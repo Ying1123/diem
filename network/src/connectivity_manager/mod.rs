@@ -663,6 +663,12 @@ where
                     keys: PublicKeys::default(),
                 });
             let mut peer_updated = false;
+            // Update role from discovery if it raises priority
+            if discovered_peer.role < peer.role {
+                peer.role = discovered_peer.role;
+                peer_updated = true;
+            }
+
             // Update peer's pubkeys
             if peer.keys.update(src, discovered_peer.keys) {
                 info!(

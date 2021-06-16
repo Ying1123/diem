@@ -32,6 +32,7 @@ const INCONSISTENCY_TEST_FLAGS: &[&str] = &[
     "--check-inconsistency",
 ];
 const REGULAR_TEST_FLAGS: &[&str] = &[
+    "--vector-theory=SmtSeq",
     "--dependency=../move-stdlib/modules",
     "--dependency=../diem-framework/modules",
 ];

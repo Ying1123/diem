@@ -6,7 +6,7 @@ module 0x42::TestNaiveSort {
 	public fun verify_sort(v: &mut vector<u64>) {
 		let vlen = Vector::length(v);
 		spec {
-			assume len(v) == 3;
+			assume len(v) == 2;
 		};
 		if (vlen <= 1) return ();
 
@@ -19,15 +19,14 @@ module 0x42::TestNaiveSort {
 			spec {
 				assert i < j;
 				assert len(v) == vlen;
+				assert i < vlen;
 				assert j <= vlen;
 				assert forall k in 0..i-1: v[k] <= v[k + 1];
 				assert forall k in i+1..j: v[i] <= v[k];
 			};
-			(i < vlen - 1)
+			(j < vlen)
 		}) 
 		{
-//			if (i == vlen - 1)
-//				return ();
 			if (*Vector::borrow(v, i) > *Vector::borrow(v, j)) {
 				Vector::swap(v, i, j);
 			};
@@ -43,12 +42,12 @@ module 0x42::TestNaiveSort {
 			assert len(v) == vlen;
 			assert i == vlen - 1;
 			assert j == vlen;
-			assert v[0] <= v[1];
 			assert v[vlen - 2] <= v[vlen - 1];
 		};
 	}
 	spec verify_sort {
 		aborts_if false;
+		ensures len(v) > 0;
 		ensures forall i in 0..len(v)-1: v[i] <= v[i+1];
 	}
 }

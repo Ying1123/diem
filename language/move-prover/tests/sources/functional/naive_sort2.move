@@ -47,7 +47,7 @@ module 0x42::TestNaiveSort {
 				i = i + 1;
 				j = i + 1;
 			};
-			};
+		};
 		*p
 	}
 	spec verify_sort {

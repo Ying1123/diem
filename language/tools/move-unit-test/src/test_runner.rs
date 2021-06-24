@@ -13,7 +13,9 @@ use bytecode_interpreter::{
 };
 use colored::*;
 use move_binary_format::{errors::VMResult, file_format::CompiledModule};
+use move_bytecode_utils::Modules;
 use move_core_types::{
+    account_address::AccountAddress,
     effects::ChangeSet,
     gas_schedule::{CostTable, GasAlgebra, GasCost, GasUnits},
     identifier::IdentStr,
@@ -69,7 +71,11 @@ fn setup_test_storage<'a>(
     modules: impl Iterator<Item = &'a CompiledModule>,
 ) -> Result<InMemoryStorage> {
     let mut storage = InMemoryStorage::new();
-    for module in modules {
+    let modules = Modules::new(modules);
+    for module in modules
+        .compute_dependency_graph()
+        .compute_topological_order()?
+    {
         let module_id = module.self_id();
         let mut module_bytes = Vec::new();
         module.serialize(&mut module_bytes)?;
@@ -172,7 +178,10 @@ impl SharedTestingConfig {
         function_name: &str,
         test_info: &TestCase,
     ) -> (VMResult<ChangeSet>, VMResult<Vec<Vec<u8>>>, TestRunInfo) {
-        let move_vm = MoveVM::new();
+        let move_vm = MoveVM::new(move_stdlib::natives::all_natives(
+            AccountAddress::from_hex_literal("0x1").unwrap(),
+        ))
+        .unwrap();
         let mut session = move_vm.new_session(&self.starting_storage_state);
         let mut gas_meter = GasStatus::new(&self.cost_table, GasUnits::new(self.execution_bound));
         // TODO: collect VM logs if the verbose flag (i.e, `self.verbose`) is set

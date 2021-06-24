@@ -8,10 +8,11 @@ use diem_types::access_path::AccessPath;
 use diem_vm::data_cache::StateViewCache;
 use move_binary_format::CompiledModule;
 use move_core_types::{
+    account_address::AccountAddress,
     identifier::{IdentStr, Identifier},
     language_storage::{ModuleId, CORE_CODE_ADDRESS},
 };
-use move_lang::{compiled_unit::CompiledUnit, shared::Flags};
+use move_lang::{compiled_unit::CompiledUnit, Compiler, Flags};
 use move_vm_runtime::{logging::NoContextLog, move_vm::MoveVM};
 use move_vm_types::gas_schedule::GasStatus;
 use once_cell::sync::Lazy;
@@ -35,21 +36,24 @@ static STDLIB_VECTOR_SRC_PATH: Lazy<PathBuf> = Lazy::new(|| {
 /// Entry point for the bench, provide a function name to invoke in Module Bench in bench.move.
 pub fn bench<M: Measurement + 'static>(c: &mut Criterion<M>, fun: &str) {
     let modules = compile_modules();
-    let move_vm = MoveVM::new();
+    let move_vm = MoveVM::new(move_stdlib::natives::all_natives(
+        AccountAddress::from_hex_literal("0x1").unwrap(),
+    ))
+    .unwrap();
     execute(c, &move_vm, modules, fun);
 }
 
 // Compile `bench.move` and its dependencies
 fn compile_modules() -> Vec<CompiledModule> {
-    let (_files, compiled_units) = move_lang::move_compile_and_report(
+    let (_files, compiled_units) = Compiler::new(
         &[
             STDLIB_VECTOR_SRC_PATH.to_str().unwrap().to_owned(),
             MOVE_BENCH_SRC_PATH.to_str().unwrap().to_owned(),
         ],
         &[],
-        None,
-        Flags::empty().set_sources_shadow_deps(false),
     )
+    .set_flags(Flags::empty().set_sources_shadow_deps(false))
+    .build_and_report()
     .expect("Error compiling...");
     compiled_units
         .into_iter()

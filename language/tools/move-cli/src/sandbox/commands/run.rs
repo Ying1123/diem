@@ -12,7 +12,7 @@ use move_core_types::{
     language_storage::TypeTag,
     transaction_argument::{convert_txn_args, TransactionArgument},
 };
-use move_lang::{self, compiled_unit::CompiledUnit, shared::Flags};
+use move_lang::{self, compiled_unit::CompiledUnit, Compiler, Flags};
 use move_vm_runtime::{logging::NoContextLog, move_vm::MoveVM};
 
 use anyhow::{anyhow, bail, Result};
@@ -36,12 +36,10 @@ pub fn run(
         if verbose {
             println!("Compiling transaction script...")
         }
-        let (_files, compiled_units) = move_lang::move_compile_and_report(
-            &[script_file.to_string()],
-            &[state.interface_files_dir()?],
-            None,
-            Flags::empty().set_sources_shadow_deps(false),
-        )?;
+        let (_files, compiled_units) =
+            Compiler::new(&[script_file.to_string()], &[state.interface_files_dir()?])
+                .set_flags(Flags::empty().set_sources_shadow_deps(false))
+                .build_and_report()?;
 
         let mut script_opt = None;
         for c in compiled_units {
@@ -100,7 +98,7 @@ move run` must be applied to a module inside `storage/`",
     // TODO: parse Value's directly instead of going through the indirection of TransactionArgument?
     let vm_args: Vec<Vec<u8>> = convert_txn_args(&txn_args);
 
-    let vm = MoveVM::new();
+    let vm = MoveVM::new(diem_vm::natives::diem_natives()).unwrap();
     let mut gas_status = get_gas_status(gas_budget)?;
     let log_context = NoContextLog::new();
     let mut session = vm.new_session(state);

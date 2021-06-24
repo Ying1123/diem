@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{
+    errors::Errors,
     parser::ast as P,
     shared::{known_attributes, AddressBytes, CompilationEnv},
 };
@@ -46,12 +47,12 @@ pub fn program(compilation_env: &mut CompilationEnv, prog: P::Program) -> P::Pro
 
     let lib_definitions: Vec<_> = lib_definitions
         .into_iter()
-        .filter_map(|def| filter_tests_from_definition(&mut context, def))
+        .filter_map(|def| filter_tests_from_definition(&mut context, def, false))
         .collect();
 
     let source_definitions: Vec<_> = source_definitions
         .into_iter()
-        .filter_map(|def| filter_tests_from_definition(&mut context, def))
+        .filter_map(|def| filter_tests_from_definition(&mut context, def, true))
         .collect();
 
     P::Program {
@@ -90,7 +91,7 @@ fn check_has_unit_test_module(context: &mut Context, prog: &P::Program) -> bool 
                 P::Definition::Address(P::AddressDefinition { loc, .. })
                 | P::Definition::Script(P::Script { loc, .. }) => *loc,
             };
-            context.env.add_error(vec![
+            context.env.add_error_deprecated(vec![
                     (loc, "Compilation in test mode requires passing the UnitTest module in the Move stdlib as a dependency")
                 ]);
             return false;
@@ -103,9 +104,12 @@ fn check_has_unit_test_module(context: &mut Context, prog: &P::Program) -> bool 
 fn filter_tests_from_definition(
     context: &mut Context,
     def: P::Definition,
+    is_source_def: bool,
 ) -> Option<P::Definition> {
     match def {
-        P::Definition::Module(m) => filter_tests_from_module(context, m).map(P::Definition::Module),
+        P::Definition::Module(m) => {
+            filter_tests_from_module(context, m, is_source_def).map(P::Definition::Module)
+        }
         P::Definition::Address(a) => {
             let P::AddressDefinition {
                 addr,
@@ -114,10 +118,10 @@ fn filter_tests_from_definition(
                 addr_value,
                 modules,
             } = a;
-            if !should_remove_node(context.env, &attributes) {
+            if !should_remove_node(context.env, &attributes, is_source_def) {
                 let modules = modules
                     .into_iter()
-                    .filter_map(|m| filter_tests_from_module(context, m))
+                    .filter_map(|m| filter_tests_from_module(context, m, is_source_def))
                     .collect();
                 Some(P::Definition::Address(P::AddressDefinition {
                     attributes,
@@ -144,7 +148,7 @@ fn filter_tests_from_definition(
                 .chain(function.attributes.iter())
                 .chain(specs.iter().flat_map(|spec| &spec.value.attributes));
 
-            let errors: Vec<_> = script_attributes
+            let errors: Errors = script_attributes
                 .map(|attr| {
                     test_attributes(attr).into_iter().map(|(loc, _)| {
                         let msg = "Testing attributes are not allowed in scripts.";
@@ -174,8 +178,9 @@ fn filter_tests_from_definition(
 fn filter_tests_from_module(
     context: &mut Context,
     module_def: P::ModuleDefinition,
+    is_source_def: bool,
 ) -> Option<P::ModuleDefinition> {
-    if should_remove_node(context.env, &module_def.attributes) {
+    if should_remove_node(context.env, &module_def.attributes, is_source_def) {
         return None;
     }
 
@@ -190,7 +195,7 @@ fn filter_tests_from_module(
 
     let mut new_members: Vec<_> = members
         .into_iter()
-        .filter_map(|member| filter_tests_from_module_member(context, member))
+        .filter_map(|member| filter_tests_from_module_member(context, member, is_source_def))
         .collect();
 
     insert_test_poison(context, loc, &mut new_members);
@@ -280,6 +285,7 @@ fn insert_test_poison(context: &mut Context, mloc: Loc, members: &mut Vec<P::Mod
 fn filter_tests_from_module_member(
     context: &mut Context,
     module_member: P::ModuleMember,
+    is_source_def: bool,
 ) -> Option<P::ModuleMember> {
     use P::ModuleMember as PM;
     let attrs = match &module_member {
@@ -291,7 +297,7 @@ fn filter_tests_from_module_member(
         PM::Constant(constant) => &constant.attributes,
     };
 
-    if should_remove_node(context.env, attrs) {
+    if should_remove_node(context.env, attrs, is_source_def) {
         None
     } else {
         Some(module_member)
@@ -299,10 +305,15 @@ fn filter_tests_from_module_member(
 }
 
 // A module member should be removed if:
-// * It is annotated as a test function (test_only, test, abort); and
-// * Test mode is not set
-fn should_remove_node(env: &CompilationEnv, attrs: &[P::Attributes]) -> bool {
-    attrs.iter().flat_map(test_attributes).count() > 0 && !env.flags().is_testing()
+// * It is annotated as a test function (test_only, test, abort) and test mode is not set; or
+// * If it is a library and is annotated as #[test]
+fn should_remove_node(env: &CompilationEnv, attrs: &[P::Attributes], is_source_def: bool) -> bool {
+    let flattened_attrs: Vec<_> = attrs.iter().flat_map(test_attributes).collect();
+    !flattened_attrs.is_empty() && !env.flags().is_testing()
+        || (!is_source_def
+            && flattened_attrs
+                .iter()
+                .any(|attr| attr.1 == known_attributes::TestingAttributes::Test))
 }
 
 fn test_attributes(attrs: &P::Attributes) -> Vec<(Loc, known_attributes::TestingAttributes)> {

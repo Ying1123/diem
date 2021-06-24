@@ -1,6 +1,8 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
+pub mod stream;
+
 pub mod errors;
 pub mod request;
 pub mod response;
@@ -9,7 +11,7 @@ pub mod views;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize)]
-enum JsonRpcVersion {
+pub enum JsonRpcVersion {
     #[serde(rename = "2.0")]
     V2,
 }
@@ -22,6 +24,15 @@ pub enum Id {
     Number(u64),
     /// String id
     String(Box<str>),
+}
+
+impl std::fmt::Display for Id {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Id::Number(ref v) => std::fmt::Debug::fmt(v, f),
+            Id::String(ref v) => std::fmt::Debug::fmt(v, f),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Deserialize, Serialize)]

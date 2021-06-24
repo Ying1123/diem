@@ -3,7 +3,10 @@
 
 use anyhow::{Context, Result};
 use debug_interface::NodeDebugClient;
-use diem_config::{config::NodeConfig, network_id::NetworkId};
+use diem_config::{
+    config::{NetworkConfig, NodeConfig},
+    network_id::NetworkId,
+};
 use diem_genesis_tool::{
     config_builder::{FullnodeBuilder, FullnodeType},
     swarm_config::SwarmConfig,
@@ -333,31 +336,63 @@ impl DiemNode {
     }
 
     pub fn public_address(&self) -> NetworkAddress {
-        let network = self
-            .config
+        self.network_address(&NetworkId::Public)
+    }
+
+    pub fn network_address(&self, network_id: &NetworkId) -> NetworkAddress {
+        network_address(&self.config, network_id)
+    }
+}
+
+pub fn network_address(node_config: &NodeConfig, network_id: &NetworkId) -> NetworkAddress {
+    let network = network(node_config, network_id);
+
+    let port = network
+        .listen_address
+        .as_slice()
+        .iter()
+        .find_map(|proto| {
+            if let Protocol::Tcp(port) = proto {
+                Some(port)
+            } else {
+                None
+            }
+        })
+        .unwrap();
+    let key = network.identity_key().public_key();
+    NetworkAddress::from_str(&format!(
+        "/ip4/127.0.0.1/tcp/{}/ln-noise-ik/{}/ln-handshake/0",
+        port, key
+    ))
+    .unwrap()
+}
+
+pub fn network<'a>(node_config: &'a NodeConfig, network_id: &NetworkId) -> &'a NetworkConfig {
+    match network_id {
+        NetworkId::Validator => node_config.validator_network.as_ref().unwrap(),
+        _ => node_config
             .full_node_networks
             .iter()
             .find(|network| network.network_id == NetworkId::Public)
-            .unwrap();
-        let port = network
-            .listen_address
-            .as_slice()
-            .iter()
-            .find_map(|proto| {
-                if let Protocol::Tcp(port) = proto {
-                    Some(port)
-                } else {
-                    None
-                }
-            })
-            .unwrap();
-        let key = network.identity_key().public_key();
-        NetworkAddress::from_str(&format!(
-            "/ip4/126.0.0.1/tcp/{}/ln-noise-ik/{}/ln-handshake/0",
-            port, key
-        ))
-        .unwrap()
+            .unwrap(),
     }
+}
+
+pub fn modify_network_config<Fn: FnOnce(&mut NetworkConfig)>(
+    node_config: &mut NodeConfig,
+    network_id: &NetworkId,
+    modifier: Fn,
+) {
+    let network = match network_id {
+        NetworkId::Validator => node_config.validator_network.as_mut().unwrap(),
+        _ => node_config
+            .full_node_networks
+            .iter_mut()
+            .find(|network| &network.network_id == network_id)
+            .unwrap(),
+    };
+
+    modifier(network)
 }
 
 pub enum HealthStatus {
@@ -507,15 +542,19 @@ impl DiemSwarm {
     pub fn launch(&mut self) {
         let num_attempts = 5;
         for _ in 0..num_attempts {
-            match self.launch_attempt() {
+            match self.launch_attempt(true) {
                 Ok(_) => return,
-                Err(err) => error!("Error launching swarm: {}", err),
+                Err(err) => error!("{} Error launching swarm: {}", self.log_header(), err),
             }
         }
-        panic!("Max out {} attempts to launch test swarm", num_attempts);
+        panic!(
+            "{} Max out {} attempts to launch test swarm",
+            self.log_header(),
+            num_attempts
+        );
     }
 
-    pub fn launch_attempt(&mut self) -> Result<(), SwarmLaunchFailure> {
+    pub fn launch_attempt(&mut self, check_connectivity: bool) -> Result<(), SwarmLaunchFailure> {
         let logs_dir_path = self.dir.as_ref().join("logs");
 
         // Make sure the directory exists
@@ -555,8 +594,10 @@ impl DiemSwarm {
             NodeType::PublicFullNode => 1,
         };
 
-        self.wait_for_connectivity(expected_peers)?;
-        println!("{:?} Successfully launched Swarm", self.node_type);
+        if check_connectivity {
+            self.wait_for_connectivity(expected_peers)?;
+        }
+        println!("{} Successfully launched Swarm", self.log_header());
         Ok(())
     }
 
@@ -564,7 +605,7 @@ impl DiemSwarm {
         let num_attempts = 60;
 
         for i in 0..num_attempts {
-            println!("{:?} Wait for connectivity attempt: {}", self.node_type, i);
+            println!("{} Wait for connectivity attempt: {}", self.log_header(), i);
 
             if self
                 .nodes
@@ -583,8 +624,12 @@ impl DiemSwarm {
     fn wait_for_startup(&mut self) -> Result<(), SwarmLaunchFailure> {
         let num_attempts = 120;
         let mut done = vec![false; self.nodes.len()];
+        let log_header = self.log_header();
         for i in 0..num_attempts {
-            println!("Wait for startup attempt: {} of {}", i, num_attempts);
+            println!(
+                "{} Wait for startup attempt: {} of {}",
+                log_header, i, num_attempts
+            );
             for (node, done) in self.nodes.values_mut().zip(done.iter_mut()) {
                 if *done {
                     continue;
@@ -594,7 +639,8 @@ impl DiemSwarm {
                     HealthStatus::RpcFailure(_) => continue,
                     HealthStatus::Crashed(status) => {
                         error!(
-                            "Diem node '{}' has crashed with status '{}'. Log output: '''{}'''",
+                            "{} Diem node '{}' has crashed with status '{}'. Log output: '''{}'''",
+                            log_header,
                             node.node_id(),
                             status,
                             node.get_log_contents().unwrap()
@@ -602,7 +648,11 @@ impl DiemSwarm {
                         return Err(SwarmLaunchFailure::NodeCrash);
                     }
                     HealthStatus::Stopped => {
-                        panic!("Diem node '{} child process is not created", node.node_id())
+                        panic!(
+                            "{} Diem node '{} child process is not created",
+                            log_header,
+                            node.node_id()
+                        )
                     }
                 }
             }
@@ -626,19 +676,29 @@ impl DiemSwarm {
         let num_attempts = 60;
         let last_committed_round_str = "diem_consensus_last_committed_round{}";
         let mut done = vec![false; self.nodes.len()];
+        let log_header = self.log_header();
 
         let mut last_committed_round = 0;
         // First, try to retrieve the max value across all the committed rounds
-        println!("Calculating max committed round across the validators.");
+        println!(
+            "{} Calculating max committed round across the validators.",
+            log_header
+        );
         for node in self.nodes.values_mut() {
             match node.get_metric(last_committed_round_str) {
                 Some(val) => {
-                    println!("\tNode {} last committed round = {}", node.node_id(), val);
+                    println!(
+                        "{} \tNode {} last committed round = {}",
+                        log_header,
+                        node.node_id(),
+                        val
+                    );
                     last_committed_round = last_committed_round.max(val);
                 }
                 None => {
                     println!(
-                        "\tNode {} last committed round unknown, assuming 0.",
+                        "{} \tNode {} last committed round unknown, assuming 0.",
+                        log_header,
                         node.node_id()
                     );
                 }
@@ -648,7 +708,8 @@ impl DiemSwarm {
         // Now wait for all the nodes to catch up to the max.
         for i in 0..num_attempts {
             println!(
-                "Wait for catchup, target_commit_round = {}, attempt: {} of {}",
+                "{} Wait for catchup, target_commit_round = {}, attempt: {} of {}",
+                log_header,
                 last_committed_round,
                 i + 1,
                 num_attempts
@@ -662,21 +723,24 @@ impl DiemSwarm {
                 if let Some(val) = node.get_metric(last_committed_round_str) {
                     if val >= last_committed_round {
                         println!(
-                            "\tNode {} is caught up with last committed round {}",
+                            "{} \tNode {} is caught up with last committed round {}",
+                            log_header,
                             node.node_id(),
                             val
                         );
                         *done = true;
                     } else {
                         println!(
-                            "\tNode {} is not caught up yet with last committed round {}",
+                            "{} \tNode {} is not caught up yet with last committed round {}",
+                            log_header,
                             node.node_id(),
                             val
                         );
                     }
                 } else {
                     println!(
-                        "\tNode {} last committed round unknown, assuming 0.",
+                        "{} \tNode {} last committed round unknown, assuming 0.",
+                        log_header,
                         node.node_id()
                     );
                 }
@@ -725,7 +789,7 @@ impl DiemSwarm {
             .config
             .config_files
             .get(idx)
-            .unwrap_or_else(|| panic!("Node at index {} not found", idx));
+            .unwrap_or_else(|| panic!("{} Node at index {} not found", self.log_header(), idx));
         let log_file_path = self.dir.as_ref().join("logs").join(format!("{}.log", idx));
         let node_id = format!("{}", idx);
         let mut node = DiemNode::launch(
@@ -745,17 +809,22 @@ impl DiemSwarm {
         }
         Err(SwarmLaunchFailure::LaunchTimeout)
     }
+
+    fn log_header(&self) -> String {
+        format!("[{:?}:{}]", self.node_type, self.label)
+    }
 }
 
 impl Drop for DiemSwarm {
     fn drop(&mut self) {
+        let log_header = self.log_header();
         // If panicking, we don't want to gc the swarm directory.
         if std::thread::panicking() {
             // let dir = self.dir;
             if let DiemSwarmDir::Temporary(temp_dir) = &mut self.dir {
                 temp_dir.persist();
                 let log_path = temp_dir.path();
-                println!("{:?} logs located at {:?}", self.label, log_path);
+                println!("{} logs located at {:?}", log_header, log_path);
 
                 // Dump logs for each validator to stdout when `DIEM_DUMP_LOGS`
                 // environment variable is set

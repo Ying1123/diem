@@ -1,0 +1,4 @@
+sorted_update_minimal.smt2 timeout.
+
+How to interpret s[i] if i is out of range?
+This happened in sorted_update_minimal.smt2

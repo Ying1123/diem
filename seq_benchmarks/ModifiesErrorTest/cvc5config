@@ -1,0 +1,69 @@
+This is cvc5 version 1.0-prerelease [git master 373b6e1e]
+compiled with GCC version 7.5.0
+on Jun 29 2021 18:45:34
+
+Copyright (c) 2009-2021 by the authors and their institutional
+affiliations listed at https://cvc5.github.io/people.html
+
+cvc5 is open-source and is covered by the BSD license (modified).
+
+THIS SOFTWARE IS PROVIDED AS-IS, WITHOUT ANY WARRANTIES.
+USE AT YOUR OWN RISK.
+
+cvc5 incorporates code from ANTLR3 (http://www.antlr.org).
+See licenses/antlr3-LICENSE for copyright and licensing information.
+
+This version of cvc5 is linked against the following non-(L)GPL'ed
+third party libraries.
+
+  CaDiCaL - Simplified Satisfiability Solver
+  See https://github.com/arminbiere/cadical for copyright information.
+
+  SymFPU - The Symbolic Floating Point Unit
+  See https://github.com/martin-cs/symfpu/tree/cvc5 for copyright information.
+
+This version of cvc5 is linked against the following third party
+libraries covered by the LGPLv3 license.
+See licenses/lgpl-3.0.txt for more information.
+
+  GMP - Gnu Multi Precision Arithmetic Library
+  See http://gmplib.org for copyright information.
+
+  LibPoly polynomial library
+  See https://github.com/SRI-CSL/libpoly for copyright and
+  licensing information.
+
+cvc5 is statically linked against these libraries. To recompile
+this version of cvc5 with different versions of these libraries
+follow the instructions on https://github.com/cvc5/cvc5/blob/master/INSTALL.md
+
+See the file COPYING (distributed with the source code, and with
+all binaries) for the full cvc5 copyright, licensing, and (lack of)
+warranty information.
+
+version       : 1.0-prerelease
+scm           : git [master 373b6e1e]
+
+library       : 1.0.0
+
+debug code    : yes
+statistics    : yes
+tracing       : yes
+dumping       : yes
+muzzled       : no
+assertions    : yes
+coverage      : no
+profiling     : no
+asan          : no
+ubsan         : no
+tsan          : no
+competition   : no
+
+abc           : no
+cln           : no
+glpk          : no
+cryptominisat : no
+gmp           : yes
+kissat        : no
+poly          : yes
+editline      : no

@@ -1,0 +1,41 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl
+-monomorphize
+/env:2
+/proverLog:naive_ij.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestNaiveSort_verify_sort$verify ...
+  [0.538 s, 20 proof obligations]  errors
+assert_failed(2,856,877): unknown assertion failed
+Execution trace:
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1111,9): anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1111,9): anon0$1
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1134,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1157,35): anon35_Else
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1157,35): anon35_Else$1
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1343,35): anon36_Else
+assert_failed(2,902,936): unknown assertion failed
+Execution trace:
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1111,9): anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1111,9): anon0$1
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1134,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1157,35): anon35_Else
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1157,35): anon35_Else$1
+    /home/ying/diem/seq_benchmarks/naive_ij/naive_ij.z3.bpl(1343,35): anon36_Else
+
+Boogie program verifier finished with 0 verified, 2 errors

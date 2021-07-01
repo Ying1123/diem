@@ -1,0 +1,6 @@
+[INFO] translating module M3
+[INFO] translating module M2
+[INFO] translating module M1
+[INFO] translating module M4
+[INFO] running solver
+[INFO] 0.008s build, 0.002s trafo, 0.005s gen, 0.836s verify

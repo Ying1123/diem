@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/let/.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/let/let.cvc4.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

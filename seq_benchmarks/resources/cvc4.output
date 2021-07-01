@@ -1,7 +1,7 @@
-/home/ying/diem/seq_benchmarks/resources/.smt2:52.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/resources/resources.cvc4.smt2:52.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
-/home/ying/diem/seq_benchmarks/resources/.smt2:236.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/resources/resources.cvc4.smt2:236.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unknown

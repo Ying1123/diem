@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/bubble_sort/.bpl
+/home/ying/diem/seq_benchmarks/bubble_sort/bubble_sort.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:bubble_sort.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/bubble_sort/.bpl
+Parsing /home/ying/diem/seq_benchmarks/bubble_sort/bubble_sort.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
@@ -16,7 +16,7 @@ Prover error: Term of kind STRING_SUBSTR not supported in default mode, try --st
 
 
 Verifying $42_TestBubbleSort_verify_sort$verify ...
-  [0.293 s, 33 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/bubble_sort/.bpl(1076,27): Verification inconclusive ($42_TestBubbleSort_verify_sort$verify)
+  [0.290 s, 33 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/bubble_sort/bubble_sort.cvc4.bpl(1076,27): Verification inconclusive ($42_TestBubbleSort_verify_sort$verify)
 
 Boogie program verifier finished with 0 verified, 0 errors, 1 inconclusive

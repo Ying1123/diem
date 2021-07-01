@@ -1,36 +1,36 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/strong_edges/.bpl
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:strong_edges.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/strong_edges/.bpl
+Parsing /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestStrongEdges_glob_and_field_edges$verify ...
-  [0.213 s, 4 proof obligations]  verified
+  [0.212 s, 4 proof obligations]  verified
 
 Verifying $42_TestStrongEdges_glob_and_field_edges_incorrect$verify ...
-  [0.030 s, 4 proof obligations]  error
+  [0.040 s, 4 proof obligations]  error
 assert_failed(2,1208,1239): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/strong_edges/.bpl(1218,9): anon0
-    /home/ying/diem/seq_benchmarks/strong_edges/.bpl(1218,9): anon0$1
-    /home/ying/diem/seq_benchmarks/strong_edges/.bpl(1255,13): anon7_Else
-    /home/ying/diem/seq_benchmarks/strong_edges/.bpl(1257,5): anon8_Else
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1218,9): anon0
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1218,9): anon0$1
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1255,13): anon7_Else
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1257,5): anon8_Else
 
 Verifying $42_TestStrongEdges_loc__edge_incorrect$verify ...
-  [0.011 s, 1 proof obligation]  error
+  [0.014 s, 1 proof obligation]  error
 assert_failed(2,1443,1457): unknown assertion failed
 Execution trace:
-    /home/ying/diem/seq_benchmarks/strong_edges/.bpl(1329,5): anon0
-    /home/ying/diem/seq_benchmarks/strong_edges/.bpl(1329,5): anon0$1
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1329,5): anon0
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1329,5): anon0$1
 
 Verifying $42_TestStrongEdges_loc_edge$verify ...
   [0.004 s, 1 proof obligation]  verified
@@ -39,6 +39,6 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 Verifying $42_TestStrongEdges_vec_edge$verify ...
   [0.024 s, 4 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/strong_edges/.bpl(1442,27): Verification inconclusive ($42_TestStrongEdges_vec_edge$verify)
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.bpl(1442,27): Verification inconclusive ($42_TestStrongEdges_vec_edge$verify)
 
 Boogie program verifier finished with 2 verified, 2 errors, 1 inconclusive

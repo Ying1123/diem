@@ -1,0 +1,58 @@
+21:42:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::create_R_invalid` to be verified
+21:42:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::create_R` to be verified
+21:42:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::remove_S_invalid` to be verified
+21:42:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::remove_R_invalid` to be verified
+21:42:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::get_S_x` to be verified
+21:42:39 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+[INFO] translating module TestGlobalInvariants
+21:42:39 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:42:39 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:42:39 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:42:40 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:42:40 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.009s build, 0.004s trafo, 0.004s gen, 0.845s verify
+error: global memory invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:18:9 ───
+    │
+ 18 │         invariant [global] forall a: address where exists<R>(a): exists<S>(a);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:38: create_R_invalid
+    =         account = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:40: create_R_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:38: create_R_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:40: create_R_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:18
+
+error: global memory invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:20:9 ───
+    │
+ 20 │         invariant update [global] forall a: address where old(exists_R(a)): exists<R>(a);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:62: remove_R_invalid
+    =         account = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:64: remove_R_invalid
+    =         tmp#$1 = true
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:62: remove_R_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65: remove_R_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:18
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:20
+
+error: global memory invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:18:9 ───
+    │
+ 18 │         invariant [global] forall a: address where exists<R>(a): exists<S>(a);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:53: remove_S_invalid
+    =         account = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:55: remove_S_invalid
+    =         tmp#$1 = true
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:18
+
+exiting with boogie verification errors

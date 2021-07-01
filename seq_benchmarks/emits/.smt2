@@ -1,0 +1,22 @@
+(set-option :print-success false)
+(set-info :smt-lib-version 2.6)
+(set-logic ALL_SUPPORTED)
+; done setting options
+
+
+(declare-sort |T@[Int]Bool| 0)
+(declare-sort T@$1_Event_EventHandleGenerator 0)
+(declare-sort |T@[Int]$1_Event_EventHandleGenerator| 0)
+(declare-datatypes ((T@$Memory_21091 0)) ((($Memory_21091 (|domain#$Memory_21091| |T@[Int]Bool|) (|contents#$Memory_21091| |T@[Int]$1_Event_EventHandleGenerator|) ) ) ))
+(declare-datatypes ((T@$42_TestEmits_DummyEvent 0)) ((($42_TestEmits_DummyEvent (|$msg#$42_TestEmits_DummyEvent| Int) ) ) ))
+(declare-datatypes ((T@$EventRep 0)) (((|$ToEventRep'$42_TestEmits_DummyEvent'| (|e#$ToEventRep'$42_TestEmits_DummyEvent'| T@$42_TestEmits_DummyEvent) ) ) ))
+(declare-sort |T@[$EventRep]Int| 0)
+(declare-datatypes ((T@Multiset_18204 0)) (((Multiset_18204 (|v#Multiset_18204| |T@[$EventRep]Int|) (|l#Multiset_18204| Int) ) ) ))
+(declare-sort T@$1_Event_EventHandle 0)
+(declare-sort |T@[$1_Event_EventHandle]Multiset_18204| 0)
+(declare-datatypes ((T@$EventStore 0)) ((($EventStore (|counter#$EventStore| Int) (|streams#$EventStore| |T@[$1_Event_EventHandle]Multiset_18204|) ) ) ))
+(declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
+(declare-datatypes ((T@$Mutation_21669 0)) ((($Mutation_21669 (|l#$Mutation_21669| T@$Location) (|p#$Mutation_21669| (Seq Int)) (|v#$Mutation_21669| T@$1_Event_EventHandle) ) ) ))
+(declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
+(declare-datatypes ((T@$Mutation_19505 0)) ((($Mutation_19505 (|l#$Mutation_19505| T@$Location) (|p#$Mutation_19505| (Seq Int)) (|v#$Mutation_19505| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))

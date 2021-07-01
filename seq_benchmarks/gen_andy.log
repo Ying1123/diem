@@ -1,0 +1,623 @@
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move is move
+file name is aborts_if
+dir exists
+output exists
+./gen_andy.sh: line 23: 11501 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 11539 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move is move
+file name is aborts_if_with_code
+dir exists
+output exists
+./gen_andy.sh: line 23: 11657 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 11686 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_check.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_check.move is move
+file name is aborts_with_check
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_negative_check.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_negative_check.move is move
+file name is aborts_with_negative_check
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/address_quant.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move is move
+file name is address_quant
+dir exists
+output exists
+./gen_andy.sh: line 23: 11903 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 11927 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move is move
+file name is address_serialization_constant_size
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 12010 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12032 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/arithm.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/arithm.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move is move
+file name is arithm
+dir exists
+output exists
+./gen_andy.sh: line 23: 12174 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12218 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/axioms.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move is move
+file name is axioms
+dir exists
+output exists
+./gen_andy.sh: line 23: 12325 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12348 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move is move
+file name is bubble_sort
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 12422 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12443 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/cast.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/cast.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/cast.move is move
+file name is cast
+dir exists
+output exists
+./gen_andy.sh: line 23: 12538 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12564 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/choice.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/choice.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/choice.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/choice.move is move
+file name is choice
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 12664 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12690 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/consts.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/consts.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/consts.move is move
+file name is consts
+dir exists
+output exists
+./gen_andy.sh: line 23: 12774 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12796 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/cross_module_invariant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/cross_module_invariant.move is move
+file name is cross_module_invariant
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/defines.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/defines.move is move
+file name is defines
+dir exists
+output exists
+./gen_andy.sh: line 23: 12894 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 12918 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.inv-v1_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move is move
+file name is disable_inv_friends
+dir exists
+output exists
+./gen_andy.sh: line 23: 13012 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13036 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.inv-v1_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.inv_v2_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.move is move
+file name is disable_inv
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/emits.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/emits.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/emits.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/emits.move is move
+file name is emits
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 13199 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13249 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move is move
+file name is exists_in_vector
+dir exists
+output exists
+./gen_andy.sh: line 23: 13358 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13380 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/fixed_point_arithm.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/fixed_point_arithm.move is move
+file name is fixed_point_arithm
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/friend_error.inv-v1_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move is move
+file name is friend_error
+dir exists
+output exists
+./gen_andy.sh: line 23: 13521 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13543 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/friend.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/friend.move is move
+file name is friend
+dir exists
+output exists
+./gen_andy.sh: line 23: 13626 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13647 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move is move
+file name is global_invariants
+dir exists
+output exists
+./gen_andy.sh: line 23: 13739 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13764 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/global_vars.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/global_vars.move is move
+file name is global_vars
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move is move
+file name is hash_model_invalid
+dir exists
+output exists
+./gen_andy.sh: line 23: 13906 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 13930 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is move
+file name is hash_model
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 14026 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14052 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is move
+file name is inconsistency
+dir exists
+output exists
+./gen_andy.sh: line 23: 14149 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14173 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move is move
+file name is invariants
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 14281 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14342 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move is move
+file name is invariants_resources
+dir exists
+output exists
+./gen_andy.sh: line 23: 14431 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14453 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move is move
+file name is invariants_with_quant
+dir exists
+output exists
+./gen_andy.sh: line 23: 14526 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14548 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/let.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/let.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/let.move is move
+file name is let
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 14645 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14672 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/loops.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/loops.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/loops.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/loops.move is move
+file name is loops
+dir exists
+output exists
+./gen_andy.sh: line 23: 14788 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14821 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move is move
+file name is loops_with_memory_ops
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 14913 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 14935 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is move
+file name is marketcap_as_schema_apply
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema.move is move
+file name is marketcap_as_schema
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap_generic.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_generic.move is move
+file name is marketcap_generic
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap.move is move
+file name is marketcap
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move is move
+file name is ModifiesErrorTest
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 15273 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 15301 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move is move
+file name is ModifiesSchemaTest
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 15393 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 15416 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move is move
+file name is ModifiesTest
+dir exists
+output exists
+./gen_andy.sh: line 23: 15512 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 15538 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.move is move
+file name is ModifiesTypeTest
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/module_invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/module_invariants.move is move
+file name is module_invariants
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move is move
+file name is module_level_spec
+dir exists
+output exists
+./gen_andy.sh: line 23: 15700 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 15732 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/mono.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/mono.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/mono.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mono.move is move
+file name is mono
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 15838 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 15871 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is move
+file name is mut_ref_accross_modules
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move is move
+file name is mut_ref
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16043 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16074 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is move
+file name is mut_ref_unpack
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_ij_minimal.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_ij_minimal.move is move
+file name is naive_ij_minimal
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_ij.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_ij.move is move
+file name is naive_ij
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16222 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16243 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive.move is move
+file name is naive
+dir exists
+output exists
+./gen_andy.sh: line 23: 16315 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16336 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_perm_fail.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_perm_fail.move is move
+file name is naive_perm_fail
+dir exists
+output exists
+./gen_andy.sh: line 23: 16408 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16429 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_perm.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_perm.move is move
+file name is naive_perm
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16501 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16522 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort2.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort2.move is move
+file name is naive_sort2
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16594 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16615 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move is move
+file name is naive_sort3
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16687 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16708 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort4.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort4.move is move
+file name is naive_sort4
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16780 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16801 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort.move is move
+file name is naive_sort
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16873 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 16894 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move is move
+file name is nested_invariants
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 16988 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17024 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/opaque.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/opaque.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move is move
+file name is opaque
+dir exists
+output exists
+./gen_andy.sh: line 23: 17108 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17130 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/pack_unpack.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pack_unpack.move is move
+file name is pack_unpack
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/parse_error.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/parse_error.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/parse_error.move is move
+file name is parse_error
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/pragma.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/pragma.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move is move
+file name is pragma
+dir exists
+output exists
+./gen_andy.sh: line 23: 17269 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17290 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move is move
+file name is pure_function_call_incorrect
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call.move is move
+file name is pure_function_call
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/references.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/references.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/references.move is move
+file name is references
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 17403 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17433 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/resources.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/resources.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/resources.move is move
+file name is resources
+dir exists
+output exists
+./gen_andy.sh: line 23: 17565 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17606 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/restrictions.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/restrictions.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/restrictions.move is move
+file name is restrictions
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/return_values.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/return_values.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/return_values.move is move
+file name is return_values
+dir exists
+output exists
+./gen_andy.sh: line 23: 17737 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17774 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/schema_exp.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/schema_exp.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/schema_exp.move is move
+file name is schema_exp
+dir exists
+output exists
+./gen_andy.sh: line 23: 17871 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 17895 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/script_incorrect.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/script_incorrect.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/script_incorrect.move is move
+file name is script_incorrect
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/script.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/script.move is move
+file name is script
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/script_provider.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/script_provider.move is move
+file name is script_provider
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move is move
+file name is serialize_model
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 18050 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18072 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is move
+file name is simple_vector_client
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 18188 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18241 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is move
+file name is specs_in_fun
+dir exists
+output exists
+./gen_andy.sh: line 23: 18372 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18400 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move is move
+file name is specs_in_fun_ref
+dir exists
+output exists
+./gen_andy.sh: line 23: 18504 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18531 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move is move
+file name is strong_edges
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 18640 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18665 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/txn.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/txn.move is move
+file name is txn
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move is move
+file name is unused_schema
+dir exists
+output exists
+./gen_andy.sh: line 23: 18747 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18768 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move is move
+file name is verify_bcs
+dir exists
+output exists
+./gen_andy.sh: line 23: 18840 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18861 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_signature.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/verify_signature.move is move
+file name is verify_signature
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move is move
+file name is verify_vector
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+./gen_andy.sh: line 23: 18980 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 19023 Aborted                 (core dumped) boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1

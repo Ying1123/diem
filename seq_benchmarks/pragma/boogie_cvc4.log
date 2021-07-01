@@ -1,23 +1,23 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/pragma/.bpl
+/home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:pragma.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/pragma/.bpl
+Parsing /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestPragma_always_aborts_with_verify_incorrect$verify ...
-  [0.205 s, 1 proof obligation]  error
+  [0.201 s, 1 proof obligation]  error
 assert_failed(2,243,341): abort not covered by any of the `aborts_if` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/pragma/.bpl(902,9): anon0
-    /home/ying/diem/seq_benchmarks/pragma/.bpl(902,9): anon0$1
+    /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl(902,9): anon0
+    /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl(902,9): anon0$1
 
 Boogie program verifier finished with 0 verified, 1 error

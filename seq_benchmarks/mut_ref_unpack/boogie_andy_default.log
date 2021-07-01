@@ -1,0 +1,15 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/mut_ref_unpack/.bpl
+-monomorphize
+/env:2
+/proverLog:.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/mut_ref_unpack/.bpl
+Coalescing blocks...
+Inlining...
+
+Boogie program verifier finished with 0 verified, 0 errors

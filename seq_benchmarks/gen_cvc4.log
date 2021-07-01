@@ -66,7 +66,7 @@ file name is choice
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 27850 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20: 31613 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/consts.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/consts.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/consts.move is move
@@ -114,7 +114,7 @@ the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/
 file name is exists_in_vector
 dir exists
 output exists
-./gen_cvc4.sh: line 20: 28447 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20: 32202 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/fixed_point_arithm.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/fixed_point_arithm.move is move
 file name is fixed_point_arithm
@@ -152,14 +152,14 @@ the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/
 file name is hash_model_invalid
 dir exists
 output exists
-./gen_cvc4.sh: line 20: 28896 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20: 32646 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is move
 file name is hash_model
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 28991 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20: 32740 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is move
@@ -173,7 +173,7 @@ file name is invariants
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 29208 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:   501 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.cvc4_exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move is a file
@@ -206,7 +206,7 @@ the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/
 file name is loops_with_memory_ops
 dir exists
 output exists
-./gen_cvc4.sh: line 20: 29710 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  1178 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is move
 file name is marketcap_as_schema_apply
@@ -278,7 +278,7 @@ file name is mono
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 30483 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  2220 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is move
 file name is mut_ref_accross_modules
@@ -292,7 +292,7 @@ file name is mut_ref
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 30655 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  2391 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is move
 file name is mut_ref_unpack
@@ -407,7 +407,7 @@ file name is references
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 31751 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  3481 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/resources.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/resources.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/resources.move is move
@@ -463,14 +463,14 @@ file name is serialize_model
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 32291 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  4020 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is move
 file name is simple_vector_client
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20: 32406 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  4135 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is move
@@ -521,4 +521,4 @@ file name is verify_vector
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output exists
-./gen_cvc4.sh: line 20:   595 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+./gen_cvc4.sh: line 20:  4755 Aborted                 (core dumped) $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1

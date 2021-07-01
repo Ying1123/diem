@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/address_serialization_constant_size/.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

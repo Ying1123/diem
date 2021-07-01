@@ -1,0 +1,87 @@
+21:40:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::with_spec_fun_choice` to be verified
+21:40:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::simple_incorrect` to be verified
+21:40:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::simple` to be verified
+21:40:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::populate_R` to be verified
+21:40:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::test_not_using_min_incorrect` to be verified
+21:40:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::test_min` to be verified
+21:40:07 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+21:40:07 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+[INFO] translating module TestSome
+21:40:07 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:40:07 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:40:07 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:40:49 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:40:49 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.012s build, 0.006s trafo, 0.003s gen, 41.827s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:54:9 ───
+    │
+ 54 │         ensures choice == Signer::spec_address_of(s2);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:49
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:50
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:53
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:52
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44: populate_R
+    =         s1 = 0x29
+    =         s2 = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:45: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:46: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:47: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:54
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:9 ───
+    │
+ 21 │         ensures result == TRACE(choose x: u64 where x >= 4 && x <= 5);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:15: simple_incorrect
+    =         b = false
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16: simple_incorrect
+    =         tmp#$1 = 5
+    =         result = 5
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:17: simple_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21
+    =         `TRACE(choose x: u64 where x >= 4 && x <= 5)` = 4
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:60:5 ───
+    │
+ 60 │ ╭     fun test_min(): vector<u64> {
+ 61 │ │         let v = Vector::empty<u64>();
+ 62 │ │         let v_ref = &mut v;
+ 63 │ │         Vector::push_back(v_ref, 1);
+ 64 │ │         Vector::push_back(v_ref, 2);
+ 65 │ │         Vector::push_back(v_ref, 3);
+ 66 │ │         Vector::push_back(v_ref, 2);
+ 67 │ │         v
+ 68 │ │     }
+    │ ╰─────^
+    │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:73:5 ───
+    │
+ 73 │ ╭     fun test_not_using_min_incorrect(): vector<u64> {
+ 74 │ │         let v = Vector::empty<u64>();
+ 75 │ │         let v_ref = &mut v;
+ 76 │ │         Vector::push_back(v_ref, 1);
+ 77 │ │         Vector::push_back(v_ref, 2);
+ 78 │ │         Vector::push_back(v_ref, 3);
+ 79 │ │         Vector::push_back(v_ref, 2);
+ 80 │ │         Vector::push_back(v_ref, 2);
+ 81 │ │         v
+ 82 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

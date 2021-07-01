@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/strong_edges/.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/strong_edges/.smt2:176.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.cvc4.smt2:176.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

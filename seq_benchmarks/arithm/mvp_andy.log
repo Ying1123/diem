@@ -1,0 +1,130 @@
+[INFO] translating module TestArithmetic
+[INFO] running solver
+[INFO] 0.011s build, 0.007s trafo, 0.004s gen, 0.969s verify
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:128:5 ───
+     │
+ 128 │ ╭     spec div_by_zero_u64_incorrect {
+ 129 │ │         aborts_if false;
+ 130 │ │     }
+     │ ╰─────^
+     ·
+ 126 │         x / y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:125: div_by_zero_u64_incorrect
+     =         x = 0
+     =         y = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:126: div_by_zero_u64_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:180:5 ───
+     │
+ 180 │ ╭     spec overflow_u128_add_incorrect {
+ 181 │ │         aborts_if false;
+ 182 │ │     }
+     │ ╰─────^
+     ·
+ 178 │         x + y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:177: overflow_u128_add_incorrect
+     =         x = 340282366920938463463374607431768211455u128
+     =         y = 1u128
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:178: overflow_u128_add_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:232:5 ───
+     │
+ 232 │ ╭     spec overflow_u128_mul_incorrect {
+ 233 │ │         aborts_if false;
+ 234 │ │     }
+     │ ╰─────^
+     ·
+ 230 │         x * y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:229: overflow_u128_mul_incorrect
+     =         x = 2u128
+     =         y = 2u128
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:230: overflow_u128_mul_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:164:5 ───
+     │
+ 164 │ ╭     spec overflow_u64_add_incorrect {
+ 165 │ │         aborts_if false;
+ 166 │ │     }
+     │ ╰─────^
+     ·
+ 162 │         x + y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:161: overflow_u64_add_incorrect
+     =         x = 18446744073709551615
+     =         y = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:162: overflow_u64_add_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:217:5 ───
+     │
+ 217 │ ╭     spec overflow_u64_mul_incorrect {
+ 218 │ │         aborts_if false;
+ 219 │ │     }
+     │ ╰─────^
+     ·
+ 215 │         x * y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:214: overflow_u64_mul_incorrect
+     =         x = 2
+     =         y = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:215: overflow_u64_mul_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:148:5 ───
+     │
+ 148 │ ╭     spec overflow_u8_add_incorrect {
+ 149 │ │         aborts_if false;
+ 150 │ │     }
+     │ ╰─────^
+     ·
+ 146 │         x + y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:145: overflow_u8_add_incorrect
+     =         x = 255u8
+     =         y = 1u8
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:146: overflow_u8_add_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:201:5 ───
+     │
+ 201 │ ╭     spec overflow_u8_mul_incorrect {
+ 202 │ │         aborts_if false;
+ 203 │ │     }
+     │ ╰─────^
+     ·
+ 199 │         x * y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:198: overflow_u8_mul_incorrect
+     =         x = 2u8
+     =         y = 2u8
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:199: overflow_u8_mul_incorrect
+     =         ABORTED
+
+exiting with boogie verification errors

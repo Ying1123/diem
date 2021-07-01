@@ -1,20 +1,20 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/friend_error/.bpl
+/home/ying/diem/seq_benchmarks/friend_error/friend_error.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:friend_error.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/friend_error/.bpl
+Parsing /home/ying/diem/seq_benchmarks/friend_error/friend_error.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestFriendError_f$verify ...
-  [0.189 s, 0 proof obligations]  verified
+  [0.201 s, 0 proof obligations]  verified
 
 Verifying $42_TestFriendError_i$verify ...
   [0.002 s, 0 proof obligations]  verified

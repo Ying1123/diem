@@ -1,0 +1,34 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl
+-monomorphize
+/env:2
+/proverLog:hash_model_invalid.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestHash_hash_test1$verify ...
+  [0.299 s, 2 proof obligations]  error
+assert_failed(2,606,659): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(907,9): anon0
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(907,9): anon0$1
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(931,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(944,5): anon7_Else
+
+Verifying $42_TestHash_hash_test2$verify ...
+  [0.122 s, 2 proof obligations]  error
+assert_failed(2,976,1029): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1008,9): anon0
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1008,9): anon0$1
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1032,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1045,5): anon7_Else
+
+Boogie program verifier finished with 0 verified, 2 errors

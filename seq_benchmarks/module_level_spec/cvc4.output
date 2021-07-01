@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/module_level_spec/.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/module_level_spec/.smt2:155.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.smt2:155.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

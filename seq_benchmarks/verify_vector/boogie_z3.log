@@ -1,0 +1,117 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl
+-monomorphize
+/env:2
+/proverLog:verify_vector.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_VerifyVector_verify_append$verify ...
+  [41.302 s, 15 proof obligations]  errors
+assert_failed(2,5426,5486): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1107,9): anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1107,9): anon0$1
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(653,8): inline$$1_Vector_reverse'#0'$0$anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1184,5): anon17_Else
+assert_failed(2,5873,5913): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1107,9): anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1107,9): anon0$1
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(653,8): inline$$1_Vector_reverse'#0'$0$anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1184,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(624,7): inline$$1_Vector_is_empty'#0'$0$anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1290,5): anon18_Else
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(566,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1290,5): anon18_Else$1
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1302,35): anon19_Else
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(694,5): inline$$1_Vector_destroy_empty'#0'$0$anon2_Else
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(1351,5): anon22_Else
+
+Verifying $42_VerifyVector_verify_contains$verify ...
+  [0.088 s, 6 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_index_of$verify ...
+  [0.026 s, 8 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_is_empty$verify ...
+  [0.008 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_append$verify ...
+  [0.032 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_borrow$verify ...
+  [0.009 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_borrow_mut$verify ...
+  [0.013 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_contains$verify ...
+  [40.156 s, 3 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(2318,27): Verification of '$42_VerifyVector_verify_model_contains$verify' timed out after 40 seconds
+
+Verifying $42_VerifyVector_verify_model_destroy_empty$verify ...
+  [2.633 s, 2 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_empty$verify ...
+  [0.102 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_index_of$verify ...
+  [40.375 s, 6 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(2505,27): Verification of '$42_VerifyVector_verify_model_index_of$verify' timed out after 40 seconds
+
+Verifying $42_VerifyVector_verify_model_is_empty$verify ...
+  [2.468 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_length$verify ...
+  [0.016 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_pop_back$verify ...
+  [0.094 s, 5 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_push_back$verify ...
+  [0.012 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_remove$verify ...
+  [0.021 s, 6 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_reverse$verify ...
+  [0.013 s, 3 proof obligations]  error
+assert_failed(2,4865,4923): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3013,9): anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3013,9): anon0$1
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(653,8): inline$$1_Vector_reverse'#0'$0$anon0
+    /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3034,5): anon4_Else
+
+Verifying $42_VerifyVector_verify_model_swap$verify ...
+  [40.031 s, 4 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3081,27): Verification of '$42_VerifyVector_verify_model_swap$verify' timed out after 40 seconds
+
+Verifying $42_VerifyVector_verify_model_swap_remove$verify ...
+  [40.053 s, 5 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3177,27): Verification of '$42_VerifyVector_verify_model_swap_remove$verify' timed out after 40 seconds
+
+Verifying $42_VerifyVector_verify_remove$verify ...
+  [40.033 s, 18 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3277,27): Verification of '$42_VerifyVector_verify_remove$verify' timed out after 40 seconds
+
+Verifying $42_VerifyVector_verify_reverse$verify ...
+  [40.174 s, 13 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(3715,27): Verification of '$42_VerifyVector_verify_reverse$verify' timed out after 40 seconds
+
+Verifying $42_VerifyVector_verify_singleton$verify ...
+  [0.095 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_swap_remove$verify ...
+  [40.030 s, 5 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.z3.bpl(4206,27): Verification of '$42_VerifyVector_verify_swap_remove$verify' timed out after 40 seconds
+
+Boogie program verifier finished with 14 verified, 3 errors, 7 time outs

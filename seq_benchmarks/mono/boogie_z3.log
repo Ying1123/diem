@@ -1,0 +1,99 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/mono/mono.z3.bpl
+-monomorphize
+/env:2
+/proverLog:mono.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestMonomorphization_create_R$verify ...
+  [0.190 s, 3 proof obligations]  verified
+
+Verifying $42_TestMonomorphization_create_R_generic$verify ...
+  [0.034 s, 3 proof obligations]  verified
+
+Verifying $42_TestMonomorphization_mutate_R$verify ...
+  [0.023 s, 1 proof obligation]  verified
+
+Verifying $42_TestMonomorphization_pack_R$verify ...
+  [0.016 s, 1 proof obligation]  verified
+
+Verifying $42_TestMonomorphization_use_bcs$verify ...
+  [0.034 s, 2 proof obligations]  verified
+
+Verifying $42_TestMonomorphization_use_event$verify ...
+  [0.022 s, 2 proof obligations]  verified
+
+Verifying $42_TestMonomorphization_use_vec$verify ...
+  [0.016 s, 0 proof obligations]  verified
+
+Verifying $42_TestMonomorphization_vec_addr$verify ...
+  [0.032 s, 1 proof obligation]  error
+assert_failed(2,2285,2311): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2767,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2767,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(1348,8): inline$$1_Vector_push_back'address'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2791,5): anon4_Else
+
+Verifying $42_TestMonomorphization_vec_bool$verify ...
+  [0.023 s, 1 proof obligation]  error
+assert_failed(2,2428,2454): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2840,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2840,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(1168,8): inline$$1_Vector_push_back'bool'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2864,5): anon4_Else
+
+Verifying $42_TestMonomorphization_vec_int$verify ...
+  [0.016 s, 1 proof obligation]  error
+assert_failed(2,2139,2162): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2913,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2913,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(1528,8): inline$$1_Vector_push_back'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2937,5): anon4_Else
+
+Verifying $42_TestMonomorphization_vec_struct_addr$verify ...
+  [0.016 s, 1 proof obligation]  error
+assert_failed(2,2782,2810): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2988,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2988,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(628,8): inline$$1_Vector_push_back'$42_TestMonomorphization_R'address''$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3019,5): anon4_Else
+
+Verifying $42_TestMonomorphization_vec_struct_int$verify ...
+  [0.019 s, 1 proof obligation]  error
+assert_failed(2,2599,2624): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3070,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3070,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(808,8): inline$$1_Vector_push_back'$42_TestMonomorphization_R'u64''$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3101,5): anon4_Else
+
+Verifying $42_TestMonomorphization_vec_vec$verify ...
+  [0.019 s, 1 proof obligation]  error
+assert_failed(2,2968,2996): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3150,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3150,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(1516,7): inline$$1_Vector_empty'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3171,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(988,8): inline$$1_Vector_push_back'vec'u64''$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3180,5): anon7_Else
+
+Boogie program verifier finished with 7 verified, 6 errors

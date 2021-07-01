@@ -1,0 +1,35 @@
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 20480))
+(((ControlFlow 0 20480) 17293))
+(((ControlFlow 0 17293) (- 20526)))
+unsat
+unsat
+unsat
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 21672))
+(((ControlFlow 0 21672) 18584))
+(((ControlFlow 0 18584) 18808))
+(((ControlFlow 0 18808) (- 21905)))
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 22485))
+(((ControlFlow 0 22485) 19374))
+(((ControlFlow 0 19374) 19494))
+(((ControlFlow 0 19494) 19538))
+(((ControlFlow 0 19538) 19552))
+(((ControlFlow 0 19552) 19578))
+(((ControlFlow 0 19578) 19584))
+(((ControlFlow 0 19584) 19594))
+(((ControlFlow 0 19594) 19682))
+(((ControlFlow 0 19682) 19640))
+(((ControlFlow 0 19640) (- 23060)))
+unsat
+unsat
+unsat
+unsat

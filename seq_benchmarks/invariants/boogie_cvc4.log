@@ -1,52 +1,52 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/invariants/.bpl
+/home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:invariants.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/invariants/.bpl
+Parsing /home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestInvariants_invalid_R_pack$verify ...
-  [0.213 s, 2 proof obligations]  error
+  [0.205 s, 2 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/invariants/.bpl(948,5): anon0
-    /home/ying/diem/seq_benchmarks/invariants/.bpl(948,5): anon0$1
+    /home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl(948,5): anon0
+    /home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl(948,5): anon0$1
 
 Verifying $42_TestInvariants_invalid_R_update$verify ...
-  [0.016 s, 4 proof obligations]  verified
+  [0.010 s, 4 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
-  [0.015 s, 7 proof obligations]  verified
+  [0.018 s, 7 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
-  [0.012 s, 2 proof obligations]  verified
+  [0.010 s, 2 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
-  [0.011 s, 3 proof obligations]  verified
+  [0.010 s, 3 proof obligations]  verified
 
 Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
   [0.020 s, 3 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/invariants/.bpl(1461,5): anon0
-    /home/ying/diem/seq_benchmarks/invariants/.bpl(1461,5): anon0$1
+    /home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl(1461,5): anon0
+    /home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl(1461,5): anon0$1
 
 Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
-  [0.016 s, 3 proof obligations]  verified
+  [0.014 s, 3 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestInvariants_lifetime_invalid_S_branching$verify ...
-  [0.044 s, 8 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/invariants/.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
+  [0.033 s, 8 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

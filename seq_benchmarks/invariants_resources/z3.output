@@ -1,0 +1,9 @@
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 10002))
+(((ControlFlow 0 10002) 9602))
+(((ControlFlow 0 9602) 9616))
+(((ControlFlow 0 9616) 9646))
+(((ControlFlow 0 9646) (- 10193)))
+unsat

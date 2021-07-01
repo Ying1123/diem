@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/choice/.smt2:52.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/choice/.smt2:227.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/choice/choice.cvc4.smt2:52.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/choice/choice.cvc4.smt2:227.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unknown
 (:reason-unknown incomplete)
 (error "Cannot get value unless model generation is enabled (try --produce-models)")

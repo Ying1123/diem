@@ -1,0 +1,10 @@
+[INFO] translating module AddressSerialization
+[INFO] running solver
+[internal] boogie exited with prover errors:
+Prover error: Unexpected value: (seq.++ (seq.unit 0) (seq.unit 0))
+
+Advisory: $42_AddressSerialization_serialized_move_values_diff_len_incorrect$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
+output.bpl(1045,27): Verification inconclusive ($42_AddressSerialization_serialized_move_values_diff_len_incorrect$verify)
+
+Boogie program verifier finished with 0 errors, 1 inconclusive
+

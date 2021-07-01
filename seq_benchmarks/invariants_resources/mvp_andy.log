@@ -1,0 +1,34 @@
+[INFO] translating module TestInvariants
+[INFO] running solver
+[INFO] 0.007s build, 0.001s trafo, 0.005s gen, 0.847s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:9 ───
+    │
+ 23 │         ensures result > 0;
+    │         ^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:19: get
+    =         a = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20: get
+    =         result = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21: get
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:9 ───
+    │
+ 31 │         ensures result < 1;
+    │         ^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:27: get_invalid
+    =         a = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28: get_invalid
+    =         result = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29: get_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31
+
+exiting with boogie verification errors

@@ -1,42 +1,42 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/references/.bpl
+/home/ying/diem/seq_benchmarks/references/references.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:references.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/references/.bpl
+Parsing /home/ying/diem/seq_benchmarks/references/references.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestReferences_increment$verify ...
-  [0.200 s, 1 proof obligation]  verified
+  [0.208 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_mut_b$verify ...
   [0.003 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_mut_ref$verify ...
-  [0.005 s, 2 proof obligations]  verified
+  [0.006 s, 2 proof obligations]  verified
 
 Verifying $42_TestReferences_mut_ref_incorrect$verify ...
-  [0.021 s, 2 proof obligations]  error
+  [0.023 s, 2 proof obligations]  error
 assert_failed(2,1406,1421): function does not abort under this condition
 Execution trace:
-    /home/ying/diem/seq_benchmarks/references/.bpl(1587,5): anon0
-    /home/ying/diem/seq_benchmarks/references/.bpl(1587,5): anon0$1
-    /home/ying/diem/seq_benchmarks/references/.bpl(1366,9): inline$$42_TestReferences_mut_b$0$anon0
-    /home/ying/diem/seq_benchmarks/references/.bpl(1616,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/references/.bpl(1645,34): anon7_Else
+    /home/ying/diem/seq_benchmarks/references/references.cvc4.bpl(1587,5): anon0
+    /home/ying/diem/seq_benchmarks/references/references.cvc4.bpl(1587,5): anon0$1
+    /home/ying/diem/seq_benchmarks/references/references.cvc4.bpl(1366,9): inline$$42_TestReferences_mut_b$0$anon0
+    /home/ying/diem/seq_benchmarks/references/references.cvc4.bpl(1616,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/references/references.cvc4.bpl(1645,34): anon7_Else
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestReferences_mutate_vector$verify ...
-  [0.017 s, 1 proof obligation]  inconclusive
-/home/ying/diem/seq_benchmarks/references/.bpl(1702,27): Verification inconclusive ($42_TestReferences_mutate_vector$verify)
+  [0.023 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/references/references.cvc4.bpl(1702,27): Verification inconclusive ($42_TestReferences_mutate_vector$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

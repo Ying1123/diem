@@ -1,0 +1,20 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/naive_sort2/naive_sort2.z3.bpl
+-monomorphize
+/env:2
+/proverLog:naive_sort2.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/naive_sort2/naive_sort2.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestNaiveSort_verify_sort$verify ...
+  [40.647 s, 24 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/naive_sort2/naive_sort2.z3.bpl(1076,27): Verification of '$42_TestNaiveSort_verify_sort$verify' timed out after 40 seconds
+
+Boogie program verifier finished with 0 verified, 0 errors, 1 time out

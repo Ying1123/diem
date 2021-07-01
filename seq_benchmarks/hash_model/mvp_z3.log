@@ -1,0 +1,324 @@
+21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test4` to be verified
+21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test3` to be verified
+21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2_incorrect` to be verified
+21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2` to be verified
+21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1_incorrect` to be verified
+21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1` to be verified
+21:42:45 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
+[INFO] translating module TestHash
+21:42:45 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:42:45 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:42:45 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:42:46 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:42:46 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.009s build, 0.003s trafo, 0.006s gen, 0.982s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48:9 ───
+    │
+ 48 │         ensures len(result_1) > 0 ==> result_1[0] < max_u8(); // should be <=
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:39: hash_test1_incorrect
+    =         v1 = vector{255u8}
+    =         v2 = vector{}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:41: hash_test1_incorrect
+    =         h1 =
+    =           vector{
+    =             255u8,
+    =             3u8,
+    =             206u8,
+    =             205u8,
+    =             144u8,
+    =             97u8,
+    =             213u8,
+    =             252u8,
+    =             239u8,
+    =             244u8,
+    =             79u8,
+    =             75u8,
+    =             81u8,
+    =             237u8,
+    =             97u8,
+    =             16u8,
+    =             62u8,
+    =             153u8,
+    =             37u8,
+    =             142u8,
+    =             81u8,
+    =             204u8,
+    =             83u8,
+    =             239u8,
+    =             92u8,
+    =             48u8,
+    =             236u8,
+    =             63u8,
+    =             84u8,
+    =             105u8,
+    =             23u8,
+    =             34u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:42: hash_test1_incorrect
+    =         h2 =
+    =           vector{
+    =             95u8,
+    =             4u8,
+    =             205u8,
+    =             204u8,
+    =             143u8,
+    =             96u8,
+    =             212u8,
+    =             253u8,
+    =             240u8,
+    =             243u8,
+    =             78u8,
+    =             74u8,
+    =             82u8,
+    =             238u8,
+    =             96u8,
+    =             17u8,
+    =             61u8,
+    =             154u8,
+    =             38u8,
+    =             143u8,
+    =             82u8,
+    =             203u8,
+    =             84u8,
+    =             238u8,
+    =             93u8,
+    =             47u8,
+    =             237u8,
+    =             64u8,
+    =             85u8,
+    =             104u8,
+    =             22u8,
+    =             35u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:43: hash_test1_incorrect
+    =         result_1 =
+    =           vector{
+    =             255u8,
+    =             3u8,
+    =             206u8,
+    =             205u8,
+    =             144u8,
+    =             97u8,
+    =             213u8,
+    =             252u8,
+    =             239u8,
+    =             244u8,
+    =             79u8,
+    =             75u8,
+    =             81u8,
+    =             237u8,
+    =             97u8,
+    =             16u8,
+    =             62u8,
+    =             153u8,
+    =             37u8,
+    =             142u8,
+    =             81u8,
+    =             204u8,
+    =             83u8,
+    =             239u8,
+    =             92u8,
+    =             48u8,
+    =             236u8,
+    =             63u8,
+    =             84u8,
+    =             105u8,
+    =             23u8,
+    =             34u8}
+    =         result_2 =
+    =           vector{
+    =             95u8,
+    =             4u8,
+    =             205u8,
+    =             204u8,
+    =             143u8,
+    =             96u8,
+    =             212u8,
+    =             253u8,
+    =             240u8,
+    =             243u8,
+    =             78u8,
+    =             74u8,
+    =             82u8,
+    =             238u8,
+    =             96u8,
+    =             17u8,
+    =             61u8,
+    =             154u8,
+    =             38u8,
+    =             143u8,
+    =             82u8,
+    =             203u8,
+    =             84u8,
+    =             238u8,
+    =             93u8,
+    =             47u8,
+    =             237u8,
+    =             64u8,
+    =             85u8,
+    =             104u8,
+    =             22u8,
+    =             35u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:44: hash_test1_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:46
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91:9 ───
+    │
+ 91 │         ensures len(result_1) > 0 ==> result_1[0] < max_u8();
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:82: hash_test2_incorrect
+    =         v1 = vector{255u8}
+    =         v2 = vector{}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:84: hash_test2_incorrect
+    =         h1 =
+    =           vector{
+    =             255u8,
+    =             3u8,
+    =             206u8,
+    =             205u8,
+    =             144u8,
+    =             97u8,
+    =             213u8,
+    =             252u8,
+    =             239u8,
+    =             244u8,
+    =             79u8,
+    =             75u8,
+    =             81u8,
+    =             237u8,
+    =             97u8,
+    =             16u8,
+    =             62u8,
+    =             153u8,
+    =             37u8,
+    =             142u8,
+    =             81u8,
+    =             204u8,
+    =             83u8,
+    =             239u8,
+    =             92u8,
+    =             48u8,
+    =             236u8,
+    =             63u8,
+    =             84u8,
+    =             105u8,
+    =             23u8,
+    =             34u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:85: hash_test2_incorrect
+    =         h2 =
+    =           vector{
+    =             95u8,
+    =             4u8,
+    =             205u8,
+    =             204u8,
+    =             143u8,
+    =             96u8,
+    =             212u8,
+    =             253u8,
+    =             240u8,
+    =             243u8,
+    =             78u8,
+    =             74u8,
+    =             82u8,
+    =             238u8,
+    =             96u8,
+    =             17u8,
+    =             61u8,
+    =             154u8,
+    =             38u8,
+    =             143u8,
+    =             82u8,
+    =             203u8,
+    =             84u8,
+    =             238u8,
+    =             93u8,
+    =             47u8,
+    =             237u8,
+    =             64u8,
+    =             85u8,
+    =             104u8,
+    =             22u8,
+    =             35u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:86: hash_test2_incorrect
+    =         result_1 =
+    =           vector{
+    =             255u8,
+    =             3u8,
+    =             206u8,
+    =             205u8,
+    =             144u8,
+    =             97u8,
+    =             213u8,
+    =             252u8,
+    =             239u8,
+    =             244u8,
+    =             79u8,
+    =             75u8,
+    =             81u8,
+    =             237u8,
+    =             97u8,
+    =             16u8,
+    =             62u8,
+    =             153u8,
+    =             37u8,
+    =             142u8,
+    =             81u8,
+    =             204u8,
+    =             83u8,
+    =             239u8,
+    =             92u8,
+    =             48u8,
+    =             236u8,
+    =             63u8,
+    =             84u8,
+    =             105u8,
+    =             23u8,
+    =             34u8}
+    =         result_2 =
+    =           vector{
+    =             95u8,
+    =             4u8,
+    =             205u8,
+    =             204u8,
+    =             143u8,
+    =             96u8,
+    =             212u8,
+    =             253u8,
+    =             240u8,
+    =             243u8,
+    =             78u8,
+    =             74u8,
+    =             82u8,
+    =             238u8,
+    =             96u8,
+    =             17u8,
+    =             61u8,
+    =             154u8,
+    =             38u8,
+    =             143u8,
+    =             82u8,
+    =             203u8,
+    =             84u8,
+    =             238u8,
+    =             93u8,
+    =             47u8,
+    =             237u8,
+    =             64u8,
+    =             85u8,
+    =             104u8,
+    =             22u8,
+    =             35u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:87: hash_test2_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:89
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91
+
+exiting with boogie verification errors

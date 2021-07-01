@@ -1,0 +1,16 @@
+22:00:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNaiveSort::verify_sort` to be verified
+22:00:01 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestNaiveSort
+22:00:01 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+22:00:01 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+22:00:01 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+22:00:02 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+[internal] boogie exited with prover errors:
+Prover error: Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp
+
+Advisory: $42_TestNaiveSort_verify_sort$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+output.bpl(1076,27): Verification inconclusive ($42_TestNaiveSort_verify_sort$verify)
+
+Boogie program verifier finished with 0 errors, 1 inconclusive
+

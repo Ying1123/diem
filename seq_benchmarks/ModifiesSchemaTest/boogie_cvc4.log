@@ -1,33 +1,33 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl
+/home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:ModifiesSchemaTest.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl
+Parsing /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $0_A_mutate_at$verify ...
-  [0.203 s, 1 proof obligation]  verified
+  [0.208 s, 1 proof obligation]  verified
 
 Verifying $0_A_mutate_at_wrapper1$verify ...
-  [0.036 s, 1 proof obligation]  verified
+  [0.033 s, 1 proof obligation]  verified
 
 Verifying $0_A_mutate_at_wrapper2$verify ...
-  [0.038 s, 2 proof obligations]  error
+  [0.040 s, 2 proof obligations]  error
 assert_failed(2,683,699): caller does not have permission to modify `A::S` at given address
 Execution trace:
-    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl(1150,9): anon0
-    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl(1150,9): anon0$1
-    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl(922,9): inline$$0_A_mutate_at$0$anon0
-    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl(937,13): inline$$0_A_mutate_at$0$anon6_Else
-    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl(939,5): inline$$0_A_mutate_at$0$anon7_Else
-    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/.bpl(1186,5): anon5_Else
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl(1150,9): anon0
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl(1150,9): anon0$1
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl(922,9): inline$$0_A_mutate_at$0$anon0
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl(937,13): inline$$0_A_mutate_at$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl(939,5): inline$$0_A_mutate_at$0$anon7_Else
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.bpl(1186,5): anon5_Else
 
 Boogie program verifier finished with 2 verified, 1 error

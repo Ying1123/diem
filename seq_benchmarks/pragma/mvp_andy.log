@@ -1,0 +1,23 @@
+[INFO] translating module TestPragma
+[INFO] running solver
+[INFO] 0.007s build, 0.000s trafo, 0.005s gen, 0.811s verify
+error: abort not covered by any of the `aborts_if` clauses
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:13:5 ───
+    │
+ 13 │ ╭     spec always_aborts_with_verify_incorrect {
+ 14 │ │         pragma verify=true;
+ 15 │ │         aborts_if _c;
+ 16 │ │     }
+    │ ╰─────^
+    ·
+ 11 │         abort(1)
+    │         -------- abort happened here with code 0x1
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:10: always_aborts_with_verify_incorrect
+    =         _c = false
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:11: always_aborts_with_verify_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:11: always_aborts_with_verify_incorrect
+    =         ABORTED
+
+exiting with boogie verification errors

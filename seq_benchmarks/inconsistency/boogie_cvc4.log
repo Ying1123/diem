@@ -1,28 +1,28 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/inconsistency/.bpl
+/home/ying/diem/seq_benchmarks/inconsistency/inconsistency.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:inconsistency.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/inconsistency/.bpl
+Parsing /home/ying/diem/seq_benchmarks/inconsistency/inconsistency.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_Inconsistency_always_abort$verify ...
-  [0.196 s, 0 proof obligations]  verified
+  [0.191 s, 0 proof obligations]  verified
 
 Verifying $42_Inconsistency_assume_false$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 
 Verifying $42_Inconsistency_call_inconsistent_opaque$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 
 Verifying $42_Inconsistency_dec$verify ...
-  [0.014 s, 3 proof obligations]  verified
+  [0.010 s, 3 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

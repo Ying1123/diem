@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/invariants/.smt2:48.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/invariants/invariants.cvc4.smt2:48.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unknown
 (:reason-unknown incomplete)
 (error "Cannot get value unless model generation is enabled (try --produce-models)")

@@ -1,2 +1,2 @@
-/home/ying/diem/seq_benchmarks/serialize_model/.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/serialize_model/serialize_model.cvc4.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

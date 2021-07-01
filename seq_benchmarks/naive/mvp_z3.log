@@ -1,0 +1,43 @@
+21:43:42 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNaiveSort::verify_sort` to be verified
+21:43:42 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestNaiveSort
+21:43:42 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:43:42 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:43:42 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:43:43 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:43:43 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.011s build, 0.010s trafo, 0.005s gen, 1.454s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:37:3 ───
+    │
+ 37 │         ensures forall i in 0..len(v)-1: v[i] <= v[i+1];
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:6: verify_sort
+    =         v = &vector{18446744073709548012, 0}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:7: verify_sort
+    =         vlen = 2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:9: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:11: verify_sort
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:14: verify_sort
+    =         j = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:16: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:17: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:18: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:19: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:20: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:17: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:18: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:19: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:20: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:22: verify_sort
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:15: verify_sort
+    =         v = &vector{18446744073709548883, 18446744073709548882}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:35
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:36
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/naive.move:37
+
+exiting with boogie verification errors

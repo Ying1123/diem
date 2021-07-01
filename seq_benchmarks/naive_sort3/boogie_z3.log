@@ -1,0 +1,80 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl
+-monomorphize
+/env:2
+/proverLog:naive_sort3.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestNaiveSort_verify_sort$verify ...
+  [3.421 s, 18 proof obligations]  errors
+assert_failed(2,950,984): unknown assertion failed
+Execution trace:
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1113,9): anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1113,9): anon0$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1136,5): anon36_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1159,35): anon37_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(443,5): inline$$Sub$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1345,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1345,5): anon38_Else$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1357,35): anon39_Else
+assert_failed(2,497,541): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1113,9): anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1113,9): anon0$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1136,5): anon36_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1159,35): anon37_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(443,5): inline$$Sub$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1345,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1345,5): anon38_Else$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1357,17): anon39_Then
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(665,5): inline$$1_Vector_borrow'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1388,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(665,5): inline$$1_Vector_borrow'u64'$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1400,5): anon41_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1411,35): anon42_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1434,1): L8
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1442,5): anon44_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(536,9): inline$$Lt$1$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1453,35): anon45_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(415,5): inline$$AddU64$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1498,5): anon47_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1518,5): anon48_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1533,1): L12
+assert_failed(2,994,1085): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1113,9): anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1113,9): anon0$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1136,5): anon36_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1159,35): anon37_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(443,5): inline$$Sub$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1345,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1345,5): anon38_Else$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1357,17): anon39_Then
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(665,5): inline$$1_Vector_borrow'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1388,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(666,9): inline$$1_Vector_borrow'u64'$1$anon3_Then
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(666,9): inline$$1_Vector_borrow'u64'$1$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1401,9): anon41_Then
+    /home/ying/diem/seq_benchmarks/naive_sort3/naive_sort3.z3.bpl(1632,1): L16
+
+Boogie program verifier finished with 0 verified, 3 errors

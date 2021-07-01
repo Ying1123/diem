@@ -1,0 +1,27 @@
+unsat
+unsat
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 26054))
+(((ControlFlow 0 26054) 20930))
+(((ControlFlow 0 20930) 20960))
+(((ControlFlow 0 20960) (- 26199)))
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat

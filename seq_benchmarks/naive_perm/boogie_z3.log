@@ -1,0 +1,34 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl
+-monomorphize
+/env:2
+/proverLog:naive_perm.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestNaiveSort_verify_sort$verify ...
+  [0.201 s, 6 proof obligations]  error
+assert_failed(2,395,435): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1095,9): anon0
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1095,9): anon0$1
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1118,5): anon16_Else
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(616,7): inline$$1_Vector_empty'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1135,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1135,5): anon17_Else$1
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1214,17): anon18_Then
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(628,8): inline$$1_Vector_push_back'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1228,5): anon19_Else
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.z3.bpl(1242,5): anon20_Else
+
+Boogie program verifier finished with 0 verified, 1 error

@@ -1,0 +1,12 @@
+21:59:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Inconsistency::dec` to be verified
+21:59:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Inconsistency::call_inconsistent_opaque` to be verified
+21:59:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Inconsistency::assume_false` to be verified
+21:59:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Inconsistency::always_abort` to be verified
+[INFO] translating module Inconsistency
+21:59:07 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:59:07 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:59:07 [DEBUG] (11) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:59:08 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:59:08 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.007s build, 0.001s trafo, 0.004s gen, 0.800s verify

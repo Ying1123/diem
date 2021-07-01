@@ -1,0 +1,82 @@
+21:38:37 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestBubbleSort::verify_sort` to be verified
+21:38:37 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestBubbleSort
+21:38:37 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:38:37 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:38:37 [DEBUG] (11) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:39:18 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:39:18 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.012s build, 0.010s trafo, 0.004s gen, 41.086s verify
+error: verification out of resources/timeout (global timeout set to 40s)
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move:6:2 ───
+    │
+  6 │ ╭     public fun verify_sort(v: &mut vector<u64>): vector<u64> {
+  7 │ │ 		let vlen = Vector::length(v);
+  8 │ │ 		spec {
+  9 │ │ 			assume len(v) == 4;
+ 10 │ │ 		};
+ 11 │ │ 
+ 12 │ │ 		let p = &mut Vector::empty<u64>();
+ 13 │ │ 		let i = 0;
+ 14 │ │ 		while ({
+ 15 │ │ 			spec {
+ 16 │ │ 				assert len(p) == i;
+ 17 │ │ 				assert forall k in 0..len(p): p[k] == k;
+ 18 │ │ 			};
+ 19 │ │ 			(i < vlen)
+ 20 │ │ 		}) {
+ 21 │ │ 			Vector::push_back(p, i);
+ 22 │ │ 			i = i + 1;
+ 23 │ │ 		};
+ 24 │ │ 		if (vlen <= 1) return *p;
+ 25 │ │ 
+ 26 │ │ 		let i = vlen;
+ 27 │ │ 		while ({
+ 28 │ │ 			spec {
+ 29 │ │ 				assert 0 <= i && i <= vlen;
+ 30 │ │ 				assert forall k in i..vlen: forall l in 0..k: v[l] <= v[k];
+ 31 │ │ 				// p is a permutation
+ 32 │ │ 				assert forall k in 0..vlen: 0 <= p[k] && p[k] < vlen;
+ 33 │ │ 				assert forall k in 0..vlen-1: forall l in k+1..vlen: p[k] != p[l];
+ 34 │ │ 				// permutation consistence
+ 35 │ │ 				assert forall k in 0..vlen: v[k] == old(v)[p[k]];
+ 36 │ │ 			};
+ 37 │ │ 			(true)
+ 38 │ │ 		})
+ 39 │ │ 		{
+ 40 │ │ 			i = i - 1;
+ 41 │ │ 			if (i < 0)
+ 42 │ │ 				return *p;
+ 43 │ │ 
+ 44 │ │ 			let j = 0;
+ 45 │ │ 			while ({
+ 46 │ │ 				spec {
+ 47 │ │ 					assert 0 <= j && j < i;
+ 48 │ │ 					// order
+ 49 │ │ 					assert forall k in i+1..vlen: forall l in 0..k: v[l] <= v[k];
+ 50 │ │ 					// p is a permutation
+ 51 │ │ 					assert forall k in 0..vlen: 0 <= p[k] && p[k] < vlen;
+ 52 │ │ 					assert forall k in 0..vlen-1: forall l in k+1..vlen: p[k] != p[l];
+ 53 │ │ 					// permutation consistence
+ 54 │ │ 					assert forall k in 0..vlen: v[k] == old(v)[p[k]];
+ 55 │ │ 
+ 56 │ │ 					assert forall k in 0..j: v[k] <= v[j];
+ 57 │ │ 				};
+ 58 │ │ 				(j < i)
+ 59 │ │ 			})
+ 60 │ │ 			{
+ 61 │ │ 				if (*Vector::borrow(v, j + 1) < *Vector::borrow(v, j)) {
+ 62 │ │ 					Vector::swap(v, j + 1, j);
+ 63 │ │ 					Vector::swap(p, j + 1, j);
+ 64 │ │ 				};
+ 65 │ │ 				j = j + 1;
+ 66 │ │ 			};
+ 67 │ │ 		};
+ 68 │ │ 		*p
+ 69 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

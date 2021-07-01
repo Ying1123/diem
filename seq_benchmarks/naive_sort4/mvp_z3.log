@@ -1,0 +1,70 @@
+21:46:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNaiveSort::verify_sort` to be verified
+21:46:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestNaiveSort
+21:46:10 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:46:10 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:46:10 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:46:51 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:46:51 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.011s build, 0.010s trafo, 0.003s gen, 41.011s verify
+error: verification out of resources/timeout (global timeout set to 40s)
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort4.move:7:2 ───
+    │
+  7 │ ╭     public fun verify_sort(v: &mut vector<u64>) {
+  8 │ │ 		let vlen = Vector::length(v);
+  9 │ │                 spec {
+ 10 │ │                     assume vlen == 45;
+ 11 │ │                 };
+ 12 │ │ 		if (vlen <= 1) return ();
+ 13 │ │ 
+ 14 │ │ 		let i = 0;
+ 15 │ │ 		let j = 1;
+ 16 │ │                 while
+ 17 │ │ 		({
+ 18 │ │ 			spec {
+ 19 │ │ 				assert vlen == len(v);
+ 20 │ │       				assert i < j;
+ 21 │ │ 				assert j <= vlen;
+ 22 │ │ 				assert forall k in 0..i: v[k] <= v[k + 1];
+ 23 │ │                                 // Invariant depends on whether i was just incremented or not
+ 24 │ │                                 // v[i] is still in process, but previous indices are the minimum
+ 25 │ │                                 // elements of the vector (they've already been compared with everything)
+ 26 │ │                                 assert i > 0 ==> (forall k in i..vlen: v[i-1] <= v[k]);
+ 27 │ │                                 // v[i] has been swapped with everything up to v[j]
+ 28 │ │                                 assert forall k in i+1..j: v[i] <= v[k];
+ 29 │ │                                 // j stays in bounds until loop exit
+ 30 │ │                                 assert i < vlen - 1 ==> j < vlen;
+ 31 │ │ 			};
+ 32 │ │ 			(i < vlen - 1)
+ 33 │ │ 		})
+ 34 │ │ 		{
+ 35 │ │ 			if (*Vector::borrow(v, i) > *Vector::borrow(v, j)) {
+ 36 │ │ 				Vector::swap(v, i, j);
+ 37 │ │ 			};
+ 38 │ │ 
+ 39 │ │ 			if (j < vlen - 1 ) {
+ 40 │ │ 				j = j + 1;
+ 41 │ │ 			} else {
+ 42 │ │ 				i = i + 1;
+ 43 │ │ 				j = i + 1;
+ 44 │ │ 			};
+ 45 │ │                         // spec {
+ 46 │ │                         //     TRACE(i);
+ 47 │ │                         //     TRACE(j);
+ 48 │ │                         //     TRACE(v);
+ 49 │ │                         // }
+ 50 │ │ 		};
+ 51 │ │ 		spec {
+ 52 │ │ 			assert len(v) == vlen;
+ 53 │ │ 			assert i == vlen - 1;
+ 54 │ │ 			assert j == vlen;
+ 55 │ │ 			assert v[0] <= v[1];
+ 56 │ │ 			assert v[vlen - 2] <= v[vlen - 1];
+ 57 │ │ 		};
+ 58 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

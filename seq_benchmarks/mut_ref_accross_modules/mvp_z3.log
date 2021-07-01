@@ -1,0 +1,8 @@
+[INFO] translating module TestMutRefsAccrossModule
+21:43:30 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:43:30 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:43:30 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:43:31 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:43:31 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.006s build, 0.000s trafo, 0.005s gen, 0.543s verify

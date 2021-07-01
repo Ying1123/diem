@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/mono/.bpl
+/home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:mono.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/mono/.bpl
+Parsing /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
@@ -17,10 +17,10 @@ Verifying $42_TestMonomorphization_create_R$verify ...
   [0.225 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_create_R_generic$verify ...
-  [0.014 s, 3 proof obligations]  verified
+  [0.020 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_mutate_R$verify ...
-  [0.021 s, 1 proof obligation]  verified
+  [0.018 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_pack_R$verify ...
   [0.003 s, 1 proof obligation]  verified
@@ -29,30 +29,30 @@ Verifying $42_TestMonomorphization_use_bcs$verify ...
   [0.014 s, 2 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_use_event$verify ...
-  [0.048 s, 2 proof obligations]  errors
+  [0.055 s, 2 proof obligations]  errors
 assert_failed(2,1744,1770): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2664,9): anon0
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2052,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2664,9): anon0$1
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2120,12): inline$$1_Event_emit_event'$42_TestMonomorphization_E'$0$anon0
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2689,5): anon4_Else
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2664,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2664,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2120,12): inline$$1_Event_emit_event'$42_TestMonomorphization_E'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2689,5): anon4_Else
 assert_failed(2,1719,1776): emitted event not covered by any of the `emits` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2664,9): anon0
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2052,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2664,9): anon0$1
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2120,12): inline$$1_Event_emit_event'$42_TestMonomorphization_E'$0$anon0
-    /home/ying/diem/seq_benchmarks/mono/.bpl(2689,5): anon4_Else
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2664,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2664,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2120,12): inline$$1_Event_emit_event'$42_TestMonomorphization_E'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2689,5): anon4_Else
 
 Verifying $42_TestMonomorphization_use_vec$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestMonomorphization_vec_addr$verify ...
-  [0.012 s, 1 proof obligation]  inconclusive
-/home/ying/diem/seq_benchmarks/mono/.bpl(2758,27): Verification inconclusive ($42_TestMonomorphization_vec_addr$verify)
+  [0.008 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2758,27): Verification inconclusive ($42_TestMonomorphization_vec_addr$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

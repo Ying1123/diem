@@ -1,28 +1,28 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/address_serialization_constant_size/.bpl
+/home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:address_serialization_constant_size.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/address_serialization_constant_size/.bpl
+Parsing /home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_AddressSerialization_serialized_addresses_same_len$verify ...
-  [0.209 s, 2 proof obligations]  verified
+  [0.217 s, 2 proof obligations]  verified
 
 Verifying $42_AddressSerialization_serialized_move_values_diff_len_incorrect$verify ...
-  [0.021 s, 2 proof obligations]  error
+  [0.027 s, 2 proof obligations]  error
 assert_failed(2,909,970): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/.bpl(1055,9): anon0
-    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/.bpl(1055,9): anon0$1
-    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/.bpl(1079,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/.bpl(1088,5): anon7_Else
+    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl(1055,9): anon0
+    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl(1055,9): anon0$1
+    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl(1079,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl(1088,5): anon7_Else
 
 Boogie program verifier finished with 1 verified, 1 error

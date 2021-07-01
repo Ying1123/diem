@@ -1,0 +1,71 @@
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_root` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::identity` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_root` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec2` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_identity` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2_incorrect` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2` to be verified
+21:43:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec` to be verified
+21:43:32 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestMutRef
+21:43:32 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+21:43:32 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+21:43:32 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+21:43:33 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+21:43:33 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.014s build, 0.019s trafo, 0.004s gen, 1.595s verify
+error: data invariant does not hold
+
+   ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14 ───
+   │
+ 8 │     spec T { invariant value > 0; }
+   │              ^^^^^^^^^^^^^^^^^^^^
+   │
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:127
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:113: call_return_ref_different_path_vec2_incorrect
+   =         b = false
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:114: call_return_ref_different_path_vec2_incorrect
+   =         is = vector{}
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:115: call_return_ref_different_path_vec2_incorrect
+   =         ts = vector{}
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:116: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:117: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:120: call_return_ref_different_path_vec2_incorrect
+   =         x =
+   =           TestMutRef.V{
+   =             is = vector{1, 2},
+   =             ts = vector{<? Literal("3")>, <? Literal("4")>}}
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:121: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90: return_ref_different_path_vec2
+   =         b = false
+   =         x =
+   =           &TestMutRef.V{
+   =             is = vector{1, 2},
+   =             ts = vector{<? Literal("3")>, <? Literal("4")>}}
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91: return_ref_different_path_vec2
+   =         tmp#$2 = &3
+   =         result = &3
+   =         x =
+   =           &TestMutRef.V{
+   =             is = vector{1, 2},
+   =             ts = vector{<? Literal("3")>, <? Literal("4")>}}
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92: return_ref_different_path_vec2
+   =         r = &3
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122: call_return_ref_different_path_vec2_incorrect
+   =     at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8
+
+exiting with boogie verification errors

@@ -1,28 +1,28 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/module_level_spec/.bpl
+/home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:module_level_spec.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/module_level_spec/.bpl
+Parsing /home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestModule_store$verify ...
-  [0.199 s, 3 proof obligations]  verified
+  [0.220 s, 3 proof obligations]  verified
 
 Verifying $42_TestModule_store_incorrect$verify ...
-  [0.032 s, 3 proof obligations]  error
+  [0.026 s, 3 proof obligations]  error
 assert_failed(2,283,363): global memory invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/module_level_spec/.bpl(1019,9): anon0
-    /home/ying/diem/seq_benchmarks/module_level_spec/.bpl(1019,9): anon0$1
-    /home/ying/diem/seq_benchmarks/module_level_spec/.bpl(1060,34): anon7_Else
-    /home/ying/diem/seq_benchmarks/module_level_spec/.bpl(1062,5): anon8_Else
+    /home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl(1019,9): anon0
+    /home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl(1019,9): anon0$1
+    /home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl(1060,34): anon7_Else
+    /home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl(1062,5): anon8_Else
 
 Boogie program verifier finished with 1 verified, 1 error

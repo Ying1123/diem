@@ -1,0 +1,101 @@
+[INFO] translating module TestInvariants
+[INFO] running solver
+[internal] boogie exited with prover errors:
+Prover error: Unexpected value: (seq.unit 0)
+
+Advisory: $42_TestInvariants_lifetime_invalid_R$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+assert_failed(2,248,273): data invariant does not hold
+Execution trace:
+    output.bpl(948,5): anon0
+    output.bpl(948,5): anon0$1
+Augmented execution trace:
+$at(2,942,943)
+$at(2,248,273)
+*** MODEL
+$EXEC_FAILURE_CODE -> (- 1)
+$MAX_U128 -> 340282366920938463463374607431768211455
+$MAX_U64 -> 18446744073709551615
+$MAX_U8 -> 255
+$t1@0 -> ($42_TestInvariants_R 1)
+$1_Hash_sha2 -> {
+  else -> (seq.empty)
+}
+$1_Hash_sha3 -> {
+  else -> (seq.empty)
+}
+$1_Signature_$ed25519_validate_pubkey -> {
+  else -> false
+}
+$1_Signature_$ed25519_verify -> {
+  else -> false
+}
+$ConstMemoryDomain -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+$IndexOfVec'u8' -> {
+  else -> 0
+}
+$InRange -> {
+  else -> false
+}
+$IsValid'$42_TestInvariants_R' -> {
+  else -> false
+}
+$IsValid'$42_TestInvariants_S' -> {
+  else -> false
+}
+$IsValid'$42_TestInvariants_T' -> {
+  else -> false
+}
+$IsValid'address' -> {
+  else -> false
+}
+$IsValid'num' -> {
+  else -> false
+}
+$IsValid'u128' -> {
+  else -> false
+}
+$IsValid'u64' -> {
+  1 -> true
+  else -> true
+}
+$IsValid'u8' -> {
+  else -> false
+}
+$IsValid'vec'u8'' -> {
+  else -> false
+}
+$shl -> {
+  else -> 0
+}
+$shr -> {
+  else -> 0
+}
+ControlFlow -> {
+  0 0 -> 20496
+  0 17293 -> (- 20828)
+  0 20496 -> 17293
+  else -> (- 20828)
+}
+lambda#0 -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+ReverseVec_3283 -> {
+  else -> (seq.empty)
+}
+Select__T@[Int]Bool_ -> {
+  else -> false
+}
+*** END_MODEL
+output.bpl(1445,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_R$verify)
+output.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
+
+Boogie program verifier finished with 1 error, 2 inconclusives
+

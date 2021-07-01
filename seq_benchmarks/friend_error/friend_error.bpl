@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestFriendError::f [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:9:5+17
+// fun TestFriendError::f [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:9:5+17
 procedure {:timeLimit 40} $42_TestFriendError_f$verify() returns ()
 {
     // declare local variables
@@ -901,16 +901,16 @@ procedure {:timeLimit 40} $42_TestFriendError_f$verify() returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:9:21+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:9:21+1
     assume {:print "$at(2,162,163)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:9:21+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:9:21+1
     return;
 
 }
 
-// fun TestFriendError::i [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:31:5+84
+// fun TestFriendError::i [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:31:5+84
 procedure {:timeLimit 40} $42_TestFriendError_i$verify() returns ()
 {
     // declare local variables
@@ -921,45 +921,45 @@ procedure {:timeLimit 40} $42_TestFriendError_i$verify() returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
     // >> opaque call: TestFriendError::g()
     assume {:print "$at(2,574,577)"} true;
 
-    // opaque begin: TestFriendError::g() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // opaque begin: TestFriendError::g() at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
 
-    // havoc[val]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
     havoc $t0;
     assume $IsValid'bool'($t0);
 
-    // if ($t0) goto L4 else goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // if ($t0) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
     if ($t0) { goto L4; } else { goto L3; }
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
 L4:
 
-    // trace_abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // trace_abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
     assume {:print "$at(2,574,577)"} true;
     assume {:print "$track_abort(0,3):", $t1} $t1 == $t1;
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
     goto L2;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
 L3:
 
-    // opaque end: TestFriendError::g() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
+    // opaque end: TestFriendError::g() at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:32:9+3
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
     assume {:print "$at(2,632,633)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
 L2:
 
-    // abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
+    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move:33:5+1
     $abort_code := $t1;
     $abort_flag := true;
     return;

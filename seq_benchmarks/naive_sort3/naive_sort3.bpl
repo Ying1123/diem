@@ -1072,7 +1072,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestNaiveSort::verify_sort [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:6:2+824
+// fun TestNaiveSort::verify_sort [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:6:2+824
 procedure {:timeLimit 40} $42_TestNaiveSort_verify_sort$verify(_$t0: $Mutation (Vec (int))) returns ($ret0: $Mutation (Vec (int)))
 {
     // declare local variables
@@ -1119,19 +1119,19 @@ procedure {:timeLimit 40} $42_TestNaiveSort_verify_sort$verify(_$t0: $Mutation (
     assume l#$Mutation($t0) == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:6:2+824
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:6:2+824
     assume {:print "$at(2,168,992)"} true;
     assume $IsValid'vec'u64''($Dereference($t0));
 
-    // trace_local[v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:6:2+1
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:6:2+1
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,0,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // $t8 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:7:29+1
+    // $t8 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:7:29+1
     assume {:print "$at(2,242,243)"} true;
     $t8 := $Dereference($t0);
 
-    // $t9 := Vector::length<u64>($t8) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:7:14+17
+    // $t9 := Vector::length<u64>($t8) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:7:14+17
     call $t9 := $1_Vector_length'u64'($t8);
     if ($abort_flag) {
         assume {:print "$at(2,227,244)"} true;
@@ -1140,207 +1140,207 @@ procedure {:timeLimit 40} $42_TestNaiveSort_verify_sort$verify(_$t0: $Mutation (
         goto L16;
     }
 
-    // trace_local[vlen]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:7:7+4
+    // trace_local[vlen]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:7:7+4
     assume {:print "$track_local(1,0,7):", $t9} $t9 == $t9;
 
-    // assume Eq<num>(Len<u64>($t0), 3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:9:4+19
+    // assume Eq<num>(Len<u64>($t0), 3) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:9:4+19
     assume {:print "$at(2,258,277)"} true;
     assume $IsEqual'num'(LenVec($Dereference($t0)), 3);
 
-    // $t11 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:15+1
+    // $t11 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:15+1
     assume {:print "$at(2,297,298)"} true;
     $t11 := 1;
     assume $IsValid'u64'($t11);
 
-    // $t12 := <=($t9, $t11) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:12+2
+    // $t12 := <=($t9, $t11) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:12+2
     call $t12 := $Le($t9, $t11);
 
-    // if ($t12) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:3+24
+    // if ($t12) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:3+24
     if ($t12) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:3+24
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:3+24
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:3+24
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:3+24
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
 L0:
 
-    // destroy($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
+    // destroy($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
 
-    // trace_local[v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,0,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // goto L15 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
+    // goto L15 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:11:18+9
     goto L15;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:11+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:11+1
     assume {:print "$at(2,322,323)"} true;
 L2:
 
-    // $t13 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:11+1
+    // $t13 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:11+1
     $t13 := 0;
     assume $IsValid'u64'($t13);
 
-    // $t1 := $t13 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:7+1
+    // $t1 := $t13 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:7+1
     $t1 := $t13;
 
-    // trace_local[i]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:7+1
+    // trace_local[i]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:13:7+1
     assume {:print "$track_local(1,0,1):", $t13} $t13 == $t13;
 
-    // $t14 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:14:11+1
+    // $t14 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:14:11+1
     assume {:print "$at(2,335,336)"} true;
     $t14 := 1;
     assume $IsValid'u64'($t14);
 
-    // trace_local[j]($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:14:7+1
+    // trace_local[j]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:14:7+1
     assume {:print "$track_local(1,0,2):", $t14} $t14 == $t14;
 
-    // label L13 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:19:4+172
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:19:4+172
     assume {:print "$at(2,419,591)"} true;
 L13:
 
-    // assert Lt($t13, $t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:20:5+13
+    // assert Lt($t13, $t14) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:20:5+13
     assume {:print "$at(2,430,443)"} true;
     assert {:msg "assert_failed(2,430,443): base case of the loop invariant does not hold"}
       ($t13 < $t14);
 
-    // assert Eq<num>(Len<u64>($t0), $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:21:5+22
+    // assert Eq<num>(Len<u64>($t0), $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:21:5+22
     assume {:print "$at(2,448,470)"} true;
     assert {:msg "assert_failed(2,448,470): base case of the loop invariant does not hold"}
       $IsEqual'num'(LenVec($Dereference($t0)), $t9);
 
-    // assert Le($t14, $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:22:5+17
+    // assert Le($t14, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:22:5+17
     assume {:print "$at(2,475,492)"} true;
     assert {:msg "assert_failed(2,475,492): base case of the loop invariant does not hold"}
       ($t14 <= $t9);
 
-    // assert forall k: Range(0, Sub($t13, 1)): Le(Index($t0, k), Index($t0, Add(k, 1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:23:5+44
+    // assert forall k: Range(0, Sub($t13, 1)): Le(Index($t0, k), Index($t0, Add(k, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:23:5+44
     assume {:print "$at(2,497,541)"} true;
     assert {:msg "assert_failed(2,497,541): base case of the loop invariant does not hold"}
       (var $range_0 := $Range(0, ($t13 - 1)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var k := $i_1;
     ((ReadVec($Dereference($t0), k) <= ReadVec($Dereference($t0), (k + 1)))))));
 
-    // assert forall k: Range(Add($t13, 1), $t14): Le(Index($t0, $t13), Index($t0, k)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // assert forall k: Range(Add($t13, 1), $t14): Le(Index($t0, $t13), Index($t0, k)) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     assume {:print "$at(2,546,586)"} true;
     assert {:msg "assert_failed(2,546,586): base case of the loop invariant does not hold"}
       (var $range_0 := $Range(($t13 + 1), $t14); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var k := $i_1;
     ((ReadVec($Dereference($t0), $t13) <= ReadVec($Dereference($t0), k))))));
 
-    // havoc[val]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t13;
     assume $IsValid'u64'($t13);
 
-    // havoc[val]($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t14;
     assume $IsValid'u64'($t14);
 
-    // havoc[val]($t15) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t15;
     assume $IsValid'u64'($t15);
 
-    // havoc[val]($t16) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t16;
     assume $IsValid'u64'($t16);
 
-    // havoc[val]($t17) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t17;
     assume $IsValid'bool'($t17);
 
-    // havoc[val]($t18) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t18;
     assume $IsValid'vec'u64''($t18);
 
-    // havoc[val]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t19;
     assume $IsValid'u64'($t19);
 
-    // havoc[val]($t20) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t20;
     assume $IsValid'vec'u64''($t20);
 
-    // havoc[val]($t21) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t21) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t21;
     assume $IsValid'u64'($t21);
 
-    // havoc[val]($t22) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t22;
     assume $IsValid'bool'($t22);
 
-    // havoc[val]($t23) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t23;
     assume $IsValid'u64'($t23);
 
-    // havoc[val]($t24) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t24;
     assume $IsValid'u64'($t24);
 
-    // havoc[val]($t25) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t25) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t25;
     assume $IsValid'bool'($t25);
 
-    // havoc[val]($t26) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t26) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t26;
     assume $IsValid'u64'($t26);
 
-    // havoc[val]($t27) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t27) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t27;
     assume $IsValid'u64'($t27);
 
-    // havoc[val]($t28) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t28) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t28;
     assume $IsValid'u64'($t28);
 
-    // havoc[val]($t29) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t29) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t29;
     assume $IsValid'u64'($t29);
 
-    // havoc[val]($t30) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t30) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t30;
     assume $IsValid'u64'($t30);
 
-    // havoc[val]($t31) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[val]($t31) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $t31;
     assume $IsValid'u64'($t31);
 
-    // havoc[mut]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // havoc[mut]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     havoc $temp_0'vec'u64'';
     $t0 := $UpdateMutation($t0, $temp_0'vec'u64'');
     assume $IsValid'vec'u64''($Dereference($t0));
 
-    // assume Not(AbortFlag()) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     assume !$abort_flag;
 
-    // assume Lt($t13, $t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:20:5+13
+    // assume Lt($t13, $t14) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:20:5+13
     assume {:print "$at(2,430,443)"} true;
     assume ($t13 < $t14);
 
-    // assume Eq<num>(Len<u64>($t0), $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:21:5+22
+    // assume Eq<num>(Len<u64>($t0), $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:21:5+22
     assume {:print "$at(2,448,470)"} true;
     assume $IsEqual'num'(LenVec($Dereference($t0)), $t9);
 
-    // assume Le($t14, $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:22:5+17
+    // assume Le($t14, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:22:5+17
     assume {:print "$at(2,475,492)"} true;
     assume ($t14 <= $t9);
 
-    // assume forall k: Range(0, Sub($t13, 1)): Le(Index($t0, k), Index($t0, Add(k, 1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:23:5+44
+    // assume forall k: Range(0, Sub($t13, 1)): Le(Index($t0, k), Index($t0, Add(k, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:23:5+44
     assume {:print "$at(2,497,541)"} true;
     assume (var $range_0 := $Range(0, ($t13 - 1)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var k := $i_1;
     ((ReadVec($Dereference($t0), k) <= ReadVec($Dereference($t0), (k + 1)))))));
 
-    // assume forall k: Range(Add($t13, 1), $t14): Le(Index($t0, $t13), Index($t0, k)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // assume forall k: Range(Add($t13, 1), $t14): Le(Index($t0, $t13), Index($t0, k)) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     assume {:print "$at(2,546,586)"} true;
     assume (var $range_0 := $Range(($t13 + 1), $t14); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var k := $i_1;
     ((ReadVec($Dereference($t0), $t13) <= ReadVec($Dereference($t0), k))))));
 
-    // $t15 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:26:16+1
+    // $t15 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:26:16+1
     assume {:print "$at(2,608,609)"} true;
     $t15 := 1;
     assume $IsValid'u64'($t15);
 
-    // $t16 := -($t9, $t15) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:26:14+1
+    // $t16 := -($t9, $t15) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:26:14+1
     call $t16 := $Sub($t9, $t15);
     if ($abort_flag) {
         assume {:print "$at(2,606,607)"} true;
@@ -1349,41 +1349,41 @@ L13:
         goto L16;
     }
 
-    // $t17 := <($t13, $t16) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:26:7+1
+    // $t17 := <($t13, $t16) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:26:7+1
     call $t17 := $Lt($t13, $t16);
 
-    // if ($t17) goto L3 else goto L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:17:9+436
+    // if ($t17) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:17:9+436
     assume {:print "$at(2,404,840)"} true;
     if ($t17) { goto L3; } else { goto L4; }
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:17:9+436
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:17:9+436
 L4:
 
-    // goto L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:17:9+436
+    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:17:9+436
     goto L5;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:24+1
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:24+1
     assume {:print "$at(2,685,686)"} true;
 L3:
 
-    // trace_local[tmp#$4]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:23+6
+    // trace_local[tmp#$4]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:23+6
     assume {:print "$track_local(1,0,4):", $t13} $t13 == $t13;
 
-    // trace_local[tmp#$3]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:23+6
+    // trace_local[tmp#$3]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:23+6
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,0,3):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // trace_local[tmp#$6]($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:47+6
+    // trace_local[tmp#$6]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:47+6
     assume {:print "$track_local(1,0,6):", $t14} $t14 == $t14;
 
-    // trace_local[tmp#$5]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:47+6
+    // trace_local[tmp#$5]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:47+6
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,0,5):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // $t18 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:23+6
+    // $t18 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:23+6
     $t18 := $Dereference($t0);
 
-    // $t19 := Vector::borrow<u64>($t18, $t13) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:9+20
+    // $t19 := Vector::borrow<u64>($t18, $t13) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:9+20
     call $t19 := $1_Vector_borrow'u64'($t18, $t13);
     if ($abort_flag) {
         assume {:print "$at(2,670,690)"} true;
@@ -1392,10 +1392,10 @@ L3:
         goto L16;
     }
 
-    // $t20 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:47+6
+    // $t20 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:47+6
     $t20 := $Dereference($t0);
 
-    // $t21 := Vector::borrow<u64>($t20, $t14) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:33+20
+    // $t21 := Vector::borrow<u64>($t20, $t14) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:33+20
     call $t21 := $1_Vector_borrow'u64'($t20, $t14);
     if ($abort_flag) {
         assume {:print "$at(2,694,714)"} true;
@@ -1404,23 +1404,23 @@ L3:
         goto L16;
     }
 
-    // $t22 := >($t19, $t21) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:30+1
+    // $t22 := >($t19, $t21) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:30+1
     call $t22 := $Gt($t19, $t21);
 
-    // if ($t22) goto L6 else goto L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:4+84
+    // if ($t22) goto L6 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:4+84
     if ($t22) { goto L6; } else { goto L7; }
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:4+84
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:4+84
 L7:
 
-    // goto L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:4+84
+    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:31:4+84
     goto L8;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:32:18+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:32:18+1
     assume {:print "$at(2,735,736)"} true;
 L6:
 
-    // Vector::swap<u64>($t0, $t13, $t14) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:32:5+21
+    // Vector::swap<u64>($t0, $t13, $t14) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:32:5+21
     call $t0 := $1_Vector_swap'u64'($t0, $t13, $t14);
     if ($abort_flag) {
         assume {:print "$at(2,722,743)"} true;
@@ -1429,15 +1429,15 @@ L6:
         goto L16;
     }
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:8+1
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:8+1
     assume {:print "$at(2,759,760)"} true;
 L8:
 
-    // $t23 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:12+1
+    // $t23 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:12+1
     $t23 := 1;
     assume $IsValid'u64'($t23);
 
-    // $t24 := +($t14, $t23) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:10+1
+    // $t24 := +($t14, $t23) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:10+1
     call $t24 := $AddU64($t14, $t23);
     if ($abort_flag) {
         assume {:print "$at(2,761,762)"} true;
@@ -1446,27 +1446,27 @@ L8:
         goto L16;
     }
 
-    // $t25 := <($t24, $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:14+1
+    // $t25 := <($t24, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:14+1
     call $t25 := $Lt($t24, $t9);
 
-    // if ($t25) goto L9 else goto L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
+    // if ($t25) goto L9 else goto L10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
     if ($t25) { goto L9; } else { goto L10; }
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
 L10:
 
-    // goto L11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
+    // goto L11 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
     goto L11;
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:9+1
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:9+1
     assume {:print "$at(2,783,784)"} true;
 L9:
 
-    // $t26 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:13+1
+    // $t26 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:13+1
     $t26 := 1;
     assume $IsValid'u64'($t26);
 
-    // $t27 := +($t14, $t26) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:11+1
+    // $t27 := +($t14, $t26) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:11+1
     call $t27 := $AddU64($t14, $t26);
     if ($abort_flag) {
         assume {:print "$at(2,785,786)"} true;
@@ -1475,25 +1475,25 @@ L9:
         goto L16;
     }
 
-    // $t2 := $t27 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:5+1
+    // $t2 := $t27 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:5+1
     $t2 := $t27;
 
-    // trace_local[j]($t27) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:5+1
+    // trace_local[j]($t27) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:36:5+1
     assume {:print "$track_local(1,0,2):", $t27} $t27 == $t27;
 
-    // goto L12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
+    // goto L12 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
     assume {:print "$at(2,755,836)"} true;
     goto L12;
 
-    // label L11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:9+1
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:9+1
     assume {:print "$at(2,810,811)"} true;
 L11:
 
-    // $t28 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:13+1
+    // $t28 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:13+1
     $t28 := 1;
     assume $IsValid'u64'($t28);
 
-    // $t29 := +($t13, $t28) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:11+1
+    // $t29 := +($t13, $t28) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:11+1
     call $t29 := $AddU64($t13, $t28);
     if ($abort_flag) {
         assume {:print "$at(2,812,813)"} true;
@@ -1502,18 +1502,18 @@ L11:
         goto L16;
     }
 
-    // $t1 := $t29 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:5+1
+    // $t1 := $t29 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:5+1
     $t1 := $t29;
 
-    // trace_local[i]($t29) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:5+1
+    // trace_local[i]($t29) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:38:5+1
     assume {:print "$track_local(1,0,1):", $t29} $t29 == $t29;
 
-    // $t30 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:13+1
+    // $t30 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:13+1
     assume {:print "$at(2,829,830)"} true;
     $t30 := 1;
     assume $IsValid'u64'($t30);
 
-    // $t31 := +($t29, $t30) on_abort goto L16 with $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:11+1
+    // $t31 := +($t29, $t30) on_abort goto L16 with $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:11+1
     call $t31 := $AddU64($t29, $t30);
     if ($abort_flag) {
         assume {:print "$at(2,827,828)"} true;
@@ -1522,121 +1522,121 @@ L11:
         goto L16;
     }
 
-    // $t2 := $t31 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:5+1
+    // $t2 := $t31 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:5+1
     $t2 := $t31;
 
-    // trace_local[j]($t31) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:5+1
+    // trace_local[j]($t31) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:39:5+1
     assume {:print "$track_local(1,0,2):", $t31} $t31 == $t31;
 
-    // label L12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
     assume {:print "$at(2,755,836)"} true;
 L12:
 
-    // goto L14 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
+    // goto L14 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:35:4+81
     goto L14;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:42:3+144
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:42:3+144
     assume {:print "$at(2,844,988)"} true;
 L5:
 
-    // assert Eq<num>(Len<u64>($t0), $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:43:4+22
+    // assert Eq<num>(Len<u64>($t0), $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:43:4+22
     assume {:print "$at(2,854,876)"} true;
     assert {:msg "assert_failed(2,854,876): unknown assertion failed"}
       $IsEqual'num'(LenVec($Dereference($t0)), $t9);
 
-    // assert Eq<u64>($t13, Sub($t9, 1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:44:4+21
+    // assert Eq<u64>($t13, Sub($t9, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:44:4+21
     assume {:print "$at(2,880,901)"} true;
     assert {:msg "assert_failed(2,880,901): unknown assertion failed"}
       $IsEqual'u64'($t13, ($t9 - 1));
 
-    // assert Eq<u64>($t14, $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:45:4+17
+    // assert Eq<u64>($t14, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:45:4+17
     assume {:print "$at(2,905,922)"} true;
     assert {:msg "assert_failed(2,905,922): unknown assertion failed"}
       $IsEqual'u64'($t14, $t9);
 
-    // assert Le(Index($t0, 0), Index($t0, 1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:46:4+20
+    // assert Le(Index($t0, 0), Index($t0, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:46:4+20
     assume {:print "$at(2,926,946)"} true;
     assert {:msg "assert_failed(2,926,946): unknown assertion failed"}
       (ReadVec($Dereference($t0), 0) <= ReadVec($Dereference($t0), 1));
 
-    // assert Le(Index($t0, Sub($t9, 2)), Index($t0, Sub($t9, 1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:47:4+34
+    // assert Le(Index($t0, Sub($t9, 2)), Index($t0, Sub($t9, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:47:4+34
     assume {:print "$at(2,950,984)"} true;
     assert {:msg "assert_failed(2,950,984): unknown assertion failed"}
       (ReadVec($Dereference($t0), ($t9 - 2)) <= ReadVec($Dereference($t0), ($t9 - 1)));
 
-    // trace_local[v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:48:4+1
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:48:4+1
     assume {:print "$at(2,988,989)"} true;
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,0,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // goto L15 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:48:4+1
+    // goto L15 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:48:4+1
     goto L15;
 
-    // label L14 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:42:3+144
+    // label L14 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:42:3+144
     // Loop invariant checking block for the loop started with header: L13
     assume {:print "$at(2,844,988)"} true;
 L14:
 
-    // assert Lt($t1, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:20:5+13
+    // assert Lt($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:20:5+13
     assume {:print "$at(2,430,443)"} true;
     assert {:msg "assert_failed(2,430,443): induction case of the loop invariant does not hold"}
       ($t1 < $t2);
 
-    // assert Eq<num>(Len<u64>($t0), $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:21:5+22
+    // assert Eq<num>(Len<u64>($t0), $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:21:5+22
     assume {:print "$at(2,448,470)"} true;
     assert {:msg "assert_failed(2,448,470): induction case of the loop invariant does not hold"}
       $IsEqual'num'(LenVec($Dereference($t0)), $t9);
 
-    // assert Le($t2, $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:22:5+17
+    // assert Le($t2, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:22:5+17
     assume {:print "$at(2,475,492)"} true;
     assert {:msg "assert_failed(2,475,492): induction case of the loop invariant does not hold"}
       ($t2 <= $t9);
 
-    // assert forall k: Range(0, Sub($t1, 1)): Le(Index($t0, k), Index($t0, Add(k, 1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:23:5+44
+    // assert forall k: Range(0, Sub($t1, 1)): Le(Index($t0, k), Index($t0, Add(k, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:23:5+44
     assume {:print "$at(2,497,541)"} true;
     assert {:msg "assert_failed(2,497,541): induction case of the loop invariant does not hold"}
       (var $range_0 := $Range(0, ($t1 - 1)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var k := $i_1;
     ((ReadVec($Dereference($t0), k) <= ReadVec($Dereference($t0), (k + 1)))))));
 
-    // assert forall k: Range(Add($t1, 1), $t2): Le(Index($t0, $t1), Index($t0, k)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // assert forall k: Range(Add($t1, 1), $t2): Le(Index($t0, $t1), Index($t0, k)) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     assume {:print "$at(2,546,586)"} true;
     assert {:msg "assert_failed(2,546,586): induction case of the loop invariant does not hold"}
       (var $range_0 := $Range(($t1 + 1), $t2); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var k := $i_1;
     ((ReadVec($Dereference($t0), $t1) <= ReadVec($Dereference($t0), k))))));
 
-    // stop() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:24:5+40
     assume false;
     return;
 
-    // label L15 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:49:2+1
+    // label L15 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:49:2+1
     assume {:print "$at(2,991,992)"} true;
 L15:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:51:3+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:51:3+16
     assume {:print "$at(2,1015,1031)"} true;
     assert {:msg "assert_failed(2,1015,1031): function does not abort under this condition"}
       !false;
 
-    // assert forall i: Range(0, Sub(Len<u64>($t0), 1)): Le(Index($t0, i), Index($t0, Add(i, 1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:52:3+48
+    // assert forall i: Range(0, Sub(Len<u64>($t0), 1)): Le(Index($t0, i), Index($t0, Add(i, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:52:3+48
     assume {:print "$at(2,1034,1082)"} true;
     assert {:msg "assert_failed(2,1034,1082): post-condition does not hold"}
       (var $range_0 := $Range(0, (LenVec($Dereference($t0)) - 1)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
     ((ReadVec($Dereference($t0), i) <= ReadVec($Dereference($t0), (i + 1)))))));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:52:3+48
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:52:3+48
     $ret0 := $t0;
     return;
 
-    // label L16 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:49:2+1
+    // label L16 at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:49:2+1
     assume {:print "$at(2,991,992)"} true;
 L16:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:50:2+91
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:50:2+91
     assume {:print "$at(2,994,1085)"} true;
     assert {:msg "assert_failed(2,994,1085): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_sort3.move:50:2+91
+    // abort($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move:50:2+91
     $abort_code := $t10;
     $abort_flag := true;
     return;

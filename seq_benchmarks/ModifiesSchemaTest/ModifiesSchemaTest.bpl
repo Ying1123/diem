@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct A::S at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:4:5+39
+// struct A::S at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:4:5+39
 type {:datatype} $0_A_S;
 function {:constructor} $0_A_S($x: int): $0_A_S;
 function {:inline} $Update'$0_A_S'_x(s: $0_A_S, x: int): $0_A_S {
@@ -906,7 +906,7 @@ function {:inline} $IsEqual'$0_A_S'(s1: $0_A_S, s2: $0_A_S): bool {
 }
 var $0_A_S_$memory: $Memory $0_A_S;
 
-// fun A::mutate_at [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
+// fun A::mutate_at [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
 procedure {:inline 1} $0_A_mutate_at(_$t0: int) returns ()
 {
     // declare local variables
@@ -925,11 +925,11 @@ procedure {:inline 1} $0_A_mutate_at(_$t0: int) returns ()
     assume IsEmptyVec(p#$Mutation($t5));
 
     // bytecode translation starts here
-    // trace_local[addr]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+1
+    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+1
     assume {:print "$at(2,171,172)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t2 := borrow_global<A::S>($t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:17+17
+    // $t2 := borrow_global<A::S>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:17+17
     assume {:print "$at(2,236,253)"} true;
     if (!$ResourceExists($0_A_S_$memory, $t0)) {
         call $ExecFailureAbort();
@@ -943,46 +943,46 @@ procedure {:inline 1} $0_A_mutate_at(_$t0: int) returns ()
         goto L2;
     }
 
-    // trace_local[s]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:13+1
+    // trace_local[s]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:13+1
     $temp_0'$0_A_S' := $Dereference($t2);
     assume {:print "$track_local(0,0,1):", $temp_0'$0_A_S'} $temp_0'$0_A_S' == $temp_0'$0_A_S';
 
-    // $t4 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:15+1
+    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:15+1
     assume {:print "$at(2,278,279)"} true;
     $t4 := 2;
     assume $IsValid'u64'($t4);
 
-    // $t5 := borrow_field<A::S>.x($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+3
+    // $t5 := borrow_field<A::S>.x($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+3
     $t5 := $ChildMutation($t2, 0, $x#$0_A_S($Dereference($t2)));
 
-    // write_ref($t5, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
+    // write_ref($t5, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
     $t5 := $UpdateMutation($t5, $t4);
 
-    // write_back[Reference($t2).x]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
+    // write_back[Reference($t2).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
     $t2 := $UpdateMutation($t2, $Update'$0_A_S'_x($Dereference($t2), $Dereference($t5)));
 
-    // write_back[A::S@]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
+    // write_back[A::S@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
     $0_A_S_$memory := $ResourceUpdate($0_A_S_$memory, $GlobalLocationAddress($t2),
         $Dereference($t2));
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
     assume {:print "$at(2,285,286)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun A::mutate_at [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
+// fun A::mutate_at [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
 procedure {:timeLimit 40} $0_A_mutate_at$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -1004,28 +1004,28 @@ procedure {:timeLimit 40} $0_A_mutate_at$verify(_$t0: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
     assume {:print "$at(2,171,286)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<A::S>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
+    // assume forall $rsc: ResourceDomain<A::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+115
     assume (forall $a_0: int :: {$ResourceValue($0_A_S_$memory, $a_0)}(var $rsc := $ResourceValue($0_A_S_$memory, $a_0);
     ($IsValid'$0_A_S'($rsc))));
 
-    // assume CanModify<A::S>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9:9+25
+    // assume CanModify<A::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9:9+25
     assume {:print "$at(2,134,159)"} true;
     assume $0_A_S_$modifies[$t0];
 
-    // trace_local[addr]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+1
+    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12:5+1
     assume {:print "$at(2,171,172)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // assert CanModify<A::S>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:17+17
+    // assert CanModify<A::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:17+17
     assume {:print "$at(2,236,253)"} true;
     assert {:msg "assert_failed(2,236,253): caller does not have permission to modify `A::S` at given address"}
       $0_A_S_$modifies[$t0];
 
-    // $t2 := borrow_global<A::S>($t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:17+17
+    // $t2 := borrow_global<A::S>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:17+17
     if (!$ResourceExists($0_A_S_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -1038,46 +1038,46 @@ procedure {:timeLimit 40} $0_A_mutate_at$verify(_$t0: int) returns ()
         goto L2;
     }
 
-    // trace_local[s]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:13+1
+    // trace_local[s]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13:13+1
     $temp_0'$0_A_S' := $Dereference($t2);
     assume {:print "$track_local(0,0,1):", $temp_0'$0_A_S'} $temp_0'$0_A_S' == $temp_0'$0_A_S';
 
-    // $t4 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:15+1
+    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:15+1
     assume {:print "$at(2,278,279)"} true;
     $t4 := 2;
     assume $IsValid'u64'($t4);
 
-    // $t5 := borrow_field<A::S>.x($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+3
+    // $t5 := borrow_field<A::S>.x($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+3
     $t5 := $ChildMutation($t2, 0, $x#$0_A_S($Dereference($t2)));
 
-    // write_ref($t5, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
+    // write_ref($t5, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
     $t5 := $UpdateMutation($t5, $t4);
 
-    // write_back[Reference($t2).x]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
+    // write_back[Reference($t2).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
     $t2 := $UpdateMutation($t2, $Update'$0_A_S'_x($Dereference($t2), $Dereference($t5)));
 
-    // write_back[A::S@]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
+    // write_back[A::S@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14:9+7
     $0_A_S_$memory := $ResourceUpdate($0_A_S_$memory, $GlobalLocationAddress($t2),
         $Dereference($t2));
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
     assume {:print "$at(2,285,286)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun A::mutate_at_wrapper1 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+87
+// fun A::mutate_at_wrapper1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+87
 procedure {:timeLimit 40} $0_A_mutate_at_wrapper1$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -1091,28 +1091,28 @@ procedure {:timeLimit 40} $0_A_mutate_at_wrapper1$verify(_$t0: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+87
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+87
     assume {:print "$at(2,383,470)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<A::S>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+87
+    // assume forall $rsc: ResourceDomain<A::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+87
     assume (forall $a_0: int :: {$ResourceValue($0_A_S_$memory, $a_0)}(var $rsc := $ResourceValue($0_A_S_$memory, $a_0);
     ($IsValid'$0_A_S'($rsc))));
 
-    // assume CanModify<A::S>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9:9+25
+    // assume CanModify<A::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9:9+25
     assume {:print "$at(2,134,159)"} true;
     assume $0_A_S_$modifies[$t0];
 
-    // trace_local[addr]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+1
+    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:21:5+1
     assume {:print "$at(2,383,384)"} true;
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // assert CanModify<A::S>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:22:9+15
+    // assert CanModify<A::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:22:9+15
     assume {:print "$at(2,449,464)"} true;
     assert {:msg "assert_failed(2,449,464): caller does not have permission to modify `A::S` at given address"}
       $0_A_S_$modifies[$t0];
 
-    // A::mutate_at($t0) on_abort goto L2 with $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:22:9+15
+    // A::mutate_at($t0) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:22:9+15
     call $0_A_mutate_at($t0);
     if ($abort_flag) {
         assume {:print "$at(2,449,464)"} true;
@@ -1121,24 +1121,24 @@ procedure {:timeLimit 40} $0_A_mutate_at_wrapper1$verify(_$t0: int) returns ()
         goto L2;
     }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
     assume {:print "$at(2,469,470)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
 L2:
 
-    // abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
+    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:23:5+1
     $abort_code := $t1;
     $abort_flag := true;
     return;
 
 }
 
-// fun A::mutate_at_wrapper2 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
+// fun A::mutate_at_wrapper2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
 procedure {:timeLimit 40} $0_A_mutate_at_wrapper2$verify(_$t0: int, _$t1: int) returns ()
 {
     // declare local variables
@@ -1154,34 +1154,34 @@ procedure {:timeLimit 40} $0_A_mutate_at_wrapper2$verify(_$t0: int, _$t1: int) r
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
     assume {:print "$at(2,574,705)"} true;
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
     assume $IsValid'address'($t1);
 
-    // assume forall $rsc: ResourceDomain<A::S>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
+    // assume forall $rsc: ResourceDomain<A::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+131
     assume (forall $a_0: int :: {$ResourceValue($0_A_S_$memory, $a_0)}(var $rsc := $ResourceValue($0_A_S_$memory, $a_0);
     ($IsValid'$0_A_S'($rsc))));
 
-    // assume CanModify<A::S>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9:9+25
+    // assume CanModify<A::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9:9+25
     assume {:print "$at(2,134,159)"} true;
     assume $0_A_S_$modifies[$t0];
 
-    // trace_local[addr1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+1
+    // trace_local[addr1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+1
     assume {:print "$at(2,574,575)"} true;
     assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
 
-    // trace_local[addr2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+1
+    // trace_local[addr2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29:5+1
     assume {:print "$track_local(0,2,1):", $t1} $t1 == $t1;
 
-    // assert CanModify<A::S>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:30:9+16
+    // assert CanModify<A::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:30:9+16
     assume {:print "$at(2,657,673)"} true;
     assert {:msg "assert_failed(2,657,673): caller does not have permission to modify `A::S` at given address"}
       $0_A_S_$modifies[$t0];
 
-    // A::mutate_at($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:30:9+16
+    // A::mutate_at($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:30:9+16
     call $0_A_mutate_at($t0);
     if ($abort_flag) {
         assume {:print "$at(2,657,673)"} true;
@@ -1190,12 +1190,12 @@ procedure {:timeLimit 40} $0_A_mutate_at_wrapper2$verify(_$t0: int, _$t1: int) r
         goto L2;
     }
 
-    // assert CanModify<A::S>($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:31:9+16
+    // assert CanModify<A::S>($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:31:9+16
     assume {:print "$at(2,683,699)"} true;
     assert {:msg "assert_failed(2,683,699): caller does not have permission to modify `A::S` at given address"}
       $0_A_S_$modifies[$t1];
 
-    // A::mutate_at($t1) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:31:9+16
+    // A::mutate_at($t1) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:31:9+16
     call $0_A_mutate_at($t1);
     if ($abort_flag) {
         assume {:print "$at(2,683,699)"} true;
@@ -1204,17 +1204,17 @@ procedure {:timeLimit 40} $0_A_mutate_at_wrapper2$verify(_$t0: int, _$t1: int) r
         goto L2;
     }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
     assume {:print "$at(2,704,705)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
 L2:
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:32:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;

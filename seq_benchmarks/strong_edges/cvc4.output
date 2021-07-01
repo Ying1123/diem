@@ -1,0 +1,20 @@
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unsat
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

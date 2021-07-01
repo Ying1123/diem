@@ -895,31 +895,31 @@ type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// axiom at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:9:9+43
+// axiom at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:9:9+43
 axiom (forall x: int :: $IsValid'num'(x) ==> ($IsEqual'num'($42_TestAxioms_spec_incr(x), (x + 1))));
 
-// axiom at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:22:9+44
+// axiom at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:22:9+44
 axiom ((forall x: int :: $IsValid'u64'(x) ==> ($IsEqual'u64'($42_TestAxioms_spec_id'u64'(x), x))) && (forall x: #0 :: $IsValid'#0'(x) ==> ($IsEqual'#0'($42_TestAxioms_spec_id'#0'(x), x))));
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:8:9+27
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:8:9+27
 function {:inline} $42_TestAxioms_spec_incr(x: int): int;
 axiom (forall x: int ::
 (var $$res := $42_TestAxioms_spec_incr(x);
 $IsValid'num'($$res)));
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:21:9+24
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:21:9+24
 function {:inline} $42_TestAxioms_spec_id'u64'(x: int): int;
 axiom (forall x: int ::
 (var $$res := $42_TestAxioms_spec_id'u64'(x);
 $IsValid'u64'($$res)));
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:21:9+24
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:21:9+24
 function {:inline} $42_TestAxioms_spec_id'#0'(x: #0): #0;
 axiom (forall x: #0 ::
 (var $$res := $42_TestAxioms_spec_id'#0'(x);
 $IsValid'#0'($$res)));
 
-// fun TestAxioms::id_T [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:25:5+38
+// fun TestAxioms::id_T [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:25:5+38
 procedure {:timeLimit 40} $42_TestAxioms_id_T$verify(_$t0: #0) returns ($ret0: #0)
 {
     // declare local variables
@@ -931,34 +931,34 @@ procedure {:timeLimit 40} $42_TestAxioms_id_T$verify(_$t0: #0) returns ($ret0: #
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:29:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:29:17+6
     assume {:print "$at(2,590,596)"} true;
     assume $IsValid'#0'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:25:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:25:5+1
     assume {:print "$at(2,519,520)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // trace_return[0]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:26:9+1
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:26:9+1
     assume {:print "$at(2,550,551)"} true;
     assume {:print "$track_return(0,0,0):", $t0} $t0 == $t0;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:27:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:27:5+1
     assume {:print "$at(2,556,557)"} true;
 L1:
 
-    // assert Eq<#0>($t0, TestAxioms::spec_id<#0>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:29:9+29
+    // assert Eq<#0>($t0, TestAxioms::spec_id<#0>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:29:9+29
     assume {:print "$at(2,582,611)"} true;
     assert {:msg "assert_failed(2,582,611): post-condition does not hold"}
       $IsEqual'#0'($t0, $42_TestAxioms_spec_id'#0'($t0));
 
-    // return $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:29:9+29
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:29:9+29
     $ret0 := $t0;
     return;
 
 }
 
-// fun TestAxioms::id_u64 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:32:5+44
+// fun TestAxioms::id_u64 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:32:5+44
 procedure {:timeLimit 40} $42_TestAxioms_id_u64$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -970,34 +970,34 @@ procedure {:timeLimit 40} $42_TestAxioms_id_u64$verify(_$t0: int) returns ($ret0
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:36:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:36:17+6
     assume {:print "$at(2,702,708)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:32:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:32:5+1
     assume {:print "$at(2,623,624)"} true;
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // trace_return[0]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:33:9+1
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:33:9+1
     assume {:print "$at(2,660,661)"} true;
     assume {:print "$track_return(0,1,0):", $t0} $t0 == $t0;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:34:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:34:5+1
     assume {:print "$at(2,666,667)"} true;
 L1:
 
-    // assert Eq<u64>($t0, TestAxioms::spec_id<u64>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:36:9+29
+    // assert Eq<u64>($t0, TestAxioms::spec_id<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:36:9+29
     assume {:print "$at(2,694,723)"} true;
     assert {:msg "assert_failed(2,694,723): post-condition does not hold"}
       $IsEqual'u64'($t0, $42_TestAxioms_spec_id'u64'($t0));
 
-    // return $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:36:9+29
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:36:9+29
     $ret0 := $t0;
     return;
 
 }
 
-// fun TestAxioms::incr [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:12:5+43
+// fun TestAxioms::incr [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:12:5+43
 procedure {:timeLimit 40} $42_TestAxioms_incr$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1012,20 +1012,20 @@ procedure {:timeLimit 40} $42_TestAxioms_incr$verify(_$t0: int) returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:16:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:16:17+6
     assume {:print "$at(2,275,281)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:12:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:12:5+1
     assume {:print "$at(2,199,200)"} true;
     assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
 
-    // $t1 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:13:13+1
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:13:13+1
     assume {:print "$at(2,235,236)"} true;
     $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:13:11+1
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:13:11+1
     call $t2 := $AddU64($t0, $t1);
     if ($abort_flag) {
         assume {:print "$at(2,233,234)"} true;
@@ -1034,27 +1034,27 @@ procedure {:timeLimit 40} $42_TestAxioms_incr$verify(_$t0: int) returns ($ret0: 
         goto L2;
     }
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:13:9+5
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:13:9+5
     assume {:print "$track_return(0,2,0):", $t2} $t2 == $t2;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
     assume {:print "$at(2,241,242)"} true;
 L1:
 
-    // assert Eq<u64>($t2, TestAxioms::spec_incr($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:16:9+31
+    // assert Eq<u64>($t2, TestAxioms::spec_incr($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:16:9+31
     assume {:print "$at(2,267,298)"} true;
     assert {:msg "assert_failed(2,267,298): post-condition does not hold"}
       $IsEqual'u64'($t2, $42_TestAxioms_spec_incr($t0));
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:16:9+31
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:16:9+31
     $ret0 := $t2;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
     assume {:print "$at(2,241,242)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;

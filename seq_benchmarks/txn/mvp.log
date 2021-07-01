@@ -1,0 +1,49 @@
+error: 
+
+   ┌── /home/ying/diem/language/move-prover/tests/sources/functional/txn.move:5:9 ───
+   │
+ 5 │     use 0x1::DiemAccount;
+   │         ^^^^^^^^^^^^^^^^ Invalid 'use'. Unbound module: '0x1::DiemAccount'
+   │
+
+error: 
+
+   ┌── /home/ying/diem/language/move-prover/tests/sources/functional/txn.move:6:9 ───
+   │
+ 6 │     use 0x1::DiemTimestamp;
+   │         ^^^^^^^^^^^^^^^^^^ Invalid 'use'. Unbound module: '0x1::DiemTimestamp'
+   │
+
+error: 
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/txn.move:31:9 ───
+    │
+ 31 │         DiemTimestamp::assert_operating();
+    │         ^^^^^^^^^^^^^ Unbound module alias 'DiemTimestamp'
+    │
+
+error: 
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/txn.move:32:16 ───
+    │
+ 32 │         assert(DiemAccount::exists_at(Signer::address_of(account)), 1);
+    │                ^^^^^^^^^^^ Unbound module alias 'DiemAccount'
+    │
+
+error: 
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/txn.move:35:17 ───
+    │
+ 35 │         include DiemTimestamp::AbortsIfNotOperating;
+    │                 ^^^^^^^^^^^^^ Unbound module alias 'DiemTimestamp'
+    │
+
+error: 
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/txn.move:38:27 ───
+    │
+ 38 │         aborts_if !exists<DiemAccount::DiemAccount>(Signer::spec_address_of(account));
+    │                           ^^^^^^^^^^^ Unbound module alias 'DiemAccount'
+    │
+
+exiting with model building errors

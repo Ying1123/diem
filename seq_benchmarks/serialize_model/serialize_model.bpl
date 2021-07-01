@@ -922,7 +922,7 @@ type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// fun TestBCS::bcs_test1 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:10:5+171
+// fun TestBCS::bcs_test1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:10:5+171
 procedure {:timeLimit 40} $42_TestBCS_bcs_test1$verify(_$t0: #0, _$t1: #0) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -942,21 +942,21 @@ procedure {:timeLimit 40} $42_TestBCS_bcs_test1$verify(_$t0: #0, _$t1: #0) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:39+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:39+8
     assume {:print "$at(2,573,581)"} true;
     assume $IsValid'#0'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:39+8
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:39+8
     assume $IsValid'#0'($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:10:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:10:5+1
     assume {:print "$at(2,174,175)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:10:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:10:5+1
     assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
-    // $t4 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:12:18+17
+    // $t4 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:12:18+17
     assume {:print "$at(2,268,285)"} true;
     call $t4 := $1_BCS_to_bytes'#0'($t0);
     if ($abort_flag) {
@@ -966,10 +966,10 @@ procedure {:timeLimit 40} $42_TestBCS_bcs_test1$verify(_$t0: #0, _$t1: #0) retur
         goto L2;
     }
 
-    // trace_local[s1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:12:13+2
+    // trace_local[s1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:12:13+2
     assume {:print "$track_local(1,0,2):", $t4} $t4 == $t4;
 
-    // $t6 := BCS::to_bytes<#0>($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:13:18+17
+    // $t6 := BCS::to_bytes<#0>($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:13:18+17
     assume {:print "$at(2,304,321)"} true;
     call $t6 := $1_BCS_to_bytes'#0'($t1);
     if ($abort_flag) {
@@ -979,62 +979,62 @@ procedure {:timeLimit 40} $42_TestBCS_bcs_test1$verify(_$t0: #0, _$t1: #0) retur
         goto L2;
     }
 
-    // trace_local[s2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:13:13+2
+    // trace_local[s2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:13:13+2
     assume {:print "$track_local(1,0,3):", $t6} $t6 == $t6;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:14:9+8
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:14:9+8
     assume {:print "$at(2,331,339)"} true;
     assume {:print "$track_return(1,0,0):", $t4} $t4 == $t4;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:14:9+8
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:14:9+8
     assume {:print "$track_return(1,0,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:15:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:15:5+1
     assume {:print "$at(2,344,345)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:17:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:17:9+16
     assume {:print "$at(2,375,391)"} true;
     assert {:msg "assert_failed(2,375,391): function does not abort under this condition"}
       !false;
 
-    // assert Implies(Eq<vector<u8>>($t4, $t6), Eq<#0>($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:18:9+42
+    // assert Implies(Eq<vector<u8>>($t4, $t6), Eq<#0>($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:18:9+42
     assume {:print "$at(2,400,442)"} true;
     assert {:msg "assert_failed(2,400,442): post-condition does not hold"}
       ($IsEqual'vec'u8''($t4, $t6) ==> $IsEqual'#0'($t0, $t1));
 
-    // assert Implies(Eq<#0>($t0, $t1), Eq<vector<u8>>($t4, $t6)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:19:9+42
+    // assert Implies(Eq<#0>($t0, $t1), Eq<vector<u8>>($t4, $t6)) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:19:9+42
     assume {:print "$at(2,451,493)"} true;
     assert {:msg "assert_failed(2,451,493): post-condition does not hold"}
       ($IsEqual'#0'($t0, $t1) ==> $IsEqual'vec'u8''($t4, $t6));
 
-    // assert Implies(Gt(Len<u8>($t4), 0), Le(Index($t4, 0), MaxU8())) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:9+54
+    // assert Implies(Gt(Len<u8>($t4), 0), Le(Index($t4, 0), MaxU8())) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:9+54
     assume {:print "$at(2,543,597)"} true;
     assert {:msg "assert_failed(2,543,597): post-condition does not hold"}
       ((LenVec($t4) > 0) ==> (ReadVec($t4, 0) <= $MAX_U8));
 
-    // return ($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:9+54
+    // return ($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:9+54
     $ret0 := $t4;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:15:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:15:5+1
     assume {:print "$at(2,344,345)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:16:5+253
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:16:5+253
     assume {:print "$at(2,350,603)"} true;
     assert {:msg "assert_failed(2,350,603): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:16:5+253
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:16:5+253
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestBCS::bcs_test1_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:26:5+181
+// fun TestBCS::bcs_test1_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:26:5+181
 procedure {:timeLimit 40} $42_TestBCS_bcs_test1_incorrect$verify(_$t0: #0, _$t1: #0) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -1054,21 +1054,21 @@ procedure {:timeLimit 40} $42_TestBCS_bcs_test1_incorrect$verify(_$t0: #0, _$t1:
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:21+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:21+8
     assume {:print "$at(2,929,937)"} true;
     assume $IsValid'#0'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:21+8
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:21+8
     assume $IsValid'#0'($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:26:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:26:5+1
     assume {:print "$at(2,633,634)"} true;
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:26:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:26:5+1
     assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
 
-    // $t4 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:28:18+17
+    // $t4 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:28:18+17
     assume {:print "$at(2,737,754)"} true;
     call $t4 := $1_BCS_to_bytes'#0'($t0);
     if ($abort_flag) {
@@ -1078,10 +1078,10 @@ procedure {:timeLimit 40} $42_TestBCS_bcs_test1_incorrect$verify(_$t0: #0, _$t1:
         goto L2;
     }
 
-    // trace_local[s1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:28:13+2
+    // trace_local[s1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:28:13+2
     assume {:print "$track_local(1,1,2):", $t4} $t4 == $t4;
 
-    // $t6 := BCS::to_bytes<#0>($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:29:18+17
+    // $t6 := BCS::to_bytes<#0>($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:29:18+17
     assume {:print "$at(2,773,790)"} true;
     call $t6 := $1_BCS_to_bytes'#0'($t1);
     if ($abort_flag) {
@@ -1091,50 +1091,50 @@ procedure {:timeLimit 40} $42_TestBCS_bcs_test1_incorrect$verify(_$t0: #0, _$t1:
         goto L2;
     }
 
-    // trace_local[s2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:29:13+2
+    // trace_local[s2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:29:13+2
     assume {:print "$track_local(1,1,3):", $t6} $t6 == $t6;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:30:9+8
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:30:9+8
     assume {:print "$at(2,800,808)"} true;
     assume {:print "$track_return(1,1,0):", $t4} $t4 == $t4;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:30:9+8
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:30:9+8
     assume {:print "$track_return(1,1,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:31:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:31:5+1
     assume {:print "$at(2,813,814)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:33:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:33:9+16
     assume {:print "$at(2,854,870)"} true;
     assert {:msg "assert_failed(2,854,870): function does not abort under this condition"}
       !false;
 
-    // assert Eq<vector<u8>>($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:34:9+29
+    // assert Eq<vector<u8>>($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:34:9+29
     assume {:print "$at(2,879,908)"} true;
     assert {:msg "assert_failed(2,879,908): post-condition does not hold"}
       $IsEqual'vec'u8''($t4, $t6);
 
-    // assert Gt(Len<u8>($t4), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:9+26
+    // assert Gt(Len<u8>($t4), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:9+26
     assume {:print "$at(2,917,943)"} true;
     assert {:msg "assert_failed(2,917,943): post-condition does not hold"}
       (LenVec($t4) > 0);
 
-    // return ($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:9+26
+    // return ($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:35:9+26
     $ret0 := $t4;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:31:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:31:5+1
     assume {:print "$at(2,813,814)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:32:5+293
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:32:5+293
     assume {:print "$at(2,819,1112)"} true;
     assert {:msg "assert_failed(2,819,1112): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/serialize_model.move:32:5+293
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:32:5+293
     $abort_code := $t5;
     $abort_flag := true;
     return;

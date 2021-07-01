@@ -1,0 +1,138 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/arithm/arithm.bpl
+-monomorphize
+/env:2
+/proverLog:arithm.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/arithm/arithm.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestArithmetic_add_two_number$verify ...
+  [0.309 s, 4 proof obligations]  verified
+
+Verifying $42_TestArithmetic_arithmetic_ops$verify ...
+  [0.020 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_bool_ops$verify ...
+  [0.078 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div$verify ...
+  [0.145 s, 4 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div_by_zero$verify ...
+  [0.030 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div_by_zero_u64$verify ...
+  [0.076 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div_by_zero_u64_incorrect$verify ...
+  [0.111 s, 2 proof obligations]  error
+assert_failed(2,2478,2541): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(1546,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(1546,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(517,9): inline$$Div$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(517,9): inline$$Div$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(1570,9): anon4_Then
+
+Verifying $42_TestArithmetic_f$verify ...
+  [0.078 s, 3 proof obligations]  verified
+
+Verifying $42_TestArithmetic_g$verify ...
+  [0.077 s, 3 proof obligations]  verified
+
+Verifying $42_TestArithmetic_h$verify ...
+  [0.183 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_multiple_ops$verify ...
+  [0.108 s, 1 proof obligation]  verified
+
+Verifying $42_TestArithmetic_overflow_u128_add$verify ...
+  [0.056 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u128_add_incorrect$verify ...
+  [0.079 s, 2 proof obligations]  error
+assert_failed(2,3483,3548): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2304,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2304,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(430,9): inline$$AddU128$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(430,9): inline$$AddU128$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2328,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u128_mul$verify ...
+  [0.054 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u128_mul_incorrect$verify ...
+  [0.179 s, 2 proof obligations]  error
+assert_failed(2,4527,4592): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2446,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2446,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(508,9): inline$$MulU128$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(508,9): inline$$MulU128$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2470,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u64_add$verify ...
+  [0.062 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u64_add_incorrect$verify ...
+  [0.077 s, 2 proof obligations]  error
+assert_failed(2,3160,3224): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2588,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2588,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(416,9): inline$$AddU64$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(416,9): inline$$AddU64$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2612,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u64_mul$verify ...
+  [0.055 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u64_mul_incorrect$verify ...
+  [0.178 s, 2 proof obligations]  error
+assert_failed(2,4221,4285): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2730,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2730,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(499,9): inline$$MulU64$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(499,9): inline$$MulU64$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2754,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u8_add$verify ...
+  [0.054 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u8_add_incorrect$verify ...
+  [0.082 s, 2 proof obligations]  error
+assert_failed(2,2848,2911): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2872,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2872,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(407,9): inline$$AddU8$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(407,9): inline$$AddU8$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(2896,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u8_mul$verify ...
+  [0.052 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u8_mul_incorrect$verify ...
+  [0.179 s, 2 proof obligations]  error
+assert_failed(2,3909,3972): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(3014,9): anon0
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(3014,9): anon0$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(490,9): inline$$MulU8$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(490,9): inline$$MulU8$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/arithm/arithm.bpl(3038,9): anon4_Then
+
+Verifying $42_TestArithmetic_underflow$verify ...
+  [0.023 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 17 verified, 7 errors

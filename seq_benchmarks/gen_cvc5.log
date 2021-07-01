@@ -1,0 +1,54 @@
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move is move
+file name is aborts_if
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move is move
+file name is aborts_if_with_code
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_check.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_check.move is move
+file name is aborts_with_check
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_negative_check.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_negative_check.move is move
+file name is aborts_with_negative_check
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/address_quant.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move is move
+file name is address_quant
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move is move
+file name is address_serialization_constant_size
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/arithm.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/arithm.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move is move
+file name is arithm
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/axioms.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move is move
+file name is axioms
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move is move
+file name is bubble_sort
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists

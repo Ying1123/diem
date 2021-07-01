@@ -2154,12 +2154,12 @@ type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:18:10+45
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:18:10+45
 function {:inline} $42_TestMonomorphization_spec_pack_R(): $42_TestMonomorphization_R'u64' {
     $42_TestMonomorphization_R'u64'(1, 2)
 }
 
-// struct TestMonomorphization::E at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:54:5+55
+// struct TestMonomorphization::E at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:54:5+55
 type {:datatype} $42_TestMonomorphization_E;
 function {:constructor} $42_TestMonomorphization_E($msg: int): $42_TestMonomorphization_E;
 function {:inline} $Update'$42_TestMonomorphization_E'_msg(s: $42_TestMonomorphization_E, x: int): $42_TestMonomorphization_E {
@@ -2172,7 +2172,7 @@ function {:inline} $IsEqual'$42_TestMonomorphization_E'(s1: $42_TestMonomorphiza
     s1 == s2
 }
 
-// struct TestMonomorphization::R<bool> at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
+// struct TestMonomorphization::R<bool> at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
 type {:datatype} $42_TestMonomorphization_R'bool';
 function {:constructor} $42_TestMonomorphization_R'bool'($x: bool, $y: bool): $42_TestMonomorphization_R'bool';
 function {:inline} $Update'$42_TestMonomorphization_R'bool''_x(s: $42_TestMonomorphization_R'bool', x: bool): $42_TestMonomorphization_R'bool' {
@@ -2190,7 +2190,7 @@ function {:inline} $IsEqual'$42_TestMonomorphization_R'bool''(s1: $42_TestMonomo
 }
 var $42_TestMonomorphization_R'bool'_$memory: $Memory $42_TestMonomorphization_R'bool';
 
-// struct TestMonomorphization::R<u64> at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
+// struct TestMonomorphization::R<u64> at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
 type {:datatype} $42_TestMonomorphization_R'u64';
 function {:constructor} $42_TestMonomorphization_R'u64'($x: int, $y: int): $42_TestMonomorphization_R'u64';
 function {:inline} $Update'$42_TestMonomorphization_R'u64''_x(s: $42_TestMonomorphization_R'u64', x: int): $42_TestMonomorphization_R'u64' {
@@ -2208,7 +2208,7 @@ function {:inline} $IsEqual'$42_TestMonomorphization_R'u64''(s1: $42_TestMonomor
 }
 var $42_TestMonomorphization_R'u64'_$memory: $Memory $42_TestMonomorphization_R'u64';
 
-// struct TestMonomorphization::R<address> at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
+// struct TestMonomorphization::R<address> at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
 type {:datatype} $42_TestMonomorphization_R'address';
 function {:constructor} $42_TestMonomorphization_R'address'($x: int, $y: int): $42_TestMonomorphization_R'address';
 function {:inline} $Update'$42_TestMonomorphization_R'address''_x(s: $42_TestMonomorphization_R'address', x: int): $42_TestMonomorphization_R'address' {
@@ -2226,7 +2226,7 @@ function {:inline} $IsEqual'$42_TestMonomorphization_R'address''(s1: $42_TestMon
 }
 var $42_TestMonomorphization_R'address'_$memory: $Memory $42_TestMonomorphization_R'address';
 
-// struct TestMonomorphization::R<#0> at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
+// struct TestMonomorphization::R<#0> at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:9:5+41
 type {:datatype} $42_TestMonomorphization_R'#0';
 function {:constructor} $42_TestMonomorphization_R'#0'($x: #0, $y: #0): $42_TestMonomorphization_R'#0';
 function {:inline} $Update'$42_TestMonomorphization_R'#0''_x(s: $42_TestMonomorphization_R'#0', x: #0): $42_TestMonomorphization_R'#0' {
@@ -2244,7 +2244,7 @@ function {:inline} $IsEqual'$42_TestMonomorphization_R'#0''(s1: $42_TestMonomorp
 }
 var $42_TestMonomorphization_R'#0'_$memory: $Memory $42_TestMonomorphization_R'#0';
 
-// fun TestMonomorphization::create_R [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
+// fun TestMonomorphization::create_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
 procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -2261,33 +2261,33 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: int) re
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
     assume {:print "$at(2,480,573)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<TestMonomorphization::R<u64>>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
+    // assume forall $rsc: ResourceDomain<TestMonomorphization::R<u64>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
     assume (forall $a_0: int :: {$ResourceValue($42_TestMonomorphization_R'u64'_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestMonomorphization_R'u64'_$memory, $a_0);
     ($IsValid'$42_TestMonomorphization_R'u64''($rsc))));
 
-    // @2 := save_mem(TestMonomorphization::R<u64>) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:20:5+1
+    // @2 := save_mem(TestMonomorphization::R<u64>) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+1
     $42_TestMonomorphization_R'u64'_$memory#2 := $42_TestMonomorphization_R'u64'_$memory;
 
-    // trace_local[account]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:20:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+1
     assume {:print "$track_local(5,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:21:38+1
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:21:38+1
     assume {:print "$at(2,557,558)"} true;
     $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // $t2 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:21:43+1
+    // $t2 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:21:43+1
     $t2 := 2;
     assume $IsValid'u64'($t2);
 
-    // $t3 := pack TestMonomorphization::R<u64>($t1, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:21:34+11
+    // $t3 := pack TestMonomorphization::R<u64>($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:21:34+11
     $t3 := $42_TestMonomorphization_R'u64'($t1, $t2);
 
-    // move_to<TestMonomorphization::R<u64>>($t3, $t0) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:21:9+7
+    // move_to<TestMonomorphization::R<u64>>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:21:9+7
     if ($ResourceExists($42_TestMonomorphization_R'u64'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -2300,40 +2300,40 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: int) re
         goto L2;
     }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:22:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:22:5+1
     assume {:print "$at(2,572,573)"} true;
 L1:
 
-    // assert Not(exists[@2]<TestMonomorphization::R<u64>>(Signer::spec_address_of[]($t0))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:24:9+59
+    // assert Not(exists[@2]<TestMonomorphization::R<u64>>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:24:9+59
     assume {:print "$at(2,602,661)"} true;
     assert {:msg "assert_failed(2,602,661): function does not abort under this condition"}
       !$ResourceExists($42_TestMonomorphization_R'u64'_$memory#2, $1_Signer_spec_address_of($t0));
 
-    // assert exists<TestMonomorphization::R<u64>>(Signer::spec_address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:25:9+57
+    // assert exists<TestMonomorphization::R<u64>>(Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:25:9+57
     assume {:print "$at(2,670,727)"} true;
     assert {:msg "assert_failed(2,670,727): post-condition does not hold"}
       $ResourceExists($42_TestMonomorphization_R'u64'_$memory, $1_Signer_spec_address_of($t0));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:25:9+57
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:25:9+57
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:22:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:22:5+1
     assume {:print "$at(2,572,573)"} true;
 L2:
 
-    // assert exists[@2]<TestMonomorphization::R<u64>>(Signer::spec_address_of[]($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:23:5+155
+    // assert exists[@2]<TestMonomorphization::R<u64>>(Signer::spec_address_of[]($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:23:5+155
     assume {:print "$at(2,578,733)"} true;
     assert {:msg "assert_failed(2,578,733): abort not covered by any of the `aborts_if` clauses"}
       $ResourceExists($42_TestMonomorphization_R'u64'_$memory#2, $1_Signer_spec_address_of($t0));
 
-    // abort($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:23:5+155
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:23:5+155
     $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::create_R_generic [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
+// fun TestMonomorphization::create_R_generic [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
 procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0: int, _$t1: #0, _$t2: #0) returns ()
 {
     // declare local variables
@@ -2353,37 +2353,37 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0:
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
     assume {:print "$at(2,969,1085)"} true;
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
     assume $IsValid'#0'($t1);
 
-    // assume WellFormed($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
     assume $IsValid'#0'($t2);
 
-    // assume forall $rsc: ResourceDomain<TestMonomorphization::R<#0>>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
+    // assume forall $rsc: ResourceDomain<TestMonomorphization::R<#0>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
     assume (forall $a_0: int :: {$ResourceValue($42_TestMonomorphization_R'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestMonomorphization_R'#0'_$memory, $a_0);
     ($IsValid'$42_TestMonomorphization_R'#0''($rsc))));
 
-    // @1 := save_mem(TestMonomorphization::R<#0>) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
+    // @1 := save_mem(TestMonomorphization::R<#0>) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
     $42_TestMonomorphization_R'#0'_$memory#1 := $42_TestMonomorphization_R'#0'_$memory;
 
-    // trace_local[account]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
     assume {:print "$track_local(5,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
     assume {:print "$track_local(5,1,1):", $t1} $t1 == $t1;
 
-    // trace_local[y]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+1
     assume {:print "$track_local(5,1,2):", $t2} $t2 == $t2;
 
-    // $t3 := pack TestMonomorphization::R<#0>($t1, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:36:32+7
+    // $t3 := pack TestMonomorphization::R<#0>($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:36:32+7
     assume {:print "$at(2,1070,1077)"} true;
     $t3 := $42_TestMonomorphization_R'#0'($t1, $t2);
 
-    // move_to<TestMonomorphization::R<#0>>($t3, $t0) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:36:9+7
+    // move_to<TestMonomorphization::R<#0>>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:36:9+7
     if ($ResourceExists($42_TestMonomorphization_R'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -2396,40 +2396,40 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0:
         goto L2;
     }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:37:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:37:5+1
     assume {:print "$at(2,1084,1085)"} true;
 L1:
 
-    // assert Not(exists[@1]<TestMonomorphization::R<#0>>(Signer::spec_address_of[]($t0))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:39:9+57
+    // assert Not(exists[@1]<TestMonomorphization::R<#0>>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:39:9+57
     assume {:print "$at(2,1122,1179)"} true;
     assert {:msg "assert_failed(2,1122,1179): function does not abort under this condition"}
       !$ResourceExists($42_TestMonomorphization_R'#0'_$memory#1, $1_Signer_spec_address_of($t0));
 
-    // assert exists<TestMonomorphization::R<#0>>(Signer::spec_address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:40:9+55
+    // assert exists<TestMonomorphization::R<#0>>(Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:40:9+55
     assume {:print "$at(2,1188,1243)"} true;
     assert {:msg "assert_failed(2,1188,1243): post-condition does not hold"}
       $ResourceExists($42_TestMonomorphization_R'#0'_$memory, $1_Signer_spec_address_of($t0));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:40:9+55
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:40:9+55
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:37:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:37:5+1
     assume {:print "$at(2,1084,1085)"} true;
 L2:
 
-    // assert exists[@1]<TestMonomorphization::R<#0>>(Signer::spec_address_of[]($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:38:5+159
+    // assert exists[@1]<TestMonomorphization::R<#0>>(Signer::spec_address_of[]($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:38:5+159
     assume {:print "$at(2,1090,1249)"} true;
     assert {:msg "assert_failed(2,1090,1249): abort not covered by any of the `aborts_if` clauses"}
       $ResourceExists($42_TestMonomorphization_R'#0'_$memory#1, $1_Signer_spec_address_of($t0));
 
-    // abort($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:38:5+159
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:38:5+159
     $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::mutate_R [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:28:5+105
+// fun TestMonomorphization::mutate_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:28:5+105
 procedure {:timeLimit 40} $42_TestMonomorphization_mutate_R$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -2448,26 +2448,26 @@ procedure {:timeLimit 40} $42_TestMonomorphization_mutate_R$verify(_$t0: int) re
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:28:5+105
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:28:5+105
     assume {:print "$at(2,739,844)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<TestMonomorphization::R<bool>>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:28:5+105
+    // assume forall $rsc: ResourceDomain<TestMonomorphization::R<bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:28:5+105
     assume (forall $a_0: int :: {$ResourceValue($42_TestMonomorphization_R'bool'_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestMonomorphization_R'bool'_$memory, $a_0);
     ($IsValid'$42_TestMonomorphization_R'bool''($rsc))));
 
-    // @0 := save_mem(TestMonomorphization::R<bool>) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:28:5+1
+    // @0 := save_mem(TestMonomorphization::R<bool>) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:28:5+1
     $42_TestMonomorphization_R'bool'_$memory#0 := $42_TestMonomorphization_R'bool'_$memory;
 
-    // trace_local[addr]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:28:5+1
+    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:28:5+1
     assume {:print "$track_local(5,2,0):", $t0} $t0 == $t0;
 
-    // $t1 := false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:29:46+5
+    // $t1 := false at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:29:46+5
     assume {:print "$at(2,832,837)"} true;
     $t1 := false;
     assume $IsValid'bool'($t1);
 
-    // $t2 := borrow_global<TestMonomorphization::R<bool>>($t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:29:9+17
+    // $t2 := borrow_global<TestMonomorphization::R<bool>>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:29:9+17
     if (!$ResourceExists($42_TestMonomorphization_R'bool'_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -2480,43 +2480,43 @@ procedure {:timeLimit 40} $42_TestMonomorphization_mutate_R$verify(_$t0: int) re
         goto L2;
     }
 
-    // $t4 := borrow_field<TestMonomorphization::R<bool>>.y($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:29:9+34
+    // $t4 := borrow_field<TestMonomorphization::R<bool>>.y($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:29:9+34
     $t4 := $ChildMutation($t2, 1, $y#$42_TestMonomorphization_R'bool'($Dereference($t2)));
 
-    // write_ref($t4, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:29:9+42
+    // write_ref($t4, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:29:9+42
     $t4 := $UpdateMutation($t4, $t1);
 
-    // write_back[Reference($t2).y]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:29:9+42
+    // write_back[Reference($t2).y]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:29:9+42
     $t2 := $UpdateMutation($t2, $Update'$42_TestMonomorphization_R'bool''_y($Dereference($t2), $Dereference($t4)));
 
-    // write_back[TestMonomorphization::R<bool>@]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:29:9+42
+    // write_back[TestMonomorphization::R<bool>@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:29:9+42
     $42_TestMonomorphization_R'bool'_$memory := $ResourceUpdate($42_TestMonomorphization_R'bool'_$memory, $GlobalLocationAddress($t2),
         $Dereference($t2));
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:30:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:30:5+1
     assume {:print "$at(2,843,844)"} true;
 L1:
 
-    // assert Eq<TestMonomorphization::R<bool>>(global<TestMonomorphization::R<bool>>($t0), update TestMonomorphization::R.y<TestMonomorphization::R<bool>>(global[@0]<TestMonomorphization::R<bool>>($t0), false)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:32:9+84
+    // assert Eq<TestMonomorphization::R<bool>>(global<TestMonomorphization::R<bool>>($t0), update TestMonomorphization::R.y<TestMonomorphization::R<bool>>(global[@0]<TestMonomorphization::R<bool>>($t0), false)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:32:9+84
     assume {:print "$at(2,873,957)"} true;
     assert {:msg "assert_failed(2,873,957): post-condition does not hold"}
       $IsEqual'$42_TestMonomorphization_R'bool''($ResourceValue($42_TestMonomorphization_R'bool'_$memory, $t0), $Update'$42_TestMonomorphization_R'bool''_y($ResourceValue($42_TestMonomorphization_R'bool'_$memory#0, $t0), false));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:32:9+84
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:32:9+84
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:30:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:30:5+1
     assume {:print "$at(2,843,844)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:30:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:30:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::pack_R [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:12:5+57
+// fun TestMonomorphization::pack_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:12:5+57
 procedure {:timeLimit 40} $42_TestMonomorphization_pack_R$verify() returns ($ret0: $42_TestMonomorphization_R'u64')
 {
     // declare local variables
@@ -2529,37 +2529,37 @@ procedure {:timeLimit 40} $42_TestMonomorphization_pack_R$verify() returns ($ret
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:13:14+1
+    // $t0 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:13:14+1
     assume {:print "$at(2,340,341)"} true;
     $t0 := 1;
     assume $IsValid'u64'($t0);
 
-    // $t1 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:13:20+1
+    // $t1 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:13:20+1
     $t1 := 2;
     assume $IsValid'u64'($t1);
 
-    // $t2 := pack TestMonomorphization::R<u64>($t0, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:13:9+13
+    // $t2 := pack TestMonomorphization::R<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:13:9+13
     $t2 := $42_TestMonomorphization_R'u64'($t0, $t1);
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:13:9+13
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:13:9+13
     assume {:print "$track_return(5,3,0):", $t2} $t2 == $t2;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:14:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:14:5+1
     assume {:print "$at(2,353,354)"} true;
 L1:
 
-    // assert Eq<TestMonomorphization::R<u64>>($t2, TestMonomorphization::spec_pack_R()) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:16:9+32
+    // assert Eq<TestMonomorphization::R<u64>>($t2, TestMonomorphization::spec_pack_R()) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:16:9+32
     assume {:print "$at(2,381,413)"} true;
     assert {:msg "assert_failed(2,381,413): post-condition does not hold"}
       $IsEqual'$42_TestMonomorphization_R'u64''($t2, $42_TestMonomorphization_spec_pack_R());
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:16:9+32
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:16:9+32
     $ret0 := $t2;
     return;
 
 }
 
-// fun TestMonomorphization::use_bcs [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:46:5+111
+// fun TestMonomorphization::use_bcs [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:46:5+111
 procedure {:timeLimit 40} $42_TestMonomorphization_use_bcs$verify(_$t0: #0) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -2579,15 +2579,15 @@ procedure {:timeLimit 40} $42_TestMonomorphization_use_bcs$verify(_$t0: #0) retu
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:51:17+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:51:17+8
     assume {:print "$at(2,1498,1506)"} true;
     assume $IsValid'#0'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:46:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:46:5+1
     assume {:print "$at(2,1304,1305)"} true;
     assume {:print "$track_local(5,4,0):", $t0} $t0 == $t0;
 
-    // $t3 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:10+16
+    // $t3 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:10+16
     assume {:print "$at(2,1370,1386)"} true;
     call $t3 := $1_BCS_to_bytes'#0'($t0);
     if ($abort_flag) {
@@ -2597,17 +2597,17 @@ procedure {:timeLimit 40} $42_TestMonomorphization_use_bcs$verify(_$t0: #0) retu
         goto L2;
     }
 
-    // trace_local[tmp#$2]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:10+16
+    // trace_local[tmp#$2]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:10+16
     assume {:print "$track_local(5,4,2):", $t3} $t3 == $t3;
 
-    // $t5 := 0x2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:43+4
+    // $t5 := 0x2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:43+4
     $t5 := 2;
     assume $IsValid'address'($t5);
 
-    // trace_local[tmp#$1]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:43+4
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:43+4
     assume {:print "$track_local(5,4,1):", $t5} $t5 == $t5;
 
-    // $t6 := BCS::to_bytes<address>($t5) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:28+20
+    // $t6 := BCS::to_bytes<address>($t5) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:28+20
     call $t6 := $1_BCS_to_bytes'address'($t5);
     if ($abort_flag) {
         assume {:print "$at(2,1388,1408)"} true;
@@ -2616,43 +2616,43 @@ procedure {:timeLimit 40} $42_TestMonomorphization_use_bcs$verify(_$t0: #0) retu
         goto L2;
     }
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:9+40
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:9+40
     assume {:print "$track_return(5,4,0):", $t3} $t3 == $t3;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:47:9+40
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:47:9+40
     assume {:print "$track_return(5,4,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:48:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:48:5+1
     assume {:print "$at(2,1414,1415)"} true;
 L1:
 
-    // assert Eq<vector<u8>>($t3, BCS::serialize<#0>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:50:9+38
+    // assert Eq<vector<u8>>($t3, BCS::serialize<#0>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:50:9+38
     assume {:print "$at(2,1443,1481)"} true;
     assert {:msg "assert_failed(2,1443,1481): post-condition does not hold"}
       $IsEqual'vec'u8''($t3, $1_BCS_serialize'#0'($t0));
 
-    // assert Eq<vector<u8>>($t6, BCS::serialize<address>(2)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:51:9+41
+    // assert Eq<vector<u8>>($t6, BCS::serialize<address>(2)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:51:9+41
     assume {:print "$at(2,1490,1531)"} true;
     assert {:msg "assert_failed(2,1490,1531): post-condition does not hold"}
       $IsEqual'vec'u8''($t6, $1_BCS_serialize'address'(2));
 
-    // return ($t3, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:51:9+41
+    // return ($t3, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:51:9+41
     $ret0 := $t3;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:48:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:48:5+1
     assume {:print "$at(2,1414,1415)"} true;
 L2:
 
-    // abort($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:48:5+1
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:48:5+1
     $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::use_event [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:58:5+110
+// fun TestMonomorphization::use_event [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:58:5+110
 procedure {:timeLimit 40} $42_TestMonomorphization_use_event$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestMonomorphization_E')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestMonomorphization_E'))
 {
     // declare local variables
@@ -2668,23 +2668,23 @@ procedure {:timeLimit 40} $42_TestMonomorphization_use_event$verify(_$t0: $Mutat
     assume l#$Mutation($t0) == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:58:5+110
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:58:5+110
     assume {:print "$at(2,1604,1714)"} true;
     assume $IsValid'$1_Event_EventHandle'$42_TestMonomorphization_E''($Dereference($t0));
 
-    // trace_local[handle]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:58:5+1
+    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:58:5+1
     $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E'' := $Dereference($t0);
     assume {:print "$track_local(5,5,0):", $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E''} $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E'' == $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E'';
 
-    // $t1 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:59:42+1
+    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:59:42+1
     assume {:print "$at(2,1704,1705)"} true;
     $t1 := 0;
     assume $IsValid'u64'($t1);
 
-    // $t2 := pack TestMonomorphization::E($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:59:35+9
+    // $t2 := pack TestMonomorphization::E($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:59:35+9
     $t2 := $42_TestMonomorphization_E($t1);
 
-    // Event::emit_event<TestMonomorphization::E>($t0, $t2) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:59:9+36
+    // Event::emit_event<TestMonomorphization::E>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:59:9+36
     call $t0 := $1_Event_emit_event'$42_TestMonomorphization_E'($t0, $t2);
     if ($abort_flag) {
         assume {:print "$at(2,1671,1707)"} true;
@@ -2693,40 +2693,40 @@ procedure {:timeLimit 40} $42_TestMonomorphization_use_event$verify(_$t0: $Mutat
         goto L2;
     }
 
-    // trace_local[handle]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:59:45+1
+    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:59:45+1
     $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E'' := $Dereference($t0);
     assume {:print "$track_local(5,5,0):", $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E''} $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E'' == $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E'';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:60:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:60:5+1
     assume {:print "$at(2,1713,1714)"} true;
 L1:
 
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestMonomorphization::E(0), $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:62:9+26
+    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestMonomorphization::E(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:62:9+26
     assume {:print "$at(2,1744,1770)"} true;
     assert {:msg "assert_failed(2,1744,1770): function does not emit the expected event"}
       (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestMonomorphization_E'($EmptyEventStore, $Dereference($t0), $42_TestMonomorphization_E(0)); $EventStore__is_subset(expected, actual)));
 
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestMonomorphization::E(0), $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:61:5+57
+    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestMonomorphization::E(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:61:5+57
     assume {:print "$at(2,1719,1776)"} true;
     assert {:msg "assert_failed(2,1719,1776): emitted event not covered by any of the `emits` clauses"}
       (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestMonomorphization_E'($EmptyEventStore, $Dereference($t0), $42_TestMonomorphization_E(0)); $EventStore__is_subset(actual, expected)));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:61:5+57
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:61:5+57
     $ret0 := $t0;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:60:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:60:5+1
     assume {:print "$at(2,1713,1714)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:60:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:60:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::use_vec [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:43:5+43
+// fun TestMonomorphization::use_vec [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:43:5+43
 procedure {:timeLimit 40} $42_TestMonomorphization_use_vec$verify(_$t0: Vec (int)) returns ()
 {
     // declare local variables
@@ -2738,23 +2738,23 @@ procedure {:timeLimit 40} $42_TestMonomorphization_use_vec$verify(_$t0: Vec (int
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:43:5+43
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:43:5+43
     assume {:print "$at(2,1255,1298)"} true;
     assume $IsValid'vec'u64''($t0);
 
-    // trace_local[_x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:43:5+1
+    // trace_local[_x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:43:5+1
     assume {:print "$track_local(5,6,0):", $t0} $t0 == $t0;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:44:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:44:5+1
     assume {:print "$at(2,1297,1298)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:44:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:44:5+1
     return;
 
 }
 
-// fun TestMonomorphization::vec_addr [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:5+95
+// fun TestMonomorphization::vec_addr [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:5+95
 procedure {:timeLimit 40} $42_TestMonomorphization_vec_addr$verify(_$t0: Vec (int)) returns ($ret0: Vec (int))
 {
     // declare local variables
@@ -2771,22 +2771,22 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_addr$verify(_$t0: Vec (in
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:71:29+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:71:29+6
     assume {:print "$at(2,2293,2299)"} true;
     assume $IsValid'vec'address''($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:5+1
     assume {:print "$at(2,2169,2170)"} true;
     assume {:print "$track_local(5,7,0):", $t0} $t0 == $t0;
 
-    // $t1 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:82+6
+    // $t1 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:82+6
     $t1 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t2 := 0x1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:90+4
+    // $t2 := 0x1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:90+4
     $t2 := 1;
     assume $IsValid'address'($t2);
 
-    // Vector::push_back<address>($t1, $t2) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:64+31
+    // Vector::push_back<address>($t1, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:64+31
     call $t1 := $1_Vector_push_back'address'($t1, $t2);
     if ($abort_flag) {
         assume {:print "$at(2,2228,2259)"} true;
@@ -2795,39 +2795,39 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_addr$verify(_$t0: Vec (in
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:64+31
+    // write_back[LocalRoot($t0)@]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:64+31
     $t0 := $Dereference($t1);
 
-    // $t4 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:97+1
+    // $t4 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:97+1
     $t4 := $t0;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:97+1
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:97+1
     assume {:print "$track_return(5,7,0):", $t4} $t4 == $t4;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:99+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:99+1
 L1:
 
-    // assert Neq<address>(Index($t4, 0), 1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:71:21+26
+    // assert Neq<address>(Index($t4, 0), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:71:21+26
     assume {:print "$at(2,2285,2311)"} true;
     assert {:msg "assert_failed(2,2285,2311): post-condition does not hold"}
       !$IsEqual'address'(ReadVec($t4, 0), 1);
 
-    // return $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:71:21+26
+    // return $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:71:21+26
     $ret0 := $t4;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:99+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:99+1
     assume {:print "$at(2,2263,2264)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:70:99+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70:99+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::vec_bool [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:5+89
+// fun TestMonomorphization::vec_bool [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:5+89
 procedure {:timeLimit 40} $42_TestMonomorphization_vec_bool$verify(_$t0: Vec (bool)) returns ($ret0: Vec (bool))
 {
     // declare local variables
@@ -2844,22 +2844,22 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_bool$verify(_$t0: Vec (bo
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:73:29+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:73:29+6
     assume {:print "$at(2,2436,2442)"} true;
     assume $IsValid'vec'bool''($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:5+1
     assume {:print "$at(2,2318,2319)"} true;
     assume {:print "$track_local(5,8,0):", $t0} $t0 == $t0;
 
-    // $t1 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:76+6
+    // $t1 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:76+6
     $t1 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t2 := true at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:84+4
+    // $t2 := true at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:84+4
     $t2 := true;
     assume $IsValid'bool'($t2);
 
-    // Vector::push_back<bool>($t1, $t2) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:58+31
+    // Vector::push_back<bool>($t1, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:58+31
     call $t1 := $1_Vector_push_back'bool'($t1, $t2);
     if ($abort_flag) {
         assume {:print "$at(2,2371,2402)"} true;
@@ -2868,39 +2868,39 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_bool$verify(_$t0: Vec (bo
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:58+31
+    // write_back[LocalRoot($t0)@]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:58+31
     $t0 := $Dereference($t1);
 
-    // $t4 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:91+1
+    // $t4 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:91+1
     $t4 := $t0;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:91+1
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:91+1
     assume {:print "$track_return(5,8,0):", $t4} $t4 == $t4;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:93+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:93+1
 L1:
 
-    // assert Neq<bool>(Index($t4, 0), true) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:73:21+26
+    // assert Neq<bool>(Index($t4, 0), true) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:73:21+26
     assume {:print "$at(2,2428,2454)"} true;
     assert {:msg "assert_failed(2,2428,2454): post-condition does not hold"}
       !$IsEqual'bool'(ReadVec($t4, 0), true);
 
-    // return $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:73:21+26
+    // return $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:73:21+26
     $ret0 := $t4;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:93+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:93+1
     assume {:print "$at(2,2406,2407)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:72:93+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72:93+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::vec_int [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:5+83
+// fun TestMonomorphization::vec_int [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:5+83
 procedure {:timeLimit 40} $42_TestMonomorphization_vec_int$verify(_$t0: Vec (int)) returns ($ret0: Vec (int))
 {
     // declare local variables
@@ -2917,22 +2917,22 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_int$verify(_$t0: Vec (int
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:69:28+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:69:28+6
     assume {:print "$at(2,2147,2153)"} true;
     assume $IsValid'vec'u64''($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:5+1
     assume {:print "$at(2,2036,2037)"} true;
     assume {:print "$track_local(5,9,0):", $t0} $t0 == $t0;
 
-    // $t1 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:73+6
+    // $t1 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:73+6
     $t1 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t2 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:81+1
+    // $t2 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:81+1
     $t2 := 1;
     assume $IsValid'u64'($t2);
 
-    // Vector::push_back<u64>($t1, $t2) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:55+28
+    // Vector::push_back<u64>($t1, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:55+28
     call $t1 := $1_Vector_push_back'u64'($t1, $t2);
     if ($abort_flag) {
         assume {:print "$at(2,2086,2114)"} true;
@@ -2941,39 +2941,39 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_int$verify(_$t0: Vec (int
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:55+28
+    // write_back[LocalRoot($t0)@]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:55+28
     $t0 := $Dereference($t1);
 
-    // $t4 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:85+1
+    // $t4 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:85+1
     $t4 := $t0;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:85+1
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:85+1
     assume {:print "$track_return(5,9,0):", $t4} $t4 == $t4;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:87+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:87+1
 L1:
 
-    // assert Neq<u64>(Index($t4, 0), 1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:69:20+23
+    // assert Neq<u64>(Index($t4, 0), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:69:20+23
     assume {:print "$at(2,2139,2162)"} true;
     assert {:msg "assert_failed(2,2139,2162): post-condition does not hold"}
       !$IsEqual'u64'(ReadVec($t4, 0), 1);
 
-    // return $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:69:20+23
+    // return $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:69:20+23
     $ret0 := $t4;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:87+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:87+1
     assume {:print "$at(2,2118,2119)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:68:87+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68:87+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::vec_struct_addr [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:5+123
+// fun TestMonomorphization::vec_struct_addr [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:5+123
 procedure {:timeLimit 40} $42_TestMonomorphization_vec_struct_addr$verify(_$t0: Vec ($42_TestMonomorphization_R'address')) returns ($ret0: Vec ($42_TestMonomorphization_R'address'))
 {
     // declare local variables
@@ -2992,29 +2992,29 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_struct_addr$verify(_$t0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:77:36+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:77:36+6
     assume {:print "$at(2,2790,2796)"} true;
     assume $IsValid'vec'$42_TestMonomorphization_R'address'''($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:5+1
     assume {:print "$at(2,2631,2632)"} true;
     assume {:print "$track_local(5,10,0):", $t0} $t0 == $t0;
 
-    // $t1 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:95+6
+    // $t1 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:95+6
     $t1 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t2 := 0x1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:108+4
+    // $t2 := 0x1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:108+4
     $t2 := 1;
     assume $IsValid'address'($t2);
 
-    // $t3 := 0x2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:117+4
+    // $t3 := 0x2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:117+4
     $t3 := 2;
     assume $IsValid'address'($t3);
 
-    // $t4 := pack TestMonomorphization::R<address>($t2, $t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:103+19
+    // $t4 := pack TestMonomorphization::R<address>($t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:103+19
     $t4 := $42_TestMonomorphization_R'address'($t2, $t3);
 
-    // Vector::push_back<TestMonomorphization::R<address>>($t1, $t4) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:77+46
+    // Vector::push_back<TestMonomorphization::R<address>>($t1, $t4) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:77+46
     call $t1 := $1_Vector_push_back'$42_TestMonomorphization_R'address''($t1, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,2703,2749)"} true;
@@ -3023,39 +3023,39 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_struct_addr$verify(_$t0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:77+46
+    // write_back[LocalRoot($t0)@]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:77+46
     $t0 := $Dereference($t1);
 
-    // $t6 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:125+1
+    // $t6 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:125+1
     $t6 := $t0;
 
-    // trace_return[0]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:125+1
+    // trace_return[0]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:125+1
     assume {:print "$track_return(5,10,0):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:127+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:127+1
 L1:
 
-    // assert Neq<address>(select TestMonomorphization::R.x(Index($t6, 0)), 1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:77:28+28
+    // assert Neq<address>(select TestMonomorphization::R.x(Index($t6, 0)), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:77:28+28
     assume {:print "$at(2,2782,2810)"} true;
     assert {:msg "assert_failed(2,2782,2810): post-condition does not hold"}
       !$IsEqual'address'($x#$42_TestMonomorphization_R'address'(ReadVec($t6, 0)), 1);
 
-    // return $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:77:28+28
+    // return $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:77:28+28
     $ret0 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:127+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:127+1
     assume {:print "$at(2,2753,2754)"} true;
 L2:
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:76:127+1
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76:127+1
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::vec_struct_int [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:5+111
+// fun TestMonomorphization::vec_struct_int [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:5+111
 procedure {:timeLimit 40} $42_TestMonomorphization_vec_struct_int$verify(_$t0: Vec ($42_TestMonomorphization_R'u64')) returns ($ret0: Vec ($42_TestMonomorphization_R'u64'))
 {
     // declare local variables
@@ -3074,29 +3074,29 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_struct_int$verify(_$t0: V
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:75:35+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:75:35+6
     assume {:print "$at(2,2607,2613)"} true;
     assume $IsValid'vec'$42_TestMonomorphization_R'u64'''($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:5+1
     assume {:print "$at(2,2461,2462)"} true;
     assume {:print "$track_local(5,11,0):", $t0} $t0 == $t0;
 
-    // $t1 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:86+6
+    // $t1 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:86+6
     $t1 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t2 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:99+4
+    // $t2 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:99+4
     $t2 := 1;
     assume $IsValid'u64'($t2);
 
-    // $t3 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:108+1
+    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:108+1
     $t3 := 1;
     assume $IsValid'u64'($t3);
 
-    // $t4 := pack TestMonomorphization::R<u64>($t2, $t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:94+16
+    // $t4 := pack TestMonomorphization::R<u64>($t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:94+16
     $t4 := $42_TestMonomorphization_R'u64'($t2, $t3);
 
-    // Vector::push_back<TestMonomorphization::R<u64>>($t1, $t4) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:68+43
+    // Vector::push_back<TestMonomorphization::R<u64>>($t1, $t4) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:68+43
     call $t1 := $1_Vector_push_back'$42_TestMonomorphization_R'u64''($t1, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,2524,2567)"} true;
@@ -3105,39 +3105,39 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_struct_int$verify(_$t0: V
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:68+43
+    // write_back[LocalRoot($t0)@]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:68+43
     $t0 := $Dereference($t1);
 
-    // $t6 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:113+1
+    // $t6 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:113+1
     $t6 := $t0;
 
-    // trace_return[0]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:113+1
+    // trace_return[0]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:113+1
     assume {:print "$track_return(5,11,0):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:115+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:115+1
 L1:
 
-    // assert Neq<u64>(select TestMonomorphization::R.x(Index($t6, 0)), 1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:75:27+25
+    // assert Neq<u64>(select TestMonomorphization::R.x(Index($t6, 0)), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:75:27+25
     assume {:print "$at(2,2599,2624)"} true;
     assert {:msg "assert_failed(2,2599,2624): post-condition does not hold"}
       !$IsEqual'u64'($x#$42_TestMonomorphization_R'u64'(ReadVec($t6, 0)), 1);
 
-    // return $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:75:27+25
+    // return $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:75:27+25
     $ret0 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:115+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:115+1
     assume {:print "$at(2,2571,2572)"} true;
 L2:
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:74:115+1
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74:115+1
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMonomorphization::vec_vec [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:79:5+130
+// fun TestMonomorphization::vec_vec [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:79:5+130
 procedure {:timeLimit 40} $42_TestMonomorphization_vec_vec$verify(_$t0: Vec (Vec (int))) returns ($ret0: Vec (Vec (int)))
 {
     // declare local variables
@@ -3154,19 +3154,19 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_vec$verify(_$t0: Vec (Vec
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:82:32+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:82:32+6
     assume {:print "$at(2,2980,2986)"} true;
     assume $IsValid'vec'vec'u64'''($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:79:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:79:5+1
     assume {:print "$at(2,2818,2819)"} true;
     assume {:print "$track_local(5,12,0):", $t0} $t0 == $t0;
 
-    // $t1 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:80:27+6
+    // $t1 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80:27+6
     assume {:print "$at(2,2910,2916)"} true;
     $t1 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t2 := Vector::empty<u64>() on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:80:35+20
+    // $t2 := Vector::empty<u64>() on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80:35+20
     call $t2 := $1_Vector_empty'u64'();
     if ($abort_flag) {
         assume {:print "$at(2,2918,2938)"} true;
@@ -3175,7 +3175,7 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_vec$verify(_$t0: Vec (Vec
         goto L2;
     }
 
-    // Vector::push_back<vector<u64>>($t1, $t2) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:80:9+47
+    // Vector::push_back<vector<u64>>($t1, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80:9+47
     call $t1 := $1_Vector_push_back'vec'u64''($t1, $t2);
     if ($abort_flag) {
         assume {:print "$at(2,2892,2939)"} true;
@@ -3184,33 +3184,33 @@ procedure {:timeLimit 40} $42_TestMonomorphization_vec_vec$verify(_$t0: Vec (Vec
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:80:9+47
+    // write_back[LocalRoot($t0)@]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80:9+47
     $t0 := $Dereference($t1);
 
-    // $t4 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:80:58+1
+    // $t4 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80:58+1
     $t4 := $t0;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:80:58+1
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80:58+1
     assume {:print "$track_return(5,12,0):", $t4} $t4 == $t4;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:81:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:81:5+1
     assume {:print "$at(2,2947,2948)"} true;
 L1:
 
-    // assert Neq<num>(Len<u64>(Index($t4, 0)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:82:20+28
+    // assert Neq<num>(Len<u64>(Index($t4, 0)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:82:20+28
     assume {:print "$at(2,2968,2996)"} true;
     assert {:msg "assert_failed(2,2968,2996): post-condition does not hold"}
       !$IsEqual'num'(LenVec(ReadVec($t4, 0)), 0);
 
-    // return $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:82:20+28
+    // return $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:82:20+28
     $ret0 := $t4;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:81:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:81:5+1
     assume {:print "$at(2,2947,2948)"} true;
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mono.move:81:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:81:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;

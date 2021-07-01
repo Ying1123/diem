@@ -1,0 +1,50 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl
+-monomorphize
+/env:2
+/proverLog:nested_invariants.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $42_TestNestedInvariants_mutate$verify ...
+  [0.161 s, 6 proof obligations]  verified
+
+Verifying $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify ...
+  [0.037 s, 6 proof obligations]  error
+assert_failed(2,287,303): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1076,5): anon0
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1076,5): anon0$1
+
+Verifying $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify ...
+  [0.027 s, 6 proof obligations]  error
+assert_failed(2,689,707): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1195,5): anon0
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1195,5): anon0$1
+
+Verifying $42_TestNestedInvariants_new$verify ...
+  [0.005 s, 3 proof obligations]  verified
+
+Verifying $42_TestNestedInvariants_new_inner_data_invariant_invalid$verify ...
+  [0.006 s, 3 proof obligations]  error
+assert_failed(2,287,303): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1367,5): anon0
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1367,5): anon0$1
+
+Verifying $42_TestNestedInvariants_new_outer_data_invariant_invalid$verify ...
+  [0.008 s, 3 proof obligations]  error
+assert_failed(2,689,707): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1429,5): anon0
+    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.bpl(1429,5): anon0$1
+
+Boogie program verifier finished with 2 verified, 4 errors

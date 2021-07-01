@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct TestModule::R at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:3:5+31
+// struct TestModule::R at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:3:5+31
 type {:datatype} $42_TestModule_R;
 function {:constructor} $42_TestModule_R($value: int): $42_TestModule_R;
 function {:inline} $Update'$42_TestModule_R'_value(s: $42_TestModule_R, x: int): $42_TestModule_R {
@@ -906,7 +906,7 @@ function {:inline} $IsEqual'$42_TestModule_R'(s1: $42_TestModule_R, s2: $42_Test
 }
 var $42_TestModule_R_$memory: $Memory $42_TestModule_R;
 
-// fun TestModule::store [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+// fun TestModule::store [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
 procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) returns ()
 {
     // declare local variables
@@ -924,41 +924,41 @@ procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) retu
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
     assume {:print "$at(2,68,140)"} true;
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
     assume $IsValid'u64'($t1);
 
-    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
     assume (forall $a_0: int :: {$ResourceValue($42_TestModule_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestModule_R_$memory, $a_0);
     ($IsValid'$42_TestModule_R'($rsc))));
 
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
+    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
     assume {:print "$at(2,616,654)"} true;
     assume ($t2 == $1_Signer_spec_address_of($t0));
 
-    // assume Gt($t1, 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:20:9+19
+    // assume Gt($t1, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:20:9+19
     assume {:print "$at(2,414,433)"} true;
     assume ($t1 > 0);
 
-    // trace_local[s]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
+    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
     assume {:print "$at(2,68,69)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // trace_local[value]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
+    // trace_local[value]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
     assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
-    // $t3 := pack TestModule::R($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:22+8
+    // $t3 := pack TestModule::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:22+8
     assume {:print "$at(2,125,133)"} true;
     $t3 := $42_TestModule_R($t1);
 
-    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:8+7
+    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:8+7
     if ($ResourceExists($42_TestModule_R_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -971,41 +971,41 @@ procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) retu
         goto L2;
     }
 
-    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
     assume {:print "$at(2,283,363)"} true;
     assert {:msg "assert_failed(2,283,363): global memory invariant does not hold"}
       (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
     assume {:print "$at(2,139,140)"} true;
 L1:
 
-    // assert exists<TestModule::R>($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
+    // assert exists<TestModule::R>($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
     assume {:print "$at(2,663,687)"} true;
     assert {:msg "assert_failed(2,663,687): post-condition does not hold"}
       $ResourceExists($42_TestModule_R_$memory, $t2);
 
-    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
+    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
     assume {:print "$at(2,696,735)"} true;
     assert {:msg "assert_failed(2,696,735): post-condition does not hold"}
       $IsEqual'u64'($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, $t2)), $t1);
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
     assume {:print "$at(2,139,140)"} true;
 L2:
 
-    // abort($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
     $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestModule::store_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+// fun TestModule::store_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
 procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1: int) returns ()
 {
     // declare local variables
@@ -1023,37 +1023,37 @@ procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1:
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
     assume {:print "$at(2,146,229)"} true;
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
     assume $IsValid'u64'($t1);
 
-    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
     assume (forall $a_0: int :: {$ResourceValue($42_TestModule_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestModule_R_$memory, $a_0);
     ($IsValid'$42_TestModule_R'($rsc))));
 
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
+    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
     assume {:print "$at(2,616,654)"} true;
     assume ($t2 == $1_Signer_spec_address_of($t0));
 
-    // trace_local[s]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
+    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
     assume {:print "$at(2,146,147)"} true;
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[value]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
+    // trace_local[value]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
     assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
 
-    // $t3 := pack TestModule::R($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:23+8
+    // $t3 := pack TestModule::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:23+8
     assume {:print "$at(2,214,222)"} true;
     $t3 := $42_TestModule_R($t1);
 
-    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:9+7
+    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:9+7
     if ($ResourceExists($42_TestModule_R_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -1066,34 +1066,34 @@ procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1:
         goto L2;
     }
 
-    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
     assume {:print "$at(2,283,363)"} true;
     assert {:msg "assert_failed(2,283,363): global memory invariant does not hold"}
       (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
     assume {:print "$at(2,228,229)"} true;
 L1:
 
-    // assert exists<TestModule::R>($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
+    // assert exists<TestModule::R>($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
     assume {:print "$at(2,663,687)"} true;
     assert {:msg "assert_failed(2,663,687): post-condition does not hold"}
       $ResourceExists($42_TestModule_R_$memory, $t2);
 
-    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
+    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
     assume {:print "$at(2,696,735)"} true;
     assert {:msg "assert_failed(2,696,735): post-condition does not hold"}
       $IsEqual'u64'($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, $t2)), $t1);
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
     assume {:print "$at(2,228,229)"} true;
 L2:
 
-    // abort($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
     $abort_code := $t4;
     $abort_flag := true;
     return;

@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestOpaque::opaque_caller [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:16:5+59
+// fun TestOpaque::opaque_caller [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:16:5+59
 procedure {:timeLimit 40} $42_TestOpaque_opaque_caller$verify() returns ($ret0: int)
 {
     // declare local variables
@@ -905,68 +905,68 @@ procedure {:timeLimit 40} $42_TestOpaque_opaque_caller$verify() returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     // >> opaque call: $t0 := TestOpaque::opaque_incorrect()
     assume {:print "$at(2,338,356)"} true;
 
-    // $t0 := opaque begin: TestOpaque::opaque_incorrect() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // $t0 := opaque begin: TestOpaque::opaque_incorrect() at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
 
-    // havoc[val]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     havoc $t1;
     assume $IsValid'bool'($t1);
 
-    // if ($t1) goto L4 else goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     if ($t1) { goto L4; } else { goto L3; }
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
 L4:
 
-    // trace_abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     assume {:print "$at(2,338,356)"} true;
     assume {:print "$track_abort(0,0):", $t2} $t2 == $t2;
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     goto L2;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
 L3:
 
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     assume $IsValid'u64'($t0);
 
-    // assume Eq<u64>($t0, 2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // assume Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     assume $IsEqual'u64'($t0, 2);
 
-    // $t0 := opaque end: TestOpaque::opaque_incorrect() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // $t0 := opaque end: TestOpaque::opaque_incorrect() at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
 
-    // trace_return[0]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
     assume {:print "$track_return(0,0,0):", $t0} $t0 == $t0;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
     assume {:print "$at(2,361,362)"} true;
 L1:
 
-    // assert Eq<u64>($t0, 2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:21:9+20
+    // assert Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:21:9+20
     assume {:print "$at(2,489,509)"} true;
     assert {:msg "assert_failed(2,489,509): post-condition does not hold"}
       $IsEqual'u64'($t0, 2);
 
-    // return $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:21:9+20
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:21:9+20
     $ret0 := $t0;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
     assume {:print "$at(2,361,362)"} true;
 L2:
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestOpaque::opaque_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:8:5+45
+// fun TestOpaque::opaque_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:8:5+45
 procedure {:timeLimit 40} $42_TestOpaque_opaque_incorrect$verify() returns ($ret0: int)
 {
     // declare local variables
@@ -977,24 +977,24 @@ procedure {:timeLimit 40} $42_TestOpaque_opaque_incorrect$verify() returns ($ret
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:9:9+1
+    // $t0 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:9:9+1
     assume {:print "$at(2,197,198)"} true;
     $t0 := 1;
     assume $IsValid'u64'($t0);
 
-    // trace_return[0]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:9:9+1
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:9:9+1
     assume {:print "$track_return(0,1,0):", $t0} $t0 == $t0;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:10:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:10:5+1
     assume {:print "$at(2,203,204)"} true;
 L1:
 
-    // assert Eq<u64>($t0, 2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:13:9+20
+    // assert Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:13:9+20
     assume {:print "$at(2,271,291)"} true;
     assert {:msg "assert_failed(2,271,291): post-condition does not hold"}
       $IsEqual'u64'($t0, 2);
 
-    // return $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/opaque.move:13:9+20
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:13:9+20
     $ret0 := $t0;
     return;
 

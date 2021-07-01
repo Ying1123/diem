@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestAssertWithReferences::simple1 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+194
+// fun TestAssertWithReferences::simple1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+194
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple1$verify(_$t0: int, _$t1: int) returns ()
 {
     // declare local variables
@@ -909,24 +909,24 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple1$verify(_$t0: int,
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+194
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+194
     assume {:print "$at(2,176,370)"} true;
     assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+194
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+194
     assume $IsValid'u64'($t1);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+1
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+1
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:8:5+1
     assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
 
-    // trace_local[y]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:10:9+1
+    // trace_local[y]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:10:9+1
     assume {:print "$at(2,229,230)"} true;
     assume {:print "$track_local(0,0,1):", $t0} $t0 == $t0;
 
-    // $t3 := +($t0, $t0) on_abort goto L2 with $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:11:15+1
+    // $t3 := +($t0, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:11:15+1
     assume {:print "$at(2,250,251)"} true;
     call $t3 := $AddU64($t0, $t0);
     if ($abort_flag) {
@@ -936,42 +936,42 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple1$verify(_$t0: int,
         goto L2;
     }
 
-    // trace_local[z]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:11:9+1
+    // trace_local[z]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:11:9+1
     assume {:print "$track_local(0,0,2):", $t3} $t3 == $t3;
 
-    // assert Eq<u64>($t0, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:13:13+14
+    // assert Eq<u64>($t0, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:13:13+14
     assume {:print "$at(2,282,296)"} true;
     assert {:msg "assert_failed(2,282,296): unknown assertion failed"}
       $IsEqual'u64'($t0, $t0);
 
-    // assert Eq<u64>($t3, Mul(2, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:14:13+16
+    // assert Eq<u64>($t3, Mul(2, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:14:13+16
     assume {:print "$at(2,309,325)"} true;
     assert {:msg "assert_failed(2,309,325): unknown assertion failed"}
       $IsEqual'u64'($t3, (2 * $t0));
 
-    // assert Eq<u64>($t3, Mul(2, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:15:13+16
+    // assert Eq<u64>($t3, Mul(2, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:15:13+16
     assume {:print "$at(2,338,354)"} true;
     assert {:msg "assert_failed(2,338,354): unknown assertion failed"}
       $IsEqual'u64'($t3, (2 * $t0));
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
     assume {:print "$at(2,369,370)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
 L2:
 
-    // abort($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:17:5+1
     $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestAssertWithReferences::simple2 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+115
+// fun TestAssertWithReferences::simple2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+115
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple2$verify(_$t0: $Mutation (int), _$t1: $Mutation (int)) returns ($ret0: $Mutation (int), $ret1: $Mutation (int))
 {
     // declare local variables
@@ -988,54 +988,54 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple2$verify(_$t0: $Mut
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+115
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+115
     assume {:print "$at(2,463,578)"} true;
     assume $IsValid'u64'($Dereference($t0));
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+115
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+115
     assume $IsValid'u64'($Dereference($t1));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,1,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+1
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:21:5+1
     $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,1,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t2 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:22:14+2
+    // $t2 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:22:14+2
     assume {:print "$at(2,516,518)"} true;
     $t2 := $Dereference($t0);
 
-    // write_ref($t1, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:22:9+7
+    // write_ref($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:22:9+7
     $t1 := $UpdateMutation($t1, $t2);
 
-    // assert Eq<u64>($t0, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:24:13+14
+    // assert Eq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:24:13+14
     assume {:print "$at(2,547,561)"} true;
     assert {:msg "assert_failed(2,547,561): unknown assertion failed"}
       $IsEqual'u64'($Dereference($t0), $Dereference($t1));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:25:10+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:25:10+1
     assume {:print "$at(2,571,572)"} true;
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,1,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:25:10+1
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:25:10+1
     $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,1,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:26:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:26:5+1
     assume {:print "$at(2,577,578)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:26:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:26:5+1
     $ret0 := $t0;
     $ret1 := $t1;
     return;
 
 }
 
-// fun TestAssertWithReferences::simple3 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+192
+// fun TestAssertWithReferences::simple3 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+192
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple3$verify(_$t0: $Mutation (int), _$t1: $Mutation (int)) returns ($ret0: $Mutation (int), $ret1: $Mutation (int))
 {
     // declare local variables
@@ -1056,42 +1056,42 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple3$verify(_$t0: $Mut
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+192
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+192
     assume {:print "$at(2,615,807)"} true;
     assume $IsValid'u64'($Dereference($t0));
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+192
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+192
     assume $IsValid'u64'($Dereference($t1));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,2,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+1
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:29:5+1
     $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,2,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t2 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:30:14+2
+    // $t2 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:30:14+2
     assume {:print "$at(2,668,670)"} true;
     $t2 := $Dereference($t0);
 
-    // write_ref($t1, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:30:9+7
+    // write_ref($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:30:9+7
     $t1 := $UpdateMutation($t1, $t2);
 
-    // assert Eq<u64>($t0, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:32:13+14
+    // assert Eq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:32:13+14
     assume {:print "$at(2,699,713)"} true;
     assert {:msg "assert_failed(2,699,713): unknown assertion failed"}
       $IsEqual'u64'($Dereference($t0), $Dereference($t1));
 
-    // $t3 := read_ref($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:14+2
+    // $t3 := read_ref($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:14+2
     assume {:print "$at(2,738,740)"} true;
     $t3 := $Dereference($t1);
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:19+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:19+1
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t5 := +($t3, $t4) on_abort goto L2 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:17+1
+    // $t5 := +($t3, $t4) on_abort goto L2 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:17+1
     call $t5 := $AddU64($t3, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,741,742)"} true;
@@ -1100,43 +1100,43 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple3$verify(_$t0: $Mut
         goto L2;
     }
 
-    // write_ref($t1, $t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:9+11
+    // write_ref($t1, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:34:9+11
     $t1 := $UpdateMutation($t1, $t5);
 
-    // assert Eq<num>(Add($t0, 1), $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:36:13+18
+    // assert Eq<num>(Add($t0, 1), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:36:13+18
     assume {:print "$at(2,773,791)"} true;
     assert {:msg "assert_failed(2,773,791): unknown assertion failed"}
       $IsEqual'num'(($Dereference($t0) + 1), $Dereference($t1));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:35:9+47
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:35:9+47
     assume {:print "$at(2,754,801)"} true;
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,2,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:35:9+47
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:35:9+47
     $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,2,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
     assume {:print "$at(2,806,807)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
     $ret0 := $t0;
     $ret1 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
 L2:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:38:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestAssertWithReferences::simple4 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+451
+// fun TestAssertWithReferences::simple4 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+451
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple4$verify(_$t0: $Mutation (int), _$t1: $Mutation (int)) returns ($ret0: $Mutation (int), $ret1: $Mutation (int))
 {
     // declare local variables
@@ -1169,36 +1169,36 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple4$verify(_$t0: $Mut
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+451
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+451
     assume {:print "$at(2,844,1295)"} true;
     assume $IsValid'u64'($Dereference($t0));
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+451
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+451
     assume $IsValid'u64'($Dereference($t1));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,3,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+1
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:41:5+1
     $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,3,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t7 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:43:14+2
+    // $t7 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:43:14+2
     assume {:print "$at(2,912,914)"} true;
     $t7 := $Dereference($t0);
 
-    // write_ref($t1, $t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:43:9+7
+    // write_ref($t1, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:43:9+7
     $t1 := $UpdateMutation($t1, $t7);
 
-    // $t8 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:13+2
+    // $t8 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:13+2
     assume {:print "$at(2,928,930)"} true;
     $t8 := $Dereference($t0);
 
-    // $t9 := read_ref($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:18+2
+    // $t9 := read_ref($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:18+2
     $t9 := $Dereference($t1);
 
-    // $t10 := +($t8, $t9) on_abort goto L2 with $t11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:16+1
+    // $t10 := +($t8, $t9) on_abort goto L2 with $t11 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:16+1
     call $t10 := $AddU64($t8, $t9);
     if ($abort_flag) {
         assume {:print "$at(2,931,932)"} true;
@@ -1207,64 +1207,64 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple4$verify(_$t0: $Mut
         goto L2;
     }
 
-    // trace_local[z]($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:9+1
+    // trace_local[z]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:44:9+1
     assume {:print "$track_local(0,3,6):", $t10} $t10 == $t10;
 
-    // $t12 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:45:18+2
+    // $t12 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:45:18+2
     assume {:print "$at(2,954,956)"} true;
     $t12 := $Dereference($t0);
 
-    // trace_local[vx]($t12) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:45:13+2
+    // trace_local[vx]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:45:13+2
     assume {:print "$track_local(0,3,4):", $t12} $t12 == $t12;
 
-    // $t13 := read_ref($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:46:18+2
+    // $t13 := read_ref($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:46:18+2
     assume {:print "$at(2,975,977)"} true;
     $t13 := $Dereference($t1);
 
-    // trace_local[vy]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:46:13+2
+    // trace_local[vy]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:46:13+2
     assume {:print "$track_local(0,3,5):", $t13} $t13 == $t13;
 
-    // $t14 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:47:18+9
+    // $t14 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:47:18+9
     assume {:print "$at(2,996,1005)"} true;
     $t14 := $Dereference($t0);
 
-    // trace_local[fx]($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:47:13+2
+    // trace_local[fx]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:47:13+2
     assume {:print "$track_local(0,3,2):", $t14} $t14 == $t14;
 
-    // $t15 := read_ref($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:48:18+9
+    // $t15 := read_ref($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:48:18+9
     assume {:print "$at(2,1024,1033)"} true;
     $t15 := $Dereference($t1);
 
-    // trace_local[fy]($t15) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:48:13+2
+    // trace_local[fy]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:48:13+2
     assume {:print "$track_local(0,3,3):", $t15} $t15 == $t15;
 
-    // assert Eq<u64>($t14, $t15) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:50:13+16
+    // assert Eq<u64>($t14, $t15) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:50:13+16
     assume {:print "$at(2,1062,1078)"} true;
     assert {:msg "assert_failed(2,1062,1078): unknown assertion failed"}
       $IsEqual'u64'($t14, $t15);
 
-    // assert Eq<u64>($t12, $t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:51:13+16
+    // assert Eq<u64>($t12, $t13) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:51:13+16
     assume {:print "$at(2,1091,1107)"} true;
     assert {:msg "assert_failed(2,1091,1107): unknown assertion failed"}
       $IsEqual'u64'($t12, $t13);
 
-    // assert Eq<u64>($t10, Mul(2, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:52:13+16
+    // assert Eq<u64>($t10, Mul(2, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:52:13+16
     assume {:print "$at(2,1120,1136)"} true;
     assert {:msg "assert_failed(2,1120,1136): unknown assertion failed"}
       $IsEqual'u64'($t10, (2 * $Dereference($t0)));
 
-    // destroy($t15) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:54:9+1
+    // destroy($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:54:9+1
     assume {:print "$at(2,1156,1157)"} true;
 
-    // $t16 := read_ref($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:14+2
+    // $t16 := read_ref($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:14+2
     assume {:print "$at(2,1191,1193)"} true;
     $t16 := $Dereference($t1);
 
-    // $t17 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:19+1
+    // $t17 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:19+1
     $t17 := 1;
     assume $IsValid'u64'($t17);
 
-    // $t18 := +($t16, $t17) on_abort goto L2 with $t11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:17+1
+    // $t18 := +($t16, $t17) on_abort goto L2 with $t11 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:17+1
     call $t18 := $AddU64($t16, $t17);
     if ($abort_flag) {
         assume {:print "$at(2,1194,1195)"} true;
@@ -1273,48 +1273,48 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple4$verify(_$t0: $Mut
         goto L2;
     }
 
-    // write_ref($t1, $t18) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:9+11
+    // write_ref($t1, $t18) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:55:9+11
     $t1 := $UpdateMutation($t1, $t18);
 
-    // assert Eq<num>(Add($t0, 1), $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:57:13+18
+    // assert Eq<num>(Add($t0, 1), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:57:13+18
     assume {:print "$at(2,1226,1244)"} true;
     assert {:msg "assert_failed(2,1226,1244): unknown assertion failed"}
       $IsEqual'num'(($Dereference($t0) + 1), $Dereference($t1));
 
-    // assert Eq<num>(Add($t10, 1), Add($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:58:13+22
+    // assert Eq<num>(Add($t10, 1), Add($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:58:13+22
     assume {:print "$at(2,1257,1279)"} true;
     assert {:msg "assert_failed(2,1257,1279): unknown assertion failed"}
       $IsEqual'num'(($t10 + 1), ($Dereference($t0) + $Dereference($t1)));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:56:9+82
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:56:9+82
     assume {:print "$at(2,1207,1289)"} true;
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,3,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:56:9+82
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:56:9+82
     $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,3,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
     assume {:print "$at(2,1294,1295)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
     $ret0 := $t0;
     $ret1 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
 L2:
 
-    // abort($t11) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
+    // abort($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:60:5+1
     $abort_code := $t11;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestAssertWithReferences::simple5 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:63:5+262
+// fun TestAssertWithReferences::simple5 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:63:5+262
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple5$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1333,79 +1333,79 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple5$verify(_$t0: int)
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:79:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:79:17+6
     assume {:print "$at(2,1630,1636)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[n]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:63:5+1
+    // trace_local[n]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:63:5+1
     assume {:print "$at(2,1332,1333)"} true;
     assume {:print "$track_local(0,4,0):", $t0} $t0 == $t0;
 
-    // $t2 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:64:17+1
+    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:64:17+1
     assume {:print "$at(2,1375,1376)"} true;
     $t2 := 0;
     assume $IsValid'u64'($t2);
 
-    // trace_local[x]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:64:13+1
+    // trace_local[x]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:64:13+1
     assume {:print "$track_local(0,4,1):", $t2} $t2 == $t2;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:67:13+51
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:67:13+51
     assume {:print "$at(2,1406,1457)"} true;
 L3:
 
-    // assert Le($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // assert Le($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     assume {:print "$at(2,1429,1443)"} true;
     assert {:msg "assert_failed(2,1429,1443): base case of the loop invariant does not hold"}
       ($t2 <= $t0);
 
-    // havoc[val]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     havoc $t2;
     assume $IsValid'u64'($t2);
 
-    // havoc[val]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     havoc $t3;
     assume $IsValid'bool'($t3);
 
-    // havoc[val]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     havoc $t4;
     assume $IsValid'bool'($t4);
 
-    // havoc[val]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     havoc $t5;
     assume $IsValid'u64'($t5);
 
-    // havoc[val]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     havoc $t6;
     assume $IsValid'u64'($t6);
 
-    // assume Not(AbortFlag()) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     assume !$abort_flag;
 
-    // assume Le($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // assume Le($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     assume ($t2 <= $t0);
 
-    // $t3 := <($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:21+1
+    // $t3 := <($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:21+1
     assume {:print "$at(2,1479,1480)"} true;
     call $t3 := $Lt($t2, $t0);
 
-    // $t4 := !($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:17+1
+    // $t4 := !($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:17+1
     call $t4 := $Not($t3);
 
-    // if ($t4) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:13+19
+    // if ($t4) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:13+19
     if ($t4) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:13+19
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:70:13+19
 L1:
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:17+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:17+1
     assume {:print "$at(2,1508,1509)"} true;
 L2:
 
-    // $t5 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:21+1
+    // $t5 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:21+1
     $t5 := 1;
     assume $IsValid'u64'($t5);
 
-    // $t6 := +($t2, $t5) on_abort goto L6 with $t7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:19+1
+    // $t6 := +($t2, $t5) on_abort goto L6 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:19+1
     call $t6 := $AddU64($t2, $t5);
     if ($abort_flag) {
         assume {:print "$at(2,1510,1511)"} true;
@@ -1414,67 +1414,67 @@ L2:
         goto L6;
     }
 
-    // trace_local[x]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:13+1
+    // trace_local[x]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:13+1
     assume {:print "$track_local(0,4,1):", $t6} $t6 == $t6;
 
-    // goto L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:22+1
+    // goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:71:22+1
     goto L4;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:73:9+43
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:73:9+43
     assume {:print "$at(2,1534,1577)"} true;
 L0:
 
-    // assert Eq<u64>($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:74:13+14
+    // assert Eq<u64>($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:74:13+14
     assume {:print "$at(2,1553,1567)"} true;
     assert {:msg "assert_failed(2,1553,1567): unknown assertion failed"}
       $IsEqual'u64'($t2, $t0);
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:76:9+1
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:76:9+1
     assume {:print "$at(2,1587,1588)"} true;
     assume {:print "$track_return(0,4,0):", $t2} $t2 == $t2;
 
-    // goto L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:76:9+1
+    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:76:9+1
     goto L5;
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:73:9+43
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:73:9+43
     // Loop invariant checking block for the loop started with header: L3
     assume {:print "$at(2,1534,1577)"} true;
 L4:
 
-    // assert Le($t6, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // assert Le($t6, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     assume {:print "$at(2,1429,1443)"} true;
     assert {:msg "assert_failed(2,1429,1443): induction case of the loop invariant does not hold"}
       ($t6 <= $t0);
 
-    // stop() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:68:17+14
     assume false;
     return;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:77:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:77:5+1
     assume {:print "$at(2,1593,1594)"} true;
 L5:
 
-    // assert Eq<u64>($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:79:9+20
+    // assert Eq<u64>($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:79:9+20
     assume {:print "$at(2,1622,1642)"} true;
     assert {:msg "assert_failed(2,1622,1642): post-condition does not hold"}
       $IsEqual'u64'($t2, $t0);
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:79:9+20
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:79:9+20
     $ret0 := $t2;
     return;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:77:5+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:77:5+1
     assume {:print "$at(2,1593,1594)"} true;
 L6:
 
-    // abort($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:77:5+1
+    // abort($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:77:5+1
     $abort_code := $t7;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestAssertWithReferences::simple6 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:83:5+264
+// fun TestAssertWithReferences::simple6 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:83:5+264
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple6$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1492,76 +1492,76 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple6$verify(_$t0: int)
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:100:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:100:17+6
     assume {:print "$at(2,1985,1991)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[n]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:83:5+1
+    // trace_local[n]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:83:5+1
     assume {:print "$at(2,1685,1686)"} true;
     assume {:print "$track_local(0,5,0):", $t0} $t0 == $t0;
 
-    // $t2 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:84:17+1
+    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:84:17+1
     assume {:print "$at(2,1728,1729)"} true;
     $t2 := 0;
     assume $IsValid'u64'($t2);
 
-    // trace_local[x]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:84:13+1
+    // trace_local[x]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:84:13+1
     assume {:print "$track_local(0,5,1):", $t2} $t2 == $t2;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:87:13+51
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:87:13+51
     assume {:print "$at(2,1761,1812)"} true;
 L3:
 
-    // assert Le($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // assert Le($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     assume {:print "$at(2,1784,1798)"} true;
     assert {:msg "assert_failed(2,1784,1798): base case of the loop invariant does not hold"}
       ($t2 <= $t0);
 
-    // havoc[val]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     havoc $t2;
     assume $IsValid'u64'($t2);
 
-    // havoc[val]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     havoc $t3;
     assume $IsValid'bool'($t3);
 
-    // havoc[val]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     havoc $t4;
     assume $IsValid'u64'($t4);
 
-    // havoc[val]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     havoc $t5;
     assume $IsValid'u64'($t5);
 
-    // assume Not(AbortFlag()) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     assume !$abort_flag;
 
-    // assume Le($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // assume Le($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     assume ($t2 <= $t0);
 
-    // $t3 := <($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:90:16+1
+    // $t3 := <($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:90:16+1
     assume {:print "$at(2,1829,1830)"} true;
     call $t3 := $Lt($t2, $t0);
 
-    // if ($t3) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:86:9+139
+    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:86:9+139
     assume {:print "$at(2,1740,1879)"} true;
     if ($t3) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:86:9+139
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:86:9+139
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:86:9+139
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:86:9+139
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:17+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:17+1
     assume {:print "$at(2,1863,1864)"} true;
 L0:
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:21+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:21+1
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t5 := +($t2, $t4) on_abort goto L6 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:19+1
+    // $t5 := +($t2, $t4) on_abort goto L6 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:19+1
     call $t5 := $AddU64($t2, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,1865,1866)"} true;
@@ -1570,67 +1570,67 @@ L0:
         goto L6;
     }
 
-    // trace_local[x]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:13+1
+    // trace_local[x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:13+1
     assume {:print "$track_local(0,5,1):", $t5} $t5 == $t5;
 
-    // goto L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:22+1
+    // goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:92:22+1
     goto L4;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:94:9+43
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:94:9+43
     assume {:print "$at(2,1889,1932)"} true;
 L2:
 
-    // assert Eq<u64>($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:95:13+14
+    // assert Eq<u64>($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:95:13+14
     assume {:print "$at(2,1908,1922)"} true;
     assert {:msg "assert_failed(2,1908,1922): unknown assertion failed"}
       $IsEqual'u64'($t2, $t0);
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:97:9+1
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:97:9+1
     assume {:print "$at(2,1942,1943)"} true;
     assume {:print "$track_return(0,5,0):", $t2} $t2 == $t2;
 
-    // goto L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:97:9+1
+    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:97:9+1
     goto L5;
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:94:9+43
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:94:9+43
     // Loop invariant checking block for the loop started with header: L3
     assume {:print "$at(2,1889,1932)"} true;
 L4:
 
-    // assert Le($t5, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // assert Le($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     assume {:print "$at(2,1784,1798)"} true;
     assert {:msg "assert_failed(2,1784,1798): induction case of the loop invariant does not hold"}
       ($t5 <= $t0);
 
-    // stop() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:88:17+14
     assume false;
     return;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:98:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:98:5+1
     assume {:print "$at(2,1948,1949)"} true;
 L5:
 
-    // assert Eq<u64>($t2, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:100:9+20
+    // assert Eq<u64>($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:100:9+20
     assume {:print "$at(2,1977,1997)"} true;
     assert {:msg "assert_failed(2,1977,1997): post-condition does not hold"}
       $IsEqual'u64'($t2, $t0);
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:100:9+20
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:100:9+20
     $ret0 := $t2;
     return;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:98:5+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:98:5+1
     assume {:print "$at(2,1948,1949)"} true;
 L6:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:98:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:98:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestAssertWithReferences::simple7 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+396
+// fun TestAssertWithReferences::simple7 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+396
 procedure {:timeLimit 40} $42_TestAssertWithReferences_simple7$verify(_$t0: $Mutation (int), _$t1: int) returns ($ret0: int, $ret1: $Mutation (int))
 {
     // declare local variables
@@ -1656,100 +1656,100 @@ procedure {:timeLimit 40} $42_TestAssertWithReferences_simple7$verify(_$t0: $Mut
     assume l#$Mutation($t0) == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:27+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:27+6
     assume {:print "$at(2,2482,2488)"} true;
     assume $IsValid'u64'($Dereference($t0));
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:27+6
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:27+6
     assume $IsValid'u64'($t1);
 
-    // $t5 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
+    // $t5 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
     assume {:print "$at(2,2040,2041)"} true;
     $t5 := $Dereference($t0);
 
-    // $t6 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
+    // $t6 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
     $t6 := $Dereference($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
+    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:104:5+1
     assume {:print "$track_local(0,6,1):", $t1} $t1 == $t1;
 
-    // trace_local[a]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:105:13+1
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:105:13+1
     assume {:print "$at(2,2092,2093)"} true;
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,6,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t3 := $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:106:13+1
+    // $t3 := $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:106:13+1
     assume {:print "$at(2,2111,2112)"} true;
     $t3 := $t1;
 
-    // trace_local[b]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:106:13+1
+    // trace_local[b]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:106:13+1
     assume {:print "$track_local(0,6,3):", $t3} $t3 == $t3;
 
-    // $t7 := borrow_local($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:107:17+6
+    // $t7 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:107:17+6
     assume {:print "$at(2,2134,2140)"} true;
     $t7 := $Mutation($Local(3), EmptyVec(), $t3);
 
-    // trace_local[c]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:107:13+1
+    // trace_local[c]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:107:13+1
     $temp_0'u64' := $Dereference($t7);
     assume {:print "$track_local(0,6,4):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t8 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:108:14+2
+    // $t8 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:108:14+2
     assume {:print "$at(2,2155,2157)"} true;
     $t8 := $Dereference($t0);
 
-    // write_ref($t7, $t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:108:9+7
+    // write_ref($t7, $t8) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:108:9+7
     $t7 := $UpdateMutation($t7, $t8);
 
-    // write_ref($t0, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:109:9+6
+    // write_ref($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:109:9+6
     assume {:print "$at(2,2167,2173)"} true;
     $t0 := $UpdateMutation($t0, $t1);
 
-    // assert Eq<u64>($t0, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:111:13+14
+    // assert Eq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:111:13+14
     assume {:print "$at(2,2202,2216)"} true;
     assert {:msg "assert_failed(2,2202,2216): unknown assertion failed"}
       $IsEqual'u64'($Dereference($t0), $t1);
 
-    // assert Eq<u64>($t0, $t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:112:13+14
+    // assert Eq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:112:13+14
     assume {:print "$at(2,2229,2243)"} true;
     assert {:msg "assert_failed(2,2229,2243): unknown assertion failed"}
       $IsEqual'u64'($Dereference($t0), $t1);
 
-    // assert Eq<u64>($t7, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:113:13+19
+    // assert Eq<u64>($t7, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:113:13+19
     assume {:print "$at(2,2256,2275)"} true;
     assert {:msg "assert_failed(2,2256,2275): unknown assertion failed"}
       $IsEqual'u64'($Dereference($t7), $t6);
 
-    // write_back[LocalRoot($t3)@]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:117:13+1
+    // write_back[LocalRoot($t3)@]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:117:13+1
     assume {:print "$at(2,2414,2415)"} true;
     $t3 := $Dereference($t7);
 
-    // destroy($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:117:13+1
+    // destroy($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:117:13+1
 
-    // $t9 := copy($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:118:9+1
+    // $t9 := copy($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:118:9+1
     assume {:print "$at(2,2429,2430)"} true;
     $t9 := $t3;
 
-    // trace_return[0]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:118:9+1
+    // trace_return[0]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:118:9+1
     assume {:print "$track_return(0,6,0):", $t9} $t9 == $t9;
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:118:9+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:118:9+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(0,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:119:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:119:5+1
     assume {:print "$at(2,2435,2436)"} true;
 L1:
 
-    // assert And(Eq<u64>($t0, $t1), Eq<u64>($t9, $t5)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:9+35
+    // assert And(Eq<u64>($t0, $t1), Eq<u64>($t9, $t5)) at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:9+35
     assume {:print "$at(2,2464,2499)"} true;
     assert {:msg "assert_failed(2,2464,2499): post-condition does not hold"}
       ($IsEqual'u64'($Dereference($t0), $t1) && $IsEqual'u64'($t9, $t5));
 
-    // return $t9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:9+35
+    // return $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move:121:9+35
     $ret0 := $t9;
     $ret1 := $t0;
     return;

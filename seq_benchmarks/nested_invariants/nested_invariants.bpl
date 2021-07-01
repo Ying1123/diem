@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct TestNestedInvariants::Nested at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:10:5+51
+// struct TestNestedInvariants::Nested at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:10:5+51
 type {:datatype} $42_TestNestedInvariants_Nested;
 function {:constructor} $42_TestNestedInvariants_Nested($x: int): $42_TestNestedInvariants_Nested;
 function {:inline} $Update'$42_TestNestedInvariants_Nested'_x(s: $42_TestNestedInvariants_Nested, x: int): $42_TestNestedInvariants_Nested {
@@ -905,7 +905,7 @@ function {:inline} $IsEqual'$42_TestNestedInvariants_Nested'(s1: $42_TestNestedI
     s1 == s2
 }
 
-// struct TestNestedInvariants::Outer at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:22:5+70
+// struct TestNestedInvariants::Outer at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:22:5+70
 type {:datatype} $42_TestNestedInvariants_Outer;
 function {:constructor} $42_TestNestedInvariants_Outer($y: int, $n: $42_TestNestedInvariants_Nested): $42_TestNestedInvariants_Outer;
 function {:inline} $Update'$42_TestNestedInvariants_Outer'_y(s: $42_TestNestedInvariants_Outer, x: int): $42_TestNestedInvariants_Outer {
@@ -922,7 +922,7 @@ function {:inline} $IsEqual'$42_TestNestedInvariants_Outer'(s1: $42_TestNestedIn
     s1 == s2
 }
 
-// fun TestNestedInvariants::mutate [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:50:5+126
+// fun TestNestedInvariants::mutate [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:50:5+126
 procedure {:timeLimit 40} $42_TestNestedInvariants_mutate$verify() returns ()
 {
     // declare local variables
@@ -948,118 +948,118 @@ procedure {:timeLimit 40} $42_TestNestedInvariants_mutate$verify() returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t2 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:26+1
+    // $t2 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:26+1
     assume {:print "$at(2,1103,1104)"} true;
     $t2 := 3;
     assume $IsValid'u64'($t2);
 
-    // $t3 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:42+1
+    // $t3 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:42+1
     $t3 := 2;
     assume $IsValid'u64'($t3);
 
-    // $t4 := pack TestNestedInvariants::Nested($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:32+12
+    // $t4 := pack TestNestedInvariants::Nested($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:32+12
     $t4 := $42_TestNestedInvariants_Nested($t3);
 
-    // assert Gt(select TestNestedInvariants::Nested.x($t4), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x($t4), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($t4) > 0);
 
-    // $t0 := pack TestNestedInvariants::Outer($t2, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:17+28
+    // $t0 := pack TestNestedInvariants::Outer($t2, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:17+28
     assume {:print "$at(2,1094,1122)"} true;
     $t0 := $42_TestNestedInvariants_Outer($t2, $t4);
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t0), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t0), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($t0) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t0)), select TestNestedInvariants::Outer.y($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t0)), select TestNestedInvariants::Outer.y($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($t0)) < $y#$42_TestNestedInvariants_Outer($t0));
 
-    // trace_local[o]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:13+1
+    // trace_local[o]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:51:13+1
     assume {:print "$at(2,1090,1091)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t5 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:52:17+6
+    // $t5 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:52:17+6
     assume {:print "$at(2,1140,1146)"} true;
     $t5 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // trace_local[r]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:52:13+1
+    // trace_local[r]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:52:13+1
     $temp_0'$42_TestNestedInvariants_Outer' := $Dereference($t5);
     assume {:print "$track_local(0,0,1):", $temp_0'$42_TestNestedInvariants_Outer'} $temp_0'$42_TestNestedInvariants_Outer' == $temp_0'$42_TestNestedInvariants_Outer';
 
-    // $t6 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:15+1
+    // $t6 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:15+1
     assume {:print "$at(2,1162,1163)"} true;
     $t6 := 2;
     assume $IsValid'u64'($t6);
 
-    // $t7 := borrow_field<TestNestedInvariants::Outer>.y($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:9+3
+    // $t7 := borrow_field<TestNestedInvariants::Outer>.y($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:9+3
     $t7 := $ChildMutation($t5, 0, $y#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // write_ref($t7, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:9+7
+    // write_ref($t7, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:9+7
     $t7 := $UpdateMutation($t7, $t6);
 
-    // write_back[Reference($t5).y]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:9+7
+    // write_back[Reference($t5).y]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:53:9+7
     $t5 := $UpdateMutation($t5, $Update'$42_TestNestedInvariants_Outer'_y($Dereference($t5), $Dereference($t7)));
 
-    // $t8 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:17+1
+    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:17+1
     assume {:print "$at(2,1181,1182)"} true;
     $t8 := 1;
     assume $IsValid'u64'($t8);
 
-    // $t9 := borrow_field<TestNestedInvariants::Outer>.n($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+3
+    // $t9 := borrow_field<TestNestedInvariants::Outer>.n($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+3
     $t9 := $ChildMutation($t5, 1, $n#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // $t10 := borrow_field<TestNestedInvariants::Nested>.x($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+5
+    // $t10 := borrow_field<TestNestedInvariants::Nested>.x($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+5
     $t10 := $ChildMutation($t9, 0, $x#$42_TestNestedInvariants_Nested($Dereference($t9)));
 
-    // write_ref($t10, $t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
+    // write_ref($t10, $t8) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
     $t10 := $UpdateMutation($t10, $t8);
 
-    // write_back[Reference($t9).x]($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
+    // write_back[Reference($t9).x]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
     $t9 := $UpdateMutation($t9, $Update'$42_TestNestedInvariants_Nested'_x($Dereference($t9), $Dereference($t10)));
 
-    // write_back[Reference($t5).n]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
+    // write_back[Reference($t5).n]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
     $t5 := $UpdateMutation($t5, $Update'$42_TestNestedInvariants_Outer'_n($Dereference($t5), $Dereference($t9)));
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t5), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t5), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($Dereference($t5)) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), select TestNestedInvariants::Outer.y($t5)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), select TestNestedInvariants::Outer.y($t5)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($Dereference($t5))) < $y#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // assert Gt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($Dereference($t5))) > 0);
 
-    // write_back[LocalRoot($t0)@]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
+    // write_back[LocalRoot($t0)@]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:54:9+9
     assume {:print "$at(2,1173,1182)"} true;
     $t0 := $Dereference($t5);
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:55:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:55:5+1
     assume {:print "$at(2,1188,1189)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:55:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:55:5+1
     return;
 
 }
 
-// fun TestNestedInvariants::mutate_inner_data_invariant_invalid [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:63:5+138
+// fun TestNestedInvariants::mutate_inner_data_invariant_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:63:5+138
 procedure {:timeLimit 40} $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify() returns ()
 {
     // declare local variables
@@ -1082,104 +1082,104 @@ procedure {:timeLimit 40} $42_TestNestedInvariants_mutate_inner_data_invariant_i
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t2 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:26+1
+    // $t2 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:26+1
     assume {:print "$at(2,1406,1407)"} true;
     $t2 := 3;
     assume $IsValid'u64'($t2);
 
-    // $t3 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:42+1
+    // $t3 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:42+1
     $t3 := 2;
     assume $IsValid'u64'($t3);
 
-    // $t4 := pack TestNestedInvariants::Nested($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:32+12
+    // $t4 := pack TestNestedInvariants::Nested($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:32+12
     $t4 := $42_TestNestedInvariants_Nested($t3);
 
-    // assert Gt(select TestNestedInvariants::Nested.x($t4), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x($t4), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($t4) > 0);
 
-    // $t0 := pack TestNestedInvariants::Outer($t2, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:17+28
+    // $t0 := pack TestNestedInvariants::Outer($t2, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:17+28
     assume {:print "$at(2,1397,1425)"} true;
     $t0 := $42_TestNestedInvariants_Outer($t2, $t4);
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t0), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t0), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($t0) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t0)), select TestNestedInvariants::Outer.y($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t0)), select TestNestedInvariants::Outer.y($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($t0)) < $y#$42_TestNestedInvariants_Outer($t0));
 
-    // trace_local[o]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:13+1
+    // trace_local[o]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:64:13+1
     assume {:print "$at(2,1393,1394)"} true;
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // $t5 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:65:17+6
+    // $t5 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:65:17+6
     assume {:print "$at(2,1443,1449)"} true;
     $t5 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // trace_local[r]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:65:13+1
+    // trace_local[r]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:65:13+1
     $temp_0'$42_TestNestedInvariants_Outer' := $Dereference($t5);
     assume {:print "$track_local(0,1,1):", $temp_0'$42_TestNestedInvariants_Outer'} $temp_0'$42_TestNestedInvariants_Outer' == $temp_0'$42_TestNestedInvariants_Outer';
 
-    // $t6 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:17+1
+    // $t6 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:17+1
     assume {:print "$at(2,1467,1468)"} true;
     $t6 := 0;
     assume $IsValid'u64'($t6);
 
-    // $t7 := borrow_field<TestNestedInvariants::Outer>.n($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+3
+    // $t7 := borrow_field<TestNestedInvariants::Outer>.n($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+3
     $t7 := $ChildMutation($t5, 1, $n#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // $t8 := borrow_field<TestNestedInvariants::Nested>.x($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+5
+    // $t8 := borrow_field<TestNestedInvariants::Nested>.x($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+5
     $t8 := $ChildMutation($t7, 0, $x#$42_TestNestedInvariants_Nested($Dereference($t7)));
 
-    // write_ref($t8, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
+    // write_ref($t8, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
     $t8 := $UpdateMutation($t8, $t6);
 
-    // write_back[Reference($t7).x]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
+    // write_back[Reference($t7).x]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
     $t7 := $UpdateMutation($t7, $Update'$42_TestNestedInvariants_Nested'_x($Dereference($t7), $Dereference($t8)));
 
-    // write_back[Reference($t5).n]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
+    // write_back[Reference($t5).n]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
     $t5 := $UpdateMutation($t5, $Update'$42_TestNestedInvariants_Outer'_n($Dereference($t5), $Dereference($t7)));
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t5), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t5), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($Dereference($t5)) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), select TestNestedInvariants::Outer.y($t5)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), select TestNestedInvariants::Outer.y($t5)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($Dereference($t5))) < $y#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // assert Gt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($Dereference($t5))) > 0);
 
-    // write_back[LocalRoot($t0)@]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
+    // write_back[LocalRoot($t0)@]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:66:9+9
     assume {:print "$at(2,1459,1468)"} true;
     $t0 := $Dereference($t5);
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:67:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:67:5+1
     assume {:print "$at(2,1474,1475)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:67:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:67:5+1
     return;
 
 }
 
-// fun TestNestedInvariants::mutate_outer_data_invariant_invalid [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:57:5+136
+// fun TestNestedInvariants::mutate_outer_data_invariant_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:57:5+136
 procedure {:timeLimit 40} $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify() returns ()
 {
     // declare local variables
@@ -1200,98 +1200,98 @@ procedure {:timeLimit 40} $42_TestNestedInvariants_mutate_outer_data_invariant_i
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t2 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:26+1
+    // $t2 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:26+1
     assume {:print "$at(2,1264,1265)"} true;
     $t2 := 3;
     assume $IsValid'u64'($t2);
 
-    // $t3 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:42+1
+    // $t3 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:42+1
     $t3 := 2;
     assume $IsValid'u64'($t3);
 
-    // $t4 := pack TestNestedInvariants::Nested($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:32+12
+    // $t4 := pack TestNestedInvariants::Nested($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:32+12
     $t4 := $42_TestNestedInvariants_Nested($t3);
 
-    // assert Gt(select TestNestedInvariants::Nested.x($t4), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x($t4), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($t4) > 0);
 
-    // $t0 := pack TestNestedInvariants::Outer($t2, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:17+28
+    // $t0 := pack TestNestedInvariants::Outer($t2, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:17+28
     assume {:print "$at(2,1255,1283)"} true;
     $t0 := $42_TestNestedInvariants_Outer($t2, $t4);
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t0), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t0), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($t0) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t0)), select TestNestedInvariants::Outer.y($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t0)), select TestNestedInvariants::Outer.y($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($t0)) < $y#$42_TestNestedInvariants_Outer($t0));
 
-    // trace_local[o]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:13+1
+    // trace_local[o]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:58:13+1
     assume {:print "$at(2,1251,1252)"} true;
     assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
 
-    // $t5 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:59:17+6
+    // $t5 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:59:17+6
     assume {:print "$at(2,1301,1307)"} true;
     $t5 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // trace_local[r]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:59:13+1
+    // trace_local[r]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:59:13+1
     $temp_0'$42_TestNestedInvariants_Outer' := $Dereference($t5);
     assume {:print "$track_local(0,2,1):", $temp_0'$42_TestNestedInvariants_Outer'} $temp_0'$42_TestNestedInvariants_Outer' == $temp_0'$42_TestNestedInvariants_Outer';
 
-    // $t6 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:15+1
+    // $t6 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:15+1
     assume {:print "$at(2,1323,1324)"} true;
     $t6 := 2;
     assume $IsValid'u64'($t6);
 
-    // $t7 := borrow_field<TestNestedInvariants::Outer>.y($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+3
+    // $t7 := borrow_field<TestNestedInvariants::Outer>.y($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+3
     $t7 := $ChildMutation($t5, 0, $y#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // write_ref($t7, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+7
+    // write_ref($t7, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+7
     $t7 := $UpdateMutation($t7, $t6);
 
-    // write_back[Reference($t5).y]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+7
+    // write_back[Reference($t5).y]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+7
     $t5 := $UpdateMutation($t5, $Update'$42_TestNestedInvariants_Outer'_y($Dereference($t5), $Dereference($t7)));
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t5), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t5), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($Dereference($t5)) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), select TestNestedInvariants::Outer.y($t5)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), select TestNestedInvariants::Outer.y($t5)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($Dereference($t5))) < $y#$42_TestNestedInvariants_Outer($Dereference($t5)));
 
-    // assert Gt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t5)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($Dereference($t5))) > 0);
 
-    // write_back[LocalRoot($t0)@]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+7
+    // write_back[LocalRoot($t0)@]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:60:9+7
     assume {:print "$at(2,1317,1324)"} true;
     $t0 := $Dereference($t5);
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:61:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:61:5+1
     assume {:print "$at(2,1330,1331)"} true;
 L1:
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:61:5+1
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:61:5+1
     return;
 
 }
 
-// fun TestNestedInvariants::new [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:38:5+61
+// fun TestNestedInvariants::new [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:38:5+61
 procedure {:timeLimit 40} $42_TestNestedInvariants_new$verify() returns ($ret0: $42_TestNestedInvariants_Outer)
 {
     // declare local variables
@@ -1305,55 +1305,55 @@ procedure {:timeLimit 40} $42_TestNestedInvariants_new$verify() returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:18+1
+    // $t0 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:18+1
     assume {:print "$at(2,840,841)"} true;
     $t0 := 3;
     assume $IsValid'u64'($t0);
 
-    // $t1 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:34+1
+    // $t1 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:34+1
     $t1 := 2;
     assume $IsValid'u64'($t1);
 
-    // $t2 := pack TestNestedInvariants::Nested($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:24+12
+    // $t2 := pack TestNestedInvariants::Nested($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:24+12
     $t2 := $42_TestNestedInvariants_Nested($t1);
 
-    // assert Gt(select TestNestedInvariants::Nested.x($t2), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x($t2), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($t2) > 0);
 
-    // $t3 := pack TestNestedInvariants::Outer($t0, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:9+28
+    // $t3 := pack TestNestedInvariants::Outer($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:9+28
     assume {:print "$at(2,831,859)"} true;
     $t3 := $42_TestNestedInvariants_Outer($t0, $t2);
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t3), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t3), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($t3) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t3)), select TestNestedInvariants::Outer.y($t3)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t3)), select TestNestedInvariants::Outer.y($t3)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($t3)) < $y#$42_TestNestedInvariants_Outer($t3));
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:9+28
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:39:9+28
     assume {:print "$at(2,831,859)"} true;
     assume {:print "$track_return(0,3,0):", $t3} $t3 == $t3;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:40:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:40:5+1
     assume {:print "$at(2,864,865)"} true;
 L1:
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:40:5+1
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:40:5+1
     $ret0 := $t3;
     return;
 
 }
 
-// fun TestNestedInvariants::new_inner_data_invariant_invalid [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:46:5+90
+// fun TestNestedInvariants::new_inner_data_invariant_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:46:5+90
 procedure {:timeLimit 40} $42_TestNestedInvariants_new_inner_data_invariant_invalid$verify() returns ($ret0: $42_TestNestedInvariants_Outer)
 {
     // declare local variables
@@ -1367,55 +1367,55 @@ procedure {:timeLimit 40} $42_TestNestedInvariants_new_inner_data_invariant_inva
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:18+1
+    // $t0 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:18+1
     assume {:print "$at(2,1032,1033)"} true;
     $t0 := 2;
     assume $IsValid'u64'($t0);
 
-    // $t1 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:34+1
+    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:34+1
     $t1 := 0;
     assume $IsValid'u64'($t1);
 
-    // $t2 := pack TestNestedInvariants::Nested($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:24+12
+    // $t2 := pack TestNestedInvariants::Nested($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:24+12
     $t2 := $42_TestNestedInvariants_Nested($t1);
 
-    // assert Gt(select TestNestedInvariants::Nested.x($t2), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x($t2), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($t2) > 0);
 
-    // $t3 := pack TestNestedInvariants::Outer($t0, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:9+28
+    // $t3 := pack TestNestedInvariants::Outer($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:9+28
     assume {:print "$at(2,1023,1051)"} true;
     $t3 := $42_TestNestedInvariants_Outer($t0, $t2);
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t3), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t3), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($t3) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t3)), select TestNestedInvariants::Outer.y($t3)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t3)), select TestNestedInvariants::Outer.y($t3)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($t3)) < $y#$42_TestNestedInvariants_Outer($t3));
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:9+28
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:47:9+28
     assume {:print "$at(2,1023,1051)"} true;
     assume {:print "$track_return(0,4,0):", $t3} $t3 == $t3;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:48:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:48:5+1
     assume {:print "$at(2,1056,1057)"} true;
 L1:
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:48:5+1
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:48:5+1
     $ret0 := $t3;
     return;
 
 }
 
-// fun TestNestedInvariants::new_outer_data_invariant_invalid [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:42:5+90
+// fun TestNestedInvariants::new_outer_data_invariant_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:42:5+90
 procedure {:timeLimit 40} $42_TestNestedInvariants_new_outer_data_invariant_invalid$verify() returns ($ret0: $42_TestNestedInvariants_Outer)
 {
     // declare local variables
@@ -1429,49 +1429,49 @@ procedure {:timeLimit 40} $42_TestNestedInvariants_new_outer_data_invariant_inva
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:18+1
+    // $t0 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:18+1
     assume {:print "$at(2,936,937)"} true;
     $t0 := 2;
     assume $IsValid'u64'($t0);
 
-    // $t1 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:34+1
+    // $t1 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:34+1
     $t1 := 2;
     assume $IsValid'u64'($t1);
 
-    // $t2 := pack TestNestedInvariants::Nested($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:24+12
+    // $t2 := pack TestNestedInvariants::Nested($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:24+12
     $t2 := $42_TestNestedInvariants_Nested($t1);
 
-    // assert Gt(select TestNestedInvariants::Nested.x($t2), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // assert Gt(select TestNestedInvariants::Nested.x($t2), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:16:9+16
     assume {:print "$at(2,287,303)"} true;
     assert {:msg "assert_failed(2,287,303): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($t2) > 0);
 
-    // $t3 := pack TestNestedInvariants::Outer($t0, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:9+28
+    // $t3 := pack TestNestedInvariants::Outer($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:9+28
     assume {:print "$at(2,927,955)"} true;
     $t3 := $42_TestNestedInvariants_Outer($t0, $t2);
 
-    // assert Lt(select TestNestedInvariants::Outer.y($t3), 4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // assert Lt(select TestNestedInvariants::Outer.y($t3), 4) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:29:9+16
     assume {:print "$at(2,585,601)"} true;
     assert {:msg "assert_failed(2,585,601): data invariant does not hold"}
       ($y#$42_TestNestedInvariants_Outer($t3) < 4);
 
-    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t3)), select TestNestedInvariants::Outer.y($t3)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // assert Lt(select TestNestedInvariants::Nested.x(select TestNestedInvariants::Outer.n($t3)), select TestNestedInvariants::Outer.y($t3)) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:32:9+18
     assume {:print "$at(2,689,707)"} true;
     assert {:msg "assert_failed(2,689,707): data invariant does not hold"}
       ($x#$42_TestNestedInvariants_Nested($n#$42_TestNestedInvariants_Outer($t3)) < $y#$42_TestNestedInvariants_Outer($t3));
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:9+28
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:43:9+28
     assume {:print "$at(2,927,955)"} true;
     assume {:print "$track_return(0,5,0):", $t3} $t3 == $t3;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:44:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:44:5+1
     assume {:print "$at(2,960,961)"} true;
 L1:
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/nested_invariants.move:44:5+1
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move:44:5+1
     $ret0 := $t3;
     return;
 

@@ -1,6 +1,5 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
 (set-logic ALL)
 ; done setting options
 

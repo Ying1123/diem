@@ -1252,7 +1252,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct TestMutRef::N at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:6:5+44
+// struct TestMutRef::N at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:6:5+44
 type {:datatype} $1_TestMutRef_N;
 function {:constructor} $1_TestMutRef_N($value: int, $t: $1_TestMutRef_T): $1_TestMutRef_N;
 function {:inline} $Update'$1_TestMutRef_N'_value(s: $1_TestMutRef_N, x: int): $1_TestMutRef_N {
@@ -1269,7 +1269,7 @@ function {:inline} $IsEqual'$1_TestMutRef_N'(s1: $1_TestMutRef_N, s2: $1_TestMut
     s1 == s2
 }
 
-// struct TestMutRef::R at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:5:5+38
+// struct TestMutRef::R at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:5:5+38
 type {:datatype} $1_TestMutRef_R;
 function {:constructor} $1_TestMutRef_R($value: int): $1_TestMutRef_R;
 function {:inline} $Update'$1_TestMutRef_R'_value(s: $1_TestMutRef_R, x: int): $1_TestMutRef_R {
@@ -1282,7 +1282,7 @@ function {:inline} $IsEqual'$1_TestMutRef_R'(s1: $1_TestMutRef_R, s2: $1_TestMut
     s1 == s2
 }
 
-// struct TestMutRef::T at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:4:5+38
+// struct TestMutRef::T at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:4:5+38
 type {:datatype} $1_TestMutRef_T;
 function {:constructor} $1_TestMutRef_T($value: int): $1_TestMutRef_T;
 function {:inline} $Update'$1_TestMutRef_T'_value(s: $1_TestMutRef_T, x: int): $1_TestMutRef_T {
@@ -1295,7 +1295,7 @@ function {:inline} $IsEqual'$1_TestMutRef_T'(s1: $1_TestMutRef_T, s2: $1_TestMut
     s1 == s2
 }
 
-// struct TestMutRef::V at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:65:5+58
+// struct TestMutRef::V at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:65:5+58
 type {:datatype} $1_TestMutRef_V;
 function {:constructor} $1_TestMutRef_V($is: Vec (int), $ts: Vec ($1_TestMutRef_T)): $1_TestMutRef_V;
 function {:inline} $Update'$1_TestMutRef_V'_is(s: $1_TestMutRef_V, x: Vec (int)): $1_TestMutRef_V {
@@ -1312,7 +1312,7 @@ function {:inline} $IsEqual'$1_TestMutRef_V'(s1: $1_TestMutRef_V, s2: $1_TestMut
     s1 == s2
 }
 
-// fun TestMutRef::call_identity [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:15:5+114
+// fun TestMutRef::call_identity [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:15:5+114
 procedure {:timeLimit 40} $1_TestMutRef_call_identity$verify() returns ($ret0: int)
 {
     // declare local variables
@@ -1333,22 +1333,22 @@ procedure {:timeLimit 40} $1_TestMutRef_call_identity$verify() returns ($ret0: i
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t2 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:16:17+4
+    // $t2 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:16:17+4
     assume {:print "$at(2,347,351)"} true;
     $t2 := 1;
     assume $IsValid'u64'($t2);
 
-    // $t1 := $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:16:13+1
+    // $t1 := $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:16:13+1
     $t1 := $t2;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:16:13+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:16:13+1
     assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
-    // $t3 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:17:26+6
+    // $t3 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:17:26+6
     assume {:print "$at(2,378,384)"} true;
     $t3 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t4 := TestMutRef::identity($t3) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:17:17+16
+    // $t4 := TestMutRef::identity($t3) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:17:17+16
     call $t4,$t3 := $1_TestMutRef_identity($t3);
     if ($abort_flag) {
         assume {:print "$at(2,369,385)"} true;
@@ -1357,56 +1357,56 @@ procedure {:timeLimit 40} $1_TestMutRef_call_identity$verify() returns ($ret0: i
         goto L2;
     }
 
-    // trace_local[r]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:17:13+1
+    // trace_local[r]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:17:13+1
     $temp_0'u64' := $Dereference($t4);
     assume {:print "$track_local(1,0,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t6 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:14+1
+    // $t6 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:14+1
     assume {:print "$at(2,400,401)"} true;
     $t6 := 2;
     assume $IsValid'u64'($t6);
 
-    // write_ref($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:9+6
+    // write_ref($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:9+6
     $t4 := $UpdateMutation($t4, $t6);
 
-    // write_back[Reference($t3)@]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:9+6
+    // write_back[Reference($t3)@]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:9+6
     $t3 := $UpdateMutation($t3, $Dereference($t4));
 
-    // write_back[LocalRoot($t1)@]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:9+6
+    // write_back[LocalRoot($t1)@]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:18:9+6
     $t1 := $Dereference($t3);
 
-    // $t7 := copy($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:19:9+1
+    // $t7 := copy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:19:9+1
     assume {:print "$at(2,411,412)"} true;
     $t7 := $t1;
 
-    // trace_return[0]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:19:9+1
+    // trace_return[0]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:19:9+1
     assume {:print "$track_return(1,0,0):", $t7} $t7 == $t7;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:20:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:20:5+1
     assume {:print "$at(2,417,418)"} true;
 L1:
 
-    // assert Eq<u64>($t7, 2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:22:9+20
+    // assert Eq<u64>($t7, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:22:9+20
     assume {:print "$at(2,452,472)"} true;
     assert {:msg "assert_failed(2,452,472): post-condition does not hold"}
       $IsEqual'u64'($t7, 2);
 
-    // return $t7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:22:9+20
+    // return $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:22:9+20
     $ret0 := $t7;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:20:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:20:5+1
     assume {:print "$at(2,417,418)"} true;
 L2:
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:20:5+1
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:20:5+1
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMutRef::call_return_ref_different_path [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:51:5+179
+// fun TestMutRef::call_return_ref_different_path [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:51:5+179
 procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path$verify(_$t0: bool) returns ($ret0: $1_TestMutRef_N)
 {
     // declare local variables
@@ -1435,44 +1435,44 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path$verify(_$
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:59:24+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:59:24+6
     assume {:print "$at(2,1634,1640)"} true;
     assume $IsValid'bool'($t0);
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:51:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:51:5+1
     assume {:print "$at(2,1328,1329)"} true;
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // $t3 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:26+1
+    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:26+1
     assume {:print "$at(2,1402,1403)"} true;
     $t3 := 1;
     assume $IsValid'u64'($t3);
 
-    // $t4 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:41+1
+    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:41+1
     $t4 := 2;
     assume $IsValid'u64'($t4);
 
-    // $t5 := pack TestMutRef::T($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:32+11
+    // $t5 := pack TestMutRef::T($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:32+11
     $t5 := $1_TestMutRef_T($t4);
 
-    // assert Gt(select TestMutRef::T.value($t5), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t5), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t5) > 0);
 
-    // $t2 := pack TestMutRef::N($t3, $t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:17+27
+    // $t2 := pack TestMutRef::N($t3, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:17+27
     assume {:print "$at(2,1393,1420)"} true;
     $t2 := $1_TestMutRef_N($t3, $t5);
 
-    // trace_local[x]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:13+1
+    // trace_local[x]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:52:13+1
     assume {:print "$track_local(1,1,2):", $t2} $t2 == $t2;
 
-    // $t6 := borrow_local($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:53:46+6
+    // $t6 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:53:46+6
     assume {:print "$at(2,1467,1473)"} true;
     $t6 := $Mutation($Local(2), EmptyVec(), $t2);
 
-    // $t7 := TestMutRef::return_ref_different_path($t0, $t6) on_abort goto L6 with $t8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:53:17+36
+    // $t7 := TestMutRef::return_ref_different_path($t0, $t6) on_abort goto L6 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:53:17+36
     call $t7,$t6 := $1_TestMutRef_return_ref_different_path($t0, $t6);
     if ($abort_flag) {
         assume {:print "$at(2,1438,1474)"} true;
@@ -1481,88 +1481,88 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path$verify(_$
         goto L6;
     }
 
-    // trace_local[r]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:53:13+1
+    // trace_local[r]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:53:13+1
     $temp_0'u64' := $Dereference($t7);
     assume {:print "$track_local(1,1,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t9 := 5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:14+1
+    // $t9 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:14+1
     assume {:print "$at(2,1489,1490)"} true;
     $t9 := 5;
     assume $IsValid'u64'($t9);
 
-    // write_ref($t7, $t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // write_ref($t7, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     $t7 := $UpdateMutation($t7, $t9);
 
-    // $t10 := is_parent[Reference($t6).value]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // $t10 := is_parent[Reference($t6).value]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     $t10 := $IsParentMutation($t6, 0, $t7);
 
-    // if ($t10) goto L1 else goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // if ($t10) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     if ($t10) { goto L1; } else { goto L2; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
 L1:
 
-    // write_back[Reference($t6).value]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // write_back[Reference($t6).value]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     $t6 := $UpdateMutation($t6, $Update'$1_TestMutRef_N'_value($Dereference($t6), $Dereference($t7)));
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
 L2:
 
-    // $t11 := is_parent[Reference($t6).t/.value]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // $t11 := is_parent[Reference($t6).t/.value]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     $t11 := $IsParentMutationHyper($t6, MakeVec2(1, 0), $t7);
 
-    // if ($t11) goto L3 else goto L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // if ($t11) goto L3 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     if ($t11) { goto L3; } else { goto L7; }
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
 L3:
 
-    // write_back[Reference($t6).t/.value]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // write_back[Reference($t6).t/.value]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     $t6 := $UpdateMutation($t6, (var $$sel0 := $t#$1_TestMutRef_N($Dereference($t6)); $Update'$1_TestMutRef_N'_t($Dereference($t6), $Update'$1_TestMutRef_T'_value($$sel0, $Dereference($t7)))));
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
 L4:
 
-    // assert Gt(select TestMutRef::T.value(select TestMutRef::N.t($t6)), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value(select TestMutRef::N.t($t6)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t#$1_TestMutRef_N($Dereference($t6))) > 0);
 
-    // write_back[LocalRoot($t2)@]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
+    // write_back[LocalRoot($t2)@]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:54:9+6
     assume {:print "$at(2,1484,1490)"} true;
     $t2 := $Dereference($t6);
 
-    // $t12 := move($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:55:9+1
+    // $t12 := move($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:55:9+1
     assume {:print "$at(2,1500,1501)"} true;
     $t12 := $t2;
 
-    // trace_return[0]($t12) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:55:9+1
+    // trace_return[0]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:55:9+1
     assume {:print "$track_return(1,1,0):", $t12} $t12 == $t12;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:56:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:56:5+1
     assume {:print "$at(2,1506,1507)"} true;
 L5:
 
-    // assert Implies($t0, Eq<TestMutRef::N>($t12, pack TestMutRef::N(5, pack TestMutRef::T(2)))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:58:9+52
+    // assert Implies($t0, Eq<TestMutRef::N>($t12, pack TestMutRef::N(5, pack TestMutRef::T(2)))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:58:9+52
     assume {:print "$at(2,1558,1610)"} true;
     assert {:msg "assert_failed(2,1558,1610): post-condition does not hold"}
       ($t0 ==> $IsEqual'$1_TestMutRef_N'($t12, $1_TestMutRef_N(5, $1_TestMutRef_T(2))));
 
-    // assert Implies(Not($t0), Eq<TestMutRef::N>($t12, pack TestMutRef::N(1, pack TestMutRef::T(5)))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:59:9+53
+    // assert Implies(Not($t0), Eq<TestMutRef::N>($t12, pack TestMutRef::N(1, pack TestMutRef::T(5)))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:59:9+53
     assume {:print "$at(2,1619,1672)"} true;
     assert {:msg "assert_failed(2,1619,1672): post-condition does not hold"}
       (!$t0 ==> $IsEqual'$1_TestMutRef_N'($t12, $1_TestMutRef_N(1, $1_TestMutRef_T(5))));
 
-    // return $t12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:59:9+53
+    // return $t12 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:59:9+53
     $ret0 := $t12;
     return;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:56:5+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:56:5+1
     assume {:print "$at(2,1506,1507)"} true;
 L6:
 
-    // abort($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:56:5+1
+    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:56:5+1
     $abort_code := $t8;
     $abort_flag := true;
     return;
@@ -1578,7 +1578,7 @@ L7:
 
 }
 
-// fun TestMutRef::call_return_ref_different_path_vec [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:73:5+315
+// fun TestMutRef::call_return_ref_different_path_vec [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:73:5+315
 procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verify(_$t0: bool) returns ($ret0: $1_TestMutRef_V)
 {
     // declare local variables
@@ -1614,15 +1614,15 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verif
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:85:24+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:85:24+6
     assume {:print "$at(2,2521,2527)"} true;
     assume $IsValid'bool'($t0);
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:73:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:73:5+1
     assume {:print "$at(2,2056,2057)"} true;
     assume {:print "$track_local(1,2,0):", $t0} $t0 == $t0;
 
-    // $t1 := Vector::empty<u64>() on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:74:18+15
+    // $t1 := Vector::empty<u64>() on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:74:18+15
     assume {:print "$at(2,2126,2141)"} true;
     call $t1 := $1_Vector_empty'u64'();
     if ($abort_flag) {
@@ -1632,10 +1632,10 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verif
         goto L2;
     }
 
-    // trace_local[is]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:74:13+2
+    // trace_local[is]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:74:13+2
     assume {:print "$track_local(1,2,1):", $t1} $t1 == $t1;
 
-    // $t6 := Vector::empty<TestMutRef::T>() on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:75:18+15
+    // $t6 := Vector::empty<TestMutRef::T>() on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:75:18+15
     assume {:print "$at(2,2160,2175)"} true;
     call $t6 := $1_Vector_empty'$1_TestMutRef_T'();
     if ($abort_flag) {
@@ -1645,18 +1645,18 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verif
         goto L2;
     }
 
-    // trace_local[ts]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:75:13+2
+    // trace_local[ts]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:75:13+2
     assume {:print "$track_local(1,2,3):", $t6} $t6 == $t6;
 
-    // $t7 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:27+7
+    // $t7 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:27+7
     assume {:print "$at(2,2203,2210)"} true;
     $t7 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t8 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:36+1
+    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:36+1
     $t8 := 1;
     assume $IsValid'u64'($t8);
 
-    // Vector::push_back<u64>($t7, $t8) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:9+29
+    // Vector::push_back<u64>($t7, $t8) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:9+29
     call $t7 := $1_Vector_push_back'u64'($t7, $t8);
     if ($abort_flag) {
         assume {:print "$at(2,2185,2214)"} true;
@@ -1665,18 +1665,18 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verif
         goto L2;
     }
 
-    // write_back[LocalRoot($t1)@]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:9+29
+    // write_back[LocalRoot($t1)@]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:76:9+29
     $t1 := $Dereference($t7);
 
-    // $t9 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:27+7
+    // $t9 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:27+7
     assume {:print "$at(2,2242,2249)"} true;
     $t9 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t10 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:36+1
+    // $t10 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:36+1
     $t10 := 2;
     assume $IsValid'u64'($t10);
 
-    // Vector::push_back<u64>($t9, $t10) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:9+29
+    // Vector::push_back<u64>($t9, $t10) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:9+29
     call $t9 := $1_Vector_push_back'u64'($t9, $t10);
     if ($abort_flag) {
         assume {:print "$at(2,2224,2253)"} true;
@@ -1685,24 +1685,24 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verif
         goto L2;
     }
 
-    // write_back[LocalRoot($t1)@]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:9+29
+    // write_back[LocalRoot($t1)@]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:77:9+29
     $t1 := $Dereference($t9);
 
-    // $t11 := move($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:78:19+2
+    // $t11 := move($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:78:19+2
     assume {:print "$at(2,2273,2275)"} true;
     $t11 := $t1;
 
-    // $t4 := pack TestMutRef::V($t11, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:78:17+9
+    // $t4 := pack TestMutRef::V($t11, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:78:17+9
     $t4 := $1_TestMutRef_V($t11, $t6);
 
-    // trace_local[x]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:78:13+1
+    // trace_local[x]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:78:13+1
     assume {:print "$track_local(1,2,4):", $t4} $t4 == $t4;
 
-    // $t12 := borrow_local($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:79:50+6
+    // $t12 := borrow_local($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:79:50+6
     assume {:print "$at(2,2331,2337)"} true;
     $t12 := $Mutation($Local(4), EmptyVec(), $t4);
 
-    // $t13 := TestMutRef::return_ref_different_path_vec($t0, $t12) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:79:17+40
+    // $t13 := TestMutRef::return_ref_different_path_vec($t0, $t12) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:79:17+40
     call $t13,$t12 := $1_TestMutRef_return_ref_different_path_vec($t0, $t12);
     if ($abort_flag) {
         assume {:print "$at(2,2298,2338)"} true;
@@ -1711,69 +1711,69 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec$verif
         goto L2;
     }
 
-    // trace_local[r]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:79:13+1
+    // trace_local[r]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:79:13+1
     $temp_0'u64' := $Dereference($t13);
     assume {:print "$track_local(1,2,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t14 := 5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:14+1
+    // $t14 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:14+1
     assume {:print "$at(2,2353,2354)"} true;
     $t14 := 5;
     assume $IsValid'u64'($t14);
 
-    // write_ref($t13, $t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:9+6
+    // write_ref($t13, $t14) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:9+6
     $t13 := $UpdateMutation($t13, $t14);
 
-    // write_back[Reference($t12).is/[]]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:9+6
+    // write_back[Reference($t12).is/[]]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:9+6
     $t12 := $UpdateMutation($t12, (var $$sel0 := $is#$1_TestMutRef_V($Dereference($t12)); $Update'$1_TestMutRef_V'_is($Dereference($t12), UpdateVec($$sel0, ReadVec(p#$Mutation($t13), LenVec(p#$Mutation($t12)) + 1), $Dereference($t13)))));
 
-    // assert forall $elem: select TestMutRef::V.ts($t12): Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: select TestMutRef::V.ts($t12): Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $ts#$1_TestMutRef_V($Dereference($t12)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t4)@]($t12) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:9+6
+    // write_back[LocalRoot($t4)@]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:80:9+6
     assume {:print "$at(2,2348,2354)"} true;
     $t4 := $Dereference($t12);
 
-    // $t15 := move($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:81:9+1
+    // $t15 := move($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:81:9+1
     assume {:print "$at(2,2364,2365)"} true;
     $t15 := $t4;
 
-    // trace_return[0]($t15) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:81:9+1
+    // trace_return[0]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:81:9+1
     assume {:print "$track_return(1,2,0):", $t15} $t15 == $t15;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:82:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:82:5+1
     assume {:print "$at(2,2370,2371)"} true;
 L1:
 
-    // assert Implies($t0, Eq<TestMutRef::V>($t15, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(5)), EmptyVec<TestMutRef::T>()))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:84:9+71
+    // assert Implies($t0, Eq<TestMutRef::V>($t15, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(5)), EmptyVec<TestMutRef::T>()))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:84:9+71
     assume {:print "$at(2,2426,2497)"} true;
     assert {:msg "assert_failed(2,2426,2497): post-condition does not hold"}
       ($t0 ==> $IsEqual'$1_TestMutRef_V'($t15, $1_TestMutRef_V(ConcatVec(MakeVec1(1), MakeVec1(5)), $EmptyVec'$1_TestMutRef_T'())));
 
-    // assert Implies(Not($t0), Eq<TestMutRef::V>($t15, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(5), SingleVec<u64>(2)), EmptyVec<TestMutRef::T>()))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:85:9+72
+    // assert Implies(Not($t0), Eq<TestMutRef::V>($t15, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(5), SingleVec<u64>(2)), EmptyVec<TestMutRef::T>()))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:85:9+72
     assume {:print "$at(2,2506,2578)"} true;
     assert {:msg "assert_failed(2,2506,2578): post-condition does not hold"}
       (!$t0 ==> $IsEqual'$1_TestMutRef_V'($t15, $1_TestMutRef_V(ConcatVec(MakeVec1(5), MakeVec1(2)), $EmptyVec'$1_TestMutRef_T'())));
 
-    // return $t15 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:85:9+72
+    // return $t15 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:85:9+72
     $ret0 := $t15;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:82:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:82:5+1
     assume {:print "$at(2,2370,2371)"} true;
 L2:
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:82:5+1
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:82:5+1
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMutRef::call_return_ref_different_path_vec2 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:94:5+415
+// fun TestMutRef::call_return_ref_different_path_vec2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:94:5+415
 procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$verify(_$t0: bool) returns ($ret0: $1_TestMutRef_V)
 {
     // declare local variables
@@ -1819,15 +1819,15 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:108:24+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:108:24+6
     assume {:print "$at(2,3439,3445)"} true;
     assume $IsValid'bool'($t0);
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:94:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:94:5+1
     assume {:print "$at(2,2836,2837)"} true;
     assume {:print "$track_local(1,3,0):", $t0} $t0 == $t0;
 
-    // $t1 := Vector::empty<u64>() on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:95:18+15
+    // $t1 := Vector::empty<u64>() on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:95:18+15
     assume {:print "$at(2,2907,2922)"} true;
     call $t1 := $1_Vector_empty'u64'();
     if ($abort_flag) {
@@ -1837,10 +1837,10 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // trace_local[is]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:95:13+2
+    // trace_local[is]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:95:13+2
     assume {:print "$track_local(1,3,1):", $t1} $t1 == $t1;
 
-    // $t3 := Vector::empty<TestMutRef::T>() on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:96:18+15
+    // $t3 := Vector::empty<TestMutRef::T>() on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:96:18+15
     assume {:print "$at(2,2941,2956)"} true;
     call $t3 := $1_Vector_empty'$1_TestMutRef_T'();
     if ($abort_flag) {
@@ -1850,18 +1850,18 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // trace_local[ts]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:96:13+2
+    // trace_local[ts]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:96:13+2
     assume {:print "$track_local(1,3,3):", $t3} $t3 == $t3;
 
-    // $t6 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:27+7
+    // $t6 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:27+7
     assume {:print "$at(2,2984,2991)"} true;
     $t6 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t7 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:36+1
+    // $t7 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:36+1
     $t7 := 1;
     assume $IsValid'u64'($t7);
 
-    // Vector::push_back<u64>($t6, $t7) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:9+29
+    // Vector::push_back<u64>($t6, $t7) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:9+29
     call $t6 := $1_Vector_push_back'u64'($t6, $t7);
     if ($abort_flag) {
         assume {:print "$at(2,2966,2995)"} true;
@@ -1870,18 +1870,18 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // write_back[LocalRoot($t1)@]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:9+29
+    // write_back[LocalRoot($t1)@]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:97:9+29
     $t1 := $Dereference($t6);
 
-    // $t8 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:27+7
+    // $t8 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:27+7
     assume {:print "$at(2,3023,3030)"} true;
     $t8 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t9 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:36+1
+    // $t9 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:36+1
     $t9 := 2;
     assume $IsValid'u64'($t9);
 
-    // Vector::push_back<u64>($t8, $t9) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:9+29
+    // Vector::push_back<u64>($t8, $t9) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:9+29
     call $t8 := $1_Vector_push_back'u64'($t8, $t9);
     if ($abort_flag) {
         assume {:print "$at(2,3005,3034)"} true;
@@ -1890,27 +1890,27 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // write_back[LocalRoot($t1)@]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:9+29
+    // write_back[LocalRoot($t1)@]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:98:9+29
     $t1 := $Dereference($t8);
 
-    // $t10 := borrow_local($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:27+7
+    // $t10 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:27+7
     assume {:print "$at(2,3062,3069)"} true;
     $t10 := $Mutation($Local(3), EmptyVec(), $t3);
 
-    // $t11 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:45+1
+    // $t11 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:45+1
     $t11 := 3;
     assume $IsValid'u64'($t11);
 
-    // $t12 := pack TestMutRef::T($t11) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:36+11
+    // $t12 := pack TestMutRef::T($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:36+11
     $t12 := $1_TestMutRef_T($t11);
 
-    // assert Gt(select TestMutRef::T.value($t12), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t12), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t12) > 0);
 
-    // Vector::push_back<TestMutRef::T>($t10, $t12) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:9+39
+    // Vector::push_back<TestMutRef::T>($t10, $t12) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:9+39
     assume {:print "$at(2,3044,3083)"} true;
     call $t10 := $1_Vector_push_back'$1_TestMutRef_T'($t10, $t12);
     if ($abort_flag) {
@@ -1920,35 +1920,35 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // assert forall $elem: $t10: Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: $t10: Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $Dereference($t10); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t3)@]($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:9+39
+    // write_back[LocalRoot($t3)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:99:9+39
     assume {:print "$at(2,3044,3083)"} true;
     $t3 := $Dereference($t10);
 
-    // $t13 := borrow_local($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:27+7
+    // $t13 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:27+7
     assume {:print "$at(2,3111,3118)"} true;
     $t13 := $Mutation($Local(3), EmptyVec(), $t3);
 
-    // $t14 := 4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:45+1
+    // $t14 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:45+1
     $t14 := 4;
     assume $IsValid'u64'($t14);
 
-    // $t15 := pack TestMutRef::T($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:36+11
+    // $t15 := pack TestMutRef::T($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:36+11
     $t15 := $1_TestMutRef_T($t14);
 
-    // assert Gt(select TestMutRef::T.value($t15), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t15), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t15) > 0);
 
-    // Vector::push_back<TestMutRef::T>($t13, $t15) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:9+39
+    // Vector::push_back<TestMutRef::T>($t13, $t15) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:9+39
     assume {:print "$at(2,3093,3132)"} true;
     call $t13 := $1_Vector_push_back'$1_TestMutRef_T'($t13, $t15);
     if ($abort_flag) {
@@ -1958,35 +1958,35 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // assert forall $elem: $t13: Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: $t13: Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $Dereference($t13); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t3)@]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:9+39
+    // write_back[LocalRoot($t3)@]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:100:9+39
     assume {:print "$at(2,3093,3132)"} true;
     $t3 := $Dereference($t13);
 
-    // $t16 := move($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:19+2
+    // $t16 := move($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:19+2
     assume {:print "$at(2,3152,3154)"} true;
     $t16 := $t1;
 
-    // $t17 := move($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:23+2
+    // $t17 := move($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:23+2
     $t17 := $t3;
 
-    // $t4 := pack TestMutRef::V($t16, $t17) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:17+9
+    // $t4 := pack TestMutRef::V($t16, $t17) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:17+9
     $t4 := $1_TestMutRef_V($t16, $t17);
 
-    // trace_local[x]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:13+1
+    // trace_local[x]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:101:13+1
     assume {:print "$track_local(1,3,4):", $t4} $t4 == $t4;
 
-    // $t18 := borrow_local($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:102:51+6
+    // $t18 := borrow_local($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:102:51+6
     assume {:print "$at(2,3211,3217)"} true;
     $t18 := $Mutation($Local(4), EmptyVec(), $t4);
 
-    // $t19 := TestMutRef::return_ref_different_path_vec2($t0, $t18) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:102:17+41
+    // $t19 := TestMutRef::return_ref_different_path_vec2($t0, $t18) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:102:17+41
     call $t19,$t18 := $1_TestMutRef_return_ref_different_path_vec2($t0, $t18);
     if ($abort_flag) {
         assume {:print "$at(2,3177,3218)"} true;
@@ -1995,89 +1995,89 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2$veri
         goto L6;
     }
 
-    // trace_local[r]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:102:13+1
+    // trace_local[r]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:102:13+1
     $temp_0'u64' := $Dereference($t19);
     assume {:print "$track_local(1,3,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t20 := 5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:14+1
+    // $t20 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:14+1
     assume {:print "$at(2,3233,3234)"} true;
     $t20 := 5;
     assume $IsValid'u64'($t20);
 
-    // write_ref($t19, $t20) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // write_ref($t19, $t20) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     $t19 := $UpdateMutation($t19, $t20);
 
-    // $t21 := is_parent[Reference($t18).is/[]]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // $t21 := is_parent[Reference($t18).is/[]]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     $t21 := $IsParentMutationHyper($t18, MakeVec2(0, -1), $t19);
 
-    // if ($t21) goto L1 else goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // if ($t21) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     if ($t21) { goto L1; } else { goto L2; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
 L1:
 
-    // write_back[Reference($t18).is/[]]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // write_back[Reference($t18).is/[]]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     $t18 := $UpdateMutation($t18, (var $$sel0 := $is#$1_TestMutRef_V($Dereference($t18)); $Update'$1_TestMutRef_V'_is($Dereference($t18), UpdateVec($$sel0, ReadVec(p#$Mutation($t19), LenVec(p#$Mutation($t18)) + 1), $Dereference($t19)))));
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
 L2:
 
-    // $t22 := is_parent[Reference($t18).ts/[]/.value]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // $t22 := is_parent[Reference($t18).ts/[]/.value]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     $t22 := $IsParentMutationHyper($t18, MakeVec3(1, -1, 0), $t19);
 
-    // if ($t22) goto L3 else goto L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // if ($t22) goto L3 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     if ($t22) { goto L3; } else { goto L7; }
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
 L3:
 
-    // write_back[Reference($t18).ts/[]/.value]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // write_back[Reference($t18).ts/[]/.value]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     $t18 := $UpdateMutation($t18, (var $$sel0 := $ts#$1_TestMutRef_V($Dereference($t18)); $Update'$1_TestMutRef_V'_ts($Dereference($t18), (var $$sel1 := ReadVec($$sel0, ReadVec(p#$Mutation($t19), LenVec(p#$Mutation($t18)) + 1)); UpdateVec($$sel0, ReadVec(p#$Mutation($t19), LenVec(p#$Mutation($t18)) + 1), $Update'$1_TestMutRef_T'_value($$sel1, $Dereference($t19)))))));
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
 L4:
 
-    // assert forall $elem: select TestMutRef::V.ts($t18): Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: select TestMutRef::V.ts($t18): Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $ts#$1_TestMutRef_V($Dereference($t18)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t4)@]($t18) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
+    // write_back[LocalRoot($t4)@]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:103:9+6
     assume {:print "$at(2,3228,3234)"} true;
     $t4 := $Dereference($t18);
 
-    // $t23 := move($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:104:9+1
+    // $t23 := move($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:104:9+1
     assume {:print "$at(2,3244,3245)"} true;
     $t23 := $t4;
 
-    // trace_return[0]($t23) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:104:9+1
+    // trace_return[0]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:104:9+1
     assume {:print "$track_return(1,3,0):", $t23} $t23 == $t23;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:105:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:105:5+1
     assume {:print "$at(2,3250,3251)"} true;
 L5:
 
-    // assert Implies($t0, Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(5)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(3)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:107:9+108
+    // assert Implies($t0, Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(5)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(3)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:107:9+108
     assume {:print "$at(2,3307,3415)"} true;
     assert {:msg "assert_failed(2,3307,3415): post-condition does not hold"}
       ($t0 ==> $IsEqual'$1_TestMutRef_V'($t23, $1_TestMutRef_V(ConcatVec(MakeVec1(1), MakeVec1(5)), ConcatVec(MakeVec1($1_TestMutRef_T(3)), MakeVec1($1_TestMutRef_T(4))))));
 
-    // assert Implies(Not($t0), Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(2)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(5)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:108:9+109
+    // assert Implies(Not($t0), Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(2)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(5)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:108:9+109
     assume {:print "$at(2,3424,3533)"} true;
     assert {:msg "assert_failed(2,3424,3533): post-condition does not hold"}
       (!$t0 ==> $IsEqual'$1_TestMutRef_V'($t23, $1_TestMutRef_V(ConcatVec(MakeVec1(1), MakeVec1(2)), ConcatVec(MakeVec1($1_TestMutRef_T(5)), MakeVec1($1_TestMutRef_T(4))))));
 
-    // return $t23 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:108:9+109
+    // return $t23 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:108:9+109
     $ret0 := $t23;
     return;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:105:5+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:105:5+1
     assume {:print "$at(2,3250,3251)"} true;
 L6:
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:105:5+1
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:105:5+1
     $abort_code := $t5;
     $abort_flag := true;
     return;
@@ -2093,7 +2093,7 @@ L7:
 
 }
 
-// fun TestMutRef::call_return_ref_different_path_vec2_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:113:5+425
+// fun TestMutRef::call_return_ref_different_path_vec2_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:113:5+425
 procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_incorrect$verify(_$t0: bool) returns ($ret0: $1_TestMutRef_V)
 {
     // declare local variables
@@ -2139,15 +2139,15 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:127:24+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:127:24+6
     assume {:print "$at(2,4220,4226)"} true;
     assume $IsValid'bool'($t0);
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:113:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:113:5+1
     assume {:print "$at(2,3597,3598)"} true;
     assume {:print "$track_local(1,4,0):", $t0} $t0 == $t0;
 
-    // $t1 := Vector::empty<u64>() on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:114:18+15
+    // $t1 := Vector::empty<u64>() on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:114:18+15
     assume {:print "$at(2,3678,3693)"} true;
     call $t1 := $1_Vector_empty'u64'();
     if ($abort_flag) {
@@ -2157,10 +2157,10 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // trace_local[is]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:114:13+2
+    // trace_local[is]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:114:13+2
     assume {:print "$track_local(1,4,1):", $t1} $t1 == $t1;
 
-    // $t3 := Vector::empty<TestMutRef::T>() on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:115:18+15
+    // $t3 := Vector::empty<TestMutRef::T>() on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:115:18+15
     assume {:print "$at(2,3712,3727)"} true;
     call $t3 := $1_Vector_empty'$1_TestMutRef_T'();
     if ($abort_flag) {
@@ -2170,18 +2170,18 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // trace_local[ts]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:115:13+2
+    // trace_local[ts]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:115:13+2
     assume {:print "$track_local(1,4,3):", $t3} $t3 == $t3;
 
-    // $t6 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:27+7
+    // $t6 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:27+7
     assume {:print "$at(2,3755,3762)"} true;
     $t6 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t7 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:36+1
+    // $t7 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:36+1
     $t7 := 1;
     assume $IsValid'u64'($t7);
 
-    // Vector::push_back<u64>($t6, $t7) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:9+29
+    // Vector::push_back<u64>($t6, $t7) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:9+29
     call $t6 := $1_Vector_push_back'u64'($t6, $t7);
     if ($abort_flag) {
         assume {:print "$at(2,3737,3766)"} true;
@@ -2190,18 +2190,18 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // write_back[LocalRoot($t1)@]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:9+29
+    // write_back[LocalRoot($t1)@]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:116:9+29
     $t1 := $Dereference($t6);
 
-    // $t8 := borrow_local($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:27+7
+    // $t8 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:27+7
     assume {:print "$at(2,3794,3801)"} true;
     $t8 := $Mutation($Local(1), EmptyVec(), $t1);
 
-    // $t9 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:36+1
+    // $t9 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:36+1
     $t9 := 2;
     assume $IsValid'u64'($t9);
 
-    // Vector::push_back<u64>($t8, $t9) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:9+29
+    // Vector::push_back<u64>($t8, $t9) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:9+29
     call $t8 := $1_Vector_push_back'u64'($t8, $t9);
     if ($abort_flag) {
         assume {:print "$at(2,3776,3805)"} true;
@@ -2210,27 +2210,27 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // write_back[LocalRoot($t1)@]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:9+29
+    // write_back[LocalRoot($t1)@]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:117:9+29
     $t1 := $Dereference($t8);
 
-    // $t10 := borrow_local($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:27+7
+    // $t10 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:27+7
     assume {:print "$at(2,3833,3840)"} true;
     $t10 := $Mutation($Local(3), EmptyVec(), $t3);
 
-    // $t11 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:45+1
+    // $t11 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:45+1
     $t11 := 3;
     assume $IsValid'u64'($t11);
 
-    // $t12 := pack TestMutRef::T($t11) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:36+11
+    // $t12 := pack TestMutRef::T($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:36+11
     $t12 := $1_TestMutRef_T($t11);
 
-    // assert Gt(select TestMutRef::T.value($t12), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t12), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t12) > 0);
 
-    // Vector::push_back<TestMutRef::T>($t10, $t12) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:9+39
+    // Vector::push_back<TestMutRef::T>($t10, $t12) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:9+39
     assume {:print "$at(2,3815,3854)"} true;
     call $t10 := $1_Vector_push_back'$1_TestMutRef_T'($t10, $t12);
     if ($abort_flag) {
@@ -2240,35 +2240,35 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // assert forall $elem: $t10: Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: $t10: Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $Dereference($t10); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t3)@]($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:9+39
+    // write_back[LocalRoot($t3)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:118:9+39
     assume {:print "$at(2,3815,3854)"} true;
     $t3 := $Dereference($t10);
 
-    // $t13 := borrow_local($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:27+7
+    // $t13 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:27+7
     assume {:print "$at(2,3882,3889)"} true;
     $t13 := $Mutation($Local(3), EmptyVec(), $t3);
 
-    // $t14 := 4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:45+1
+    // $t14 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:45+1
     $t14 := 4;
     assume $IsValid'u64'($t14);
 
-    // $t15 := pack TestMutRef::T($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:36+11
+    // $t15 := pack TestMutRef::T($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:36+11
     $t15 := $1_TestMutRef_T($t14);
 
-    // assert Gt(select TestMutRef::T.value($t15), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t15), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t15) > 0);
 
-    // Vector::push_back<TestMutRef::T>($t13, $t15) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:9+39
+    // Vector::push_back<TestMutRef::T>($t13, $t15) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:9+39
     assume {:print "$at(2,3864,3903)"} true;
     call $t13 := $1_Vector_push_back'$1_TestMutRef_T'($t13, $t15);
     if ($abort_flag) {
@@ -2278,35 +2278,35 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // assert forall $elem: $t13: Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: $t13: Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $Dereference($t13); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t3)@]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:9+39
+    // write_back[LocalRoot($t3)@]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:119:9+39
     assume {:print "$at(2,3864,3903)"} true;
     $t3 := $Dereference($t13);
 
-    // $t16 := move($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:19+2
+    // $t16 := move($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:19+2
     assume {:print "$at(2,3923,3925)"} true;
     $t16 := $t1;
 
-    // $t17 := move($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:23+2
+    // $t17 := move($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:23+2
     $t17 := $t3;
 
-    // $t4 := pack TestMutRef::V($t16, $t17) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:17+9
+    // $t4 := pack TestMutRef::V($t16, $t17) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:17+9
     $t4 := $1_TestMutRef_V($t16, $t17);
 
-    // trace_local[x]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:13+1
+    // trace_local[x]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:120:13+1
     assume {:print "$track_local(1,4,4):", $t4} $t4 == $t4;
 
-    // $t18 := borrow_local($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:121:51+6
+    // $t18 := borrow_local($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:121:51+6
     assume {:print "$at(2,3982,3988)"} true;
     $t18 := $Mutation($Local(4), EmptyVec(), $t4);
 
-    // $t19 := TestMutRef::return_ref_different_path_vec2($t0, $t18) on_abort goto L6 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:121:17+41
+    // $t19 := TestMutRef::return_ref_different_path_vec2($t0, $t18) on_abort goto L6 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:121:17+41
     call $t19,$t18 := $1_TestMutRef_return_ref_different_path_vec2($t0, $t18);
     if ($abort_flag) {
         assume {:print "$at(2,3948,3989)"} true;
@@ -2315,89 +2315,89 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_path_vec2_inco
         goto L6;
     }
 
-    // trace_local[r]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:121:13+1
+    // trace_local[r]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:121:13+1
     $temp_0'u64' := $Dereference($t19);
     assume {:print "$track_local(1,4,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t20 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:14+1
+    // $t20 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:14+1
     assume {:print "$at(2,4004,4005)"} true;
     $t20 := 0;
     assume $IsValid'u64'($t20);
 
-    // write_ref($t19, $t20) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // write_ref($t19, $t20) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     $t19 := $UpdateMutation($t19, $t20);
 
-    // $t21 := is_parent[Reference($t18).is/[]]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // $t21 := is_parent[Reference($t18).is/[]]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     $t21 := $IsParentMutationHyper($t18, MakeVec2(0, -1), $t19);
 
-    // if ($t21) goto L1 else goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // if ($t21) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     if ($t21) { goto L1; } else { goto L2; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
 L1:
 
-    // write_back[Reference($t18).is/[]]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // write_back[Reference($t18).is/[]]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     $t18 := $UpdateMutation($t18, (var $$sel0 := $is#$1_TestMutRef_V($Dereference($t18)); $Update'$1_TestMutRef_V'_is($Dereference($t18), UpdateVec($$sel0, ReadVec(p#$Mutation($t19), LenVec(p#$Mutation($t18)) + 1), $Dereference($t19)))));
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
 L2:
 
-    // $t22 := is_parent[Reference($t18).ts/[]/.value]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // $t22 := is_parent[Reference($t18).ts/[]/.value]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     $t22 := $IsParentMutationHyper($t18, MakeVec3(1, -1, 0), $t19);
 
-    // if ($t22) goto L3 else goto L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // if ($t22) goto L3 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     if ($t22) { goto L3; } else { goto L7; }
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
 L3:
 
-    // write_back[Reference($t18).ts/[]/.value]($t19) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // write_back[Reference($t18).ts/[]/.value]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     $t18 := $UpdateMutation($t18, (var $$sel0 := $ts#$1_TestMutRef_V($Dereference($t18)); $Update'$1_TestMutRef_V'_ts($Dereference($t18), (var $$sel1 := ReadVec($$sel0, ReadVec(p#$Mutation($t19), LenVec(p#$Mutation($t18)) + 1)); UpdateVec($$sel0, ReadVec(p#$Mutation($t19), LenVec(p#$Mutation($t18)) + 1), $Update'$1_TestMutRef_T'_value($$sel1, $Dereference($t19)))))));
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
 L4:
 
-    // assert forall $elem: select TestMutRef::V.ts($t18): Gt(select TestMutRef::T.value($elem), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert forall $elem: select TestMutRef::V.ts($t18): Gt(select TestMutRef::T.value($elem), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       (var $range_0 := $ts#$1_TestMutRef_V($Dereference($t18)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0)))));
 
-    // write_back[LocalRoot($t4)@]($t18) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
+    // write_back[LocalRoot($t4)@]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:122:9+6
     assume {:print "$at(2,3999,4005)"} true;
     $t4 := $Dereference($t18);
 
-    // $t23 := move($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:123:9+1
+    // $t23 := move($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:123:9+1
     assume {:print "$at(2,4015,4016)"} true;
     $t23 := $t4;
 
-    // trace_return[0]($t23) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:123:9+1
+    // trace_return[0]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:123:9+1
     assume {:print "$track_return(1,4,0):", $t23} $t23 == $t23;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:124:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:124:5+1
     assume {:print "$at(2,4021,4022)"} true;
 L5:
 
-    // assert Implies($t0, Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(0)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(3)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:126:9+108
+    // assert Implies($t0, Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(0)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(3)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:126:9+108
     assume {:print "$at(2,4088,4196)"} true;
     assert {:msg "assert_failed(2,4088,4196): post-condition does not hold"}
       ($t0 ==> $IsEqual'$1_TestMutRef_V'($t23, $1_TestMutRef_V(ConcatVec(MakeVec1(1), MakeVec1(0)), ConcatVec(MakeVec1($1_TestMutRef_T(3)), MakeVec1($1_TestMutRef_T(4))))));
 
-    // assert Implies(Not($t0), Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(2)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(0)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:127:9+109
+    // assert Implies(Not($t0), Eq<TestMutRef::V>($t23, pack TestMutRef::V(ConcatVec<u64>(SingleVec<u64>(1), SingleVec<u64>(2)), ConcatVec<TestMutRef::T>(SingleVec<TestMutRef::T>(pack TestMutRef::T(0)), SingleVec<TestMutRef::T>(pack TestMutRef::T(4)))))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:127:9+109
     assume {:print "$at(2,4205,4314)"} true;
     assert {:msg "assert_failed(2,4205,4314): post-condition does not hold"}
       (!$t0 ==> $IsEqual'$1_TestMutRef_V'($t23, $1_TestMutRef_V(ConcatVec(MakeVec1(1), MakeVec1(2)), ConcatVec(MakeVec1($1_TestMutRef_T(0)), MakeVec1($1_TestMutRef_T(4))))));
 
-    // return $t23 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:127:9+109
+    // return $t23 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:127:9+109
     $ret0 := $t23;
     return;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:124:5+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:124:5+1
     assume {:print "$at(2,4021,4022)"} true;
 L6:
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:124:5+1
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:124:5+1
     $abort_code := $t5;
     $abort_flag := true;
     return;
@@ -2413,7 +2413,7 @@ L7:
 
 }
 
-// fun TestMutRef::call_return_ref_different_root [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:32:5+211
+// fun TestMutRef::call_return_ref_different_root [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:32:5+211
 procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_root$verify(_$t0: bool) returns ($ret0: $1_TestMutRef_T, $ret1: $1_TestMutRef_R)
 {
     // declare local variables
@@ -2446,51 +2446,51 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_root$verify(_$
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:41:51+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:41:51+8
     assume {:print "$at(2,1082,1090)"} true;
     assume $IsValid'bool'($t0);
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:32:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:32:5+1
     assume {:print "$at(2,703,704)"} true;
     assume {:print "$track_local(1,5,0):", $t0} $t0 == $t0;
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:33:26+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:33:26+1
     assume {:print "$at(2,782,783)"} true;
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t2 := pack TestMutRef::T($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:33:17+11
+    // $t2 := pack TestMutRef::T($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:33:17+11
     $t2 := $1_TestMutRef_T($t4);
 
-    // assert Gt(select TestMutRef::T.value($t2), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t2), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($t2) > 0);
 
-    // trace_local[x]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:33:13+1
+    // trace_local[x]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:33:13+1
     assume {:print "$at(2,769,770)"} true;
     assume {:print "$track_local(1,5,2):", $t2} $t2 == $t2;
 
-    // $t5 := 10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:34:26+2
+    // $t5 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:34:26+2
     assume {:print "$at(2,811,813)"} true;
     $t5 := 10;
     assume $IsValid'u64'($t5);
 
-    // $t3 := pack TestMutRef::R($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:34:17+12
+    // $t3 := pack TestMutRef::R($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:34:17+12
     $t3 := $1_TestMutRef_R($t5);
 
-    // trace_local[y]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:34:13+1
+    // trace_local[y]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:34:13+1
     assume {:print "$track_local(1,5,3):", $t3} $t3 == $t3;
 
-    // $t6 := borrow_local($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:46+6
+    // $t6 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:46+6
     assume {:print "$at(2,861,867)"} true;
     $t6 := $Mutation($Local(2), EmptyVec(), $t2);
 
-    // $t7 := borrow_local($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:54+6
+    // $t7 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:54+6
     $t7 := $Mutation($Local(3), EmptyVec(), $t3);
 
-    // $t8 := TestMutRef::return_ref_different_root($t0, $t6, $t7) on_abort goto L6 with $t9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:17+44
+    // $t8 := TestMutRef::return_ref_different_root($t0, $t6, $t7) on_abort goto L6 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:17+44
     call $t8,$t6,$t7 := $1_TestMutRef_return_ref_different_root($t0, $t6, $t7);
     if ($abort_flag) {
         assume {:print "$at(2,832,876)"} true;
@@ -2499,98 +2499,98 @@ procedure {:timeLimit 40} $1_TestMutRef_call_return_ref_different_root$verify(_$
         goto L6;
     }
 
-    // trace_local[r]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:13+1
+    // trace_local[r]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:35:13+1
     $temp_0'u64' := $Dereference($t8);
     assume {:print "$track_local(1,5,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // $t10 := 5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:14+1
+    // $t10 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:14+1
     assume {:print "$at(2,891,892)"} true;
     $t10 := 5;
     assume $IsValid'u64'($t10);
 
-    // write_ref($t8, $t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // write_ref($t8, $t10) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     $t8 := $UpdateMutation($t8, $t10);
 
-    // $t11 := is_parent[Reference($t6).value]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // $t11 := is_parent[Reference($t6).value]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     $t11 := $IsParentMutation($t6, 0, $t8);
 
-    // if ($t11) goto L1 else goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // if ($t11) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     if ($t11) { goto L1; } else { goto L2; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
 L1:
 
-    // write_back[Reference($t6).value]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // write_back[Reference($t6).value]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     $t6 := $UpdateMutation($t6, $Update'$1_TestMutRef_T'_value($Dereference($t6), $Dereference($t8)));
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
 L2:
 
-    // $t12 := is_parent[Reference($t7).value]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // $t12 := is_parent[Reference($t7).value]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     $t12 := $IsParentMutation($t7, 0, $t8);
 
-    // if ($t12) goto L3 else goto L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // if ($t12) goto L3 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     if ($t12) { goto L3; } else { goto L7; }
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
 L3:
 
-    // write_back[Reference($t7).value]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // write_back[Reference($t7).value]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     $t7 := $UpdateMutation($t7, $Update'$1_TestMutRef_R'_value($Dereference($t7), $Dereference($t8)));
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
 L4:
 
-    // assert Gt(select TestMutRef::T.value($t6), 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
-    // data invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // assert Gt(select TestMutRef::T.value($t6), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
+    // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:8:14+20
     assume {:print "$at(2,196,216)"} true;
     assert {:msg "assert_failed(2,196,216): data invariant does not hold"}
       ($value#$1_TestMutRef_T($Dereference($t6)) > 0);
 
-    // write_back[LocalRoot($t2)@]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // write_back[LocalRoot($t2)@]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     assume {:print "$at(2,886,892)"} true;
     $t2 := $Dereference($t6);
 
-    // write_back[LocalRoot($t3)@]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
+    // write_back[LocalRoot($t3)@]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:36:9+6
     $t3 := $Dereference($t7);
 
-    // $t13 := move($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:10+1
+    // $t13 := move($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:10+1
     assume {:print "$at(2,903,904)"} true;
     $t13 := $t2;
 
-    // $t14 := move($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:13+1
+    // $t14 := move($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:13+1
     $t14 := $t3;
 
-    // trace_return[0]($t13) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:9+6
+    // trace_return[0]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:9+6
     assume {:print "$track_return(1,5,0):", $t13} $t13 == $t13;
 
-    // trace_return[1]($t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:9+6
+    // trace_return[1]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:37:9+6
     assume {:print "$track_return(1,5,1):", $t14} $t14 == $t14;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:38:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:38:5+1
     assume {:print "$at(2,913,914)"} true;
 L5:
 
-    // assert Implies($t0, And(Eq<TestMutRef::T>($t13, pack TestMutRef::T(5)), Eq<TestMutRef::R>($t14, pack TestMutRef::R(10)))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:40:9+66
+    // assert Implies($t0, And(Eq<TestMutRef::T>($t13, pack TestMutRef::T(5)), Eq<TestMutRef::R>($t14, pack TestMutRef::R(10)))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:40:9+66
     assume {:print "$at(2,965,1031)"} true;
     assert {:msg "assert_failed(2,965,1031): post-condition does not hold"}
       ($t0 ==> ($IsEqual'$1_TestMutRef_T'($t13, $1_TestMutRef_T(5)) && $IsEqual'$1_TestMutRef_R'($t14, $1_TestMutRef_R(10))));
 
-    // assert Implies(Not($t0), And(Eq<TestMutRef::T>($t13, pack TestMutRef::T(1)), Eq<TestMutRef::R>($t14, pack TestMutRef::R(5)))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:41:9+66
+    // assert Implies(Not($t0), And(Eq<TestMutRef::T>($t13, pack TestMutRef::T(1)), Eq<TestMutRef::R>($t14, pack TestMutRef::R(5)))) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:41:9+66
     assume {:print "$at(2,1040,1106)"} true;
     assert {:msg "assert_failed(2,1040,1106): post-condition does not hold"}
       (!$t0 ==> ($IsEqual'$1_TestMutRef_T'($t13, $1_TestMutRef_T(1)) && $IsEqual'$1_TestMutRef_R'($t14, $1_TestMutRef_R(5))));
 
-    // return ($t13, $t14) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:41:9+66
+    // return ($t13, $t14) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:41:9+66
     $ret0 := $t13;
     $ret1 := $t14;
     return;
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:38:5+1
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:38:5+1
     assume {:print "$at(2,913,914)"} true;
 L6:
 
-    // abort($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:38:5+1
+    // abort($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:38:5+1
     $abort_code := $t9;
     $abort_flag := true;
     return;
@@ -2606,7 +2606,7 @@ L7:
 
 }
 
-// fun TestMutRef::identity [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+41
+// fun TestMutRef::identity [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+41
 procedure {:inline 1} $1_TestMutRef_identity(_$t0: $Mutation (int)) returns ($ret0: $Mutation (int), $ret1: $Mutation (int))
 {
     // declare local variables
@@ -2615,30 +2615,30 @@ procedure {:inline 1} $1_TestMutRef_identity(_$t0: $Mutation (int)) returns ($re
     $t0 := _$t0;
 
     // bytecode translation starts here
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+1
     assume {:print "$at(2,257,258)"} true;
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(1,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_return[0]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_return(1,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(1,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
 L1:
 
-    // return $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
     $ret0 := $t0;
     $ret1 := $t0;
     return;
 
 }
 
-// fun TestMutRef::identity [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+41
+// fun TestMutRef::identity [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+41
 procedure {:timeLimit 40} $1_TestMutRef_identity$verify(_$t0: $Mutation (int)) returns ($ret0: $Mutation (int), $ret1: $Mutation (int))
 {
     // declare local variables
@@ -2651,33 +2651,33 @@ procedure {:timeLimit 40} $1_TestMutRef_identity$verify(_$t0: $Mutation (int)) r
     assume l#$Mutation($t0) == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+41
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+41
     assume {:print "$at(2,257,298)"} true;
     assume $IsValid'u64'($Dereference($t0));
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:5+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(1,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_return[0]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_return(1,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:43+1
     $temp_0'u64' := $Dereference($t0);
     assume {:print "$track_local(1,6,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
 L1:
 
-    // return $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:13:45+1
     $ret0 := $t0;
     $ret1 := $t0;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_path [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
+// fun TestMutRef::return_ref_different_path [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
 procedure {:inline 1} $1_TestMutRef_return_ref_different_path(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_N)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_N))
 {
     // declare local variables
@@ -2698,97 +2698,97 @@ procedure {:inline 1} $1_TestMutRef_return_ref_different_path(_$t0: bool, _$t1: 
     assume IsEmptyVec(p#$Mutation($t5));
 
     // bytecode translation starts here
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
     assume {:print "$at(2,1207,1208)"} true;
     assume {:print "$track_local(1,7,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
     $temp_0'$1_TestMutRef_N' := $Dereference($t1);
     assume {:print "$track_local(1,7,1):", $temp_0'$1_TestMutRef_N'} $temp_0'$1_TestMutRef_N' == $temp_0'$1_TestMutRef_N';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     assume {:print "$at(2,1277,1316)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:21+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:21+1
 L0:
 
-    // $t3 := borrow_field<TestMutRef::N>.value($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:16+12
+    // $t3 := borrow_field<TestMutRef::N>.value($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:16+12
     $t3 := $ChildMutation($t1, 0, $value#$1_TestMutRef_N($Dereference($t1)));
 
-    // $t2 := $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // $t2 := $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $t2 := $t3;
 
-    // trace_local[tmp#$2]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_local[tmp#$2]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'u64' := $Dereference($t3);
     assume {:print "$track_local(1,7,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+1
 L2:
 
-    // $t4 := borrow_field<TestMutRef::N>.t($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+3
+    // $t4 := borrow_field<TestMutRef::N>.t($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+3
     $t4 := $ChildMutation($t1, 1, $t#$1_TestMutRef_N($Dereference($t1)));
 
-    // $t5 := borrow_field<TestMutRef::T>.value($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:34+14
+    // $t5 := borrow_field<TestMutRef::T>.value($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:34+14
     $t5 := $ChildMutation($t4, 0, $value#$1_TestMutRef_T($Dereference($t4)));
 
-    // $t2 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // $t2 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $t2 := $t5;
 
-    // trace_local[tmp#$2]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,7,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L3:
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'u64' := $Dereference($t2);
     assume {:print "$track_return(1,7,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'$1_TestMutRef_N' := $Dereference($t1);
     assume {:print "$track_local(1,7,1):", $temp_0'$1_TestMutRef_N'} $temp_0'$1_TestMutRef_N' == $temp_0'$1_TestMutRef_N';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L8:
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L9:
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
     assume {:print "$at(2,1321,1322)"} true;
 L10:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
     $ret0 := $t2;
     $ret1 := $t1;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_path [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
+// fun TestMutRef::return_ref_different_path [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
 procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_path$verify(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_N)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_N))
 {
     // declare local variables
@@ -2813,103 +2813,103 @@ procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_path$verify(_$t0: b
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
     assume {:print "$at(2,1207,1322)"} true;
     assume $IsValid'bool'($t0);
 
-    // assume And(WellFormed($t1), Gt(select TestMutRef::T.value(select TestMutRef::N.t($t1)), 0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
+    // assume And(WellFormed($t1), Gt(select TestMutRef::T.value(select TestMutRef::N.t($t1)), 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+115
     assume ($IsValid'$1_TestMutRef_N'($Dereference($t1)) && ($value#$1_TestMutRef_T($t#$1_TestMutRef_N($Dereference($t1))) > 0));
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
     assume {:print "$track_local(1,7,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:47:5+1
     $temp_0'$1_TestMutRef_N' := $Dereference($t1);
     assume {:print "$track_local(1,7,1):", $temp_0'$1_TestMutRef_N'} $temp_0'$1_TestMutRef_N' == $temp_0'$1_TestMutRef_N';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     assume {:print "$at(2,1277,1316)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:21+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:21+1
 L0:
 
-    // $t3 := borrow_field<TestMutRef::N>.value($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:16+12
+    // $t3 := borrow_field<TestMutRef::N>.value($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:16+12
     $t3 := $ChildMutation($t1, 0, $value#$1_TestMutRef_N($Dereference($t1)));
 
-    // $t2 := $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // $t2 := $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $t2 := $t3;
 
-    // trace_local[tmp#$2]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_local[tmp#$2]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'u64' := $Dereference($t3);
     assume {:print "$track_local(1,7,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+1
 L2:
 
-    // $t4 := borrow_field<TestMutRef::N>.t($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+3
+    // $t4 := borrow_field<TestMutRef::N>.t($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:39+3
     $t4 := $ChildMutation($t1, 1, $t#$1_TestMutRef_N($Dereference($t1)));
 
-    // $t5 := borrow_field<TestMutRef::T>.value($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:34+14
+    // $t5 := borrow_field<TestMutRef::T>.value($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:34+14
     $t5 := $ChildMutation($t4, 0, $value#$1_TestMutRef_T($Dereference($t4)));
 
-    // $t2 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // $t2 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $t2 := $t5;
 
-    // trace_local[tmp#$2]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,7,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L3:
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'u64' := $Dereference($t2);
     assume {:print "$track_return(1,7,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
     $temp_0'$1_TestMutRef_N' := $Dereference($t1);
     assume {:print "$track_local(1,7,1):", $temp_0'$1_TestMutRef_N'} $temp_0'$1_TestMutRef_N' == $temp_0'$1_TestMutRef_N';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L8:
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:48:9+39
 L9:
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
     assume {:print "$at(2,1321,1322)"} true;
 L10:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:49:5+1
     $ret0 := $t2;
     $ret1 := $t1;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_path_vec [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
+// fun TestMutRef::return_ref_different_path_vec [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
 procedure {:inline 1} $1_TestMutRef_return_ref_different_path_vec(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_V)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_V))
 {
     // declare local variables
@@ -2935,35 +2935,35 @@ procedure {:inline 1} $1_TestMutRef_return_ref_different_path_vec(_$t0: bool, _$
     assume IsEmptyVec(p#$Mutation($t9));
 
     // bytecode translation starts here
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
     assume {:print "$at(2,1892,1893)"} true;
     assume {:print "$track_local(1,8,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,8,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     assume {:print "$at(2,1966,2044)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:40+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:40+1
 L0:
 
-    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:35+9
+    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:35+9
     $t3 := $ChildMutation($t1, 0, $is#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:46+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:46+1
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L13 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:16+32
+    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L13 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:16+32
     call $t5,$t3 := $1_Vector_borrow_mut'u64'($t3, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,1973,2005)"} true;
@@ -2972,27 +2972,27 @@ L0:
         goto L13;
     }
 
-    // $t2 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // $t2 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $t2 := $t5;
 
-    // trace_local[tmp#$2]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,8,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:79+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:79+1
 L2:
 
-    // $t7 := borrow_field<TestMutRef::V>.is($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:74+9
+    // $t7 := borrow_field<TestMutRef::V>.is($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:74+9
     $t7 := $ChildMutation($t1, 0, $is#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t8 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:85+1
+    // $t8 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:85+1
     $t8 := 0;
     assume $IsValid'u64'($t8);
 
-    // $t9 := Vector::borrow_mut<u64>($t7, $t8) on_abort goto L13 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:55+32
+    // $t9 := Vector::borrow_mut<u64>($t7, $t8) on_abort goto L13 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:55+32
     call $t9,$t7 := $1_Vector_borrow_mut'u64'($t7, $t8);
     if ($abort_flag) {
         assume {:print "$at(2,2012,2044)"} true;
@@ -3001,68 +3001,68 @@ L2:
         goto L13;
     }
 
-    // $t2 := $t9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // $t2 := $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $t2 := $t9;
 
-    // trace_local[tmp#$2]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'u64' := $Dereference($t9);
     assume {:print "$track_local(1,8,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L3:
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'u64' := $Dereference($t2);
     assume {:print "$track_return(1,8,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,8,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L8:
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L9:
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L10:
 
-    // label L11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L11:
 
-    // label L12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
     assume {:print "$at(2,2049,2050)"} true;
 L12:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
     $ret0 := $t2;
     $ret1 := $t1;
     return;
 
-    // label L13 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
 L13:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_path_vec [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
+// fun TestMutRef::return_ref_different_path_vec [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
 procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_path_vec$verify(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_V)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_V))
 {
     // declare local variables
@@ -3092,42 +3092,42 @@ procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_path_vec$verify(_$t
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
     assume {:print "$at(2,1892,2050)"} true;
     assume $IsValid'bool'($t0);
 
-    // assume And(WellFormed($t1), forall $elem: select TestMutRef::V.ts($t1): Gt(select TestMutRef::T.value($elem), 0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
+    // assume And(WellFormed($t1), forall $elem: select TestMutRef::V.ts($t1): Gt(select TestMutRef::T.value($elem), 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+158
     assume ($IsValid'$1_TestMutRef_V'($Dereference($t1)) && (var $range_0 := $ts#$1_TestMutRef_V($Dereference($t1)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0))))));
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
     assume {:print "$track_local(1,8,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:69:5+1
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,8,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     assume {:print "$at(2,1966,2044)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:40+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:40+1
 L0:
 
-    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:35+9
+    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:35+9
     $t3 := $ChildMutation($t1, 0, $is#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:46+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:46+1
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L13 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:16+32
+    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L13 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:16+32
     call $t5,$t3 := $1_Vector_borrow_mut'u64'($t3, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,1973,2005)"} true;
@@ -3136,27 +3136,27 @@ L0:
         goto L13;
     }
 
-    // $t2 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // $t2 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $t2 := $t5;
 
-    // trace_local[tmp#$2]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,8,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:79+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:79+1
 L2:
 
-    // $t7 := borrow_field<TestMutRef::V>.is($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:74+9
+    // $t7 := borrow_field<TestMutRef::V>.is($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:74+9
     $t7 := $ChildMutation($t1, 0, $is#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t8 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:85+1
+    // $t8 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:85+1
     $t8 := 0;
     assume $IsValid'u64'($t8);
 
-    // $t9 := Vector::borrow_mut<u64>($t7, $t8) on_abort goto L13 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:55+32
+    // $t9 := Vector::borrow_mut<u64>($t7, $t8) on_abort goto L13 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:55+32
     call $t9,$t7 := $1_Vector_borrow_mut'u64'($t7, $t8);
     if ($abort_flag) {
         assume {:print "$at(2,2012,2044)"} true;
@@ -3165,68 +3165,68 @@ L2:
         goto L13;
     }
 
-    // $t2 := $t9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // $t2 := $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $t2 := $t9;
 
-    // trace_local[tmp#$2]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'u64' := $Dereference($t9);
     assume {:print "$track_local(1,8,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L3:
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'u64' := $Dereference($t2);
     assume {:print "$track_return(1,8,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,8,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L8:
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L9:
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L10:
 
-    // label L11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:70:9+78
 L11:
 
-    // label L12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
     assume {:print "$at(2,2049,2050)"} true;
 L12:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
     $ret0 := $t2;
     $ret1 := $t1;
     return;
 
-    // label L13 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
 L13:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:71:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_path_vec2 [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
+// fun TestMutRef::return_ref_different_path_vec2 [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
 procedure {:inline 1} $1_TestMutRef_return_ref_different_path_vec2(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_V)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_V))
 {
     // declare local variables
@@ -3254,35 +3254,35 @@ procedure {:inline 1} $1_TestMutRef_return_ref_different_path_vec2(_$t0: bool, _
     assume IsEmptyVec(p#$Mutation($t10));
 
     // bytecode translation starts here
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
     assume {:print "$at(2,2659,2660)"} true;
     assume {:print "$track_local(1,9,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,9,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     assume {:print "$at(2,2734,2824)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:40+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:40+1
 L0:
 
-    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:35+9
+    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:35+9
     $t3 := $ChildMutation($t1, 0, $is#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:46+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:46+1
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L15 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:16+32
+    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L15 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:16+32
     call $t5,$t3 := $1_Vector_borrow_mut'u64'($t3, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,2741,2773)"} true;
@@ -3291,27 +3291,27 @@ L0:
         goto L15;
     }
 
-    // $t2 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // $t2 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $t2 := $t5;
 
-    // trace_local[tmp#$2]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,9,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:84+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:84+1
 L2:
 
-    // $t7 := borrow_field<TestMutRef::V>.ts($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:79+9
+    // $t7 := borrow_field<TestMutRef::V>.ts($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:79+9
     $t7 := $ChildMutation($t1, 1, $ts#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t8 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:90+1
+    // $t8 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:90+1
     $t8 := 0;
     assume $IsValid'u64'($t8);
 
-    // $t9 := Vector::borrow_mut<TestMutRef::T>($t7, $t8) on_abort goto L15 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:59+34
+    // $t9 := Vector::borrow_mut<TestMutRef::T>($t7, $t8) on_abort goto L15 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:59+34
     call $t9,$t7 := $1_Vector_borrow_mut'$1_TestMutRef_T'($t7, $t8);
     if ($abort_flag) {
         assume {:print "$at(2,2784,2818)"} true;
@@ -3320,77 +3320,77 @@ L2:
         goto L15;
     }
 
-    // $t10 := borrow_field<TestMutRef::T>.value($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:54+45
+    // $t10 := borrow_field<TestMutRef::T>.value($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:54+45
     $t10 := $ChildMutation($t9, 0, $value#$1_TestMutRef_T($Dereference($t9)));
 
-    // $t2 := $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // $t2 := $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $t2 := $t10;
 
-    // trace_local[tmp#$2]($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_local[tmp#$2]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'u64' := $Dereference($t10);
     assume {:print "$track_local(1,9,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L3:
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'u64' := $Dereference($t2);
     assume {:print "$track_return(1,9,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,9,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L8:
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L9:
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L10:
 
-    // label L11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L11:
 
-    // label L12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L12:
 
-    // label L13 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L13:
 
-    // label L14 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // label L14 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
     assume {:print "$at(2,2829,2830)"} true;
 L14:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
     $ret0 := $t2;
     $ret1 := $t1;
     return;
 
-    // label L15 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // label L15 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
 L15:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_path_vec2 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
+// fun TestMutRef::return_ref_different_path_vec2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
 procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_path_vec2$verify(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_V)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_V))
 {
     // declare local variables
@@ -3422,42 +3422,42 @@ procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_path_vec2$verify(_$
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
     assume {:print "$at(2,2659,2830)"} true;
     assume $IsValid'bool'($t0);
 
-    // assume And(WellFormed($t1), forall $elem: select TestMutRef::V.ts($t1): Gt(select TestMutRef::T.value($elem), 0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
+    // assume And(WellFormed($t1), forall $elem: select TestMutRef::V.ts($t1): Gt(select TestMutRef::T.value($elem), 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+171
     assume ($IsValid'$1_TestMutRef_V'($Dereference($t1)) && (var $range_0 := $ts#$1_TestMutRef_V($Dereference($t1)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
     (($value#$1_TestMutRef_T($elem) > 0))))));
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
     assume {:print "$track_local(1,9,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:90:5+1
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,9,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     assume {:print "$at(2,2734,2824)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:40+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:40+1
 L0:
 
-    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:35+9
+    // $t3 := borrow_field<TestMutRef::V>.is($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:35+9
     $t3 := $ChildMutation($t1, 0, $is#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t4 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:46+1
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:46+1
     $t4 := 1;
     assume $IsValid'u64'($t4);
 
-    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L15 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:16+32
+    // $t5 := Vector::borrow_mut<u64>($t3, $t4) on_abort goto L15 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:16+32
     call $t5,$t3 := $1_Vector_borrow_mut'u64'($t3, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,2741,2773)"} true;
@@ -3466,27 +3466,27 @@ L0:
         goto L15;
     }
 
-    // $t2 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // $t2 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $t2 := $t5;
 
-    // trace_local[tmp#$2]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,9,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:84+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:84+1
 L2:
 
-    // $t7 := borrow_field<TestMutRef::V>.ts($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:79+9
+    // $t7 := borrow_field<TestMutRef::V>.ts($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:79+9
     $t7 := $ChildMutation($t1, 1, $ts#$1_TestMutRef_V($Dereference($t1)));
 
-    // $t8 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:90+1
+    // $t8 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:90+1
     $t8 := 0;
     assume $IsValid'u64'($t8);
 
-    // $t9 := Vector::borrow_mut<TestMutRef::T>($t7, $t8) on_abort goto L15 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:59+34
+    // $t9 := Vector::borrow_mut<TestMutRef::T>($t7, $t8) on_abort goto L15 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:59+34
     call $t9,$t7 := $1_Vector_borrow_mut'$1_TestMutRef_T'($t7, $t8);
     if ($abort_flag) {
         assume {:print "$at(2,2784,2818)"} true;
@@ -3495,77 +3495,77 @@ L2:
         goto L15;
     }
 
-    // $t10 := borrow_field<TestMutRef::T>.value($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:54+45
+    // $t10 := borrow_field<TestMutRef::T>.value($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:54+45
     $t10 := $ChildMutation($t9, 0, $value#$1_TestMutRef_T($Dereference($t9)));
 
-    // $t2 := $t10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // $t2 := $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $t2 := $t10;
 
-    // trace_local[tmp#$2]($t10) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_local[tmp#$2]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'u64' := $Dereference($t10);
     assume {:print "$track_local(1,9,2):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L3:
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'u64' := $Dereference($t2);
     assume {:print "$track_return(1,9,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
     $temp_0'$1_TestMutRef_V' := $Dereference($t1);
     assume {:print "$track_local(1,9,1):", $temp_0'$1_TestMutRef_V'} $temp_0'$1_TestMutRef_V' == $temp_0'$1_TestMutRef_V';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L8:
 
-    // label L9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L9:
 
-    // label L10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L10:
 
-    // label L11 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L11:
 
-    // label L12 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L12:
 
-    // label L13 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:91:9+90
 L13:
 
-    // label L14 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // label L14 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
     assume {:print "$at(2,2829,2830)"} true;
 L14:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
     $ret0 := $t2;
     $ret1 := $t1;
     return;
 
-    // label L15 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // label L15 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
 L15:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:92:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestMutRef::return_ref_different_root [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
+// fun TestMutRef::return_ref_different_root [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
 procedure {:inline 1} $1_TestMutRef_return_ref_different_root(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_T), _$t2: $Mutation ($1_TestMutRef_R)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_T), $ret2: $Mutation ($1_TestMutRef_R))
 {
     // declare local variables
@@ -3587,93 +3587,93 @@ procedure {:inline 1} $1_TestMutRef_return_ref_different_root(_$t0: bool, _$t1: 
     assume IsEmptyVec(p#$Mutation($t5));
 
     // bytecode translation starts here
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
     assume {:print "$at(2,573,574)"} true;
     assume {:print "$track_local(1,10,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
     $temp_0'$1_TestMutRef_T' := $Dereference($t1);
     assume {:print "$track_local(1,10,1):", $temp_0'$1_TestMutRef_T'} $temp_0'$1_TestMutRef_T' == $temp_0'$1_TestMutRef_T';
 
-    // trace_local[y]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
     $temp_0'$1_TestMutRef_R' := $Dereference($t2);
     assume {:print "$track_local(1,10,2):", $temp_0'$1_TestMutRef_R'} $temp_0'$1_TestMutRef_R' == $temp_0'$1_TestMutRef_R';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     assume {:print "$at(2,654,691)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L0:
 
-    // destroy($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // destroy($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 
-    // $t4 := borrow_field<TestMutRef::T>.value($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:16+12
+    // $t4 := borrow_field<TestMutRef::T>.value($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:16+12
     $t4 := $ChildMutation($t1, 0, $value#$1_TestMutRef_T($Dereference($t1)));
 
-    // $t3 := $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // $t3 := $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $t3 := $t4;
 
-    // trace_local[tmp#$3]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[tmp#$3]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'u64' := $Dereference($t4);
     assume {:print "$track_local(1,10,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L2:
 
-    // destroy($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 
-    // $t5 := borrow_field<TestMutRef::R>.value($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:34+12
+    // $t5 := borrow_field<TestMutRef::R>.value($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:34+12
     $t5 := $ChildMutation($t2, 0, $value#$1_TestMutRef_R($Dereference($t2)));
 
-    // $t3 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // $t3 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $t3 := $t5;
 
-    // trace_local[tmp#$3]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[tmp#$3]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,10,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L3:
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'u64' := $Dereference($t3);
     assume {:print "$track_return(1,10,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'$1_TestMutRef_T' := $Dereference($t1);
     assume {:print "$track_local(1,10,1):", $temp_0'$1_TestMutRef_T'} $temp_0'$1_TestMutRef_T' == $temp_0'$1_TestMutRef_T';
 
-    // trace_local[y]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'$1_TestMutRef_R' := $Dereference($t2);
     assume {:print "$track_local(1,10,2):", $temp_0'$1_TestMutRef_R'} $temp_0'$1_TestMutRef_R' == $temp_0'$1_TestMutRef_R';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
     assume {:print "$at(2,696,697)"} true;
 L8:
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
     $ret0 := $t3;
     $ret1 := $t1;
     $ret2 := $t2;
@@ -3681,7 +3681,7 @@ L8:
 
 }
 
-// fun TestMutRef::return_ref_different_root [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
+// fun TestMutRef::return_ref_different_root [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
 procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_root$verify(_$t0: bool, _$t1: $Mutation ($1_TestMutRef_T), _$t2: $Mutation ($1_TestMutRef_R)) returns ($ret0: $Mutation (int), $ret1: $Mutation ($1_TestMutRef_T), $ret2: $Mutation ($1_TestMutRef_R))
 {
     // declare local variables
@@ -3708,102 +3708,102 @@ procedure {:timeLimit 40} $1_TestMutRef_return_ref_different_root$verify(_$t0: b
     assume l#$Mutation($t2) == $Param(2);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
     assume {:print "$at(2,573,697)"} true;
     assume $IsValid'bool'($t0);
 
-    // assume And(WellFormed($t1), Gt(select TestMutRef::T.value($t1), 0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
+    // assume And(WellFormed($t1), Gt(select TestMutRef::T.value($t1), 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
     assume ($IsValid'$1_TestMutRef_T'($Dereference($t1)) && ($value#$1_TestMutRef_T($Dereference($t1)) > 0));
 
-    // assume WellFormed($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+124
     assume $IsValid'$1_TestMutRef_R'($Dereference($t2));
 
-    // trace_local[b]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
     assume {:print "$track_local(1,10,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
     $temp_0'$1_TestMutRef_T' := $Dereference($t1);
     assume {:print "$track_local(1,10,1):", $temp_0'$1_TestMutRef_T'} $temp_0'$1_TestMutRef_T' == $temp_0'$1_TestMutRef_T';
 
-    // trace_local[y]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:28:5+1
     $temp_0'$1_TestMutRef_R' := $Dereference($t2);
     assume {:print "$track_local(1,10,2):", $temp_0'$1_TestMutRef_R'} $temp_0'$1_TestMutRef_R' == $temp_0'$1_TestMutRef_R';
 
-    // if ($t0) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     assume {:print "$at(2,654,691)"} true;
     if ($t0) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L0:
 
-    // destroy($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // destroy($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 
-    // $t4 := borrow_field<TestMutRef::T>.value($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:16+12
+    // $t4 := borrow_field<TestMutRef::T>.value($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:16+12
     $t4 := $ChildMutation($t1, 0, $value#$1_TestMutRef_T($Dereference($t1)));
 
-    // $t3 := $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // $t3 := $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $t3 := $t4;
 
-    // trace_local[tmp#$3]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[tmp#$3]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'u64' := $Dereference($t4);
     assume {:print "$track_local(1,10,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L2:
 
-    // destroy($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 
-    // $t5 := borrow_field<TestMutRef::R>.value($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:34+12
+    // $t5 := borrow_field<TestMutRef::R>.value($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:34+12
     $t5 := $ChildMutation($t2, 0, $value#$1_TestMutRef_R($Dereference($t2)));
 
-    // $t3 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // $t3 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $t3 := $t5;
 
-    // trace_local[tmp#$3]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[tmp#$3]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'u64' := $Dereference($t5);
     assume {:print "$track_local(1,10,3):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L3:
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'u64' := $Dereference($t3);
     assume {:print "$track_return(1,10,0):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // trace_local[x]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'$1_TestMutRef_T' := $Dereference($t1);
     assume {:print "$track_local(1,10,1):", $temp_0'$1_TestMutRef_T'} $temp_0'$1_TestMutRef_T' == $temp_0'$1_TestMutRef_T';
 
-    // trace_local[y]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
     $temp_0'$1_TestMutRef_R' := $Dereference($t2);
     assume {:print "$track_local(1,10,2):", $temp_0'$1_TestMutRef_R'} $temp_0'$1_TestMutRef_R' == $temp_0'$1_TestMutRef_R';
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L4:
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L5:
 
-    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L6:
 
-    // label L7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:29:9+37
 L7:
 
-    // label L8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
     assume {:print "$at(2,696,697)"} true;
 L8:
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move:30:5+1
     $ret0 := $t3;
     $ret1 := $t1;
     $ret2 := $t2;

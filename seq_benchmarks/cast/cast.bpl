@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestCast::aborting_u64_cast [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:51:5+62
+// fun TestCast::aborting_u64_cast [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:51:5+62
 procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -907,14 +907,14 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast$verify(_$t0: int) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:51:5+62
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:51:5+62
     assume {:print "$at(2,878,940)"} true;
     assume $IsValid'u128'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:51:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:51:5+1
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:52:9+10
+    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:52:9+10
     assume {:print "$at(2,924,934)"} true;
     call $t1 := $CastU64($t0);
     if ($abort_flag) {
@@ -924,44 +924,44 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast$verify(_$t0: int) retur
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:52:9+10
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:52:9+10
     assume {:print "$track_return(0,0,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:53:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:53:5+1
     assume {:print "$at(2,939,940)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:22:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:22:9+16
     assume {:print "$at(2,369,385)"} true;
     assert {:msg "assert_failed(2,369,385): function does not abort under this condition"}
       !false;
 
-    // assert Not(Gt($t0, 18446744073709551615)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:55:9+35
+    // assert Not(Gt($t0, 18446744073709551615)) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:55:9+35
     assume {:print "$at(2,978,1013)"} true;
     assert {:msg "assert_failed(2,978,1013): function does not abort under this condition"}
       !($t0 > 18446744073709551615);
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:55:9+35
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:55:9+35
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:53:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:53:5+1
     assume {:print "$at(2,939,940)"} true;
 L2:
 
-    // assert Or(false, Gt($t0, 18446744073709551615)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:54:5+74
+    // assert Or(false, Gt($t0, 18446744073709551615)) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:54:5+74
     assume {:print "$at(2,945,1019)"} true;
     assert {:msg "assert_failed(2,945,1019): abort not covered by any of the `aborts_if` clauses"}
       (false || ($t0 > 18446744073709551615));
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:54:5+74
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:54:5+74
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestCast::aborting_u64_cast_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:44:5+72
+// fun TestCast::aborting_u64_cast_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:44:5+72
 procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast_incorrect$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -976,14 +976,14 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast_incorrect$verify(_$t0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:44:5+72
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:44:5+72
     assume {:print "$at(2,730,802)"} true;
     assume $IsValid'u128'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:44:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:44:5+1
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:45:9+10
+    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:45:9+10
     assume {:print "$at(2,786,796)"} true;
     call $t1 := $CastU64($t0);
     if ($abort_flag) {
@@ -993,39 +993,39 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast_incorrect$verify(_$t0: 
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:45:9+10
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:45:9+10
     assume {:print "$track_return(0,1,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:46:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:46:5+1
     assume {:print "$at(2,801,802)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:48:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:48:9+16
     assume {:print "$at(2,850,866)"} true;
     assert {:msg "assert_failed(2,850,866): function does not abort under this condition"}
       !false;
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:48:9+16
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:48:9+16
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:46:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:46:5+1
     assume {:print "$at(2,801,802)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:47:5+65
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:47:5+65
     assume {:print "$at(2,807,872)"} true;
     assert {:msg "assert_failed(2,807,872): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:47:5+65
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:47:5+65
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestCast::aborting_u8_cast [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:37:5+58
+// fun TestCast::aborting_u8_cast [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:37:5+58
 procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1040,14 +1040,14 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast$verify(_$t0: int) return
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:37:5+58
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:37:5+58
     assume {:print "$at(2,605,663)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:37:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:37:5+1
     assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u8)($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:38:9+9
+    // $t1 := (u8)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:38:9+9
     assume {:print "$at(2,648,657)"} true;
     call $t1 := $CastU8($t0);
     if ($abort_flag) {
@@ -1057,39 +1057,39 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast$verify(_$t0: int) return
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:38:9+9
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:38:9+9
     assume {:print "$track_return(0,2,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:39:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:39:5+1
     assume {:print "$at(2,662,663)"} true;
 L1:
 
-    // assert Not(Gt($t0, 255)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:41:9+18
+    // assert Not(Gt($t0, 255)) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:41:9+18
     assume {:print "$at(2,700,718)"} true;
     assert {:msg "assert_failed(2,700,718): function does not abort under this condition"}
       !($t0 > 255);
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:41:9+18
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:41:9+18
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:39:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:39:5+1
     assume {:print "$at(2,662,663)"} true;
 L2:
 
-    // assert Gt($t0, 255) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:40:5+56
+    // assert Gt($t0, 255) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:40:5+56
     assume {:print "$at(2,668,724)"} true;
     assert {:msg "assert_failed(2,668,724): abort not covered by any of the `aborts_if` clauses"}
       ($t0 > 255);
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:40:5+56
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:40:5+56
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestCast::aborting_u8_cast_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:30:5+68
+// fun TestCast::aborting_u8_cast_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:30:5+68
 procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast_incorrect$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1104,14 +1104,14 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast_incorrect$verify(_$t0: i
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:30:5+68
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:30:5+68
     assume {:print "$at(2,462,530)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:30:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:30:5+1
     assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u8)($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:31:9+9
+    // $t1 := (u8)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:31:9+9
     assume {:print "$at(2,515,524)"} true;
     call $t1 := $CastU8($t0);
     if ($abort_flag) {
@@ -1121,39 +1121,39 @@ procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast_incorrect$verify(_$t0: i
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:31:9+9
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:31:9+9
     assume {:print "$track_return(0,3,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:32:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:32:5+1
     assume {:print "$at(2,529,530)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:34:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:34:9+16
     assume {:print "$at(2,577,593)"} true;
     assert {:msg "assert_failed(2,577,593): function does not abort under this condition"}
       !false;
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:34:9+16
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:34:9+16
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:32:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:32:5+1
     assume {:print "$at(2,529,530)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:33:5+64
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:33:5+64
     assume {:print "$at(2,535,599)"} true;
     assert {:msg "assert_failed(2,535,599): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:33:5+64
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:33:5+64
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestCast::u64_cast [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:18:5+54
+// fun TestCast::u64_cast [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:18:5+54
 procedure {:timeLimit 40} $42_TestCast_u64_cast$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1168,14 +1168,14 @@ procedure {:timeLimit 40} $42_TestCast_u64_cast$verify(_$t0: int) returns ($ret0
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:18:5+54
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:18:5+54
     assume {:print "$at(2,277,331)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:18:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:18:5+1
     assume {:print "$track_local(0,4,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u128)($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:19:9+11
+    // $t1 := (u128)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:19:9+11
     assume {:print "$at(2,314,325)"} true;
     call $t1 := $CastU128($t0);
     if ($abort_flag) {
@@ -1185,28 +1185,28 @@ procedure {:timeLimit 40} $42_TestCast_u64_cast$verify(_$t0: int) returns ($ret0
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:19:9+11
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:19:9+11
     assume {:print "$track_return(0,4,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
     assume {:print "$at(2,330,331)"} true;
 L1:
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
 L2:
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestCast::u8_cast_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:11:5+60
+// fun TestCast::u8_cast_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:11:5+60
 procedure {:timeLimit 40} $42_TestCast_u8_cast_incorrect$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1221,14 +1221,14 @@ procedure {:timeLimit 40} $42_TestCast_u8_cast_incorrect$verify(_$t0: int) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:11:5+60
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:11:5+60
     assume {:print "$at(2,151,211)"} true;
     assume $IsValid'u8'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:11:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:11:5+1
     assume {:print "$track_local(0,5,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:12:9+10
+    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:12:9+10
     assume {:print "$at(2,195,205)"} true;
     call $t1 := $CastU64($t0);
     if ($abort_flag) {
@@ -1238,32 +1238,32 @@ procedure {:timeLimit 40} $42_TestCast_u8_cast_incorrect$verify(_$t0: int) retur
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:12:9+10
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:12:9+10
     assume {:print "$track_return(0,5,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:13:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:13:5+1
     assume {:print "$at(2,210,211)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:15:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:15:9+16
     assume {:print "$at(2,249,265)"} true;
     assert {:msg "assert_failed(2,249,265): function does not abort under this condition"}
       !false;
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:15:9+16
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:15:9+16
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:13:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:13:5+1
     assume {:print "$at(2,210,211)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:14:5+55
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:14:5+55
     assume {:print "$at(2,216,271)"} true;
     assert {:msg "assert_failed(2,216,271): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/cast.move:14:5+55
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:14:5+55
     $abort_code := $t2;
     $abort_flag := true;
     return;

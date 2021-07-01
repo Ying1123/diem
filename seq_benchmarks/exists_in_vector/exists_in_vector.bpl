@@ -1072,24 +1072,24 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:6:9+90
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:6:9+90
 function {:inline} $42_VectorExists_e_in_v_vec(e: int, v: Vec (int)): bool {
     (var $range_0 := v; (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var x := ReadVec($range_0, $i_1);
     ($IsEqual'u64'(x, e)))))
 }
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:9:9+103
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:9:9+103
 function {:inline} $42_VectorExists_e_in_v_range(e: int, v: Vec (int)): bool {
     (var $range_2 := $Range(0, LenVec(v)); (exists $i_3: int :: $InRange($range_2, $i_3) && (var i := $i_3;
     ($IsEqual'u64'(ReadVec(v, i), e)))))
 }
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:12:9+120
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:12:9+120
 function {:inline} $42_VectorExists_e_in_v_u64(e: int, v: Vec (int)): bool {
     (exists i: int :: $IsValid'u64'(i) && (((0 <= i) && (i < LenVec(v))))  && ($IsEqual'u64'(ReadVec(v, i), e)))
 }
 
-// fun VectorExists::do_nothing_ref [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+51
+// fun VectorExists::do_nothing_ref [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+51
 procedure {:timeLimit 40} $42_VectorExists_do_nothing_ref$verify(_$t0: Vec (int)) returns ()
 {
     // declare local variables
@@ -1101,73 +1101,73 @@ procedure {:timeLimit 40} $42_VectorExists_do_nothing_ref$verify(_$t0: Vec (int)
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+51
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+51
     assume {:print "$at(2,498,549)"} true;
     assume $IsValid'vec'u64''($t0);
 
-    // trace_local[_v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+1
+    // trace_local[_v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+1
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:18:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:18:5+1
     assume {:print "$at(2,548,549)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:20:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:20:9+16
     assume {:print "$at(2,584,600)"} true;
     assert {:msg "assert_failed(2,584,600): function does not abort under this condition"}
       !false;
 
-    // assert Eq<vector<u64>>($t0, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:22:9+17
+    // assert Eq<vector<u64>>($t0, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:22:9+17
     assume {:print "$at(2,610,627)"} true;
     assert {:msg "assert_failed(2,610,627): post-condition does not hold"}
       $IsEqual'vec'u64''($t0, $t0);
 
-    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:23:9+36
+    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:23:9+36
     assume {:print "$at(2,636,672)"} true;
     assert {:msg "assert_failed(2,636,672): post-condition does not hold"}
       (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t0))));
 
-    // assert exists l: TypeDomain<u64>() where Eq<u64>(l, Len<u64>($t0)): Eq<u64>(l, Len<u64>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:24:9+55
+    // assert exists l: TypeDomain<u64>() where Eq<u64>(l, Len<u64>($t0)): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:24:9+55
     assume {:print "$at(2,681,736)"} true;
     assert {:msg "assert_failed(2,681,736): post-condition does not hold"}
       (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t0)))  && ($IsEqual'u64'(l, LenVec($t0))));
 
-    // assert Implies(VectorExists::e_in_v_vec(0, $t0), VectorExists::e_in_v_vec(0, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:26:9+48
+    // assert Implies(VectorExists::e_in_v_vec(0, $t0), VectorExists::e_in_v_vec(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:26:9+48
     assume {:print "$at(2,746,794)"} true;
     assert {:msg "assert_failed(2,746,794): post-condition does not hold"}
       ($42_VectorExists_e_in_v_vec(0, $t0) ==> $42_VectorExists_e_in_v_vec(0, $t0));
 
-    // assert Implies(VectorExists::e_in_v_range(0, $t0), VectorExists::e_in_v_range(0, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:27:9+52
+    // assert Implies(VectorExists::e_in_v_range(0, $t0), VectorExists::e_in_v_range(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:27:9+52
     assume {:print "$at(2,803,855)"} true;
     assert {:msg "assert_failed(2,803,855): post-condition does not hold"}
       ($42_VectorExists_e_in_v_range(0, $t0) ==> $42_VectorExists_e_in_v_range(0, $t0));
 
-    // assert Implies(VectorExists::e_in_v_u64(0, $t0), VectorExists::e_in_v_u64(0, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:28:9+48
+    // assert Implies(VectorExists::e_in_v_u64(0, $t0), VectorExists::e_in_v_u64(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:28:9+48
     assume {:print "$at(2,864,912)"} true;
     assert {:msg "assert_failed(2,864,912): post-condition does not hold"}
       ($42_VectorExists_e_in_v_u64(0, $t0) ==> $42_VectorExists_e_in_v_u64(0, $t0));
 
-    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_vec(e, $t0), VectorExists::e_in_v_vec(e, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:30:9+65
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_vec(e, $t0), VectorExists::e_in_v_vec(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:30:9+65
     assume {:print "$at(2,922,987)"} true;
     assert {:msg "assert_failed(2,922,987): post-condition does not hold"}
       (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_vec(e, $t0) ==> $42_VectorExists_e_in_v_vec(e, $t0))));
 
-    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_range(e, $t0), VectorExists::e_in_v_range(e, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:31:9+69
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_range(e, $t0), VectorExists::e_in_v_range(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:31:9+69
     assume {:print "$at(2,996,1065)"} true;
     assert {:msg "assert_failed(2,996,1065): post-condition does not hold"}
       (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_range(e, $t0) ==> $42_VectorExists_e_in_v_range(e, $t0))));
 
-    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_u64(e, $t0), VectorExists::e_in_v_u64(e, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:32:9+65
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_u64(e, $t0), VectorExists::e_in_v_u64(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:32:9+65
     assume {:print "$at(2,1074,1139)"} true;
     assert {:msg "assert_failed(2,1074,1139): post-condition does not hold"}
       (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_u64(e, $t0) ==> $42_VectorExists_e_in_v_u64(e, $t0))));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:32:9+65
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:32:9+65
     return;
 
 }
 
-// fun VectorExists::do_nothing_ref_mut [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+59
+// fun VectorExists::do_nothing_ref_mut [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+59
 procedure {:timeLimit 40} $42_VectorExists_do_nothing_ref_mut$verify(_$t0: $Mutation (Vec (int))) returns ($ret0: $Mutation (Vec (int)))
 {
     // declare local variables
@@ -1181,81 +1181,81 @@ procedure {:timeLimit 40} $42_VectorExists_do_nothing_ref_mut$verify(_$t0: $Muta
     assume l#$Mutation($t0) == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+59
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+59
     assume {:print "$at(2,1151,1210)"} true;
     assume $IsValid'vec'u64''($Dereference($t0));
 
-    // $t1 := read_ref($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+1
+    // $t1 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+1
     $t1 := $Dereference($t0);
 
-    // trace_local[_v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+1
+    // trace_local[_v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+1
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,1,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // trace_local[_v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:57+7
+    // trace_local[_v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:57+7
     $temp_0'vec'u64'' := $Dereference($t0);
     assume {:print "$track_local(1,1,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:36:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:36:5+1
     assume {:print "$at(2,1209,1210)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:38:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:38:9+16
     assume {:print "$at(2,1249,1265)"} true;
     assert {:msg "assert_failed(2,1249,1265): function does not abort under this condition"}
       !false;
 
-    // assert Eq<vector<u64>>($t1, $t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:40:9+22
+    // assert Eq<vector<u64>>($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:40:9+22
     assume {:print "$at(2,1275,1297)"} true;
     assert {:msg "assert_failed(2,1275,1297): post-condition does not hold"}
       $IsEqual'vec'u64''($t1, $Dereference($t0));
 
-    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:41:9+41
+    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:41:9+41
     assume {:print "$at(2,1306,1347)"} true;
     assert {:msg "assert_failed(2,1306,1347): post-condition does not hold"}
       (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t1))));
 
-    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:42:9+36
+    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:42:9+36
     assume {:print "$at(2,1356,1392)"} true;
     assert {:msg "assert_failed(2,1356,1392): post-condition does not hold"}
       (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($Dereference($t0)))));
 
-    // assert exists l: TypeDomain<u64>() where Eq<u64>(l, Len<u64>($t1)): Eq<u64>(l, Len<u64>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:43:9+60
+    // assert exists l: TypeDomain<u64>() where Eq<u64>(l, Len<u64>($t1)): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:43:9+60
     assume {:print "$at(2,1401,1461)"} true;
     assert {:msg "assert_failed(2,1401,1461): post-condition does not hold"}
       (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t1)))  && ($IsEqual'u64'(l, LenVec($Dereference($t0)))));
 
-    // assert Implies(VectorExists::e_in_v_vec[](0, $t1), VectorExists::e_in_v_vec(0, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:45:9+53
+    // assert Implies(VectorExists::e_in_v_vec[](0, $t1), VectorExists::e_in_v_vec(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:45:9+53
     assume {:print "$at(2,1471,1524)"} true;
     assert {:msg "assert_failed(2,1471,1524): post-condition does not hold"}
       ($42_VectorExists_e_in_v_vec(0, $t1) ==> $42_VectorExists_e_in_v_vec(0, $Dereference($t0)));
 
-    // assert Implies(VectorExists::e_in_v_range[](0, $t1), VectorExists::e_in_v_range(0, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:46:9+57
+    // assert Implies(VectorExists::e_in_v_range[](0, $t1), VectorExists::e_in_v_range(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:46:9+57
     assume {:print "$at(2,1533,1590)"} true;
     assert {:msg "assert_failed(2,1533,1590): post-condition does not hold"}
       ($42_VectorExists_e_in_v_range(0, $t1) ==> $42_VectorExists_e_in_v_range(0, $Dereference($t0)));
 
-    // assert Implies(VectorExists::e_in_v_u64[](0, $t1), VectorExists::e_in_v_u64(0, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:47:9+53
+    // assert Implies(VectorExists::e_in_v_u64[](0, $t1), VectorExists::e_in_v_u64(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:47:9+53
     assume {:print "$at(2,1599,1652)"} true;
     assert {:msg "assert_failed(2,1599,1652): post-condition does not hold"}
       ($42_VectorExists_e_in_v_u64(0, $t1) ==> $42_VectorExists_e_in_v_u64(0, $Dereference($t0)));
 
-    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_vec[](e, $t1), VectorExists::e_in_v_vec(e, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:49:9+70
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_vec[](e, $t1), VectorExists::e_in_v_vec(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:49:9+70
     assume {:print "$at(2,1662,1732)"} true;
     assert {:msg "assert_failed(2,1662,1732): post-condition does not hold"}
       (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_vec(e, $t1) ==> $42_VectorExists_e_in_v_vec(e, $Dereference($t0)))));
 
-    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_range[](e, $t1), VectorExists::e_in_v_range(e, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:50:9+74
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_range[](e, $t1), VectorExists::e_in_v_range(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:50:9+74
     assume {:print "$at(2,1741,1815)"} true;
     assert {:msg "assert_failed(2,1741,1815): post-condition does not hold"}
       (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_range(e, $t1) ==> $42_VectorExists_e_in_v_range(e, $Dereference($t0)))));
 
-    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_u64[](e, $t1), VectorExists::e_in_v_u64(e, $t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:51:9+70
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_u64[](e, $t1), VectorExists::e_in_v_u64(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:51:9+70
     assume {:print "$at(2,1824,1894)"} true;
     assert {:msg "assert_failed(2,1824,1894): post-condition does not hold"}
       (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_u64(e, $t1) ==> $42_VectorExists_e_in_v_u64(e, $Dereference($t0)))));
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:51:9+70
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:51:9+70
     $ret0 := $t0;
     return;
 

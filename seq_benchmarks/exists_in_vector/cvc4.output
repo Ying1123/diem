@@ -1,0 +1,2 @@
+/home/ying/diem/seq_benchmarks/exists_in_vector/exists_in_vector.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

@@ -1,0 +1,21 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/naive_perm/naive_perm.bpl
+-monomorphize
+/env:2
+/proverLog:naive_perm.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/naive_perm/naive_perm.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+Advisory: $42_TestNaiveSort_verify_sort$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+
+Verifying $42_TestNaiveSort_verify_sort$verify ...
+  [0.174 s, 6 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/naive_perm/naive_perm.bpl(1076,27): Verification inconclusive ($42_TestNaiveSort_verify_sort$verify)
+
+Boogie program verifier finished with 0 verified, 0 errors, 1 inconclusive

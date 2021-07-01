@@ -1072,7 +1072,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestQuantInvariant::vector_of_proper_positives [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:7:5+210
+// fun TestQuantInvariant::vector_of_proper_positives [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:7:5+210
 procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$verify() returns ($ret0: Vec (int))
 {
     // declare local variables
@@ -1094,7 +1094,7 @@ procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$veri
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := Vector::empty<u64>() on_abort goto L2 with $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:8:17+15
+    // $t0 := Vector::empty<u64>() on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:8:17+15
     assume {:print "$at(2,178,193)"} true;
     call $t0 := $1_Vector_empty'u64'();
     if ($abort_flag) {
@@ -1104,18 +1104,18 @@ procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$veri
         goto L2;
     }
 
-    // trace_local[v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:8:13+1
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:8:13+1
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // $t2 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:27+6
+    // $t2 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:27+6
     assume {:print "$at(2,221,227)"} true;
     $t2 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t3 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:35+1
+    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:35+1
     $t3 := 1;
     assume $IsValid'u64'($t3);
 
-    // Vector::push_back<u64>($t2, $t3) on_abort goto L2 with $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:9+28
+    // Vector::push_back<u64>($t2, $t3) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:9+28
     call $t2 := $1_Vector_push_back'u64'($t2, $t3);
     if ($abort_flag) {
         assume {:print "$at(2,203,231)"} true;
@@ -1124,18 +1124,18 @@ procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$veri
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:9+28
+    // write_back[LocalRoot($t0)@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:9+28
     $t0 := $Dereference($t2);
 
-    // $t4 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:27+6
+    // $t4 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:27+6
     assume {:print "$at(2,259,265)"} true;
     $t4 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t5 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:35+1
+    // $t5 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:35+1
     $t5 := 2;
     assume $IsValid'u64'($t5);
 
-    // Vector::push_back<u64>($t4, $t5) on_abort goto L2 with $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:9+28
+    // Vector::push_back<u64>($t4, $t5) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:9+28
     call $t4 := $1_Vector_push_back'u64'($t4, $t5);
     if ($abort_flag) {
         assume {:print "$at(2,241,269)"} true;
@@ -1144,18 +1144,18 @@ procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$veri
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:9+28
+    // write_back[LocalRoot($t0)@]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:9+28
     $t0 := $Dereference($t4);
 
-    // $t6 := borrow_local($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:27+6
+    // $t6 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:27+6
     assume {:print "$at(2,297,303)"} true;
     $t6 := $Mutation($Local(0), EmptyVec(), $t0);
 
-    // $t7 := 3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:35+1
+    // $t7 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:35+1
     $t7 := 3;
     assume $IsValid'u64'($t7);
 
-    // Vector::push_back<u64>($t6, $t7) on_abort goto L2 with $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:9+28
+    // Vector::push_back<u64>($t6, $t7) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:9+28
     call $t6 := $1_Vector_push_back'u64'($t6, $t7);
     if ($abort_flag) {
         assume {:print "$at(2,279,307)"} true;
@@ -1164,64 +1164,64 @@ procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$veri
         goto L2;
     }
 
-    // write_back[LocalRoot($t0)@]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:9+28
+    // write_back[LocalRoot($t0)@]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:9+28
     $t0 := $Dereference($t6);
 
-    // $t8 := move($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:12:9+1
+    // $t8 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:12:9+1
     assume {:print "$at(2,317,318)"} true;
     $t8 := $t0;
 
-    // trace_return[0]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:12:9+1
+    // trace_return[0]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:12:9+1
     assume {:print "$track_return(1,0,0):", $t8} $t8 == $t8;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:13:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:13:5+1
     assume {:print "$at(2,323,324)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:15:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:15:9+16
     assume {:print "$at(2,371,387)"} true;
     assert {:msg "assert_failed(2,371,387): function does not abort under this condition"}
       !false;
 
-    // assert forall n: $t8: Gt(n, 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:16:9+34
+    // assert forall n: $t8: Gt(n, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:16:9+34
     assume {:print "$at(2,396,430)"} true;
     assert {:msg "assert_failed(2,396,430): post-condition does not hold"}
       (var $range_0 := $t8; (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var n := ReadVec($range_0, $i_1);
     ((n > 0)))));
 
-    // assert forall i: Range(0, Len<u64>($t8)), j: Range(0, Len<u64>($t8)) where Eq<u64>(Index($t8, i), Index($t8, j)): Eq<num>(i, j) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:17:9+94
+    // assert forall i: Range(0, Len<u64>($t8)), j: Range(0, Len<u64>($t8)) where Eq<u64>(Index($t8, i), Index($t8, j)): Eq<num>(i, j) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:17:9+94
     assume {:print "$at(2,439,533)"} true;
     assert {:msg "assert_failed(2,439,533): post-condition does not hold"}
       (var $range_0 := $Range(0, LenVec($t8)); (var $range_1 := $Range(0, LenVec($t8)); (forall $i_2: int, $i_3: int :: $InRange($range_0, $i_2) ==> $InRange($range_1, $i_3) ==> (var i := $i_2;
     (var j := $i_3;
     ($IsEqual'u64'(ReadVec($t8, i), ReadVec($t8, j)))  ==> ($IsEqual'num'(i, j)))))));
 
-    // assert forall i: TypeDomain<u64>(), j: TypeDomain<u64>(){Index($t8, i), Index($t8, j)} where And(And(And(And(Eq<u64>(Index($t8, i), Index($t8, j)), Ge(i, 0)), Lt(i, Len<u64>($t8))), Ge(j, 0)), Lt(j, Len<u64>($t8))): Eq<u64>(i, j) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:18:9+165
+    // assert forall i: TypeDomain<u64>(), j: TypeDomain<u64>(){Index($t8, i), Index($t8, j)} where And(And(And(And(Eq<u64>(Index($t8, i), Index($t8, j)), Ge(i, 0)), Lt(i, Len<u64>($t8))), Ge(j, 0)), Lt(j, Len<u64>($t8))): Eq<u64>(i, j) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:18:9+165
     assume {:print "$at(2,542,707)"} true;
     assert {:msg "assert_failed(2,542,707): post-condition does not hold"}
       (forall i: int, j: int :: {ReadVec($t8, i),ReadVec($t8, j)}$IsValid'u64'(i) ==> $IsValid'u64'(j) ==> ((((($IsEqual'u64'(ReadVec($t8, i), ReadVec($t8, j)) && (i >= 0)) && (i < LenVec($t8))) && (j >= 0)) && (j < LenVec($t8))))  ==> ($IsEqual'u64'(i, j)));
 
-    // assert forall i: Range(0, Len<u64>($t8)){Index($t8, i)}: {let i = Index($t8, i); Gt(i, 0)} at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:20:9+77
+    // assert forall i: Range(0, Len<u64>($t8)){Index($t8, i)}: {let i = Index($t8, i); Gt(i, 0)} at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:20:9+77
     assume {:print "$at(2,716,793)"} true;
     assert {:msg "assert_failed(2,716,793): post-condition does not hold"}
       (var $range_0 := $Range(0, LenVec($t8)); (forall $i_1: int :: {(var i := $i_1;
     ReadVec($t8, i))}$InRange($range_0, $i_1) ==> (var i := $i_1;
     ((var i := ReadVec($t8, i); (i > 0))))));
 
-    // return $t8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:20:9+77
+    // return $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:20:9+77
     $ret0 := $t8;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:13:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:13:5+1
     assume {:print "$at(2,323,324)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:14:5+470
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:14:5+470
     assume {:print "$at(2,329,799)"} true;
     assert {:msg "assert_failed(2,329,799): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:14:5+470
+    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:14:5+470
     $abort_code := $t1;
     $abort_flag := true;
     return;

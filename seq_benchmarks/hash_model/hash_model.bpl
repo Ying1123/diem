@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestHash::hash_test1 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:13:5+175
+// fun TestHash::hash_test1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:13:5+175
 procedure {:timeLimit 40} $42_TestHash_hash_test1$verify(_$t0: Vec (int), _$t1: Vec (int)) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -911,21 +911,21 @@ procedure {:timeLimit 40} $42_TestHash_hash_test1$verify(_$t0: Vec (int), _$t1: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:25:39+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:25:39+8
     assume {:print "$at(2,674,682)"} true;
     assume $IsValid'vec'u8''($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:25:39+8
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:25:39+8
     assume $IsValid'vec'u8''($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:13:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:13:5+1
     assume {:print "$at(2,233,234)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:13:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:13:5+1
     assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
-    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:15:18+18
+    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:15:18+18
     assume {:print "$at(2,329,347)"} true;
     call $t4 := $1_Hash_sha2_256($t0);
     if ($abort_flag) {
@@ -935,10 +935,10 @@ procedure {:timeLimit 40} $42_TestHash_hash_test1$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:15:13+2
+    // trace_local[h1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:15:13+2
     assume {:print "$track_local(1,0,2):", $t4} $t4 == $t4;
 
-    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:16:18+18
+    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:16:18+18
     assume {:print "$at(2,366,384)"} true;
     call $t6 := $1_Hash_sha2_256($t1);
     if ($abort_flag) {
@@ -948,67 +948,67 @@ procedure {:timeLimit 40} $42_TestHash_hash_test1$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:16:13+2
+    // trace_local[h2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:16:13+2
     assume {:print "$track_local(1,0,3):", $t6} $t6 == $t6;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:17:9+8
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:17:9+8
     assume {:print "$at(2,394,402)"} true;
     assume {:print "$track_return(1,0,0):", $t4} $t4 == $t4;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:17:9+8
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:17:9+8
     assume {:print "$track_return(1,0,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:18:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:18:5+1
     assume {:print "$at(2,407,408)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:20:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:20:9+16
     assume {:print "$at(2,439,455)"} true;
     assert {:msg "assert_failed(2,439,455): function does not abort under this condition"}
       !false;
 
-    // assert Implies(Eq<vector<u8>>($t4, $t6), Eq<vector<u8>>($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:21:9+42
+    // assert Implies(Eq<vector<u8>>($t4, $t6), Eq<vector<u8>>($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:21:9+42
     assume {:print "$at(2,464,506)"} true;
     assert {:msg "assert_failed(2,464,506): post-condition does not hold"}
       ($IsEqual'vec'u8''($t4, $t6) ==> $IsEqual'vec'u8''($t0, $t1));
 
-    // assert Implies(Eq<vector<u8>>($t0, $t1), Eq<vector<u8>>($t4, $t6)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:22:9+42
+    // assert Implies(Eq<vector<u8>>($t0, $t1), Eq<vector<u8>>($t4, $t6)) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:22:9+42
     assume {:print "$at(2,515,557)"} true;
     assert {:msg "assert_failed(2,515,557): post-condition does not hold"}
       ($IsEqual'vec'u8''($t0, $t1) ==> $IsEqual'vec'u8''($t4, $t6));
 
-    // assert Eq<num>(Len<u8>($t4), 32) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:23:9+28
+    // assert Eq<num>(Len<u8>($t4), 32) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:23:9+28
     assume {:print "$at(2,566,594)"} true;
     assert {:msg "assert_failed(2,566,594): post-condition does not hold"}
       $IsEqual'num'(LenVec($t4), 32);
 
-    // assert Implies(Gt(Len<u8>($t4), 0), Le(Index($t4, 0), MaxU8())) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:25:9+54
+    // assert Implies(Gt(Len<u8>($t4), 0), Le(Index($t4, 0), MaxU8())) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:25:9+54
     assume {:print "$at(2,644,698)"} true;
     assert {:msg "assert_failed(2,644,698): post-condition does not hold"}
       ((LenVec($t4) > 0) ==> (ReadVec($t4, 0) <= $MAX_U8));
 
-    // return ($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:25:9+54
+    // return ($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:25:9+54
     $ret0 := $t4;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:18:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:18:5+1
     assume {:print "$at(2,407,408)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:19:5+291
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:19:5+291
     assume {:print "$at(2,413,704)"} true;
     assert {:msg "assert_failed(2,413,704): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:19:5+291
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:19:5+291
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestHash::hash_test1_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:39:5+185
+// fun TestHash::hash_test1_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:39:5+185
 procedure {:timeLimit 40} $42_TestHash_hash_test1_incorrect$verify(_$t0: Vec (int), _$t1: Vec (int)) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -1027,21 +1027,21 @@ procedure {:timeLimit 40} $42_TestHash_hash_test1_incorrect$verify(_$t0: Vec (in
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:48:39+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48:39+8
     assume {:print "$at(2,1357,1365)"} true;
     assume $IsValid'vec'u8''($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:48:39+8
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48:39+8
     assume $IsValid'vec'u8''($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:39:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:39:5+1
     assume {:print "$at(2,962,963)"} true;
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:39:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:39:5+1
     assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
 
-    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:41:18+18
+    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:41:18+18
     assume {:print "$at(2,1068,1086)"} true;
     call $t4 := $1_Hash_sha2_256($t0);
     if ($abort_flag) {
@@ -1051,10 +1051,10 @@ procedure {:timeLimit 40} $42_TestHash_hash_test1_incorrect$verify(_$t0: Vec (in
         goto L2;
     }
 
-    // trace_local[h1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:41:13+2
+    // trace_local[h1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:41:13+2
     assume {:print "$track_local(1,1,2):", $t4} $t4 == $t4;
 
-    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:42:18+18
+    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:42:18+18
     assume {:print "$at(2,1105,1123)"} true;
     call $t6 := $1_Hash_sha2_256($t1);
     if ($abort_flag) {
@@ -1064,52 +1064,52 @@ procedure {:timeLimit 40} $42_TestHash_hash_test1_incorrect$verify(_$t0: Vec (in
         goto L2;
     }
 
-    // trace_local[h2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:42:13+2
+    // trace_local[h2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:42:13+2
     assume {:print "$track_local(1,1,3):", $t6} $t6 == $t6;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:43:9+8
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:43:9+8
     assume {:print "$at(2,1133,1141)"} true;
     assume {:print "$track_return(1,1,0):", $t4} $t4 == $t4;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:43:9+8
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:43:9+8
     assume {:print "$track_return(1,1,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:44:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:44:5+1
     assume {:print "$at(2,1146,1147)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:46:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:46:9+16
     assume {:print "$at(2,1188,1204)"} true;
     assert {:msg "assert_failed(2,1188,1204): function does not abort under this condition"}
       !false;
 
-    // assert Implies(Gt(Len<u8>($t4), 0), Lt(Index($t4, 0), MaxU8())) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:48:9+53
+    // assert Implies(Gt(Len<u8>($t4), 0), Lt(Index($t4, 0), MaxU8())) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48:9+53
     assume {:print "$at(2,1327,1380)"} true;
     assert {:msg "assert_failed(2,1327,1380): post-condition does not hold"}
       ((LenVec($t4) > 0) ==> (ReadVec($t4, 0) < $MAX_U8));
 
-    // return ($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:48:9+53
+    // return ($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48:9+53
     $ret0 := $t4;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:44:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:44:5+1
     assume {:print "$at(2,1146,1147)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:45:5+250
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:45:5+250
     assume {:print "$at(2,1152,1402)"} true;
     assert {:msg "assert_failed(2,1152,1402): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:45:5+250
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:45:5+250
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestHash::hash_test2 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:28:5+155
+// fun TestHash::hash_test2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:28:5+155
 procedure {:timeLimit 40} $42_TestHash_hash_test2$verify(_$t0: Vec (int), _$t1: Vec (int)) returns ($ret0: bool)
 {
     // declare local variables
@@ -1130,21 +1130,21 @@ procedure {:timeLimit 40} $42_TestHash_hash_test2$verify(_$t0: Vec (int), _$t1: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:36:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:36:17+6
     assume {:print "$at(2,929,935)"} true;
     assume $IsValid'vec'u8''($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:36:17+6
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:36:17+6
     assume $IsValid'vec'u8''($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:28:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:28:5+1
     assume {:print "$at(2,710,711)"} true;
     assume {:print "$track_local(1,2,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:28:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:28:5+1
     assume {:print "$track_local(1,2,1):", $t1} $t1 == $t1;
 
-    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:30:18+18
+    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:30:18+18
     assume {:print "$at(2,786,804)"} true;
     call $t4 := $1_Hash_sha2_256($t0);
     if ($abort_flag) {
@@ -1154,10 +1154,10 @@ procedure {:timeLimit 40} $42_TestHash_hash_test2$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:30:13+2
+    // trace_local[h1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:30:13+2
     assume {:print "$track_local(1,2,2):", $t4} $t4 == $t4;
 
-    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:31:18+18
+    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:31:18+18
     assume {:print "$at(2,823,841)"} true;
     call $t6 := $1_Hash_sha2_256($t1);
     if ($abort_flag) {
@@ -1167,51 +1167,51 @@ procedure {:timeLimit 40} $42_TestHash_hash_test2$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:31:13+2
+    // trace_local[h2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:31:13+2
     assume {:print "$track_local(1,2,3):", $t6} $t6 == $t6;
 
-    // $t7 := ==($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:32:12+2
+    // $t7 := ==($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:32:12+2
     assume {:print "$at(2,854,856)"} true;
     $t7 := $IsEqual'vec'u8''($t4, $t6);
 
-    // trace_return[0]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:32:9+8
+    // trace_return[0]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:32:9+8
     assume {:print "$track_return(1,2,0):", $t7} $t7 == $t7;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:33:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:33:5+1
     assume {:print "$at(2,864,865)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:35:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:35:9+16
     assume {:print "$at(2,896,912)"} true;
     assert {:msg "assert_failed(2,896,912): function does not abort under this condition"}
       !false;
 
-    // assert Eq<bool>($t7, Eq<vector<u8>>($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:36:9+29
+    // assert Eq<bool>($t7, Eq<vector<u8>>($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:36:9+29
     assume {:print "$at(2,921,950)"} true;
     assert {:msg "assert_failed(2,921,950): post-condition does not hold"}
       $IsEqual'bool'($t7, $IsEqual'vec'u8''($t0, $t1));
 
-    // return $t7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:36:9+29
+    // return $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:36:9+29
     $ret0 := $t7;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:33:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:33:5+1
     assume {:print "$at(2,864,865)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:34:5+86
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:34:5+86
     assume {:print "$at(2,870,956)"} true;
     assert {:msg "assert_failed(2,870,956): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:34:5+86
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:34:5+86
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestHash::hash_test2_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:82:5+185
+// fun TestHash::hash_test2_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:82:5+185
 procedure {:timeLimit 40} $42_TestHash_hash_test2_incorrect$verify(_$t0: Vec (int), _$t1: Vec (int)) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -1230,21 +1230,21 @@ procedure {:timeLimit 40} $42_TestHash_hash_test2_incorrect$verify(_$t0: Vec (in
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:91:39+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91:39+8
     assume {:print "$at(2,2591,2599)"} true;
     assume $IsValid'vec'u8''($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:91:39+8
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91:39+8
     assume $IsValid'vec'u8''($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:82:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:82:5+1
     assume {:print "$at(2,2196,2197)"} true;
     assume {:print "$track_local(1,3,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:82:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:82:5+1
     assume {:print "$track_local(1,3,1):", $t1} $t1 == $t1;
 
-    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:84:18+18
+    // $t4 := Hash::sha2_256($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:84:18+18
     assume {:print "$at(2,2302,2320)"} true;
     call $t4 := $1_Hash_sha2_256($t0);
     if ($abort_flag) {
@@ -1254,10 +1254,10 @@ procedure {:timeLimit 40} $42_TestHash_hash_test2_incorrect$verify(_$t0: Vec (in
         goto L2;
     }
 
-    // trace_local[h1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:84:13+2
+    // trace_local[h1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:84:13+2
     assume {:print "$track_local(1,3,2):", $t4} $t4 == $t4;
 
-    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:85:18+18
+    // $t6 := Hash::sha2_256($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:85:18+18
     assume {:print "$at(2,2339,2357)"} true;
     call $t6 := $1_Hash_sha2_256($t1);
     if ($abort_flag) {
@@ -1267,52 +1267,52 @@ procedure {:timeLimit 40} $42_TestHash_hash_test2_incorrect$verify(_$t0: Vec (in
         goto L2;
     }
 
-    // trace_local[h2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:85:13+2
+    // trace_local[h2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:85:13+2
     assume {:print "$track_local(1,3,3):", $t6} $t6 == $t6;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:86:9+8
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:86:9+8
     assume {:print "$at(2,2367,2375)"} true;
     assume {:print "$track_return(1,3,0):", $t4} $t4 == $t4;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:86:9+8
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:86:9+8
     assume {:print "$track_return(1,3,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:87:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:87:5+1
     assume {:print "$at(2,2380,2381)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:89:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:89:9+16
     assume {:print "$at(2,2422,2438)"} true;
     assert {:msg "assert_failed(2,2422,2438): function does not abort under this condition"}
       !false;
 
-    // assert Implies(Gt(Len<u8>($t4), 0), Lt(Index($t4, 0), MaxU8())) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:91:9+53
+    // assert Implies(Gt(Len<u8>($t4), 0), Lt(Index($t4, 0), MaxU8())) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91:9+53
     assume {:print "$at(2,2561,2614)"} true;
     assert {:msg "assert_failed(2,2561,2614): post-condition does not hold"}
       ((LenVec($t4) > 0) ==> (ReadVec($t4, 0) < $MAX_U8));
 
-    // return ($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:91:9+53
+    // return ($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:91:9+53
     $ret0 := $t4;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:87:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:87:5+1
     assume {:print "$at(2,2380,2381)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:88:5+234
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:88:5+234
     assume {:print "$at(2,2386,2620)"} true;
     assert {:msg "assert_failed(2,2386,2620): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:88:5+234
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:88:5+234
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestHash::hash_test3 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:56:5+175
+// fun TestHash::hash_test3 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:56:5+175
 procedure {:timeLimit 40} $42_TestHash_hash_test3$verify(_$t0: Vec (int), _$t1: Vec (int)) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -1331,21 +1331,21 @@ procedure {:timeLimit 40} $42_TestHash_hash_test3$verify(_$t0: Vec (int), _$t1: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:68:39+8
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:68:39+8
     assume {:print "$at(2,1908,1916)"} true;
     assume $IsValid'vec'u8''($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:68:39+8
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:68:39+8
     assume $IsValid'vec'u8''($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:56:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:56:5+1
     assume {:print "$at(2,1467,1468)"} true;
     assume {:print "$track_local(1,4,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:56:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:56:5+1
     assume {:print "$track_local(1,4,1):", $t1} $t1 == $t1;
 
-    // $t4 := Hash::sha3_256($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:58:18+18
+    // $t4 := Hash::sha3_256($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:58:18+18
     assume {:print "$at(2,1563,1581)"} true;
     call $t4 := $1_Hash_sha3_256($t0);
     if ($abort_flag) {
@@ -1355,10 +1355,10 @@ procedure {:timeLimit 40} $42_TestHash_hash_test3$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:58:13+2
+    // trace_local[h1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:58:13+2
     assume {:print "$track_local(1,4,2):", $t4} $t4 == $t4;
 
-    // $t6 := Hash::sha3_256($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:59:18+18
+    // $t6 := Hash::sha3_256($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:59:18+18
     assume {:print "$at(2,1600,1618)"} true;
     call $t6 := $1_Hash_sha3_256($t1);
     if ($abort_flag) {
@@ -1368,67 +1368,67 @@ procedure {:timeLimit 40} $42_TestHash_hash_test3$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:59:13+2
+    // trace_local[h2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:59:13+2
     assume {:print "$track_local(1,4,3):", $t6} $t6 == $t6;
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:60:9+8
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:60:9+8
     assume {:print "$at(2,1628,1636)"} true;
     assume {:print "$track_return(1,4,0):", $t4} $t4 == $t4;
 
-    // trace_return[1]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:60:9+8
+    // trace_return[1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:60:9+8
     assume {:print "$track_return(1,4,1):", $t6} $t6 == $t6;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:61:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:61:5+1
     assume {:print "$at(2,1641,1642)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:63:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:63:9+16
     assume {:print "$at(2,1673,1689)"} true;
     assert {:msg "assert_failed(2,1673,1689): function does not abort under this condition"}
       !false;
 
-    // assert Implies(Eq<vector<u8>>($t4, $t6), Eq<vector<u8>>($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:64:9+42
+    // assert Implies(Eq<vector<u8>>($t4, $t6), Eq<vector<u8>>($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:64:9+42
     assume {:print "$at(2,1698,1740)"} true;
     assert {:msg "assert_failed(2,1698,1740): post-condition does not hold"}
       ($IsEqual'vec'u8''($t4, $t6) ==> $IsEqual'vec'u8''($t0, $t1));
 
-    // assert Implies(Eq<vector<u8>>($t0, $t1), Eq<vector<u8>>($t4, $t6)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:65:9+42
+    // assert Implies(Eq<vector<u8>>($t0, $t1), Eq<vector<u8>>($t4, $t6)) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:65:9+42
     assume {:print "$at(2,1749,1791)"} true;
     assert {:msg "assert_failed(2,1749,1791): post-condition does not hold"}
       ($IsEqual'vec'u8''($t0, $t1) ==> $IsEqual'vec'u8''($t4, $t6));
 
-    // assert Eq<num>(Len<u8>($t4), 32) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:66:9+28
+    // assert Eq<num>(Len<u8>($t4), 32) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:66:9+28
     assume {:print "$at(2,1800,1828)"} true;
     assert {:msg "assert_failed(2,1800,1828): post-condition does not hold"}
       $IsEqual'num'(LenVec($t4), 32);
 
-    // assert Implies(Gt(Len<u8>($t4), 0), Le(Index($t4, 0), MaxU8())) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:68:9+54
+    // assert Implies(Gt(Len<u8>($t4), 0), Le(Index($t4, 0), MaxU8())) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:68:9+54
     assume {:print "$at(2,1878,1932)"} true;
     assert {:msg "assert_failed(2,1878,1932): post-condition does not hold"}
       ((LenVec($t4) > 0) ==> (ReadVec($t4, 0) <= $MAX_U8));
 
-    // return ($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:68:9+54
+    // return ($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:68:9+54
     $ret0 := $t4;
     $ret1 := $t6;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:61:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:61:5+1
     assume {:print "$at(2,1641,1642)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:62:5+291
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:62:5+291
     assume {:print "$at(2,1647,1938)"} true;
     assert {:msg "assert_failed(2,1647,1938): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:62:5+291
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:62:5+291
     $abort_code := $t5;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestHash::hash_test4 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:71:5+155
+// fun TestHash::hash_test4 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:71:5+155
 procedure {:timeLimit 40} $42_TestHash_hash_test4$verify(_$t0: Vec (int), _$t1: Vec (int)) returns ($ret0: bool)
 {
     // declare local variables
@@ -1449,21 +1449,21 @@ procedure {:timeLimit 40} $42_TestHash_hash_test4$verify(_$t0: Vec (int), _$t1: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:79:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:79:17+6
     assume {:print "$at(2,2163,2169)"} true;
     assume $IsValid'vec'u8''($t0);
 
-    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:79:17+6
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:79:17+6
     assume $IsValid'vec'u8''($t1);
 
-    // trace_local[v1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:71:5+1
+    // trace_local[v1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:71:5+1
     assume {:print "$at(2,1944,1945)"} true;
     assume {:print "$track_local(1,5,0):", $t0} $t0 == $t0;
 
-    // trace_local[v2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:71:5+1
+    // trace_local[v2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:71:5+1
     assume {:print "$track_local(1,5,1):", $t1} $t1 == $t1;
 
-    // $t4 := Hash::sha3_256($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:73:18+18
+    // $t4 := Hash::sha3_256($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:73:18+18
     assume {:print "$at(2,2020,2038)"} true;
     call $t4 := $1_Hash_sha3_256($t0);
     if ($abort_flag) {
@@ -1473,10 +1473,10 @@ procedure {:timeLimit 40} $42_TestHash_hash_test4$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:73:13+2
+    // trace_local[h1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:73:13+2
     assume {:print "$track_local(1,5,2):", $t4} $t4 == $t4;
 
-    // $t6 := Hash::sha3_256($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:74:18+18
+    // $t6 := Hash::sha3_256($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:74:18+18
     assume {:print "$at(2,2057,2075)"} true;
     call $t6 := $1_Hash_sha3_256($t1);
     if ($abort_flag) {
@@ -1486,44 +1486,44 @@ procedure {:timeLimit 40} $42_TestHash_hash_test4$verify(_$t0: Vec (int), _$t1: 
         goto L2;
     }
 
-    // trace_local[h2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:74:13+2
+    // trace_local[h2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:74:13+2
     assume {:print "$track_local(1,5,3):", $t6} $t6 == $t6;
 
-    // $t7 := ==($t4, $t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:75:12+2
+    // $t7 := ==($t4, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:75:12+2
     assume {:print "$at(2,2088,2090)"} true;
     $t7 := $IsEqual'vec'u8''($t4, $t6);
 
-    // trace_return[0]($t7) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:75:9+8
+    // trace_return[0]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:75:9+8
     assume {:print "$track_return(1,5,0):", $t7} $t7 == $t7;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:76:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:76:5+1
     assume {:print "$at(2,2098,2099)"} true;
 L1:
 
-    // assert Not(false) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:78:9+16
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:78:9+16
     assume {:print "$at(2,2130,2146)"} true;
     assert {:msg "assert_failed(2,2130,2146): function does not abort under this condition"}
       !false;
 
-    // assert Eq<bool>($t7, Eq<vector<u8>>($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:79:9+29
+    // assert Eq<bool>($t7, Eq<vector<u8>>($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:79:9+29
     assume {:print "$at(2,2155,2184)"} true;
     assert {:msg "assert_failed(2,2155,2184): post-condition does not hold"}
       $IsEqual'bool'($t7, $IsEqual'vec'u8''($t0, $t1));
 
-    // return $t7 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:79:9+29
+    // return $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:79:9+29
     $ret0 := $t7;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:76:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:76:5+1
     assume {:print "$at(2,2098,2099)"} true;
 L2:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:77:5+86
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:77:5+86
     assume {:print "$at(2,2104,2190)"} true;
     assert {:msg "assert_failed(2,2104,2190): abort not covered by any of the `aborts_if` clauses"}
       false;
 
-    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model.move:77:5+86
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:77:5+86
     $abort_code := $t5;
     $abort_flag := true;
     return;

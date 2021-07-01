@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestUnusedSchema::foo [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:34:5+73
+// fun TestUnusedSchema::foo [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:34:5+73
 procedure {:timeLimit 40} $42_TestUnusedSchema_foo$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -912,39 +912,39 @@ procedure {:timeLimit 40} $42_TestUnusedSchema_foo$verify(_$t0: int) returns ($r
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:39:28+7
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:39:28+7
     assume {:print "$at(2,724,731)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[i]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:34:5+1
+    // trace_local[i]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:34:5+1
     assume {:print "$at(2,607,608)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t2 := 10 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:17+2
+    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:17+2
     assume {:print "$at(2,646,648)"} true;
     $t2 := 10;
     assume $IsValid'u64'($t2);
 
-    // $t3 := >($t0, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:15+1
+    // $t3 := >($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:15+1
     call $t3 := $Gt($t0, $t2);
 
-    // if ($t3) goto L0 else goto L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     if ($t3) { goto L0; } else { goto L1; }
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
 L1:
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     goto L2;
 
-    // label L0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:23+1
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:23+1
 L0:
 
-    // $t4 := 2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:27+1
+    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:27+1
     $t4 := 2;
     assume $IsValid'u64'($t4);
 
-    // $t5 := +($t0, $t4) on_abort goto L5 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:25+1
+    // $t5 := +($t0, $t4) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:25+1
     call $t5 := $AddU64($t0, $t4);
     if ($abort_flag) {
         assume {:print "$at(2,654,655)"} true;
@@ -953,23 +953,23 @@ L0:
         goto L5;
     }
 
-    // $t1 := $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // $t1 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     $t1 := $t5;
 
-    // trace_local[tmp#$1]($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     assume {:print "$track_local(0,0,1):", $t5} $t5 == $t5;
 
-    // goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     goto L3;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:38+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:38+1
 L2:
 
-    // $t7 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:42+1
+    // $t7 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:42+1
     $t7 := 1;
     assume $IsValid'u64'($t7);
 
-    // $t8 := +($t0, $t7) on_abort goto L5 with $t6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:40+1
+    // $t8 := +($t0, $t7) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:40+1
     call $t8 := $AddU64($t0, $t7);
     if ($abort_flag) {
         assume {:print "$at(2,669,670)"} true;
@@ -978,41 +978,41 @@ L2:
         goto L5;
     }
 
-    // $t1 := $t8 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // $t1 := $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     $t1 := $t8;
 
-    // trace_local[tmp#$1]($t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // trace_local[tmp#$1]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     assume {:print "$track_local(0,0,1):", $t8} $t8 == $t8;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
 L3:
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
     assume {:print "$track_return(0,0,0):", $t1} $t1 == $t1;
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
     assume {:print "$at(2,679,680)"} true;
 L4:
 
-    // assert Implies(Gt($t0, 10), Eq<num>($t1, Add($t0, 2))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:17:9+24
+    // assert Implies(Gt($t0, 10), Eq<num>($t1, Add($t0, 2))) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:17:9+24
     assume {:print "$at(2,287,311)"} true;
     assert {:msg "assert_failed(2,287,311): post-condition does not hold"}
       (($t0 > 10) ==> $IsEqual'u64'($t1, ($t0 + 2)));
 
-    // assert Implies(Gt($t0, 10), Ge($t1, Add($t0, 1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:11:9+24
+    // assert Implies(Gt($t0, 10), Ge($t1, Add($t0, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:11:9+24
     assume {:print "$at(2,184,208)"} true;
     assert {:msg "assert_failed(2,184,208): post-condition does not hold"}
       (($t0 > 10) ==> ($t1 >= ($t0 + 1)));
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:11:9+24
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:11:9+24
     $ret0 := $t1;
     return;
 
-    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
     assume {:print "$at(2,679,680)"} true;
 L5:
 
-    // abort($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
     $abort_code := $t6;
     $abort_flag := true;
     return;

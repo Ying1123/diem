@@ -895,12 +895,12 @@ type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:16:10+39
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:16:10+39
 function {:inline} $42_TestInvariants_greater_one(x: int): bool {
     (x > 1)
 }
 
-// struct TestInvariants::R<#0> at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:7:5+56
+// struct TestInvariants::R<#0> at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:7:5+56
 type {:datatype} $42_TestInvariants_R'#0';
 function {:constructor} $42_TestInvariants_R'#0'($x: int, $t: #0): $42_TestInvariants_R'#0';
 function {:inline} $Update'$42_TestInvariants_R'#0''_x(s: $42_TestInvariants_R'#0', x: int): $42_TestInvariants_R'#0' {
@@ -918,7 +918,7 @@ function {:inline} $IsEqual'$42_TestInvariants_R'#0''(s1: $42_TestInvariants_R'#
 }
 var $42_TestInvariants_R'#0'_$memory: $Memory $42_TestInvariants_R'#0';
 
-// fun TestInvariants::get [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:19:5+93
+// fun TestInvariants::get [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:19:5+93
 procedure {:timeLimit 40} $42_TestInvariants_get$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -934,19 +934,19 @@ procedure {:timeLimit 40} $42_TestInvariants_get$verify(_$t0: int) returns ($ret
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:17+6
     assume {:print "$at(2,519,525)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<TestInvariants::R<#0>>(): And(WellFormed($rsc), TestInvariants::greater_one(select TestInvariants::R.x($rsc))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:17+6
+    // assume forall $rsc: ResourceDomain<TestInvariants::R<#0>>(): And(WellFormed($rsc), TestInvariants::greater_one(select TestInvariants::R.x($rsc))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:17+6
     assume (forall $a_0: int :: {$ResourceValue($42_TestInvariants_R'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestInvariants_R'#0'_$memory, $a_0);
     (($IsValid'$42_TestInvariants_R'#0''($rsc) && $42_TestInvariants_greater_one($x#$42_TestInvariants_R'#0'($rsc))))));
 
-    // trace_local[a]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:19:5+1
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:19:5+1
     assume {:print "$at(2,394,395)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := get_global<TestInvariants::R<#0>>($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20:9+13
+    // $t1 := get_global<TestInvariants::R<#0>>($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20:9+13
     assume {:print "$at(2,457,470)"} true;
     if (!$ResourceExists($42_TestInvariants_R'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
@@ -960,37 +960,37 @@ procedure {:timeLimit 40} $42_TestInvariants_get$verify(_$t0: int) returns ($ret
         goto L2;
     }
 
-    // $t3 := get_field<TestInvariants::R<#0>>.x($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20:9+24
+    // $t3 := get_field<TestInvariants::R<#0>>.x($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20:9+24
     $t3 := $x#$42_TestInvariants_R'#0'($t1);
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20:9+24
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:20:9+24
     assume {:print "$track_return(0,0,0):", $t3} $t3 == $t3;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21:5+1
     assume {:print "$at(2,486,487)"} true;
 L1:
 
-    // assert Gt($t3, 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:9+19
+    // assert Gt($t3, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:9+19
     assume {:print "$at(2,511,530)"} true;
     assert {:msg "assert_failed(2,511,530): post-condition does not hold"}
       ($t3 > 0);
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:9+19
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:9+19
     $ret0 := $t3;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21:5+1
     assume {:print "$at(2,486,487)"} true;
 L2:
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:21:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestInvariants::get_invalid [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:27:5+101
+// fun TestInvariants::get_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:27:5+101
 procedure {:timeLimit 40} $42_TestInvariants_get_invalid$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1006,19 +1006,19 @@ procedure {:timeLimit 40} $42_TestInvariants_get_invalid$verify(_$t0: int) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:17+6
     assume {:print "$at(2,718,724)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<TestInvariants::R<#0>>(): And(WellFormed($rsc), TestInvariants::greater_one(select TestInvariants::R.x($rsc))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:17+6
+    // assume forall $rsc: ResourceDomain<TestInvariants::R<#0>>(): And(WellFormed($rsc), TestInvariants::greater_one(select TestInvariants::R.x($rsc))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:17+6
     assume (forall $a_0: int :: {$ResourceValue($42_TestInvariants_R'#0'_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestInvariants_R'#0'_$memory, $a_0);
     (($IsValid'$42_TestInvariants_R'#0''($rsc) && $42_TestInvariants_greater_one($x#$42_TestInvariants_R'#0'($rsc))))));
 
-    // trace_local[a]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:27:5+1
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:27:5+1
     assume {:print "$at(2,577,578)"} true;
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // $t1 := get_global<TestInvariants::R<#0>>($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28:9+13
+    // $t1 := get_global<TestInvariants::R<#0>>($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28:9+13
     assume {:print "$at(2,648,661)"} true;
     if (!$ResourceExists($42_TestInvariants_R'#0'_$memory, $t0)) {
         call $ExecFailureAbort();
@@ -1032,30 +1032,30 @@ procedure {:timeLimit 40} $42_TestInvariants_get_invalid$verify(_$t0: int) retur
         goto L2;
     }
 
-    // $t3 := get_field<TestInvariants::R<#0>>.x($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28:9+24
+    // $t3 := get_field<TestInvariants::R<#0>>.x($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28:9+24
     $t3 := $x#$42_TestInvariants_R'#0'($t1);
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28:9+24
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:28:9+24
     assume {:print "$track_return(0,1,0):", $t3} $t3 == $t3;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29:5+1
     assume {:print "$at(2,677,678)"} true;
 L1:
 
-    // assert Lt($t3, 1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:9+19
+    // assert Lt($t3, 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:9+19
     assume {:print "$at(2,710,729)"} true;
     assert {:msg "assert_failed(2,710,729): post-condition does not hold"}
       ($t3 < 1);
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:9+19
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:31:9+19
     $ret0 := $t3;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29:5+1
     assume {:print "$at(2,677,678)"} true;
 L2:
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:29:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;

@@ -1,0 +1,33 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl
+-monomorphize
+/env:2
+/proverLog:ModifiesSchemaTest.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $0_A_mutate_at$verify ...
+  [0.142 s, 1 proof obligation]  verified
+
+Verifying $0_A_mutate_at_wrapper1$verify ...
+  [0.021 s, 1 proof obligation]  verified
+
+Verifying $0_A_mutate_at_wrapper2$verify ...
+  [0.034 s, 2 proof obligations]  error
+assert_failed(2,683,699): caller does not have permission to modify `A::S` at given address
+Execution trace:
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl(1150,9): anon0
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl(1150,9): anon0$1
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl(922,9): inline$$0_A_mutate_at$0$anon0
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl(937,13): inline$$0_A_mutate_at$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl(939,5): inline$$0_A_mutate_at$0$anon7_Else
+    /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.bpl(1186,5): anon5_Else
+
+Boogie program verifier finished with 2 verified, 1 error

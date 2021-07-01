@@ -1,0 +1,30 @@
+[INFO] translating module TestNaiveSort
+[INFO] running solver
+[INFO] 0.010s build, 0.008s trafo, 0.005s gen, 0.784s verify
+error: verification inconclusive
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/naive_perm_fail.move:6:2 ───
+    │
+  6 │ ╭     public fun verify_sort(v: &mut vector<u64>): vector<u64> {
+  7 │ │ 		let vlen = Vector::length(v);
+  8 │ │ 		spec {
+  9 │ │ 			assume len(v) == 2;
+ 10 │ │ 		};
+ 11 │ │ 		let p = &mut Vector::empty<u64>();
+ 12 │ │ 		let i = 0;
+ 13 │ │ 		while ({
+ 14 │ │ 			spec {
+ 15 │ │ 				assert forall k in 0..i: p[k] == k;
+ 16 │ │ 			};
+ 17 │ │ 			(i < vlen)
+ 18 │ │ 		}) {
+ 19 │ │ 			Vector::push_back(p, i);
+ 20 │ │ 			i = i + 1;
+ 21 │ │ 		};
+ 22 │ │ 
+ 23 │ │ 		*p
+ 24 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

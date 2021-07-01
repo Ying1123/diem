@@ -922,7 +922,7 @@ type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// fun VerifyBCS::verify_to_bytes [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:6:5+101
+// fun VerifyBCS::verify_to_bytes [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:6:5+101
 procedure {:timeLimit 40} $42_VerifyBCS_verify_to_bytes$verify(_$t0: #0) returns ($ret0: Vec (int))
 {
     // declare local variables
@@ -937,15 +937,15 @@ procedure {:timeLimit 40} $42_VerifyBCS_verify_to_bytes$verify(_$t0: #0) returns
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:17+6
     assume {:print "$at(2,276,282)"} true;
     assume $IsValid'#0'($t0);
 
-    // trace_local[v]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:6:5+1
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:6:5+1
     assume {:print "$at(2,131,132)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:8:9+16
+    // $t1 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:8:9+16
     assume {:print "$at(2,210,226)"} true;
     call $t1 := $1_BCS_to_bytes'#0'($t0);
     if ($abort_flag) {
@@ -955,27 +955,27 @@ procedure {:timeLimit 40} $42_VerifyBCS_verify_to_bytes$verify(_$t0: #0) returns
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:8:9+16
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:8:9+16
     assume {:print "$track_return(1,0,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
     assume {:print "$at(2,231,232)"} true;
 L1:
 
-    // assert Eq<vector<u8>>($t1, BCS::serialize<#0>($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:9+36
+    // assert Eq<vector<u8>>($t1, BCS::serialize<#0>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:9+36
     assume {:print "$at(2,268,304)"} true;
     assert {:msg "assert_failed(2,268,304): post-condition does not hold"}
       $IsEqual'vec'u8''($t1, $1_BCS_serialize'#0'($t0));
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:9+36
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:9+36
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
     assume {:print "$at(2,231,232)"} true;
 L2:
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;

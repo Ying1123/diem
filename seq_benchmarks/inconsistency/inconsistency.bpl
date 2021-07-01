@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun Inconsistency::always_abort [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:48:5+42
+// fun Inconsistency::always_abort [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:48:5+42
 procedure {:timeLimit 40} $42_Inconsistency_always_abort$verify() returns ()
 {
     // declare local variables
@@ -902,27 +902,27 @@ procedure {:timeLimit 40} $42_Inconsistency_always_abort$verify() returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:49:15+1
+    // $t0 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:49:15+1
     assume {:print "$at(2,1246,1247)"} true;
     $t0 := 0;
     assume $IsValid'u64'($t0);
 
-    // trace_abort($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:49:9+7
+    // trace_abort($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:49:9+7
     assume {:print "$at(2,1240,1247)"} true;
     assume {:print "$track_abort(0,0):", $t0} $t0 == $t0;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:50:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:50:5+1
     assume {:print "$at(2,1252,1253)"} true;
 L2:
 
-    // abort($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:50:5+1
+    // abort($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:50:5+1
     $abort_code := $t0;
     $abort_flag := true;
     return;
 
 }
 
-// fun Inconsistency::assume_false [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:16:5+104
+// fun Inconsistency::assume_false [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:16:5+104
 procedure {:timeLimit 40} $42_Inconsistency_assume_false$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -936,19 +936,19 @@ procedure {:timeLimit 40} $42_Inconsistency_assume_false$verify(_$t0: int) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:24:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:24:17+6
     assume {:print "$at(2,529,535)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:16:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:16:5+1
     assume {:print "$at(2,358,359)"} true;
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // assume false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:18:13+13
+    // assume false at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:18:13+13
     assume {:print "$at(2,417,430)"} true;
     assume false;
 
-    // $t1 := Inconsistency::dec($t0) on_abort goto L2 with $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:20:9+6
+    // $t1 := Inconsistency::dec($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:20:9+6
     assume {:print "$at(2,450,456)"} true;
     call $t1 := $42_Inconsistency_dec($t0);
     if ($abort_flag) {
@@ -958,49 +958,49 @@ procedure {:timeLimit 40} $42_Inconsistency_assume_false$verify(_$t0: int) retur
         goto L2;
     }
 
-    // trace_return[0]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:20:9+6
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:20:9+6
     assume {:print "$track_return(0,1,0):", $t1} $t1 == $t1;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:21:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:21:5+1
     assume {:print "$at(2,461,462)"} true;
 L1:
 
-    // assert Not(Eq<u64>($t0, 0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:23:9+17
+    // assert Not(Eq<u64>($t0, 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:23:9+17
     assume {:print "$at(2,495,512)"} true;
     assert {:msg "assert_failed(2,495,512): function does not abort under this condition"}
       !$IsEqual'u64'($t0, 0);
 
-    // assert Eq<u64>($t1, Sub($t0, 1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:24:9+24
+    // assert Eq<u64>($t1, Sub($t0, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:24:9+24
     assume {:print "$at(2,521,545)"} true;
     assert {:msg "assert_failed(2,521,545): post-condition does not hold"}
       $IsEqual'u64'($t1, ($t0 - 1));
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:25:9+14
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:25:9+14
     assume {:print "$at(2,554,568)"} true;
     assert {:msg "assert_failed(2,554,568): post-condition does not hold"}
       false;
 
-    // return $t1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:25:9+14
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:25:9+14
     $ret0 := $t1;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:21:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:21:5+1
     assume {:print "$at(2,461,462)"} true;
 L2:
 
-    // assert Eq<u64>($t0, 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:22:5+107
+    // assert Eq<u64>($t0, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:22:5+107
     assume {:print "$at(2,467,574)"} true;
     assert {:msg "assert_failed(2,467,574): abort not covered by any of the `aborts_if` clauses"}
       $IsEqual'u64'($t0, 0);
 
-    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:22:5+107
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:22:5+107
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun Inconsistency::call_inconsistent_opaque [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:39:5+69
+// fun Inconsistency::call_inconsistent_opaque [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:39:5+69
 procedure {:timeLimit 40} $42_Inconsistency_call_inconsistent_opaque$verify() returns ()
 {
     // declare local variables
@@ -1011,61 +1011,61 @@ procedure {:timeLimit 40} $42_Inconsistency_call_inconsistent_opaque$verify() re
     call $InitVerification();
 
     // bytecode translation starts here
-    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
     // >> opaque call: Inconsistency::inconsistent_opaque()
     assume {:print "$at(2,999,1020)"} true;
 
-    // opaque begin: Inconsistency::inconsistent_opaque() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // opaque begin: Inconsistency::inconsistent_opaque() at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
 
-    // havoc[val]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
     havoc $t0;
     assume $IsValid'bool'($t0);
 
-    // if ($t0) goto L4 else goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // if ($t0) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
     if ($t0) { goto L4; } else { goto L3; }
 
-    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
 L4:
 
-    // trace_abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // trace_abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
     assume {:print "$at(2,999,1020)"} true;
     assume {:print "$track_abort(0,2):", $t1} $t1 == $t1;
 
-    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
     goto L2;
 
-    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
 L3:
 
-    // assume false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // assume false at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
     assume false;
 
-    // opaque end: Inconsistency::inconsistent_opaque() at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
+    // opaque end: Inconsistency::inconsistent_opaque() at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:40:9+21
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:41:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:41:5+1
     assume {:print "$at(2,1026,1027)"} true;
 L1:
 
-    // assert false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:43:9+14
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:43:9+14
     assume {:print "$at(2,1072,1086)"} true;
     assert {:msg "assert_failed(2,1072,1086): post-condition does not hold"}
       false;
 
-    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:43:9+14
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:43:9+14
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:41:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:41:5+1
     assume {:print "$at(2,1026,1027)"} true;
 L2:
 
-    // abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:41:5+1
+    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:41:5+1
     $abort_code := $t1;
     $abort_flag := true;
     return;
 
 }
 
-// fun Inconsistency::dec [baseline] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+42
+// fun Inconsistency::dec [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+42
 procedure {:inline 1} $42_Inconsistency_dec(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1077,16 +1077,16 @@ procedure {:inline 1} $42_Inconsistency_dec(_$t0: int) returns ($ret0: int)
     $t0 := _$t0;
 
     // bytecode translation starts here
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+1
     assume {:print "$at(2,117,118)"} true;
     assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
 
-    // $t1 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:13+1
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:13+1
     assume {:print "$at(2,152,153)"} true;
     $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // $t2 := -($t0, $t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:11+1
+    // $t2 := -($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:11+1
     call $t2 := $Sub($t0, $t1);
     if ($abort_flag) {
         assume {:print "$at(2,150,151)"} true;
@@ -1095,28 +1095,28 @@ procedure {:inline 1} $42_Inconsistency_dec(_$t0: int) returns ($ret0: int)
         goto L2;
     }
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:9+5
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:9+5
     assume {:print "$track_return(0,3,0):", $t2} $t2 == $t2;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
     assume {:print "$at(2,158,159)"} true;
 L1:
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
     $ret0 := $t2;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
 L2:
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun Inconsistency::dec [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+42
+// fun Inconsistency::dec [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+42
 procedure {:timeLimit 40} $42_Inconsistency_dec$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1131,20 +1131,20 @@ procedure {:timeLimit 40} $42_Inconsistency_dec$verify(_$t0: int) returns ($ret0
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:11:17+6
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:11:17+6
     assume {:print "$at(2,217,223)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+1
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:6:5+1
     assume {:print "$at(2,117,118)"} true;
     assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
 
-    // $t1 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:13+1
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:13+1
     assume {:print "$at(2,152,153)"} true;
     $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // $t2 := -($t0, $t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:11+1
+    // $t2 := -($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:11+1
     call $t2 := $Sub($t0, $t1);
     if ($abort_flag) {
         assume {:print "$at(2,150,151)"} true;
@@ -1153,37 +1153,37 @@ procedure {:timeLimit 40} $42_Inconsistency_dec$verify(_$t0: int) returns ($ret0
         goto L2;
     }
 
-    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:9+5
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:7:9+5
     assume {:print "$track_return(0,3,0):", $t2} $t2 == $t2;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
     assume {:print "$at(2,158,159)"} true;
 L1:
 
-    // assert Not(Eq<u64>($t0, 0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:10:9+17
+    // assert Not(Eq<u64>($t0, 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:10:9+17
     assume {:print "$at(2,183,200)"} true;
     assert {:msg "assert_failed(2,183,200): function does not abort under this condition"}
       !$IsEqual'u64'($t0, 0);
 
-    // assert Eq<u64>($t2, Sub($t0, 1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:11:9+24
+    // assert Eq<u64>($t2, Sub($t0, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:11:9+24
     assume {:print "$at(2,209,233)"} true;
     assert {:msg "assert_failed(2,209,233): post-condition does not hold"}
       $IsEqual'u64'($t2, ($t0 - 1));
 
-    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:11:9+24
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:11:9+24
     $ret0 := $t2;
     return;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:8:5+1
     assume {:print "$at(2,158,159)"} true;
 L2:
 
-    // assert Eq<u64>($t0, 0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:9:5+75
+    // assert Eq<u64>($t0, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:9:5+75
     assume {:print "$at(2,164,239)"} true;
     assert {:msg "assert_failed(2,164,239): abort not covered by any of the `aborts_if` clauses"}
       $IsEqual'u64'($t0, 0);
 
-    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/inconsistency.move:9:5+75
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move:9:5+75
     $abort_code := $t3;
     $abort_flag := true;
     return;

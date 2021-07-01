@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct TestConst::T at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:3:5+69
+// struct TestConst::T at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:3:5+69
 type {:datatype} $42_TestConst_T;
 function {:constructor} $42_TestConst_T($x: int, $b: bool, $a: int): $42_TestConst_T;
 function {:inline} $Update'$42_TestConst_T'_x(s: $42_TestConst_T, x: int): $42_TestConst_T {
@@ -913,7 +913,7 @@ function {:inline} $IsEqual'$42_TestConst_T'(s1: $42_TestConst_T, s2: $42_TestCo
     s1 == s2
 }
 
-// fun TestConst::init [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:14:5+76
+// fun TestConst::init [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:14:5+76
 procedure {:timeLimit 40} $42_TestConst_init$verify() returns ($ret0: $42_TestConst_T)
 {
     // declare local variables
@@ -928,49 +928,49 @@ procedure {:timeLimit 40} $42_TestConst_init$verify() returns ($ret0: $42_TestCo
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 43 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:15:16+2
+    // $t0 := 43 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:15:16+2
     assume {:print "$at(2,306,308)"} true;
     $t0 := 43;
     assume $IsValid'u64'($t0);
 
-    // $t1 := true at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:15:24+13
+    // $t1 := true at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:15:24+13
     $t1 := true;
     assume $IsValid'bool'($t1);
 
-    // $t2 := !($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:15:23+1
+    // $t2 := !($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:15:23+1
     call $t2 := $Not($t1);
 
-    // $t3 := 0x2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:15:42+4
+    // $t3 := 0x2 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:15:42+4
     $t3 := 2;
     assume $IsValid'address'($t3);
 
-    // $t4 := pack TestConst::T($t0, $t2, $t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:15:9+39
+    // $t4 := pack TestConst::T($t0, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:15:9+39
     $t4 := $42_TestConst_T($t0, $t2, $t3);
 
-    // trace_return[0]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:15:9+39
+    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:15:9+39
     assume {:print "$track_return(0,0,0):", $t4} $t4 == $t4;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:16:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:16:5+1
     assume {:print "$at(2,343,344)"} true;
 L1:
 
-    // assert Eq<u64>(select TestConst::T.x($t4), Add(42, 1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:19:9+37
+    // assert Eq<u64>(select TestConst::T.x($t4), Add(42, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:19:9+37
     assume {:print "$at(2,370,407)"} true;
     assert {:msg "assert_failed(2,370,407): post-condition does not hold"}
       $IsEqual'u64'($x#$42_TestConst_T($t4), (42 + 1));
 
-    // assert Not(select TestConst::T.b($t4)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:20:9+18
+    // assert Not(select TestConst::T.b($t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:20:9+18
     assume {:print "$at(2,416,434)"} true;
     assert {:msg "assert_failed(2,416,434): post-condition does not hold"}
       !$b#$42_TestConst_T($t4);
 
-    // return $t4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:20:9+18
+    // return $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:20:9+18
     $ret0 := $t4;
     return;
 
 }
 
-// fun TestConst::init_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:23:5+85
+// fun TestConst::init_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:23:5+85
 procedure {:timeLimit 40} $42_TestConst_init_incorrect$verify() returns ($ret0: $42_TestConst_T)
 {
     // declare local variables
@@ -984,40 +984,40 @@ procedure {:timeLimit 40} $42_TestConst_init_incorrect$verify() returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 43 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:24:16+2
+    // $t0 := 43 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:24:16+2
     assume {:print "$at(2,494,496)"} true;
     $t0 := 43;
     assume $IsValid'u64'($t0);
 
-    // $t1 := true at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:24:23+13
+    // $t1 := true at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:24:23+13
     $t1 := true;
     assume $IsValid'bool'($t1);
 
-    // $t2 := 0x1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:24:41+4
+    // $t2 := 0x1 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:24:41+4
     $t2 := 1;
     assume $IsValid'address'($t2);
 
-    // $t3 := pack TestConst::T($t0, $t1, $t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:24:9+38
+    // $t3 := pack TestConst::T($t0, $t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:24:9+38
     $t3 := $42_TestConst_T($t0, $t1, $t2);
 
-    // trace_return[0]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:24:9+38
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:24:9+38
     assume {:print "$track_return(0,1,0):", $t3} $t3 == $t3;
 
-    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:25:5+1
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:25:5+1
     assume {:print "$at(2,530,531)"} true;
 L1:
 
-    // assert Eq<u64>(select TestConst::T.x($t3), Add(42, 1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:28:9+36
+    // assert Eq<u64>(select TestConst::T.x($t3), Add(42, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:28:9+36
     assume {:print "$at(2,567,603)"} true;
     assert {:msg "assert_failed(2,567,603): post-condition does not hold"}
       $IsEqual'u64'($x#$42_TestConst_T($t3), (42 + 1));
 
-    // assert Not(select TestConst::T.b($t3)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:29:9+18
+    // assert Not(select TestConst::T.b($t3)) at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:29:9+18
     assume {:print "$at(2,612,630)"} true;
     assert {:msg "assert_failed(2,612,630): post-condition does not hold"}
       !$b#$42_TestConst_T($t3);
 
-    // return $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:29:9+18
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/consts.move:29:9+18
     $ret0 := $t3;
     return;
 

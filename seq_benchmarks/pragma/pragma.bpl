@@ -892,7 +892,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestPragma::always_aborts_with_verify_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:10:5+74
+// fun TestPragma::always_aborts_with_verify_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:10:5+74
 procedure {:timeLimit 40} $42_TestPragma_always_aborts_with_verify_incorrect$verify(_$t0: bool) returns ()
 {
     // declare local variables
@@ -905,32 +905,32 @@ procedure {:timeLimit 40} $42_TestPragma_always_aborts_with_verify_incorrect$ver
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:10:5+74
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:10:5+74
     assume {:print "$at(2,164,238)"} true;
     assume $IsValid'bool'($t0);
 
-    // trace_local[_c]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:10:5+1
+    // trace_local[_c]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:10:5+1
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := 1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:11:14+3
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:11:14+3
     assume {:print "$at(2,229,232)"} true;
     $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // trace_abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:11:9+8
+    // trace_abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:11:9+8
     assume {:print "$at(2,224,232)"} true;
     assume {:print "$track_abort(0,0):", $t1} $t1 == $t1;
 
-    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:12:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:12:5+1
     assume {:print "$at(2,237,238)"} true;
 L2:
 
-    // assert $t0 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:13:5+98
+    // assert $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:13:5+98
     assume {:print "$at(2,243,341)"} true;
     assert {:msg "assert_failed(2,243,341): abort not covered by any of the `aborts_if` clauses"}
       $t0;
 
-    // abort($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/pragma.move:13:5+98
+    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move:13:5+98
     $abort_code := $t1;
     $abort_flag := true;
     return;

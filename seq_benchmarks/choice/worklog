@@ -1,0 +1,5 @@
+using andy_seq/bin/cvc5 as a backend of boogie not terminating.
+using ~/bin/cvc4 looks good, generate choice.smt2
+
+~/bin/cvc4 can verify choice.smt2
+andy_seq/bin/cvc5 will not terminate on choice.smt2

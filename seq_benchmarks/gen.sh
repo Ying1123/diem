@@ -1,30 +1,37 @@
-move_dir = "~/diem/language/move-prover/tests/sources/functional/"
-bm_dir = "~/diem/seq_benchmarks/"
-nobpls = []
-for file in move_dir: 
-	if file endwith ".move":	
-		split file into filename + ".move"
-		
-		# generate output.bpl
-		run("mvp -d ~/diem/language/move-stdlib/modules "
-	            + move_dir + file + 
-	            " --use-cvc4 --vector-theory SmtSeq --generate-smt -k")	
-		# check if output.bpl generated
-		if ("output.bpl" not exists in "./"):
-			nobpls.append(file)
-			continue
-	
-		# move .bpl to the benchmark directory
-	        bm_dir_single = bm_dir + filename + "/"
-		if (bm_dir_single not exists):
-			run("mkdir " + bm_dir_single)
-		bm_bpl = bm_dir_single + filename + ".bpl"
-		run("mv output.bpl " + bm_bpl)	
-		
-		# generate smt2
-		bm_smt2 = filename + ".smt2"
-		backend = "~/bin/cvc4"
-		run("~/boogie/Source/BoogieDriver/bin/Debug/netcoreapp3.1/BoogieDriver "
-	            + bm_bpl + " -monomorphize /env:2 /proverLog:" + bm_smt2 + " /proverOpt:PROVER_PATH=" + backend + " /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis")
-		# move smt2 into the benchmark directory
-		run("mv " + bm_smt2 + " " + bm_dir_single + bm_smt2)
+function IsSuffix() {
+    local filename="$1"
+    local suffix="$2"
+    if [ "${file##*.}"x = "$suffix"x ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+move_dir=~/diem/language/move-prover/tests/sources/functional
+bm_dir=~/diem/seq_benchmarks
+
+r0=$(source ~/.profile)
+r0=$(mvp)
+echo $r0
+
+for file in ~/test/*
+do
+    if [ -d "$file" ]
+    then
+        echo "$file is a dir"
+    elif [ -f "$file" ]
+    then
+        echo "$file is a file"
+        IsSuffix ${file} "move"
+        ret=$?
+        if [ $ret -eq 0 ]; then
+            echo "the suffix of the ${file} is move"
+            filename=$(basename $file .move)
+            echo "file name is $filename"
+            r1=$("mvp -d ~/diem/language/move-stdlib/modules" $move_dir$filename "--use-cvc4 --vector-theory SmtSeq --generate-smt -k")
+            # r1=$(ls)
+            echo $r1
+        fi
+    fi
+done

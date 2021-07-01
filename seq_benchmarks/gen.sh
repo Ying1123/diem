@@ -1,3 +1,7 @@
+#!/bin/bash
+
+source ~/.profile
+
 function IsSuffix() {
     local filename="$1"
     local suffix="$2"
@@ -10,10 +14,6 @@ function IsSuffix() {
 
 move_dir=~/diem/language/move-prover/tests/sources/functional
 bm_dir=~/diem/seq_benchmarks
-
-r0=$(source ~/.profile)
-r0=$(mvp)
-echo $r0
 
 for file in ~/test/*
 do
@@ -29,9 +29,16 @@ do
             echo "the suffix of the ${file} is move"
             filename=$(basename $file .move)
             echo "file name is $filename"
-            r1=$("mvp -d ~/diem/language/move-stdlib/modules" $move_dir$filename "--use-cvc4 --vector-theory SmtSeq --generate-smt -k")
-            # r1=$(ls)
-            echo $r1
+            cargo run --release --quiet --package move-prover -- -d ~/diem/language/move-stdlib/modules ~/test/$filename.move --use-cvc4 --vector-theory SmtSeq --generate-smt -k
+            output_bpl=./output.bpl
+            if [ -f "$output_bpl" ]; then
+                echo "output exists"
+            else
+                echo "output doesn't exist"
+                continue
+            fi
+            bm_dir_single=$bm_dir/$filename
+            
         fi
     fi
 done

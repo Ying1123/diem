@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/marketcap_as_schema/marketcap_as_schema.bpl
+/home/ying/diem/seq_benchmarks/marketcap_as_schema/.bpl
 -monomorphize
 /env:2
-/proverLog:marketcap_as_schema.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/marketcap_as_schema/marketcap_as_schema.bpl
+Parsing /home/ying/diem/seq_benchmarks/marketcap_as_schema/.bpl
 Coalescing blocks...
 Inlining...
 

@@ -1,4 +1,5 @@
-/home/ying/diem/seq_benchmarks/global_invariants/global_invariants.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/global_invariants/.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/global_invariants/.smt2:162.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

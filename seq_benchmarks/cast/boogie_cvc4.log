@@ -1,48 +1,48 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/cast/cast.bpl
+/home/ying/diem/seq_benchmarks/cast/.bpl
 -monomorphize
 /env:2
-/proverLog:cast.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/cast/cast.bpl
+Parsing /home/ying/diem/seq_benchmarks/cast/.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestCast_aborting_u64_cast$verify ...
-  [0.149 s, 3 proof obligations]  verified
+  [0.202 s, 3 proof obligations]  verified
 
 Verifying $42_TestCast_aborting_u64_cast_incorrect$verify ...
-  [0.023 s, 2 proof obligations]  error
+  [0.029 s, 2 proof obligations]  error
 assert_failed(2,807,872): abort not covered by any of the `aborts_if` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(973,9): anon0
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(973,9): anon0$1
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(389,9): inline$$CastU64$0$anon3_Then
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(389,9): inline$$CastU64$0$anon3_Then$1
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(990,9): anon4_Then
+    /home/ying/diem/seq_benchmarks/cast/.bpl(973,9): anon0
+    /home/ying/diem/seq_benchmarks/cast/.bpl(973,9): anon0$1
+    /home/ying/diem/seq_benchmarks/cast/.bpl(389,9): inline$$CastU64$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/cast/.bpl(389,9): inline$$CastU64$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/cast/.bpl(990,9): anon4_Then
 
 Verifying $42_TestCast_aborting_u8_cast$verify ...
-  [0.006 s, 2 proof obligations]  verified
+  [0.010 s, 2 proof obligations]  verified
 
 Verifying $42_TestCast_aborting_u8_cast_incorrect$verify ...
-  [0.012 s, 2 proof obligations]  error
+  [0.023 s, 2 proof obligations]  error
 assert_failed(2,535,599): abort not covered by any of the `aborts_if` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(1101,9): anon0
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(1101,9): anon0$1
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(380,9): inline$$CastU8$0$anon3_Then
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(380,9): inline$$CastU8$0$anon3_Then$1
-    /home/ying/diem/seq_benchmarks/cast/cast.bpl(1118,9): anon4_Then
+    /home/ying/diem/seq_benchmarks/cast/.bpl(1101,9): anon0
+    /home/ying/diem/seq_benchmarks/cast/.bpl(1101,9): anon0$1
+    /home/ying/diem/seq_benchmarks/cast/.bpl(380,9): inline$$CastU8$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/cast/.bpl(380,9): inline$$CastU8$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/cast/.bpl(1118,9): anon4_Then
 
 Verifying $42_TestCast_u64_cast$verify ...
-  [0.013 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $42_TestCast_u8_cast_incorrect$verify ...
-  [0.009 s, 2 proof obligations]  verified
+  [0.010 s, 2 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 2 errors

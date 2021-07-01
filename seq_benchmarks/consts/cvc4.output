@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/consts/consts.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/consts/.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

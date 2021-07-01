@@ -1,4 +1,5 @@
-/home/ying/diem/seq_benchmarks/disable_inv_friends/disable_inv_friends.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/disable_inv_friends/.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/disable_inv_friends/.smt2:161.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

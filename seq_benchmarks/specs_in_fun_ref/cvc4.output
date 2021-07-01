@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/specs_in_fun_ref/specs_in_fun_ref.smt2:39.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/specs_in_fun_ref/.smt2:39.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

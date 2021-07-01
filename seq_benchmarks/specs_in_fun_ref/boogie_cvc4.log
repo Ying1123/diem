@@ -1,37 +1,37 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/specs_in_fun_ref/specs_in_fun_ref.bpl
+/home/ying/diem/seq_benchmarks/specs_in_fun_ref/.bpl
 -monomorphize
 /env:2
-/proverLog:specs_in_fun_ref.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/specs_in_fun_ref/specs_in_fun_ref.bpl
+Parsing /home/ying/diem/seq_benchmarks/specs_in_fun_ref/.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestAssertWithReferences_simple1$verify ...
-  [0.154 s, 3 proof obligations]  verified
+  [0.216 s, 3 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple2$verify ...
-  [0.009 s, 1 proof obligation]  verified
+  [0.008 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertWithReferences_simple3$verify ...
-  [0.014 s, 2 proof obligations]  verified
+  [0.013 s, 2 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple4$verify ...
-  [0.018 s, 5 proof obligations]  verified
+  [0.016 s, 5 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple5$verify ...
-  [0.015 s, 4 proof obligations]  verified
+  [0.012 s, 4 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple6$verify ...
-  [0.013 s, 4 proof obligations]  verified
+  [0.008 s, 4 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple7$verify ...
-  [0.009 s, 4 proof obligations]  verified
+  [0.010 s, 4 proof obligations]  verified
 
 Boogie program verifier finished with 7 verified, 0 errors

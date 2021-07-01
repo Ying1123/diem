@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/mut_ref_accross_modules/mut_ref_accross_modules.bpl
+/home/ying/diem/seq_benchmarks/mut_ref_accross_modules/.bpl
 -monomorphize
 /env:2
-/proverLog:mut_ref_accross_modules.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/mut_ref_accross_modules/mut_ref_accross_modules.bpl
+Parsing /home/ying/diem/seq_benchmarks/mut_ref_accross_modules/.bpl
 Coalescing blocks...
 Inlining...
 

@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/aborts_with_negative_check/aborts_with_negative_check.bpl
+/home/ying/diem/seq_benchmarks/aborts_with_negative_check/.bpl
 -monomorphize
 /env:2
-/proverLog:aborts_with_negative_check.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/aborts_with_negative_check/aborts_with_negative_check.bpl
+Parsing /home/ying/diem/seq_benchmarks/aborts_with_negative_check/.bpl
 Coalescing blocks...
 Inlining...
 

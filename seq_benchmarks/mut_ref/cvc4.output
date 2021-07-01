@@ -1,3 +1,3 @@
-/home/ying/diem/seq_benchmarks/mut_ref/mut_ref.smt2:57.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/mut_ref/.smt2:57.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

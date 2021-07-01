@@ -1,25 +1,25 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/axioms/axioms.bpl
+/home/ying/diem/seq_benchmarks/axioms/.bpl
 -monomorphize
 /env:2
-/proverLog:axioms.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/axioms/axioms.bpl
+Parsing /home/ying/diem/seq_benchmarks/axioms/.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestAxioms_id_T$verify ...
-  [0.149 s, 1 proof obligation]  verified
+  [0.197 s, 1 proof obligation]  verified
 
 Verifying $42_TestAxioms_id_u64$verify ...
-  [0.007 s, 1 proof obligation]  verified
+  [0.003 s, 1 proof obligation]  verified
 
 Verifying $42_TestAxioms_incr$verify ...
-  [0.016 s, 1 proof obligation]  verified
+  [0.011 s, 1 proof obligation]  verified
 
 Boogie program verifier finished with 3 verified, 0 errors

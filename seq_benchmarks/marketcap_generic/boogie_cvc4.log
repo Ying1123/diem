@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/marketcap_generic/marketcap_generic.bpl
+/home/ying/diem/seq_benchmarks/marketcap_generic/.bpl
 -monomorphize
 /env:2
-/proverLog:marketcap_generic.smt2
+/proverLog:.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/marketcap_generic/marketcap_generic.bpl
+Parsing /home/ying/diem/seq_benchmarks/marketcap_generic/.bpl
 Coalescing blocks...
 Inlining...
 

@@ -38,7 +38,17 @@ do
                 continue
             fi
             bm_dir_single=$bm_dir/$filename
-            
+            if [ -d "$bm_dir_single" ]; then
+                echo "dir exists"
+            else
+                mkdir $bm_dir_single
+            fi
+            bm_bpl=$bm_dir_single/$filename.bpl
+            mv ./output.bpl $bm_bpl
+            # generate smt2
+            bm_smt2=$filename.smt2
+            ~/boogie/Source/BoogieDriver/bin/Debug/netcoreapp3.1/BoogieDriver $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis                
+            mv $bm_smt2 $bm_dir_single/$bm_smt2
         fi
     fi
 done

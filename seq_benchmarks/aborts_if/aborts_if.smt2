@@ -1,6 +1,5 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
 (set-logic ALL)
 ; done setting options
 
@@ -328,7 +327,7 @@ anon0_correct@@8)))))))
 (get-value ((ControlFlow 0 0)))
 (get-value ((ControlFlow 0 16730)))
 (get-value ((ControlFlow 0 14203)))
-(get-value ((ControlFlow 0 14287)))
+(get-value ((ControlFlow 0 14229)))
 (get-value ((ControlFlow 0 14269)))
 (assert (not (= (ControlFlow 0 14269) (- 16871))))
 (check-sat)

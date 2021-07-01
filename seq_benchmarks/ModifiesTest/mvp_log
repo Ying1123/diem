@@ -1,0 +1,4 @@
+[INFO] translating module A
+[INFO] translating module B
+[INFO] running solver
+[INFO] 0.014s build, 0.002s trafo, 0.003s gen, 0.795s verify

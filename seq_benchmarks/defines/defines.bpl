@@ -892,32 +892,32 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
+// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
 function {:inline} $42_TestDefines_$add_as_spec_fun(x: int, y: int): int {
     (x + y)
 }
 
-// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:8:9+91
+// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:8:9+91
 function {:inline} $42_TestDefines_in_range(x: int, min: int, max: int): bool {
     ((x >= min) && (x <= max))
 }
 
-// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:12:9+58
+// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:12:9+58
 function {:inline} $42_TestDefines_eq'u64'(x: int, y: int): bool {
     $IsEqual'u64'(x, y)
 }
 
-// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:31:9+114
+// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:31:9+114
 function {:inline} $42_TestDefines_exists_both($42_TestDefines_R_$memory: $Memory $42_TestDefines_R, addr1: int, addr2: int): bool {
     ($ResourceExists($42_TestDefines_R_$memory, addr1) && $ResourceExists($42_TestDefines_R_$memory, addr2))
 }
 
-// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:34:9+69
+// spec fun at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:34:9+69
 function {:inline} $42_TestDefines_get($42_TestDefines_R_$memory: $Memory $42_TestDefines_R, addr: int): int {
     $x#$42_TestDefines_R($ResourceValue($42_TestDefines_R_$memory, addr))
 }
 
-// struct TestDefines::R at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:28:5+27
+// struct TestDefines::R at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:28:5+27
 type {:datatype} $42_TestDefines_R;
 function {:constructor} $42_TestDefines_R($x: int): $42_TestDefines_R;
 function {:inline} $Update'$42_TestDefines_R'_x(s: $42_TestDefines_R, x: int): $42_TestDefines_R {
@@ -931,7 +931,7 @@ function {:inline} $IsEqual'$42_TestDefines_R'(s1: $42_TestDefines_R, s2: $42_Te
 }
 var $42_TestDefines_R_$memory: $Memory $42_TestDefines_R;
 
-// fun TestDefines::add [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:5+38
+// fun TestDefines::add [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:5+38
 procedure {:timeLimit 40} $42_TestDefines_add$verify(_$t0: int, _$t1: int) returns ($ret0: int)
 {
     // declare local variables
@@ -947,21 +947,21 @@ procedure {:timeLimit 40} $42_TestDefines_add$verify(_$t0: int, _$t1: int) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:21:20+6
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:21:20+6
     assume {:print "$at(2,415,421)"} true;
     assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:21:20+6
+    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:21:20+6
     assume $IsValid'u64'($t1);
 
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:5+1
+    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:5+1
     assume {:print "$at(2,280,281)"} true;
     assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:5+1
+    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:5+1
     assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
 
-    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:38+1
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:38+1
     call $t2 := $AddU64($t0, $t1);
     if ($abort_flag) {
         assume {:print "$at(2,313,314)"} true;
@@ -970,43 +970,43 @@ procedure {:timeLimit 40} $42_TestDefines_add$verify(_$t0: int, _$t1: int) retur
         goto L2;
     }
 
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:36+5
+    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:36+5
     assume {:print "$track_return(0,0,0):", $t2} $t2 == $t2;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:42+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:42+1
 L1:
 
-    // assert Not(Not(TestDefines::in_range[](Add($t0, $t1), 0, 18446744073709551615))) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:20:9+52
+    // assert Not(Not(TestDefines::in_range[](Add($t0, $t1), 0, 18446744073709551615))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:20:9+52
     assume {:print "$at(2,343,395)"} true;
     assert {:msg "assert_failed(2,343,395): function does not abort under this condition"}
       !!$42_TestDefines_in_range(($t0 + $t1), 0, 18446744073709551615);
 
-    // assert TestDefines::eq<u64>($t2, Add($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:21:9+26
+    // assert TestDefines::eq<u64>($t2, Add($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:21:9+26
     assume {:print "$at(2,404,430)"} true;
     assert {:msg "assert_failed(2,404,430): post-condition does not hold"}
       $42_TestDefines_eq'u64'($t2, ($t0 + $t1));
 
-    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:21:9+26
+    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:21:9+26
     $ret0 := $t2;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:17:42+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:17:42+1
     assume {:print "$at(2,317,318)"} true;
 L2:
 
-    // assert Not(TestDefines::in_range[](Add($t0, $t1), 0, 18446744073709551615)) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:19:5+112
+    // assert Not(TestDefines::in_range[](Add($t0, $t1), 0, 18446744073709551615)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:19:5+112
     assume {:print "$at(2,324,436)"} true;
     assert {:msg "assert_failed(2,324,436): abort not covered by any of the `aborts_if` clauses"}
       !$42_TestDefines_in_range(($t0 + $t1), 0, 18446744073709551615);
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:19:5+112
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:19:5+112
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestDefines::add_as_spec_fun [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
+// fun TestDefines::add_as_spec_fun [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
 procedure {:timeLimit 40} $42_TestDefines_add_as_spec_fun$verify(_$t0: int, _$t1: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1022,20 +1022,20 @@ procedure {:timeLimit 40} $42_TestDefines_add_as_spec_fun$verify(_$t0: int, _$t1
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
     assume {:print "$at(2,1295,1345)"} true;
     assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
+    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:5+50
     assume $IsValid'u64'($t1);
 
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:5+1
+    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:5+1
     assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:5+1
+    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:5+1
     assume {:print "$track_local(0,1,1):", $t1} $t1 == $t1;
 
-    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:50+1
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:50+1
     call $t2 := $AddU64($t0, $t1);
     if ($abort_flag) {
         assume {:print "$at(2,1340,1341)"} true;
@@ -1044,27 +1044,27 @@ procedure {:timeLimit 40} $42_TestDefines_add_as_spec_fun$verify(_$t0: int, _$t1
         goto L2;
     }
 
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:48+5
+    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:48+5
     assume {:print "$track_return(0,1,0):", $t2} $t2 == $t2;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
 L1:
 
-    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
+    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
     $ret0 := $t2;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:53:54+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestDefines::add_fun [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:5+42
+// fun TestDefines::add_fun [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:5+42
 procedure {:timeLimit 40} $42_TestDefines_add_fun$verify(_$t0: int, _$t1: int) returns ($ret0: int)
 {
     // declare local variables
@@ -1080,21 +1080,21 @@ procedure {:timeLimit 40} $42_TestDefines_add_fun$verify(_$t0: int, _$t1: int) r
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:56:17+5
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:56:17+5
     assume {:print "$at(2,1428,1433)"} true;
     assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:56:17+5
+    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:56:17+5
     assume $IsValid'u64'($t1);
 
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:5+1
+    // trace_local[x]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:5+1
     assume {:print "$at(2,1350,1351)"} true;
     assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
 
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:5+1
+    // trace_local[y]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:5+1
     assume {:print "$track_local(0,2,1):", $t1} $t1 == $t1;
 
-    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:42+1
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:42+1
     call $t2 := $AddU64($t0, $t1);
     if ($abort_flag) {
         assume {:print "$at(2,1387,1388)"} true;
@@ -1103,33 +1103,33 @@ procedure {:timeLimit 40} $42_TestDefines_add_fun$verify(_$t0: int, _$t1: int) r
         goto L2;
     }
 
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:40+5
+    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:40+5
     assume {:print "$track_return(0,2,0):", $t2} $t2 == $t2;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:46+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:46+1
 L1:
 
-    // assert Eq<num>($t2, TestDefines::$add_as_spec_fun($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:60:9+40
+    // assert Eq<num>($t2, TestDefines::$add_as_spec_fun($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:60:9+40
     assume {:print "$at(2,1510,1550)"} true;
     assert {:msg "assert_failed(2,1510,1550): post-condition does not hold"}
       $IsEqual'u64'($t2, $42_TestDefines_$add_as_spec_fun($t0, $t1));
 
-    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:60:9+40
+    // return $t2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:60:9+40
     $ret0 := $t2;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:46+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:46+1
     assume {:print "$at(2,1391,1392)"} true;
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:54:46+1
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:54:46+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestDefines::equal_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:39:5+173
+// fun TestDefines::equal_R [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:39:5+173
 procedure {:timeLimit 40} $42_TestDefines_equal_R$verify(_$t0: int, _$t1: int) returns ($ret0: bool)
 {
     // declare local variables
@@ -1154,28 +1154,28 @@ procedure {:timeLimit 40} $42_TestDefines_equal_R$verify(_$t0: int, _$t1: int) r
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:46:17+6
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:46:17+6
     assume {:print "$at(2,1095,1101)"} true;
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:46:17+6
+    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:46:17+6
     assume $IsValid'address'($t1);
 
-    // assume forall $rsc: ResourceDomain<TestDefines::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:46:17+6
+    // assume forall $rsc: ResourceDomain<TestDefines::R>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:46:17+6
     assume (forall $a_0: int :: {$ResourceValue($42_TestDefines_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestDefines_R_$memory, $a_0);
     ($IsValid'$42_TestDefines_R'($rsc))));
 
-    // @0 := save_mem(TestDefines::R) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:39:5+1
+    // @0 := save_mem(TestDefines::R) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:39:5+1
     assume {:print "$at(2,840,841)"} true;
     $42_TestDefines_R_$memory#0 := $42_TestDefines_R_$memory;
 
-    // trace_local[addr1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:39:5+1
+    // trace_local[addr1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:39:5+1
     assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
 
-    // trace_local[addr2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:39:5+1
+    // trace_local[addr2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:39:5+1
     assume {:print "$track_local(0,3,1):", $t1} $t1 == $t1;
 
-    // $t4 := get_global<TestDefines::R>($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:40:18+13
+    // $t4 := get_global<TestDefines::R>($t0) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:40:18+13
     assume {:print "$at(2,920,933)"} true;
     if (!$ResourceExists($42_TestDefines_R_$memory, $t0)) {
         call $ExecFailureAbort();
@@ -1189,10 +1189,10 @@ procedure {:timeLimit 40} $42_TestDefines_equal_R$verify(_$t0: int, _$t1: int) r
         goto L2;
     }
 
-    // trace_local[r1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:40:13+2
+    // trace_local[r1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:40:13+2
     assume {:print "$track_local(0,3,2):", $t4} $t4 == $t4;
 
-    // $t6 := get_global<TestDefines::R>($t1) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:41:18+13
+    // $t6 := get_global<TestDefines::R>($t1) on_abort goto L2 with $t5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:41:18+13
     assume {:print "$at(2,962,975)"} true;
     if (!$ResourceExists($42_TestDefines_R_$memory, $t1)) {
         call $ExecFailureAbort();
@@ -1206,50 +1206,50 @@ procedure {:timeLimit 40} $42_TestDefines_equal_R$verify(_$t0: int, _$t1: int) r
         goto L2;
     }
 
-    // trace_local[r2]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:41:13+2
+    // trace_local[r2]($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:41:13+2
     assume {:print "$track_local(0,3,3):", $t6} $t6 == $t6;
 
-    // $t7 := get_field<TestDefines::R>.x($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:42:9+4
+    // $t7 := get_field<TestDefines::R>.x($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:42:9+4
     assume {:print "$at(2,995,999)"} true;
     $t7 := $x#$42_TestDefines_R($t4);
 
-    // $t8 := get_field<TestDefines::R>.x($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:42:17+4
+    // $t8 := get_field<TestDefines::R>.x($t6) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:42:17+4
     $t8 := $x#$42_TestDefines_R($t6);
 
-    // $t9 := ==($t7, $t8) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:42:14+2
+    // $t9 := ==($t7, $t8) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:42:14+2
     $t9 := $IsEqual'u64'($t7, $t8);
 
-    // trace_return[0]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:42:9+12
+    // trace_return[0]($t9) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:42:9+12
     assume {:print "$track_return(0,3,0):", $t9} $t9 == $t9;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:43:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:43:5+1
     assume {:print "$at(2,1012,1013)"} true;
 L1:
 
-    // assert Not(Not(TestDefines::exists_both[@0]($t0, $t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:45:9+37
+    // assert Not(Not(TestDefines::exists_both[@0]($t0, $t1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:45:9+37
     assume {:print "$at(2,1041,1078)"} true;
     assert {:msg "assert_failed(2,1041,1078): function does not abort under this condition"}
       !!$42_TestDefines_exists_both($42_TestDefines_R_$memory#0, $t0, $t1);
 
-    // assert Eq<bool>($t9, Eq<u64>(TestDefines::get($t0), TestDefines::get($t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:46:9+45
+    // assert Eq<bool>($t9, Eq<u64>(TestDefines::get($t0), TestDefines::get($t1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:46:9+45
     assume {:print "$at(2,1087,1132)"} true;
     assert {:msg "assert_failed(2,1087,1132): post-condition does not hold"}
       $IsEqual'bool'($t9, $IsEqual'u64'($42_TestDefines_get($42_TestDefines_R_$memory, $t0), $42_TestDefines_get($42_TestDefines_R_$memory, $t1)));
 
-    // return $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:46:9+45
+    // return $t9 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:46:9+45
     $ret0 := $t9;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:43:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:43:5+1
     assume {:print "$at(2,1012,1013)"} true;
 L2:
 
-    // assert Not(TestDefines::exists_both[@0]($t0, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:44:5+120
+    // assert Not(TestDefines::exists_both[@0]($t0, $t1)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:44:5+120
     assume {:print "$at(2,1018,1138)"} true;
     assert {:msg "assert_failed(2,1018,1138): abort not covered by any of the `aborts_if` clauses"}
       !$42_TestDefines_exists_both($42_TestDefines_R_$memory#0, $t0, $t1);
 
-    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/defines.move:44:5+120
+    // abort($t5) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/defines.move:44:5+120
     $abort_code := $t5;
     $abort_flag := true;
     return;

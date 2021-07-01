@@ -1,0 +1,12 @@
+error: 
+
+   ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/heap_sort.move:6:1 ───
+   │
+ 6 │ }
+   │ ^ Unexpected '}'
+   ·
+ 6 │ }
+   │ - Expected an identifier
+   │
+
+exiting with model building errors

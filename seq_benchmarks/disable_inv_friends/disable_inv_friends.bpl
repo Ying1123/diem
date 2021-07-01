@@ -892,12 +892,12 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:13:5+77
+// spec fun at /Users/yingsheng/diem/language/move-stdlib/modules/Signer.move:13:5+77
 function {:inline} $1_Signer_$address_of(s: int): int {
     $1_Signer_$borrow_address(s)
 }
 
-// struct M3::R3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:55:5+20
+// struct M3::R3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:55:5+20
 type {:datatype} $1_M3_R3;
 function {:constructor} $1_M3_R3($dummy_field: bool): $1_M3_R3;
 function {:inline} $Update'$1_M3_R3'_dummy_field(s: $1_M3_R3, x: bool): $1_M3_R3 {
@@ -911,7 +911,7 @@ function {:inline} $IsEqual'$1_M3_R3'(s1: $1_M3_R3, s2: $1_M3_R3): bool {
 }
 var $1_M3_R3_$memory: $Memory $1_M3_R3;
 
-// fun M3::f3 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
+// fun M3::f3 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
 procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -927,35 +927,35 @@ procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
     assume {:print "$at(2,1086,1154)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
+    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
     assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
     ($IsValid'$1_M3_R3'($rsc))));
 
-    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:63:9+43
+    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:63:9+43
     assume {:print "$at(2,1201,1244)"} true;
     assume $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+1
+    // trace_local[s]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+1
     assume {:print "$at(2,1086,1087)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := false at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:20+5
+    // $t1 := false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:20+5
     assume {:print "$at(2,1141,1146)"} true;
     $t1 := false;
     assume $IsValid'bool'($t1);
 
-    // $t2 := pack M3::R3($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:20+5
+    // $t2 := pack M3::R3($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:20+5
     $t2 := $1_M3_R3($t1);
 
-    // assert CanModify<M3::R3>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
+    // assert CanModify<M3::R3>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
     assert {:msg "assert_failed(2,1130,1137): caller does not have permission to modify `M3::R3` at given address"}
       $1_M3_R3_$modifies[$t0];
 
-    // move_to<M3::R3>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
+    // move_to<M3::R3>($t2, $t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
     if ($ResourceExists($1_M3_R3_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -968,30 +968,30 @@ procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: int) returns ()
         goto L2;
     }
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
     assume {:print "$at(2,1153,1154)"} true;
 L1:
 
-    // assert exists<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:64:9+42
+    // assert exists<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:64:9+42
     assume {:print "$at(2,1253,1295)"} true;
     assert {:msg "assert_failed(2,1253,1295): post-condition does not hold"}
       $ResourceExists($1_M3_R3_$memory, $1_Signer_$address_of($t0));
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:64:9+42
+    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:64:9+42
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
     assume {:print "$at(2,1153,1154)"} true;
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// struct M2::R2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:37:5+20
+// struct M2::R2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:37:5+20
 type {:datatype} $1_M2_R2;
 function {:constructor} $1_M2_R2($dummy_field: bool): $1_M2_R2;
 function {:inline} $Update'$1_M2_R2'_dummy_field(s: $1_M2_R2, x: bool): $1_M2_R2 {
@@ -1005,7 +1005,7 @@ function {:inline} $IsEqual'$1_M2_R2'(s1: $1_M2_R2, s2: $1_M2_R2): bool {
 }
 var $1_M2_R2_$memory: $Memory $1_M2_R2;
 
-// fun M2::f2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
+// fun M2::f2 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
 procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -1021,35 +1021,35 @@ procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
     assume {:print "$at(2,762,831)"} true;
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
+    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
     assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
     ($IsValid'$1_M2_R2'($rsc))));
 
-    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:45:9+43
+    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:45:9+43
     assume {:print "$at(2,878,921)"} true;
     assume $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+1
+    // trace_local[s]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+1
     assume {:print "$at(2,762,763)"} true;
     assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := false at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:20+5
+    // $t1 := false at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:20+5
     assume {:print "$at(2,818,823)"} true;
     $t1 := false;
     assume $IsValid'bool'($t1);
 
-    // $t2 := pack M2::R2($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:20+5
+    // $t2 := pack M2::R2($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:20+5
     $t2 := $1_M2_R2($t1);
 
-    // assert CanModify<M2::R2>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
+    // assert CanModify<M2::R2>($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
     assert {:msg "assert_failed(2,807,814): caller does not have permission to modify `M2::R2` at given address"}
       $1_M2_R2_$modifies[$t0];
 
-    // move_to<M2::R2>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
+    // move_to<M2::R2>($t2, $t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
     if ($ResourceExists($1_M2_R2_$memory, $t0)) {
         call $ExecFailureAbort();
     } else {
@@ -1062,30 +1062,30 @@ procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: int) returns ()
         goto L2;
     }
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
     assume {:print "$at(2,830,831)"} true;
 L1:
 
-    // assert exists<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:46:9+42
+    // assert exists<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:46:9+42
     assume {:print "$at(2,930,972)"} true;
     assert {:msg "assert_failed(2,930,972): post-condition does not hold"}
       $ResourceExists($1_M2_R2_$memory, $1_Signer_$address_of($t0));
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:46:9+42
+    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:46:9+42
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
     assume {:print "$at(2,830,831)"} true;
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun M1::f1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
+// fun M1::f1 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
 procedure {:timeLimit 40} $1_M1_f1$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -1105,65 +1105,65 @@ procedure {:timeLimit 40} $1_M1_f1$verify(_$t0: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
+    // assume forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
+    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
     assume {:print "$at(2,238,309)"} true;
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
+    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
     assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
     ($IsValid'$1_M3_R3'($rsc))));
 
-    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
+    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
     assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
     ($IsValid'$1_M2_R2'($rsc))));
 
-    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:18:9+47
+    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:18:9+47
     assume {:print "$at(2,356,403)"} true;
     assume $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
 
-    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:19:9+47
+    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:19:9+47
     assume {:print "$at(2,412,459)"} true;
     assume $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+1
+    // trace_local[s]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+1
     assume {:print "$at(2,238,239)"} true;
     assume {:print "$track_local(3,0,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     // >> opaque call: M2::f2($t0)
     assume {:print "$at(2,274,283)"} true;
 
-    // assert CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // assert CanModify<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     assert {:msg "assert_failed(2,274,283): caller does not have permission to modify `M2::R2` at given address"}
       $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
 
-    // opaque begin: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // opaque begin: M2::f2($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
 
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // havoc[val]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     havoc $t1;
     assume $IsValid'bool'($t1);
 
-    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // if ($t1) goto L4 else goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     if ($t1) { goto L4; } else { goto L3; }
 
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
 L4:
 
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // trace_abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     assume {:print "$at(2,274,283)"} true;
     assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     goto L2;
 
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
 L3:
 
-    // modifies global<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // modifies global<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     havoc $temp_0'bool';
     if ($temp_0'bool') {
         havoc $temp_0'$1_M2_R2';
@@ -1172,42 +1172,42 @@ L3:
         $1_M2_R2_$memory := $ResourceRemove($1_M2_R2_$memory, $1_Signer_$address_of($t0));
     }
 
-    // assume exists<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // assume exists<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
     assume $ResourceExists($1_M2_R2_$memory, $1_Signer_$address_of($t0));
 
-    // opaque end: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // opaque end: M2::f2($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     // >> opaque call: M3::f3($t0)
     assume {:print "$at(2,293,302)"} true;
 
-    // assert CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // assert CanModify<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     assert {:msg "assert_failed(2,293,302): caller does not have permission to modify `M3::R3` at given address"}
       $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
 
-    // opaque begin: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // opaque begin: M3::f3($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
 
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // havoc[val]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     havoc $t3;
     assume $IsValid'bool'($t3);
 
-    // if ($t3) goto L6 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // if ($t3) goto L6 else goto L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     if ($t3) { goto L6; } else { goto L5; }
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
 L6:
 
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // trace_abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     assume {:print "$at(2,293,302)"} true;
     assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     goto L2;
 
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
 L5:
 
-    // modifies global<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // modifies global<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     havoc $temp_0'bool';
     if ($temp_0'bool') {
         havoc $temp_0'$1_M3_R3';
@@ -1216,36 +1216,36 @@ L5:
         $1_M3_R3_$memory := $ResourceRemove($1_M3_R3_$memory, $1_Signer_$address_of($t0));
     }
 
-    // assume exists<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // assume exists<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
     assume $ResourceExists($1_M3_R3_$memory, $1_Signer_$address_of($t0));
 
-    // opaque end: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
+    // opaque end: M3::f3($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
     assume {:print "$at(2,308,309)"} true;
 L1:
 
-    // assert forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
+    // assert forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
+    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
     assume {:print "$at(2,558,647)"} true;
     assert {:msg "assert_failed(2,558,647): global memory invariant does not hold"}
       (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
+    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
     assume {:print "$at(2,308,309)"} true;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
 L2:
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
+    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun M4::f4 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
+// fun M4::f4 [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
 procedure {:timeLimit 40} $1_M4_f4$verify(_$t0: int) returns ()
 {
     // declare local variables
@@ -1265,65 +1265,65 @@ procedure {:timeLimit 40} $1_M4_f4$verify(_$t0: int) returns ()
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
+    // assume forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
+    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
     assume {:print "$at(2,1377,1448)"} true;
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
     assume $IsValid'address'($t0);
 
-    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
+    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
     assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
     ($IsValid'$1_M3_R3'($rsc))));
 
-    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
+    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
     assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
     ($IsValid'$1_M2_R2'($rsc))));
 
-    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:80:9+47
+    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:80:9+47
     assume {:print "$at(2,1495,1542)"} true;
     assume $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
 
-    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:81:9+47
+    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:81:9+47
     assume {:print "$at(2,1551,1598)"} true;
     assume $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+1
+    // trace_local[s]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+1
     assume {:print "$at(2,1377,1378)"} true;
     assume {:print "$track_local(4,0,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     // >> opaque call: M3::f3($t0)
     assume {:print "$at(2,1413,1422)"} true;
 
-    // assert CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // assert CanModify<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     assert {:msg "assert_failed(2,1413,1422): caller does not have permission to modify `M3::R3` at given address"}
       $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
 
-    // opaque begin: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // opaque begin: M3::f3($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
 
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // havoc[val]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     havoc $t1;
     assume $IsValid'bool'($t1);
 
-    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // if ($t1) goto L4 else goto L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     if ($t1) { goto L4; } else { goto L3; }
 
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // label L4 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
 L4:
 
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // trace_abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     assume {:print "$at(2,1413,1422)"} true;
     assume {:print "$track_abort(4,0):", $t2} $t2 == $t2;
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     goto L2;
 
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // label L3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
 L3:
 
-    // modifies global<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // modifies global<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     havoc $temp_0'bool';
     if ($temp_0'bool') {
         havoc $temp_0'$1_M3_R3';
@@ -1332,42 +1332,42 @@ L3:
         $1_M3_R3_$memory := $ResourceRemove($1_M3_R3_$memory, $1_Signer_$address_of($t0));
     }
 
-    // assume exists<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // assume exists<M3::R3>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
     assume $ResourceExists($1_M3_R3_$memory, $1_Signer_$address_of($t0));
 
-    // opaque end: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // opaque end: M3::f3($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // nop at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     // >> opaque call: M2::f2($t0)
     assume {:print "$at(2,1432,1441)"} true;
 
-    // assert CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // assert CanModify<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     assert {:msg "assert_failed(2,1432,1441): caller does not have permission to modify `M2::R2` at given address"}
       $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
 
-    // opaque begin: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // opaque begin: M2::f2($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
 
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // havoc[val]($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     havoc $t3;
     assume $IsValid'bool'($t3);
 
-    // if ($t3) goto L6 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // if ($t3) goto L6 else goto L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     if ($t3) { goto L6; } else { goto L5; }
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // label L6 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
 L6:
 
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // trace_abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     assume {:print "$at(2,1432,1441)"} true;
     assume {:print "$track_abort(4,0):", $t2} $t2 == $t2;
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // goto L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     goto L2;
 
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // label L5 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
 L5:
 
-    // modifies global<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // modifies global<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     havoc $temp_0'bool';
     if ($temp_0'bool') {
         havoc $temp_0'$1_M2_R2';
@@ -1376,29 +1376,29 @@ L5:
         $1_M2_R2_$memory := $ResourceRemove($1_M2_R2_$memory, $1_Signer_$address_of($t0));
     }
 
-    // assume exists<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // assume exists<M2::R2>(Signer::$address_of($t0)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
     assume $ResourceExists($1_M2_R2_$memory, $1_Signer_$address_of($t0));
 
-    // opaque end: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
+    // opaque end: M2::f2($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
     assume {:print "$at(2,1447,1448)"} true;
 L1:
 
-    // assert forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
+    // assert forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
+    // global invariant at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
     assume {:print "$at(2,558,647)"} true;
     assert {:msg "assert_failed(2,558,647): global memory invariant does not hold"}
       (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
+    // return () at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
     assume {:print "$at(2,1447,1448)"} true;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
 L2:
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
+    // abort($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;

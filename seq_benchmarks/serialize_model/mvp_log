@@ -1,0 +1,12 @@
+[INFO] translating module TestBCS
+[INFO] running solver
+[internal] boogie exited with prover errors:
+Advisory: $42_TestBCS_bcs_test1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+output.bpl(926,27): Verification inconclusive ($42_TestBCS_bcs_test1$verify)
+Prover error: Unexpected value: (seq.unit 0)
+
+Advisory: $42_TestBCS_bcs_test1_incorrect$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
+output.bpl(1038,27): Verification inconclusive ($42_TestBCS_bcs_test1_incorrect$verify)
+
+Boogie program verifier finished with 0 errors, 2 inconclusives
+

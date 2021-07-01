@@ -1,0 +1,3 @@
+[INFO] translating module TestMutRefsAccrossModule
+[INFO] running solver
+[INFO] 0.010s build, 0.000s trafo, 0.002s gen, 0.575s verify

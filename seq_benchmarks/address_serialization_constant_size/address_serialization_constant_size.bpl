@@ -954,7 +954,7 @@ type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// fun AddressSerialization::serialized_addresses_same_len [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:6:5+161
+// fun AddressSerialization::serialized_addresses_same_len [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:6:5+161
 procedure {:timeLimit 40} $42_AddressSerialization_serialized_addresses_same_len$verify(_$t0: int, _$t1: int) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -972,21 +972,21 @@ procedure {:timeLimit 40} $42_AddressSerialization_serialized_addresses_same_len
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:38+8
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:38+8
     assume {:print "$at(2,556,564)"} true;
     assume $IsValid'address'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:38+8
+    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:38+8
     assume $IsValid'address'($t1);
 
-    // trace_local[addr1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:6:5+1
+    // trace_local[addr1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:6:5+1
     assume {:print "$at(2,242,243)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // trace_local[addr2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:6:5+1
+    // trace_local[addr2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:6:5+1
     assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
-    // $t2 := BCS::to_bytes<address>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:10+20
+    // $t2 := BCS::to_bytes<address>($t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:10+20
     assume {:print "$at(2,354,374)"} true;
     call $t2 := $1_BCS_to_bytes'address'($t0);
     if ($abort_flag) {
@@ -996,7 +996,7 @@ procedure {:timeLimit 40} $42_AddressSerialization_serialized_addresses_same_len
         goto L2;
     }
 
-    // $t4 := BCS::to_bytes<address>($t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:32+20
+    // $t4 := BCS::to_bytes<address>($t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:32+20
     call $t4 := $1_BCS_to_bytes'address'($t1);
     if ($abort_flag) {
         assume {:print "$at(2,376,396)"} true;
@@ -1005,43 +1005,43 @@ procedure {:timeLimit 40} $42_AddressSerialization_serialized_addresses_same_len
         goto L2;
     }
 
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:9+44
+    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:9+44
     assume {:print "$track_return(1,0,0):", $t2} $t2 == $t2;
 
-    // trace_return[1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:9+44
+    // trace_return[1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:7:9+44
     assume {:print "$track_return(1,0,1):", $t4} $t4 == $t4;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:8:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:8:5+1
     assume {:print "$at(2,402,403)"} true;
 L1:
 
-    // assert Eq<num>(Len<u8>(BCS::serialize<address>($t0)), Len<u8>(BCS::serialize<address>($t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:10:9+65
+    // assert Eq<num>(Len<u8>(BCS::serialize<address>($t0)), Len<u8>(BCS::serialize<address>($t1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:10:9+65
     assume {:print "$at(2,453,518)"} true;
     assert {:msg "assert_failed(2,453,518): post-condition does not hold"}
       $IsEqual'num'(LenVec($1_BCS_serialize'address'($t0)), LenVec($1_BCS_serialize'address'($t1)));
 
-    // assert Eq<num>(Len<u8>($t2), Len<u8>($t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:9+39
+    // assert Eq<num>(Len<u8>($t2), Len<u8>($t4)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:9+39
     assume {:print "$at(2,527,566)"} true;
     assert {:msg "assert_failed(2,527,566): post-condition does not hold"}
       $IsEqual'num'(LenVec($t2), LenVec($t4));
 
-    // return ($t2, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:9+39
+    // return ($t2, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:11:9+39
     $ret0 := $t2;
     $ret1 := $t4;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:8:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:8:5+1
     assume {:print "$at(2,402,403)"} true;
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:8:5+1
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:8:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun AddressSerialization::serialized_move_values_diff_len_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:15:5+180
+// fun AddressSerialization::serialized_move_values_diff_len_incorrect [verification] at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:15:5+180
 procedure {:timeLimit 40} $42_AddressSerialization_serialized_move_values_diff_len_incorrect$verify(_$t0: #0, _$t1: #0) returns ($ret0: Vec (int), $ret1: Vec (int))
 {
     // declare local variables
@@ -1059,21 +1059,21 @@ procedure {:timeLimit 40} $42_AddressSerialization_serialized_move_values_diff_l
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:38+8
+    // assume WellFormed($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:38+8
     assume {:print "$at(2,1008,1016)"} true;
     assume $IsValid'#0'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:38+8
+    // assume WellFormed($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:38+8
     assume $IsValid'#0'($t1);
 
-    // trace_local[mv1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:15:5+1
+    // trace_local[mv1]($t0) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:15:5+1
     assume {:print "$at(2,667,668)"} true;
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[mv2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:15:5+1
+    // trace_local[mv2]($t1) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:15:5+1
     assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
 
-    // $t2 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:10+18
+    // $t2 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:10+18
     assume {:print "$at(2,802,820)"} true;
     call $t2 := $1_BCS_to_bytes'#0'($t0);
     if ($abort_flag) {
@@ -1083,7 +1083,7 @@ procedure {:timeLimit 40} $42_AddressSerialization_serialized_move_values_diff_l
         goto L2;
     }
 
-    // $t4 := BCS::to_bytes<#0>($t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:30+18
+    // $t4 := BCS::to_bytes<#0>($t1) on_abort goto L2 with $t3 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:30+18
     call $t4 := $1_BCS_to_bytes'#0'($t1);
     if ($abort_flag) {
         assume {:print "$at(2,822,840)"} true;
@@ -1092,36 +1092,36 @@ procedure {:timeLimit 40} $42_AddressSerialization_serialized_move_values_diff_l
         goto L2;
     }
 
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:9+40
+    // trace_return[0]($t2) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:9+40
     assume {:print "$track_return(1,1,0):", $t2} $t2 == $t2;
 
-    // trace_return[1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:9+40
+    // trace_return[1]($t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:16:9+40
     assume {:print "$track_return(1,1,1):", $t4} $t4 == $t4;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:17:5+1
+    // label L1 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:17:5+1
     assume {:print "$at(2,846,847)"} true;
 L1:
 
-    // assert Eq<num>(Len<u8>(BCS::serialize<#0>($t0)), Len<u8>(BCS::serialize<#0>($t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:19:9+61
+    // assert Eq<num>(Len<u8>(BCS::serialize<#0>($t0)), Len<u8>(BCS::serialize<#0>($t1))) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:19:9+61
     assume {:print "$at(2,909,970)"} true;
     assert {:msg "assert_failed(2,909,970): post-condition does not hold"}
       $IsEqual'num'(LenVec($1_BCS_serialize'#0'($t0)), LenVec($1_BCS_serialize'#0'($t1)));
 
-    // assert Eq<num>(Len<u8>($t2), Len<u8>($t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:9+39
+    // assert Eq<num>(Len<u8>($t2), Len<u8>($t4)) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:9+39
     assume {:print "$at(2,979,1018)"} true;
     assert {:msg "assert_failed(2,979,1018): post-condition does not hold"}
       $IsEqual'num'(LenVec($t2), LenVec($t4));
 
-    // return ($t2, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:9+39
+    // return ($t2, $t4) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:20:9+39
     $ret0 := $t2;
     $ret1 := $t4;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:17:5+1
+    // label L2 at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:17:5+1
     assume {:print "$at(2,846,847)"} true;
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:17:5+1
+    // abort($t3) at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move:17:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;

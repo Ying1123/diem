@@ -1,0 +1,19 @@
+[INFO] translating module TestModule
+[INFO] running solver
+[INFO] 0.013s build, 0.002s trafo, 0.003s gen, 0.876s verify
+error: global memory invariant does not hold
+
+    ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5 ───
+    │
+ 17 │     invariant forall addr: address where exists<R>(addr): global<R>(addr).value > 0;
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9: store_incorrect
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9: store_incorrect
+    =         s = 0x0
+    =         value = 0
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10: store_incorrect
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17
+
+exiting with boogie verification errors

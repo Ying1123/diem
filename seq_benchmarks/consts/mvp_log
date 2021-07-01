@@ -1,0 +1,17 @@
+[INFO] translating module TestConst
+[INFO] running solver
+[INFO] 0.014s build, 0.001s trafo, 0.002s gen, 0.789s verify
+error: post-condition does not hold
+
+    ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:29:9 ───
+    │
+ 29 │         ensures !result.b;
+    │         ^^^^^^^^^^^^^^^^^^
+    │
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:24: init_incorrect
+    =         result = TestConst.T{x = 43, b = true, a = 0x1}
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:25: init_incorrect
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:28
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/consts.move:29
+
+exiting with boogie verification errors

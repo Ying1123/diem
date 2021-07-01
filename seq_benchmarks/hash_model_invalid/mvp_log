@@ -1,0 +1,30 @@
+[INFO] translating module TestHash
+[INFO] running solver
+[INFO] 0.013s build, 0.001s trafo, 0.003s gen, 0.794s verify
+error: verification inconclusive
+
+    ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move:11:5 ───
+    │
+ 11 │ ╭     fun hash_test1(v1: vector<u8>, v2: vector<u8>): (vector<u8>, vector<u8>)
+ 12 │ │     {
+ 13 │ │         let h1 = Hash::sha2_256(v1);
+ 14 │ │         let h2 = Hash::sha2_256(v2);
+ 15 │ │         (h1, h2)
+ 16 │ │     }
+    │ ╰─────^
+    │
+
+error: verification inconclusive
+
+    ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move:26:5 ───
+    │
+ 26 │ ╭     fun hash_test2(v1: vector<u8>, v2: vector<u8>): (vector<u8>, vector<u8>)
+ 27 │ │     {
+ 28 │ │         let h1 = Hash::sha3_256(v1);
+ 29 │ │         let h2 = Hash::sha3_256(v2);
+ 30 │ │         (h1, h2)
+ 31 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

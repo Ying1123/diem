@@ -1,0 +1,18 @@
+[INFO] translating module TestResources
+[INFO] running solver
+[INFO] 0.021s build, 0.006s trafo, 0.005s gen, 0.896s verify
+error: post-condition does not hold
+
+    ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/resources.move:39:6 ───
+    │
+ 39 │      ensures exists<R>(Signer::spec_address_of(account));
+    │      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/resources.move:32: create_resource_incorrect
+    =         account = 0x0
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/resources.move:33: create_resource_incorrect
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/resources.move:36: create_resource_incorrect
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/resources.move:38
+    =     at /Users/yingsheng/diem/language/move-prover/tests/sources/functional/resources.move:39
+
+exiting with boogie verification errors

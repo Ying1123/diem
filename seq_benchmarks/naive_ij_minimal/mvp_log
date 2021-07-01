@@ -1,0 +1,9 @@
+error: unresolved spec target
+
+    ┌── /Users/yingsheng/diem/language/move-prover/tests/sources/functional/naive_ij_minimal.move:30:7 ───
+    │
+ 30 │     spec verify_sort {
+    │          ^^^^^^^^^^^
+    │
+
+exiting with model building errors

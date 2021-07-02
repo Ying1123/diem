@@ -1,1 +1,4 @@
-cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`
+[INFO] translating module A
+[INFO] translating module B
+[INFO] running solver
+[INFO] 0.009s build, 0.003s trafo, 0.006s gen, 0.590s verify

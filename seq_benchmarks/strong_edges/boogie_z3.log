@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestStrongEdges_glob_and_field_edges$verify ...
-  [0.182 s, 4 proof obligations]  verified
+  [0.133 s, 4 proof obligations]  verified
 
 Verifying $42_TestStrongEdges_glob_and_field_edges_incorrect$verify ...
-  [0.024 s, 4 proof obligations]  error
+  [0.022 s, 4 proof obligations]  error
 assert_failed(2,1208,1239): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.z3.bpl(1218,9): anon0
@@ -26,17 +26,17 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.z3.bpl(1257,5): anon8_Else
 
 Verifying $42_TestStrongEdges_loc__edge_incorrect$verify ...
-  [0.020 s, 1 proof obligation]  error
+  [0.014 s, 1 proof obligation]  error
 assert_failed(2,1443,1457): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.z3.bpl(1329,5): anon0
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.z3.bpl(1329,5): anon0$1
 
 Verifying $42_TestStrongEdges_loc_edge$verify ...
-  [0.008 s, 1 proof obligation]  verified
+  [0.007 s, 1 proof obligation]  verified
 
 Verifying $42_TestStrongEdges_vec_edge$verify ...
-  [0.040 s, 4 proof obligations]  error
+  [0.096 s, 4 proof obligations]  error
 assert_failed(2,953,979): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.z3.bpl(1459,9): anon0

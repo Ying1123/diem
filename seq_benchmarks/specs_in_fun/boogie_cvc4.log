@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestAssertAndAssume_simple1$verify ...
-  [0.140 s, 1 proof obligation]  verified
+  [0.150 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple1_incorrect$verify ...
-  [0.021 s, 1 proof obligation]  error
+  [0.016 s, 1 proof obligation]  error
 assert_failed(2,792,806): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.cvc4.bpl(991,9): anon0
@@ -27,10 +27,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.cvc4.bpl(1019,34): anon4_Else
 
 Verifying $42_TestAssertAndAssume_simple2$verify ...
-  [0.024 s, 1 proof obligation]  verified
+  [0.022 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple2_incorrect$verify ...
-  [0.007 s, 1 proof obligation]  error
+  [0.008 s, 1 proof obligation]  error
 assert_failed(2,926,940): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.cvc4.bpl(1139,9): anon0
@@ -49,7 +49,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.cvc4.bpl(1243,9): anon0$1
 
 Verifying $42_TestAssertAndAssume_simple4$verify ...
-  [0.007 s, 1 proof obligation]  verified
+  [0.008 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple4_incorrect$verify ...
   [0.011 s, 1 proof obligation]  error

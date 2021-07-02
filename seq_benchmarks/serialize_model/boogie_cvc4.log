@@ -15,7 +15,7 @@ Inlining...
 Advisory: $42_TestBCS_bcs_test1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 
 Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.152 s, 4 proof obligations]  inconclusive
+  [0.158 s, 4 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.cvc4.bpl(926,27): Verification inconclusive ($42_TestBCS_bcs_test1$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
@@ -50,3 +50,4 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
    at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
    at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
+timeout: the monitored command dumped core

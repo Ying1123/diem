@@ -1,9 +1,32 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/strong_edges/.smt2:4.24: Illegal argument detected
-
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy_strings.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy_strings.smt2:177.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat

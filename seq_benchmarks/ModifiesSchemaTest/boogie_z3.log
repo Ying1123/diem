@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $0_A_mutate_at$verify ...
-  [0.177 s, 1 proof obligation]  verified
+  [0.131 s, 1 proof obligation]  verified
 
 Verifying $0_A_mutate_at_wrapper1$verify ...
   [0.025 s, 1 proof obligation]  verified
 
 Verifying $0_A_mutate_at_wrapper2$verify ...
-  [0.024 s, 2 proof obligations]  error
+  [0.025 s, 2 proof obligations]  error
 assert_failed(2,683,699): caller does not have permission to modify `A::S` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.z3.bpl(1150,9): anon0

@@ -1,6 +1,6 @@
 [INFO] translating module TestAbortsIfWithCode
 [INFO] running solver
-[INFO] 0.008s build, 0.005s trafo, 0.006s gen, 0.653s verify
+[INFO] 0.008s build, 0.006s trafo, 0.007s gen, 0.663s verify
 error: abort code not covered by any of the `aborts_if` or `aborts_with` clauses
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:77:5 ───

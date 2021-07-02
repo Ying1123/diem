@@ -1,17 +1,17 @@
-21:40:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u8_cast_incorrect` to be verified
-21:40:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u64_cast` to be verified
-21:40:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast_incorrect` to be verified
-21:40:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast` to be verified
-21:40:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast_incorrect` to be verified
-21:40:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast` to be verified
+02:43:35 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u8_cast_incorrect` to be verified
+02:43:35 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u64_cast` to be verified
+02:43:35 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast_incorrect` to be verified
+02:43:35 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast` to be verified
+02:43:35 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast_incorrect` to be verified
+02:43:35 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast` to be verified
 [INFO] translating module TestCast
-21:40:05 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:43:35 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-21:40:05 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-21:40:05 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-21:40:06 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-21:40:06 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.007s build, 0.002s trafo, 0.006s gen, 0.855s verify
+02:43:35 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:43:35 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:43:35 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:43:35 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.007s build, 0.001s trafo, 0.006s gen, 0.627s verify
 error: abort not covered by any of the `aborts_if` clauses
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:47:5 ───

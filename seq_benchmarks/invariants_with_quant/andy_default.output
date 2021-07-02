@@ -1,9 +1,8 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/invariants_with_quant/.smt2:3.24: Illegal argument detected
+/home/ying/diem/seq_benchmarks/invariants_with_quant/invariants_with_quant.andy_default.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")
+Fatal failure within void cvc5::Minisat::Solver::pop() at /home/ying/CVC4/src/prop/minisat/core/Solver.cc:1969
+Check failure
 
-  (set-logic ALL_SUPPORTED)
-             ^
+ decisionLevel() == 0
 
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+timeout: the monitored command dumped core

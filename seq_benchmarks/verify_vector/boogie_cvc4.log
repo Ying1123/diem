@@ -16,7 +16,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $42_VerifyVector_verify_append$verify ...
-  [0.175 s, 15 proof obligations]  inconclusive
+  [0.178 s, 15 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.cvc4.bpl(1079,27): Verification inconclusive ($42_VerifyVector_verify_append$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
@@ -660,3 +660,4 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
+timeout: the monitored command dumped core

@@ -1,20 +1,20 @@
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_update` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_pack` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::update_helper` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_S_branching` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R_2` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_ref` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_indirectly` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_branching` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update` to be verified
-01:07:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_pack` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_update` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_pack` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::update_helper` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_S_branching` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R_2` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_ref` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_indirectly` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_branching` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update` to be verified
+02:36:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_pack` to be verified
 [INFO] translating module TestInvariants
-01:07:23 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:36:49 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-01:07:23 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-01:07:23 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-01:07:24 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:36:49 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:36:49 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:36:50 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 [internal] boogie exited with prover errors:
 Prover error: Unexpected value: (seq.unit 0)
 
@@ -111,6 +111,8 @@ output.bpl(1445,27): Verification inconclusive ($42_TestInvariants_lifetime_inva
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 output.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
+output.bpl(2154,27): Verification inconclusive ($42_TestInvariants_valid_R_pack$verify)
+output.bpl(2199,27): Verification inconclusive ($42_TestInvariants_valid_R_update$verify)
 
-Boogie program verifier finished with 1 error, 2 inconclusives
+Boogie program verifier finished with 1 error, 4 inconclusives
 

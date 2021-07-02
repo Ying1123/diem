@@ -15,7 +15,7 @@ Inlining...
 Advisory: $42_TestHash_hash_test1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 
 Verifying $42_TestHash_hash_test1$verify ...
-  [0.151 s, 5 proof obligations]  inconclusive
+  [0.149 s, 5 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/hash_model/hash_model.cvc4.bpl(896,27): Verification inconclusive ($42_TestHash_hash_test1$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
@@ -166,3 +166,4 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
+timeout: the monitored command dumped core

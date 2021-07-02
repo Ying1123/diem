@@ -1,9 +1,2 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/hash_model/.smt2:3.24: Illegal argument detected
-
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+/home/ying/diem/seq_benchmarks/hash_model/hash_model.andy_default.smt2:39.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

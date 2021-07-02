@@ -1,17 +1,17 @@
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
-01:07:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
+02:37:07 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
 [INFO] translating module A
 [INFO] translating module B
-01:07:41 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:37:07 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-01:07:41 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-01:07:41 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-01:07:41 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:37:07 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:37:07 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:37:07 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 [internal] boogie exited with prover errors:
 assert_failed(2,1563,1572): caller does not have permission to modify `B::T` at given address
 Execution trace:
@@ -106,11 +106,11 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 17430
+  0 0 -> 17424
   0 15551 -> 15587
-  0 15587 -> (- 18032)
-  0 17430 -> 15551
-  else -> (- 18032)
+  0 15587 -> (- 18015)
+  0 17424 -> 15551
+  else -> (- 18015)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!1
@@ -290,12 +290,10 @@ _$t0 -> 0
 _$t0@@0 -> 1
 _$t1 -> 0
 $0_A_S_$memory -> ($Memory_10918 T@[Int]Bool!val!2 T@[Int]$0_A_S!val!0)
-$0_A_S_$memory@0 -> ($Memory_10918 T@[Int]Bool!val!0 T@[Int]$0_A_S!val!0)
-$0_A_S_$memory@0@@0 -> ($Memory_10918 T@[Int]Bool!val!0 T@[Int]$0_A_S!val!1)
+$0_A_S_$memory@0 -> ($Memory_10918 T@[Int]Bool!val!0 T@[Int]$0_A_S!val!1)
 $0_A_S_$memory@1 -> ($Memory_10918 T@[Int]Bool!val!0 T@[Int]$0_A_S!val!0)
 $0_A_S_$memory@2 -> ($Memory_10918 T@[Int]Bool!val!4 T@[Int]$0_A_S!val!1)
-$0_A_S_$modifies -> T@[Int]Bool!val!0
-$0_A_S_$modifies@@0 -> T@[Int]Bool!val!3
+$0_A_S_$modifies -> T@[Int]Bool!val!3
 $abort_code@0 -> 0
 $abort_code@1 -> 0
 $abort_flag@0 -> false
@@ -303,21 +301,16 @@ $EXEC_FAILURE_CODE -> (- 1)
 $MAX_U128 -> 340282366920938463463374607431768211455
 $MAX_U64 -> 18446744073709551615
 $MAX_U8 -> 255
-$t1 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
-$t2 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
-$t2@0 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
-$t2@1 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
-$t2@2 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
+$t2 -> ($0_A_S 0)
+$t2@0 -> ($0_A_S 0)
+$t2@1 -> ($0_A_S 0)
 $t4 -> 0
-$t5 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
-$t5@@0 -> false
-$t5@0 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
-$t5@1 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t4@0 -> 0
+$t5 -> false
 $t7 -> false
 $t8 -> (- 1)
 $t9 -> false
-$temp_0'$0_A_S'@0 -> ($0_A_S 0)
-$temp_0'$0_A_S'@0@@0 -> ($0_A_S 3)
+$temp_0'$0_A_S'@0 -> ($0_A_S 3)
 $temp_0'bool'@0 -> false
 $1_Hash_sha2 -> {
   else -> (seq.empty)
@@ -377,11 +370,11 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 18758
+  0 0 -> 18756
   0 16334 -> 16382
-  0 16382 -> (- 18934)
-  0 18758 -> 16334
-  else -> (- 18934)
+  0 16382 -> (- 18911)
+  0 18756 -> 16334
+  else -> (- 18911)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0
@@ -440,10 +433,12 @@ $at(2,2331,2347)
 _$t0 -> 0
 _$t0@@0 -> 0
 $0_A_S_$memory -> ($Memory_10918 T@[Int]Bool!val!2 T@[Int]$0_A_S!val!0)
-$0_A_S_$memory@0 -> ($Memory_10918 T@[Int]Bool!val!5 T@[Int]$0_A_S!val!1)
+$0_A_S_$memory@0 -> ($Memory_10918 T@[Int]Bool!val!0 T@[Int]$0_A_S!val!0)
+$0_A_S_$memory@0@@0 -> ($Memory_10918 T@[Int]Bool!val!5 T@[Int]$0_A_S!val!1)
 $0_A_S_$memory@1 -> ($Memory_10918 T@[Int]Bool!val!0 T@[Int]$0_A_S!val!0)
 $0_A_S_$memory@2 -> ($Memory_10918 T@[Int]Bool!val!5 T@[Int]$0_A_S!val!1)
-$0_A_S_$modifies -> T@[Int]Bool!val!3
+$0_A_S_$modifies -> T@[Int]Bool!val!0
+$0_A_S_$modifies@@0 -> T@[Int]Bool!val!3
 $abort_code@0 -> 0
 $abort_code@1 -> 0
 $abort_flag@0 -> false
@@ -451,16 +446,21 @@ $EXEC_FAILURE_CODE -> (- 1)
 $MAX_U128 -> 340282366920938463463374607431768211455
 $MAX_U64 -> 18446744073709551615
 $MAX_U8 -> 255
-$t2 -> ($0_A_S 0)
-$t2@0 -> ($0_A_S 0)
-$t2@1 -> ($0_A_S 0)
+$t1 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
+$t2 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
+$t2@0 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
+$t2@1 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
+$t2@2 -> ($Mutation_10951 ($Global 0) (seq.empty) ($0_A_S 0))
 $t3 -> 3
 $t4 -> false
-$t4@0 -> 0
+$t5 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t5@0 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t5@1 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
 $t6 -> false
 $t7 -> 2
 $t8 -> false
-$temp_0'$0_A_S'@0 -> ($0_A_S 2)
+$temp_0'$0_A_S'@0 -> ($0_A_S 0)
+$temp_0'$0_A_S'@0@@0 -> ($0_A_S 2)
 $temp_0'bool'@0 -> true
 $1_Hash_sha2 -> {
   else -> (seq.empty)
@@ -519,14 +519,14 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 18783
+  0 0 -> 19026
   0 16654 -> 16702
   0 16702 -> 16708
   0 16708 -> 16816
   0 16748 -> 16786
   0 16786 -> (- 19337)
   0 16816 -> 16748
-  0 18783 -> 16654
+  0 19026 -> 16654
   else -> (- 19337)
 }
 lambda#0 -> {

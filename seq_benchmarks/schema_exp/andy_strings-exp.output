@@ -1,9 +1,19 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/schema_exp/.smt2:4.24: Illegal argument detected
-
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+/home/ying/diem/seq_benchmarks/schema_exp/schema_exp.andy_strings.smt2:40.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unsat

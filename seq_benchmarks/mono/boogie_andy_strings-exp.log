@@ -1,395 +1,100 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/mono/.bpl
+/home/ying/diem/seq_benchmarks/mono/mono.andy.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:mono.andy_strings.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
 /proverOpt:O:strings-exp=true
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/mono/.bpl
+Parsing /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
-Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
- ---> System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.PrepareDataTypes() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 297
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.PrepareCommon() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 438
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
-   --- End of inner exception stack trace ---
-   at System.AggregateException.Handle(Func`2 predicate)
-   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1026
-   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
-   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/runner/work/boogie/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
- ---> (Inner Exception #1) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
- ---> (Inner Exception #2) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_create_R$verify ...
+  [0.562 s, 3 proof obligations]  verified
 
- ---> (Inner Exception #3) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_create_R_generic$verify ...
+  [0.098 s, 3 proof obligations]  verified
 
- ---> (Inner Exception #4) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_mutate_R$verify ...
+  [0.252 s, 1 proof obligation]  verified
 
- ---> (Inner Exception #5) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_pack_R$verify ...
+  [0.015 s, 1 proof obligation]  verified
 
- ---> (Inner Exception #6) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_use_bcs$verify ...
+  [0.041 s, 2 proof obligations]  verified
 
- ---> (Inner Exception #7) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_use_event$verify ...
+  [1.650 s, 2 proof obligations]  verified
 
- ---> (Inner Exception #8) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_use_vec$verify ...
+  [0.004 s, 0 proof obligations]  verified
 
- ---> (Inner Exception #9) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_vec_addr$verify ...
+  [0.189 s, 1 proof obligation]  error
+assert_failed(2,2285,2311): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2767,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2767,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(1348,8): inline$$1_Vector_push_back'address'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2791,5): anon4_Else
 
- ---> (Inner Exception #10) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_vec_bool$verify ...
+  [0.190 s, 1 proof obligation]  error
+assert_failed(2,2428,2454): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2840,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2840,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(1168,8): inline$$1_Vector_push_back'bool'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2864,5): anon4_Else
 
- ---> (Inner Exception #11) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_vec_int$verify ...
+  [0.170 s, 1 proof obligation]  error
+assert_failed(2,2139,2162): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2913,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2913,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(1528,8): inline$$1_Vector_push_back'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2937,5): anon4_Else
 
- ---> (Inner Exception #12) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 112
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 214
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 198
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/runner/work/boogie/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 486
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 477
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/runner/work/boogie/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 540
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/runner/work/boogie/boogie/Source/VCGeneration/Checker.cs:line 392
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/runner/work/boogie/boogie/Source/VCGeneration/Split.cs:line 1175
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 801
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/runner/work/boogie/boogie/Source/VCGeneration/VCGen.cs:line 1092
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/runner/work/boogie/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1191
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/runner/work/boogie/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 994
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__274_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location where exception was thrown ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+Verifying $42_TestMonomorphization_vec_struct_addr$verify ...
+  [0.191 s, 1 proof obligation]  error
+assert_failed(2,2782,2810): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2988,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2988,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(628,8): inline$$1_Vector_push_back'$42_TestMonomorphization_R'address''$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3019,5): anon4_Else
 
+Verifying $42_TestMonomorphization_vec_struct_int$verify ...
+  [0.194 s, 1 proof obligation]  error
+assert_failed(2,2599,2624): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3070,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3070,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(808,8): inline$$1_Vector_push_back'$42_TestMonomorphization_R'u64''$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3101,5): anon4_Else
+
+Verifying $42_TestMonomorphization_vec_vec$verify ...
+  [0.250 s, 1 proof obligation]  error
+assert_failed(2,2968,2996): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3150,9): anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2052,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3150,9): anon0$1
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(1516,7): inline$$1_Vector_empty'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3171,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(988,8): inline$$1_Vector_push_back'vec'u64''$0$anon0
+    /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(3180,5): anon7_Else
+
+Boogie program verifier finished with 7 verified, 6 errors

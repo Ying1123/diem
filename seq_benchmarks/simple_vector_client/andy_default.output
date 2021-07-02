@@ -1,9 +1,5 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/simple_vector_client/.smt2:3.24: Illegal argument detected
+(error "Parse Error: /home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.andy_default.smt2:7.114: Symbol 'T@#0' not declared as a type
 
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+  ...T'#0'| (|$v#$42_TestVector_T'#0'| (Seq |T@#0|)) ) ) ))
+                                                ^
+")

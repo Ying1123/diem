@@ -14,16 +14,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestLet_local_let_with_memory_access$verify ...
-  [0.143 s, 1 proof obligation]  verified
+  [0.148 s, 1 proof obligation]  verified
 
 Verifying $42_TestLet_spec_let$verify ...
   [0.021 s, 2 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_abort$verify ...
-  [0.064 s, 6 proof obligations]  verified
+  [0.069 s, 6 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_abort_incorrect$verify ...
-  [0.059 s, 6 proof obligations]  errors
+  [0.053 s, 6 proof obligations]  errors
 assert_failed(2,1867,1886): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/let/let.cvc4.bpl(1318,9): anon0
@@ -46,12 +46,12 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/let/let.cvc4.bpl(1456,1): L2
 
 Verifying $42_TestLet_spec_let_with_abort_opaque_caller$verify ...
-  [0.016 s, 6 proof obligations]  verified
+  [0.015 s, 6 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_old$verify ...
-  [0.017 s, 2 proof obligations]  verified
+  [0.021 s, 2 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_schema$verify ...
-  [0.070 s, 6 proof obligations]  verified
+  [0.067 s, 6 proof obligations]  verified
 
 Boogie program verifier finished with 6 verified, 2 errors

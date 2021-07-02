@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_VerifyLoops_iter10_abort$verify ...
-  [0.181 s, 4 proof obligations]  verified
+  [0.132 s, 4 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_abort_incorrect$verify ...
-  [0.025 s, 4 proof obligations]  error
+  [0.020 s, 4 proof obligations]  error
 assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1108,5): anon0
@@ -29,7 +29,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1273,1): L9
 
 Verifying $42_VerifyLoops_iter10_missing_inc_spec1$verify ...
-  [0.015 s, 3 proof obligations]  verified
+  [0.013 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_missing_inc_spec2$verify ...
   [0.008 s, 3 proof obligations]  verified
@@ -38,7 +38,7 @@ Verifying $42_VerifyLoops_iter10_no_abort$verify ...
   [0.013 s, 4 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_no_abort_incorrect$verify ...
-  [0.014 s, 4 proof obligations]  error
+  [0.012 s, 4 proof obligations]  error
 assert_failed(2,1634,1649): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1804,5): anon0
@@ -48,14 +48,14 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1867,34): anon12_Else
 
 Verifying $42_VerifyLoops_loop_invariant_base_invalid$verify ...
-  [0.012 s, 2 proof obligations]  error
+  [0.009 s, 2 proof obligations]  error
 assert_failed(2,4881,4895): base case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1995,9): anon0
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1995,9): anon0$1
 
 Verifying $42_VerifyLoops_loop_invariant_induction_invalid$verify ...
-  [0.012 s, 2 proof obligations]  error
+  [0.013 s, 2 proof obligations]  error
 assert_failed(2,5129,5143): induction case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2137,9): anon0
@@ -67,10 +67,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2213,5): anon9_Else
 
 Verifying $42_VerifyLoops_loop_with_two_back_edges_correct$verify ...
-  [0.022 s, 3 proof obligations]  verified
+  [0.027 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify ...
-  [0.012 s, 4 proof obligations]  error
+  [0.013 s, 4 proof obligations]  error
 assert_failed(2,4425,4439): induction case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2480,9): anon0
@@ -82,10 +82,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2643,1): L7
 
 Verifying $42_VerifyLoops_nested_loop_correct$verify ...
-  [0.012 s, 3 proof obligations]  verified
+  [0.014 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify ...
-  [0.016 s, 4 proof obligations]  errors
+  [0.015 s, 4 proof obligations]  errors
 assert_failed(2,3489,3503): base case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2915,9): anon0
@@ -100,7 +100,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3029,5): anon15_Else
 
 Verifying $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify ...
-  [0.016 s, 4 proof obligations]  error
+  [0.014 s, 4 proof obligations]  error
 assert_failed(2,2937,2951): induction case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3145,9): anon0

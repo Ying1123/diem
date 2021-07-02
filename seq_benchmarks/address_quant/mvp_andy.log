@@ -1,6 +1,6 @@
 [INFO] translating module AddressQuant
 [INFO] running solver
-[INFO] 0.009s build, 0.002s trafo, 0.006s gen, 0.632s verify
+[INFO] 0.009s build, 0.002s trafo, 0.005s gen, 0.621s verify
 error: post-condition does not hold
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:53:10 ───

@@ -1,1 +1,10 @@
-cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`
+[INFO] translating module A
+[INFO] running solver
+[internal] boogie exited with prover errors:
+Prover error: Unexpected value: (seq.unit 0)
+
+Advisory: $0_A_mutate_at_wrapper2$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
+output.bpl(1142,27): Verification inconclusive ($0_A_mutate_at_wrapper2$verify)
+
+Boogie program verifier finished with 0 errors, 1 inconclusive
+

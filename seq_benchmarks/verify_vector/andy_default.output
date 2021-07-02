@@ -1,9 +1,2 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/verify_vector/.smt2:3.24: Illegal argument detected
-
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.andy_default.smt2:45.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

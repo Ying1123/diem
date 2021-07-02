@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestModule_store$verify ...
-  [0.153 s, 3 proof obligations]  verified
+  [0.155 s, 3 proof obligations]  verified
 
 Verifying $42_TestModule_store_incorrect$verify ...
-  [0.023 s, 3 proof obligations]  error
+  [0.028 s, 3 proof obligations]  error
 assert_failed(2,283,363): global memory invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/module_level_spec/module_level_spec.cvc4.bpl(1019,9): anon0

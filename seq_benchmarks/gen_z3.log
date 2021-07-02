@@ -45,11 +45,6 @@ the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/
 file name is axioms
 dir exists
 output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/bubble_sort.move is move
-file name is bubble_sort
-dir exists
-output exists
 /home/ying/diem/language/move-prover/tests/sources/functional/cast.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/cast.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/cast.move is move
@@ -279,53 +274,6 @@ the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/
 file name is mut_ref_unpack
 dir exists
 rm: cannot remove '*.smt': No such file or directory
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_ij_minimal.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_ij_minimal.move is move
-file name is naive_ij_minimal
-dir exists
-rm: cannot remove '*.smt': No such file or directory
-rm: cannot remove '*.bpl.log': No such file or directory
-output doesn't exist
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_ij.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_ij.move is move
-file name is naive_ij
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive.move is move
-file name is naive
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_perm_fail.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_perm_fail.move is move
-file name is naive_perm_fail
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_perm.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_perm.move is move
-file name is naive_perm
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort2.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort2.move is move
-file name is naive_sort2
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort3.move is move
-file name is naive_sort3
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort4.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort4.move is move
-file name is naive_sort4
-dir exists
-output exists
-/home/ying/diem/language/move-prover/tests/sources/functional/naive_sort.move is a file
-the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/naive_sort.move is move
-file name is naive_sort
-dir exists
 output exists
 /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move is a file

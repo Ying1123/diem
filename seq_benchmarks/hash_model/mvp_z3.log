@@ -1,18 +1,18 @@
-21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test4` to be verified
-21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test3` to be verified
-21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2_incorrect` to be verified
-21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2` to be verified
-21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1_incorrect` to be verified
-21:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1` to be verified
-21:42:45 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
+02:44:52 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test4` to be verified
+02:44:52 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test3` to be verified
+02:44:52 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2_incorrect` to be verified
+02:44:52 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2` to be verified
+02:44:52 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1_incorrect` to be verified
+02:44:52 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1` to be verified
+02:44:52 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
 [INFO] translating module TestHash
-21:42:45 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:44:52 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-21:42:45 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-21:42:45 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-21:42:46 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-21:42:46 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.009s build, 0.003s trafo, 0.006s gen, 0.982s verify
+02:44:52 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:44:52 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:44:53 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:44:53 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.008s build, 0.003s trafo, 0.006s gen, 0.745s verify
 error: post-condition does not hold
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move:48:9 ───

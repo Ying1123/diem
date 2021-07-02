@@ -58,7 +58,7 @@ do
             mv ./output.bpl $bm_bpl
             # generate smt2
             bm_smt2=$filename.cvc4.smt2
-            $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+            timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
             if [ -f "$bm_smt2" ]; then
                 mv $bm_smt2 $bm_dir_single/$bm_smt2
                 timeout 5 $cvc4 $bm_dir_single/$bm_smt2 --incremental > $bm_dir_single/cvc4.output 2>&1

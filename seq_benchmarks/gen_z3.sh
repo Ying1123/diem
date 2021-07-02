@@ -57,7 +57,7 @@ do
             mv ./output.bpl $bm_bpl
             # generate smt2
             bm_smt2=$filename.z3.smt2
-            $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$z3 /proverOpt:SOLVER=Z3 /trace -doModSetAnalysis > $bm_dir_single/boogie_z3.log 2>&1
+            timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$z3 /proverOpt:SOLVER=Z3 /trace -doModSetAnalysis > $bm_dir_single/boogie_z3.log 2>&1
             if [ -f "$bm_smt2" ]; then
                 mv $bm_smt2 $bm_dir_single/$bm_smt2
                 timeout 5 $z3 $bm_dir_single/$bm_smt2 > $bm_dir_single/z3.output 2>&1

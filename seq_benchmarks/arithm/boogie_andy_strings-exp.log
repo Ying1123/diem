@@ -15,25 +15,25 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestArithmetic_add_two_number$verify ...
-  [0.307 s, 4 proof obligations]  verified
+  [0.305 s, 4 proof obligations]  verified
 
 Verifying $42_TestArithmetic_arithmetic_ops$verify ...
-  [0.017 s, 2 proof obligations]  verified
+  [0.016 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_bool_ops$verify ...
-  [0.080 s, 2 proof obligations]  verified
+  [0.079 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_div$verify ...
   [0.148 s, 4 proof obligations]  verified
 
 Verifying $42_TestArithmetic_div_by_zero$verify ...
-  [0.023 s, 2 proof obligations]  verified
+  [0.018 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_div_by_zero_u64$verify ...
-  [0.081 s, 2 proof obligations]  verified
+  [0.076 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_div_by_zero_u64_incorrect$verify ...
-  [0.111 s, 2 proof obligations]  error
+  [0.114 s, 2 proof obligations]  error
 assert_failed(2,2478,2541): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(1546,9): anon0
@@ -43,22 +43,22 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(1570,9): anon4_Then
 
 Verifying $42_TestArithmetic_f$verify ...
-  [0.081 s, 3 proof obligations]  verified
+  [0.080 s, 3 proof obligations]  verified
 
 Verifying $42_TestArithmetic_g$verify ...
-  [0.092 s, 3 proof obligations]  verified
+  [0.090 s, 3 proof obligations]  verified
 
 Verifying $42_TestArithmetic_h$verify ...
-  [0.169 s, 2 proof obligations]  verified
+  [0.167 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_multiple_ops$verify ...
-  [0.101 s, 1 proof obligation]  verified
+  [0.108 s, 1 proof obligation]  verified
 
 Verifying $42_TestArithmetic_overflow_u128_add$verify ...
-  [0.055 s, 2 proof obligations]  verified
+  [0.060 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_overflow_u128_add_incorrect$verify ...
-  [0.081 s, 2 proof obligations]  error
+  [0.076 s, 2 proof obligations]  error
 assert_failed(2,3483,3548): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2304,9): anon0
@@ -68,7 +68,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2328,9): anon4_Then
 
 Verifying $42_TestArithmetic_overflow_u128_mul$verify ...
-  [0.052 s, 2 proof obligations]  verified
+  [0.051 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_overflow_u128_mul_incorrect$verify ...
   [0.177 s, 2 proof obligations]  error
@@ -84,7 +84,7 @@ Verifying $42_TestArithmetic_overflow_u64_add$verify ...
   [0.057 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_overflow_u64_add_incorrect$verify ...
-  [0.083 s, 2 proof obligations]  error
+  [0.081 s, 2 proof obligations]  error
 assert_failed(2,3160,3224): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2588,9): anon0
@@ -94,10 +94,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2612,9): anon4_Then
 
 Verifying $42_TestArithmetic_overflow_u64_mul$verify ...
-  [0.050 s, 2 proof obligations]  verified
+  [0.054 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_overflow_u64_mul_incorrect$verify ...
-  [0.178 s, 2 proof obligations]  error
+  [0.177 s, 2 proof obligations]  error
 assert_failed(2,4221,4285): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2730,9): anon0
@@ -107,10 +107,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2754,9): anon4_Then
 
 Verifying $42_TestArithmetic_overflow_u8_add$verify ...
-  [0.055 s, 2 proof obligations]  verified
+  [0.058 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_overflow_u8_add_incorrect$verify ...
-  [0.086 s, 2 proof obligations]  error
+  [0.082 s, 2 proof obligations]  error
 assert_failed(2,2848,2911): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2872,9): anon0
@@ -120,7 +120,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/arithm/arithm.andy.bpl(2896,9): anon4_Then
 
 Verifying $42_TestArithmetic_overflow_u8_mul$verify ...
-  [0.053 s, 2 proof obligations]  verified
+  [0.055 s, 2 proof obligations]  verified
 
 Verifying $42_TestArithmetic_overflow_u8_mul_incorrect$verify ...
   [0.181 s, 2 proof obligations]  error

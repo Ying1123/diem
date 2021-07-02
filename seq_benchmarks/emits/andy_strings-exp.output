@@ -1,9 +1,3 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/emits/emits.andy_strings.smt2:4.24: Illegal argument detected
-
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+/home/ying/diem/seq_benchmarks/emits/emits.andy_strings.smt2:58.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/emits/emits.andy_strings.smt2:196.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+cvc5 interrupted by SIGTERM.

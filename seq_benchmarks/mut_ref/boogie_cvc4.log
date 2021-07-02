@@ -14,12 +14,12 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $1_TestMutRef_call_identity$verify ...
-  [0.153 s, 1 proof obligation]  verified
+  [0.160 s, 1 proof obligation]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_TestMutRef_call_return_ref_different_path$verify ...
-  [0.030 s, 4 proof obligations]  inconclusive
+  [0.027 s, 4 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/mut_ref/mut_ref.cvc4.bpl(1410,27): Verification inconclusive ($1_TestMutRef_call_return_ref_different_path$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
@@ -286,3 +286,4 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
+timeout: the monitored command dumped core

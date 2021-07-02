@@ -1,22 +1,22 @@
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::withdrawal_capability_address` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_b` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::increment` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_return` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param_vec` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector_param` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref_incorrect` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref` to be verified
-21:49:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector` to be verified
-21:49:33 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::withdrawal_capability_address` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_b` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::increment` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_return` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param_vec` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector_param` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref_incorrect` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref` to be verified
+02:45:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector` to be verified
+02:45:45 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestReferences
-21:49:33 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:45:45 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-21:49:33 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-21:49:33 [DEBUG] (11) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-21:49:34 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-21:49:34 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.012s build, 0.008s trafo, 0.003s gen, 0.920s verify
+02:45:45 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:45:45 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:45:46 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:45:46 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.012s build, 0.012s trafo, 0.005s gen, 0.628s verify
 error: function does not abort under this condition
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/references.move:76:9 ───

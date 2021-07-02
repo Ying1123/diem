@@ -1,14 +1,14 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/fixed_point_arithm/.bpl
+/home/ying/diem/seq_benchmarks/fixed_point_arithm/fixed_point_arithm.andy.bpl
 -monomorphize
 /env:2
-/proverLog:.smt2
+/proverLog:fixed_point_arithm.andy_default.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
 /proverOpt:SOLVER=CVC4
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/fixed_point_arithm/.bpl
+Parsing /home/ying/diem/seq_benchmarks/fixed_point_arithm/fixed_point_arithm.andy.bpl
 Coalescing blocks...
 Inlining...
 

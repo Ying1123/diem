@@ -1,9 +1,7 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/verify_vector/.smt2:4.24: Illegal argument detected
+/home/ying/diem/seq_benchmarks/verify_vector/verify_vector.andy_strings.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+Fatal failure within bool cvc5::theory::strings::TheoryStrings::collectModelInfoType(cvc5::TypeNode, std::unordered_set<cvc5::TypeNode>&, const std::map<cvc5::TypeNode, std::unordered_set<cvc5::NodeTemplate<true> > >&, cvc5::theory::TheoryModel*) at /home/ying/CVC4/src/theory/strings/theory_strings.cpp:361
+Check failure
 
-  (set-logic ALL_SUPPORTED)
-             ^
+ !argVal.isNull()
 
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+timeout: the monitored command dumped core

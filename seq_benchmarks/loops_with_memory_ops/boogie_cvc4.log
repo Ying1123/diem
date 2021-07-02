@@ -16,7 +16,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $42_VerifyLoopsWithMemoryOps_nested_loop1$verify ...
-  [0.180 s, 11 proof obligations]  inconclusive
+  [0.183 s, 11 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/loops_with_memory_ops/loops_with_memory_ops.cvc4.bpl(1076,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop1$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
@@ -51,3 +51,4 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
    at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
    at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
+timeout: the monitored command dumped core

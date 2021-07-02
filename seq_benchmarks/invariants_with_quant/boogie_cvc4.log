@@ -15,7 +15,7 @@ Inlining...
 Advisory: $42_TestQuantInvariant_vector_of_proper_positives$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 
 Verifying $42_TestQuantInvariant_vector_of_proper_positives$verify ...
-  [0.168 s, 5 proof obligations]  inconclusive
+  [0.158 s, 5 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/invariants_with_quant/invariants_with_quant.cvc4.bpl(1076,27): Verification inconclusive ($42_TestQuantInvariant_vector_of_proper_positives$verify)
 
 Boogie program verifier finished with 0 verified, 0 errors, 1 inconclusive

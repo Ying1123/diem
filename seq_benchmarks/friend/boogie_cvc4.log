@@ -14,6 +14,6 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestFriend_h$verify ...
-  [0.147 s, 0 proof obligations]  verified
+  [0.148 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 1 verified, 0 errors

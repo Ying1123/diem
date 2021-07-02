@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestInvariants_get$verify ...
-  [0.171 s, 1 proof obligation]  verified
+  [0.119 s, 1 proof obligation]  verified
 
 Verifying $42_TestInvariants_get_invalid$verify ...
-  [0.025 s, 1 proof obligation]  error
+  [0.024 s, 1 proof obligation]  error
 assert_failed(2,710,729): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl(1003,9): anon0

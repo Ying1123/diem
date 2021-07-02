@@ -14,28 +14,28 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestMonomorphization_create_R$verify ...
-  [0.190 s, 3 proof obligations]  verified
+  [0.141 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_create_R_generic$verify ...
-  [0.034 s, 3 proof obligations]  verified
+  [0.021 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_mutate_R$verify ...
-  [0.023 s, 1 proof obligation]  verified
+  [0.019 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_pack_R$verify ...
-  [0.016 s, 1 proof obligation]  verified
+  [0.012 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_use_bcs$verify ...
-  [0.034 s, 2 proof obligations]  verified
+  [0.027 s, 2 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_use_event$verify ...
-  [0.022 s, 2 proof obligations]  verified
+  [0.029 s, 2 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_use_vec$verify ...
-  [0.016 s, 0 proof obligations]  verified
+  [0.015 s, 0 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_vec_addr$verify ...
-  [0.032 s, 1 proof obligation]  error
+  [0.017 s, 1 proof obligation]  error
 assert_failed(2,2285,2311): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2767,9): anon0
@@ -45,7 +45,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2791,5): anon4_Else
 
 Verifying $42_TestMonomorphization_vec_bool$verify ...
-  [0.023 s, 1 proof obligation]  error
+  [0.018 s, 1 proof obligation]  error
 assert_failed(2,2428,2454): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2840,9): anon0
@@ -55,7 +55,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2864,5): anon4_Else
 
 Verifying $42_TestMonomorphization_vec_int$verify ...
-  [0.016 s, 1 proof obligation]  error
+  [0.017 s, 1 proof obligation]  error
 assert_failed(2,2139,2162): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2913,9): anon0
@@ -65,7 +65,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2937,5): anon4_Else
 
 Verifying $42_TestMonomorphization_vec_struct_addr$verify ...
-  [0.016 s, 1 proof obligation]  error
+  [0.017 s, 1 proof obligation]  error
 assert_failed(2,2782,2810): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(2988,9): anon0
@@ -75,7 +75,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3019,5): anon4_Else
 
 Verifying $42_TestMonomorphization_vec_struct_int$verify ...
-  [0.019 s, 1 proof obligation]  error
+  [0.016 s, 1 proof obligation]  error
 assert_failed(2,2599,2624): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.z3.bpl(3070,9): anon0

@@ -1,9 +1,10 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/mono/.smt2:3.24: Illegal argument detected
-
-  (set-logic ALL_SUPPORTED)
-             ^
-
-void cvc5::LogicInfo::setLogicString(std::__cxx11::string)
-
-  `logicString' is a bad argument
-LogicInfo::setLogicString(): junk ("LL_SUPPORTED") at end of logic string: ALL_SUPPORTED")
+/home/ying/diem/seq_benchmarks/mono/mono.andy_default.smt2:101.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/mono/mono.andy_default.smt2:449.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

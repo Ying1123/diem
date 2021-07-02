@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestInvariants_invalid_R_pack$verify ...
-  [0.178 s, 2 proof obligations]  error
+  [0.132 s, 2 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.z3.bpl(948,5): anon0
@@ -24,26 +24,26 @@ Verifying $42_TestInvariants_invalid_R_update$verify ...
   [0.017 s, 4 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
-  [0.011 s, 7 proof obligations]  verified
+  [0.009 s, 7 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
-  [0.011 s, 2 proof obligations]  verified
+  [0.012 s, 2 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
-  [0.010 s, 3 proof obligations]  verified
+  [0.011 s, 3 proof obligations]  verified
 
 Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
-  [0.012 s, 3 proof obligations]  error
+  [0.011 s, 3 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.z3.bpl(1461,5): anon0
     /home/ying/diem/seq_benchmarks/invariants/invariants.z3.bpl(1461,5): anon0$1
 
 Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
-  [0.009 s, 3 proof obligations]  verified
+  [0.013 s, 3 proof obligations]  verified
 
 Verifying $42_TestInvariants_lifetime_invalid_S_branching$verify ...
-  [0.030 s, 8 proof obligations]  error
+  [0.024 s, 8 proof obligations]  error
 assert_failed(2,3033,3049): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.z3.bpl(1756,9): anon0
@@ -57,12 +57,12 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.z3.bpl(2006,1): L15
 
 Verifying $42_TestInvariants_update_helper$verify ...
-  [0.007 s, 0 proof obligations]  verified
+  [0.008 s, 0 proof obligations]  verified
 
 Verifying $42_TestInvariants_valid_R_pack$verify ...
   [0.009 s, 2 proof obligations]  verified
 
 Verifying $42_TestInvariants_valid_R_update$verify ...
-  [0.011 s, 4 proof obligations]  verified
+  [0.017 s, 4 proof obligations]  verified
 
 Boogie program verifier finished with 8 verified, 3 errors

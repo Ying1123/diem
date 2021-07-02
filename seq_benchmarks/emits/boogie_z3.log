@@ -14,22 +14,22 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestEmits_opaque$verify ...
-  [0.250 s, 5 proof obligations]  verified
+  [0.214 s, 5 proof obligations]  verified
 
 Verifying $42_TestEmits_callee$verify ...
-  [0.022 s, 4 proof obligations]  verified
+  [0.031 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_callee_partial$verify ...
-  [0.018 s, 3 proof obligations]  verified
+  [0.019 s, 3 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional$verify ...
-  [0.020 s, 2 proof obligations]  verified
+  [0.021 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_bool$verify ...
-  [0.019 s, 2 proof obligations]  verified
+  [0.018 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_missing_condition_incorrect$verify ...
-  [0.031 s, 2 proof obligations]  error
+  [0.039 s, 2 proof obligations]  error
 assert_failed(2,4059,4094): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(1724,9): anon0
@@ -40,10 +40,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(1793,1): L3
 
 Verifying $42_TestEmits_conditional_multiple$verify ...
-  [0.156 s, 4 proof obligations]  verified
+  [0.177 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_multiple_incorrect$verify ...
-  [0.070 s, 4 proof obligations]  error
+  [0.064 s, 4 proof obligations]  error
 assert_failed(2,5358,5393): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2047,9): anon0
@@ -57,10 +57,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2143,1): L3
 
 Verifying $42_TestEmits_conditional_multiple_same$verify ...
-  [0.111 s, 4 proof obligations]  verified
+  [0.161 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_multiple_same_incorrect$verify ...
-  [0.044 s, 4 proof obligations]  error
+  [0.049 s, 4 proof obligations]  error
 assert_failed(2,6420,6455): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2407,9): anon0
@@ -74,7 +74,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2503,1): L3
 
 Verifying $42_TestEmits_conditional_wrong_condition_incorrect$verify ...
-  [0.021 s, 2 proof obligations]  error
+  [0.024 s, 2 proof obligations]  error
 assert_failed(2,3749,3793): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2561,9): anon0
@@ -88,16 +88,16 @@ Verifying $42_TestEmits_emits_in_schema$verify ...
   [0.015 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_emits_in_schema_condition$verify ...
-  [0.020 s, 2 proof obligations]  verified
+  [0.026 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple$verify ...
-  [0.030 s, 3 proof obligations]  verified
+  [0.027 s, 3 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple_different_handle$verify ...
-  [0.366 s, 7 proof obligations]  verified
+  [0.500 s, 7 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple_incorrect$verify ...
-  [0.022 s, 4 proof obligations]  error
+  [0.040 s, 4 proof obligations]  error
 assert_failed(2,1737,1772): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3222,9): anon0
@@ -109,10 +109,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3264,5): anon7_Else
 
 Verifying $42_TestEmits_multiple_same$verify ...
-  [0.020 s, 3 proof obligations]  verified
+  [0.028 s, 3 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple_same_incorrect$verify ...
-  [0.016 s, 3 proof obligations]  error
+  [0.020 s, 3 proof obligations]  error
 assert_failed(2,2312,2347): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3421,9): anon0
@@ -122,7 +122,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3446,5): anon4_Else
 
 Verifying $42_TestEmits_opaque_completeness_incorrect$verify ...
-  [0.031 s, 4 proof obligations]  error
+  [0.049 s, 4 proof obligations]  error
 assert_failed(2,10235,10409): emitted event not covered by any of the `emits` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3506,9): anon0
@@ -134,10 +134,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3576,5): anon7_Else
 
 Verifying $42_TestEmits_opaque_in_call_chain$verify ...
-  [0.066 s, 5 proof obligations]  verified
+  [0.089 s, 5 proof obligations]  verified
 
 Verifying $42_TestEmits_opaque_incorrect$verify ...
-  [0.106 s, 6 proof obligations]  error
+  [0.162 s, 6 proof obligations]  error
 assert_failed(2,9641,9676): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3721,9): anon0
@@ -149,10 +149,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3791,5): anon7_Else
 
 Verifying $42_TestEmits_opaque_partial$verify ...
-  [0.044 s, 4 proof obligations]  verified
+  [0.058 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_opaque_partial_incorrect$verify ...
-  [0.077 s, 5 proof obligations]  error
+  [0.089 s, 5 proof obligations]  error
 assert_failed(2,11667,11965): emitted event not covered by any of the `emits` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4004,9): anon0
@@ -166,10 +166,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4077,5): anon7_Else
 
 Verifying $42_TestEmits_partial$verify ...
-  [0.018 s, 1 proof obligation]  verified
+  [0.013 s, 1 proof obligation]  verified
 
 Verifying $42_TestEmits_partial_incorrect$verify ...
-  [0.019 s, 2 proof obligations]  error
+  [0.018 s, 2 proof obligations]  error
 assert_failed(2,7736,7810): emitted event not covered by any of the `emits` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4231,9): anon0
@@ -181,10 +181,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4273,5): anon7_Else
 
 Verifying $42_TestEmits_simple$verify ...
-  [0.015 s, 2 proof obligations]  verified
+  [0.017 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_simple_wrong_handle_incorrect$verify ...
-  [0.018 s, 2 proof obligations]  error
+  [0.019 s, 2 proof obligations]  error
 assert_failed(2,1010,1047): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4397,9): anon0
@@ -204,10 +204,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4510,5): anon4_Else
 
 Verifying $42_TestEmits_strict$verify ...
-  [0.008 s, 0 proof obligations]  verified
+  [0.010 s, 0 proof obligations]  verified
 
 Verifying $42_TestEmits_strict_incorrect$verify ...
-  [0.012 s, 1 proof obligation]  error
+  [0.015 s, 1 proof obligation]  error
 assert_failed(2,8311,8372): emitted event not covered by any of the `emits` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4643,9): anon0

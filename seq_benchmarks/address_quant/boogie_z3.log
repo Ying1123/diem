@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_AddressQuant_f$verify ...
-  [0.182 s, 3 proof obligations]  verified
+  [0.137 s, 3 proof obligations]  verified
 
 Verifying $42_AddressQuant_initialize$verify ...
-  [0.021 s, 3 proof obligations]  verified
+  [0.018 s, 3 proof obligations]  verified
 
 Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
-  [0.021 s, 2 proof obligations]  error
+  [0.019 s, 2 proof obligations]  error
 assert_failed(2,1555,1577): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl(1200,9): anon0

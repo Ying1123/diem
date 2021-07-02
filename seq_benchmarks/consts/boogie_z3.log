@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestConst_init$verify ...
-  [0.179 s, 2 proof obligations]  verified
+  [0.121 s, 2 proof obligations]  verified
 
 Verifying $42_TestConst_init_incorrect$verify ...
-  [0.026 s, 2 proof obligations]  error
+  [0.022 s, 2 proof obligations]  error
 assert_failed(2,612,630): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/consts/consts.z3.bpl(984,5): anon0

@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestSchemaExp_bar_incorrect$verify ...
-  [0.151 s, 2 proof obligations]  error
+  [0.153 s, 2 proof obligations]  error
 assert_failed(2,416,722): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.cvc4.bpl(903,9): anon0
@@ -23,10 +23,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.cvc4.bpl(921,16): anon4_Then
 
 Verifying $42_TestSchemaExp_baz$verify ...
-  [0.022 s, 2 proof obligations]  verified
+  [0.021 s, 2 proof obligations]  verified
 
 Verifying $42_TestSchemaExp_baz_incorrect$verify ...
-  [0.022 s, 2 proof obligations]  error
+  [0.017 s, 2 proof obligations]  error
 assert_failed(2,975,999): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.cvc4.bpl(1110,9): anon0

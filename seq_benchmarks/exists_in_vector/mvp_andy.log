@@ -1,1 +1,12 @@
-cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`
+[INFO] translating module VectorExists
+[INFO] running solver
+[internal] boogie exited with prover errors:
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+Advisory: $42_VectorExists_do_nothing_ref_mut$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+Advisory: $42_VectorExists_do_nothing_ref$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+output.bpl(1093,27): Verification inconclusive ($42_VectorExists_do_nothing_ref$verify)
+output.bpl(1171,27): Verification inconclusive ($42_VectorExists_do_nothing_ref_mut$verify)
+
+Boogie program verifier finished with 0 errors, 2 inconclusives
+

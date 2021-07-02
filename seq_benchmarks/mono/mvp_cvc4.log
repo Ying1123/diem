@@ -1,35 +1,35 @@
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_vec` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::pack_R` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::mutate_R` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R_generic` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_int` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_addr` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_int` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_bool` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_addr` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_bcs` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_vec` to be verified
-01:07:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_event` to be verified
-01:07:50 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
-01:07:50 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-01:07:50 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
-01:07:50 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
-01:07:50 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_vec` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::pack_R` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::mutate_R` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R_generic` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_int` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_addr` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_int` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_bool` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_addr` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_bcs` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_vec` to be verified
+02:37:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_event` to be verified
+02:37:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+02:37:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+02:37:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+02:37:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+02:37:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
 [INFO] translating module TestMonomorphization
-01:07:50 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:37:16 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-01:07:50 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-01:07:50 [DEBUG] (13) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-01:07:51 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:37:16 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:37:16 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:37:17 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 Boogie error (signal: 6 (core dumped)): Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
+Advisory: $42_TestMonomorphization_vec_bool$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 Advisory: $42_TestMonomorphization_vec_addr$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
-Advisory: $42_TestMonomorphization_vec_int$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 assert_failed(2,1744,1770): function does not emit the expected event
 Execution trace:
     output.bpl(2664,9): anon0
@@ -45,26 +45,17 @@ $track_local(5,5,0):T@$1_Event_EventHandle!val!0
 $at(2,1713,1714)
 $at(2,1744,1770)
 *** MODEL
-_$t0 -> 0
-_$t0@@0 -> ($Mutation_31810 ($Param 0) (seq.empty) T@$1_Event_EventHandle!val!0)
-_$t1 -> T@#0!val!0
-_$t2 -> T@#0!val!0
-$42_TestMonomorphization_R'#0'_$memory -> ($Memory_32643 T@[Int]Bool!val!0 T@[Int]$42_TestMonomorphization_R'#0'!val!0)
-$42_TestMonomorphization_R'#0'_$memory@0 -> ($Memory_32643 T@[Int]Bool!val!0 T@[Int]$42_TestMonomorphization_R'#0'!val!0)
-$42_TestMonomorphization_R'#0'_$memory@1 -> ($Memory_32643 T@[Int]Bool!val!0 T@[Int]$42_TestMonomorphization_R'#0'!val!0)
-$abort_code@0 -> 0
-$abort_code@1 -> 0
-$abort_flag@0 -> false
+_$t0 -> ($Mutation_31810 ($Param 0) (seq.empty) T@$1_Event_EventHandle!val!0)
 $EmptyEventStore -> ($EventStore 0 T@[$1_Event_EventHandle]Multiset_17592!val!0)
-$es -> ($EventStore 0 T@[$1_Event_EventHandle]Multiset_17592!val!1)
+$es -> ($EventStore 0 T@[$1_Event_EventHandle]Multiset_17592!val!2)
 $es@0 -> ($EventStore 1 T@[$1_Event_EventHandle]Multiset_17592!val!3)
 $EXEC_FAILURE_CODE -> (- 1)
 $MAX_U128 -> 340282366920938463463374607431768211455
 $MAX_U64 -> 18446744073709551615
 $MAX_U8 -> 255
 $serialized_address_len -> 0
-$t2@0 -> ($42_TestMonomorphization_E 0)
-$t3@0 -> ($42_TestMonomorphization_R'#0' T@#0!val!0 T@#0!val!0)
+$t2@0 -> ($42_TestMonomorphization_R'u64' 0 0)
+$t2@0@@0 -> ($42_TestMonomorphization_E 0)
 $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E''@0 -> T@$1_Event_EventHandle!val!0
 $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E''@1 -> T@$1_Event_EventHandle!val!0
 inline$$1_Event_emit_event'$42_TestMonomorphization_E'$0$handle@1 -> T@$1_Event_EventHandle!val!0
@@ -178,13 +169,13 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 41554
+  0 0 -> 41540
   0 38311 -> 38438
   0 38432 -> 38524
   0 38438 -> 38432
-  0 38524 -> (- 41782)
-  0 41554 -> 38311
-  else -> (- 41782)
+  0 38524 -> (- 41736)
+  0 41540 -> 38311
+  else -> (- 41736)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0
@@ -192,7 +183,7 @@ lambda#0 -> {
   else -> T@[Int]Bool!val!1
 }
 lambda#2 -> {
-  T@[$1_Event_EventHandle]Multiset_17592!val!3 T@[$1_Event_EventHandle]Multiset_17592!val!1 -> T@[$1_Event_EventHandle]Multiset_17592!val!4
+  T@[$1_Event_EventHandle]Multiset_17592!val!3 T@[$1_Event_EventHandle]Multiset_17592!val!2 -> T@[$1_Event_EventHandle]Multiset_17592!val!4
   else -> T@[$1_Event_EventHandle]Multiset_17592!val!4
 }
 lambda#3 -> {
@@ -216,8 +207,8 @@ ReverseVec_7730 -> {
 }
 Select__T@[$1_Event_EventHandle]Multiset_17592_ -> {
   T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!0 1)
-  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!2 1)
-  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!4 2)
+  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!4 2)
+  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!2 1)
   T@[$1_Event_EventHandle]Multiset_17592!val!3 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!1 2)
   T@[$1_Event_EventHandle]Multiset_17592!val!4 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!3 1)
   else -> (Multiset_17592 T@[$EventRep]Int!val!0 1)
@@ -229,27 +220,18 @@ Select__T@[$EventRep]Int_ -> {
   T@[$EventRep]Int!val!4 ($ToEventRep'$42_TestMonomorphization_E' ($42_TestMonomorphization_E 0)) -> 0
   else -> (- 1)
 }
-Select__T@[Int]$42_TestMonomorphization_R'#0'_ -> {
-  else -> ($42_TestMonomorphization_R'#0' T@#0!val!0 T@#0!val!0)
-}
 Select__T@[Int]Bool_ -> {
   else -> false
 }
 Store__T@[$1_Event_EventHandle]Multiset_17592_ -> {
-  T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!4 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!2
-  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!1 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!3
-  else -> T@[$1_Event_EventHandle]Multiset_17592!val!2
+  T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!4 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!1
+  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!1 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!3
+  else -> T@[$1_Event_EventHandle]Multiset_17592!val!1
 }
 Store__T@[$EventRep]Int_ -> {
   T@[$EventRep]Int!val!0 ($ToEventRep'$42_TestMonomorphization_E' ($42_TestMonomorphization_E 0)) 0 -> T@[$EventRep]Int!val!4
   T@[$EventRep]Int!val!2 ($ToEventRep'$42_TestMonomorphization_E' ($42_TestMonomorphization_E 0)) 0 -> T@[$EventRep]Int!val!1
   else -> T@[$EventRep]Int!val!4
-}
-Store__T@[Int]$42_TestMonomorphization_R'#0'_ -> {
-  else -> T@[Int]$42_TestMonomorphization_R'#0'!val!0
-}
-Store__T@[Int]Bool_ -> {
-  else -> T@[Int]Bool!val!0
 }
 *** END_MODEL
 assert_failed(2,1719,1776): emitted event not covered by any of the `emits` clauses
@@ -268,26 +250,17 @@ $at(2,1713,1714)
 $at(2,1744,1770)
 $at(2,1719,1776)
 *** MODEL
-_$t0 -> 0
-_$t0@@0 -> ($Mutation_31810 ($Param 0) (seq.empty) T@$1_Event_EventHandle!val!0)
-_$t1 -> T@#0!val!0
-_$t2 -> T@#0!val!0
-$42_TestMonomorphization_R'#0'_$memory -> ($Memory_32643 T@[Int]Bool!val!0 T@[Int]$42_TestMonomorphization_R'#0'!val!0)
-$42_TestMonomorphization_R'#0'_$memory@0 -> ($Memory_32643 T@[Int]Bool!val!0 T@[Int]$42_TestMonomorphization_R'#0'!val!0)
-$42_TestMonomorphization_R'#0'_$memory@1 -> ($Memory_32643 T@[Int]Bool!val!0 T@[Int]$42_TestMonomorphization_R'#0'!val!0)
-$abort_code@0 -> 0
-$abort_code@1 -> 0
-$abort_flag@0 -> false
+_$t0 -> ($Mutation_31810 ($Param 0) (seq.empty) T@$1_Event_EventHandle!val!0)
 $EmptyEventStore -> ($EventStore 0 T@[$1_Event_EventHandle]Multiset_17592!val!0)
-$es -> ($EventStore 0 T@[$1_Event_EventHandle]Multiset_17592!val!1)
+$es -> ($EventStore 0 T@[$1_Event_EventHandle]Multiset_17592!val!2)
 $es@0 -> ($EventStore 1 T@[$1_Event_EventHandle]Multiset_17592!val!3)
 $EXEC_FAILURE_CODE -> (- 1)
 $MAX_U128 -> 340282366920938463463374607431768211455
 $MAX_U64 -> 18446744073709551615
 $MAX_U8 -> 255
 $serialized_address_len -> 0
-$t2@0 -> ($42_TestMonomorphization_E 0)
-$t3@0 -> ($42_TestMonomorphization_R'#0' T@#0!val!0 T@#0!val!0)
+$t2@0 -> ($42_TestMonomorphization_R'u64' 0 0)
+$t2@0@@0 -> ($42_TestMonomorphization_E 0)
 $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E''@0 -> T@$1_Event_EventHandle!val!0
 $temp_0'$1_Event_EventHandle'$42_TestMonomorphization_E''@1 -> T@$1_Event_EventHandle!val!0
 inline$$1_Event_emit_event'$42_TestMonomorphization_E'$0$handle@1 -> T@$1_Event_EventHandle!val!0
@@ -401,13 +374,13 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 41554
+  0 0 -> 41540
   0 38311 -> 38438
   0 38432 -> 38524
   0 38438 -> 38432
-  0 38524 -> (- 41810)
-  0 41554 -> 38311
-  else -> (- 41810)
+  0 38524 -> (- 41764)
+  0 41540 -> 38311
+  else -> (- 41764)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0
@@ -415,7 +388,7 @@ lambda#0 -> {
   else -> T@[Int]Bool!val!1
 }
 lambda#2 -> {
-  T@[$1_Event_EventHandle]Multiset_17592!val!3 T@[$1_Event_EventHandle]Multiset_17592!val!1 -> T@[$1_Event_EventHandle]Multiset_17592!val!4
+  T@[$1_Event_EventHandle]Multiset_17592!val!3 T@[$1_Event_EventHandle]Multiset_17592!val!2 -> T@[$1_Event_EventHandle]Multiset_17592!val!4
   else -> T@[$1_Event_EventHandle]Multiset_17592!val!4
 }
 lambda#3 -> {
@@ -441,10 +414,10 @@ ReverseVec_7730 -> {
 Select__T@[$1_Event_EventHandle]Multiset_17592_ -> {
   T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!0 1)
   T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!1 -> (Multiset_17592 T@[$EventRep]Int!val!5 (- 1))
-  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!2 1)
-  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!1 -> (Multiset_17592 T@[$EventRep]Int!val!6 1)
-  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!4 2)
-  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!1 -> (Multiset_17592 T@[$EventRep]Int!val!5 (- 1))
+  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!4 2)
+  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!1 -> (Multiset_17592 T@[$EventRep]Int!val!5 (- 1))
+  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!2 1)
+  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!1 -> (Multiset_17592 T@[$EventRep]Int!val!6 1)
   T@[$1_Event_EventHandle]Multiset_17592!val!3 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!1 2)
   T@[$1_Event_EventHandle]Multiset_17592!val!3 T@$1_Event_EventHandle!val!1 -> (Multiset_17592 T@[$EventRep]Int!val!6 1)
   T@[$1_Event_EventHandle]Multiset_17592!val!4 T@$1_Event_EventHandle!val!0 -> (Multiset_17592 T@[$EventRep]Int!val!3 1)
@@ -458,32 +431,22 @@ Select__T@[$EventRep]Int_ -> {
   T@[$EventRep]Int!val!4 ($ToEventRep'$42_TestMonomorphization_E' ($42_TestMonomorphization_E 0)) -> 0
   else -> (- 1)
 }
-Select__T@[Int]$42_TestMonomorphization_R'#0'_ -> {
-  else -> ($42_TestMonomorphization_R'#0' T@#0!val!0 T@#0!val!0)
-}
 Select__T@[Int]Bool_ -> {
   else -> false
 }
 Store__T@[$1_Event_EventHandle]Multiset_17592_ -> {
-  T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!4 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!2
-  T@[$1_Event_EventHandle]Multiset_17592!val!1 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!1 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!3
-  else -> T@[$1_Event_EventHandle]Multiset_17592!val!2
+  T@[$1_Event_EventHandle]Multiset_17592!val!0 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!4 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!1
+  T@[$1_Event_EventHandle]Multiset_17592!val!2 T@$1_Event_EventHandle!val!0 (Multiset_17592 T@[$EventRep]Int!val!1 2) -> T@[$1_Event_EventHandle]Multiset_17592!val!3
+  else -> T@[$1_Event_EventHandle]Multiset_17592!val!1
 }
 Store__T@[$EventRep]Int_ -> {
   T@[$EventRep]Int!val!0 ($ToEventRep'$42_TestMonomorphization_E' ($42_TestMonomorphization_E 0)) 0 -> T@[$EventRep]Int!val!4
   T@[$EventRep]Int!val!2 ($ToEventRep'$42_TestMonomorphization_E' ($42_TestMonomorphization_E 0)) 0 -> T@[$EventRep]Int!val!1
   else -> T@[$EventRep]Int!val!4
 }
-Store__T@[Int]$42_TestMonomorphization_R'#0'_ -> {
-  else -> T@[Int]$42_TestMonomorphization_R'#0'!val!0
-}
-Store__T@[Int]Bool_ -> {
-  else -> T@[Int]Bool!val!0
-}
 *** END_MODEL
 output.bpl(2758,27): Verification inconclusive ($42_TestMonomorphization_vec_addr$verify)
 output.bpl(2831,27): Verification inconclusive ($42_TestMonomorphization_vec_bool$verify)
-output.bpl(2904,27): Verification inconclusive ($42_TestMonomorphization_vec_int$verify)
 
 
 stderr:
@@ -533,7 +496,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
    at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
    at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
    at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
    at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
@@ -561,8 +525,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
    at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
    at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
    at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
    at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886

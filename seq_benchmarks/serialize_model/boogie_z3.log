@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.193 s, 4 proof obligations]  verified
+  [0.135 s, 4 proof obligations]  verified
 
 Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
-  [0.033 s, 3 proof obligations]  error
+  [0.024 s, 3 proof obligations]  error
 assert_failed(2,879,908): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl(1050,9): anon0

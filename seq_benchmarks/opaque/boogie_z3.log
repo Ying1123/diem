@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestOpaque_opaque_caller$verify ...
-  [0.173 s, 1 proof obligation]  verified
+  [0.121 s, 1 proof obligation]  verified
 
 Verifying $42_TestOpaque_opaque_incorrect$verify ...
-  [0.021 s, 1 proof obligation]  error
+  [0.019 s, 1 proof obligation]  error
 assert_failed(2,271,291): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/opaque/opaque.z3.bpl(977,5): anon0

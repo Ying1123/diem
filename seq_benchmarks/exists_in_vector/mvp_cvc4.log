@@ -1,19 +1,30 @@
-01:07:08 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VectorExists::do_nothing_ref_mut` to be verified
-01:07:08 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VectorExists::do_nothing_ref` to be verified
-01:07:08 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+02:36:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VectorExists::do_nothing_ref_mut` to be verified
+02:36:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VectorExists::do_nothing_ref` to be verified
+02:36:34 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module VectorExists
-01:07:08 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:36:34 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-01:07:08 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-01:07:08 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-01:07:09 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-[internal] boogie exited with prover errors:
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+02:36:34 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:36:34 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:36:34 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:36:34 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.011s build, 0.008s trafo, 0.006s gen, 0.587s verify
+error: verification inconclusive
 
-Advisory: $42_VectorExists_do_nothing_ref$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
-Advisory: $42_VectorExists_do_nothing_ref_mut$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
-output.bpl(1093,27): Verification inconclusive ($42_VectorExists_do_nothing_ref$verify)
-output.bpl(1171,27): Verification inconclusive ($42_VectorExists_do_nothing_ref_mut$verify)
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5 ───
+    │
+ 17 │ ╭     public fun do_nothing_ref(_v: &vector<u64>) {
+ 18 │ │     }
+    │ ╰─────^
+    │
 
-Boogie program verifier finished with 0 errors, 2 inconclusives
+error: verification inconclusive
 
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5 ───
+    │
+ 35 │ ╭     public fun do_nothing_ref_mut(_v: &mut vector<u64>) {
+ 36 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

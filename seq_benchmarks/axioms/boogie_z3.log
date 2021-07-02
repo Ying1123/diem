@@ -14,12 +14,12 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestAxioms_id_T$verify ...
-  [0.178 s, 1 proof obligation]  verified
+  [0.127 s, 1 proof obligation]  verified
 
 Verifying $42_TestAxioms_id_u64$verify ...
-  [0.012 s, 1 proof obligation]  verified
+  [0.015 s, 1 proof obligation]  verified
 
 Verifying $42_TestAxioms_incr$verify ...
-  [0.013 s, 1 proof obligation]  verified
+  [0.011 s, 1 proof obligation]  verified
 
 Boogie program verifier finished with 3 verified, 0 errors

@@ -1,13 +1,13 @@
-01:07:25 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::get_invalid` to be verified
-01:07:25 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::get` to be verified
+02:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::get_invalid` to be verified
+02:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::get` to be verified
 [INFO] translating module TestInvariants
-01:07:25 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:36:51 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-01:07:25 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-01:07:25 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-01:07:26 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-01:07:26 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.007s build, 0.001s trafo, 0.005s gen, 0.638s verify
+02:36:51 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:36:51 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:36:52 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:36:52 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.007s build, 0.001s trafo, 0.005s gen, 0.620s verify
 error: post-condition does not hold
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move:23:9 ───

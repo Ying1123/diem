@@ -14,22 +14,22 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestMonomorphization_create_R$verify ...
-  [0.169 s, 3 proof obligations]  verified
+  [0.174 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_create_R_generic$verify ...
   [0.016 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_mutate_R$verify ...
-  [0.018 s, 1 proof obligation]  verified
+  [0.021 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_pack_R$verify ...
   [0.004 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_use_bcs$verify ...
-  [0.019 s, 2 proof obligations]  verified
+  [0.016 s, 2 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_use_event$verify ...
-  [0.057 s, 2 proof obligations]  errors
+  [0.060 s, 2 proof obligations]  errors
 assert_failed(2,1744,1770): function does not emit the expected event
 Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2664,9): anon0
@@ -46,12 +46,12 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2689,5): anon4_Else
 
 Verifying $42_TestMonomorphization_use_vec$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestMonomorphization_vec_addr$verify ...
-  [0.010 s, 1 proof obligation]  inconclusive
+  [0.012 s, 1 proof obligation]  inconclusive
 /home/ying/diem/seq_benchmarks/mono/mono.cvc4.bpl(2758,27): Verification inconclusive ($42_TestMonomorphization_vec_addr$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
@@ -202,3 +202,4 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
+timeout: the monitored command dumped core

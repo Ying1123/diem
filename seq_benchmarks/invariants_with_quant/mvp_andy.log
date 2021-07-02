@@ -1,1 +1,18 @@
-cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`
+[INFO] translating module TestQuantInvariant
+[INFO] running solver
+[INFO] 0.010s build, 0.008s trafo, 0.005s gen, 0.616s verify
+error: verification inconclusive
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:7:5 ───
+    │
+  7 │ ╭     fun vector_of_proper_positives(): vector<u64> {
+  8 │ │         let v = Vector::empty();
+  9 │ │         Vector::push_back(&mut v, 1);
+ 10 │ │         Vector::push_back(&mut v, 2);
+ 11 │ │         Vector::push_back(&mut v, 3);
+ 12 │ │         v
+ 13 │ │     }
+    │ ╰─────^
+    │
+
+exiting with boogie verification errors

@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestAbortsIfWithCode_aborts_if_with_code_mixed$verify ...
-  [0.274 s, 4 proof obligations]  verified
+  [0.284 s, 4 proof obligations]  verified
 
 Verifying $42_TestAbortsIfWithCode_aborts_if_with_code_mixed_invalid$verify ...
-  [0.093 s, 4 proof obligations]  error
+  [0.095 s, 4 proof obligations]  error
 assert_failed(2,1786,1891): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1048,9): anon0
@@ -27,10 +27,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1157,1): L7
 
 Verifying $42_TestAbortsIfWithCode_aborts_with$verify ...
-  [0.041 s, 1 proof obligation]  verified
+  [0.038 s, 1 proof obligation]  verified
 
 Verifying $42_TestAbortsIfWithCode_aborts_with_invalid$verify ...
-  [0.062 s, 1 proof obligation]  error
+  [0.063 s, 1 proof obligation]  error
 assert_failed(2,2285,2342): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1313,9): anon0
@@ -40,10 +40,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1411,1): L7
 
 Verifying $42_TestAbortsIfWithCode_aborts_with_mixed$verify ...
-  [0.043 s, 2 proof obligations]  verified
+  [0.042 s, 2 proof obligations]  verified
 
 Verifying $42_TestAbortsIfWithCode_aborts_with_mixed_invalid$verify ...
-  [0.076 s, 2 proof obligations]  error
+  [0.071 s, 2 proof obligations]  error
 assert_failed(2,2792,2930): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1569,9): anon0
@@ -53,10 +53,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1673,1): L7
 
 Verifying $42_TestAbortsIfWithCode_conditional_abort$verify ...
-  [0.132 s, 6 proof obligations]  verified
+  [0.133 s, 6 proof obligations]  verified
 
 Verifying $42_TestAbortsIfWithCode_conditional_abort_invalid$verify ...
-  [0.092 s, 5 proof obligations]  error
+  [0.104 s, 5 proof obligations]  error
 assert_failed(2,872,1019): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if_with_code/aborts_if_with_code.andy.bpl(1874,9): anon0

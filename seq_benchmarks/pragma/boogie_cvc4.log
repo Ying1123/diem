@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestPragma_always_aborts_with_verify_incorrect$verify ...
-  [0.201 s, 1 proof obligation]  error
+  [0.154 s, 1 proof obligation]  error
 assert_failed(2,243,341): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl(902,9): anon0

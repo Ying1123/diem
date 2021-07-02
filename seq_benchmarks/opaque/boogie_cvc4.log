@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestOpaque_opaque_caller$verify ...
-  [0.201 s, 1 proof obligation]  verified
+  [0.146 s, 1 proof obligation]  verified
 
 Verifying $42_TestOpaque_opaque_incorrect$verify ...
-  [0.016 s, 1 proof obligation]  error
+  [0.012 s, 1 proof obligation]  error
 assert_failed(2,271,291): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/opaque/opaque.cvc4.bpl(977,5): anon0

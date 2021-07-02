@@ -14,16 +14,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestReturnValue_one_two$verify ...
-  [0.200 s, 3 proof obligations]  verified
+  [0.144 s, 3 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_incorrect$verify ...
   [0.002 s, 0 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_wrapper$verify ...
-  [0.005 s, 4 proof obligations]  verified
+  [0.008 s, 4 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_wrapper_incorrect$verify ...
-  [0.022 s, 7 proof obligations]  error
+  [0.018 s, 7 proof obligations]  error
 assert_failed(2,345,367): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/return_values/return_values.cvc4.bpl(1100,5): anon0
@@ -32,13 +32,13 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/return_values/return_values.cvc4.bpl(1106,5): anon4_Else
 
 Verifying $42_TestReturnValue_true_one$verify ...
-  [0.005 s, 3 proof obligations]  verified
+  [0.004 s, 3 proof obligations]  verified
 
 Verifying $42_TestReturnValue_true_one_wrapper$verify ...
-  [0.005 s, 2 proof obligations]  verified
+  [0.012 s, 2 proof obligations]  verified
 
 Verifying $42_TestReturnValue_true_one_wrapper_incorrect$verify ...
-  [0.023 s, 5 proof obligations]  error
+  [0.010 s, 5 proof obligations]  error
 assert_failed(2,1296,1310): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/return_values/return_values.cvc4.bpl(1335,5): anon0

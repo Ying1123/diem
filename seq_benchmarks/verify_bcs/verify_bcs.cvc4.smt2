@@ -1,12 +1,12 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-logic ALL_SUPPORTED)
+(set-logic ALL)
 ; done setting options
 
 
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6702 0)) ((($Mutation_6702 (|l#$Mutation_6702| T@$Location) (|p#$Mutation_6702| (Seq Int)) (|v#$Mutation_6702| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_6706 0)) ((($Mutation_6706 (|l#$Mutation_6706| T@$Location) (|p#$Mutation_6706| (Seq Int)) (|v#$Mutation_6706| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -151,10 +151,10 @@
 (push 1)
 (set-info :boogie-vc-id $42_VerifyBCS_verify_to_bytes$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 8886) (let ((anon4_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= (ControlFlow 0 8797) (- 0 9002))) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))))))
+ (=> (= (ControlFlow 0 0) 8951) (let ((anon4_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= (ControlFlow 0 8862) (- 0 9067))) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))))))
 (let ((anon4_Then_correct true))
-(let ((anon0$1_correct  (=> (and (= _$t0 _$t0) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))) (and (=> (= (ControlFlow 0 8771) 8815) anon4_Then_correct) (=> (= (ControlFlow 0 8771) 8797) anon4_Else_correct)))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 8886) 8771) anon0$1_correct)))
+(let ((anon0$1_correct  (=> (and (= _$t0 _$t0) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))) (and (=> (= (ControlFlow 0 8836) 8880) anon4_Then_correct) (=> (= (ControlFlow 0 8836) 8862) anon4_Else_correct)))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 8951) 8836) anon0$1_correct)))
 anon0_correct)))))
 ))
 (check-sat)

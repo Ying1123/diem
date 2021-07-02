@@ -1,6 +1,6 @@
 [INFO] translating module TestAbortsIf
 [INFO] running solver
-[INFO] 0.009s build, 0.008s trafo, 0.004s gen, 0.906s verify
+[INFO] 0.009s build, 0.007s trafo, 0.004s gen, 0.669s verify
 error: function does not abort under this condition
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:35:9 ───

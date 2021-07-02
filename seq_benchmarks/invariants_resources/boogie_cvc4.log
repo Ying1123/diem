@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestInvariants_get$verify ...
-  [0.219 s, 1 proof obligation]  error
+  [0.153 s, 1 proof obligation]  error
 assert_failed(2,511,530): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.cvc4.bpl(931,9): anon0
@@ -23,7 +23,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.cvc4.bpl(956,5): anon8_Else
 
 Verifying $42_TestInvariants_get_invalid$verify ...
-  [0.017 s, 1 proof obligation]  error
+  [0.015 s, 1 proof obligation]  error
 assert_failed(2,710,729): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.cvc4.bpl(1003,9): anon0

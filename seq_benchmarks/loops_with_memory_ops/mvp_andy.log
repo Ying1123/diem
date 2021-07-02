@@ -1,11 +1,1 @@
-[INFO] translating module VerifyLoopsWithMemoryOps
-[INFO] running solver
-[internal] boogie exited with prover errors:
-Advisory: $42_VerifyLoopsWithMemoryOps_nested_loop1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-output.bpl(1076,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop1$verify)
-output.bpl(1652,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop2$verify)
-
-Boogie program verifier finished with 0 errors, 2 inconclusives
-
+cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`

@@ -1,12 +1,12 @@
-21:59:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
-21:59:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at_wrapper2` to be verified
-21:59:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at_wrapper1` to be verified
+01:07:43 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+01:07:43 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at_wrapper2` to be verified
+01:07:43 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at_wrapper1` to be verified
 [INFO] translating module A
-21:59:33 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+01:07:43 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-21:59:33 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-21:59:33 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-21:59:34 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+01:07:43 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+01:07:43 [DEBUG] (11) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+01:07:43 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 [internal] boogie exited with prover errors:
 Prover error: Unexpected value: (seq.unit 0)
 

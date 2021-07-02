@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestConst_init$verify ...
-  [0.206 s, 2 proof obligations]  verified
+  [0.146 s, 2 proof obligations]  verified
 
 Verifying $42_TestConst_init_incorrect$verify ...
-  [0.020 s, 2 proof obligations]  error
+  [0.015 s, 2 proof obligations]  error
 assert_failed(2,612,630): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/consts/consts.cvc4.bpl(984,5): anon0

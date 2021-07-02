@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestCast_aborting_u64_cast$verify ...
-  [0.210 s, 3 proof obligations]  verified
+  [0.151 s, 3 proof obligations]  verified
 
 Verifying $42_TestCast_aborting_u64_cast_incorrect$verify ...
-  [0.025 s, 2 proof obligations]  error
+  [0.017 s, 2 proof obligations]  error
 assert_failed(2,807,872): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/cast/cast.cvc4.bpl(973,9): anon0
@@ -27,7 +27,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/cast/cast.cvc4.bpl(990,9): anon4_Then
 
 Verifying $42_TestCast_aborting_u8_cast$verify ...
-  [0.011 s, 2 proof obligations]  verified
+  [0.007 s, 2 proof obligations]  verified
 
 Verifying $42_TestCast_aborting_u8_cast_incorrect$verify ...
   [0.018 s, 2 proof obligations]  error
@@ -40,9 +40,9 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/cast/cast.cvc4.bpl(1118,9): anon4_Then
 
 Verifying $42_TestCast_u64_cast$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $42_TestCast_u8_cast_incorrect$verify ...
-  [0.010 s, 2 proof obligations]  verified
+  [0.008 s, 2 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 2 errors

@@ -12,9 +12,11 @@ function IsSuffix() {
     fi
 }
 
+BOOGIE_EXE=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
+
+boogie=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 move_dir=~/diem/language/move-prover/tests/sources/functional
 bm_dir=~/diem/seq_benchmarks
-boogie=/home/ying/.dotnet/tools/boogie
 z3=/home/ying/bin/z3
 
 for file in ~/diem/language/move-prover/tests/sources/functional/*

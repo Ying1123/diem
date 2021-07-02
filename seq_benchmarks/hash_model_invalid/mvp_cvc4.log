@@ -1,38 +1,19 @@
-21:59:02 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2` to be verified
-21:59:02 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1` to be verified
-21:59:02 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
+01:07:18 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test2` to be verified
+01:07:18 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestHash::hash_test1` to be verified
+01:07:18 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
 [INFO] translating module TestHash
-21:59:02 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+01:07:18 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-21:59:02 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-21:59:02 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-21:59:03 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-21:59:03 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.008s build, 0.001s trafo, 0.004s gen, 0.800s verify
-error: verification inconclusive
+01:07:18 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+01:07:18 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+01:07:18 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+[internal] boogie exited with prover errors:
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move:11:5 ───
-    │
- 11 │ ╭     fun hash_test1(v1: vector<u8>, v2: vector<u8>): (vector<u8>, vector<u8>)
- 12 │ │     {
- 13 │ │         let h1 = Hash::sha2_256(v1);
- 14 │ │         let h2 = Hash::sha2_256(v2);
- 15 │ │         (h1, h2)
- 16 │ │     }
-    │ ╰─────^
-    │
+Advisory: $42_TestHash_hash_test1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+Advisory: $42_TestHash_hash_test2$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+output.bpl(896,27): Verification inconclusive ($42_TestHash_hash_test1$verify)
+output.bpl(997,27): Verification inconclusive ($42_TestHash_hash_test2$verify)
 
-error: verification inconclusive
+Boogie program verifier finished with 0 errors, 2 inconclusives
 
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move:26:5 ───
-    │
- 26 │ ╭     fun hash_test2(v1: vector<u8>, v2: vector<u8>): (vector<u8>, vector<u8>)
- 27 │ │     {
- 28 │ │         let h1 = Hash::sha3_256(v1);
- 29 │ │         let h2 = Hash::sha3_256(v2);
- 30 │ │         (h1, h2)
- 31 │ │     }
-    │ ╰─────^
-    │
-
-exiting with boogie verification errors

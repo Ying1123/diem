@@ -1,12 +1,12 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-logic ALL_SUPPORTED)
+(set-logic ALL)
 ; done setting options
 
 
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6509 0)) ((($Mutation_6509 (|l#$Mutation_6509| T@$Location) (|p#$Mutation_6509| (Seq Int)) (|v#$Mutation_6509| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_6513 0)) ((($Mutation_6513 (|l#$Mutation_6513| T@$Location) (|p#$Mutation_6513| (Seq Int)) (|v#$Mutation_6513| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -136,7 +136,7 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestFriendError_f$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 8490) true)
+ (=> (= (ControlFlow 0 0) 8540) true)
 ))
 (check-sat)
 (pop 1)
@@ -144,7 +144,7 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestFriendError_i$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 8531) true)
+ (=> (= (ControlFlow 0 0) 8581) true)
 ))
 (check-sat)
 (pop 1)

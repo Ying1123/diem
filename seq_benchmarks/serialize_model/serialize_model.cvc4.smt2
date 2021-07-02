@@ -1,12 +1,12 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-logic ALL_SUPPORTED)
+(set-logic ALL)
 ; done setting options
 
 
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7126 0)) ((($Mutation_7126 (|l#$Mutation_7126| T@$Location) (|p#$Mutation_7126| (Seq Int)) (|v#$Mutation_7126| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7130 0)) ((($Mutation_7130 (|l#$Mutation_7130| T@$Location) (|p#$Mutation_7130| (Seq Int)) (|v#$Mutation_7130| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -153,12 +153,12 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestBCS_bcs_test1$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10082) (let ((anon7_Else_correct  (=> (and (and (not false) (= call1formal@res@0 call1formal@res@0)) (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 call1formal@res@0))) (and (=> (= (ControlFlow 0 9711) (- 0 10282)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 9711) (- 0 10289)) (=> (= call1formal@res@0@@0 call1formal@res@0) (= _$t0 _$t1))) (=> (=> (= call1formal@res@0@@0 call1formal@res@0) (= _$t0 _$t1)) (and (=> (= (ControlFlow 0 9711) (- 0 10302)) (=> (= _$t0 _$t1) (= call1formal@res@0@@0 call1formal@res@0))) (=> (=> (= _$t0 _$t1) (= call1formal@res@0@@0 call1formal@res@0)) (=> (= (ControlFlow 0 9711) (- 0 10315)) (=> (> (seq.len call1formal@res@0@@0) 0) (<= (seq.nth call1formal@res@0@@0 0) $MAX_U8))))))))))))
+ (=> (= (ControlFlow 0 0) 10182) (let ((anon7_Else_correct  (=> (and (and (not false) (= call1formal@res@0 call1formal@res@0)) (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 call1formal@res@0))) (and (=> (= (ControlFlow 0 9811) (- 0 10382)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 9811) (- 0 10389)) (=> (= call1formal@res@0@@0 call1formal@res@0) (= _$t0 _$t1))) (=> (=> (= call1formal@res@0@@0 call1formal@res@0) (= _$t0 _$t1)) (and (=> (= (ControlFlow 0 9811) (- 0 10402)) (=> (= _$t0 _$t1) (= call1formal@res@0@@0 call1formal@res@0))) (=> (=> (= _$t0 _$t1) (= call1formal@res@0@@0 call1formal@res@0)) (=> (= (ControlFlow 0 9811) (- 0 10415)) (=> (> (seq.len call1formal@res@0@@0) 0) (<= (seq.nth call1formal@res@0@@0 0) $MAX_U8))))))))))))
 (let ((anon7_Then_correct true))
-(let ((anon6_Else_correct  (=> (not false) (=> (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t1))) (and (=> (= (ControlFlow 0 9619) 9725) anon7_Then_correct) (=> (= (ControlFlow 0 9619) 9711) anon7_Else_correct))))))
+(let ((anon6_Else_correct  (=> (not false) (=> (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t1))) (and (=> (= (ControlFlow 0 9719) 9825) anon7_Then_correct) (=> (= (ControlFlow 0 9719) 9811) anon7_Else_correct))))))
 (let ((anon6_Then_correct true))
-(let ((anon0$1_correct  (=> (= _$t0 _$t0) (=> (and (= _$t1 _$t1) (= call1formal@res@0@@0 (|$1_BCS_serialize'#0'| _$t0))) (and (=> (= (ControlFlow 0 9605) 9749) anon6_Then_correct) (=> (= (ControlFlow 0 9605) 9619) anon6_Else_correct))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 10082) 9605) anon0$1_correct)))
+(let ((anon0$1_correct  (=> (= _$t0 _$t0) (=> (and (= _$t1 _$t1) (= call1formal@res@0@@0 (|$1_BCS_serialize'#0'| _$t0))) (and (=> (= (ControlFlow 0 9705) 9849) anon6_Then_correct) (=> (= (ControlFlow 0 9705) 9719) anon6_Else_correct))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 10182) 9705) anon0$1_correct)))
 anon0_correct)))))))
 ))
 (check-sat)

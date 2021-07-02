@@ -1,6 +1,6 @@
 [INFO] translating module TestCast
 [INFO] running solver
-[INFO] 0.007s build, 0.001s trafo, 0.005s gen, 0.879s verify
+[INFO] 0.007s build, 0.001s trafo, 0.005s gen, 0.623s verify
 error: abort not covered by any of the `aborts_if` clauses
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:47:5 ───

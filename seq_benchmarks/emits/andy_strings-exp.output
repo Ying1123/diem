@@ -1,4 +1,4 @@
-(error "Parse Error: /home/ying/diem/seq_benchmarks/emits/.smt2:4.24: Illegal argument detected
+(error "Parse Error: /home/ying/diem/seq_benchmarks/emits/emits.andy_strings.smt2:4.24: Illegal argument detected
 
   (set-logic ALL_SUPPORTED)
              ^

@@ -1,6 +1,6 @@
 [INFO] translating module TestArithmetic
 [INFO] running solver
-[INFO] 0.011s build, 0.007s trafo, 0.004s gen, 0.969s verify
+[INFO] 0.011s build, 0.010s trafo, 0.005s gen, 0.699s verify
 error: abort not covered by any of the `aborts_if` clauses
 
      ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:128:5 ───

@@ -12,10 +12,13 @@ function IsSuffix() {
     fi
 }
 
+BOOGIE_EXE=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
+CVC4_EXE=/home/ying/bin/cvc4
+
+boogie=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 move_dir=~/diem/language/move-prover/tests/sources/functional
 bm_dir=~/diem/seq_benchmarks
 cvc4=/home/ying/bin/cvc4
-boogie=/home/ying/.dotnet/tools/boogie
 
 for file in ~/diem/language/move-prover/tests/sources/functional/*
 do

@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_AddressSerialization_serialized_addresses_same_len$verify ...
-  [0.217 s, 2 proof obligations]  verified
+  [0.159 s, 2 proof obligations]  verified
 
 Verifying $42_AddressSerialization_serialized_move_values_diff_len_incorrect$verify ...
-  [0.027 s, 2 proof obligations]  error
+  [0.023 s, 2 proof obligations]  error
 assert_failed(2,909,970): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.cvc4.bpl(1055,9): anon0

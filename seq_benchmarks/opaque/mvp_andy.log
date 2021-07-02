@@ -1,16 +1,1 @@
-[INFO] translating module TestOpaque
-[INFO] running solver
-[INFO] 0.007s build, 0.001s trafo, 0.005s gen, 0.833s verify
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:13:9 ───
-    │
- 13 │         ensures result == 2;
-    │         ^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:9: opaque_incorrect
-    =         result = 1
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:10: opaque_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:13
-
-exiting with boogie verification errors
+cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`

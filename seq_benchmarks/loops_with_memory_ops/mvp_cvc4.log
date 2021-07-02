@@ -1,101 +1,20 @@
-21:59:22 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop2` to be verified
-21:59:22 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop1` to be verified
-21:59:22 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+01:07:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop2` to be verified
+01:07:33 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop1` to be verified
+01:07:33 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module VerifyLoopsWithMemoryOps
-21:59:22 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+01:07:33 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-21:59:22 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/.dotnet/tools/boogie -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-21:59:22 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-21:59:23 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-21:59:23 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.012s build, 0.011s trafo, 0.004s gen, 0.870s verify
-error: verification inconclusive
+01:07:33 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+01:07:33 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+01:07:34 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+[internal] boogie exited with prover errors:
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:8:5 ───
-    │
-  8 │ ╭     public fun nested_loop1(a: &mut vector<u64>, b: &mut vector<u64>) {
-  9 │ │         let length = Vector::length(a);
- 10 │ │         spec {
- 11 │ │             assume length > 0;
- 12 │ │             assume length == len(b);
- 13 │ │         };
- 14 │ │         let i = 0;
- 15 │ │         while ({
- 16 │ │             spec {
- 17 │ │                 assert length == len(a);
- 18 │ │                 assert length == len(b);
- 19 │ │                 assert i <= length;
- 20 │ │                 assert forall n in 0..i: a[n] == b[n];
- 21 │ │             };
- 22 │ │             (i < length)
- 23 │ │         }) {
- 24 │ │             let x = Vector::borrow_mut(a, i);
- 25 │ │             let y = Vector::borrow_mut(b, i);
- 26 │ │             loop {
- 27 │ │                 loop {
- 28 │ │                     if (*x <= *y) {
- 29 │ │                         break
- 30 │ │                     };
- 31 │ │                     *y = *y + 1;
- 32 │ │                 };
- 33 │ │                 if (*y <= *x) {
- 34 │ │                     break
- 35 │ │                 };
- 36 │ │                 *x = *x + 1;
- 37 │ │             };
- 38 │ │         };
- 39 │ │         spec {
- 40 │ │             assert forall m in 0..length: a[m] == b[m];
- 41 │ │         };
- 42 │ │     }
-    │ ╰─────^
-    │
+Advisory: $42_VerifyLoopsWithMemoryOps_nested_loop1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
+output.bpl(1076,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop1$verify)
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
-error: verification inconclusive
+output.bpl(1652,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop2$verify)
 
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56:5 ───
-    │
- 56 │ ╭     public fun nested_loop2(a: &mut vector<u64>, b: &mut vector<u64>) {
- 57 │ │         let length = Vector::length(a);
- 58 │ │         spec {
- 59 │ │             assume length > 0;
- 60 │ │             assume length == len(b);
- 61 │ │         };
- 62 │ │         let i = 0;
- 63 │ │         let x = Vector::borrow_mut(a, i);
- 64 │ │         let y = Vector::borrow_mut(b, i);
- 65 │ │         loop {
- 66 │ │             spec {
- 67 │ │                 assert length == len(a);
- 68 │ │                 assert length == len(b);
- 69 │ │                 assert i < length;
- 70 │ │                 assert forall n in 0..i: a[n] == b[n];
- 71 │ │             };
- 72 │ │             loop {
- 73 │ │                 loop {
- 74 │ │                     if (*x <= *y) {
- 75 │ │                         break
- 76 │ │                     };
- 77 │ │                     *y = *y + 1;
- 78 │ │                 };
- 79 │ │ 
- 80 │ │                 if (*y <= *x) {
- 81 │ │                     break
- 82 │ │                 };
- 83 │ │                 *x = *x + 1;
- 84 │ │             };
- 85 │ │             i = i + 1;
- 86 │ │             if (i == length) {
- 87 │ │                 break
- 88 │ │             };
- 89 │ │             x = Vector::borrow_mut(a, i);
- 90 │ │             y = Vector::borrow_mut(b, i);
- 91 │ │         };
- 92 │ │         spec {
- 93 │ │             assert forall m in 0..length: a[m] == b[m];
- 94 │ │         };
- 95 │ │     }
-    │ ╰─────^
-    │
+Boogie program verifier finished with 0 errors, 2 inconclusives
 
-exiting with boogie verification errors

@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $0_A_mutate_at$verify ...
-  [0.207 s, 4 proof obligations]  verified
+  [0.156 s, 4 proof obligations]  verified
 
 Verifying $0_A_read_at$verify ...
-  [0.015 s, 3 proof obligations]  verified
+  [0.014 s, 3 proof obligations]  verified
 
 Verifying $0_B_move_from_test_incorrect$verify ...
-  [0.025 s, 2 proof obligations]  error
+  [0.022 s, 2 proof obligations]  error
 assert_failed(2,1563,1572): caller does not have permission to modify `B::T` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1149,9): anon0
@@ -28,7 +28,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1192,34): anon10_Else
 
 Verifying $0_B_move_to_test_incorrect$verify ...
-  [0.022 s, 2 proof obligations]  error
+  [0.020 s, 2 proof obligations]  error
 assert_failed(2,1190,1197): caller does not have permission to modify `B::T` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1321,9): anon0
@@ -36,7 +36,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1364,34): anon10_Else
 
 Verifying $0_B_mutate_S_test1_incorrect$verify ...
-  [0.018 s, 2 proof obligations]  error
+  [0.019 s, 2 proof obligations]  error
 assert_failed(2,1917,1936): caller does not have permission to modify `A::S` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1492,9): anon0
@@ -44,7 +44,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1535,34): anon10_Else
 
 Verifying $0_B_mutate_S_test2_incorrect$verify ...
-  [0.021 s, 2 proof obligations]  error
+  [0.017 s, 2 proof obligations]  error
 assert_failed(2,2331,2347): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1680,9): anon0
@@ -56,7 +56,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1791,34): anon13_Else
 
 Verifying $0_B_mutate_at_test_incorrect$verify ...
-  [0.022 s, 2 proof obligations]  error
+  [0.027 s, 2 proof obligations]  error
 assert_failed(2,821,838): caller does not have permission to modify `B::T` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.cvc4.bpl(1860,9): anon0

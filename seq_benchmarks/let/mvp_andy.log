@@ -1,11 +1,1 @@
-[INFO] translating module TestLet
-[INFO] running solver
-[internal] boogie exited with prover errors:
-Prover error: Unexpected value: (seq.unit (- 1))
-
-Advisory: $42_TestLet_spec_let_with_abort_incorrect$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
-output.bpl(1298,27): Verification inconclusive ($42_TestLet_spec_let_with_abort_incorrect$verify)
-output.bpl(1810,27): Verification inconclusive ($42_TestLet_spec_let_with_schema$verify)
-
-Boogie program verifier finished with 0 errors, 2 inconclusives
-
+cannot extract version from `/home/ying/CVC4/andy_seq/bin/cvc5`

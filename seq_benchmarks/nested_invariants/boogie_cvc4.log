@@ -14,27 +14,27 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $42_TestNestedInvariants_mutate$verify ...
-  [0.217 s, 6 proof obligations]  verified
+  [0.160 s, 6 proof obligations]  verified
 
 Verifying $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify ...
-  [0.035 s, 6 proof obligations]  error
+  [0.029 s, 6 proof obligations]  error
 assert_failed(2,287,303): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.cvc4.bpl(1076,5): anon0
     /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.cvc4.bpl(1076,5): anon0$1
 
 Verifying $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify ...
-  [0.021 s, 6 proof obligations]  error
+  [0.019 s, 6 proof obligations]  error
 assert_failed(2,689,707): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.cvc4.bpl(1195,5): anon0
     /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.cvc4.bpl(1195,5): anon0$1
 
 Verifying $42_TestNestedInvariants_new$verify ...
-  [0.004 s, 3 proof obligations]  verified
+  [0.005 s, 3 proof obligations]  verified
 
 Verifying $42_TestNestedInvariants_new_inner_data_invariant_invalid$verify ...
-  [0.006 s, 3 proof obligations]  error
+  [0.007 s, 3 proof obligations]  error
 assert_failed(2,287,303): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.cvc4.bpl(1367,5): anon0

@@ -15,13 +15,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $0_A_mutate_at$verify ...
-  [0.253 s, 1 proof obligation]  verified
+  [0.261 s, 1 proof obligation]  verified
 
 Verifying $0_A_mutate_at_wrapper1$verify ...
-  [0.059 s, 1 proof obligation]  verified
+  [0.056 s, 1 proof obligation]  verified
 
 Verifying $0_A_mutate_at_wrapper2$verify ...
-  [0.316 s, 2 proof obligations]  error
+  [0.318 s, 2 proof obligations]  error
 assert_failed(2,683,699): caller does not have permission to modify `A::S` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.andy.bpl(1150,9): anon0

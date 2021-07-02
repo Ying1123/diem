@@ -16,7 +16,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.287 s, 4 proof obligations]  inconclusive
+  [0.290 s, 4 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(926,27): Verification inconclusive ($42_TestBCS_bcs_test1$verify)
 Prover error: Prover died
 

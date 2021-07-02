@@ -14,38 +14,38 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestInvariants_invalid_R_pack$verify ...
-  [0.283 s, 2 proof obligations]  error
+  [0.270 s, 2 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(948,5): anon0
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(948,5): anon0$1
 
 Verifying $42_TestInvariants_invalid_R_update$verify ...
-  [0.091 s, 4 proof obligations]  verified
+  [0.088 s, 4 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
   [0.146 s, 7 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
-  [0.118 s, 2 proof obligations]  verified
+  [0.114 s, 2 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
-  [0.127 s, 3 proof obligations]  verified
+  [0.131 s, 3 proof obligations]  verified
 
 Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
-  [0.226 s, 3 proof obligations]  error
+  [0.229 s, 3 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1461,5): anon0
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1461,5): anon0$1
 
 Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
-  [0.228 s, 3 proof obligations]  verified
+  [0.233 s, 3 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestInvariants_lifetime_invalid_S_branching$verify ...
-  [0.203 s, 8 proof obligations]  inconclusive
+  [0.210 s, 8 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
 Prover error: Prover died
 
@@ -69,6 +69,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)

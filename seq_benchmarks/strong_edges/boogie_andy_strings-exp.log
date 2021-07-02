@@ -15,10 +15,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestStrongEdges_glob_and_field_edges$verify ...
-  [0.457 s, 4 proof obligations]  verified
+  [0.496 s, 4 proof obligations]  verified
 
 Verifying $42_TestStrongEdges_glob_and_field_edges_incorrect$verify ...
-  [0.272 s, 4 proof obligations]  error
+  [0.265 s, 4 proof obligations]  error
 assert_failed(2,1208,1239): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1218,9): anon0
@@ -27,17 +27,17 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1257,5): anon8_Else
 
 Verifying $42_TestStrongEdges_loc__edge_incorrect$verify ...
-  [0.070 s, 1 proof obligation]  error
+  [0.071 s, 1 proof obligation]  error
 assert_failed(2,1443,1457): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1329,5): anon0
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1329,5): anon0$1
 
 Verifying $42_TestStrongEdges_loc_edge$verify ...
-  [0.034 s, 1 proof obligation]  verified
+  [0.036 s, 1 proof obligation]  verified
 
 Verifying $42_TestStrongEdges_vec_edge$verify ...
-  [1.631 s, 4 proof obligations]  error
+  [1.684 s, 4 proof obligations]  error
 assert_failed(2,953,979): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1459,9): anon0

@@ -75,9 +75,9 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 24667 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 13829 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
-./gen_andy.sh: line 23: 24699 Aborted                 timeout 5 $cvc5 $bm_dir_single/$bm_smt2 --incremental > $bm_dir_single/andy_default.output 2>&1
+./gen_andy.sh: line 23: 13860 Aborted                 timeout 5 $cvc5 $bm_dir_single/$bm_smt2 --incremental > $bm_dir_single/andy_default.output 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/consts.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/consts.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/consts.move is move
@@ -132,7 +132,6 @@ the second smt2 file exists
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move is move
 file name is exists_in_vector
 dir exists
-rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
 the second smt2 file exists
@@ -181,7 +180,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 25952 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 15097 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is move
@@ -190,7 +189,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 26081 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 15228 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is a file
@@ -208,7 +207,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 26358 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 15522 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.cvc4_exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.exp is a file
@@ -226,7 +225,7 @@ dir exists
 output.bpl exists
 the first smt2 file exists
 the second smt2 file exists
-./gen_andy.sh: line 23: 26606 Aborted                 timeout 5 $cvc5 $bm_dir_single/$bm_smt2 --incremental > $bm_dir_single/andy_default.output 2>&1
+./gen_andy.sh: line 23: 15770 Aborted                 timeout 5 $cvc5 $bm_dir_single/$bm_smt2 --incremental > $bm_dir_single/andy_default.output 2>&1
 /home/ying/diem/language/move-prover/tests/sources/functional/let.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/let.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/let.move is move
@@ -253,7 +252,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 27043 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 16197 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is move
@@ -335,7 +334,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 28062 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 17214 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is move
@@ -351,7 +350,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 28290 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 17446 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is move
@@ -421,7 +420,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 28965 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 18090 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/resources.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/resources.move is a file
@@ -485,7 +484,7 @@ dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
 the first smt2 file exists
-./gen_andy.sh: line 23: 29692 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 18810 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is a file
 the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is move
@@ -493,9 +492,9 @@ file name is simple_vector_client
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
-./gen_andy.sh: line 23: 29823 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 18928 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
 the first smt2 file exists
-./gen_andy.sh: line 23: 29878 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 18983 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists
 /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.exp is a file
 /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is a file
@@ -557,8 +556,8 @@ file name is verify_vector
 dir exists
 rm: cannot remove '*.bpl.log': No such file or directory
 output.bpl exists
-./gen_andy.sh: line 23: 30679 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
+./gen_andy.sh: line 23: 19768 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:O:strings-exp=true /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_strings-exp.log 2>&1
 the first smt2 file exists
-./gen_andy.sh: line 23: 30733 Aborted                 timeout 5 $cvc5 $bm_dir_single/$bm_smt2 --incremental --strings-exp > $bm_dir_single/andy_strings-exp.output 2>&1
-./gen_andy.sh: line 23: 30736 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
+./gen_andy.sh: line 23: 19812 Aborted                 timeout 5 $cvc5 $bm_dir_single/$bm_smt2 --incremental --strings-exp > $bm_dir_single/andy_strings-exp.output 2>&1
+./gen_andy.sh: line 23: 19815 Aborted                 timeout 5 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc5 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_andy_default.log 2>&1
 the second smt2 file exists

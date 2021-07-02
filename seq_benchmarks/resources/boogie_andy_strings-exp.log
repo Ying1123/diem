@@ -15,19 +15,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestResources_borrow_global_mut_correct$verify ...
-  [0.363 s, 2 proof obligations]  verified
+  [0.366 s, 2 proof obligations]  verified
 
 Verifying $42_TestResources_create_empty$verify ...
   [0.015 s, 1 proof obligation]  verified
 
 Verifying $42_TestResources_create_resource$verify ...
-  [0.086 s, 3 proof obligations]  verified
+  [0.082 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_create_resource_at_signer$verify ...
-  [0.068 s, 3 proof obligations]  verified
+  [0.070 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_create_resource_incorrect$verify ...
-  [0.073 s, 3 proof obligations]  error
+  [0.069 s, 3 proof obligations]  error
 assert_failed(2,998,1050): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/resources/resources.andy.bpl(1296,9): anon0
@@ -35,49 +35,49 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/resources/resources.andy.bpl(1334,34): anon6_Else
 
 Verifying $42_TestResources_identity$verify ...
-  [0.011 s, 4 proof obligations]  verified
+  [0.016 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_addr$verify ...
   [0.052 s, 2 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_addr_and_return$verify ...
-  [0.082 s, 5 proof obligations]  verified
+  [0.087 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_addr_to_sender$verify ...
-  [0.256 s, 7 proof obligations]  verified
+  [0.257 s, 7 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_sender_and_return$verify ...
-  [0.081 s, 4 proof obligations]  verified
+  [0.082 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_sender_to_sender$verify ...
-  [0.180 s, 5 proof obligations]  verified
+  [0.182 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_pack_A$verify ...
-  [0.018 s, 3 proof obligations]  verified
+  [0.017 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_pack_B$verify ...
-  [0.025 s, 4 proof obligations]  verified
+  [0.028 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_pack_C$verify ...
   [0.029 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_ref_A$verify ...
-  [0.066 s, 3 proof obligations]  verified
+  [0.068 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_spec_pack_A$verify ...
   [0.022 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_spec_pack_B$verify ...
-  [0.031 s, 8 proof obligations]  verified
+  [0.034 s, 8 proof obligations]  verified
 
 Verifying $42_TestResources_spec_pack_R$verify ...
-  [0.013 s, 3 proof obligations]  verified
+  [0.014 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_unpack_A$verify ...
-  [0.029 s, 3 proof obligations]  verified
+  [0.019 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_unpack_B$verify ...
-  [0.026 s, 4 proof obligations]  verified
+  [0.030 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_unpack_C$verify ...
   [0.037 s, 5 proof obligations]  verified

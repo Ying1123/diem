@@ -1,7 +1,23 @@
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::withdrawal_capability_address` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_b` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::increment` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_return` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param_vec` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector_param` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref_incorrect` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref` to be verified
+03:00:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector` to be verified
+03:00:45 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestReferences
+03:00:45 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
+03:00:45 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+03:00:45 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+03:00:46 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 Boogie error (signal: 6 (core dumped)): Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
+Advisory: $42_TestReferences_ref_return$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
@@ -112,14 +128,14 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 22631
+  0 0 -> 22629
   0 20266 -> 20445
   0 20439 -> 20487
   0 20445 -> 20439
   0 20487 -> 20501
-  0 20501 -> (- 23488)
-  0 22631 -> 20266
-  else -> (- 23488)
+  0 20501 -> (- 23360)
+  0 22629 -> 20266
+  else -> (- 23360)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0

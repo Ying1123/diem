@@ -20,18 +20,18 @@ Verifying $42_TestAssertWithReferences_simple2$verify ...
   [0.027 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertWithReferences_simple3$verify ...
-  [0.090 s, 2 proof obligations]  verified
+  [0.093 s, 2 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple4$verify ...
-  [0.183 s, 5 proof obligations]  verified
+  [0.186 s, 5 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple5$verify ...
-  [0.106 s, 4 proof obligations]  verified
+  [0.109 s, 4 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple6$verify ...
-  [0.101 s, 4 proof obligations]  verified
+  [0.102 s, 4 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple7$verify ...
-  [0.071 s, 4 proof obligations]  verified
+  [0.069 s, 4 proof obligations]  verified
 
 Boogie program verifier finished with 7 verified, 0 errors

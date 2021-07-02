@@ -1,6 +1,17 @@
+02:58:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::create_R_invalid` to be verified
+02:58:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::create_R` to be verified
+02:58:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::remove_S_invalid` to be verified
+02:58:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::remove_R_invalid` to be verified
+02:58:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestGlobalInvariants::get_S_x` to be verified
+02:58:01 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
 [INFO] translating module TestGlobalInvariants
+02:58:01 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-[INFO] 0.009s build, 0.001s trafo, 0.002s gen, 0.601s verify
+02:58:01 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:58:01 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:58:02 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:58:02 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.009s build, 0.004s trafo, 0.007s gen, 0.629s verify
 error: global memory invariant does not hold
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:18:9 ───

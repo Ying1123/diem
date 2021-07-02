@@ -43,7 +43,7 @@ do
             fi
             cp $move_dir/$filename.move $bm_dir_single/
 			
-            cargo run --release --quiet --package move-prover -- -d ~/diem/language/move-stdlib/modules $move_dir/$filename.move --use-cvc4 --vector-theory SmtSeq --generate-smt -k > $bm_dir_single/mvp_andy.log 2>&1
+            cargo run --release --quiet --package move-prover -- -d ~/diem/language/move-stdlib/modules $move_dir/$filename.move --use-cvc4 --vector-theory SmtSeq --generate-smt -v debug -k > $bm_dir_single/mvp_andy.log 2>&1
             rm *.smt
             rm *.bpl.log
             output_bpl=./output.bpl

@@ -15,16 +15,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestLet_local_let_with_memory_access$verify ...
-  [0.289 s, 1 proof obligation]  verified
+  [0.275 s, 1 proof obligation]  verified
 
 Verifying $42_TestLet_spec_let$verify ...
-  [0.171 s, 2 proof obligations]  verified
+  [0.178 s, 2 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_abort$verify ...
-  [1.627 s, 6 proof obligations]  verified
+  [1.624 s, 6 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_abort_incorrect$verify ...
-  [0.465 s, 6 proof obligations]  errors
+  [0.473 s, 6 proof obligations]  errors
 assert_failed(2,1867,1886): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1318,9): anon0
@@ -47,9 +47,9 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1456,1): L2
 
 Verifying $42_TestLet_spec_let_with_abort_opaque_caller$verify ...
-  [0.140 s, 6 proof obligations]  verified
+  [0.139 s, 6 proof obligations]  verified
 
 Verifying $42_TestLet_spec_let_with_old$verify ...
-  [0.220 s, 2 proof obligations]  verified
+  [0.223 s, 2 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

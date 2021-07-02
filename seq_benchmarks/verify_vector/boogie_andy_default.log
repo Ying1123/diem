@@ -16,7 +16,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $42_VerifyVector_verify_append$verify ...
-  [0.822 s, 15 proof obligations]  inconclusive
+  [0.812 s, 15 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.andy.bpl(1079,27): Verification inconclusive ($42_VerifyVector_verify_append$verify)
 Prover error: Prover died
 

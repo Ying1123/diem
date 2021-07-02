@@ -12,21 +12,11 @@ Parsing /home/ying/diem/seq_benchmarks/invariants_with_quant/invariants_with_qua
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
-Prover error: Fatal failure within void cvc5::Minisat::Solver::pop() at /home/ying/CVC4/src/prop/minisat/core/Solver.cc:1969
-
-Prover error: Check failure
-
-Prover error: 
-
-Prover error:  decisionLevel() == 0
-
-Prover error: 
-
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestQuantInvariant_vector_of_proper_positives$verify ...
-  [0.428 s, 5 proof obligations]  inconclusive
+  [0.421 s, 5 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/invariants_with_quant/invariants_with_quant.andy.bpl(1076,27): Verification inconclusive ($42_TestQuantInvariant_vector_of_proper_positives$verify)
 
 Boogie program verifier finished with 0 verified, 0 errors, 1 inconclusive

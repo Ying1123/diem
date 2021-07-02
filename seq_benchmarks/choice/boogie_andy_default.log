@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestSome_populate_R$verify ...
-  [0.595 s, 1 proof obligation]  error
+  [0.590 s, 1 proof obligation]  error
 assert_failed(2,1601,1647): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/choice/choice.andy.bpl(1109,9): anon0
@@ -25,10 +25,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/choice/choice.andy.bpl(1185,5): anon15_Else
 
 Verifying $42_TestSome_simple$verify ...
-  [0.036 s, 1 proof obligation]  verified
+  [0.035 s, 1 proof obligation]  verified
 
 Verifying $42_TestSome_simple_incorrect$verify ...
-  [0.093 s, 1 proof obligation]  error
+  [0.088 s, 1 proof obligation]  error
 assert_failed(2,615,677): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/choice/choice.andy.bpl(1259,9): anon0
@@ -39,7 +39,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $42_TestSome_test_min$verify ...
-  [0.145 s, 1 proof obligation]  inconclusive
+  [0.138 s, 1 proof obligation]  inconclusive
 /home/ying/diem/seq_benchmarks/choice/choice.andy.bpl(1340,27): Verification inconclusive ($42_TestSome_test_min$verify)
 Prover error: Fatal failure within void cvc5::Minisat::Solver::pop() at /home/ying/CVC4/src/prop/minisat/core/Solver.cc:1969
 

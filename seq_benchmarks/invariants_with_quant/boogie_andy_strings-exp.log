@@ -15,6 +15,6 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestQuantInvariant_vector_of_proper_positives$verify ...
-  [3.138 s, 5 proof obligations]  verified
+  [3.176 s, 5 proof obligations]  verified
 
 Boogie program verifier finished with 1 verified, 0 errors

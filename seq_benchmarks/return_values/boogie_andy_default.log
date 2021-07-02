@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestReturnValue_one_two$verify ...
-  [0.242 s, 3 proof obligations]  verified
+  [0.246 s, 3 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_incorrect$verify ...
   [0.003 s, 0 proof obligations]  verified
@@ -23,7 +23,7 @@ Verifying $42_TestReturnValue_one_two_wrapper$verify ...
   [0.016 s, 4 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_wrapper_incorrect$verify ...
-  [0.058 s, 7 proof obligations]  error
+  [0.053 s, 7 proof obligations]  error
 assert_failed(2,345,367): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1100,5): anon0
@@ -32,10 +32,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1106,5): anon4_Else
 
 Verifying $42_TestReturnValue_true_one$verify ...
-  [0.013 s, 3 proof obligations]  verified
+  [0.009 s, 3 proof obligations]  verified
 
 Verifying $42_TestReturnValue_true_one_wrapper$verify ...
-  [0.027 s, 2 proof obligations]  verified
+  [0.032 s, 2 proof obligations]  verified
 
 Verifying $42_TestReturnValue_true_one_wrapper_incorrect$verify ...
   [0.038 s, 5 proof obligations]  error

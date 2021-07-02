@@ -15,7 +15,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestSchemaExp_bar_incorrect$verify ...
-  [0.300 s, 2 proof obligations]  error
+  [0.273 s, 2 proof obligations]  error
 assert_failed(2,416,722): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.andy.bpl(903,9): anon0
@@ -24,7 +24,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.andy.bpl(921,16): anon4_Then
 
 Verifying $42_TestSchemaExp_baz$verify ...
-  [0.149 s, 2 proof obligations]  verified
+  [0.142 s, 2 proof obligations]  verified
 
 Verifying $42_TestSchemaExp_baz_incorrect$verify ...
   [0.110 s, 2 proof obligations]  error
@@ -36,6 +36,6 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.andy.bpl(1131,5): anon4_Else
 
 Verifying $42_TestSchemaExp_foo$verify ...
-  [0.029 s, 3 proof obligations]  verified
+  [0.026 s, 3 proof obligations]  verified
 
 Boogie program verifier finished with 2 verified, 2 errors

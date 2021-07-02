@@ -26,7 +26,7 @@ Prover error:
 Advisory: $42_VerifyVector_verify_append$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 
 Verifying $42_VerifyVector_verify_append$verify ...
-  [1.300 s, 15 proof obligations]  inconclusive
+  [1.187 s, 15 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/verify_vector/verify_vector.andy.bpl(1079,27): Verification inconclusive ($42_VerifyVector_verify_append$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe

@@ -15,10 +15,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestGlobalInvariants_create_R$verify ...
-  [0.500 s, 3 proof obligations]  verified
+  [0.484 s, 3 proof obligations]  verified
 
 Verifying $42_TestGlobalInvariants_create_R_invalid$verify ...
-  [0.150 s, 2 proof obligations]  error
+  [0.154 s, 2 proof obligations]  error
 assert_failed(2,316,386): global memory invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.andy.bpl(1067,9): anon0
@@ -27,10 +27,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.andy.bpl(1108,5): anon7_Else
 
 Verifying $42_TestGlobalInvariants_get_S_x$verify ...
-  [0.134 s, 3 proof obligations]  verified
+  [0.152 s, 3 proof obligations]  verified
 
 Verifying $42_TestGlobalInvariants_remove_R_invalid$verify ...
-  [0.169 s, 2 proof obligations]  error
+  [0.184 s, 2 proof obligations]  error
 assert_failed(2,396,477): global memory invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.andy.bpl(1321,9): anon0
@@ -40,7 +40,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.andy.bpl(1414,5): anon11_Else
 
 Verifying $42_TestGlobalInvariants_remove_S_invalid$verify ...
-  [0.203 s, 3 proof obligations]  error
+  [0.199 s, 3 proof obligations]  error
 assert_failed(2,316,386): global memory invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.andy.bpl(1473,9): anon0

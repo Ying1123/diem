@@ -14,33 +14,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestInvariants_invalid_R_pack$verify ...
-  [0.270 s, 2 proof obligations]  error
+  [0.278 s, 2 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(948,5): anon0
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(948,5): anon0$1
 
 Verifying $42_TestInvariants_invalid_R_update$verify ...
-  [0.088 s, 4 proof obligations]  verified
+  [0.090 s, 4 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
-  [0.146 s, 7 proof obligations]  verified
+  [0.147 s, 7 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
-  [0.114 s, 2 proof obligations]  verified
+  [0.121 s, 2 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
-  [0.131 s, 3 proof obligations]  verified
+  [0.128 s, 3 proof obligations]  verified
 
 Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
-  [0.229 s, 3 proof obligations]  error
+  [0.225 s, 3 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1461,5): anon0
     /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1461,5): anon0$1
 
 Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
-  [0.233 s, 3 proof obligations]  verified
+  [0.232 s, 3 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 

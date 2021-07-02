@@ -1,4 +1,4 @@
-03:01:02 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M::use_them` to be verified
+05:37:37 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M::use_them` to be verified
 [INFO] translating module M
 error: [boogie translator] function or tuple result type not yet supported
 

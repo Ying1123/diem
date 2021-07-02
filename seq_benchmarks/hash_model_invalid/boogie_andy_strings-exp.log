@@ -24,7 +24,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.andy.bpl(944,5): anon7_Else
 
 Verifying $42_TestHash_hash_test2$verify ...
-  [0.220 s, 2 proof obligations]  error
+  [0.217 s, 2 proof obligations]  error
 assert_failed(2,976,1029): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.andy.bpl(1008,9): anon0

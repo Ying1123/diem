@@ -1,8 +1,8 @@
-02:59:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
-02:59:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
-02:59:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::read_S_test2` to be verified
-02:59:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::read_S_test1` to be verified
-02:59:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
+05:36:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
+05:36:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+05:36:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::read_S_test2` to be verified
+05:36:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::read_S_test1` to be verified
+05:36:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
 error: function `A::mutate_at` is opaque but its specification does not have a modifies clause for `A::S`
 
     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.move:21:5 ───

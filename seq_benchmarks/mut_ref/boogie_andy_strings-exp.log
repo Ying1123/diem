@@ -15,12 +15,12 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $1_TestMutRef_call_identity$verify ...
-  [0.352 s, 1 proof obligation]  verified
+  [0.348 s, 1 proof obligation]  verified
 
 Verifying $1_TestMutRef_call_return_ref_different_path$verify ...
-  [1.112 s, 4 proof obligations]  verified
+  [1.124 s, 4 proof obligations]  verified
 
 Verifying $1_TestMutRef_call_return_ref_different_path_vec$verify ...
-  [1.833 s, 3 proof obligations]  verified
+  [1.834 s, 3 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

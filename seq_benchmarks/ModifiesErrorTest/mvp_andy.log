@@ -1,17 +1,17 @@
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
-02:59:34 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
+05:36:09 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
 [INFO] translating module A
 [INFO] translating module B
-02:59:34 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+05:36:09 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:59:34 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-02:59:34 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-02:59:35 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:36:09 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:36:09 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:36:10 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 [internal] boogie exited with prover errors:
 assert_failed(2,1563,1572): caller does not have permission to modify `B::T` at given address
 Execution trace:
@@ -108,9 +108,9 @@ $shr -> {
 ControlFlow -> {
   0 0 -> 17428
   0 15551 -> 15587
-  0 15587 -> (- 18019)
+  0 15587 -> (- 18024)
   0 17428 -> 15551
-  else -> (- 18019)
+  else -> (- 18024)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!1
@@ -232,10 +232,10 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 17424
+  0 0 -> 17426
   0 15958 -> 16004
   0 16004 -> (- 18041)
-  0 17424 -> 15958
+  0 17426 -> 15958
   else -> (- 18041)
 }
 lambda#0 -> {
@@ -372,9 +372,9 @@ $shr -> {
 ControlFlow -> {
   0 0 -> 18758
   0 16334 -> 16382
-  0 16382 -> (- 18918)
+  0 16382 -> (- 19064)
   0 18758 -> 16334
-  else -> (- 18918)
+  else -> (- 19064)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0
@@ -519,15 +519,15 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 18801
+  0 0 -> 18765
   0 16654 -> 16702
   0 16702 -> 16708
   0 16708 -> 16816
   0 16748 -> 16786
-  0 16786 -> (- 19337)
+  0 16786 -> (- 19298)
   0 16816 -> 16748
-  0 18801 -> 16654
-  else -> (- 19337)
+  0 18765 -> 16654
+  else -> (- 19298)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0

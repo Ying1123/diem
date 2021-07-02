@@ -14,30 +14,30 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestMonomorphization_create_R$verify ...
-  [0.555 s, 3 proof obligations]  verified
+  [0.544 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_create_R_generic$verify ...
-  [0.099 s, 3 proof obligations]  verified
+  [0.095 s, 3 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_mutate_R$verify ...
-  [0.252 s, 1 proof obligation]  verified
+  [0.249 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_pack_R$verify ...
-  [0.014 s, 1 proof obligation]  verified
+  [0.015 s, 1 proof obligation]  verified
 
 Verifying $42_TestMonomorphization_use_bcs$verify ...
-  [0.043 s, 2 proof obligations]  verified
+  [0.044 s, 2 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_use_event$verify ...
-  [1.644 s, 2 proof obligations]  verified
+  [1.622 s, 2 proof obligations]  verified
 
 Verifying $42_TestMonomorphization_use_vec$verify ...
-  [0.007 s, 0 proof obligations]  verified
+  [0.011 s, 0 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestMonomorphization_vec_addr$verify ...
-  [0.063 s, 1 proof obligation]  inconclusive
+  [0.068 s, 1 proof obligation]  inconclusive
 /home/ying/diem/seq_benchmarks/mono/mono.andy.bpl(2758,27): Verification inconclusive ($42_TestMonomorphization_vec_addr$verify)
 Prover error: Prover died
 

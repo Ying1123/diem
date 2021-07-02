@@ -14,12 +14,12 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $1_TestMutRef_call_identity$verify ...
-  [0.353 s, 1 proof obligation]  verified
+  [0.351 s, 1 proof obligation]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_TestMutRef_call_return_ref_different_path$verify ...
-  [0.181 s, 4 proof obligations]  inconclusive
+  [0.172 s, 4 proof obligations]  inconclusive
 /home/ying/diem/seq_benchmarks/mut_ref/mut_ref.andy.bpl(1410,27): Verification inconclusive ($1_TestMutRef_call_return_ref_different_path$verify)
 Prover error: Prover died
 

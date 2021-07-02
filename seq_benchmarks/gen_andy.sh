@@ -14,6 +14,7 @@ function IsSuffix() {
 
 BOOGIE_EXE=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 CVC4_EXE=/home/ying/bin/cvc4
+#CVC4_EXE=/home/ying/CVC4/andy_seq/bin/cvc5
 
 boogie=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 cvc5=/home/ying/CVC4/andy_seq/bin/cvc5

@@ -14,10 +14,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestInvariants_get$verify ...
-  [0.309 s, 1 proof obligation]  verified
+  [0.305 s, 1 proof obligation]  verified
 
 Verifying $42_TestInvariants_get_invalid$verify ...
-  [0.101 s, 1 proof obligation]  error
+  [0.103 s, 1 proof obligation]  error
 assert_failed(2,710,729): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.andy.bpl(1003,9): anon0

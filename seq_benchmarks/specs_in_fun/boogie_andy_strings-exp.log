@@ -15,10 +15,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestAssertAndAssume_simple1$verify ...
-  [0.251 s, 1 proof obligation]  verified
+  [0.244 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple1_incorrect$verify ...
-  [0.072 s, 1 proof obligation]  error
+  [0.075 s, 1 proof obligation]  error
 assert_failed(2,792,806): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(991,9): anon0
@@ -28,10 +28,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1019,34): anon4_Else
 
 Verifying $42_TestAssertAndAssume_simple2$verify ...
-  [0.065 s, 1 proof obligation]  verified
+  [0.073 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple2_incorrect$verify ...
-  [0.071 s, 1 proof obligation]  error
+  [0.073 s, 1 proof obligation]  error
 assert_failed(2,926,940): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1139,9): anon0
@@ -40,20 +40,20 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1159,5): anon3_Else
 
 Verifying $42_TestAssertAndAssume_simple3$verify ...
-  [0.023 s, 1 proof obligation]  verified
+  [0.027 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple3_incorrect$verify ...
-  [0.035 s, 1 proof obligation]  error
+  [0.038 s, 1 proof obligation]  error
 assert_failed(2,1056,1069): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1243,9): anon0
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1243,9): anon0$1
 
 Verifying $42_TestAssertAndAssume_simple4$verify ...
-  [0.063 s, 1 proof obligation]  verified
+  [0.062 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple4_incorrect$verify ...
-  [0.083 s, 1 proof obligation]  error
+  [0.082 s, 1 proof obligation]  error
 assert_failed(2,1223,1238): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1360,9): anon0

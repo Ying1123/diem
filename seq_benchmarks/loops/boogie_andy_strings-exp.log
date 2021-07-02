@@ -15,10 +15,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_VerifyLoops_iter10_abort$verify ...
-  [0.312 s, 4 proof obligations]  verified
+  [0.318 s, 4 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_abort_incorrect$verify ...
-  [0.161 s, 4 proof obligations]  error
+  [0.159 s, 4 proof obligations]  error
 assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1108,5): anon0
@@ -30,16 +30,16 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1273,1): L9
 
 Verifying $42_VerifyLoops_iter10_missing_inc_spec1$verify ...
-  [0.032 s, 3 proof obligations]  verified
+  [0.030 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_missing_inc_spec2$verify ...
-  [0.019 s, 3 proof obligations]  verified
+  [0.018 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_no_abort$verify ...
-  [0.094 s, 4 proof obligations]  verified
+  [0.095 s, 4 proof obligations]  verified
 
 Verifying $42_VerifyLoops_iter10_no_abort_incorrect$verify ...
-  [0.131 s, 4 proof obligations]  error
+  [0.127 s, 4 proof obligations]  error
 assert_failed(2,1634,1649): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1804,5): anon0
@@ -49,7 +49,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1867,34): anon12_Else
 
 Verifying $42_VerifyLoops_loop_invariant_base_invalid$verify ...
-  [0.053 s, 2 proof obligations]  error
+  [0.051 s, 2 proof obligations]  error
 assert_failed(2,4881,4895): base case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1995,9): anon0
@@ -68,7 +68,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2213,5): anon9_Else
 
 Verifying $42_VerifyLoops_loop_with_two_back_edges_correct$verify ...
-  [0.176 s, 3 proof obligations]  verified
+  [0.171 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify ...
   [0.212 s, 4 proof obligations]  error
@@ -86,7 +86,7 @@ Verifying $42_VerifyLoops_nested_loop_correct$verify ...
   [0.163 s, 3 proof obligations]  verified
 
 Verifying $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify ...
-  [0.233 s, 4 proof obligations]  errors
+  [0.226 s, 4 proof obligations]  errors
 assert_failed(2,3489,3503): base case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2915,9): anon0
@@ -101,7 +101,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3029,5): anon15_Else
 
 Verifying $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify ...
-  [0.223 s, 4 proof obligations]  error
+  [0.221 s, 4 proof obligations]  error
 assert_failed(2,2937,2951): induction case of the loop invariant does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3145,9): anon0

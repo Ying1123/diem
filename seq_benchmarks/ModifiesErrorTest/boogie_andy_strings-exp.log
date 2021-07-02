@@ -15,13 +15,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $0_A_mutate_at$verify ...
-  [0.439 s, 4 proof obligations]  verified
+  [0.454 s, 4 proof obligations]  verified
 
 Verifying $0_A_read_at$verify ...
-  [0.074 s, 3 proof obligations]  verified
+  [0.086 s, 3 proof obligations]  verified
 
 Verifying $0_B_move_from_test_incorrect$verify ...
-  [0.172 s, 2 proof obligations]  error
+  [0.184 s, 2 proof obligations]  error
 assert_failed(2,1563,1572): caller does not have permission to modify `B::T` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1149,9): anon0
@@ -29,7 +29,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1192,34): anon10_Else
 
 Verifying $0_B_move_to_test_incorrect$verify ...
-  [0.163 s, 2 proof obligations]  error
+  [0.160 s, 2 proof obligations]  error
 assert_failed(2,1190,1197): caller does not have permission to modify `B::T` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1321,9): anon0
@@ -45,7 +45,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1535,34): anon10_Else
 
 Verifying $0_B_mutate_S_test2_incorrect$verify ...
-  [0.196 s, 2 proof obligations]  error
+  [0.190 s, 2 proof obligations]  error
 assert_failed(2,2331,2347): unknown assertion failed
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1680,9): anon0
@@ -57,7 +57,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1791,34): anon13_Else
 
 Verifying $0_B_mutate_at_test_incorrect$verify ...
-  [0.310 s, 2 proof obligations]  error
+  [0.306 s, 2 proof obligations]  error
 assert_failed(2,821,838): caller does not have permission to modify `B::T` at given address
 Execution trace:
     /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1860,9): anon0

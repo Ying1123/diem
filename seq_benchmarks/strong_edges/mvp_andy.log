@@ -1,15 +1,15 @@
-03:01:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc_edge` to be verified
-03:01:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc__edge_incorrect` to be verified
-03:01:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges_incorrect` to be verified
-03:01:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges` to be verified
-03:01:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::vec_edge` to be verified
-03:01:29 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+05:38:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc_edge` to be verified
+05:38:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc__edge_incorrect` to be verified
+05:38:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges_incorrect` to be verified
+05:38:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges` to be verified
+05:38:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::vec_edge` to be verified
+05:38:04 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestStrongEdges
-03:01:29 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+05:38:04 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-03:01:29 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-03:01:29 [DEBUG] (10) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-03:01:29 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:38:04 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:38:04 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:38:04 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 [internal] boogie exited with prover errors:
 Prover error: Unexpected value: (seq.unit 0)
 
@@ -98,11 +98,11 @@ $shr -> {
   else -> 0
 }
 ControlFlow -> {
-  0 0 -> 16253
+  0 0 -> 16257
   0 15259 -> 15327
-  0 15327 -> (- 16754)
-  0 16253 -> 15259
-  else -> (- 16754)
+  0 15327 -> (- 16761)
+  0 16257 -> 15259
+  else -> (- 16761)
 }
 lambda#0 -> {
   false -> T@[Int]Bool!val!0

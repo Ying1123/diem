@@ -1,27 +1,26 @@
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_root` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::identity` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_root` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec2` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_identity` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2_incorrect` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2` to be verified
-03:00:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec` to be verified
-03:00:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_root` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::identity` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_root` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec2` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_identity` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2_incorrect` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2` to be verified
+05:36:51 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec` to be verified
+05:36:51 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestMutRef
-03:00:16 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+05:36:51 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-03:00:16 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-03:00:16 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-03:00:17 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:36:51 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:36:51 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:36:52 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
 Boogie error (signal: 6 (core dumped)): Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 Advisory: $1_TestMutRef_call_return_ref_different_path$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
-Advisory: $1_TestMutRef_call_return_ref_different_path_vec$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 output.bpl(1410,27): Verification inconclusive ($1_TestMutRef_call_return_ref_different_path$verify)
 output.bpl(1582,27): Verification inconclusive ($1_TestMutRef_call_return_ref_different_path_vec$verify)
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp

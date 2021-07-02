@@ -14,20 +14,20 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestAbortsIf_abort1$verify ...
-  [0.276 s, 2 proof obligations]  verified
+  [0.264 s, 2 proof obligations]  verified
 
 Verifying $42_TestAbortsIf_abort2_incorrect$verify ...
-  [0.047 s, 1 proof obligation]  error
+  [0.048 s, 1 proof obligation]  error
 assert_failed(2,758,777): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(993,9): anon0
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(993,9): anon0$1
 
 Verifying $42_TestAbortsIf_abort3$verify ...
-  [0.006 s, 1 proof obligation]  verified
+  [0.008 s, 1 proof obligation]  verified
 
 Verifying $42_TestAbortsIf_abort4_incorrect$verify ...
-  [0.051 s, 1 proof obligation]  error
+  [0.050 s, 1 proof obligation]  error
 assert_failed(2,1117,1134): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1089,9): anon0
@@ -36,7 +36,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1114,34): anon4_Else
 
 Verifying $42_TestAbortsIf_abort5_incorrect$verify ...
-  [0.069 s, 2 proof obligations]  error
+  [0.064 s, 2 proof obligations]  error
 assert_failed(2,1312,1366): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1171,9): anon0
@@ -45,7 +45,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1196,16): anon4_Then
 
 Verifying $42_TestAbortsIf_abort6_incorrect$verify ...
-  [0.059 s, 2 proof obligations]  error
+  [0.058 s, 2 proof obligations]  error
 assert_failed(2,1533,1550): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1258,9): anon0
@@ -54,10 +54,10 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1283,34): anon4_Else
 
 Verifying $42_TestAbortsIf_abort_1$verify ...
-  [0.005 s, 2 proof obligations]  verified
+  [0.006 s, 2 proof obligations]  verified
 
 Verifying $42_TestAbortsIf_abort_at_2_or_3$verify ...
-  [0.033 s, 1 proof obligation]  verified
+  [0.036 s, 1 proof obligation]  verified
 
 Verifying $42_TestAbortsIf_abort_at_2_or_3_spec_incorrect$verify ...
   [0.055 s, 1 proof obligation]  error
@@ -69,7 +69,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1583,34): anon7_Else
 
 Verifying $42_TestAbortsIf_abort_at_2_or_3_strict_incorrect$verify ...
-  [0.055 s, 2 proof obligations]  error
+  [0.057 s, 2 proof obligations]  error
 assert_failed(2,3836,4011): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1645,9): anon0
@@ -78,7 +78,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1711,16): anon6_Then
 
 Verifying $42_TestAbortsIf_abort_at_2_or_3_total_incorrect$verify ...
-  [0.059 s, 2 proof obligations]  error
+  [0.062 s, 2 proof obligations]  error
 assert_failed(2,3251,3455): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1776,9): anon0
@@ -87,13 +87,13 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(1842,16): anon7_Then
 
 Verifying $42_TestAbortsIf_aborts_if_with_code$verify ...
-  [0.054 s, 2 proof obligations]  verified
+  [0.052 s, 2 proof obligations]  verified
 
 Verifying $42_TestAbortsIf_multi_abort1$verify ...
-  [0.042 s, 3 proof obligations]  verified
+  [0.045 s, 3 proof obligations]  verified
 
 Verifying $42_TestAbortsIf_multi_abort2_incorrect$verify ...
-  [0.061 s, 3 proof obligations]  error
+  [0.055 s, 3 proof obligations]  error
 assert_failed(2,2095,2112): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(2148,9): anon0
@@ -102,7 +102,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(2173,34): anon4_Else
 
 Verifying $42_TestAbortsIf_multi_abort3_incorrect$verify ...
-  [0.041 s, 1 proof obligation]  error
+  [0.042 s, 1 proof obligation]  error
 assert_failed(2,2284,2374): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(2239,9): anon0
@@ -112,7 +112,7 @@ Verifying $42_TestAbortsIf_multi_abort4$verify ...
   [0.026 s, 1 proof obligation]  verified
 
 Verifying $42_TestAbortsIf_multi_abort5_incorrect$verify ...
-  [0.040 s, 3 proof obligations]  error
+  [0.043 s, 3 proof obligations]  error
 assert_failed(2,2732,2747): function does not abort under this condition
 Execution trace:
     /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.andy.bpl(2346,9): anon0

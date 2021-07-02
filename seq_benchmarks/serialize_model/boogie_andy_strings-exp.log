@@ -15,10 +15,10 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.440 s, 4 proof obligations]  verified
+  [0.451 s, 4 proof obligations]  verified
 
 Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
-  [0.113 s, 3 proof obligations]  error
+  [0.114 s, 3 proof obligations]  error
 assert_failed(2,879,908): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(1050,9): anon0

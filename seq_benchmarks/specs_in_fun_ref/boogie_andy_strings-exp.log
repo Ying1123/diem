@@ -15,19 +15,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestAssertWithReferences_simple1$verify ...
-  [0.295 s, 3 proof obligations]  verified
+  [0.273 s, 3 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple2$verify ...
-  [0.029 s, 1 proof obligation]  verified
+  [0.022 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertWithReferences_simple3$verify ...
   [0.091 s, 2 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple4$verify ...
-  [0.190 s, 5 proof obligations]  verified
+  [0.180 s, 5 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple5$verify ...
-  [0.111 s, 4 proof obligations]  verified
+  [0.106 s, 4 proof obligations]  verified
 
 Verifying $42_TestAssertWithReferences_simple6$verify ...
   [0.103 s, 4 proof obligations]  verified

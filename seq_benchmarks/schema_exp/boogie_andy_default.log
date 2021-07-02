@@ -23,7 +23,7 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/schema_exp/schema_exp.andy.bpl(921,16): anon4_Then
 
 Verifying $42_TestSchemaExp_baz$verify ...
-  [0.143 s, 2 proof obligations]  verified
+  [0.139 s, 2 proof obligations]  verified
 
 Verifying $42_TestSchemaExp_baz_incorrect$verify ...
   [0.105 s, 2 proof obligations]  error

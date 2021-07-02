@@ -15,19 +15,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $0_A_mutate_at$verify ...
-  [0.453 s, 4 proof obligations]  verified
+  [0.451 s, 4 proof obligations]  verified
 
 Verifying $0_A_read_at$verify ...
-  [0.085 s, 3 proof obligations]  verified
+  [0.082 s, 3 proof obligations]  verified
 
 Verifying $0_B_move_from_test$verify ...
-  [0.058 s, 2 proof obligations]  verified
+  [0.059 s, 2 proof obligations]  verified
 
 Verifying $0_B_move_to_test$verify ...
-  [0.077 s, 2 proof obligations]  verified
+  [0.076 s, 2 proof obligations]  verified
 
 Verifying $0_B_mutate_S_test$verify ...
-  [0.190 s, 6 proof obligations]  verified
+  [0.187 s, 6 proof obligations]  verified
 
 Verifying $0_B_mutate_at_test$verify ...
   [0.186 s, 2 proof obligations]  verified

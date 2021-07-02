@@ -15,7 +15,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_TestCast_aborting_u64_cast$verify ...
-  [0.283 s, 3 proof obligations]  verified
+  [0.281 s, 3 proof obligations]  verified
 
 Verifying $42_TestCast_aborting_u64_cast_incorrect$verify ...
   [0.080 s, 2 proof obligations]  error
@@ -31,7 +31,7 @@ Verifying $42_TestCast_aborting_u8_cast$verify ...
   [0.047 s, 2 proof obligations]  verified
 
 Verifying $42_TestCast_aborting_u8_cast_incorrect$verify ...
-  [0.080 s, 2 proof obligations]  error
+  [0.083 s, 2 proof obligations]  error
 assert_failed(2,535,599): abort not covered by any of the `aborts_if` clauses
 Execution trace:
     /home/ying/diem/seq_benchmarks/cast/cast.andy.bpl(1101,9): anon0

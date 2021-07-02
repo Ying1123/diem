@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
 
 Verifying $42_AddressQuant_f$verify ...
-  [0.591 s, 3 proof obligations]  verified
+  [0.594 s, 3 proof obligations]  verified
 
 Verifying $42_AddressQuant_initialize$verify ...
-  [0.170 s, 3 proof obligations]  verified
+  [0.163 s, 3 proof obligations]  verified
 
 Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
-  [0.206 s, 2 proof obligations]  error
+  [0.196 s, 2 proof obligations]  error
 assert_failed(2,1555,1577): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl(1200,9): anon0

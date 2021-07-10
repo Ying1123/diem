@@ -1,0 +1,8 @@
+/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy_strings.smt2:381.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy_strings.smt2:1419.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")

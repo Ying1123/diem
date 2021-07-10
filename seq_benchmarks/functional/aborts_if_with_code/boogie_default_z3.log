@@ -1,0 +1,77 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:aborts_if_with_code.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestAbortsIfWithCode_aborts_if_with_code_mixed$verify ...
+  [0.129 s, 4 proof obligations]  verified
+
+Verifying $42_TestAbortsIfWithCode_aborts_if_with_code_mixed_invalid$verify ...
+  [0.024 s, 4 proof obligations]  error
+assert_failed(2,1786,1891): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1079,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1079,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1101,34): anon10_Else
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1139,16): anon11_Then
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1188,1): L7
+
+Verifying $42_TestAbortsIfWithCode_aborts_with$verify ...
+  [0.019 s, 1 proof obligation]  verified
+
+Verifying $42_TestAbortsIfWithCode_aborts_with_invalid$verify ...
+  [0.008 s, 1 proof obligation]  error
+assert_failed(2,2285,2342): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1344,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1344,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1366,34): anon9_Else
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1404,16): anon10_Then
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1442,1): L7
+
+Verifying $42_TestAbortsIfWithCode_aborts_with_mixed$verify ...
+  [0.011 s, 2 proof obligations]  verified
+
+Verifying $42_TestAbortsIfWithCode_aborts_with_mixed_invalid$verify ...
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,2792,2930): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1600,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1600,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1622,34): anon10_Else
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1660,16): anon11_Then
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1704,1): L7
+
+Verifying $42_TestAbortsIfWithCode_conditional_abort$verify ...
+  [0.014 s, 6 proof obligations]  verified
+
+Verifying $42_TestAbortsIfWithCode_conditional_abort_invalid$verify ...
+  [0.009 s, 5 proof obligations]  error
+assert_failed(2,872,1019): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1905,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1905,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(1935,16): anon10_Then
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(2031,1): L7
+
+Verifying $42_TestAbortsIfWithCode_exec_failure_invalid$verify ...
+  [0.020 s, 4 proof obligations]  error
+assert_failed(2,1138,1252): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(2058,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(2058,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(547,9): inline$$Div$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(547,9): inline$$Div$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/functional/aborts_if_with_code/aborts_if_with_code.default.z3.bpl(2080,9): anon4_Then
+
+Boogie program verifier finished with 4 verified, 5 errors

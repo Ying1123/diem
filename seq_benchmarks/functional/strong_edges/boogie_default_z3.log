@@ -1,0 +1,41 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:strong_edges.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestStrongEdges_glob_and_field_edges$verify ...
+  [0.132 s, 4 proof obligations]  verified
+
+Verifying $42_TestStrongEdges_glob_and_field_edges_incorrect$verify ...
+  [0.027 s, 4 proof obligations]  error
+assert_failed(2,1208,1239): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl(1250,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl(1250,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl(1287,13): anon7_Else
+    /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl(1289,5): anon8_Else
+
+Verifying $42_TestStrongEdges_loc__edge_incorrect$verify ...
+  [0.015 s, 1 proof obligation]  error
+assert_failed(2,1443,1457): unknown assertion failed
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl(1361,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/strong_edges/strong_edges.default.z3.bpl(1361,5): anon0$1
+
+Verifying $42_TestStrongEdges_loc_edge$verify ...
+  [0.008 s, 1 proof obligation]  verified
+
+Verifying $42_TestStrongEdges_vec_edge$verify ...
+  [0.017 s, 4 proof obligations]  verified
+
+Boogie program verifier finished with 3 verified, 2 errors

@@ -1,0 +1,45 @@
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_C` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_B` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_A` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_R` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::ref_A` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_C` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_B` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_A` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr_to_sender` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr_and_return` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::identity` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource_at_signer` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_empty` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::borrow_global_mut_correct` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_B` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_A` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_sender_to_sender` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_sender_and_return` to be verified
+05:28:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource_incorrect` to be verified
+05:28:13 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+[INFO] translating module TestResources
+05:28:13 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+05:28:13 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:28:13 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:28:13 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:28:13 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.013s build, 0.010s trafo, 0.004s gen, 0.679s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/resources.move:39:6 ───
+    │
+ 39 │      ensures exists<R>(Signer::spec_address_of(account));
+    │      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/resources.move:32: create_resource_incorrect
+    =         account = 0x0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/resources.move:33: create_resource_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/resources.move:36: create_resource_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/resources.move:38
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/resources.move:39
+
+exiting with boogie verification errors

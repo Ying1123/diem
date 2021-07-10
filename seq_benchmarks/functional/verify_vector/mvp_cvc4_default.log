@@ -1,0 +1,577 @@
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_push_back` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_pop_back` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_length` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_empty` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_destroy_empty` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow_mut` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_is_empty` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_singleton` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_reverse` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_index_of` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_contains` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_swap_remove` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_remove` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_reverse` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_remove` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_is_empty` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_index_of` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_contains` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_append` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap_remove` to be verified
+05:28:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_append` to be verified
+05:28:41 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module VerifyVector
+05:28:41 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+05:28:41 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:28:41 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:28:42 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:28:42 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.018s build, 0.014s trafo, 0.005s gen, 1.076s verify
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143:17 ───
+     │
+ 143 │                 assert forall k in 0..len(old(v)): v[k] == old(v)[k];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:135: verify_append
+     =         v = &vector{(size): 2, <generic>, default: <generic>}
+     =         other = vector{(size): 2, 1: <generic>, default: <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:136: verify_append
+     =         o = &vector{(size): 2, 1: <generic>, default: <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:137: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:139: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:147: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:138: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144:17 ───
+     │
+ 144 │                 assert forall k in 0..len(o): o[k] == other[len(other)-1-k];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:135: verify_append
+     =         v = &vector{}
+     =         other = vector{(size): 2, 1: <generic>, default: <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:136: verify_append
+     =         o = &vector{(size): 2, 1: <generic>, default: <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:137: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:139: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:147: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:138: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145:17 ───
+     │
+ 145 │                 assert forall k in len(old(v))..len(v): v[k] == other[k-len(old(v))];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:135: verify_append
+     =         v = &vector{}
+     =         other = vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:136: verify_append
+     =         o = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:137: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:139: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:147: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:138: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:155:9 ───
+     │
+ 155 │         ensures v[0..len(old(v))] == old(v);
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:135: verify_append
+     =         v = &vector{<generic>}
+     =         other = vector{}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:136: verify_append
+     =         o = &vector{}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:137: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:139: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:147: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:138: verify_append
+     =         v = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:154
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:155
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:156:9 ───
+     │
+ 156 │         ensures v[len(old(v))..len(v)] == other;
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:135: verify_append
+     =         v = &vector{<generic>}
+     =         other = vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:136: verify_append
+     =         o = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:137: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:139: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:145: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:147: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:138: verify_append
+     =         v = &vector{<generic>, <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:154
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:155
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:156
+
+error: unknown assertion failed
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:234:12 ───
+     │
+ 234 │            assert !(exists x in v: x==e);
+     │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:240
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:221: verify_contains
+     =         v = vector{<generic>}
+     =         e = <generic>
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:222: verify_contains
+     =         i = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:223: verify_contains
+     =         len = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:225: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:226: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:228: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:224: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:234: verify_contains
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:226:16 ───
+     │
+ 226 │                assert !(exists j in 0..i: v[j]==e);
+     │                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:240
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:221: verify_contains
+     =         v =
+     =           vector{
+     =             (size): 18446744073709551615,
+     =             <generic>,
+     =             18446744073709551613: <generic>,
+     =             <generic>,
+     =             default: <generic>}
+     =         e = <generic>
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:222: verify_contains
+     =         i = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:223: verify_contains
+     =         len = 18446744073709551615
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:225: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:226: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:228: verify_contains
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:224: verify_contains
+     =         i = 18446744073709551614
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:226: verify_contains
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:192:17 ───
+     │
+ 192 │                 assert !(exists j in 0..i: v[j]==e);
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:206
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:187: verify_index_of
+     =         v =
+     =           vector{
+     =             (size): 18446744073709551615,
+     =             <generic>,
+     =             18446744073709551613: <generic>,
+     =             <generic>,
+     =             default: <generic>}
+     =         e = <generic>
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:188: verify_index_of
+     =         i = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:189: verify_index_of
+     =         len = 18446744073709551615
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:191: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:192: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:194: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:190: verify_index_of
+     =         i = 18446744073709551614
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:192: verify_index_of
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:203:9 ───
+     │
+ 203 │         ensures result_1 == (exists x in v: x==e); // whether v contains e or not
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:206
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:187: verify_index_of
+     =         v = vector{<generic>}
+     =         e = <generic>
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:188: verify_index_of
+     =         i = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:189: verify_index_of
+     =         len = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:191: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:192: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:194: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:190: verify_index_of
+     =         result_1 = false
+     =         result_2 = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:202
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:203
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:205:9 ───
+     │
+ 205 │         ensures result_1 ==> (forall i in 0..result_2: v[i]!=e); // ensure the smallest index
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:206
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:187: verify_index_of
+     =         v =
+     =           vector{
+     =             (size): 18446744073709551615,
+     =             <generic>,
+     =             18446744073709551614: <generic>,
+     =             default: <generic>}
+     =         e = <generic>
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:188: verify_index_of
+     =         i = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:189: verify_index_of
+     =         len = 18446744073709551615
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:191: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:192: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:194: verify_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:190: verify_index_of
+     =         result_1 = true
+     =         result_2 = 18446744073709551614
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:202
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:203
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:204
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:205
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:216:9 ───
+     │
+ 216 │         ensures result_1 ==> (forall i in 0..result_2: v[i]!=e); // ensure the smallest index
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:217
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:209: verify_model_index_of
+     =         v = vector{<generic>, <generic>}
+     =         e = <generic>
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:210: verify_model_index_of
+     =         result_1 = true
+     =         result_2 = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:211: verify_model_index_of
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:213
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:214
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:215
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:216
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266:17 ───
+     │
+ 266 │                 assert forall k in j..i: v[k] == old(v)[k+1];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:282
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:254: verify_remove
+     =         v = &vector{<generic>, <generic>, <generic>, <generic>}
+     =         j = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:255: verify_remove
+     =         vlen = 4
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:256: verify_remove
+     =         i = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:258: verify_remove
+     =         vlen = 3
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:262: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:263: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:264: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:265: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:267: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:268: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:263: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:264: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:265: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:267: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:268: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:270: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:261: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:273: verify_remove
+     =         i = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:263: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:264: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:265: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266: verify_remove
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:267:17 ───
+     │
+ 267 │                 assert forall k in i+1..len(v): v[k] == old(v)[k];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:282
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:254: verify_remove
+     =         v =
+     =           &vector{
+     =             (size): 4,
+     =             <generic>,
+     =             <generic>,
+     =             3: <generic>,
+     =             default: <generic>}
+     =         j = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:255: verify_remove
+     =         vlen = 4
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:256: verify_remove
+     =         i = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:258: verify_remove
+     =         vlen = 3
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:262: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:263: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:264: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:265: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:267: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:268: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:263: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:264: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:265: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:267: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:268: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:270: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:261: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:273: verify_remove
+     =         i = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:263: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:264: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:265: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:266: verify_remove
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:267: verify_remove
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108:17 ───
+     │
+ 108 │                 assert forall i in 0..front_index: v[i] == old(v)[vlen-1-i];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:99: verify_reverse
+     =         v = &vector{<generic>, <generic>, <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:100: verify_reverse
+     =         vlen = 3
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:101: verify_reverse
+     =         front_index = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:104: verify_reverse
+     =         back_index = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:106: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:113: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:105: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:116: verify_reverse
+     =         front_index = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:117: verify_reverse
+     =         back_index = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109:17 ───
+     │
+ 109 │                 assert forall i in 0..front_index: v[vlen-1-i] == old(v)[i];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:99: verify_reverse
+     =         v = &vector{<generic>, <generic>, <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:100: verify_reverse
+     =         vlen = 3
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:101: verify_reverse
+     =         front_index = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:104: verify_reverse
+     =         back_index = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:106: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:113: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:105: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:116: verify_reverse
+     =         front_index = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:117: verify_reverse
+     =         back_index = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110:17 ───
+     │
+ 110 │                 assert forall j in front_index..back_index+1: v[j] == old(v)[j];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:99: verify_reverse
+     =         v = &vector{(size): 3, 1: <generic>, default: <generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:100: verify_reverse
+     =         vlen = 3
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:101: verify_reverse
+     =         front_index = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:104: verify_reverse
+     =         back_index = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:106: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:113: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:105: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:116: verify_reverse
+     =         front_index = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:117: verify_reverse
+     =         back_index = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:122:9 ───
+     │
+ 122 │         ensures forall i in 0..len(v): v[i] == old(v)[len(v)-1-i];
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:99: verify_reverse
+     =         v = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:100: verify_reverse
+     =         vlen = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:101: verify_reverse
+     =         front_index = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:104: verify_reverse
+     =         back_index = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:106: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:107: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:108: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:109: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:110: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:111: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:113: verify_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:105: verify_reverse
+     =         v = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:121
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:122
+
+exiting with boogie verification errors

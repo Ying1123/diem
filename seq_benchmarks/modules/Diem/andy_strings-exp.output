@@ -1,0 +1,11 @@
+/home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy_strings.smt2:407.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy_strings.smt2:1462.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+(error "Illegal argument detected
+cvc5::theory::TheoryId cvc5::theory::kindToTheoryId(cvc5::Kind)
+
+  `k' is a bad argument
+bad kind")

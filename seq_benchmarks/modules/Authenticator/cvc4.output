@@ -1,0 +1,6 @@
+/home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.cvc4.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

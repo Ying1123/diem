@@ -1,0 +1,50 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:nested_invariants.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestNestedInvariants_mutate$verify ...
+  [0.140 s, 6 proof obligations]  verified
+
+Verifying $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify ...
+  [0.026 s, 6 proof obligations]  error
+assert_failed(2,287,303): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1107,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1107,5): anon0$1
+
+Verifying $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify ...
+  [0.016 s, 6 proof obligations]  error
+assert_failed(2,689,707): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1226,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1226,5): anon0$1
+
+Verifying $42_TestNestedInvariants_new$verify ...
+  [0.009 s, 3 proof obligations]  verified
+
+Verifying $42_TestNestedInvariants_new_inner_data_invariant_invalid$verify ...
+  [0.012 s, 3 proof obligations]  error
+assert_failed(2,287,303): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1398,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1398,5): anon0$1
+
+Verifying $42_TestNestedInvariants_new_outer_data_invariant_invalid$verify ...
+  [0.012 s, 3 proof obligations]  error
+assert_failed(2,689,707): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1460,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/nested_invariants/nested_invariants.default.z3.bpl(1460,5): anon0$1
+
+Boogie program verifier finished with 2 verified, 4 errors

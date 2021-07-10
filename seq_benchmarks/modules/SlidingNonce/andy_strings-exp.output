@@ -1,0 +1,4 @@
+/home/ying/diem/seq_benchmarks/modules/SlidingNonce/SlidingNonce.andy_strings.smt2:49.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/SlidingNonce/SlidingNonce.andy_strings.smt2:170.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat

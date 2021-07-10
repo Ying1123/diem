@@ -1,0 +1,17 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/DiemId/DiemId.andy.bpl
+-monomorphize
+/env:2
+/proverLog:DiemId.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/DiemId/DiemId.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+Prover error: cvc5 interrupted by SIGTERM.
+

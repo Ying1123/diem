@@ -1,0 +1,46 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.z3.bpl
+-monomorphize
+/env:2
+/proverLog:DiemTransactionPublishingOption.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.180 s, 8 proof obligations]  verified
+
+Verifying $1_DiemTransactionPublishingOption_initialize$verify ...
+  [0.053 s, 16 proof obligations]  verified
+
+Verifying $1_DiemTransactionPublishingOption_halt_all_transactions$verify ...
+  [0.026 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTransactionPublishingOption_is_module_allowed$verify ...
+  [0.029 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTransactionPublishingOption_is_script_allowed$verify ...
+  [0.044 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTransactionPublishingOption_resume_transactions$verify ...
+  [0.027 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTransactionPublishingOption_set_open_module$verify ...
+  [0.051 s, 9 proof obligations]  verified
+
+Verifying $1_DiemTransactionPublishingOption_set_open_script$verify ...
+  [0.052 s, 9 proof obligations]  verified
+
+Verifying $1_DiemTransactionPublishingOption_transactions_halted$verify ...
+  [0.021 s, 1 proof obligation]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.176 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 10 verified, 0 errors

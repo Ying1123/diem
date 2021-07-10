@@ -1,0 +1,47 @@
+22:34:56 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc_edge` to be verified
+22:34:56 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc__edge_incorrect` to be verified
+22:34:56 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges_incorrect` to be verified
+22:34:56 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges` to be verified
+22:34:56 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::vec_edge` to be verified
+22:34:56 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestStrongEdges
+22:34:56 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+22:34:56 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+22:34:56 [DEBUG] (12) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+22:34:57 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+22:34:57 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.011s build, 0.009s trafo, 0.005s gen, 0.613s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:54:9 ───
+    │
+ 54 │         ensures global<S>(addr).x == 3;
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:47: glob_and_field_edges_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:56
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:47: glob_and_field_edges_incorrect
+    =         addr = 0x29
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:48: glob_and_field_edges_incorrect
+    =         s = &TestStrongEdges.S{x = 18467}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:49: glob_and_field_edges_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:50: glob_and_field_edges_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:55
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:54
+
+error: unknown assertion failed
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:64:13 ───
+    │
+ 64 │             assert r == 5;
+    │             ^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:60: loc__edge_incorrect
+    =         r = 5
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:61: loc__edge_incorrect
+    =         r_ref = &5
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:62: loc__edge_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:64: loc__edge_incorrect
+
+exiting with boogie verification errors

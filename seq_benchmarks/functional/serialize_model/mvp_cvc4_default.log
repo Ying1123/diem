@@ -1,0 +1,58 @@
+05:28:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestBCS::bcs_test1_incorrect` to be verified
+05:28:23 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestBCS::bcs_test1` to be verified
+05:28:23 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+[INFO] translating module TestBCS
+05:28:23 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+05:28:23 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:28:23 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:28:24 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:28:24 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.008s build, 0.001s trafo, 0.006s gen, 0.650s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21:9 ───
+    │
+ 21 │         ensures len(result_1) > 0 ==> result_1[0] <= max_u8();
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:10: bcs_test1
+    =         v1 = <generic>
+    =         v2 = <generic>
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:12: bcs_test1
+    =         s1 = vector{<? Literal("256")>}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:13: bcs_test1
+    =         s2 = vector{(size): 2, default: undef}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:14: bcs_test1
+    =         result_1 = vector{<? Literal("256")>}
+    =         result_2 = vector{(size): 2, default: undef}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:15: bcs_test1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:17
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:18
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:19
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:21
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:34:9 ───
+    │
+ 34 │         ensures result_1 == result_2;
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:35
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:26: bcs_test1_incorrect
+    =         v1 = <generic>
+    =         v2 = <generic>
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:28: bcs_test1_incorrect
+    =         s1 = vector{(size): 1, default: 0u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:29: bcs_test1_incorrect
+    =         s2 = vector{(size): 2, default: 0u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:30: bcs_test1_incorrect
+    =         result_1 = vector{(size): 1, default: 0u8}
+    =         result_2 = vector{(size): 2, default: 0u8}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:31: bcs_test1_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:33
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move:34
+
+exiting with boogie verification errors

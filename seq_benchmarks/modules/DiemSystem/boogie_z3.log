@@ -1,0 +1,20 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.z3.bpl
+-monomorphize
+/env:2
+/proverLog:DiemSystem.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.172 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.037 s, 7 proof obligations]  verified

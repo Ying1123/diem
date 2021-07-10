@@ -1,0 +1,46 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:hash_model.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestHash_hash_test1$verify ...
+  [0.148 s, 5 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test1_incorrect$verify ...
+  [0.022 s, 2 proof obligations]  error
+assert_failed(2,1327,1380): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1054,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1054,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1078,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1091,5): anon7_Else
+
+Verifying $42_TestHash_hash_test2$verify ...
+  [0.017 s, 2 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test2_incorrect$verify ...
+  [0.016 s, 2 proof obligations]  error
+assert_failed(2,2561,2614): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1257,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1257,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1281,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.default.z3.bpl(1294,5): anon7_Else
+
+Verifying $42_TestHash_hash_test3$verify ...
+  [0.009 s, 5 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test4$verify ...
+  [0.013 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 2 errors

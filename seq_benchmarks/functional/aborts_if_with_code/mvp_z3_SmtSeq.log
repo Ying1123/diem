@@ -1,0 +1,117 @@
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::exec_failure_invalid` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::conditional_abort_invalid` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::conditional_abort` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_mixed_invalid` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_mixed` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_invalid` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_if_with_code_mixed_invalid` to be verified
+22:32:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_if_with_code_mixed` to be verified
+[INFO] translating module TestAbortsIfWithCode
+22:32:01 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+22:32:01 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+22:32:01 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+22:32:02 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+22:32:02 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.008s build, 0.006s trafo, 0.006s gen, 0.640s verify
+error: abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:77:5 ───
+    │
+ 77 │ ╭     spec aborts_if_with_code_mixed_invalid {
+ 78 │ │         aborts_if x == 1;
+ 79 │ │         aborts_if x == 2 with 1;
+ 80 │ │     }
+    │ ╰─────^
+    ·
+ 74 │             abort(2)
+    │             -------- abort happened here with code 0x2
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:69: aborts_if_with_code_mixed_invalid
+    =         x = 2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:70: aborts_if_with_code_mixed_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:74: aborts_if_with_code_mixed_invalid
+    =         ABORTED
+
+error: abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:105:5 ───
+     │
+ 105 │ ╭     spec aborts_with_invalid {
+ 106 │ │         aborts_with 1,3;
+ 107 │ │     }
+     │ ╰─────^
+     ·
+ 102 │             abort(2)
+     │             -------- abort happened here with code 0x2
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:97: aborts_with_invalid
+     =         x = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:98: aborts_with_invalid
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:102: aborts_with_invalid
+     =         ABORTED
+
+error: abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:131:5 ───
+     │
+ 131 │ ╭     spec aborts_with_mixed_invalid {
+ 132 │ │         pragma aborts_if_is_partial = true;
+ 133 │ │         aborts_if x == 1 with 1;
+ 134 │ │         aborts_with 2;
+ 135 │ │     }
+     │ ╰─────^
+     ·
+ 128 │             abort(1)
+     │             -------- abort happened here with code 0x1
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:123: aborts_with_mixed_invalid
+     =         x = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:124: aborts_with_mixed_invalid
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:128: aborts_with_mixed_invalid
+     =         ABORTED
+
+error: abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:38:5 ───
+    │
+ 38 │ ╭     spec conditional_abort_invalid {
+ 39 │ │         aborts_if x == 1 with 1; // wrong code
+ 40 │ │         aborts_if y == 2 with 3;
+ 41 │ │         ensures result == x;
+ 42 │ │     }
+    │ ╰─────^
+    ·
+ 31 │             abort 2
+    │             ------- abort happened here with code 0x2
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:41
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:29: conditional_abort_invalid
+    =         x = 1
+    =         y = 3
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:30: conditional_abort_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:31: conditional_abort_invalid
+    =         ABORTED
+
+error: abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:48:5 ───
+    │
+ 48 │ ╭     spec exec_failure_invalid {
+ 49 │ │         aborts_if x == 0 with 1; // wrong code
+ 50 │ │         ensures result == 10 / x;
+ 51 │ │     }
+    │ ╰─────^
+    ·
+ 46 │         10 / x
+    │            - abort happened here with execution failure
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:50
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:45: exec_failure_invalid
+    =         x = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:46: exec_failure_invalid
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:46: exec_failure_invalid
+    =         ABORTED
+
+exiting with boogie verification errors

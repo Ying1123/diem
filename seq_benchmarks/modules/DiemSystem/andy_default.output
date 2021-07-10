@@ -1,0 +1,4 @@
+/home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.andy_default.smt2:378.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.andy_default.smt2:1381.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

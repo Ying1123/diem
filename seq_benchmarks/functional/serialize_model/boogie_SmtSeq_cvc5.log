@@ -1,0 +1,29 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:serialize_model.SmtSeq.cvc5.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestBCS_bcs_test1$verify ...
+  [0.443 s, 4 proof obligations]  verified
+
+Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
+  [0.115 s, 3 proof obligations]  error
+assert_failed(2,879,908): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.cvc4.bpl(1050,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.cvc4.bpl(1050,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.cvc4.bpl(1074,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.cvc4.bpl(1087,5): anon7_Else
+
+Boogie program verifier finished with 1 verified, 1 error

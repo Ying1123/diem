@@ -1,0 +1,22 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/Genesis/Genesis.andy.bpl
+-monomorphize
+/env:2
+/proverLog:Genesis.andy_default.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/Genesis/Genesis.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.383 s, 0 proof obligations]  verified
+
+Verifying $1_Genesis_create_initialize_owners_operators$verify ...
+  [0.082 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 2 verified, 0 errors

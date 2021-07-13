@@ -10,6 +10,7 @@ use move_binary_format::{
     normalized,
 };
 use move_bytecode_utils::Modules;
+use move_command_line_common::files::MOVE_COMPILED_EXTENSION;
 use move_core_types::{
     account_address::AccountAddress,
     effects::{ChangeSet, Event},
@@ -19,7 +20,6 @@ use move_core_types::{
     transaction_argument::TransactionArgument,
     vm_status::{AbortLocation, StatusCode, VMStatus},
 };
-use move_lang::{self, MOVE_COMPILED_EXTENSION};
 use resource_viewer::{AnnotatedMoveStruct, MoveValueAnnotator};
 
 use move_vm_types::gas_schedule::GasStatus;
@@ -37,7 +37,7 @@ pub use package::*;
 
 pub(crate) fn get_gas_status(gas_budget: Option<u64>) -> Result<GasStatus<'static>> {
     let gas_status = if let Some(gas_budget) = gas_budget {
-        let gas_schedule = &vm_genesis::genesis_gas_schedule::INITIAL_GAS_SCHEDULE;
+        let gas_schedule = &move_vm_types::gas_schedule::INITIAL_GAS_SCHEDULE;
         let max_gas_budget = u64::MAX
             .checked_div(gas_schedule.gas_constants.gas_unit_scaling_factor)
             .unwrap();
@@ -146,12 +146,12 @@ pub(crate) fn explain_execution_effects(
                         let resource_data = state
                             .get_resource_bytes(*addr, struct_tag.clone())?
                             .unwrap();
-                        let resource_old = MoveValueAnnotator::new_no_stdlib(state)
+                        let resource_old = MoveValueAnnotator::new(state)
                             .view_resource(&struct_tag, &resource_data)?;
                         println!("      Previous:");
                         print_struct_with_indent(&resource_old, 8);
-                        let resource_new = MoveValueAnnotator::new_no_stdlib(state)
-                            .view_resource(&struct_tag, &blob)?;
+                        let resource_new =
+                            MoveValueAnnotator::new(state).view_resource(&struct_tag, &blob)?;
                         println!("      New:");
                         print_struct_with_indent(&resource_new, 8)
                     } else {
@@ -160,8 +160,8 @@ pub(crate) fn explain_execution_effects(
                             struct_tag, blob, bytes_to_write
                         );
                         // Print new resource
-                        let resource = MoveValueAnnotator::new_no_stdlib(state)
-                            .view_resource(&struct_tag, &blob)?;
+                        let resource =
+                            MoveValueAnnotator::new(state).view_resource(&struct_tag, &blob)?;
                         print_struct_with_indent(&resource, 6)
                     }
                 }
@@ -174,7 +174,7 @@ pub(crate) fn explain_execution_effects(
                     let resource_data = state
                         .get_resource_bytes(*addr, struct_tag.clone())?
                         .unwrap();
-                    let resource_old = MoveValueAnnotator::new_no_stdlib(state)
+                    let resource_old = MoveValueAnnotator::new(state)
                         .view_resource(&struct_tag, &resource_data)?;
                     print_struct_with_indent(&resource_old, 6);
                 }
@@ -356,6 +356,7 @@ pub(crate) fn explain_publish_error(
 
 /// Explain an execution error
 pub(crate) fn explain_execution_error(
+    error_descriptions: &ErrorMapping,
     error: VMError,
     state: &OnDiskStateView,
     script_type_parameters: &[AbilitySet],
@@ -368,10 +369,7 @@ pub(crate) fn explain_execution_error(
     match error.into_vm_status() {
         VMStatus::MoveAbort(AbortLocation::Module(id), abort_code) => {
             // try to use move-explain to explain the abort
-            // TODO: this will only work for errors in the stdlib or Diem Framework. We should
-            // add code to build an ErrorMapping for modules in move_lib as well
-            let error_descriptions: ErrorMapping =
-                bcs::from_bytes(diem_framework_releases::current_error_descriptions())?;
+
             print!(
                 "Execution aborted with code {} in module {}.",
                 abort_code, id

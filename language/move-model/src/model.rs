@@ -41,6 +41,7 @@ use bytecode_source_map::{mapping::SourceMapping, source_map::SourceMap};
 use disassembler::disassembler::{Disassembler, DisassemblerOptions};
 use move_binary_format::{
     access::ModuleAccess,
+    binary_views::BinaryIndexedView,
     file_format::{
         AddressIdentifierIndex, Bytecode, Constant as VMConstant, ConstantPoolIndex,
         FunctionDefinitionIndex, FunctionHandleIndex, SignatureIndex, SignatureToken,
@@ -2032,7 +2033,7 @@ impl<'env> ModuleEnv<'env> {
         let disas = Disassembler::new(
             SourceMapping::new(
                 self.data.source_map.clone(),
-                self.get_verified_module().clone(),
+                BinaryIndexedView::Module(self.get_verified_module()),
             ),
             DisassemblerOptions {
                 only_externally_visible: false,
@@ -2220,6 +2221,17 @@ impl<'env> StructEnv<'env> {
         unreachable!("invalid field lookup")
     }
 
+    /// Whether the type parameter at position `idx` is declared as phantom.
+    pub fn is_phantom_parameter(&self, idx: usize) -> bool {
+        let def = self.module_env.data.module.struct_def_at(self.data.def_idx);
+        self.module_env
+            .data
+            .module
+            .struct_handle_at(def.struct_handle)
+            .type_parameters[idx]
+            .is_phantom
+    }
+
     /// Returns the type parameters associated with this struct.
     pub fn get_type_parameters(&self) -> Vec<TypeParameter> {
         // TODO: we currently do not know the original names of those formals, so we generate them.
@@ -2233,7 +2245,7 @@ impl<'env> StructEnv<'env> {
             .map(|(i, k)| {
                 TypeParameter(
                     self.module_env.env.symbol_pool.make(&format!("$tv{}", i)),
-                    AbilityConstraint(*k),
+                    AbilityConstraint(k.constraints),
                 )
             })
             .collect_vec()
@@ -2260,7 +2272,7 @@ impl<'env> StructEnv<'env> {
                     .unwrap_or_else(|| format!("unknown#{}", i));
                 TypeParameter(
                     self.module_env.env.symbol_pool.make(&name),
-                    AbilityConstraint(*k),
+                    AbilityConstraint(k.constraints),
                 )
             })
             .collect_vec()

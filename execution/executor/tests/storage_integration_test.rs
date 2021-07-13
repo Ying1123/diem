@@ -35,18 +35,12 @@ fn test_genesis() {
         .reader
         .get_accumulator_summary(trusted_state.version())
         .unwrap();
-    let (li, epoch_change_proof, consistency_proof) =
-        db.reader.get_state_proof(trusted_state.version()).unwrap();
+    let state_proof = db.reader.get_state_proof(trusted_state.version()).unwrap();
 
     trusted_state
-        .verify_and_ratchet(
-            &li,
-            &epoch_change_proof,
-            &consistency_proof,
-            Some(&initial_accumulator),
-        )
+        .verify_and_ratchet(&state_proof, Some(&initial_accumulator))
         .unwrap();
-    let li = li.ledger_info();
+    let li = state_proof.latest_ledger_info();
     assert_eq!(li.version(), 0);
 
     let diem_root_account = db
@@ -68,15 +62,14 @@ fn test_reconfiguration() {
     let (genesis, validators) = vm_genesis::test_genesis_change_set_and_validators(Some(1));
     let genesis_key = &vm_genesis::GENESIS_KEYPAIR.0;
     let genesis_txn = Transaction::GenesisTransaction(WriteSetPayload::Direct(genesis));
-    let (_, db, mut executor, _waypoint) = create_db_and_executor(path.path(), &genesis_txn);
+    let (_, db, executor, _waypoint) = create_db_and_executor(path.path(), &genesis_txn);
     let parent_block_id = executor.committed_block_id();
     let signer = ValidatorSigner::new(validators[0].data.address, validators[0].key.clone());
     let validator_account = signer.author();
 
     // test the current keys in the validator's account equals to the key in the validator set
-    let (li, _epoch_change_proof, _accumulator_consistency_proof) =
-        db.reader.get_state_proof(0).unwrap();
-    let current_version = li.ledger_info().version();
+    let state_proof = db.reader.get_state_proof(0).unwrap();
+    let current_version = state_proof.latest_ledger_info().version();
     let validator_account_state_with_proof = db
         .reader
         .get_account_state_with_proof(validator_account, current_version, current_version)
@@ -160,13 +153,12 @@ fn test_reconfiguration() {
         .commit_blocks(vec![block_id], ledger_info_with_sigs)
         .unwrap();
 
-    let (li, _epoch_change_proof, _accumulator_consistency_proof) =
-        db.reader.get_state_proof(0).unwrap();
-    let current_version = li.ledger_info().version();
+    let state_proof = db.reader.get_state_proof(0).unwrap();
+    let current_version = state_proof.latest_ledger_info().version();
 
     let t3 = db
         .reader
-        .get_txn_by_account(operator_account, 0, current_version, true)
+        .get_account_transaction(operator_account, 0, true, current_version)
         .unwrap();
     verify_committed_txn_status(t3.as_ref(), &txn_block[2]).unwrap();
 
@@ -241,7 +233,7 @@ fn test_change_publishing_option_to_custom() {
     let genesis_key = &vm_genesis::GENESIS_KEYPAIR.0;
     let genesis_txn = Transaction::GenesisTransaction(WriteSetPayload::Direct(genesis));
 
-    let (_, db, mut executor, waypoint) = create_db_and_executor(path.path(), &genesis_txn);
+    let (_, db, executor, waypoint) = create_db_and_executor(path.path(), &genesis_txn);
     let parent_block_id = executor.committed_block_id();
 
     let treasury_compliance_account = treasury_compliance_account_address();
@@ -304,8 +296,7 @@ fn test_change_publishing_option_to_custom() {
 
         let compiler = Compiler {
             address: diem_types::account_config::CORE_CODE_ADDRESS,
-            skip_stdlib_deps: false,
-            extra_deps: vec![],
+            deps: diem_framework_releases::current_modules().iter().collect(),
         };
         compiler
             .into_script_blob("file_name", code)
@@ -340,15 +331,9 @@ fn test_change_publishing_option_to_custom() {
         .reader
         .get_accumulator_summary(trusted_state.version())
         .unwrap();
-    let (li, epoch_change_proof, consistency_proof) =
-        db.reader.get_state_proof(trusted_state.version()).unwrap();
+    let state_proof = db.reader.get_state_proof(trusted_state.version()).unwrap();
     let trusted_state_change = trusted_state
-        .verify_and_ratchet(
-            &li,
-            &epoch_change_proof,
-            &consistency_proof,
-            Some(&initial_accumulator),
-        )
+        .verify_and_ratchet(&state_proof, Some(&initial_accumulator))
         .unwrap();
     assert!(trusted_state_change.is_epoch_change());
     let trusted_state = trusted_state_change.new_state().unwrap();
@@ -358,13 +343,13 @@ fn test_change_publishing_option_to_custom() {
     // Transaction 1 is committed as it's in the allowlist
     let txn1 = db
         .reader
-        .get_txn_by_account(treasury_compliance_account, 0, current_version, false)
+        .get_account_transaction(treasury_compliance_account, 0, false, current_version)
         .unwrap();
     verify_committed_txn_status(txn1.as_ref(), &block1[0]).unwrap();
     // Transaction 2, 3 are rejected
     assert!(db
         .reader
-        .get_txn_by_account(validator_account, 0, current_version, false)
+        .get_account_transaction(validator_account, 0, false, current_version)
         .unwrap()
         .is_none());
 
@@ -396,25 +381,24 @@ fn test_change_publishing_option_to_custom() {
         .commit_blocks(vec![block2_id], ledger_info_with_sigs)
         .unwrap();
 
-    let (li, epoch_change_proof, consistency_proof) =
-        db.reader.get_state_proof(current_version).unwrap();
+    let state_proof = db.reader.get_state_proof(current_version).unwrap();
     let trusted_state_change = trusted_state
-        .verify_and_ratchet(&li, &epoch_change_proof, &consistency_proof, None)
+        .verify_and_ratchet(&state_proof, None)
         .unwrap();
     assert!(!trusted_state_change.is_epoch_change());
 
-    let current_version = li.ledger_info().version();
+    let current_version = state_proof.latest_ledger_info().version();
     assert_eq!(current_version, 5);
     // Transaction 2 is committed.
     let txn2 = db
         .reader
-        .get_txn_by_account(validator_account, 0, current_version, false)
+        .get_account_transaction(validator_account, 0, false, current_version)
         .unwrap();
     verify_committed_txn_status(txn2.as_ref(), &block2[0]).unwrap();
     // Transaction 3 is committed.
     let txn3 = db
         .reader
-        .get_txn_by_account(validator_account, 1, current_version, false)
+        .get_account_transaction(validator_account, 1, false, current_version)
         .unwrap();
     verify_committed_txn_status(txn3.as_ref(), &block2[1]).unwrap();
 }

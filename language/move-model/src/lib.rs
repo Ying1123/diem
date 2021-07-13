@@ -12,9 +12,14 @@ use std::collections::BTreeSet;
 use builder::module_builder::ModuleBuilder;
 use move_binary_format::{
     access::ModuleAccess,
-    file_format::{CompiledModule, FunctionDefinitionIndex, StructDefinitionIndex},
+    file_format::{
+        self_module_name, AddressIdentifierIndex, CompiledModule, CompiledScript,
+        FunctionDefinition, FunctionDefinitionIndex, FunctionHandle, FunctionHandleIndex,
+        IdentifierIndex, ModuleHandle, ModuleHandleIndex, Signature, SignatureIndex,
+        StructDefinitionIndex, Visibility,
+    },
 };
-use move_core_types::account_address::AccountAddress;
+use move_core_types::{account_address::AccountAddress, identifier::Identifier};
 use move_ir_types::location::sp;
 use move_lang::{
     self,
@@ -84,14 +89,14 @@ pub fn run_model_builder_with_compilation_flags(
     };
     let (compiler, parsed_prog) = compiler.into_ast();
     // Add source files for targets and dependencies
-    let dep_sources: BTreeSet<_> = parsed_prog
+    let dep_files: BTreeSet<_> = parsed_prog
         .lib_definitions
         .iter()
         .map(|def| def.file())
         .collect();
     for fname in files.keys().sorted() {
         let fsrc = &files[fname];
-        env.add_source(fname, fsrc, dep_sources.contains(fname));
+        env.add_source(fname, fsrc, dep_files.contains(fname));
     }
 
     // Add any documentation comments found by the Move compiler to the env.
@@ -120,42 +125,50 @@ pub fn run_model_builder_with_compilation_flags(
         Ok(compiler) => compiler.into_ast(),
     };
     // Extract the module/script closure
+    let mut visited_addresses = BTreeSet::new();
     let mut visited_modules = BTreeSet::new();
-    for (mident, mdef) in expansion_ast.modules.key_cloned_iter() {
+    for (_, mident, mdef) in &expansion_ast.modules {
         let src_file = mdef.loc.file();
-        if !dep_sources.contains(src_file) {
-            collect_related_modules_recursive(mident, &expansion_ast.modules, &mut visited_modules);
+        if !dep_files.contains(src_file) {
+            collect_related_modules_recursive(
+                mident,
+                &expansion_ast.modules,
+                &mut visited_addresses,
+                &mut visited_modules,
+            );
         }
     }
     for sdef in expansion_ast.scripts.values() {
         let src_file = sdef.loc.file();
-        if !dep_sources.contains(src_file) {
-            for (mident, _neighbor) in sdef.immediate_neighbors.key_cloned_iter() {
+        if !dep_files.contains(src_file) {
+            for (_, mident, _neighbor) in &sdef.immediate_neighbors {
                 collect_related_modules_recursive(
                     mident,
                     &expansion_ast.modules,
+                    &mut visited_addresses,
                     &mut visited_modules,
                 );
             }
-        }
-    }
-    let mut visited_addresses = BTreeSet::new();
-    for mident in &visited_modules {
-        if let Address::Named(n) = &mident.value.address {
-            visited_addresses.insert(n);
+            for addr in &sdef.used_addresses {
+                if let Address::Named(n) = &addr {
+                    visited_addresses.insert(&n.value);
+                }
+            }
         }
     }
 
     // Step 3: selective compilation.
     let expansion_ast = {
+        let addresses = expansion_ast
+            .addresses
+            .filter_map(|n, val| visited_addresses.contains(n.value.as_str()).then(|| val));
         let E::Program {
-            addresses,
+            addresses: _,
             modules,
             scripts,
         } = expansion_ast;
-        let addresses = addresses.filter_map(|n, val| visited_addresses.contains(&n).then(|| val));
         let modules = modules.filter_map(|mident, mut mdef| {
-            visited_modules.contains(&mident).then(|| {
+            visited_modules.contains(&mident.value).then(|| {
                 mdef.is_source_module = true;
                 mdef
             })
@@ -190,23 +203,34 @@ pub fn run_model_builder_with_compilation_flags(
     Ok(env)
 }
 
-fn collect_related_modules_recursive(
-    mident: ModuleIdent,
-    modules: &UniqueMap<ModuleIdent, ModuleDefinition>,
-    visited: &mut BTreeSet<ModuleIdent>,
+fn collect_used_addresses<'a>(
+    used_addresses: &'a BTreeSet<Address>,
+    visited_addresses: &mut BTreeSet<&'a str>,
 ) {
-    if visited.contains(&mident) {
+    for addr in used_addresses {
+        if let Address::Named(n) = &addr {
+            visited_addresses.insert(&n.value);
+        }
+    }
+}
+
+fn collect_related_modules_recursive<'a>(
+    mident: &'a ModuleIdent_,
+    modules: &'a UniqueMap<ModuleIdent, ModuleDefinition>,
+    visited_addresses: &mut BTreeSet<&'a str>,
+    visited_modules: &mut BTreeSet<ModuleIdent_>,
+) {
+    if visited_modules.contains(&mident) {
         return;
     }
-    let mdef = modules.get(&mident).unwrap();
-    let deps: BTreeSet<_> = mdef
-        .immediate_neighbors
-        .key_cloned_iter()
-        .map(|(mident, _neighbor)| mident)
-        .collect();
-    visited.insert(mident);
-    for next_mident in deps {
-        collect_related_modules_recursive(next_mident, modules, visited);
+    let mdef = modules.get_(mident).unwrap();
+    if let Address::Named(n) = &mident.address {
+        visited_addresses.insert(&n.value);
+    }
+    collect_used_addresses(&mdef.used_addresses, visited_addresses);
+    visited_modules.insert(mident.clone());
+    for (_, next_mident, _) in &mdef.immediate_neighbors {
+        collect_related_modules_recursive(next_mident, modules, visited_addresses, visited_modules);
     }
 }
 
@@ -266,6 +290,116 @@ fn add_move_lang_errors(env: &mut GlobalEnv, errors: Errors) {
 }
 
 #[allow(deprecated)]
+fn script_into_module(compiled_script: CompiledScript) -> CompiledModule {
+    let mut script = compiled_script;
+
+    // Add the "<SELF>" identifier if it isn't present.
+    //
+    // Note: When adding an element to the table, in theory it is possible for the index
+    // to overflow. This will not be a problem if we get rid of the script/module conversion.
+    let self_ident_idx = match script
+        .identifiers
+        .iter()
+        .position(|ident| ident.as_ident_str() == self_module_name())
+    {
+        Some(idx) => IdentifierIndex::new(idx as u16),
+        None => {
+            let idx = IdentifierIndex::new(script.identifiers.len() as u16);
+            script
+                .identifiers
+                .push(Identifier::new(self_module_name().to_string()).unwrap());
+            idx
+        }
+    };
+
+    // Add a dummy adress if none exists.
+    let dummy_addr = AccountAddress::new([0xff; AccountAddress::LENGTH]);
+    let dummy_addr_idx = match script
+        .address_identifiers
+        .iter()
+        .position(|addr| addr == &dummy_addr)
+    {
+        Some(idx) => AddressIdentifierIndex::new(idx as u16),
+        None => {
+            let idx = AddressIdentifierIndex::new(script.address_identifiers.len() as u16);
+            script.address_identifiers.push(dummy_addr);
+            idx
+        }
+    };
+
+    // Add a self module handle.
+    let self_module_handle_idx = match script
+        .module_handles
+        .iter()
+        .position(|handle| handle.address == dummy_addr_idx && handle.name == self_ident_idx)
+    {
+        Some(idx) => ModuleHandleIndex::new(idx as u16),
+        None => {
+            let idx = ModuleHandleIndex::new(script.module_handles.len() as u16);
+            script.module_handles.push(ModuleHandle {
+                address: dummy_addr_idx,
+                name: self_ident_idx,
+            });
+            idx
+        }
+    };
+
+    // Find the index to the empty signature [].
+    // Create one if it doesn't exist.
+    let return_sig_idx = match script.signatures.iter().position(|sig| sig.0.is_empty()) {
+        Some(idx) => SignatureIndex::new(idx as u16),
+        None => {
+            let idx = SignatureIndex::new(script.signatures.len() as u16);
+            script.signatures.push(Signature(vec![]));
+            idx
+        }
+    };
+
+    // Create a function handle for the main function.
+    let main_handle_idx = FunctionHandleIndex::new(script.function_handles.len() as u16);
+    script.function_handles.push(FunctionHandle {
+        module: self_module_handle_idx,
+        name: self_ident_idx,
+        parameters: script.parameters,
+        return_: return_sig_idx,
+        type_parameters: script.type_parameters,
+    });
+
+    // Create a function definition for the main function.
+    let main_def = FunctionDefinition {
+        function: main_handle_idx,
+        visibility: Visibility::Script,
+        acquires_global_resources: vec![],
+        code: Some(script.code),
+    };
+
+    CompiledModule {
+        version: script.version,
+        module_handles: script.module_handles,
+        self_module_handle_idx,
+        struct_handles: script.struct_handles,
+        function_handles: script.function_handles,
+        field_handles: vec![],
+        friend_decls: vec![],
+
+        struct_def_instantiations: vec![],
+        function_instantiations: script.function_instantiations,
+        field_instantiations: vec![],
+
+        signatures: script.signatures,
+
+        identifiers: script.identifiers,
+        address_identifiers: script.address_identifiers,
+        constant_pool: script.constant_pool,
+
+        struct_defs: vec![],
+        function_defs: vec![main_def],
+    }
+    .freeze()
+    .unwrap()
+}
+
+#[allow(deprecated)]
 fn run_spec_checker(env: &mut GlobalEnv, units: Vec<CompiledUnit>, mut eprog: E::Program) {
     let named_address_mapping = eprog
         .addresses
@@ -315,6 +449,7 @@ fn run_spec_checker(env: &mut GlobalEnv, units: Vec<CompiledUnit>, mut eprog: E:
                         attributes,
                         loc,
                         immediate_neighbors,
+                        used_addresses,
                         function_name,
                         constants,
                         function,
@@ -347,6 +482,7 @@ fn run_spec_checker(env: &mut GlobalEnv, units: Vec<CompiledUnit>, mut eprog: E:
                         loc,
                         dependency_order: usize::MAX,
                         immediate_neighbors,
+                        used_addresses,
                         is_source_module: true,
                         friends: UniqueMap::new(),
                         structs: UniqueMap::new(),
@@ -354,7 +490,7 @@ fn run_spec_checker(env: &mut GlobalEnv, units: Vec<CompiledUnit>, mut eprog: E:
                         functions,
                         specs,
                     };
-                    let module = script.into_module().1;
+                    let module = script_into_module(script);
                     (ident, expanded_module, module, source_map, function_infos)
                 }
             })

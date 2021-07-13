@@ -128,6 +128,7 @@ The Move modules in the Diem Framework can be bucketed in to a couple categories
 -  [`0x1::TransactionFee`](TransactionFee.md#0x1_TransactionFee)
 -  [`0x1::TreasuryComplianceScripts`](TreasuryComplianceScripts.md#0x1_TreasuryComplianceScripts)
 -  [`0x1::VASP`](VASP.md#0x1_VASP)
+-  [`0x1::VASPDomain`](VASPDomain.md#0x1_VASPDomain)
 -  [`0x1::ValidatorAdministrationScripts`](ValidatorAdministrationScripts.md#0x1_ValidatorAdministrationScripts)
 -  [`0x1::ValidatorConfig`](ValidatorConfig.md#0x1_ValidatorConfig)
 -  [`0x1::ValidatorOperatorConfig`](ValidatorOperatorConfig.md#0x1_ValidatorOperatorConfig)

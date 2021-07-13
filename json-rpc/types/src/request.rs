@@ -80,7 +80,9 @@ pub enum MethodRequest {
     GetAccumulatorConsistencyProof(GetAccumulatorConsistencyProofParams),
     GetAccountStateWithProof(GetAccountStateWithProofParams),
     GetTransactionsWithProofs(GetTransactionsWithProofsParams),
+    GetAccountTransactionsWithProofs(GetAccountTransactionsWithProofsParams),
     GetEventsWithProofs(GetEventsWithProofsParams),
+    GetEventByVersionWithProof(GetEventByVersionWithProof),
 }
 
 impl MethodRequest {
@@ -113,8 +115,14 @@ impl MethodRequest {
             Method::GetTransactionsWithProofs => {
                 MethodRequest::GetTransactionsWithProofs(serde_json::from_value(value)?)
             }
+            Method::GetAccountTransactionsWithProofs => {
+                MethodRequest::GetAccountTransactionsWithProofs(serde_json::from_value(value)?)
+            }
             Method::GetEventsWithProofs => {
                 MethodRequest::GetEventsWithProofs(serde_json::from_value(value)?)
+            }
+            Method::GetEventByVersionWithProof => {
+                MethodRequest::GetEventByVersionWithProof(serde_json::from_value(value)?)
             }
         };
 
@@ -138,7 +146,11 @@ impl MethodRequest {
             }
             MethodRequest::GetAccountStateWithProof(_) => Method::GetAccountStateWithProof,
             MethodRequest::GetTransactionsWithProofs(_) => Method::GetTransactionsWithProofs,
+            MethodRequest::GetAccountTransactionsWithProofs(_) => {
+                Method::GetAccountTransactionsWithProofs
+            }
             MethodRequest::GetEventsWithProofs(_) => Method::GetEventsWithProofs,
+            MethodRequest::GetEventByVersionWithProof(_) => Method::GetEventByVersionWithProof,
         }
     }
 }
@@ -338,10 +350,27 @@ pub struct GetTransactionsWithProofsParams {
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct GetAccountTransactionsWithProofsParams {
+    pub account: AccountAddress,
+    pub start: u64,
+    pub limit: u64,
+    pub include_events: bool,
+    #[serde(default)]
+    pub ledger_version: Option<u64>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
 pub struct GetEventsWithProofsParams {
     pub key: EventKey,
     pub start: u64,
     pub limit: u64,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct GetEventByVersionWithProof {
+    pub key: EventKey,
+    #[serde(default)]
+    pub version: Option<u64>,
 }
 
 #[cfg(test)]
@@ -553,6 +582,58 @@ mod test {
             "start": 10,
             "limit": 11,
             "include_events": true,
+        }));
+
+        // Object without all params
+        parse_err(json!({
+            "include_events": true,
+        }));
+
+        // Object with more params
+        parse_ok(json!({
+            "account": account,
+            "start": 10,
+            "limit": 11,
+            "include_events": true,
+            "foo": 11,
+        }));
+    }
+
+    #[test]
+    fn get_account_transactions_with_proofs() {
+        let parse = |value| serde_json::from_value::<GetAccountTransactionsWithProofsParams>(value);
+        let parse_ok = |value| parse(value).unwrap();
+        let parse_err = |value| parse(value).unwrap_err();
+        let account = "1668f6be25668c1a17cd8caf6b8d2f25";
+
+        // Array with all params
+        parse_ok(json!([account, 10, 11, false]));
+        parse_ok(json!([account, 10, 11, false, 123]));
+
+        // Array with too many params
+        parse_err(json!([account, 10, 11, false, 123, "foo"]));
+
+        // Array with wrong param
+        parse_err(json!(["foo", 10, 11, false]));
+
+        // Array with too few params
+        parse_err(json!([account, 10]));
+        parse_err(json!([]));
+        parse_err(json!({}));
+
+        // Object params
+        parse_ok(json!({
+            "account": account,
+            "start": 10,
+            "limit": 11,
+            "include_events": true,
+        }));
+        parse_ok(json!({
+            "account": account,
+            "start": 10,
+            "limit": 11,
+            "include_events": true,
+            "ledger_version": 999,
         }));
 
         // Object without all params
@@ -875,5 +956,34 @@ mod test {
             "limit": 11,
             "foo": 11,
         }));
+    }
+
+    #[test]
+    fn get_event_by_version_with_proof() {
+        let parse = |value| serde_json::from_value::<GetEventByVersionWithProof>(value);
+        let parse_ok = |value| parse(value).unwrap();
+        let parse_err = |value| parse(value).unwrap_err();
+
+        let key = "13000000000000000000000000000000000000000a550c18";
+
+        // Correct arguments
+        parse_ok(json!([key, 10]));
+        parse_ok(json!([key]));
+
+        // Incorrect arguments
+        parse_err(json!([key, 10, false]));
+        parse_err(json!(["foo", 10]));
+        parse_err(json!([]));
+        parse_err(json!({}));
+
+        // Object params
+        parse_ok(json!({ "key": key, "version": 10 }));
+        parse_ok(json!({ "key": key }));
+
+        // Object without all required params
+        parse_err(json!({ "version": 10 }));
+
+        // Object with more params
+        parse_ok(json!({ "key": key, "version": 10, "foo": 99 }));
     }
 }

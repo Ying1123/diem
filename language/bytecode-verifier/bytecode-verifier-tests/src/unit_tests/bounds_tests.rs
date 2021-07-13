@@ -6,8 +6,7 @@ use invalid_mutations::bounds::{
     OutOfBoundsMutation,
 };
 use move_binary_format::{
-    check_bounds::BoundsChecker, file_format::*, file_format_common,
-    proptest_types::CompiledModuleStrategyGen,
+    file_format::*, file_format_common, proptest_types::CompiledModuleStrategyGen,
 };
 use move_core_types::{
     account_address::AccountAddress, identifier::Identifier, vm_status::StatusCode,
@@ -20,12 +19,18 @@ fn empty_module_no_errors() {
 }
 
 #[test]
+fn empty_script_no_errors() {
+    basic_test_script().freeze().unwrap();
+}
+
+#[test]
 fn invalid_default_module() {
-    let m = CompiledModuleMut {
+    CompiledModule {
         version: file_format_common::VERSION_MAX,
         ..Default::default()
-    };
-    m.freeze().unwrap_err();
+    }
+    .freeze()
+    .unwrap_err();
 }
 
 #[test]
@@ -149,6 +154,23 @@ fn invalid_locals_id_in_call() {
 }
 
 #[test]
+fn script_invalid_locals_id_in_call() {
+    use Bytecode::*;
+
+    let mut s = basic_test_script();
+    s.function_instantiations.push(FunctionInstantiation {
+        handle: FunctionHandleIndex::new(0),
+        type_parameters: SignatureIndex::new(1),
+    });
+    let func_inst_idx = FunctionInstantiationIndex(s.function_instantiations.len() as u16 - 1);
+    s.code.code = vec![CallGeneric(func_inst_idx)];
+    assert_eq!(
+        s.freeze().unwrap_err().major_status(),
+        StatusCode::INDEX_OUT_OF_BOUNDS
+    );
+}
+
+#[test]
 fn invalid_type_param_in_call() {
     use Bytecode::*;
     use SignatureToken::*;
@@ -163,6 +185,25 @@ fn invalid_type_param_in_call() {
     m.function_defs[0].code.as_mut().unwrap().code = vec![CallGeneric(func_inst_idx)];
     assert_eq!(
         m.freeze().unwrap_err().major_status(),
+        StatusCode::INDEX_OUT_OF_BOUNDS
+    );
+}
+
+#[test]
+fn script_invalid_type_param_in_call() {
+    use Bytecode::*;
+    use SignatureToken::*;
+
+    let mut s = basic_test_script();
+    s.signatures.push(Signature(vec![TypeParameter(0)]));
+    s.function_instantiations.push(FunctionInstantiation {
+        handle: FunctionHandleIndex::new(0),
+        type_parameters: SignatureIndex::new(1),
+    });
+    let func_inst_idx = FunctionInstantiationIndex(s.function_instantiations.len() as u16 - 1);
+    s.code.code = vec![CallGeneric(func_inst_idx)];
+    assert_eq!(
+        s.freeze().unwrap_err().major_status(),
         StatusCode::INDEX_OUT_OF_BOUNDS
     );
 }
@@ -183,6 +224,26 @@ fn invalid_struct_as_type_actual_in_exists() {
     m.function_defs[0].code.as_mut().unwrap().code = vec![CallGeneric(func_inst_idx)];
     assert_eq!(
         m.freeze().unwrap_err().major_status(),
+        StatusCode::INDEX_OUT_OF_BOUNDS
+    );
+}
+
+#[test]
+fn script_invalid_struct_as_type_argument_in_exists() {
+    use Bytecode::*;
+    use SignatureToken::*;
+
+    let mut s = basic_test_script();
+    s.signatures
+        .push(Signature(vec![Struct(StructHandleIndex::new(3))]));
+    s.function_instantiations.push(FunctionInstantiation {
+        handle: FunctionHandleIndex::new(0),
+        type_parameters: SignatureIndex::new(1),
+    });
+    let func_inst_idx = FunctionInstantiationIndex(s.function_instantiations.len() as u16 - 1);
+    s.code.code = vec![CallGeneric(func_inst_idx)];
+    assert_eq!(
+        s.freeze().unwrap_err().major_status(),
         StatusCode::INDEX_OUT_OF_BOUNDS
     );
 }
@@ -209,6 +270,19 @@ fn invalid_friend_module_name() {
     });
     assert_eq!(
         m.freeze().unwrap_err().major_status(),
+        StatusCode::INDEX_OUT_OF_BOUNDS
+    );
+}
+
+#[test]
+fn script_missing_signature() {
+    // The basic test script includes parameters pointing to an empty signature.
+    let mut s = basic_test_script();
+    // Remove the empty signature from the script.
+    s.signatures.clear();
+    // Bounds-checking the script should now result in an out-of-bounds error.
+    assert_eq!(
+        s.freeze().unwrap_err().major_status(),
         StatusCode::INDEX_OUT_OF_BOUNDS
     );
 }
@@ -244,22 +318,21 @@ proptest! {
             oob_context.apply()
         };
 
-        let actual_violations = BoundsChecker::verify(&module);
+        let actual_violations = module.freeze();
         prop_assert_eq!(expected_violations.is_empty(), actual_violations.is_ok());
     }
 
     #[test]
     fn code_unit_out_of_bounds(
-        module in CompiledModule::valid_strategy(20),
+        mut module in CompiledModule::valid_strategy(20),
         mutations in vec(CodeUnitBoundsMutation::strategy(), 0..40),
     ) {
-        let mut module = module.into_inner();
         let expected_violations = {
             let context = ApplyCodeUnitBoundsContext::new(&mut module, mutations);
             context.apply()
         };
 
-        let actual_violations = BoundsChecker::verify(&module);
+        let actual_violations = module.freeze();
 
         prop_assert_eq!(expected_violations.is_empty(), actual_violations.is_ok());
     }
@@ -271,14 +344,14 @@ proptest! {
     ) {
         // If there are no module handles, the only other things that can be stored are intrinsic
         // data.
-        let module = CompiledModuleMut {
+        let module = CompiledModule {
             identifiers,
             address_identifiers,
             ..Default::default()
         };
 
         prop_assert_eq!(
-            BoundsChecker::verify(&module).map_err(|e| e.major_status()),
+            module.freeze().map_err(|e| e.major_status()),
             Err(StatusCode::NO_MODULE_HANDLES)
         );
     }
@@ -291,7 +364,7 @@ proptest! {
 
     /// Make sure that garbage inputs don't crash the bounds checker.
     #[test]
-    fn garbage_inputs(module in any_with::<CompiledModuleMut>(16)) {
+    fn garbage_inputs(module in any_with::<CompiledModule>(16)) {
         let _ = module.freeze();
     }
 }

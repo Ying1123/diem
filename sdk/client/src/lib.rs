@@ -81,7 +81,9 @@ pub enum Method {
     GetAccumulatorConsistencyProof,
     GetAccountStateWithProof,
     GetTransactionsWithProofs,
+    GetAccountTransactionsWithProofs,
     GetEventsWithProofs,
+    GetEventByVersionWithProof,
 }
 
 cfg_async_or_blocking! {

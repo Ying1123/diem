@@ -29,7 +29,9 @@ pub enum MethodRequest {
     GetAccumulatorConsistencyProof(Option<u64>, Option<u64>),
     GetAccountStateWithProof(AccountAddress, Option<u64>, Option<u64>),
     GetTransactionsWithProofs(u64, u64, bool),
+    GetAccountTransactionsWithProofs(AccountAddress, u64, u64, bool, Option<u64>),
     GetEventsWithProofs(EventKey, u64, u64),
+    GetEventByVersionWithProof(EventKey, Option<u64>),
 }
 
 impl MethodRequest {
@@ -118,8 +120,28 @@ impl MethodRequest {
         Self::GetTransactionsWithProofs(start_version, limit, include_events)
     }
 
+    pub fn get_account_transactions_with_proofs(
+        address: AccountAddress,
+        start_seq: u64,
+        limit: u64,
+        include_events: bool,
+        ledger_version: Option<u64>,
+    ) -> Self {
+        Self::GetAccountTransactionsWithProofs(
+            address,
+            start_seq,
+            limit,
+            include_events,
+            ledger_version,
+        )
+    }
+
     pub fn get_events_with_proofs(key: EventKey, start_seq: u64, limit: u64) -> Self {
         Self::GetEventsWithProofs(key, start_seq, limit)
+    }
+
+    pub fn get_event_by_version_with_proof(key: EventKey, version: Option<u64>) -> Self {
+        Self::GetEventByVersionWithProof(key, version)
     }
 
     pub fn method(&self) -> Method {
@@ -139,7 +161,11 @@ impl MethodRequest {
             }
             MethodRequest::GetAccountStateWithProof(_, _, _) => Method::GetAccountStateWithProof,
             MethodRequest::GetTransactionsWithProofs(_, _, _) => Method::GetTransactionsWithProofs,
+            MethodRequest::GetAccountTransactionsWithProofs(_, _, _, _, _) => {
+                Method::GetAccountTransactionsWithProofs
+            }
             MethodRequest::GetEventsWithProofs(_, _, _) => Method::GetEventsWithProofs,
+            MethodRequest::GetEventByVersionWithProof(_, _) => Method::GetEventByVersionWithProof,
         }
     }
 }

@@ -30,20 +30,16 @@ ir-to-bytecode = {path = "../compiler/ir-to-bytecode" }
 borrow-graph = { path = "../borrow-graph" }
 bytecode-source-map = { path = "../compiler/bytecode-source-map" }
 bcs = "0.1.2"
+move-command-line-common = { path = "../move-command-line-common" }
 
 [dev-dependencies]
 move-lang-test-utils = { path = "test-utils" }
 move-stdlib = { path = "../move-stdlib" }
 datatest-stable = "0.1.1"
-diem-framework = { path = "../diem-framework" }
 
 [[test]]
 name = "move_check_testsuite"
 harness = false
-
-[[test]]
-name = "stdlib_sanity_check"
-harness = true
 
 [[test]]
 name = "ir_test_coverage"

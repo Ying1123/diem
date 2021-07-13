@@ -18,7 +18,6 @@ use move_core_types::account_address::AccountAddress;
 macro_rules! instr_count {
     ($compiled: expr, $instr: pat) => {
         $compiled
-            .as_inner()
             .code
             .code
             .iter()
@@ -32,19 +31,17 @@ fn compile_script_string_impl(
     deps: Vec<CompiledModule>,
 ) -> Result<(CompiledScript, Option<VMError>)> {
     let parsed_script = parse_script("file_name", code).unwrap();
-    let compiled_script = compile_script(None, parsed_script, &deps)?.0;
+    let script = compile_script(None, parsed_script, &deps)?.0;
 
     let mut serialized_script = Vec::<u8>::new();
-    compiled_script.serialize(&mut serialized_script)?;
+    script.serialize(&mut serialized_script)?;
     let deserialized_script = CompiledScript::deserialize(&serialized_script)
         .map_err(|e| e.finish(Location::Undefined).into_vm_status())?;
-    assert_eq!(compiled_script, deserialized_script);
+    assert_eq!(script, deserialized_script);
 
-    // Always return a CompiledScript because some callers explicitly care about unverified
-    // modules.
-    Ok(match verify_script(&compiled_script) {
-        Ok(_) => (compiled_script, None),
-        Err(error) => (compiled_script, Some(error)),
+    Ok(match verify_script(&script) {
+        Ok(_) => (script, None),
+        Err(error) => (script, Some(error)),
     })
 }
 
@@ -134,16 +131,4 @@ pub fn compile_module_string_and_assert_error(
 
 pub fn count_locals(script: &CompiledScript) -> usize {
     script.signature_at(script.code().locals).0.len()
-}
-
-pub fn compile_module_string_with_stdlib(code: &str) -> Result<CompiledModule> {
-    compile_module_string_and_assert_no_error(code, stdlib())
-}
-
-pub fn compile_script_string_with_stdlib(code: &str) -> Result<CompiledScript> {
-    compile_script_string_and_assert_no_error(code, stdlib())
-}
-
-fn stdlib() -> Vec<CompiledModule> {
-    diem_framework_releases::current_modules().to_vec()
 }

@@ -8,7 +8,7 @@ use diem_types::{
     account_address::AccountAddress,
     account_state::AccountState,
     account_state_blob::{AccountStateBlob, AccountStateWithProof},
-    contract_event::{ContractEvent, EventWithProof},
+    contract_event::{ContractEvent, EventByVersionWithProof, EventWithProof},
     epoch_change::EpochChangeProof,
     epoch_state::EpochState,
     event::EventKey,
@@ -18,9 +18,10 @@ use diem_types::{
         definition::LeafCount, AccumulatorConsistencyProof, SparseMerkleProof,
         TransactionAccumulatorSummary,
     },
+    state_proof::StateProof,
     transaction::{
-        TransactionInfo, TransactionListWithProof, TransactionToCommit, TransactionWithProof,
-        Version,
+        AccountTransactionsWithProof, TransactionInfo, TransactionListWithProof,
+        TransactionToCommit, TransactionWithProof, Version,
     },
 };
 use itertools::Itertools;
@@ -213,6 +214,15 @@ pub trait DbReader: Send + Sync {
     /// ../diemdb/struct.DiemDB.html#method.get_block_timestamp
     fn get_block_timestamp(&self, version: u64) -> Result<u64>;
 
+    /// Returns the [`NewBlockEvent`] for the block containing the requested
+    /// `version` and proof that the block actually contains the `version`.
+    fn get_event_by_version_with_proof(
+        &self,
+        event_key: &EventKey,
+        event_version: u64,
+        proof_version: u64,
+    ) -> Result<EventByVersionWithProof>;
+
     /// Gets the version of the last transaction committed before timestamp,
     /// a commited block at or after the required timestamp must exist (otherwise it's possible
     /// the next block committed as a timestamp smaller than the one in the request).
@@ -253,31 +263,39 @@ pub trait DbReader: Send + Sync {
     /// ../diemdb/struct.DiemDB.html#method.get_startup_info
     fn get_startup_info(&self) -> Result<Option<StartupInfo>>;
 
-    fn get_txn_by_account(
+    /// Returns a transaction that is the `seq_num`-th one associated with the given account. If
+    /// the transaction with given `seq_num` doesn't exist, returns `None`.
+    fn get_account_transaction(
         &self,
         address: AccountAddress,
         seq_num: u64,
+        include_events: bool,
         ledger_version: Version,
-        fetch_events: bool,
     ) -> Result<Option<TransactionWithProof>>;
+
+    /// Returns the list of transactions sent by an account with `address` starting
+    /// at sequence number `seq_num`. Will return no more than `limit` transactions.
+    /// Will ignore transactions with `txn.version > ledger_version`. Optionally
+    /// fetch events for each transaction when `fetch_events` is `true`.
+    fn get_account_transactions(
+        &self,
+        address: AccountAddress,
+        seq_num: u64,
+        limit: u64,
+        include_events: bool,
+        ledger_version: Version,
+    ) -> Result<AccountTransactionsWithProof>;
 
     /// Returns proof of new state for a given ledger info with signatures relative to version known
     /// to client
     fn get_state_proof_with_ledger_info(
         &self,
         known_version: u64,
-        ledger_info: &LedgerInfoWithSignatures,
-    ) -> Result<(EpochChangeProof, AccumulatorConsistencyProof)>;
+        ledger_info: LedgerInfoWithSignatures,
+    ) -> Result<StateProof>;
 
     /// Returns proof of new state relative to version known to client
-    fn get_state_proof(
-        &self,
-        known_version: u64,
-    ) -> Result<(
-        LedgerInfoWithSignatures,
-        EpochChangeProof,
-        AccumulatorConsistencyProof,
-    )>;
+    fn get_state_proof(&self, known_version: u64) -> Result<StateProof>;
 
     /// Returns the account state corresponding to the given version and account address with proof
     /// based on `ledger_version`

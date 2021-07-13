@@ -14,6 +14,7 @@ use diem_crypto::{
     test_utils::KeyPair,
 };
 use diem_logger::prelude::{error, info};
+use diem_resource_viewer::{AnnotatedAccountStateBlob, DiemValueAnnotator};
 use diem_temppath::TempPath;
 use diem_transaction_builder::stdlib as transaction_builder;
 use diem_types::{
@@ -36,12 +37,12 @@ use diem_types::{
     write_set::{WriteOp, WriteSetMut},
 };
 use diem_wallet::{io_utils, WalletLibrary};
+use move_vm_test_utils::InMemoryStorage;
 use num_traits::{
     cast::{FromPrimitive, ToPrimitive},
     identities::Zero,
 };
 use reqwest::Url;
-use resource_viewer::{AnnotatedAccountStateBlob, MoveValueAnnotator, NullStateView};
 use rust_decimal::Decimal;
 use std::{
     collections::HashMap,
@@ -114,7 +115,7 @@ pub struct ClientProxy {
     /// do not print '.' when waiting for signed transaction
     pub quiet_wait: bool,
     /// Wallet library managing user accounts.
-    wallet: WalletLibrary,
+    pub wallet: WalletLibrary,
     /// Whether to sync with validator on wallet recovery.
     sync_on_wallet_recovery: bool,
     /// temp files (alive for duration of program)
@@ -607,8 +608,7 @@ impl ClientProxy {
 
             let compiler = Compiler {
                 address: diem_types::account_config::CORE_CODE_ADDRESS,
-                skip_stdlib_deps: false,
-                extra_deps: vec![],
+                deps: diem_framework_releases::current_modules().iter().collect(),
             };
             compiler
                 .into_script_blob("file_name", &code)
@@ -1280,8 +1280,11 @@ impl ClientProxy {
     ) -> Result<(Option<AnnotatedAccountStateBlob>, Version)> {
         let (blob, ver) = self.client.get_account_state_blob(&address)?;
         if let Some(account_blob) = blob {
-            let state_view = NullStateView::default();
-            let annotator = MoveValueAnnotator::new(&state_view);
+            let mut storage = InMemoryStorage::new();
+            for (blob, module) in diem_framework_releases::current_modules_with_blobs() {
+                storage.publish_or_overwrite_module(module.self_id(), blob.clone())
+            }
+            let annotator = DiemValueAnnotator::new(&storage);
             let annotate_blob =
                 annotator.view_account_state(&AccountState::try_from(&account_blob)?)?;
             Ok((Some(annotate_blob), ver))

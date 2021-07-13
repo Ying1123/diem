@@ -4,7 +4,7 @@
 use crate::{
     errors::Errors,
     parser::ast as P,
-    shared::{known_attributes, AddressBytes, CompilationEnv},
+    shared::{known_attributes, CompilationEnv},
 };
 use move_ir_types::location::{sp, Loc};
 
@@ -25,10 +25,7 @@ impl<'env> Context<'env> {
 //***************************************************************************
 
 const UNIT_TEST_MODULE_NAME: &str = "UnitTest";
-// TODO: remove once named addresses have landed in the stdlib
-const STDLIB_ADDRESS: AddressBytes = AddressBytes::new([
-    0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 0u8, 1u8,
-]);
+const STDLIB_ADDRESS_NAME: &str = "Std";
 
 // This filters out all test, and test-only annotated module member from `prog` if the `test` flag
 // in `compilation_env` is not set. If the test flag is set, no filtering is performed, and instead
@@ -72,8 +69,8 @@ fn check_has_unit_test_module(context: &mut Context, prog: &P::Program) -> bool 
                     && mdef.address.is_some()
                     && match &mdef.address.as_ref().unwrap().value {
                         // TODO: remove once named addresses have landed in the stdlib
-                        P::LeadingNameAccess_::AnonymousAddress(bytes) => bytes == &STDLIB_ADDRESS,
-                        P::LeadingNameAccess_::Name(name) => name.value == "Std",
+                        P::LeadingNameAccess_::Name(name) => name.value == STDLIB_ADDRESS_NAME,
+                        P::LeadingNameAccess_::AnonymousAddress(_) => false,
                     }
             }
             _ => false,
@@ -91,9 +88,11 @@ fn check_has_unit_test_module(context: &mut Context, prog: &P::Program) -> bool 
                 P::Definition::Address(P::AddressDefinition { loc, .. })
                 | P::Definition::Script(P::Script { loc, .. }) => *loc,
             };
-            context.env.add_error_deprecated(vec![
-                    (loc, "Compilation in test mode requires passing the UnitTest module in the Move stdlib as a dependency")
-                ]);
+            context.env.add_error_deprecated(vec![(
+                loc,
+                "Compilation in test mode requires passing the UnitTest module in the Move stdlib \
+                 as a dependency",
+            )]);
             return false;
         }
     }
@@ -168,7 +167,7 @@ fn filter_tests_from_definition(
                     specs,
                 }))
             } else {
-                context.env.add_errors(errors);
+                context.env.add_errors_deprecated(errors);
                 None
             }
         }
@@ -211,10 +210,10 @@ fn filter_tests_from_module(
 }
 
 /// If a module is being compiled in test mode, this inserts a function that calls a native
-/// function `0x1::UnitTest::create_signers_for_testing` that only exists if the VM is being run with the
-/// "unit_test" feature flag set. This will then cause the module to fail to link if an attempt is
-/// made to publish a module that has been compiled in test mode on a VM that is not running in
-/// test mode.
+/// function `0x1::UnitTest::create_signers_for_testing` that only exists if the VM is being run
+/// with the "unit_test" feature flag set. This will then cause the module to fail to link if
+/// an attempt is made to publish a module that has been compiled in test mode on a VM that is not
+/// running in test mode.
 fn insert_test_poison(context: &mut Context, mloc: Loc, members: &mut Vec<P::ModuleMember>) {
     if !context.env.flags().is_testing() {
         return;
@@ -226,35 +225,22 @@ fn insert_test_poison(context: &mut Context, mloc: Loc, members: &mut Vec<P::Mod
         return_type: sp(mloc, P::Type_::Unit),
     };
 
-    // TODO: Change this to a named "Std" address once named addresses in the stdlib have landed
-    //let leading_name_access =  sp(mloc, P::LeadingNameAccess_::Name(P::ModuleName(sp(mloc, "Std".to_string())),
     let leading_name_access = sp(
         mloc,
-        P::LeadingNameAccess_::AnonymousAddress(STDLIB_ADDRESS),
+        P::LeadingNameAccess_::Name(sp(mloc, STDLIB_ADDRESS_NAME.to_owned())),
     );
 
+    let mod_name = sp(mloc, UNIT_TEST_MODULE_NAME.to_string());
+    let mod_addr_name = sp(mloc, (leading_name_access, mod_name));
+    let fn_name = sp(mloc, "create_signers_for_testing".to_string());
+    let args_ = vec![sp(
+        mloc,
+        P::Exp_::Value(sp(mloc, P::Value_::Num("0".to_string()))),
+    )];
     let nop_call = P::Exp_::Call(
-        sp(
-            mloc,
-            P::NameAccessChain_::Three(
-                sp(
-                    mloc,
-                    (
-                        leading_name_access,
-                        sp(mloc, UNIT_TEST_MODULE_NAME.to_string()),
-                    ),
-                ),
-                sp(mloc, "create_signers_for_testing".to_string()),
-            ),
-        ),
+        sp(mloc, P::NameAccessChain_::Three(mod_addr_name, fn_name)),
         None,
-        sp(
-            mloc,
-            vec![sp(
-                mloc,
-                P::Exp_::Value(sp(mloc, P::Value_::Num("0".to_string()))),
-            )],
-        ),
+        sp(mloc, args_),
     );
 
     // fun unit_test_poison() { 0x1::UnitTest::create_signers_for_testing(0); () }

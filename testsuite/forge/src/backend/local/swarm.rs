@@ -1,7 +1,7 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::{node::LocalNode, ChainInfo, FullNode, HealthCheckError, Node, Swarm, Validator};
+use crate::{ChainInfo, FullNode, HealthCheckError, LocalNode, Node, Swarm, Validator};
 use anyhow::{anyhow, Result};
 use diem_config::config::NodeConfig;
 use diem_genesis_tool::validator_builder::ValidatorBuilder;
@@ -24,6 +24,7 @@ pub enum SwarmDirectory {
 }
 
 impl SwarmDirectory {
+    #[allow(dead_code)]
     pub fn persist(&mut self) {
         match self {
             SwarmDirectory::Persistent(_) => {}
@@ -35,6 +36,7 @@ impl SwarmDirectory {
         }
     }
 
+    #[allow(dead_code)]
     pub fn into_persistent(self) -> Self {
         match self {
             SwarmDirectory::Temporary(tempdir) => SwarmDirectory::Persistent(tempdir.into_path()),
@@ -134,7 +136,7 @@ impl LocalSwarmBuilder {
         let root_account = LocalAccount::new(
             diem_sdk::types::account_config::diem_root_address(),
             AccountKey::from_private_key(root_keys.root_key),
-            0,
+            1,
         );
 
         // Designated dealer account is built to have the same private key as the TC account

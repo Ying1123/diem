@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{BCS_EXTENSION, DEFAULT_BUILD_DIR, DEFAULT_STORAGE_DIR};
+use anyhow::{anyhow, bail, Result};
 use disassembler::disassembler::Disassembler;
-// TODO: do we want to make these Move core types or allow this to be customizable?
-use diem_types::{contract_event::ContractEvent, event::EventKey};
 use move_binary_format::{
     access::ModuleAccess,
+    binary_views::BinaryIndexedView,
     errors::*,
     file_format::{CompiledModule, CompiledScript, FunctionDefinitionIndex},
 };
+use move_command_line_common::files::MOVE_COMPILED_EXTENSION;
 use move_core_types::{
     account_address::AccountAddress,
     identifier::Identifier,
@@ -17,16 +18,18 @@ use move_core_types::{
     parser,
     vm_status::StatusCode,
 };
-use move_lang::{MOVE_COMPILED_EXTENSION, MOVE_COMPILED_INTERFACES_DIR};
+use move_lang::MOVE_COMPILED_INTERFACES_DIR;
 use move_vm_runtime::data_cache::MoveStorage;
 use resource_viewer::{AnnotatedMoveStruct, AnnotatedMoveValue, MoveValueAnnotator};
-
-use anyhow::{anyhow, bail, Result};
+use serde::{Deserialize, Serialize};
 use std::{
-    convert::TryFrom,
+    collections::BTreeMap,
+    convert::{TryFrom, TryInto},
     fs,
     path::{Path, PathBuf},
 };
+
+type Event = (Vec<u8>, u64, TypeTag, Vec<u8>);
 
 /// subdirectory of `DEFAULT_STORAGE_DIR`/<addr> where resources are stored
 pub const RESOURCES_DIR: &str = "resources";
@@ -34,6 +37,13 @@ pub const RESOURCES_DIR: &str = "resources";
 pub const MODULES_DIR: &str = "modules";
 /// subdirectory of `DEFAULT_STORAGE_DIR`/<addr> where events are stored
 pub const EVENTS_DIR: &str = "events";
+
+pub type ModuleIdWithNamedAddress = (ModuleId, Option<String>);
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub(crate) struct InterfaceFilesMetadata {
+    named_address_mapping: BTreeMap<ModuleId, String>,
+}
 
 #[derive(Debug)]
 pub struct OnDiskStateView {
@@ -68,6 +78,56 @@ impl OnDiskStateView {
             fs::create_dir_all(&path)?;
         }
         Ok(path.into_os_string().into_string().unwrap())
+    }
+
+    pub(crate) fn interface_files_metadata_file(&self) -> PathBuf {
+        // File containing interface file metadata, specifically named address mapping
+        const INTERFACE_FILES_METADATA: &str = "metadata";
+        let mut path = self.build_dir.join(MOVE_COMPILED_INTERFACES_DIR);
+        path = path.join(INTERFACE_FILES_METADATA);
+        path.set_extension("yaml");
+        path
+    }
+
+    pub(crate) fn read_interface_files_metadata(&self) -> Result<InterfaceFilesMetadata> {
+        let bytes_opt = Self::get_bytes(&self.interface_files_metadata_file())?;
+        Ok(match bytes_opt {
+            None => InterfaceFilesMetadata {
+                named_address_mapping: BTreeMap::new(),
+            },
+            Some(bytes) => serde_yaml::from_slice::<InterfaceFilesMetadata>(&bytes)?,
+        })
+    }
+
+    fn update_interface_files_metadata(
+        &self,
+        additional_named_address_mapping: BTreeMap<ModuleId, Option<String>>,
+    ) -> Result<()> {
+        let InterfaceFilesMetadata {
+            mut named_address_mapping,
+        } = self.read_interface_files_metadata()?;
+        for (id, address_name_opt) in additional_named_address_mapping {
+            match address_name_opt {
+                None => {
+                    named_address_mapping.remove(&id);
+                }
+                Some(address_name) => {
+                    named_address_mapping.insert(id, address_name);
+                }
+            }
+        }
+        self.write_interface_files_metadata(InterfaceFilesMetadata {
+            named_address_mapping,
+        })
+    }
+
+    fn write_interface_files_metadata(&self, metadata: InterfaceFilesMetadata) -> Result<()> {
+        let yaml_string = serde_yaml::to_string(&metadata).unwrap();
+        let path = self.interface_files_metadata_file();
+        if !path.exists() {
+            fs::create_dir_all(path.parent().unwrap())?;
+        }
+        Ok(fs::write(path, yaml_string.as_bytes())?)
     }
 
     pub fn build_dir(&self) -> &PathBuf {
@@ -112,10 +172,16 @@ impl OnDiskStateView {
     }
 
     // Events are stored under address/handle creation number
-    fn get_event_path(&self, key: &EventKey) -> PathBuf {
-        let mut path = self.get_addr_path(&key.get_creator_address());
+    fn get_event_path(&self, key: &[u8]) -> PathBuf {
+        // TODO: this is a hacky way to get the account address and creation number from the event key.
+        // The root problem here is that the move-cli is using the Diem-specific event format.
+        // We will deal this later when we make events more generic in the Move VM.
+        let account_addr = AccountAddress::try_from(&key[8..])
+            .expect("failed to get account address from event key");
+        let creation_number = u64::from_le_bytes(key[..8].try_into().unwrap());
+        let mut path = self.get_addr_path(&account_addr);
         path.push(EVENTS_DIR);
-        path.push(key.get_creation_number().to_string());
+        path.push(creation_number.to_string());
         path.with_extension(BCS_EXTENSION)
     }
 
@@ -190,20 +256,19 @@ impl OnDiskStateView {
                     t => bail!("Expected to parse struct tag, but got {}", t),
                 };
                 match Self::get_bytes(resource_path)? {
-                    Some(resource_data) => Some(
-                        MoveValueAnnotator::new_no_stdlib(self)
-                            .view_resource(&id, &resource_data)?,
-                    ),
+                    Some(resource_data) => {
+                        Some(MoveValueAnnotator::new(self).view_resource(&id, &resource_data)?)
+                    }
                     None => None,
                 }
             }),
         }
     }
 
-    fn get_events(&self, events_path: &Path) -> Result<Vec<ContractEvent>> {
+    fn get_events(&self, events_path: &Path) -> Result<Vec<Event>> {
         Ok(if events_path.exists() {
             match Self::get_bytes(events_path)? {
-                Some(events_data) => bcs::from_bytes::<Vec<ContractEvent>>(&events_data)?,
+                Some(events_data) => bcs::from_bytes::<Vec<Event>>(&events_data)?,
                 None => vec![],
             }
         } else {
@@ -212,10 +277,10 @@ impl OnDiskStateView {
     }
 
     pub fn view_events(&self, events_path: &Path) -> Result<Vec<AnnotatedMoveValue>> {
-        let annotator = MoveValueAnnotator::new_no_stdlib(self);
+        let annotator = MoveValueAnnotator::new(self);
         self.get_events(events_path)?
             .iter()
-            .map(|event| annotator.view_contract_event(event))
+            .map(|(_, _, event_type, event_data)| annotator.view_value(event_type, event_data))
             .collect()
     }
 
@@ -227,20 +292,19 @@ impl OnDiskStateView {
 
         Ok(match Self::get_bytes(path)? {
             Some(bytes) => {
-                // TODO: find or create source map and pass it to disassembler
-                let d: Disassembler<Loc> = if is_module {
-                    Disassembler::from_module(
-                        CompiledModule::deserialize(&bytes)
-                            .map_err(|e| anyhow!("Failure deserializing module: {:?}", e))?,
-                        0,
-                    )?
+                let module: CompiledModule;
+                let script: CompiledScript;
+                let view = if is_module {
+                    module = CompiledModule::deserialize(&bytes)
+                        .map_err(|e| anyhow!("Failure deserializing module: {:?}", e))?;
+                    BinaryIndexedView::Module(&module)
                 } else {
-                    Disassembler::from_script(
-                        CompiledScript::deserialize(&bytes)
-                            .map_err(|e| anyhow!("Failure deserializing script: {:?}", e))?,
-                        0,
-                    )?
+                    script = CompiledScript::deserialize(&bytes)
+                        .map_err(|e| anyhow!("Failure deserializing script: {:?}", e))?;
+                    BinaryIndexedView::Script(&script)
                 };
+                // TODO: find or create source map and pass it to disassembler
+                let d: Disassembler<Loc> = Disassembler::from_view(view, 0)?;
                 Some(d.disassemble()?)
             }
             None => None,
@@ -288,24 +352,19 @@ impl OnDiskStateView {
         event_type: TypeTag,
         event_data: Vec<u8>,
     ) -> Result<()> {
-        let key = EventKey::try_from(event_key)?;
-        self.save_contract_event(ContractEvent::new(
-            key,
-            event_sequence_number,
-            event_type,
-            event_data,
-        ))
-    }
-
-    pub fn save_contract_event(&self, event: ContractEvent) -> Result<()> {
         // save event data in handle_address/EVENTS_DIR/handle_number
-        let path = self.get_event_path(event.key());
+        let path = self.get_event_path(event_key);
         if !path.exists() {
             fs::create_dir_all(path.parent().unwrap())?;
         }
         // grab the old event log (if any) and append this event to it
         let mut event_log = self.get_events(&path)?;
-        event_log.push(event);
+        event_log.push((
+            event_key.to_vec(),
+            event_sequence_number,
+            event_type,
+            event_data,
+        ));
         Ok(fs::write(path, &bcs::to_bytes(&event_log)?)?)
     }
 
@@ -320,7 +379,11 @@ impl OnDiskStateView {
 
     // keep the mv_interfaces generated in the build_dir in-sync with the modules on storage. The
     // mv_interfaces will be used for compilation and the modules will be used for linking.
-    fn sync_interface_files(&self) -> Result<()> {
+    fn sync_interface_files(
+        &self,
+        named_address_mapping_changes: BTreeMap<ModuleId, Option<String>>,
+    ) -> Result<()> {
+        self.update_interface_files_metadata(named_address_mapping_changes)?;
         move_lang::generate_interface_files(
             &[self
                 .storage_dir
@@ -335,6 +398,7 @@ impl OnDiskStateView {
                     .into_string()
                     .unwrap(),
             ),
+            &self.read_interface_files_metadata()?.named_address_mapping,
             false,
         )?;
         Ok(())
@@ -343,17 +407,19 @@ impl OnDiskStateView {
     /// Save all the modules in the local cache, re-generate mv_interfaces if required.
     pub fn save_modules<'a>(
         &self,
-        modules: impl IntoIterator<Item = &'a (ModuleId, Vec<u8>)>,
+        modules: impl IntoIterator<Item = &'a (ModuleIdWithNamedAddress, Vec<u8>)>,
     ) -> Result<()> {
+        let mut named_address_mapping_changes = BTreeMap::new();
         let mut is_empty = true;
-        for (module_id, module_bytes) in modules.into_iter() {
-            self.save_module(module_id, module_bytes)?;
+        for ((module_id, address_name_opt), module_bytes) in modules {
+            self.save_module(&module_id, module_bytes)?;
+            named_address_mapping_changes.insert(module_id.clone(), address_name_opt.clone());
             is_empty = false;
         }
 
         // sync with build_dir for updates of mv_interfaces if new modules are added
         if !is_empty {
-            self.sync_interface_files()?;
+            self.sync_interface_files(named_address_mapping_changes)?;
         }
 
         Ok(())

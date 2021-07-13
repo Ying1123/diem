@@ -3,25 +3,28 @@
 
 use crate::{
     client::Client,
-    error::{Error, Result},
+    error::{Error, Result, WaitForTransactionError},
     request::MethodRequest,
     response::{MethodResponse, Response},
     state::State,
 };
+use diem_crypto::hash::{CryptoHash, HashValue};
 use diem_json_rpc_types::views::{
-    AccountView, CurrencyInfoView, EventView, TransactionListView, TransactionView,
+    AccountStateWithProofView, AccountView, CurrencyInfoView, EventView, MetadataView,
+    TransactionListView, TransactionView,
 };
 use diem_types::{
     account_address::AccountAddress,
-    account_config::diem_root_address,
+    account_config::{diem_root_address, NewBlockEvent},
     account_state::AccountState,
     account_state_blob::AccountStateWithProof,
-    contract_event::EventWithProof,
-    epoch_change::EpochChangeProof,
+    block_metadata::new_block_event_key,
+    contract_event::{EventByVersionWithProof, EventWithProof},
     event::EventKey,
-    ledger_info::{LedgerInfo, LedgerInfoWithSignatures},
+    ledger_info::LedgerInfo,
     proof::{AccumulatorConsistencyProof, TransactionAccumulatorSummary},
-    transaction::Version,
+    state_proof::StateProof,
+    transaction::{AccountTransactionsWithProof, SignedTransaction, Transaction, Version},
     trusted_state::TrustedState,
     waypoint::Waypoint,
 };
@@ -30,6 +33,7 @@ use std::{
     convert::TryFrom,
     fmt::Debug,
     sync::{Arc, RwLock},
+    time::Duration,
 };
 
 // TODO(philiphayes): figure out retry strategy
@@ -37,15 +41,6 @@ use std::{
 // TODO(philiphayes): fill out rest of the methods
 // TODO(philiphayes): all clients should validate chain id (allow users to trust-on-first-use or pre-configure)
 // TODO(philiphayes): we could abstract the async client so VerifyingClient takes a dyn Trait?
-
-// TODO(philiphayes): we should really add a real StateProof type (not alias) that
-// collects these types together. StateProof isn't a very descriptive name though...
-
-type StateProof = (
-    LedgerInfoWithSignatures,
-    EpochChangeProof,
-    AccumulatorConsistencyProof,
-);
 
 /// The `VerifyingClient` is a [Diem JSON-RPC client] that verifies Diem's
 /// cryptographic proofs when it makes API calls.
@@ -118,6 +113,71 @@ impl<S: Storage> VerifyingClient<S> {
             .clone()
     }
 
+    pub async fn wait_for_signed_transaction(
+        &self,
+        txn: &SignedTransaction,
+        timeout: Option<Duration>,
+        delay: Option<Duration>,
+    ) -> Result<Response<TransactionView>, WaitForTransactionError> {
+        let response = self
+            .wait_for_transaction(
+                txn.sender(),
+                txn.sequence_number(),
+                txn.expiration_timestamp_secs(),
+                Transaction::UserTransaction(txn.clone()).hash(),
+                timeout,
+                delay,
+            )
+            .await?;
+
+        if !response.inner().vm_status.is_executed() {
+            return Err(WaitForTransactionError::TransactionExecutionFailed(
+                response.into_inner(),
+            ));
+        }
+
+        Ok(response)
+    }
+
+    pub async fn wait_for_transaction(
+        &self,
+        address: AccountAddress,
+        seq: u64,
+        expiration_time_secs: u64,
+        txn_hash: HashValue,
+        timeout: Option<Duration>,
+        delay: Option<Duration>,
+    ) -> Result<Response<TransactionView>, WaitForTransactionError> {
+        const DEFAULT_TIMEOUT: Duration = Duration::from_secs(5);
+        const DEFAULT_DELAY: Duration = Duration::from_millis(50);
+
+        let start = std::time::Instant::now();
+        while start.elapsed() < timeout.unwrap_or(DEFAULT_TIMEOUT) {
+            let txn_resp = self
+                .get_account_transaction(address, seq, true)
+                .await
+                .map_err(WaitForTransactionError::GetTransactionError)?;
+
+            let (maybe_txn, state) = txn_resp.into_parts();
+
+            if let Some(txn) = maybe_txn {
+                if txn.hash != txn_hash {
+                    return Err(WaitForTransactionError::TransactionHashMismatchError(txn));
+                }
+
+                return Ok(Response::new(txn, state));
+            }
+
+            if expiration_time_secs <= state.timestamp_usecs / 1_000_000 {
+                return Err(WaitForTransactionError::TransactionExpired);
+            }
+
+            tokio::time::sleep(delay.unwrap_or(DEFAULT_DELAY)).await;
+        }
+
+        Err(WaitForTransactionError::Timeout)
+    }
+
     /// Issue `get_state_proof` requests until we successfully sync to the remote
     /// node's current version (unless we experience a verification error or other
     /// I/O error).
@@ -149,7 +209,7 @@ impl<S: Storage> VerifyingClient<S> {
         )?;
 
         // return true if we need to sync more epoch changes
-        Ok(state_proof.1.more)
+        Ok(state_proof.epoch_changes().more)
     }
 
     async fn get_state_proof_and_maybe_accumulator(
@@ -207,7 +267,7 @@ impl<S: Storage> VerifyingClient<S> {
             .transpose()?;
 
         // check the response metadata matches the state proof
-        verify_latest_li_matches_state(state_proof.0.ledger_info(), &state)?;
+        verify_latest_li_matches_state(state_proof.latest_ledger_info(), &state)?;
 
         Ok((state_proof, maybe_accumulator))
     }
@@ -220,19 +280,12 @@ impl<S: Storage> VerifyingClient<S> {
         state_proof: &StateProof,
         maybe_accumulator: Option<&TransactionAccumulatorSummary>,
     ) -> Result<()> {
-        let (latest_li, epoch_change_proof, consistency_proof) = state_proof;
-
         // Verify the response's state proof starting from the trusted state when
         // we first made the request. If successful, this means the potential new
         // trusted state is at least a descendent of the request trusted state,
         // though not necessarily the globally most-recent trusted state.
         let change = request_trusted_state
-            .verify_and_ratchet(
-                latest_li,
-                epoch_change_proof,
-                consistency_proof,
-                maybe_accumulator,
-            )
+            .verify_and_ratchet(state_proof, maybe_accumulator)
             .map_err(Error::invalid_proof)?;
 
         // Try to compare-and-swap the new trusted state into the state store.
@@ -247,6 +300,41 @@ impl<S: Storage> VerifyingClient<S> {
         }
 
         Ok(())
+    }
+
+    /// Submit a new signed user transaction.
+    ///
+    /// Note: we don't verify anything about the server's response here. If the
+    /// server is behaving maliciously, they can claim our transaction is
+    /// malformed when it is not, they can broadcast our valid transaction but
+    /// tell us it is too old, or they can accept our invalid transaction without
+    /// giving us any indication that it's bad.
+    ///
+    /// Unfortunately, there's nothing for us to verify that their response is
+    /// correct or not; the only way to get around this is by broadcasting our
+    /// transaction to multiple different servers. As long as one is honest, our
+    /// valid transaction will eventually be committed. This client handles a
+    /// connection to a single server, so the broadcasting needs to happen at a
+    /// higher layer.
+    pub async fn submit(&self, txn: &SignedTransaction) -> Result<Response<()>> {
+        self.request(MethodRequest::submit(txn).map_err(Error::request)?)
+            .await?
+            .and_then(MethodResponse::try_into_submit)
+    }
+
+    pub async fn get_metadata_by_version(
+        &self,
+        version: Version,
+    ) -> Result<Response<MetadataView>> {
+        self.request(MethodRequest::get_metadata_by_version(version))
+            .await?
+            .and_then(MethodResponse::try_into_get_metadata)
+    }
+
+    pub async fn get_metadata(&self) -> Result<Response<MetadataView>> {
+        self.request(MethodRequest::get_metadata())
+            .await?
+            .and_then(MethodResponse::try_into_get_metadata)
     }
 
     pub async fn get_account(
@@ -281,6 +369,38 @@ impl<S: Storage> VerifyingClient<S> {
         ))
         .await?
         .and_then(MethodResponse::try_into_get_transactions)
+    }
+
+    pub async fn get_account_transaction(
+        &self,
+        address: AccountAddress,
+        seq_num: u64,
+        include_events: bool,
+    ) -> Result<Response<Option<TransactionView>>> {
+        self.request(MethodRequest::get_account_transaction(
+            address,
+            seq_num,
+            include_events,
+        ))
+        .await?
+        .and_then(MethodResponse::try_into_get_account_transaction)
+    }
+
+    pub async fn get_account_transactions(
+        &self,
+        address: AccountAddress,
+        start_seq_num: u64,
+        limit: u64,
+        include_events: bool,
+    ) -> Result<Response<Vec<TransactionView>>> {
+        self.request(MethodRequest::get_account_transactions(
+            address,
+            start_seq_num,
+            limit,
+            include_events,
+        ))
+        .await?
+        .and_then(MethodResponse::try_into_get_account_transactions)
     }
 
     pub async fn get_events(
@@ -364,14 +484,14 @@ impl<S: Storage> VerifyingClient<S> {
         let state_proof = StateProof::try_from(&state_proof_view).map_err(Error::decode)?;
 
         // check the response metadata matches the state proof
-        verify_latest_li_matches_state(state_proof.0.ledger_info(), &state)?;
+        verify_latest_li_matches_state(state_proof.latest_ledger_info(), &state)?;
 
         // try to ratchet our trusted state using the state proof
         self.verify_and_ratchet(&request_trusted_state, &state_proof, None)?;
 
         // remote says we're too far behind and need to sync. we have to throw
         // out the batch since we can't verify any proofs
-        if state_proof.1.more {
+        if state_proof.epoch_changes().more {
             // TODO(philiphayes): what is the right behaviour here? it would obv.
             // be more convenient to just call `self.sync` here and then retry,
             // but maybe a client would like to control the syncs itself?
@@ -431,7 +551,7 @@ impl VerifyingBatch {
     }
 
     fn validate_responses(
-        &self,
+        self,
         start_version: Version,
         state: &State,
         state_proof: &StateProof,
@@ -461,7 +581,7 @@ impl VerifyingBatch {
 
         Ok(self
             .requests
-            .iter()
+            .into_iter()
             .map(|request| {
                 let n = request.subrequests.len();
                 let subresponses = responses_iter.by_ref().take(n).collect();
@@ -471,22 +591,24 @@ impl VerifyingBatch {
     }
 }
 
+#[derive(Clone, Copy)]
 struct RequestContext<'a> {
     #[allow(dead_code)]
     start_version: Version,
 
-    #[allow(dead_code)]
     state: &'a State,
 
     state_proof: &'a StateProof,
 
+    #[allow(dead_code)]
     request: &'a MethodRequest,
 
     #[allow(dead_code)]
     subrequests: &'a [MethodRequest],
 }
 
-type RequestCallback = fn(RequestContext<'_>, &[MethodResponse]) -> Result<MethodResponse>;
+type RequestCallback =
+    Box<dyn FnOnce(RequestContext<'_>, &[MethodResponse]) -> Result<MethodResponse>>;
 
 struct VerifyingRequest {
     request: MethodRequest,
@@ -507,10 +629,22 @@ impl VerifyingRequest {
         }
     }
 
+    fn map<F>(self, f: F) -> VerifyingRequest
+    where
+        F: FnOnce(RequestContext<'_>, MethodResponse) -> MethodResponse + 'static,
+    {
+        let inner = self.callback;
+        let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
+            let response = inner(ctxt, subresponses)?;
+            Ok(f(ctxt, response))
+        });
+        Self::new(self.request, self.subrequests, callback)
+    }
+
     // TODO(philiphayes): this would be easier if the Error's were cloneable...
 
     fn validate_subresponses(
-        &self,
+        self,
         start_version: Version,
         state: &State,
         state_proof: &StateProof,
@@ -548,9 +682,23 @@ impl VerifyingRequest {
 impl From<MethodRequest> for VerifyingRequest {
     fn from(request: MethodRequest) -> Self {
         match request {
+            MethodRequest::Submit((txn,)) => verifying_submit(txn),
+            MethodRequest::GetMetadata((None,)) => verifying_get_latest_metadata(),
+            MethodRequest::GetMetadata((Some(version),)) => {
+                verifying_get_historical_metadata(version)
+            }
             MethodRequest::GetAccount(address, version) => verifying_get_account(address, version),
             MethodRequest::GetTransactions(start_version, limit, include_events) => {
                 verifying_get_transactions(start_version, limit, include_events)
+            }
+            MethodRequest::GetAccountTransactions(
+                address,
+                start_seq_num,
+                limit,
+                include_events,
+            ) => verifying_get_account_transactions(address, start_seq_num, limit, include_events),
+            MethodRequest::GetAccountTransaction(address, seq_num, include_events) => {
+                verifying_get_account_transaction(address, seq_num, include_events)
             }
             MethodRequest::GetEvents(key, start_seq, limit) => {
                 verifying_get_events(key, start_seq, limit)
@@ -576,12 +724,157 @@ impl From<MethodRequest> for VerifyingRequest {
 // would allow the from(MethodRequest) above to call a method on the enum inner
 // instead of these ad-hoc methods i think
 
+fn verifying_submit(txn: String) -> VerifyingRequest {
+    let request = MethodRequest::Submit((txn,));
+    let subrequests = vec![request.clone()];
+    let callback: RequestCallback = Box::new(move |_ctxt, subresponses| {
+        match subresponses {
+            [MethodResponse::Submit] => (),
+            subresponses => {
+                return Err(Error::rpc_response(format!(
+                    "expected [Submit] subresponses, received: {:?}",
+                    subresponses,
+                )))
+            }
+        };
+        Ok(MethodResponse::Submit)
+    });
+    VerifyingRequest::new(request, subrequests, callback)
+}
+
+fn verifying_get_latest_metadata() -> VerifyingRequest {
+    let request = MethodRequest::GetMetadata((None,));
+    let subrequests = vec![MethodRequest::GetAccountStateWithProof(
+        diem_root_address(),
+        None,
+        None,
+    )];
+    let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
+        let diem_root = match subresponses {
+            [MethodResponse::GetAccountStateWithProof(ref account)] => account,
+            subresponses => {
+                return Err(Error::rpc_response(format!(
+                    "expected [GetAccountStateWithProof] subresponses, received: {:?}",
+                    subresponses,
+                )))
+            }
+        };
+
+        let latest_li = ctxt.state_proof.latest_ledger_info();
+        let diem_root = verify_account_state(ctxt, &diem_root, diem_root_address(), None)?
+            .ok_or_else(|| Error::rpc_response("DiemRoot account is missing"))?;
+
+        let version = latest_li.version();
+        let accumulator_root_hash = latest_li.transaction_accumulator_hash();
+        let timestamp = latest_li.timestamp_usecs();
+        let chain_id = ctxt.state.chain_id;
+
+        let mut metadata_view =
+            MetadataView::new(version, accumulator_root_hash, timestamp, chain_id);
+        metadata_view
+            .with_diem_root(&diem_root)
+            .map_err(Error::rpc_response)?;
+
+        Ok(MethodResponse::GetMetadata(metadata_view))
+    });
+    VerifyingRequest::new(request, subrequests, callback)
+}
+
+fn verifying_get_historical_metadata(version: Version) -> VerifyingRequest {
+    let request = MethodRequest::GetMetadata((Some(version),));
+    let subrequests = vec![
+        MethodRequest::GetAccumulatorConsistencyProof(None, Some(version)),
+        MethodRequest::GetAccumulatorConsistencyProof(Some(version), None),
+        MethodRequest::GetEventByVersionWithProof(new_block_event_key(), Some(version)),
+    ];
+    let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
+        let (consistency_pg2v, consistency_v2li, block_event) = match subresponses {
+            [MethodResponse::GetAccumulatorConsistencyProof(ref c1), MethodResponse::GetAccumulatorConsistencyProof(ref c2), MethodResponse::GetEventByVersionWithProof(ref e)] => (c1, c2, e),
+            subresponses => {
+                return Err(Error::rpc_response(format!(
+                    "expected [GetAccumulatorConsistencyProof, GetAccumulatorConsistencyProof, GetEventByVersionWithProof] subresponses, received: {:?}",
+                    subresponses,
+                )))
+            }
+        };
+
+        let latest_li = ctxt.state_proof.latest_ledger_info();
+
+        // deserialize
+        let consistency_pg2v =
+            AccumulatorConsistencyProof::try_from(consistency_pg2v).map_err(Error::decode)?;
+        let consistency_v2li =
+            AccumulatorConsistencyProof::try_from(consistency_v2li).map_err(Error::decode)?;
+        let block_event = EventByVersionWithProof::try_from(block_event).map_err(Error::decode)?;
+
+        // build the accumulator summary from pre-genesis to the requested version
+        let accumulator_summary =
+            TransactionAccumulatorSummary::try_from_genesis_proof(consistency_pg2v, version)
+                .map_err(Error::invalid_proof)?;
+        // compute the root hash at the requested version
+        let accumulator_root_hash = accumulator_summary.root_hash();
+
+        // verify that the historical accumulator_summary is actually a prefix of
+        // our latest verified accumulator_summary.
+        let _ = accumulator_summary
+            .try_extend_with_proof(&consistency_v2li, &latest_li)
+            .map_err(Error::invalid_proof)?;
+
+        // NewBlockEvent can be special cased so we don't need to lookup the diem_root::DiemBlock->height
+        let event_count = None;
+        // verify the block event for the requested version
+        block_event
+            .verify(latest_li, &new_block_event_key(), event_count, version)
+            .map_err(Error::invalid_proof)?;
+
+        // extract the timestamp
+        let timestamp = match (block_event.lower_bound_incl, block_event.upper_bound_excl) {
+            // For block events specifically, these cases should only happen at genesis.
+            (None, None) | (None, Some(_)) => {
+                if version == 0 {
+                    0 // genesis timestamp is 0
+                } else {
+                    return Err(Error::rpc_response("not genesis"));
+                }
+            }
+            // This logic is for all request versions before the current, latest block.
+            (Some(block_event), Some(_)) => {
+                let block_event =
+                    NewBlockEvent::try_from(&block_event.event).map_err(Error::decode)?;
+                block_event.proposed_time()
+            }
+            // This logic is for the current, latest block.
+            (Some(block_event), None) => {
+                let block_event =
+                    NewBlockEvent::try_from(&block_event.event).map_err(Error::decode)?;
+                let timestamp = block_event.proposed_time();
+                // since the timestamp must increment across an epoch boundary,
+                // (round, timestamp) provides a total order across blocks.
+                //
+                // If these two values don't match with our verified latest ledger
+                // info, then we know this can't be the latest block.
+                if block_event.round() != latest_li.round()
+                    || timestamp != latest_li.timestamp_usecs()
+                {
+                    return Err(Error::rpc_response("not latest block"));
+                }
+                timestamp
+            }
+        };
+
+        let chain_id = ctxt.state.chain_id;
+        let metadata_view = MetadataView::new(version, accumulator_root_hash, timestamp, chain_id);
+        Ok(MethodResponse::GetMetadata(metadata_view))
+    });
+    VerifyingRequest::new(request, subrequests, callback)
+}
+
 fn verifying_get_account(address: AccountAddress, version: Option<Version>) -> VerifyingRequest {
     let request = MethodRequest::GetAccount(address, version);
     let subrequests = vec![MethodRequest::GetAccountStateWithProof(
         address, version, None,
     )];
-    let callback: RequestCallback = |ctxt, subresponses| {
+    let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
         let account = match subresponses {
             [MethodResponse::GetAccountStateWithProof(ref account)] => account,
             subresponses => {
@@ -592,32 +885,18 @@ fn verifying_get_account(address: AccountAddress, version: Option<Version>) -> V
             }
         };
 
-        let account_state_with_proof =
-            AccountStateWithProof::try_from(account).map_err(Error::decode)?;
-
-        let (address, version) = match ctxt.request {
-            MethodRequest::GetAccount(address, version) => (*address, *version),
-            request => panic!("programmer error: unexpected request: {:?}", request),
-        };
-        let latest_li = ctxt.state_proof.0.ledger_info();
-        let ledger_version = latest_li.version();
+        let ledger_version = ctxt.state_proof.latest_ledger_info().version();
         let version = version.unwrap_or(ledger_version);
-
-        account_state_with_proof
-            .verify(latest_li, version, address)
-            .map_err(Error::invalid_proof)?;
-
-        let maybe_account_view = account_state_with_proof
-            .blob
-            .map(|blob| {
-                let account_state = AccountState::try_from(&blob).map_err(Error::decode)?;
+        let maybe_account_state = verify_account_state(ctxt, &account, address, Some(version))?;
+        let maybe_account_view = maybe_account_state
+            .map(|account_state| {
                 AccountView::try_from_account_state(address, account_state, version)
                     .map_err(Error::decode)
             })
             .transpose()?;
 
         Ok(MethodResponse::GetAccount(maybe_account_view))
-    };
+    });
     VerifyingRequest::new(request, subrequests, callback)
 }
 
@@ -632,7 +911,7 @@ fn verifying_get_transactions(
         limit,
         include_events,
     )];
-    let callback: RequestCallback = |ctxt, subresponses| {
+    let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
         let maybe_txs_with_proofs_view = match subresponses {
             [MethodResponse::GetTransactionsWithProofs(ref txs)] => txs,
             subresponses => {
@@ -641,14 +920,6 @@ fn verifying_get_transactions(
                     subresponses,
                 )))
             }
-        };
-
-        // Extract our original request arguments.
-        let (start_version, _limit, include_events) = match ctxt.request {
-            MethodRequest::GetTransactions(start_version, limit, include_events) => {
-                (*start_version, *limit, *include_events)
-            }
-            request => panic!("programmer error: unexpected request: {:?}", request),
         };
 
         // We don't guarantee that our response contains _all_ possible transactions
@@ -677,7 +948,7 @@ fn verifying_get_transactions(
             .map_err(Error::decode)?;
 
         // Verify the proofs
-        let latest_li = ctxt.state_proof.0.ledger_info();
+        let latest_li = ctxt.state_proof.latest_ledger_info();
         txn_list_with_proof
             .verify(latest_li, Some(start_version))
             .map_err(Error::invalid_proof)?;
@@ -687,15 +958,84 @@ fn verifying_get_transactions(
             TransactionListView::try_from(txn_list_with_proof).map_err(Error::decode)?;
 
         Ok(MethodResponse::GetTransactions(txn_list_view.0))
-    };
+    });
     VerifyingRequest::new(request, subrequests, callback)
+}
+
+fn verifying_get_account_transactions(
+    address: AccountAddress,
+    start_seq_num: u64,
+    limit: u64,
+    include_events: bool,
+) -> VerifyingRequest {
+    let request =
+        MethodRequest::GetAccountTransactions(address, start_seq_num, limit, include_events);
+    let subrequests = vec![MethodRequest::GetAccountTransactionsWithProofs(
+        address,
+        start_seq_num,
+        limit,
+        include_events,
+        None, /* ledger_version must be None so proofs are verifiable at the latest state */
+    )];
+    let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
+        let acct_txns_with_proof_view = match subresponses {
+            [MethodResponse::GetAccountTransactionsWithProofs(ref txs)] => txs,
+            subresponses => {
+                return Err(Error::rpc_response(format!(
+                    "expected [GetAccountTransactionsWithProofs] subresponses, received: {:?}",
+                    subresponses,
+                )))
+            }
+        };
+
+        let acct_txns_with_proof =
+            AccountTransactionsWithProof::try_from(acct_txns_with_proof_view)
+                .map_err(Error::decode)?;
+
+        let latest_li = ctxt.state_proof.latest_ledger_info();
+        let ledger_version = latest_li.version();
+
+        acct_txns_with_proof
+            .verify(
+                latest_li,
+                address,
+                start_seq_num,
+                limit,
+                include_events,
+                ledger_version,
+            )
+            .map_err(Error::invalid_proof)?;
+
+        let txs = TransactionListView::try_from(acct_txns_with_proof).map_err(Error::decode)?;
+
+        Ok(MethodResponse::GetAccountTransactions(txs.0))
+    });
+    VerifyingRequest::new(request, subrequests, callback)
+}
+
+fn verifying_get_account_transaction(
+    address: AccountAddress,
+    seq_num: u64,
+    include_events: bool,
+) -> VerifyingRequest {
+    verifying_get_account_transactions(address, seq_num, 1, include_events).map(
+        |_ctxt, response| match response {
+            MethodResponse::GetAccountTransactions(txns) => {
+                MethodResponse::GetAccountTransaction(txns.into_iter().next())
+            }
+            response => panic!(
+                "expected GetAccountTransactions response, got: {:?}",
+                response
+            ),
+        },
+    )
 }
 
 fn verifying_get_events(key: EventKey, start_seq: u64, limit: u64) -> VerifyingRequest {
     let request = MethodRequest::GetEvents(key, start_seq, limit);
     let subrequests = vec![MethodRequest::GetEventsWithProofs(key, start_seq, limit)];
 
-    let callback: RequestCallback = |ctxt, subresponses| {
+    let callback: RequestCallback = Box::new(move |ctxt, subresponses| {
         let event_with_proof_views = match subresponses {
             [MethodResponse::GetEventsWithProofs(ref inner)] => inner,
             subresponses => {
@@ -704,11 +1044,6 @@ fn verifying_get_events(key: EventKey, start_seq: u64, limit: u64) -> VerifyingR
                     subresponses,
                 )))
             }
-        };
-
-        let (key, start_seq, limit) = match ctxt.request {
-            MethodRequest::GetEvents(key, start_seq, limit) => (key, *start_seq, *limit),
-            request => panic!("programmer error: unexpected request: {:?}", request),
         };
 
         // Make sure we didn't get more than we requested. Note that remote can
@@ -722,7 +1057,7 @@ fn verifying_get_events(key: EventKey, start_seq: u64, limit: u64) -> VerifyingR
             )));
         }
 
-        let latest_li = ctxt.state_proof.0.ledger_info();
+        let latest_li = ctxt.state_proof.latest_ledger_info();
         let event_views = event_with_proof_views
             .iter()
             .enumerate()
@@ -738,7 +1073,7 @@ fn verifying_get_events(key: EventKey, start_seq: u64, limit: u64) -> VerifyingR
                 event_with_proof
                     .verify(
                         latest_li,
-                        key,
+                        &key,
                         start_seq + offset as u64,
                         txn_version,
                         event_with_proof.event_index,
@@ -754,7 +1089,7 @@ fn verifying_get_events(key: EventKey, start_seq: u64, limit: u64) -> VerifyingR
             .collect::<Result<Vec<_>>>()?;
 
         Ok(MethodResponse::GetEvents(event_views))
-    };
+    });
     VerifyingRequest::new(request, subrequests, callback)
 }
 
@@ -765,7 +1100,7 @@ fn verifying_get_currencies() -> VerifyingRequest {
         None,
         None,
     )];
-    let callback: RequestCallback = |ctxt, subresponses| {
+    let callback: RequestCallback = Box::new(|ctxt, subresponses| {
         let diem_root = match subresponses {
             [MethodResponse::GetAccountStateWithProof(ref diem_root)] => diem_root,
             subresponses => {
@@ -776,36 +1111,22 @@ fn verifying_get_currencies() -> VerifyingRequest {
             }
         };
 
-        let diem_root_with_proof =
-            AccountStateWithProof::try_from(diem_root).map_err(Error::decode)?;
-
-        let latest_li = ctxt.state_proof.0.ledger_info();
-        let version = latest_li.version();
-
-        diem_root_with_proof
-            .verify(latest_li, version, diem_root_address())
-            .map_err(Error::invalid_proof)?;
-
-        // Deserialize the DiemRoot account state, pull out its currency infos,
-        // and project them into json-rpc currency views.
-        let diem_root_blob = diem_root_with_proof
-            .blob
-            .ok_or_else(|| Error::unknown("missing diem_root account"))?;
-        let diem_root = AccountState::try_from(&diem_root_blob).map_err(Error::decode)?;
+        let diem_root = verify_account_state(ctxt, &diem_root, diem_root_address(), None)?
+            .ok_or_else(|| Error::rpc_response("DiemRoot account is missing"))?;
         let currency_infos = diem_root
             .get_registered_currency_info_resources()
             .map_err(Error::decode)?;
         let currency_views = currency_infos.iter().map(CurrencyInfoView::from).collect();
 
         Ok(MethodResponse::GetCurrencies(currency_views))
-    };
+    });
     VerifyingRequest::new(request, subrequests, callback)
 }
 
 fn verifying_get_network_status() -> VerifyingRequest {
     let request = MethodRequest::get_network_status();
     let subrequests = vec![MethodRequest::get_network_status()];
-    let callback: RequestCallback = |_ctxt, subresponses| {
+    let callback: RequestCallback = Box::new(|_ctxt, subresponses| {
         let status = match subresponses {
             [MethodResponse::GetNetworkStatus(ref status)] => *status,
             subresponses => {
@@ -816,8 +1137,30 @@ fn verifying_get_network_status() -> VerifyingRequest {
             }
         };
         Ok(MethodResponse::GetNetworkStatus(status))
-    };
+    });
     VerifyingRequest::new(request, subrequests, callback)
+}
+
+fn verify_account_state(
+    ctxt: RequestContext<'_>,
+    view: &AccountStateWithProofView,
+    address: AccountAddress,
+    version: Option<Version>,
+) -> Result<Option<AccountState>> {
+    let account_state_with_proof = AccountStateWithProof::try_from(view).map_err(Error::decode)?;
+
+    let latest_li = ctxt.state_proof.latest_ledger_info();
+    let ledger_version = latest_li.version();
+    let version = version.unwrap_or(ledger_version);
+
+    account_state_with_proof
+        .verify(latest_li, version, address)
+        .map_err(Error::invalid_proof)?;
+
+    account_state_with_proof
+        .blob
+        .map(|blob| AccountState::try_from(&blob).map_err(Error::decode))
+        .transpose()
 }
 
 mod private {

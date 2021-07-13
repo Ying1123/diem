@@ -7,9 +7,10 @@ use functional_tests::{
     compiler::{Compiler, ScriptOrModule},
     testsuite,
 };
+use move_command_line_common::env::read_bool_env_var;
 use move_lang::{
-    self, command_line::read_bool_env_var, compiled_unit::CompiledUnit, errors,
-    Compiler as MoveCompiler, Flags, FullyCompiledProgram, PASS_COMPILATION,
+    self, compiled_unit::CompiledUnit, errors, Compiler as MoveCompiler, Flags,
+    FullyCompiledProgram, PASS_COMPILATION,
 };
 use once_cell::sync::Lazy;
 use std::{fmt, io::Write, path::Path};
@@ -84,7 +85,7 @@ impl<'a> Compiler for MoveSourceCompiler<'a> {
                     }
                 }
 
-                let error_buffer = if read_bool_env_var(testsuite::PRETTY) {
+                let error_buffer = if read_bool_env_var(move_command_line_common::testing::PRETTY) {
                     move_lang::errors::report_errors_to_color_buffer(files, errors)
                 } else {
                     move_lang::errors::report_errors_to_buffer(files, errors)

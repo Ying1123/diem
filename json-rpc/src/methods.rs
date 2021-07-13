@@ -6,16 +6,18 @@ use crate::{
     data,
     errors::JsonRpcError,
     views::{
-        AccountStateWithProofView, AccountView, AccumulatorConsistencyProofView, CurrencyInfoView,
-        EventView, EventWithProofView, MetadataView, StateProofView, TransactionListView,
-        TransactionView, TransactionsWithProofsView,
+        AccountStateWithProofView, AccountTransactionsWithProofView, AccountView,
+        AccumulatorConsistencyProofView, CurrencyInfoView, EventByVersionWithProofView, EventView,
+        EventWithProofView, MetadataView, StateProofView, TransactionListView, TransactionView,
+        TransactionsWithProofsView,
     },
 };
 use anyhow::Result;
 use diem_config::config::RoleType;
 use diem_json_rpc_types::request::{
     GetAccountParams, GetAccountStateWithProofParams, GetAccountTransactionParams,
-    GetAccountTransactionsParams, GetAccumulatorConsistencyProofParams, GetCurrenciesParams,
+    GetAccountTransactionsParams, GetAccountTransactionsWithProofsParams,
+    GetAccumulatorConsistencyProofParams, GetCurrenciesParams, GetEventByVersionWithProof,
     GetEventsParams, GetEventsWithProofsParams, GetMetadataParams, GetNetworkStatusParams,
     GetStateProofParams, GetTransactionsParams, GetTransactionsWithProofsParams, MethodRequest,
     SubmitParams,
@@ -126,18 +128,16 @@ impl<'a> Handler<'a> {
     }
 
     fn version_param(&self, version: Option<u64>, name: &str) -> Result<u64, JsonRpcError> {
-        let version = if let Some(version) = version {
-            if version > self.version() {
-                return Err(JsonRpcError::invalid_param(&format!(
-                    "{} should be <= known latest version {}",
-                    name,
-                    self.version()
-                )));
-            }
-            version
-        } else {
-            self.version()
-        };
+        let latest_ledger_version = self.version();
+        let version = version.unwrap_or(latest_ledger_version);
+
+        if version > latest_ledger_version {
+            return Err(JsonRpcError::invalid_param(&format!(
+                "{} should be <= known latest version {}",
+                name, latest_ledger_version,
+            )));
+        }
+
         Ok(version)
     }
 
@@ -180,8 +180,14 @@ impl<'a> Handler<'a> {
             MethodRequest::GetTransactionsWithProofs(params) => {
                 serde_json::to_value(self.get_transactions_with_proofs(params).await?)?
             }
+            MethodRequest::GetAccountTransactionsWithProofs(params) => {
+                serde_json::to_value(self.get_account_transactions_with_proofs(params).await?)?
+            }
             MethodRequest::GetEventsWithProofs(params) => {
                 serde_json::to_value(self.get_events_with_proofs(params).await?)?
+            }
+            MethodRequest::GetEventByVersionWithProof(params) => {
+                serde_json::to_value(self.get_event_by_version_with_proof(params).await?)?
             }
         };
         Ok(response)
@@ -273,10 +279,10 @@ impl<'a> Handler<'a> {
         } = params;
         data::get_account_transaction(
             self.service.db.borrow(),
-            self.version(),
             account,
             sequence_number,
             include_events,
+            self.version(),
         )
     }
 
@@ -295,11 +301,37 @@ impl<'a> Handler<'a> {
         self.service.validate_page_size_limit(limit as usize)?;
         data::get_account_transactions(
             self.service.db.borrow(),
-            self.version(),
             account,
             start,
             limit,
             include_events,
+            self.version(),
+        )
+    }
+
+    /// Return a serialized list of an account's transactions along with a proof for
+    /// each transaction.
+    async fn get_account_transactions_with_proofs(
+        &self,
+        params: GetAccountTransactionsWithProofsParams,
+    ) -> Result<AccountTransactionsWithProofView, JsonRpcError> {
+        let GetAccountTransactionsWithProofsParams {
+            account,
+            start,
+            limit,
+            include_events,
+            ledger_version,
+        } = params;
+        let ledger_version = self.version_param(ledger_version, "ledger_version")?;
+
+        self.service.validate_page_size_limit(limit as usize)?;
+        data::get_account_transactions_with_proofs(
+            self.service.db.borrow(),
+            account,
+            start,
+            limit,
+            include_events,
+            ledger_version,
         )
     }
 
@@ -320,6 +352,24 @@ impl<'a> Handler<'a> {
 
         self.service.validate_page_size_limit(limit as usize)?;
         data::get_events_with_proofs(self.service.db.borrow(), self.version(), key, start, limit)
+    }
+
+    /// Returns the latest event at or below the requested version along with proof.
+    async fn get_event_by_version_with_proof(
+        &self,
+        params: GetEventByVersionWithProof,
+    ) -> Result<EventByVersionWithProofView, JsonRpcError> {
+        let GetEventByVersionWithProof { key, version } = params;
+
+        let version = self.version_param(version, "version")?;
+        let ledger_version = self.version();
+
+        data::get_event_by_version_with_proof(
+            self.service.db.borrow(),
+            ledger_version,
+            key,
+            version,
+        )
     }
 
     /// Returns meta information about supported currencies
@@ -344,7 +394,7 @@ impl<'a> Handler<'a> {
         params: GetStateProofParams,
     ) -> Result<StateProofView, JsonRpcError> {
         let version = self.version_param(Some(params.version), "version")?;
-        data::get_state_proof(self.service.db.borrow(), version, &self.ledger_info)
+        data::get_state_proof(self.service.db.borrow(), version, self.ledger_info.clone())
     }
 
     async fn get_accumulator_consistency_proof(

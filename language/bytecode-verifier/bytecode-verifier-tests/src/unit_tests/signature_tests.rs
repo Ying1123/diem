@@ -25,10 +25,9 @@ proptest! {
 
     #[test]
     fn double_refs(
-        module in CompiledModule::valid_strategy(20),
+        mut module in CompiledModule::valid_strategy(20),
         mutations in vec((any::<PropIndex>(), any::<PropIndex>()), 0..20),
     ) {
-        let mut module = module.into_inner();
         let context = SignatureRefMutation::new(&mut module, mutations);
         let expected_violations = context.apply();
         let module = module.freeze().expect("should satisfy bounds checker");
@@ -40,10 +39,9 @@ proptest! {
 
     #[test]
     fn field_def_references(
-        module in CompiledModule::valid_strategy(20),
+        mut module in CompiledModule::valid_strategy(20),
         mutations in vec((any::<PropIndex>(), any::<PropIndex>()), 0..40),
     ) {
-        let mut module = module.into_inner();
         let context = FieldRefMutation::new(&mut module, mutations);
         let expected_violations = context.apply();
         let module = module.freeze().expect("should satisfy bounds checker");
@@ -56,7 +54,7 @@ proptest! {
 
 #[test]
 fn no_verify_locals_good() {
-    let compiled_module_good = CompiledModuleMut {
+    let compiled_module_good = CompiledModule {
         version: move_binary_format::file_format_common::VERSION_MAX,
         module_handles: vec![ModuleHandle {
             address: AddressIdentifierIndex(0),

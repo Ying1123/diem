@@ -11,8 +11,9 @@ use crate::{
     error::WaitForTransactionError,
     move_deserialize::{self, Event},
     views::{
-        AccountStateWithProofView, AccountView, AccumulatorConsistencyProofView, CurrencyInfoView,
-        EventView, EventWithProofView, MetadataView, StateProofView, TransactionView,
+        AccountStateWithProofView, AccountTransactionsWithProofView, AccountView,
+        AccumulatorConsistencyProofView, CurrencyInfoView, EventByVersionWithProofView, EventView,
+        EventWithProofView, MetadataView, StateProofView, TransactionView,
         TransactionsWithProofsView,
     },
     Error, Result, Retry, State,
@@ -276,6 +277,24 @@ impl Client {
         .await
     }
 
+    pub async fn get_account_transactions_with_proofs(
+        &self,
+        address: AccountAddress,
+        start_seq: u64,
+        limit: u64,
+        include_events: bool,
+        ledger_version: Option<u64>,
+    ) -> Result<Response<AccountTransactionsWithProofView>> {
+        self.send(MethodRequest::get_account_transactions_with_proofs(
+            address,
+            start_seq,
+            limit,
+            include_events,
+            ledger_version,
+        ))
+        .await
+    }
+
     pub async fn get_events_with_proofs(
         &self,
         key: EventKey,
@@ -283,6 +302,15 @@ impl Client {
         limit: u64,
     ) -> Result<Response<Vec<EventWithProofView>>> {
         self.send(MethodRequest::get_events_with_proofs(key, start_seq, limit))
+            .await
+    }
+
+    pub async fn get_event_by_version_with_proof(
+        &self,
+        key: EventKey,
+        version: Option<u64>,
+    ) -> Result<Response<EventByVersionWithProofView>> {
+        self.send(MethodRequest::get_event_by_version_with_proof(key, version))
             .await
     }
 

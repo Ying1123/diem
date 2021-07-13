@@ -4,8 +4,9 @@
 use super::Method;
 use crate::{
     views::{
-        AccountStateWithProofView, AccountView, AccumulatorConsistencyProofView, CurrencyInfoView,
-        EventView, EventWithProofView, MetadataView, StateProofView, TransactionView,
+        AccountStateWithProofView, AccountTransactionsWithProofView, AccountView,
+        AccumulatorConsistencyProofView, CurrencyInfoView, EventByVersionWithProofView, EventView,
+        EventWithProofView, MetadataView, StateProofView, TransactionView,
         TransactionsWithProofsView,
     },
     Error, State,
@@ -72,7 +73,9 @@ pub enum MethodResponse {
     GetAccumulatorConsistencyProof(AccumulatorConsistencyProofView),
     GetAccountStateWithProof(AccountStateWithProofView),
     GetTransactionsWithProofs(Option<TransactionsWithProofsView>),
+    GetAccountTransactionsWithProofs(AccountTransactionsWithProofView),
     GetEventsWithProofs(Vec<EventWithProofView>),
+    GetEventByVersionWithProof(EventByVersionWithProofView),
 }
 
 impl MethodResponse {
@@ -105,8 +108,14 @@ impl MethodResponse {
             Method::GetTransactionsWithProofs => {
                 MethodResponse::GetTransactionsWithProofs(serde_json::from_value(json)?)
             }
+            Method::GetAccountTransactionsWithProofs => {
+                MethodResponse::GetAccountTransactionsWithProofs(serde_json::from_value(json)?)
+            }
             Method::GetEventsWithProofs => {
                 MethodResponse::GetEventsWithProofs(serde_json::from_value(json)?)
+            }
+            Method::GetEventByVersionWithProof => {
+                MethodResponse::GetEventByVersionWithProof(serde_json::from_value(json)?)
             }
         };
 
@@ -130,7 +139,11 @@ impl MethodResponse {
             }
             MethodResponse::GetAccountStateWithProof(_) => Method::GetAccountStateWithProof,
             MethodResponse::GetTransactionsWithProofs(_) => Method::GetTransactionsWithProofs,
+            MethodResponse::GetAccountTransactionsWithProofs(_) => {
+                Method::GetAccountTransactionsWithProofs
+            }
             MethodResponse::GetEventsWithProofs(_) => Method::GetEventsWithProofs,
+            MethodResponse::GetEventByVersionWithProof(_) => Method::GetEventByVersionWithProof,
         }
     }
 
@@ -142,6 +155,26 @@ impl MethodResponse {
                 "expected MethodResponse::GetAccount found MethodResponse::{:?}",
                 self.method()
             );
+        }
+    }
+
+    pub fn try_into_submit(self) -> Result<(), Error> {
+        match self {
+            MethodResponse::Submit => Ok(()),
+            _ => Err(Error::rpc_response(format!(
+                "expected MethodResponse::Submit found MethodResponse::{:?}",
+                self.method()
+            ))),
+        }
+    }
+
+    pub fn try_into_get_metadata(self) -> Result<MetadataView, Error> {
+        match self {
+            MethodResponse::GetMetadata(view) => Ok(view),
+            _ => Err(Error::rpc_response(format!(
+                "expected MethodResponse::GetMetadata found MethodResponse::{:?}",
+                self.method()
+            ))),
         }
     }
 
@@ -187,11 +220,53 @@ impl MethodResponse {
         }
     }
 
+    pub fn try_into_get_account_transaction(self) -> Result<Option<TransactionView>, Error> {
+        match self {
+            MethodResponse::GetAccountTransaction(tx) => Ok(tx),
+            _ => Err(Error::rpc_response(format!(
+                "expected MethodResponse::GetAccountTransaction found MethodResponse::{:?}",
+                self.method()
+            ))),
+        }
+    }
+
+    pub fn try_into_get_account_transactions(self) -> Result<Vec<TransactionView>, Error> {
+        match self {
+            MethodResponse::GetAccountTransactions(txs) => Ok(txs),
+            _ => Err(Error::rpc_response(format!(
+                "expected MethodResponse::GetAccountTransactions found MethodResponse::{:?}",
+                self.method()
+            ))),
+        }
+    }
+
+    pub fn try_into_get_account_state_with_proof(self) -> Result<AccountStateWithProofView, Error> {
+        match self {
+            MethodResponse::GetAccountStateWithProof(view) => Ok(view),
+            _ => Err(Error::rpc_response(format!(
+                "expected MethodResponse::GetAccountStateWithProof found MethodResponse::{:?}",
+                self.method()
+            ))),
+        }
+    }
+
     pub fn try_into_get_events(self) -> Result<Vec<EventView>, Error> {
         match self {
             MethodResponse::GetEvents(events) => Ok(events),
             _ => Err(Error::rpc_response(format!(
                 "expected MethodResponse::GetEvents found MethodResponse::{:?}",
+                self.method()
+            ))),
+        }
+    }
+
+    pub fn try_into_get_event_by_version_with_proof(
+        self,
+    ) -> Result<EventByVersionWithProofView, Error> {
+        match self {
+            MethodResponse::GetEventByVersionWithProof(view) => Ok(view),
+            _ => Err(Error::rpc_response(format!(
+                "expected MethodResponse::GetEventByVersionWithProof found MethodResponse::{:?}",
                 self.method()
             ))),
         }

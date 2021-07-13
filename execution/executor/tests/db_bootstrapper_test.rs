@@ -74,17 +74,12 @@ fn test_empty_db() {
         .get_accumulator_summary(waypoint.version())
         .unwrap();
     let trusted_state = TrustedState::from_epoch_waypoint(waypoint);
-    let (li, epoch_change_proof, consistency_proof) = db_rw
+    let state_proof = db_rw
         .reader
         .get_state_proof(trusted_state.version())
         .unwrap();
     let trusted_state_change = trusted_state
-        .verify_and_ratchet(
-            &li,
-            &epoch_change_proof,
-            &consistency_proof,
-            Some(&initial_accumulator),
-        )
+        .verify_and_ratchet(&state_proof, Some(&initial_accumulator))
         .unwrap();
     assert!(trusted_state_change.is_epoch_change());
 
@@ -98,7 +93,7 @@ fn execute_and_commit(txns: Vec<Transaction>, db: &DbReaderWriter, signer: &Vali
     let version = li.ledger_info().version();
     let epoch = li.ledger_info().next_block_epoch();
     let target_version = version + txns.len() as u64;
-    let mut executor = Executor::<DiemVM>::new(db.clone());
+    let executor = Executor::<DiemVM>::new(db.clone());
     let output = executor
         .execute_block((block_id, txns), executor.committed_block_id())
         .unwrap();
@@ -324,17 +319,12 @@ fn test_pre_genesis() {
         .reader
         .get_accumulator_summary(trusted_state.version())
         .unwrap();
-    let (li, epoch_change_proof, consistency_proof) = db_rw
+    let state_proof = db_rw
         .reader
         .get_state_proof(trusted_state.version())
         .unwrap();
     let trusted_state_change = trusted_state
-        .verify_and_ratchet(
-            &li,
-            &epoch_change_proof,
-            &consistency_proof,
-            Some(&initial_accumulator),
-        )
+        .verify_and_ratchet(&state_proof, Some(&initial_accumulator))
         .unwrap();
     assert!(trusted_state_change.is_epoch_change());
 
@@ -370,15 +360,9 @@ fn test_new_genesis() {
         .reader
         .get_accumulator_summary(trusted_state.version())
         .unwrap();
-    let (li, epoch_change_proof, consistency_proof) =
-        db.reader.get_state_proof(trusted_state.version()).unwrap();
+    let state_proof = db.reader.get_state_proof(trusted_state.version()).unwrap();
     let trusted_state_change = trusted_state
-        .verify_and_ratchet(
-            &li,
-            &epoch_change_proof,
-            &consistency_proof,
-            Some(&initial_accumulator),
-        )
+        .verify_and_ratchet(&state_proof, Some(&initial_accumulator))
         .unwrap();
     assert!(trusted_state_change.is_epoch_change());
 
@@ -420,20 +404,14 @@ fn test_new_genesis() {
         .reader
         .get_accumulator_summary(trusted_state.version())
         .unwrap();
-    let (li, epoch_change_proof, consistency_proof) =
-        db.reader.get_state_proof(trusted_state.version()).unwrap();
+    let state_proof = db.reader.get_state_proof(trusted_state.version()).unwrap();
     let trusted_state_change = trusted_state
-        .verify_and_ratchet(
-            &li,
-            &epoch_change_proof,
-            &consistency_proof,
-            Some(&initial_accumulator),
-        )
+        .verify_and_ratchet(&state_proof, Some(&initial_accumulator))
         .unwrap();
     assert!(trusted_state_change.is_epoch_change());
     let trusted_state = trusted_state_change.new_state().unwrap();
     assert_eq!(trusted_state.version(), 5);
-    assert!(consistency_proof.is_empty());
+    assert!(state_proof.consistency_proof().is_empty());
 
     // Effect of bootstrapping reflected.
     assert_eq!(get_balance(&account1, &db), 1_000_000);

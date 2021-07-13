@@ -5,9 +5,13 @@ use crate::{
     smoke_test_environment::SmokeTestEnvironment,
     test_utils::{diem_swarm_utils::get_json_rpc_url, setup_swarm_and_client_proxy},
 };
-use cli::client_proxy::ClientProxy;
-use diem_client::{
-    Client, InMemoryStorage, MethodRequest, MethodResponse, Response, Result, VerifyingClient,
+use cli::client_proxy::{AddressAndIndex, ClientProxy};
+use diem_sdk::{
+    client::{
+        Client, InMemoryStorage, MethodRequest, MethodResponse, Response, Result, VerifyingClient,
+    },
+    transaction_builder::{Currency, TransactionFactory},
+    types::LocalAccount,
 };
 use diem_types::{
     account_address::AccountAddress,
@@ -61,13 +65,18 @@ impl Environment {
         }
     }
 
-    fn fund_new_account(&mut self) -> AccountAddress {
+    fn transaction_factory(&self) -> TransactionFactory {
+        TransactionFactory::new(self.client_proxy.chain_id)
+    }
+
+    fn fund_new_account(&mut self, amount: u64) -> AddressAndIndex {
         let account = self.client_proxy.create_next_account(false).unwrap();
         let idx = format!("{}", account.index);
+        let amount = format!("{}", amount);
         self.client_proxy
-            .mint_coins(&["mintb", &idx, "1000", "XUS"], true)
+            .mint_coins(&["mintb", &idx, &amount, "XUS"], true)
             .unwrap();
-        account.address
+        account
     }
 
     fn latest_observed_version(&self) -> Version {
@@ -254,10 +263,42 @@ fn arb_request(
         })
     });
 
+    // we are not producing any transactions, so we don't need to worry about races
+    // between verifying and non-verifying queries
+    let arb_seq_num = prop_oneof! [
+        10 => Just(0u64),
+        10 => 1u64..50,
+        1 => Just(u64::MAX / 2),
+    ];
+    let arb_limit = prop_oneof! [
+        20 => 1u64..100,
+        1 => Just(0u64),
+        1 => Just(u64::MAX / 2),
+    ];
+    let arb_acct_txns = (
+        arb_account.clone(),
+        arb_seq_num.clone(),
+        arb_limit,
+        arb_include_events,
+    );
+    let arb_acct_txn = (arb_account.clone(), arb_seq_num, arb_include_events);
+
+    let arb_metadata_version = prop_oneof! [
+        // note: the exclusive upper bound is intentional so we don't get super
+        // unlucky and call get_metadata(current_state_version) on a ledger state
+        // with the same version.
+        20 => 0u64..current_state_version,
+        1 => Just(u64::MAX / 2),
+        1 => Just(u64::MAX),
+    ];
+
     prop_oneof![
+        arb_metadata_version.prop_map(MethodRequest::get_metadata_by_version),
         (arb_account, arb_version).prop_map(|(a, v)| MethodRequest::GetAccount(a, Some(v))),
         (arb_version_and_limit, arb_include_events)
             .prop_map(|((v, l), i)| MethodRequest::GetTransactions(v, l, i)),
+        arb_acct_txns.prop_map(|(a, s, l, i)| MethodRequest::GetAccountTransactions(a, s, l, i)),
+        arb_acct_txn.prop_map(|(a, s, i)| MethodRequest::GetAccountTransaction(a, s, i)),
         arb_events.prop_map(|(k, s, l)| MethodRequest::GetEvents(k, s, l)),
         Just(MethodRequest::get_currencies()),
     ]
@@ -299,9 +340,9 @@ fn test_client_equivalence() {
         treasury_compliance_account_address(),
         testnet_dd_account_address(),
         // Fund some new accounts
-        env.fund_new_account(),
-        env.fund_new_account(),
-        env.fund_new_account(),
+        env.fund_new_account(1000).address,
+        env.fund_new_account(2000).address,
+        env.fund_new_account(3000).address,
         // Some random, likely non-existent accounts
         AccountAddress::ZERO,
         AccountAddress::random(),
@@ -326,4 +367,116 @@ fn test_client_equivalence() {
         let (recv_nv, recv_v) = rt.block_on(env.batch(batch));
         assert_batches_equal(recv_nv, recv_v);
     });
+}
+
+#[test]
+fn test_submit() {
+    let rt = Builder::new_current_thread().enable_all().build().unwrap();
+    let mut env = Environment::new();
+
+    let start_amount = 1_000_000;
+    let transfer_amount = 100;
+    let currency = Currency::XUS;
+
+    let idx_1 = env.fund_new_account(start_amount / 1_000_000).index;
+    let idx_2 = env.fund_new_account(start_amount / 1_000_000).index;
+
+    let account_1 = env.client_proxy.get_account(idx_1).unwrap();
+    let account_2 = env.client_proxy.get_account(idx_2).unwrap();
+
+    let mut account_1 = LocalAccount::new(
+        account_1.address,
+        env.client_proxy
+            .wallet
+            .get_private_key(&account_1.address)
+            .unwrap(),
+        account_1.sequence_number,
+    );
+    let account_2 = LocalAccount::new(
+        account_2.address,
+        env.client_proxy
+            .wallet
+            .get_private_key(&account_2.address)
+            .unwrap(),
+        account_2.sequence_number,
+    );
+
+    rt.block_on(env.verifying_client.sync()).unwrap();
+
+    let txn = account_1.sign_with_transaction_builder(env.transaction_factory().peer_to_peer(
+        currency,
+        account_2.address(),
+        transfer_amount,
+    ));
+
+    rt.block_on(env.verifying_client.submit(&txn)).unwrap();
+    rt.block_on(
+        env.verifying_client
+            .wait_for_signed_transaction(&txn, None, None),
+    )
+    .unwrap();
+
+    let account_view_1 = rt
+        .block_on(env.verifying_client.get_account(account_1.address()))
+        .unwrap()
+        .into_inner()
+        .unwrap();
+    let balance_1 = account_view_1
+        .balances
+        .iter()
+        .find(|b| b.currency == currency)
+        .unwrap();
+
+    let account_view_2 = rt
+        .block_on(env.verifying_client.get_account(account_2.address()))
+        .unwrap()
+        .into_inner()
+        .unwrap();
+    let balance_2 = account_view_2
+        .balances
+        .iter()
+        .find(|b| b.currency == currency)
+        .unwrap();
+
+    assert_eq!(balance_1.amount, start_amount - transfer_amount);
+    assert_eq!(balance_2.amount, start_amount + transfer_amount);
+}
+
+#[test]
+fn test_get_latest_metadata() {
+    let rt = Builder::new_current_thread().enable_all().build().unwrap();
+    let env = Environment::new();
+
+    rt.block_on(env.verifying_client.sync()).unwrap();
+
+    let (resp_nv, resp_v) = rt.block_on(env.request(MethodRequest::get_metadata()));
+
+    let meta_nv = resp_nv
+        .unwrap()
+        .into_inner()
+        .try_into_get_metadata()
+        .unwrap();
+    let meta_v = resp_v
+        .unwrap()
+        .into_inner()
+        .try_into_get_metadata()
+        .unwrap();
+
+    // only check that the "non-volatile" fields match up, since we're not 100%
+    // guaranteed that these requests are fulfilled at the same exact version.
+
+    assert_eq!(meta_nv.chain_id, meta_v.chain_id);
+    assert_eq!(
+        meta_nv.script_hash_allow_list,
+        meta_v.script_hash_allow_list
+    );
+    assert_eq!(
+        meta_nv.module_publishing_allowed,
+        meta_v.module_publishing_allowed
+    );
+    assert_eq!(meta_nv.diem_version, meta_v.diem_version);
+    assert_eq!(
+        meta_nv.dual_attestation_limit,
+        meta_v.dual_attestation_limit
+    );
 }

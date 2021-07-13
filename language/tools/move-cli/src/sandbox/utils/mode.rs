@@ -14,6 +14,8 @@ use move_binary_format::file_format::CompiledModule;
 use once_cell::sync::Lazy;
 use std::{collections::HashSet, path::Path, str::FromStr};
 
+use super::ModuleIdWithNamedAddress;
+
 /// Content for the move stdlib directory
 const DIR_MOVE_STDLIB: Dir = include_dir!("../../move-stdlib/modules");
 /// Content for the nursery directory
@@ -38,6 +40,7 @@ static PACKAGE_MOVE_STDLIB: Lazy<MovePackage> = Lazy::new(|| {
             },
         ],
         vec![],
+        Some("Std".to_owned()),
     )
 });
 
@@ -50,6 +53,7 @@ static PACKAGE_DIEM_FRAMEWORK: Lazy<MovePackage> = Lazy::new(|| {
             exclusion: HashSet::new(),
         }],
         vec![&PACKAGE_MOVE_STDLIB],
+        Some("DiemFramework".to_owned()),
     )
 });
 
@@ -95,14 +99,14 @@ impl Mode {
         let lib_modules = self.compiled_modules(&package_dir)?;
         let new_modules: Vec<_> = lib_modules
             .into_iter()
-            .filter(|m| !state.has_module(&m.self_id()))
+            .filter(|(_, m)| !state.has_module(&m.self_id()))
             .collect();
 
         let mut serialized_modules = vec![];
-        for module in new_modules {
+        for (id, module) in new_modules {
             let mut module_bytes = vec![];
             module.serialize(&mut module_bytes)?;
-            serialized_modules.push((module.self_id(), module_bytes));
+            serialized_modules.push((id, module_bytes));
         }
         state.save_modules(&serialized_modules)?;
 
@@ -125,13 +129,16 @@ impl Mode {
         Ok(pkg_sources?.into_iter().flatten().collect())
     }
 
-    pub fn compiled_modules(&self, out_path: &Path) -> Result<Vec<CompiledModule>> {
-        let pkg_modules: Result<Vec<_>, _> = self
+    pub fn compiled_modules(
+        &self,
+        out_path: &Path,
+    ) -> Result<Vec<(ModuleIdWithNamedAddress, CompiledModule)>> {
+        let pkg_modules = self
             .0
             .iter()
             .map(|pkg| pkg.compiled_modules(out_path))
-            .collect();
-        Ok(pkg_modules?.into_iter().flatten().collect())
+            .collect::<Result<Vec<Vec<_>>>>()?;
+        Ok(pkg_modules.into_iter().flatten().collect())
     }
 }
 

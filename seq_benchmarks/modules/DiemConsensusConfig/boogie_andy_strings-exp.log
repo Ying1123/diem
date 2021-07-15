@@ -3,22 +3,22 @@
 -monomorphize
 /env:2
 /proverLog:DiemConsensusConfig.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemConsensusConfig_initialize$verify ...
-  [0.208 s, 15 proof obligations]  verified
+  [1.220 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConsensusConfig_set$verify ...
-  [0.043 s, 12 proof obligations]  verified
+  [0.366 s, 12 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
   [0.170 s, 0 proof obligations]  verified

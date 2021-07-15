@@ -9,10 +9,3 @@ unsat
 unsat
 unsat
 unsat
-unsat
-unsat
-(error "Illegal argument detected
-cvc5::theory::TheoryId cvc5::theory::kindToTheoryId(cvc5::Kind)
-
-  `k' is a bad argument
-bad kind")

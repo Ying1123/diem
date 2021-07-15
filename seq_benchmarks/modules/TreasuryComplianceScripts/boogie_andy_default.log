@@ -3,42 +3,51 @@
 -monomorphize
 /env:2
 /proverLog:TreasuryComplianceScripts.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.392 s, 0 proof obligations]  verified
+  [1.223 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
-  [0.011 s, 0 proof obligations]  verified
+  [0.014 s, 0 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
-Verifying $1_TreasuryComplianceScripts_add_diem_id_domain$verify ...
-  [0.080 s, 12 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.andy.bpl(20516,27): Verification inconclusive ($1_TreasuryComplianceScripts_add_diem_id_domain$verify)
+Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
+  [1.031 s, 12 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.andy.bpl(20268,27): Verification inconclusive ($1_TreasuryComplianceScripts_add_vasp_domain$verify)
+Prover error: Fatal failure within void cvc5::Minisat::Solver::pop() at /home/ying/CVC4/src/prop/minisat/core/Solver.cc:1969
+
+Prover error: Check failure
+
+Prover error: 
+
+Prover error:  decisionLevel() == 0
+
+Prover error: 
+
+Prover error: Prover died
+
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendThisVC(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 202
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCheckSat() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 1883
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 588
    at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
    at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
    at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
@@ -60,9 +69,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #1) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -70,8 +77,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
    at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
    at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
    at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
    at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
@@ -89,9 +95,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #2) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -118,9 +122,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #3) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -147,9 +149,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #4) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -176,9 +176,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #5) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -205,9 +203,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #6) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -228,15 +224,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #7) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -257,15 +250,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #8) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -286,7 +276,6 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
 timeout: the monitored command dumped core

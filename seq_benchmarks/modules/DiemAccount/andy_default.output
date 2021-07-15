@@ -9,5 +9,3 @@ unsat
 unsat
 unsat
 unsat
-unsat
-(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

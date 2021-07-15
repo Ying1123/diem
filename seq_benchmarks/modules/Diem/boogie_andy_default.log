@@ -3,40 +3,68 @@
 -monomorphize
 /env:2
 /proverLog:Diem.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.286 s, 9 proof obligations]  verified
+  [2.819 s, 9 proof obligations]  verified
 
 Verifying $1_Diem_initialize$verify ...
-  [0.047 s, 18 proof obligations]  verified
+  [0.615 s, 18 proof obligations]  verified
 
 Verifying $1_Diem_value$verify ...
-  [0.021 s, 11 proof obligations]  verified
+  [0.146 s, 11 proof obligations]  verified
 
 Verifying $1_Diem_currency_code$verify ...
-  [0.023 s, 15 proof obligations]  verified
+  [0.216 s, 15 proof obligations]  verified
 Prover error: Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp
 
 
 Verifying $1_Diem_add_preburn_to_queue$verify ...
-  [0.049 s, 23 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6407,27): Verification inconclusive ($1_Diem_add_preburn_to_queue$verify)
+  [0.499 s, 23 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6814,27): Verification inconclusive ($1_Diem_add_preburn_to_queue$verify)
+Prover error: Prover died
+
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendThisVC(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 202
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCheckSat() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 1883
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 588
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+   at System.AggregateException.Handle(Func`2 predicate)
+   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
+   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
+   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
+ ---> (Inner Exception #1) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -56,48 +84,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
-   --- End of inner exception stack trace ---
-   at System.AggregateException.Handle(Func`2 predicate)
-   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
-   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
-   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
- ---> (Inner Exception #1) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #2) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -118,15 +110,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #3) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -147,15 +136,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #4) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -176,15 +162,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #5) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -205,15 +188,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #6) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -234,15 +214,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #7) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -263,15 +240,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #8) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -292,15 +266,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #9) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -321,15 +292,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #10) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -350,15 +318,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #11) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -379,15 +344,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #12) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -408,15 +370,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #13) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -437,15 +396,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #14) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -466,15 +422,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #15) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -495,15 +448,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #16) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -524,15 +474,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #17) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -553,15 +500,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #18) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -582,15 +526,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #19) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -611,15 +552,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #20) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -640,15 +578,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #21) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -669,15 +604,12 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #22) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -695,18 +627,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #23) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -724,18 +652,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #24) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -752,19 +676,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #25) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -781,19 +700,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #26) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -810,19 +724,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #27) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -839,19 +748,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #28) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -868,19 +772,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #29) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -897,19 +796,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #30) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -926,19 +820,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #31) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -955,19 +844,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #32) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -984,19 +868,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #33) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1013,19 +892,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #34) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1042,19 +916,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #35) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1071,19 +940,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #36) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1100,19 +964,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #37) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1129,19 +988,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #38) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1158,19 +1012,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #39) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1187,19 +1036,14 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #40) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -1216,11 +1060,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
 timeout: the monitored command dumped core

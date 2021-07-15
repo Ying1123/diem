@@ -3,20 +3,20 @@
 -monomorphize
 /env:2
 /proverLog:SlidingNonce.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/SlidingNonce/SlidingNonce.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_SlidingNonce_publish$verify ...
-  [0.140 s, 7 proof obligations]  verified
+  [0.410 s, 7 proof obligations]  verified
 
 Verifying $1_SlidingNonce_record_nonce_or_abort$verify ...
-  [0.029 s, 4 proof obligations]  verified
+  [0.103 s, 4 proof obligations]  verified
 
 Boogie program verifier finished with 2 verified, 0 errors

@@ -2,6 +2,4 @@
 /home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.andy_strings.smt2:1382.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
-unknown
-(:reason-unknown incomplete)
-(error "Cannot get value unless model generation is enabled (try --produce-models)")
+cvc5 interrupted by SIGTERM.

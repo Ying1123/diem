@@ -7,161 +7,162 @@
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort T@$1_Event_EventHandleGenerator 0)
 (declare-sort |T@[Int]$1_Event_EventHandleGenerator| 0)
-(declare-datatypes ((T@$Memory_84497 0)) ((($Memory_84497 (|domain#$Memory_84497| |T@[Int]Bool|) (|contents#$Memory_84497| |T@[Int]$1_Event_EventHandleGenerator|) ) ) ))
+(declare-datatypes ((T@$Memory_83775 0)) ((($Memory_83775 (|domain#$Memory_83775| |T@[Int]Bool|) (|contents#$Memory_83775| |T@[Int]$1_Event_EventHandleGenerator|) ) ) ))
 (declare-datatypes ((T@$1_DiemVMConfig_GasConstants 0)) ((($1_DiemVMConfig_GasConstants (|$global_memory_per_byte_cost#$1_DiemVMConfig_GasConstants| Int) (|$global_memory_per_byte_write_cost#$1_DiemVMConfig_GasConstants| Int) (|$min_transaction_gas_units#$1_DiemVMConfig_GasConstants| Int) (|$large_transaction_cutoff#$1_DiemVMConfig_GasConstants| Int) (|$intrinsic_gas_per_byte#$1_DiemVMConfig_GasConstants| Int) (|$maximum_number_of_gas_units#$1_DiemVMConfig_GasConstants| Int) (|$min_price_per_gas_unit#$1_DiemVMConfig_GasConstants| Int) (|$max_price_per_gas_unit#$1_DiemVMConfig_GasConstants| Int) (|$max_transaction_size_in_bytes#$1_DiemVMConfig_GasConstants| Int) (|$gas_unit_scaling_factor#$1_DiemVMConfig_GasConstants| Int) (|$default_account_size#$1_DiemVMConfig_GasConstants| Int) ) ) ))
 (declare-datatypes ((T@$1_DiemVMConfig_GasSchedule 0)) ((($1_DiemVMConfig_GasSchedule (|$instruction_schedule#$1_DiemVMConfig_GasSchedule| (Seq Int)) (|$native_schedule#$1_DiemVMConfig_GasSchedule| (Seq Int)) (|$gas_constants#$1_DiemVMConfig_GasSchedule| T@$1_DiemVMConfig_GasConstants) ) ) ))
 (declare-sort T@$1_Event_EventHandle 0)
 (declare-datatypes ((T@$1_DiemBlock_BlockMetadata 0)) ((($1_DiemBlock_BlockMetadata (|$height#$1_DiemBlock_BlockMetadata| Int) (|$new_block_events#$1_DiemBlock_BlockMetadata| T@$1_Event_EventHandle) ) ) ))
 (declare-sort |T@[Int]$1_DiemBlock_BlockMetadata| 0)
-(declare-datatypes ((T@$Memory_92811 0)) ((($Memory_92811 (|domain#$Memory_92811| |T@[Int]Bool|) (|contents#$Memory_92811| |T@[Int]$1_DiemBlock_BlockMetadata|) ) ) ))
+(declare-datatypes ((T@$Memory_91934 0)) ((($Memory_91934 (|domain#$Memory_91934| |T@[Int]Bool|) (|contents#$Memory_91934| |T@[Int]$1_DiemBlock_BlockMetadata|) ) ) ))
 (declare-datatypes ((T@$1_DiemAccount_DiemWriteSetManager 0)) ((($1_DiemAccount_DiemWriteSetManager (|$upgrade_events#$1_DiemAccount_DiemWriteSetManager| T@$1_Event_EventHandle) ) ) ))
 (declare-sort |T@[Int]$1_DiemAccount_DiemWriteSetManager| 0)
-(declare-datatypes ((T@$Memory_119134 0)) ((($Memory_119134 (|domain#$Memory_119134| |T@[Int]Bool|) (|contents#$Memory_119134| |T@[Int]$1_DiemAccount_DiemWriteSetManager|) ) ) ))
+(declare-datatypes ((T@$Memory_119605 0)) ((($Memory_119605 (|domain#$Memory_119605| |T@[Int]Bool|) (|contents#$Memory_119605| |T@[Int]$1_DiemAccount_DiemWriteSetManager|) ) ) ))
 (declare-datatypes ((T@$1_AccountFreezing_FreezingBit 0)) ((($1_AccountFreezing_FreezingBit (|$is_frozen#$1_AccountFreezing_FreezingBit| Bool) ) ) ))
 (declare-sort |T@[Int]$1_AccountFreezing_FreezingBit| 0)
-(declare-datatypes ((T@$Memory_117137 0)) ((($Memory_117137 (|domain#$Memory_117137| |T@[Int]Bool|) (|contents#$Memory_117137| |T@[Int]$1_AccountFreezing_FreezingBit|) ) ) ))
+(declare-datatypes ((T@$Memory_117610 0)) ((($Memory_117610 (|domain#$Memory_117610| |T@[Int]Bool|) (|contents#$Memory_117610| |T@[Int]$1_AccountFreezing_FreezingBit|) ) ) ))
 (declare-datatypes ((T@$1_AccountFreezing_FreezeEventsHolder 0)) ((($1_AccountFreezing_FreezeEventsHolder (|$freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder| T@$1_Event_EventHandle) (|$unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder| T@$1_Event_EventHandle) ) ) ))
 (declare-sort |T@[Int]$1_AccountFreezing_FreezeEventsHolder| 0)
-(declare-datatypes ((T@$Memory_117417 0)) ((($Memory_117417 (|domain#$Memory_117417| |T@[Int]Bool|) (|contents#$Memory_117417| |T@[Int]$1_AccountFreezing_FreezeEventsHolder|) ) ) ))
+(declare-datatypes ((T@$Memory_117890 0)) ((($Memory_117890 (|domain#$Memory_117890| |T@[Int]Bool|) (|contents#$Memory_117890| |T@[Int]$1_AccountFreezing_FreezeEventsHolder|) ) ) ))
 (declare-datatypes ((T@$1_ChainId_ChainId 0)) ((($1_ChainId_ChainId (|$id#$1_ChainId_ChainId| Int) ) ) ))
 (declare-sort |T@[Int]$1_ChainId_ChainId| 0)
-(declare-datatypes ((T@$Memory_117104 0)) ((($Memory_117104 (|domain#$Memory_117104| |T@[Int]Bool|) (|contents#$Memory_117104| |T@[Int]$1_ChainId_ChainId|) ) ) ))
+(declare-datatypes ((T@$Memory_117577 0)) ((($Memory_117577 (|domain#$Memory_117577| |T@[Int]Bool|) (|contents#$Memory_117577| |T@[Int]$1_ChainId_ChainId|) ) ) ))
 (declare-datatypes ((T@$1_DesignatedDealer_Dealer 0)) ((($1_DesignatedDealer_Dealer (|$mint_event_handle#$1_DesignatedDealer_Dealer| T@$1_Event_EventHandle) ) ) ))
 (declare-sort |T@[Int]$1_DesignatedDealer_Dealer| 0)
-(declare-datatypes ((T@$Memory_116889 0)) ((($Memory_116889 (|domain#$Memory_116889| |T@[Int]Bool|) (|contents#$Memory_116889| |T@[Int]$1_DesignatedDealer_Dealer|) ) ) ))
-(declare-datatypes ((T@$1_DiemId_DiemIdDomainManager 0)) ((($1_DiemId_DiemIdDomainManager (|$diem_id_domain_events#$1_DiemId_DiemIdDomainManager| T@$1_Event_EventHandle) ) ) ))
-(declare-sort |T@[Int]$1_DiemId_DiemIdDomainManager| 0)
-(declare-datatypes ((T@$Memory_116518 0)) ((($Memory_116518 (|domain#$Memory_116518| |T@[Int]Bool|) (|contents#$Memory_116518| |T@[Int]$1_DiemId_DiemIdDomainManager|) ) ) ))
-(declare-datatypes ((T@$1_DiemId_DiemIdDomain 0)) ((($1_DiemId_DiemIdDomain (|$domain#$1_DiemId_DiemIdDomain| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Memory_117362 0)) ((($Memory_117362 (|domain#$Memory_117362| |T@[Int]Bool|) (|contents#$Memory_117362| |T@[Int]$1_DesignatedDealer_Dealer|) ) ) ))
 (declare-datatypes ((T@$1_DualAttestation_Limit 0)) ((($1_DualAttestation_Limit (|$micro_xdx_limit#$1_DualAttestation_Limit| Int) ) ) ))
 (declare-sort |T@[Int]$1_DualAttestation_Limit| 0)
-(declare-datatypes ((T@$Memory_114058 0)) ((($Memory_114058 (|domain#$Memory_114058| |T@[Int]Bool|) (|contents#$Memory_114058| |T@[Int]$1_DualAttestation_Limit|) ) ) ))
+(declare-datatypes ((T@$Memory_114872 0)) ((($Memory_114872 (|domain#$Memory_114872| |T@[Int]Bool|) (|contents#$Memory_114872| |T@[Int]$1_DualAttestation_Limit|) ) ) ))
 (declare-datatypes ((T@$1_DualAttestation_Credential 0)) ((($1_DualAttestation_Credential (|$human_name#$1_DualAttestation_Credential| (Seq Int)) (|$base_url#$1_DualAttestation_Credential| (Seq Int)) (|$compliance_public_key#$1_DualAttestation_Credential| (Seq Int)) (|$expiration_date#$1_DualAttestation_Credential| Int) (|$compliance_key_rotation_events#$1_DualAttestation_Credential| T@$1_Event_EventHandle) (|$base_url_rotation_events#$1_DualAttestation_Credential| T@$1_Event_EventHandle) ) ) ))
 (declare-sort |T@[Int]$1_DualAttestation_Credential| 0)
-(declare-datatypes ((T@$Memory_113994 0)) ((($Memory_113994 (|domain#$Memory_113994| |T@[Int]Bool|) (|contents#$Memory_113994| |T@[Int]$1_DualAttestation_Credential|) ) ) ))
+(declare-datatypes ((T@$Memory_114808 0)) ((($Memory_114808 (|domain#$Memory_114808| |T@[Int]Bool|) (|contents#$Memory_114808| |T@[Int]$1_DualAttestation_Credential|) ) ) ))
+(declare-datatypes ((T@$1_VASPDomain_VASPDomainManager 0)) ((($1_VASPDomain_VASPDomainManager (|$vasp_domain_events#$1_VASPDomain_VASPDomainManager| T@$1_Event_EventHandle) ) ) ))
+(declare-sort |T@[Int]$1_VASPDomain_VASPDomainManager| 0)
+(declare-datatypes ((T@$Memory_113430 0)) ((($Memory_113430 (|domain#$Memory_113430| |T@[Int]Bool|) (|contents#$Memory_113430| |T@[Int]$1_VASPDomain_VASPDomainManager|) ) ) ))
+(declare-datatypes ((T@$1_VASPDomain_VASPDomain 0)) ((($1_VASPDomain_VASPDomain (|$domain#$1_VASPDomain_VASPDomain| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$1_XDX_XDX 0)) ((($1_XDX_XDX (|$dummy_field#$1_XDX_XDX| Bool) ) ) ))
+(declare-datatypes ((T@$1_XUS_XUS 0)) ((($1_XUS_XUS (|$dummy_field#$1_XUS_XUS| Bool) ) ) ))
+(declare-datatypes ((|T@$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| 0)) (((|$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) ) ) ))
+(declare-sort |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| 0)
+(declare-datatypes ((T@$Memory_110309 0)) ((($Memory_110309 (|domain#$Memory_110309| |T@[Int]Bool|) (|contents#$Memory_110309| |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((|T@$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| 0)) (((|$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) ) ) ))
+(declare-sort |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_110090 0)) ((($Memory_110090 (|domain#$Memory_110090| |T@[Int]Bool|) (|contents#$Memory_110090| |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((T@$1_AccountLimits_AccountLimitMutationCapability 0)) ((($1_AccountLimits_AccountLimitMutationCapability (|$dummy_field#$1_AccountLimits_AccountLimitMutationCapability| Bool) ) ) ))
+(declare-datatypes ((T@$1_DiemAccount_AccountOperationsCapability 0)) ((($1_DiemAccount_AccountOperationsCapability (|$limits_cap#$1_DiemAccount_AccountOperationsCapability| T@$1_AccountLimits_AccountLimitMutationCapability) (|$creation_events#$1_DiemAccount_AccountOperationsCapability| T@$1_Event_EventHandle) ) ) ))
+(declare-sort |T@[Int]$1_DiemAccount_AccountOperationsCapability| 0)
+(declare-datatypes ((T@$Memory_119394 0)) ((($Memory_119394 (|domain#$Memory_119394| |T@[Int]Bool|) (|contents#$Memory_119394| |T@[Int]$1_DiemAccount_AccountOperationsCapability|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_MintCapability'$1_XDX_XDX'| 0)) (((|$1_Diem_MintCapability'$1_XDX_XDX'| (|$dummy_field#$1_Diem_MintCapability'$1_XDX_XDX'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_Diem_MintCapability'$1_XDX_XDX'| 0)
+(declare-datatypes ((T@$Memory_103045 0)) ((($Memory_103045 (|domain#$Memory_103045| |T@[Int]Bool|) (|contents#$Memory_103045| |T@[Int]$1_Diem_MintCapability'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_MintCapability'$1_XUS_XUS'| 0)) (((|$1_Diem_MintCapability'$1_XUS_XUS'| (|$dummy_field#$1_Diem_MintCapability'$1_XUS_XUS'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_Diem_MintCapability'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_102958 0)) ((($Memory_102958 (|domain#$Memory_102958| |T@[Int]Bool|) (|contents#$Memory_102958| |T@[Int]$1_Diem_MintCapability'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_BurnCapability'$1_XDX_XDX'| 0)) (((|$1_Diem_BurnCapability'$1_XDX_XDX'| (|$dummy_field#$1_Diem_BurnCapability'$1_XDX_XDX'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_Diem_BurnCapability'$1_XDX_XDX'| 0)
+(declare-datatypes ((T@$Memory_99755 0)) ((($Memory_99755 (|domain#$Memory_99755| |T@[Int]Bool|) (|contents#$Memory_99755| |T@[Int]$1_Diem_BurnCapability'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_BurnCapability'$1_XUS_XUS'| 0)) (((|$1_Diem_BurnCapability'$1_XUS_XUS'| (|$dummy_field#$1_Diem_BurnCapability'$1_XUS_XUS'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_Diem_BurnCapability'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_99668 0)) ((($Memory_99668 (|domain#$Memory_99668| |T@[Int]Bool|) (|contents#$Memory_99668| |T@[Int]$1_Diem_BurnCapability'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_Diem'$1_XDX_XDX'| 0)) (((|$1_Diem_Diem'$1_XDX_XDX'| (|$value#$1_Diem_Diem'$1_XDX_XDX'| Int) ) ) ))
+(declare-datatypes ((|T@$1_Diem_Preburn'$1_XDX_XDX'| 0)) (((|$1_Diem_Preburn'$1_XDX_XDX'| (|$to_burn#$1_Diem_Preburn'$1_XDX_XDX'| |T@$1_Diem_Diem'$1_XDX_XDX'|) ) ) ))
+(declare-sort |T@[Int]$1_Diem_Preburn'$1_XDX_XDX'| 0)
+(declare-datatypes ((T@$Memory_103309 0)) ((($Memory_103309 (|domain#$Memory_103309| |T@[Int]Bool|) (|contents#$Memory_103309| |T@[Int]$1_Diem_Preburn'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((T@$1_XDX_Reserve 0)) ((($1_XDX_Reserve (|$mint_cap#$1_XDX_Reserve| |T@$1_Diem_MintCapability'$1_XDX_XDX'|) (|$burn_cap#$1_XDX_Reserve| |T@$1_Diem_BurnCapability'$1_XDX_XDX'|) (|$preburn_cap#$1_XDX_Reserve| |T@$1_Diem_Preburn'$1_XDX_XDX'|) ) ) ))
+(declare-sort |T@[Int]$1_XDX_Reserve| 0)
+(declare-datatypes ((T@$Memory_112142 0)) ((($Memory_112142 (|domain#$Memory_112142| |T@[Int]Bool|) (|contents#$Memory_112142| |T@[Int]$1_XDX_Reserve|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| 0)) (((|$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| |T@$1_Diem_Preburn'$1_XDX_XDX'|) (|$metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| (Seq Int)) ) ) ))
+(declare-datatypes ((|T@$1_Diem_PreburnQueue'$1_XDX_XDX'| 0)) (((|$1_Diem_PreburnQueue'$1_XDX_XDX'| (|$preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) ) ) ))
+(declare-sort |T@[Int]$1_Diem_PreburnQueue'$1_XDX_XDX'| 0)
+(declare-datatypes ((T@$Memory_103635 0)) ((($Memory_103635 (|domain#$Memory_103635| |T@[Int]Bool|) (|contents#$Memory_103635| |T@[Int]$1_Diem_PreburnQueue'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_Diem'$1_XUS_XUS'| 0)) (((|$1_Diem_Diem'$1_XUS_XUS'| (|$value#$1_Diem_Diem'$1_XUS_XUS'| Int) ) ) ))
+(declare-datatypes ((|T@$1_Diem_Preburn'$1_XUS_XUS'| 0)) (((|$1_Diem_Preburn'$1_XUS_XUS'| (|$to_burn#$1_Diem_Preburn'$1_XUS_XUS'| |T@$1_Diem_Diem'$1_XUS_XUS'|) ) ) ))
+(declare-sort |T@[Int]$1_Diem_Preburn'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_103218 0)) ((($Memory_103218 (|domain#$Memory_103218| |T@[Int]Bool|) (|contents#$Memory_103218| |T@[Int]$1_Diem_Preburn'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((|T@$1_TransactionFee_TransactionFee'$1_XUS_XUS'| 0)) (((|$1_TransactionFee_TransactionFee'$1_XUS_XUS'| (|$balance#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| |T@$1_Diem_Diem'$1_XUS_XUS'|) (|$preburn#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| |T@$1_Diem_Preburn'$1_XUS_XUS'|) ) ) ))
+(declare-sort |T@[Int]$1_TransactionFee_TransactionFee'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_113742 0)) ((($Memory_113742 (|domain#$Memory_113742| |T@[Int]Bool|) (|contents#$Memory_113742| |T@[Int]$1_TransactionFee_TransactionFee'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| 0)) (((|$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| |T@$1_Diem_Preburn'$1_XUS_XUS'|) (|$metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| (Seq Int)) ) ) ))
+(declare-datatypes ((|T@$1_Diem_PreburnQueue'$1_XUS_XUS'| 0)) (((|$1_Diem_PreburnQueue'$1_XUS_XUS'| (|$preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) ) ) ))
+(declare-sort |T@[Int]$1_Diem_PreburnQueue'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_103536 0)) ((($Memory_103536 (|domain#$Memory_103536| |T@[Int]Bool|) (|contents#$Memory_103536| |T@[Int]$1_Diem_PreburnQueue'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((T@$1_FixedPoint32_FixedPoint32 0)) ((($1_FixedPoint32_FixedPoint32 (|$value#$1_FixedPoint32_FixedPoint32| Int) ) ) ))
+(declare-datatypes ((|T@$1_Diem_CurrencyInfo'$1_XDX_XDX'| 0)) (((|$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|$total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_FixedPoint32_FixedPoint32) (|$is_synthetic#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Bool) (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (Seq Int)) (|$can_mint#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Bool) (|$mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) ) ) ))
+(declare-sort |T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'| 0)
+(declare-datatypes ((T@$Memory_99370 0)) ((($Memory_99370 (|domain#$Memory_99370| |T@[Int]Bool|) (|contents#$Memory_99370| |T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((|T@$1_Diem_CurrencyInfo'$1_XUS_XUS'| 0)) (((|$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|$total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_FixedPoint32_FixedPoint32) (|$is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Bool) (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (Seq Int)) (|$can_mint#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Bool) (|$mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) ) ) ))
+(declare-sort |T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'| 0)
+(declare-datatypes ((T@$Memory_99306 0)) ((($Memory_99306 (|domain#$Memory_99306| |T@[Int]Bool|) (|contents#$Memory_99306| |T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| 0)
+(declare-datatypes ((T@$Memory_95308 0)) ((($Memory_95308 (|domain#$Memory_95308| |T@[Int]Bool|) (|contents#$Memory_95308| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'|) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| 0)
+(declare-datatypes ((T@$Memory_95221 0)) ((($Memory_95221 (|domain#$Memory_95221| |T@[Int]Bool|) (|contents#$Memory_95221| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'|) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)
+(declare-datatypes ((T@$Memory_95134 0)) ((($Memory_95134 (|domain#$Memory_95134| |T@[Int]Bool|) (|contents#$Memory_95134| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)
+(declare-datatypes ((T@$Memory_95047 0)) ((($Memory_95047 (|domain#$Memory_95047| |T@[Int]Bool|) (|contents#$Memory_95047| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| Bool) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| 0)
+(declare-datatypes ((T@$Memory_94960 0)) ((($Memory_94960 (|domain#$Memory_94960| |T@[Int]Bool|) (|contents#$Memory_94960| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) ) ) ))
+(declare-datatypes ((T@$1_DiemSystem_CapabilityHolder 0)) ((($1_DiemSystem_CapabilityHolder (|$cap#$1_DiemSystem_CapabilityHolder| |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) ) ) ))
+(declare-sort |T@[Int]$1_DiemSystem_CapabilityHolder| 0)
+(declare-datatypes ((T@$Memory_95644 0)) ((($Memory_95644 (|domain#$Memory_95644| |T@[Int]Bool|) (|contents#$Memory_95644| |T@[Int]$1_DiemSystem_CapabilityHolder|) ) ) ))
+(declare-datatypes ((T@$1_DiemConfig_DisableReconfiguration 0)) ((($1_DiemConfig_DisableReconfiguration (|$dummy_field#$1_DiemConfig_DisableReconfiguration| Bool) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_DisableReconfiguration| 0)
+(declare-datatypes ((T@$Memory_94086 0)) ((($Memory_94086 (|domain#$Memory_94086| |T@[Int]Bool|) (|contents#$Memory_94086| |T@[Int]$1_DiemConfig_DisableReconfiguration|) ) ) ))
+(declare-datatypes ((T@$1_DiemConfig_Configuration 0)) ((($1_DiemConfig_Configuration (|$epoch#$1_DiemConfig_Configuration| Int) (|$last_reconfiguration_time#$1_DiemConfig_Configuration| Int) (|$events#$1_DiemConfig_Configuration| T@$1_Event_EventHandle) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_Configuration| 0)
+(declare-datatypes ((T@$Memory_94152 0)) ((($Memory_94152 (|domain#$Memory_94152| |T@[Int]Bool|) (|contents#$Memory_94152| |T@[Int]$1_DiemConfig_Configuration|) ) ) ))
+(declare-datatypes ((T@$1_DiemVersion_DiemVersion 0)) ((($1_DiemVersion_DiemVersion (|$major#$1_DiemVersion_DiemVersion| Int) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| T@$1_DiemVersion_DiemVersion) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| 0)
+(declare-datatypes ((T@$Memory_94005 0)) ((($Memory_94005 (|domain#$Memory_94005| |T@[Int]Bool|) (|contents#$Memory_94005| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'|) ) ) ))
+(declare-datatypes ((T@$1_DiemVMConfig_DiemVMConfig 0)) ((($1_DiemVMConfig_DiemVMConfig (|$gas_schedule#$1_DiemVMConfig_DiemVMConfig| T@$1_DiemVMConfig_GasSchedule) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| T@$1_DiemVMConfig_DiemVMConfig) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| 0)
+(declare-datatypes ((T@$Memory_93924 0)) ((($Memory_93924 (|domain#$Memory_93924| |T@[Int]Bool|) (|contents#$Memory_93924| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'|) ) ) ))
+(declare-datatypes ((T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption 0)) ((($1_DiemTransactionPublishingOption_DiemTransactionPublishingOption (|$script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption| (Seq (Seq Int))) (|$module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption| Bool) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)
+(declare-datatypes ((T@$Memory_93843 0)) ((($Memory_93843 (|domain#$Memory_93843| |T@[Int]Bool|) (|contents#$Memory_93843| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) ) ))
+(declare-datatypes ((T@$1_RegisteredCurrencies_RegisteredCurrencies 0)) ((($1_RegisteredCurrencies_RegisteredCurrencies (|$currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies| (Seq (Seq Int))) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)) (((|$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| (|$payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| T@$1_RegisteredCurrencies_RegisteredCurrencies) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)
+(declare-datatypes ((T@$Memory_93762 0)) ((($Memory_93762 (|domain#$Memory_93762| |T@[Int]Bool|) (|contents#$Memory_93762| |T@[Int]$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) ) ))
+(declare-datatypes ((T@$1_SlidingNonce_SlidingNonce 0)) ((($1_SlidingNonce_SlidingNonce (|$min_nonce#$1_SlidingNonce_SlidingNonce| Int) (|$nonce_mask#$1_SlidingNonce_SlidingNonce| Int) ) ) ))
+(declare-sort |T@[Int]$1_SlidingNonce_SlidingNonce| 0)
+(declare-datatypes ((T@$Memory_93648 0)) ((($Memory_93648 (|domain#$Memory_93648| |T@[Int]Bool|) (|contents#$Memory_93648| |T@[Int]$1_SlidingNonce_SlidingNonce|) ) ) ))
 (declare-datatypes ((T@$1_DiemAccount_WithdrawCapability 0)) ((($1_DiemAccount_WithdrawCapability (|$account_address#$1_DiemAccount_WithdrawCapability| Int) ) ) ))
 (declare-datatypes ((|T@$1_Option_Option'$1_DiemAccount_WithdrawCapability'| 0)) (((|$1_Option_Option'$1_DiemAccount_WithdrawCapability'| (|$vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'| (Seq T@$1_DiemAccount_WithdrawCapability)) ) ) ))
 (declare-datatypes ((T@$1_DiemAccount_KeyRotationCapability 0)) ((($1_DiemAccount_KeyRotationCapability (|$account_address#$1_DiemAccount_KeyRotationCapability| Int) ) ) ))
 (declare-datatypes ((|T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'| 0)) (((|$1_Option_Option'$1_DiemAccount_KeyRotationCapability'| (|$vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'| (Seq T@$1_DiemAccount_KeyRotationCapability)) ) ) ))
 (declare-datatypes ((T@$1_DiemAccount_DiemAccount 0)) ((($1_DiemAccount_DiemAccount (|$authentication_key#$1_DiemAccount_DiemAccount| (Seq Int)) (|$withdraw_capability#$1_DiemAccount_DiemAccount| |T@$1_Option_Option'$1_DiemAccount_WithdrawCapability'|) (|$key_rotation_capability#$1_DiemAccount_DiemAccount| |T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) (|$received_events#$1_DiemAccount_DiemAccount| T@$1_Event_EventHandle) (|$sent_events#$1_DiemAccount_DiemAccount| T@$1_Event_EventHandle) (|$sequence_number#$1_DiemAccount_DiemAccount| Int) ) ) ))
 (declare-sort |T@[Int]$1_DiemAccount_DiemAccount| 0)
-(declare-datatypes ((T@$Memory_118060 0)) ((($Memory_118060 (|domain#$Memory_118060| |T@[Int]Bool|) (|contents#$Memory_118060| |T@[Int]$1_DiemAccount_DiemAccount|) ) ) ))
+(declare-datatypes ((T@$Memory_118531 0)) ((($Memory_118531 (|domain#$Memory_118531| |T@[Int]Bool|) (|contents#$Memory_118531| |T@[Int]$1_DiemAccount_DiemAccount|) ) ) ))
 (declare-datatypes ((T@$1_ValidatorConfig_Config 0)) ((($1_ValidatorConfig_Config (|$consensus_pubkey#$1_ValidatorConfig_Config| (Seq Int)) (|$validator_network_addresses#$1_ValidatorConfig_Config| (Seq Int)) (|$fullnode_network_addresses#$1_ValidatorConfig_Config| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$1_DiemSystem_ValidatorInfo 0)) ((($1_DiemSystem_ValidatorInfo (|$addr#$1_DiemSystem_ValidatorInfo| Int) (|$consensus_voting_power#$1_DiemSystem_ValidatorInfo| Int) (|$config#$1_DiemSystem_ValidatorInfo| T@$1_ValidatorConfig_Config) (|$last_config_update_time#$1_DiemSystem_ValidatorInfo| Int) ) ) ))
+(declare-datatypes ((T@$1_DiemSystem_DiemSystem 0)) ((($1_DiemSystem_DiemSystem (|$scheme#$1_DiemSystem_DiemSystem| Int) (|$validators#$1_DiemSystem_DiemSystem| (Seq T@$1_DiemSystem_ValidatorInfo)) ) ) ))
+(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| T@$1_DiemSystem_DiemSystem) ) ) ))
+(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| 0)
+(declare-datatypes ((T@$Memory_93681 0)) ((($Memory_93681 (|domain#$Memory_93681| |T@[Int]Bool|) (|contents#$Memory_93681| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|) ) ) ))
 (declare-datatypes ((|T@$1_Option_Option'$1_ValidatorConfig_Config'| 0)) (((|$1_Option_Option'$1_ValidatorConfig_Config'| (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (Seq T@$1_ValidatorConfig_Config)) ) ) ))
 (declare-datatypes ((|T@$1_Option_Option'address'| 0)) (((|$1_Option_Option'address'| (|$vec#$1_Option_Option'address'| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$1_ValidatorConfig_ValidatorConfig 0)) ((($1_ValidatorConfig_ValidatorConfig (|$config#$1_ValidatorConfig_ValidatorConfig| |T@$1_Option_Option'$1_ValidatorConfig_Config'|) (|$operator_account#$1_ValidatorConfig_ValidatorConfig| |T@$1_Option_Option'address'|) (|$human_name#$1_ValidatorConfig_ValidatorConfig| (Seq Int)) ) ) ))
 (declare-sort |T@[Int]$1_ValidatorConfig_ValidatorConfig| 0)
-(declare-datatypes ((T@$Memory_112475 0)) ((($Memory_112475 (|domain#$Memory_112475| |T@[Int]Bool|) (|contents#$Memory_112475| |T@[Int]$1_ValidatorConfig_ValidatorConfig|) ) ) ))
+(declare-datatypes ((T@$Memory_93137 0)) ((($Memory_93137 (|domain#$Memory_93137| |T@[Int]Bool|) (|contents#$Memory_93137| |T@[Int]$1_ValidatorConfig_ValidatorConfig|) ) ) ))
 (declare-datatypes ((T@$1_ValidatorOperatorConfig_ValidatorOperatorConfig 0)) ((($1_ValidatorOperatorConfig_ValidatorOperatorConfig (|$human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig| (Seq Int)) ) ) ))
 (declare-sort |T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig| 0)
-(declare-datatypes ((T@$Memory_111965 0)) ((($Memory_111965 (|domain#$Memory_111965| |T@[Int]Bool|) (|contents#$Memory_111965| |T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig|) ) ) ))
-(declare-datatypes ((T@$1_XDX_XDX 0)) ((($1_XDX_XDX (|$dummy_field#$1_XDX_XDX| Bool) ) ) ))
-(declare-datatypes ((T@$1_XUS_XUS 0)) ((($1_XUS_XUS (|$dummy_field#$1_XUS_XUS| Bool) ) ) ))
-(declare-datatypes ((|T@$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| 0)) (((|$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| Int) ) ) ))
-(declare-sort |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| 0)
-(declare-datatypes ((T@$Memory_108816 0)) ((($Memory_108816 (|domain#$Memory_108816| |T@[Int]Bool|) (|contents#$Memory_108816| |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((|T@$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| 0)) (((|$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| Int) ) ) ))
-(declare-sort |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_108597 0)) ((($Memory_108597 (|domain#$Memory_108597| |T@[Int]Bool|) (|contents#$Memory_108597| |T@[Int]$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((T@$1_AccountLimits_AccountLimitMutationCapability 0)) ((($1_AccountLimits_AccountLimitMutationCapability (|$dummy_field#$1_AccountLimits_AccountLimitMutationCapability| Bool) ) ) ))
-(declare-datatypes ((T@$1_DiemAccount_AccountOperationsCapability 0)) ((($1_DiemAccount_AccountOperationsCapability (|$limits_cap#$1_DiemAccount_AccountOperationsCapability| T@$1_AccountLimits_AccountLimitMutationCapability) (|$creation_events#$1_DiemAccount_AccountOperationsCapability| T@$1_Event_EventHandle) ) ) ))
-(declare-sort |T@[Int]$1_DiemAccount_AccountOperationsCapability| 0)
-(declare-datatypes ((T@$Memory_118923 0)) ((($Memory_118923 (|domain#$Memory_118923| |T@[Int]Bool|) (|contents#$Memory_118923| |T@[Int]$1_DiemAccount_AccountOperationsCapability|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_MintCapability'$1_XDX_XDX'| 0)) (((|$1_Diem_MintCapability'$1_XDX_XDX'| (|$dummy_field#$1_Diem_MintCapability'$1_XDX_XDX'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_Diem_MintCapability'$1_XDX_XDX'| 0)
-(declare-datatypes ((T@$Memory_101488 0)) ((($Memory_101488 (|domain#$Memory_101488| |T@[Int]Bool|) (|contents#$Memory_101488| |T@[Int]$1_Diem_MintCapability'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_MintCapability'$1_XUS_XUS'| 0)) (((|$1_Diem_MintCapability'$1_XUS_XUS'| (|$dummy_field#$1_Diem_MintCapability'$1_XUS_XUS'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_Diem_MintCapability'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_101401 0)) ((($Memory_101401 (|domain#$Memory_101401| |T@[Int]Bool|) (|contents#$Memory_101401| |T@[Int]$1_Diem_MintCapability'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_BurnCapability'$1_XDX_XDX'| 0)) (((|$1_Diem_BurnCapability'$1_XDX_XDX'| (|$dummy_field#$1_Diem_BurnCapability'$1_XDX_XDX'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_Diem_BurnCapability'$1_XDX_XDX'| 0)
-(declare-datatypes ((T@$Memory_98198 0)) ((($Memory_98198 (|domain#$Memory_98198| |T@[Int]Bool|) (|contents#$Memory_98198| |T@[Int]$1_Diem_BurnCapability'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_BurnCapability'$1_XUS_XUS'| 0)) (((|$1_Diem_BurnCapability'$1_XUS_XUS'| (|$dummy_field#$1_Diem_BurnCapability'$1_XUS_XUS'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_Diem_BurnCapability'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_98111 0)) ((($Memory_98111 (|domain#$Memory_98111| |T@[Int]Bool|) (|contents#$Memory_98111| |T@[Int]$1_Diem_BurnCapability'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_Diem'$1_XDX_XDX'| 0)) (((|$1_Diem_Diem'$1_XDX_XDX'| (|$value#$1_Diem_Diem'$1_XDX_XDX'| Int) ) ) ))
-(declare-datatypes ((|T@$1_Diem_Preburn'$1_XDX_XDX'| 0)) (((|$1_Diem_Preburn'$1_XDX_XDX'| (|$to_burn#$1_Diem_Preburn'$1_XDX_XDX'| |T@$1_Diem_Diem'$1_XDX_XDX'|) ) ) ))
-(declare-sort |T@[Int]$1_Diem_Preburn'$1_XDX_XDX'| 0)
-(declare-datatypes ((T@$Memory_101752 0)) ((($Memory_101752 (|domain#$Memory_101752| |T@[Int]Bool|) (|contents#$Memory_101752| |T@[Int]$1_Diem_Preburn'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((T@$1_XDX_Reserve 0)) ((($1_XDX_Reserve (|$mint_cap#$1_XDX_Reserve| |T@$1_Diem_MintCapability'$1_XDX_XDX'|) (|$burn_cap#$1_XDX_Reserve| |T@$1_Diem_BurnCapability'$1_XDX_XDX'|) (|$preburn_cap#$1_XDX_Reserve| |T@$1_Diem_Preburn'$1_XDX_XDX'|) ) ) ))
-(declare-sort |T@[Int]$1_XDX_Reserve| 0)
-(declare-datatypes ((T@$Memory_110657 0)) ((($Memory_110657 (|domain#$Memory_110657| |T@[Int]Bool|) (|contents#$Memory_110657| |T@[Int]$1_XDX_Reserve|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| 0)) (((|$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| |T@$1_Diem_Preburn'$1_XDX_XDX'|) (|$metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| (Seq Int)) ) ) ))
-(declare-datatypes ((|T@$1_Diem_PreburnQueue'$1_XDX_XDX'| 0)) (((|$1_Diem_PreburnQueue'$1_XDX_XDX'| (|$preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) ) ) ))
-(declare-sort |T@[Int]$1_Diem_PreburnQueue'$1_XDX_XDX'| 0)
-(declare-datatypes ((T@$Memory_102078 0)) ((($Memory_102078 (|domain#$Memory_102078| |T@[Int]Bool|) (|contents#$Memory_102078| |T@[Int]$1_Diem_PreburnQueue'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_Diem'$1_XUS_XUS'| 0)) (((|$1_Diem_Diem'$1_XUS_XUS'| (|$value#$1_Diem_Diem'$1_XUS_XUS'| Int) ) ) ))
-(declare-datatypes ((|T@$1_Diem_Preburn'$1_XUS_XUS'| 0)) (((|$1_Diem_Preburn'$1_XUS_XUS'| (|$to_burn#$1_Diem_Preburn'$1_XUS_XUS'| |T@$1_Diem_Diem'$1_XUS_XUS'|) ) ) ))
-(declare-sort |T@[Int]$1_Diem_Preburn'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_101661 0)) ((($Memory_101661 (|domain#$Memory_101661| |T@[Int]Bool|) (|contents#$Memory_101661| |T@[Int]$1_Diem_Preburn'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((|T@$1_TransactionFee_TransactionFee'$1_XUS_XUS'| 0)) (((|$1_TransactionFee_TransactionFee'$1_XUS_XUS'| (|$balance#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| |T@$1_Diem_Diem'$1_XUS_XUS'|) (|$preburn#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| |T@$1_Diem_Preburn'$1_XUS_XUS'|) ) ) ))
-(declare-sort |T@[Int]$1_TransactionFee_TransactionFee'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_112900 0)) ((($Memory_112900 (|domain#$Memory_112900| |T@[Int]Bool|) (|contents#$Memory_112900| |T@[Int]$1_TransactionFee_TransactionFee'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| 0)) (((|$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| |T@$1_Diem_Preburn'$1_XUS_XUS'|) (|$metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| (Seq Int)) ) ) ))
-(declare-datatypes ((|T@$1_Diem_PreburnQueue'$1_XUS_XUS'| 0)) (((|$1_Diem_PreburnQueue'$1_XUS_XUS'| (|$preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) ) ) ))
-(declare-sort |T@[Int]$1_Diem_PreburnQueue'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_101979 0)) ((($Memory_101979 (|domain#$Memory_101979| |T@[Int]Bool|) (|contents#$Memory_101979| |T@[Int]$1_Diem_PreburnQueue'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'| 0)
-(declare-datatypes ((T@$Memory_95349 0)) ((($Memory_95349 (|domain#$Memory_95349| |T@[Int]Bool|) (|contents#$Memory_95349| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'|) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'| 0)
-(declare-datatypes ((T@$Memory_95262 0)) ((($Memory_95262 (|domain#$Memory_95262| |T@[Int]Bool|) (|contents#$Memory_95262| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'|) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'| 0)
-(declare-datatypes ((T@$Memory_95175 0)) ((($Memory_95175 (|domain#$Memory_95175| |T@[Int]Bool|) (|contents#$Memory_95175| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) ) ) ))
-(declare-datatypes ((T@$1_DiemSystem_CapabilityHolder 0)) ((($1_DiemSystem_CapabilityHolder (|$cap#$1_DiemSystem_CapabilityHolder| |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) ) ) ))
-(declare-sort |T@[Int]$1_DiemSystem_CapabilityHolder| 0)
-(declare-datatypes ((T@$Memory_122491 0)) ((($Memory_122491 (|domain#$Memory_122491| |T@[Int]Bool|) (|contents#$Memory_122491| |T@[Int]$1_DiemSystem_CapabilityHolder|) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)
-(declare-datatypes ((T@$Memory_95088 0)) ((($Memory_95088 (|domain#$Memory_95088| |T@[Int]Bool|) (|contents#$Memory_95088| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)) (((|$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| (|$dummy_field#$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| Bool) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)
-(declare-datatypes ((T@$Memory_95001 0)) ((($Memory_95001 (|domain#$Memory_95001| |T@[Int]Bool|) (|contents#$Memory_95001| |T@[Int]$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) ) ))
-(declare-datatypes ((T@$1_DiemConfig_DisableReconfiguration 0)) ((($1_DiemConfig_DisableReconfiguration (|$dummy_field#$1_DiemConfig_DisableReconfiguration| Bool) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_DisableReconfiguration| 0)
-(declare-datatypes ((T@$Memory_94120 0)) ((($Memory_94120 (|domain#$Memory_94120| |T@[Int]Bool|) (|contents#$Memory_94120| |T@[Int]$1_DiemConfig_DisableReconfiguration|) ) ) ))
-(declare-datatypes ((T@$1_DiemConfig_Configuration 0)) ((($1_DiemConfig_Configuration (|$epoch#$1_DiemConfig_Configuration| Int) (|$last_reconfiguration_time#$1_DiemConfig_Configuration| Int) (|$events#$1_DiemConfig_Configuration| T@$1_Event_EventHandle) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_Configuration| 0)
-(declare-datatypes ((T@$Memory_94187 0)) ((($Memory_94187 (|domain#$Memory_94187| |T@[Int]Bool|) (|contents#$Memory_94187| |T@[Int]$1_DiemConfig_Configuration|) ) ) ))
-(declare-datatypes ((T@$1_DiemVersion_DiemVersion 0)) ((($1_DiemVersion_DiemVersion (|$major#$1_DiemVersion_DiemVersion| Int) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| T@$1_DiemVersion_DiemVersion) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| 0)
-(declare-datatypes ((T@$Memory_94038 0)) ((($Memory_94038 (|domain#$Memory_94038| |T@[Int]Bool|) (|contents#$Memory_94038| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'|) ) ) ))
-(declare-datatypes ((T@$1_DiemVMConfig_DiemVMConfig 0)) ((($1_DiemVMConfig_DiemVMConfig (|$gas_schedule#$1_DiemVMConfig_DiemVMConfig| T@$1_DiemVMConfig_GasSchedule) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| T@$1_DiemVMConfig_DiemVMConfig) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| 0)
-(declare-datatypes ((T@$Memory_93956 0)) ((($Memory_93956 (|domain#$Memory_93956| |T@[Int]Bool|) (|contents#$Memory_93956| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'|) ) ) ))
-(declare-datatypes ((T@$1_DiemSystem_DiemSystem 0)) ((($1_DiemSystem_DiemSystem (|$scheme#$1_DiemSystem_DiemSystem| Int) (|$validators#$1_DiemSystem_DiemSystem| (Seq T@$1_DiemSystem_ValidatorInfo)) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| T@$1_DiemSystem_DiemSystem) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| 0)
-(declare-datatypes ((T@$Memory_93874 0)) ((($Memory_93874 (|domain#$Memory_93874| |T@[Int]Bool|) (|contents#$Memory_93874| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|) ) ) ))
-(declare-datatypes ((T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption 0)) ((($1_DiemTransactionPublishingOption_DiemTransactionPublishingOption (|$script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption| (Seq (Seq Int))) (|$module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption| Bool) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)) (((|$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| 0)
-(declare-datatypes ((T@$Memory_93792 0)) ((($Memory_93792 (|domain#$Memory_93792| |T@[Int]Bool|) (|contents#$Memory_93792| |T@[Int]$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) ) ))
-(declare-datatypes ((T@$1_RegisteredCurrencies_RegisteredCurrencies 0)) ((($1_RegisteredCurrencies_RegisteredCurrencies (|$currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies| (Seq (Seq Int))) ) ) ))
-(declare-datatypes ((|T@$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)) (((|$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| (|$payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| T@$1_RegisteredCurrencies_RegisteredCurrencies) ) ) ))
-(declare-sort |T@[Int]$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| 0)
-(declare-datatypes ((T@$Memory_93710 0)) ((($Memory_93710 (|domain#$Memory_93710| |T@[Int]Bool|) (|contents#$Memory_93710| |T@[Int]$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) ) ))
-(declare-datatypes ((T@$1_FixedPoint32_FixedPoint32 0)) ((($1_FixedPoint32_FixedPoint32 (|$value#$1_FixedPoint32_FixedPoint32| Int) ) ) ))
-(declare-datatypes ((|T@$1_Diem_CurrencyInfo'$1_XDX_XDX'| 0)) (((|$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|$total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_FixedPoint32_FixedPoint32) (|$is_synthetic#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Bool) (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Int) (|$currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (Seq Int)) (|$can_mint#$1_Diem_CurrencyInfo'$1_XDX_XDX'| Bool) (|$mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| T@$1_Event_EventHandle) ) ) ))
-(declare-sort |T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'| 0)
-(declare-datatypes ((T@$Memory_97809 0)) ((($Memory_97809 (|domain#$Memory_97809| |T@[Int]Bool|) (|contents#$Memory_97809| |T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((|T@$1_Diem_CurrencyInfo'$1_XUS_XUS'| 0)) (((|$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|$total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_FixedPoint32_FixedPoint32) (|$is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Bool) (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Int) (|$currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (Seq Int)) (|$can_mint#$1_Diem_CurrencyInfo'$1_XUS_XUS'| Bool) (|$mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| T@$1_Event_EventHandle) ) ) ))
-(declare-sort |T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'| 0)
-(declare-datatypes ((T@$Memory_97744 0)) ((($Memory_97744 (|domain#$Memory_97744| |T@[Int]Bool|) (|contents#$Memory_97744| |T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((T@$Memory_92579 0)) ((($Memory_92579 (|domain#$Memory_92579| |T@[Int]Bool|) (|contents#$Memory_92579| |T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig|) ) ) ))
 (declare-datatypes ((T@$1_Roles_RoleId 0)) ((($1_Roles_RoleId (|$role_id#$1_Roles_RoleId| Int) ) ) ))
 (declare-sort |T@[Int]$1_Roles_RoleId| 0)
-(declare-datatypes ((T@$Memory_93313 0)) ((($Memory_93313 (|domain#$Memory_93313| |T@[Int]Bool|) (|contents#$Memory_93313| |T@[Int]$1_Roles_RoleId|) ) ) ))
-(declare-datatypes ((T@$1_SlidingNonce_SlidingNonce 0)) ((($1_SlidingNonce_SlidingNonce (|$min_nonce#$1_SlidingNonce_SlidingNonce| Int) (|$nonce_mask#$1_SlidingNonce_SlidingNonce| Int) ) ) ))
-(declare-sort |T@[Int]$1_SlidingNonce_SlidingNonce| 0)
-(declare-datatypes ((T@$Memory_93280 0)) ((($Memory_93280 (|domain#$Memory_93280| |T@[Int]Bool|) (|contents#$Memory_93280| |T@[Int]$1_SlidingNonce_SlidingNonce|) ) ) ))
+(declare-datatypes ((T@$Memory_92310 0)) ((($Memory_92310 (|domain#$Memory_92310| |T@[Int]Bool|) (|contents#$Memory_92310| |T@[Int]$1_Roles_RoleId|) ) ) ))
 (declare-datatypes ((T@$1_DiemTimestamp_CurrentTimeMicroseconds 0)) ((($1_DiemTimestamp_CurrentTimeMicroseconds (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| Int) ) ) ))
 (declare-sort |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds| 0)
-(declare-datatypes ((T@$Memory_91365 0)) ((($Memory_91365 (|domain#$Memory_91365| |T@[Int]Bool|) (|contents#$Memory_91365| |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds|) ) ) ))
+(declare-datatypes ((T@$Memory_90527 0)) ((($Memory_90527 (|domain#$Memory_90527| |T@[Int]Bool|) (|contents#$Memory_90527| |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds|) ) ) ))
+(declare-datatypes ((T@$1_VASPDomain_VASPDomainEvent 0)) ((($1_VASPDomain_VASPDomainEvent (|$removed#$1_VASPDomain_VASPDomainEvent| Bool) (|$domain#$1_VASPDomain_VASPDomainEvent| T@$1_VASPDomain_VASPDomain) (|$address#$1_VASPDomain_VASPDomainEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_DualAttestation_ComplianceKeyRotationEvent 0)) ((($1_DualAttestation_ComplianceKeyRotationEvent (|$new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent| (Seq Int)) (|$time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_DualAttestation_BaseUrlRotationEvent 0)) ((($1_DualAttestation_BaseUrlRotationEvent (|$new_base_url#$1_DualAttestation_BaseUrlRotationEvent| (Seq Int)) (|$time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_Diem_ToXDXExchangeRateUpdateEvent 0)) ((($1_Diem_ToXDXExchangeRateUpdateEvent (|$currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent| (Seq Int)) (|$new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent| Int) ) ) ))
@@ -169,7 +170,6 @@
 (declare-datatypes ((T@$1_Diem_MintEvent 0)) ((($1_Diem_MintEvent (|$amount#$1_Diem_MintEvent| Int) (|$currency_code#$1_Diem_MintEvent| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$1_Diem_CancelBurnEvent 0)) ((($1_Diem_CancelBurnEvent (|$amount#$1_Diem_CancelBurnEvent| Int) (|$currency_code#$1_Diem_CancelBurnEvent| (Seq Int)) (|$preburn_address#$1_Diem_CancelBurnEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_Diem_BurnEvent 0)) ((($1_Diem_BurnEvent (|$amount#$1_Diem_BurnEvent| Int) (|$currency_code#$1_Diem_BurnEvent| (Seq Int)) (|$preburn_address#$1_Diem_BurnEvent| Int) ) ) ))
-(declare-datatypes ((T@$1_DiemId_DiemIdDomainEvent 0)) ((($1_DiemId_DiemIdDomainEvent (|$removed#$1_DiemId_DiemIdDomainEvent| Bool) (|$domain#$1_DiemId_DiemIdDomainEvent| T@$1_DiemId_DiemIdDomain) (|$address#$1_DiemId_DiemIdDomainEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_DiemConfig_NewEpochEvent 0)) ((($1_DiemConfig_NewEpochEvent (|$epoch#$1_DiemConfig_NewEpochEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_DiemBlock_NewBlockEvent 0)) ((($1_DiemBlock_NewBlockEvent (|$round#$1_DiemBlock_NewBlockEvent| Int) (|$proposer#$1_DiemBlock_NewBlockEvent| Int) (|$previous_block_votes#$1_DiemBlock_NewBlockEvent| (Seq Int)) (|$time_microseconds#$1_DiemBlock_NewBlockEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_DiemAccount_SentPaymentEvent 0)) ((($1_DiemAccount_SentPaymentEvent (|$amount#$1_DiemAccount_SentPaymentEvent| Int) (|$currency_code#$1_DiemAccount_SentPaymentEvent| (Seq Int)) (|$payee#$1_DiemAccount_SentPaymentEvent| Int) (|$metadata#$1_DiemAccount_SentPaymentEvent| (Seq Int)) ) ) ))
@@ -179,38 +179,38 @@
 (declare-datatypes ((T@$1_DesignatedDealer_ReceivedMintEvent 0)) ((($1_DesignatedDealer_ReceivedMintEvent (|$currency_code#$1_DesignatedDealer_ReceivedMintEvent| (Seq Int)) (|$destination_address#$1_DesignatedDealer_ReceivedMintEvent| Int) (|$amount#$1_DesignatedDealer_ReceivedMintEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_AccountFreezing_UnfreezeAccountEvent 0)) ((($1_AccountFreezing_UnfreezeAccountEvent (|$initiator_address#$1_AccountFreezing_UnfreezeAccountEvent| Int) (|$unfrozen_address#$1_AccountFreezing_UnfreezeAccountEvent| Int) ) ) ))
 (declare-datatypes ((T@$1_AccountFreezing_FreezeAccountEvent 0)) ((($1_AccountFreezing_FreezeAccountEvent (|$initiator_address#$1_AccountFreezing_FreezeAccountEvent| Int) (|$frozen_address#$1_AccountFreezing_FreezeAccountEvent| Int) ) ) ))
-(declare-datatypes ((T@$EventRep 0)) (((|$ToEventRep'$1_AccountFreezing_FreezeAccountEvent'| (|e#$ToEventRep'$1_AccountFreezing_FreezeAccountEvent'| T@$1_AccountFreezing_FreezeAccountEvent) ) (|$ToEventRep'$1_AccountFreezing_UnfreezeAccountEvent'| (|e#$ToEventRep'$1_AccountFreezing_UnfreezeAccountEvent'| T@$1_AccountFreezing_UnfreezeAccountEvent) ) (|$ToEventRep'$1_DesignatedDealer_ReceivedMintEvent'| (|e#$ToEventRep'$1_DesignatedDealer_ReceivedMintEvent'| T@$1_DesignatedDealer_ReceivedMintEvent) ) (|$ToEventRep'$1_DiemAccount_AdminTransactionEvent'| (|e#$ToEventRep'$1_DiemAccount_AdminTransactionEvent'| T@$1_DiemAccount_AdminTransactionEvent) ) (|$ToEventRep'$1_DiemAccount_CreateAccountEvent'| (|e#$ToEventRep'$1_DiemAccount_CreateAccountEvent'| T@$1_DiemAccount_CreateAccountEvent) ) (|$ToEventRep'$1_DiemAccount_ReceivedPaymentEvent'| (|e#$ToEventRep'$1_DiemAccount_ReceivedPaymentEvent'| T@$1_DiemAccount_ReceivedPaymentEvent) ) (|$ToEventRep'$1_DiemAccount_SentPaymentEvent'| (|e#$ToEventRep'$1_DiemAccount_SentPaymentEvent'| T@$1_DiemAccount_SentPaymentEvent) ) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| (|e#$ToEventRep'$1_DiemBlock_NewBlockEvent'| T@$1_DiemBlock_NewBlockEvent) ) (|$ToEventRep'$1_DiemConfig_NewEpochEvent'| (|e#$ToEventRep'$1_DiemConfig_NewEpochEvent'| T@$1_DiemConfig_NewEpochEvent) ) (|$ToEventRep'$1_DiemId_DiemIdDomainEvent'| (|e#$ToEventRep'$1_DiemId_DiemIdDomainEvent'| T@$1_DiemId_DiemIdDomainEvent) ) (|$ToEventRep'$1_Diem_BurnEvent'| (|e#$ToEventRep'$1_Diem_BurnEvent'| T@$1_Diem_BurnEvent) ) (|$ToEventRep'$1_Diem_CancelBurnEvent'| (|e#$ToEventRep'$1_Diem_CancelBurnEvent'| T@$1_Diem_CancelBurnEvent) ) (|$ToEventRep'$1_Diem_MintEvent'| (|e#$ToEventRep'$1_Diem_MintEvent'| T@$1_Diem_MintEvent) ) (|$ToEventRep'$1_Diem_PreburnEvent'| (|e#$ToEventRep'$1_Diem_PreburnEvent'| T@$1_Diem_PreburnEvent) ) (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| (|e#$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| T@$1_Diem_ToXDXExchangeRateUpdateEvent) ) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| (|e#$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| T@$1_DualAttestation_BaseUrlRotationEvent) ) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| (|e#$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| T@$1_DualAttestation_ComplianceKeyRotationEvent) ) ) ))
+(declare-datatypes ((T@$EventRep 0)) (((|$ToEventRep'$1_AccountFreezing_FreezeAccountEvent'| (|e#$ToEventRep'$1_AccountFreezing_FreezeAccountEvent'| T@$1_AccountFreezing_FreezeAccountEvent) ) (|$ToEventRep'$1_AccountFreezing_UnfreezeAccountEvent'| (|e#$ToEventRep'$1_AccountFreezing_UnfreezeAccountEvent'| T@$1_AccountFreezing_UnfreezeAccountEvent) ) (|$ToEventRep'$1_DesignatedDealer_ReceivedMintEvent'| (|e#$ToEventRep'$1_DesignatedDealer_ReceivedMintEvent'| T@$1_DesignatedDealer_ReceivedMintEvent) ) (|$ToEventRep'$1_DiemAccount_AdminTransactionEvent'| (|e#$ToEventRep'$1_DiemAccount_AdminTransactionEvent'| T@$1_DiemAccount_AdminTransactionEvent) ) (|$ToEventRep'$1_DiemAccount_CreateAccountEvent'| (|e#$ToEventRep'$1_DiemAccount_CreateAccountEvent'| T@$1_DiemAccount_CreateAccountEvent) ) (|$ToEventRep'$1_DiemAccount_ReceivedPaymentEvent'| (|e#$ToEventRep'$1_DiemAccount_ReceivedPaymentEvent'| T@$1_DiemAccount_ReceivedPaymentEvent) ) (|$ToEventRep'$1_DiemAccount_SentPaymentEvent'| (|e#$ToEventRep'$1_DiemAccount_SentPaymentEvent'| T@$1_DiemAccount_SentPaymentEvent) ) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| (|e#$ToEventRep'$1_DiemBlock_NewBlockEvent'| T@$1_DiemBlock_NewBlockEvent) ) (|$ToEventRep'$1_DiemConfig_NewEpochEvent'| (|e#$ToEventRep'$1_DiemConfig_NewEpochEvent'| T@$1_DiemConfig_NewEpochEvent) ) (|$ToEventRep'$1_Diem_BurnEvent'| (|e#$ToEventRep'$1_Diem_BurnEvent'| T@$1_Diem_BurnEvent) ) (|$ToEventRep'$1_Diem_CancelBurnEvent'| (|e#$ToEventRep'$1_Diem_CancelBurnEvent'| T@$1_Diem_CancelBurnEvent) ) (|$ToEventRep'$1_Diem_MintEvent'| (|e#$ToEventRep'$1_Diem_MintEvent'| T@$1_Diem_MintEvent) ) (|$ToEventRep'$1_Diem_PreburnEvent'| (|e#$ToEventRep'$1_Diem_PreburnEvent'| T@$1_Diem_PreburnEvent) ) (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| (|e#$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| T@$1_Diem_ToXDXExchangeRateUpdateEvent) ) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| (|e#$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| T@$1_DualAttestation_BaseUrlRotationEvent) ) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| (|e#$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| T@$1_DualAttestation_ComplianceKeyRotationEvent) ) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| (|e#$ToEventRep'$1_VASPDomain_VASPDomainEvent'| T@$1_VASPDomain_VASPDomainEvent) ) ) ))
 (declare-sort |T@[$EventRep]Int| 0)
-(declare-datatypes ((T@Multiset_62435 0)) (((Multiset_62435 (|v#Multiset_62435| |T@[$EventRep]Int|) (|l#Multiset_62435| Int) ) ) ))
-(declare-sort |T@[$1_Event_EventHandle]Multiset_62435| 0)
-(declare-datatypes ((T@$EventStore 0)) ((($EventStore (|counter#$EventStore| Int) (|streams#$EventStore| |T@[$1_Event_EventHandle]Multiset_62435|) ) ) ))
+(declare-datatypes ((T@Multiset_61713 0)) (((Multiset_61713 (|v#Multiset_61713| |T@[$EventRep]Int|) (|l#Multiset_61713| Int) ) ) ))
+(declare-sort |T@[$1_Event_EventHandle]Multiset_61713| 0)
+(declare-datatypes ((T@$EventStore 0)) ((($EventStore (|counter#$EventStore| Int) (|streams#$EventStore| |T@[$1_Event_EventHandle]Multiset_61713|) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_124317 0)) ((($Mutation_124317 (|l#$Mutation_124317| T@$Location) (|p#$Mutation_124317| (Seq Int)) (|v#$Mutation_124317| T@$1_DiemBlock_BlockMetadata) ) ) ))
-(declare-datatypes ((T@$Mutation_119961 0)) ((($Mutation_119961 (|l#$Mutation_119961| T@$Location) (|p#$Mutation_119961| (Seq Int)) (|v#$Mutation_119961| |T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) ) ) ))
-(declare-datatypes ((T@$Mutation_119917 0)) ((($Mutation_119917 (|l#$Mutation_119917| T@$Location) (|p#$Mutation_119917| (Seq Int)) (|v#$Mutation_119917| T@$1_DiemAccount_DiemAccount) ) ) ))
-(declare-datatypes ((T@$Mutation_30655 0)) ((($Mutation_30655 (|l#$Mutation_30655| T@$Location) (|p#$Mutation_30655| (Seq Int)) (|v#$Mutation_30655| Bool) ) ) ))
-(declare-datatypes ((T@$Mutation_107314 0)) ((($Mutation_107314 (|l#$Mutation_107314| T@$Location) (|p#$Mutation_107314| (Seq Int)) (|v#$Mutation_107314| |T@$1_Diem_CurrencyInfo'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((T@$Mutation_96487 0)) ((($Mutation_96487 (|l#$Mutation_96487| T@$Location) (|p#$Mutation_96487| (Seq Int)) (|v#$Mutation_96487| T@$1_RegisteredCurrencies_RegisteredCurrencies) ) ) ))
-(declare-datatypes ((T@$Mutation_91839 0)) ((($Mutation_91839 (|l#$Mutation_91839| T@$Location) (|p#$Mutation_91839| (Seq Int)) (|v#$Mutation_91839| T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) ) ))
-(declare-datatypes ((T@$Mutation_85125 0)) ((($Mutation_85125 (|l#$Mutation_85125| T@$Location) (|p#$Mutation_85125| (Seq Int)) (|v#$Mutation_85125| T@$1_Event_EventHandle) ) ) ))
+(declare-datatypes ((T@$Mutation_123173 0)) ((($Mutation_123173 (|l#$Mutation_123173| T@$Location) (|p#$Mutation_123173| (Seq Int)) (|v#$Mutation_123173| T@$1_DiemBlock_BlockMetadata) ) ) ))
+(declare-datatypes ((T@$Mutation_120432 0)) ((($Mutation_120432 (|l#$Mutation_120432| T@$Location) (|p#$Mutation_120432| (Seq Int)) (|v#$Mutation_120432| |T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) ) ) ))
+(declare-datatypes ((T@$Mutation_120388 0)) ((($Mutation_120388 (|l#$Mutation_120388| T@$Location) (|p#$Mutation_120388| (Seq Int)) (|v#$Mutation_120388| T@$1_DiemAccount_DiemAccount) ) ) ))
+(declare-datatypes ((T@$Mutation_32213 0)) ((($Mutation_32213 (|l#$Mutation_32213| T@$Location) (|p#$Mutation_32213| (Seq Int)) (|v#$Mutation_32213| Bool) ) ) ))
+(declare-datatypes ((T@$Mutation_108824 0)) ((($Mutation_108824 (|l#$Mutation_108824| T@$Location) (|p#$Mutation_108824| (Seq Int)) (|v#$Mutation_108824| |T@$1_Diem_CurrencyInfo'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((T@$Mutation_98059 0)) ((($Mutation_98059 (|l#$Mutation_98059| T@$Location) (|p#$Mutation_98059| (Seq Int)) (|v#$Mutation_98059| T@$1_RegisteredCurrencies_RegisteredCurrencies) ) ) ))
+(declare-datatypes ((T@$Mutation_90996 0)) ((($Mutation_90996 (|l#$Mutation_90996| T@$Location) (|p#$Mutation_90996| (Seq Int)) (|v#$Mutation_90996| T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) ) ))
+(declare-datatypes ((T@$Mutation_84403 0)) ((($Mutation_84403 (|l#$Mutation_84403| T@$Location) (|p#$Mutation_84403| (Seq Int)) (|v#$Mutation_84403| T@$1_Event_EventHandle) ) ) ))
 (declare-datatypes ((T@$Mutation_12329 0)) ((($Mutation_12329 (|l#$Mutation_12329| T@$Location) (|p#$Mutation_12329| (Seq Int)) (|v#$Mutation_12329| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_80493 0)) ((($Mutation_80493 (|l#$Mutation_80493| T@$Location) (|p#$Mutation_80493| (Seq Int)) (|v#$Mutation_80493| (Seq Int)) ) ) ))
-(declare-datatypes ((T@$Mutation_79747 0)) ((($Mutation_79747 (|l#$Mutation_79747| T@$Location) (|p#$Mutation_79747| (Seq Int)) (|v#$Mutation_79747| (Seq (Seq Int))) ) ) ))
-(declare-datatypes ((T@$Mutation_78307 0)) ((($Mutation_78307 (|l#$Mutation_78307| T@$Location) (|p#$Mutation_78307| (Seq Int)) (|v#$Mutation_78307| T@$1_ValidatorConfig_Config) ) ) ))
-(declare-datatypes ((T@$Mutation_77561 0)) ((($Mutation_77561 (|l#$Mutation_77561| T@$Location) (|p#$Mutation_77561| (Seq Int)) (|v#$Mutation_77561| (Seq T@$1_ValidatorConfig_Config)) ) ) ))
-(declare-datatypes ((T@$Mutation_76121 0)) ((($Mutation_76121 (|l#$Mutation_76121| T@$Location) (|p#$Mutation_76121| (Seq Int)) (|v#$Mutation_76121| |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|) ) ) ))
-(declare-datatypes ((T@$Mutation_75375 0)) ((($Mutation_75375 (|l#$Mutation_75375| T@$Location) (|p#$Mutation_75375| (Seq Int)) (|v#$Mutation_75375| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) ) ) ))
-(declare-datatypes ((T@$Mutation_73935 0)) ((($Mutation_73935 (|l#$Mutation_73935| T@$Location) (|p#$Mutation_73935| (Seq Int)) (|v#$Mutation_73935| |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|) ) ) ))
-(declare-datatypes ((T@$Mutation_73189 0)) ((($Mutation_73189 (|l#$Mutation_73189| T@$Location) (|p#$Mutation_73189| (Seq Int)) (|v#$Mutation_73189| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) ) ) ))
-(declare-datatypes ((T@$Mutation_71749 0)) ((($Mutation_71749 (|l#$Mutation_71749| T@$Location) (|p#$Mutation_71749| (Seq Int)) (|v#$Mutation_71749| T@$1_DiemSystem_ValidatorInfo) ) ) ))
-(declare-datatypes ((T@$Mutation_71003 0)) ((($Mutation_71003 (|l#$Mutation_71003| T@$Location) (|p#$Mutation_71003| (Seq Int)) (|v#$Mutation_71003| (Seq T@$1_DiemSystem_ValidatorInfo)) ) ) ))
-(declare-datatypes ((T@$Mutation_69563 0)) ((($Mutation_69563 (|l#$Mutation_69563| T@$Location) (|p#$Mutation_69563| (Seq Int)) (|v#$Mutation_69563| T@$1_DiemAccount_WithdrawCapability) ) ) ))
-(declare-datatypes ((T@$Mutation_68817 0)) ((($Mutation_68817 (|l#$Mutation_68817| T@$Location) (|p#$Mutation_68817| (Seq Int)) (|v#$Mutation_68817| (Seq T@$1_DiemAccount_WithdrawCapability)) ) ) ))
-(declare-datatypes ((T@$Mutation_67377 0)) ((($Mutation_67377 (|l#$Mutation_67377| T@$Location) (|p#$Mutation_67377| (Seq Int)) (|v#$Mutation_67377| T@$1_DiemAccount_KeyRotationCapability) ) ) ))
-(declare-datatypes ((T@$Mutation_66631 0)) ((($Mutation_66631 (|l#$Mutation_66631| T@$Location) (|p#$Mutation_66631| (Seq Int)) (|v#$Mutation_66631| (Seq T@$1_DiemAccount_KeyRotationCapability)) ) ) ))
+(declare-datatypes ((T@$Mutation_79771 0)) ((($Mutation_79771 (|l#$Mutation_79771| T@$Location) (|p#$Mutation_79771| (Seq Int)) (|v#$Mutation_79771| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_79025 0)) ((($Mutation_79025 (|l#$Mutation_79025| T@$Location) (|p#$Mutation_79025| (Seq Int)) (|v#$Mutation_79025| (Seq (Seq Int))) ) ) ))
+(declare-datatypes ((T@$Mutation_77585 0)) ((($Mutation_77585 (|l#$Mutation_77585| T@$Location) (|p#$Mutation_77585| (Seq Int)) (|v#$Mutation_77585| T@$1_ValidatorConfig_Config) ) ) ))
+(declare-datatypes ((T@$Mutation_76839 0)) ((($Mutation_76839 (|l#$Mutation_76839| T@$Location) (|p#$Mutation_76839| (Seq Int)) (|v#$Mutation_76839| (Seq T@$1_ValidatorConfig_Config)) ) ) ))
+(declare-datatypes ((T@$Mutation_75399 0)) ((($Mutation_75399 (|l#$Mutation_75399| T@$Location) (|p#$Mutation_75399| (Seq Int)) (|v#$Mutation_75399| |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|) ) ) ))
+(declare-datatypes ((T@$Mutation_74653 0)) ((($Mutation_74653 (|l#$Mutation_74653| T@$Location) (|p#$Mutation_74653| (Seq Int)) (|v#$Mutation_74653| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) ) ) ))
+(declare-datatypes ((T@$Mutation_73213 0)) ((($Mutation_73213 (|l#$Mutation_73213| T@$Location) (|p#$Mutation_73213| (Seq Int)) (|v#$Mutation_73213| |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|) ) ) ))
+(declare-datatypes ((T@$Mutation_72467 0)) ((($Mutation_72467 (|l#$Mutation_72467| T@$Location) (|p#$Mutation_72467| (Seq Int)) (|v#$Mutation_72467| (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) ) ) ))
+(declare-datatypes ((T@$Mutation_71027 0)) ((($Mutation_71027 (|l#$Mutation_71027| T@$Location) (|p#$Mutation_71027| (Seq Int)) (|v#$Mutation_71027| T@$1_DiemSystem_ValidatorInfo) ) ) ))
+(declare-datatypes ((T@$Mutation_70281 0)) ((($Mutation_70281 (|l#$Mutation_70281| T@$Location) (|p#$Mutation_70281| (Seq Int)) (|v#$Mutation_70281| (Seq T@$1_DiemSystem_ValidatorInfo)) ) ) ))
+(declare-datatypes ((T@$Mutation_68841 0)) ((($Mutation_68841 (|l#$Mutation_68841| T@$Location) (|p#$Mutation_68841| (Seq Int)) (|v#$Mutation_68841| T@$1_DiemAccount_WithdrawCapability) ) ) ))
+(declare-datatypes ((T@$Mutation_68095 0)) ((($Mutation_68095 (|l#$Mutation_68095| T@$Location) (|p#$Mutation_68095| (Seq Int)) (|v#$Mutation_68095| (Seq T@$1_DiemAccount_WithdrawCapability)) ) ) ))
+(declare-datatypes ((T@$Mutation_66655 0)) ((($Mutation_66655 (|l#$Mutation_66655| T@$Location) (|p#$Mutation_66655| (Seq Int)) (|v#$Mutation_66655| T@$1_DiemAccount_KeyRotationCapability) ) ) ))
+(declare-datatypes ((T@$Mutation_65909 0)) ((($Mutation_65909 (|l#$Mutation_65909| T@$Location) (|p#$Mutation_65909| (Seq Int)) (|v#$Mutation_65909| (Seq T@$1_DiemAccount_KeyRotationCapability)) ) ) ))
 (declare-sort |T@#0| 0)
-(declare-datatypes ((T@$Mutation_65153 0)) ((($Mutation_65153 (|l#$Mutation_65153| T@$Location) (|p#$Mutation_65153| (Seq Int)) (|v#$Mutation_65153| |T@#0|) ) ) ))
-(declare-datatypes ((T@$Mutation_64407 0)) ((($Mutation_64407 (|l#$Mutation_64407| T@$Location) (|p#$Mutation_64407| (Seq Int)) (|v#$Mutation_64407| (Seq |T@#0|)) ) ) ))
+(declare-datatypes ((T@$Mutation_64431 0)) ((($Mutation_64431 (|l#$Mutation_64431| T@$Location) (|p#$Mutation_64431| (Seq Int)) (|v#$Mutation_64431| |T@#0|) ) ) ))
+(declare-datatypes ((T@$Mutation_63685 0)) ((($Mutation_63685 (|l#$Mutation_63685| T@$Location) (|p#$Mutation_63685| (Seq Int)) (|v#$Mutation_63685| (Seq |T@#0|)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -257,7 +257,7 @@
 (declare-fun $1_Signature_$ed25519_validate_pubkey ((Seq Int)) Bool)
 (declare-fun $1_Signature_$ed25519_verify ((Seq Int) (Seq Int) (Seq Int)) Bool)
 (declare-fun $EmptyEventStore () T@$EventStore)
-(declare-fun |Select__T@[$1_Event_EventHandle]Multiset_62435_| (|T@[$1_Event_EventHandle]Multiset_62435| T@$1_Event_EventHandle) T@Multiset_62435)
+(declare-fun |Select__T@[$1_Event_EventHandle]Multiset_61713_| (|T@[$1_Event_EventHandle]Multiset_61713| T@$1_Event_EventHandle) T@Multiset_61713)
 (declare-fun |Select__T@[$EventRep]Int_| (|T@[$EventRep]Int| T@$EventRep) Int)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_AccountFreezing_FreezeAccountEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''| (T@$1_Event_EventHandle) Bool)
@@ -268,7 +268,6 @@
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_DiemAccount_SentPaymentEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_DiemBlock_NewBlockEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''| (T@$1_Event_EventHandle) Bool)
-(declare-fun |$IsValid'$1_Event_EventHandle'$1_DiemId_DiemIdDomainEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| (T@$1_Event_EventHandle) Bool)
@@ -276,28 +275,36 @@
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| (T@$1_Event_EventHandle) Bool)
+(declare-fun |$IsValid'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''| (T@$1_Event_EventHandle) Bool)
 (declare-fun |$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| (T@$1_DiemTimestamp_CurrentTimeMicroseconds) Bool)
-(declare-fun |$IsValid'$1_SlidingNonce_SlidingNonce'| (T@$1_SlidingNonce_SlidingNonce) Bool)
 (declare-fun |$IsValid'$1_Roles_RoleId'| (T@$1_Roles_RoleId) Bool)
-(declare-fun |$IsValid'$1_FixedPoint32_FixedPoint32'| (T@$1_FixedPoint32_FixedPoint32) Bool)
+(declare-fun |$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| (T@$1_ValidatorOperatorConfig_ValidatorOperatorConfig) Bool)
+(declare-fun |$IsValid'$1_Option_Option'address''| (|T@$1_Option_Option'address'|) Bool)
+(declare-fun |$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| (|T@$1_Option_Option'$1_ValidatorConfig_Config'|) Bool)
+(declare-fun |$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| (|T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) Bool)
+(declare-fun |$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| (|T@$1_Option_Option'$1_DiemAccount_WithdrawCapability'|) Bool)
+(declare-fun |$IsValid'$1_ValidatorConfig_ValidatorConfig'| (T@$1_ValidatorConfig_ValidatorConfig) Bool)
+(declare-fun |$IsValid'$1_SlidingNonce_SlidingNonce'| (T@$1_SlidingNonce_SlidingNonce) Bool)
+(declare-fun |$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| (|T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|) Bool)
+(declare-fun |$IsValid'$1_DiemSystem_DiemSystem'| (T@$1_DiemSystem_DiemSystem) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''| (|T@$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'|) Bool)
 (declare-fun |$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| (T@$1_RegisteredCurrencies_RegisteredCurrencies) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| (|T@$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) Bool)
 (declare-fun |$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption) Bool)
-(declare-fun |$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| (|T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|) Bool)
-(declare-fun |$IsValid'$1_DiemSystem_DiemSystem'| (T@$1_DiemSystem_DiemSystem) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''| (|T@$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'|) Bool)
 (declare-fun |$IsValid'$1_DiemVMConfig_DiemVMConfig'| (T@$1_DiemVMConfig_DiemVMConfig) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion''| (|T@$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'|) Bool)
 (declare-fun |$IsValid'$1_DiemVersion_DiemVersion'| (T@$1_DiemVersion_DiemVersion) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_Configuration'| (T@$1_DiemConfig_Configuration) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_DisableReconfiguration'| (T@$1_DiemConfig_DisableReconfiguration) Bool)
+(declare-fun |$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| (|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies''| (|T@$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'|) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| (|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) Bool)
-(declare-fun |$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| (|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig''| (|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'|) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion''| (|T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'|) Bool)
 (declare-fun |$IsValid'$1_DiemConfig_NewEpochEvent'| (T@$1_DiemConfig_NewEpochEvent) Bool)
+(declare-fun |$IsValid'$1_DiemSystem_CapabilityHolder'| (T@$1_DiemSystem_CapabilityHolder) Bool)
+(declare-fun |$IsValid'$1_FixedPoint32_FixedPoint32'| (T@$1_FixedPoint32_FixedPoint32) Bool)
 (declare-fun |$IsValid'$1_Diem_Diem'$1_XUS_XUS''| (|T@$1_Diem_Diem'$1_XUS_XUS'|) Bool)
 (declare-fun |$IsValid'$1_Diem_Diem'$1_XDX_XDX''| (|T@$1_Diem_Diem'$1_XDX_XDX'|) Bool)
 (declare-fun |$IsValid'$1_Diem_BurnCapability'$1_XUS_XUS''| (|T@$1_Diem_BurnCapability'$1_XUS_XUS'|) Bool)
@@ -321,20 +328,14 @@
 (declare-fun |$IsValid'$1_XUS_XUS'| (T@$1_XUS_XUS) Bool)
 (declare-fun |$IsValid'$1_XDX_XDX'| (T@$1_XDX_XDX) Bool)
 (declare-fun |$IsValid'$1_XDX_Reserve'| (T@$1_XDX_Reserve) Bool)
-(declare-fun |$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| (T@$1_ValidatorOperatorConfig_ValidatorOperatorConfig) Bool)
-(declare-fun |$IsValid'$1_Option_Option'address''| (|T@$1_Option_Option'address'|) Bool)
-(declare-fun |$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| (|T@$1_Option_Option'$1_ValidatorConfig_Config'|) Bool)
-(declare-fun |$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| (|T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) Bool)
-(declare-fun |$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| (|T@$1_Option_Option'$1_DiemAccount_WithdrawCapability'|) Bool)
-(declare-fun |$IsValid'$1_ValidatorConfig_ValidatorConfig'| (T@$1_ValidatorConfig_ValidatorConfig) Bool)
+(declare-fun |$IsValid'$1_VASPDomain_VASPDomain'| (T@$1_VASPDomain_VASPDomain) Bool)
+(declare-fun |$IsValid'$1_VASPDomain_VASPDomainEvent'| (T@$1_VASPDomain_VASPDomainEvent) Bool)
+(declare-fun |$IsValid'$1_VASPDomain_VASPDomainManager'| (T@$1_VASPDomain_VASPDomainManager) Bool)
 (declare-fun |$IsValid'$1_TransactionFee_TransactionFee'$1_XUS_XUS''| (|T@$1_TransactionFee_TransactionFee'$1_XUS_XUS'|) Bool)
 (declare-fun |$IsValid'$1_DualAttestation_BaseUrlRotationEvent'| (T@$1_DualAttestation_BaseUrlRotationEvent) Bool)
 (declare-fun |$IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'| (T@$1_DualAttestation_ComplianceKeyRotationEvent) Bool)
 (declare-fun |$IsValid'$1_DualAttestation_Credential'| (T@$1_DualAttestation_Credential) Bool)
 (declare-fun |$IsValid'$1_DualAttestation_Limit'| (T@$1_DualAttestation_Limit) Bool)
-(declare-fun |$IsValid'$1_DiemId_DiemIdDomain'| (T@$1_DiemId_DiemIdDomain) Bool)
-(declare-fun |$IsValid'$1_DiemId_DiemIdDomainEvent'| (T@$1_DiemId_DiemIdDomainEvent) Bool)
-(declare-fun |$IsValid'$1_DiemId_DiemIdDomainManager'| (T@$1_DiemId_DiemIdDomainManager) Bool)
 (declare-fun |$IsValid'$1_DesignatedDealer_Dealer'| (T@$1_DesignatedDealer_Dealer) Bool)
 (declare-fun |$IsValid'$1_DesignatedDealer_ReceivedMintEvent'| (T@$1_DesignatedDealer_ReceivedMintEvent) Bool)
 (declare-fun |$IsValid'$1_ChainId_ChainId'| (T@$1_ChainId_ChainId) Bool)
@@ -349,22 +350,21 @@
 (declare-fun |$IsValid'$1_DiemAccount_DiemWriteSetManager'| (T@$1_DiemAccount_DiemWriteSetManager) Bool)
 (declare-fun |$IsValid'$1_DiemAccount_ReceivedPaymentEvent'| (T@$1_DiemAccount_ReceivedPaymentEvent) Bool)
 (declare-fun |$IsValid'$1_DiemAccount_SentPaymentEvent'| (T@$1_DiemAccount_SentPaymentEvent) Bool)
-(declare-fun |$IsValid'$1_DiemSystem_CapabilityHolder'| (T@$1_DiemSystem_CapabilityHolder) Bool)
 (declare-fun |$IsValid'$1_DiemBlock_BlockMetadata'| (T@$1_DiemBlock_BlockMetadata) Bool)
 (declare-fun |$IsValid'$1_DiemBlock_NewBlockEvent'| (T@$1_DiemBlock_NewBlockEvent) Bool)
 (declare-fun |$IsValid'$1_DiemVMConfig_GasSchedule'| (T@$1_DiemVMConfig_GasSchedule) Bool)
 (declare-fun |$IsValid'$1_DiemVMConfig_GasConstants'| (T@$1_DiemVMConfig_GasConstants) Bool)
 (declare-fun ReverseVec_12182 ((Seq Int)) (Seq Int))
-(declare-fun ReverseVec_56871 ((Seq (Seq Int))) (Seq (Seq Int)))
-(declare-fun ReverseVec_56477 ((Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|))
-(declare-fun ReverseVec_56280 ((Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|))
-(declare-fun ReverseVec_56674 ((Seq T@$1_ValidatorConfig_Config)) (Seq T@$1_ValidatorConfig_Config))
-(declare-fun ReverseVec_55689 ((Seq T@$1_DiemAccount_KeyRotationCapability)) (Seq T@$1_DiemAccount_KeyRotationCapability))
-(declare-fun ReverseVec_55886 ((Seq T@$1_DiemAccount_WithdrawCapability)) (Seq T@$1_DiemAccount_WithdrawCapability))
-(declare-fun ReverseVec_56083 ((Seq T@$1_DiemSystem_ValidatorInfo)) (Seq T@$1_DiemSystem_ValidatorInfo))
-(declare-fun ReverseVec_55492 ((Seq |T@#0|)) (Seq |T@#0|))
+(declare-fun ReverseVec_55952 ((Seq T@$1_ValidatorConfig_Config)) (Seq T@$1_ValidatorConfig_Config))
+(declare-fun ReverseVec_54967 ((Seq T@$1_DiemAccount_KeyRotationCapability)) (Seq T@$1_DiemAccount_KeyRotationCapability))
+(declare-fun ReverseVec_55164 ((Seq T@$1_DiemAccount_WithdrawCapability)) (Seq T@$1_DiemAccount_WithdrawCapability))
+(declare-fun ReverseVec_55361 ((Seq T@$1_DiemSystem_ValidatorInfo)) (Seq T@$1_DiemSystem_ValidatorInfo))
+(declare-fun ReverseVec_56149 ((Seq (Seq Int))) (Seq (Seq Int)))
+(declare-fun ReverseVec_55755 ((Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|))
+(declare-fun ReverseVec_55558 ((Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|))
+(declare-fun ReverseVec_54770 ((Seq |T@#0|)) (Seq |T@#0|))
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
-(declare-fun |lambda#2| (|T@[$1_Event_EventHandle]Multiset_62435| |T@[$1_Event_EventHandle]Multiset_62435|) |T@[$1_Event_EventHandle]Multiset_62435|)
+(declare-fun |lambda#2| (|T@[$1_Event_EventHandle]Multiset_61713| |T@[$1_Event_EventHandle]Multiset_61713|) |T@[$1_Event_EventHandle]Multiset_61713|)
 (declare-fun |lambda#3| (|T@[$EventRep]Int| |T@[$EventRep]Int|) |T@[$EventRep]Int|)
 (assert (= $MAX_U8 255))
 (assert (= $MAX_U64 18446744073709551615))
@@ -633,8 +633,8 @@
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (= (|counter#$EventStore| $EmptyEventStore) 0))
-(assert (forall ((handle T@$1_Event_EventHandle) ) (! (let ((stream (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) handle)))
- (and (= (|l#Multiset_62435| stream) 0) (forall ((v@@24 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream) v@@24) 0)
+(assert (forall ((handle T@$1_Event_EventHandle) ) (! (let ((stream (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) handle)))
+ (and (= (|l#Multiset_61713| stream) 0) (forall ((v@@24 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream) v@@24) 0)
  :qid |DiemBlockandybpl.129:13|
  :skolemid |2|
 ))))
@@ -731,503 +731,503 @@
  :skolemid |88|
  :pattern ( (|$ToEventRep'$1_DiemConfig_NewEpochEvent'| v1@@9) (|$ToEventRep'$1_DiemConfig_NewEpochEvent'| v2@@9))
 )))
-(assert (forall ((h@@8 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_DiemId_DiemIdDomainEvent''| h@@8) true)
- :qid |DiemBlockandybpl.3083:70|
+(assert (forall ((h@@8 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| h@@8) true)
+ :qid |DiemBlockandybpl.3083:60|
  :skolemid |89|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_DiemId_DiemIdDomainEvent''| h@@8))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| h@@8))
 )))
-(assert (forall ((v1@@10 T@$1_DiemId_DiemIdDomainEvent) (v2@@10 T@$1_DiemId_DiemIdDomainEvent) ) (! (= (= v1@@10 v2@@10) (= (|$ToEventRep'$1_DiemId_DiemIdDomainEvent'| v1@@10) (|$ToEventRep'$1_DiemId_DiemIdDomainEvent'| v2@@10)))
+(assert (forall ((v1@@10 T@$1_Diem_BurnEvent) (v2@@10 T@$1_Diem_BurnEvent) ) (! (= (= v1@@10 v2@@10) (= (|$ToEventRep'$1_Diem_BurnEvent'| v1@@10) (|$ToEventRep'$1_Diem_BurnEvent'| v2@@10)))
  :qid |DiemBlockandybpl.3089:15|
  :skolemid |90|
- :pattern ( (|$ToEventRep'$1_DiemId_DiemIdDomainEvent'| v1@@10) (|$ToEventRep'$1_DiemId_DiemIdDomainEvent'| v2@@10))
+ :pattern ( (|$ToEventRep'$1_Diem_BurnEvent'| v1@@10) (|$ToEventRep'$1_Diem_BurnEvent'| v2@@10))
 )))
-(assert (forall ((h@@9 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| h@@9) true)
- :qid |DiemBlockandybpl.3139:60|
+(assert (forall ((h@@9 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| h@@9) true)
+ :qid |DiemBlockandybpl.3139:66|
  :skolemid |91|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| h@@9))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| h@@9))
 )))
-(assert (forall ((v1@@11 T@$1_Diem_BurnEvent) (v2@@11 T@$1_Diem_BurnEvent) ) (! (= (= v1@@11 v2@@11) (= (|$ToEventRep'$1_Diem_BurnEvent'| v1@@11) (|$ToEventRep'$1_Diem_BurnEvent'| v2@@11)))
+(assert (forall ((v1@@11 T@$1_Diem_CancelBurnEvent) (v2@@11 T@$1_Diem_CancelBurnEvent) ) (! (= (= v1@@11 v2@@11) (= (|$ToEventRep'$1_Diem_CancelBurnEvent'| v1@@11) (|$ToEventRep'$1_Diem_CancelBurnEvent'| v2@@11)))
  :qid |DiemBlockandybpl.3145:15|
  :skolemid |92|
- :pattern ( (|$ToEventRep'$1_Diem_BurnEvent'| v1@@11) (|$ToEventRep'$1_Diem_BurnEvent'| v2@@11))
+ :pattern ( (|$ToEventRep'$1_Diem_CancelBurnEvent'| v1@@11) (|$ToEventRep'$1_Diem_CancelBurnEvent'| v2@@11))
 )))
-(assert (forall ((h@@10 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| h@@10) true)
- :qid |DiemBlockandybpl.3195:66|
+(assert (forall ((h@@10 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| h@@10) true)
+ :qid |DiemBlockandybpl.3195:60|
  :skolemid |93|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| h@@10))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| h@@10))
 )))
-(assert (forall ((v1@@12 T@$1_Diem_CancelBurnEvent) (v2@@12 T@$1_Diem_CancelBurnEvent) ) (! (= (= v1@@12 v2@@12) (= (|$ToEventRep'$1_Diem_CancelBurnEvent'| v1@@12) (|$ToEventRep'$1_Diem_CancelBurnEvent'| v2@@12)))
+(assert (forall ((v1@@12 T@$1_Diem_MintEvent) (v2@@12 T@$1_Diem_MintEvent) ) (! (= (= v1@@12 v2@@12) (= (|$ToEventRep'$1_Diem_MintEvent'| v1@@12) (|$ToEventRep'$1_Diem_MintEvent'| v2@@12)))
  :qid |DiemBlockandybpl.3201:15|
  :skolemid |94|
- :pattern ( (|$ToEventRep'$1_Diem_CancelBurnEvent'| v1@@12) (|$ToEventRep'$1_Diem_CancelBurnEvent'| v2@@12))
+ :pattern ( (|$ToEventRep'$1_Diem_MintEvent'| v1@@12) (|$ToEventRep'$1_Diem_MintEvent'| v2@@12))
 )))
-(assert (forall ((h@@11 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| h@@11) true)
- :qid |DiemBlockandybpl.3251:60|
+(assert (forall ((h@@11 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| h@@11) true)
+ :qid |DiemBlockandybpl.3251:63|
  :skolemid |95|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| h@@11))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| h@@11))
 )))
-(assert (forall ((v1@@13 T@$1_Diem_MintEvent) (v2@@13 T@$1_Diem_MintEvent) ) (! (= (= v1@@13 v2@@13) (= (|$ToEventRep'$1_Diem_MintEvent'| v1@@13) (|$ToEventRep'$1_Diem_MintEvent'| v2@@13)))
+(assert (forall ((v1@@13 T@$1_Diem_PreburnEvent) (v2@@13 T@$1_Diem_PreburnEvent) ) (! (= (= v1@@13 v2@@13) (= (|$ToEventRep'$1_Diem_PreburnEvent'| v1@@13) (|$ToEventRep'$1_Diem_PreburnEvent'| v2@@13)))
  :qid |DiemBlockandybpl.3257:15|
  :skolemid |96|
- :pattern ( (|$ToEventRep'$1_Diem_MintEvent'| v1@@13) (|$ToEventRep'$1_Diem_MintEvent'| v2@@13))
+ :pattern ( (|$ToEventRep'$1_Diem_PreburnEvent'| v1@@13) (|$ToEventRep'$1_Diem_PreburnEvent'| v2@@13))
 )))
-(assert (forall ((h@@12 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| h@@12) true)
- :qid |DiemBlockandybpl.3307:63|
+(assert (forall ((h@@12 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| h@@12) true)
+ :qid |DiemBlockandybpl.3307:79|
  :skolemid |97|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| h@@12))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| h@@12))
 )))
-(assert (forall ((v1@@14 T@$1_Diem_PreburnEvent) (v2@@14 T@$1_Diem_PreburnEvent) ) (! (= (= v1@@14 v2@@14) (= (|$ToEventRep'$1_Diem_PreburnEvent'| v1@@14) (|$ToEventRep'$1_Diem_PreburnEvent'| v2@@14)))
+(assert (forall ((v1@@14 T@$1_Diem_ToXDXExchangeRateUpdateEvent) (v2@@14 T@$1_Diem_ToXDXExchangeRateUpdateEvent) ) (! (= (= v1@@14 v2@@14) (= (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v1@@14) (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v2@@14)))
  :qid |DiemBlockandybpl.3313:15|
  :skolemid |98|
- :pattern ( (|$ToEventRep'$1_Diem_PreburnEvent'| v1@@14) (|$ToEventRep'$1_Diem_PreburnEvent'| v2@@14))
+ :pattern ( (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v1@@14) (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v2@@14))
 )))
-(assert (forall ((h@@13 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| h@@13) true)
- :qid |DiemBlockandybpl.3363:79|
+(assert (forall ((h@@13 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| h@@13) true)
+ :qid |DiemBlockandybpl.3363:82|
  :skolemid |99|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| h@@13))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| h@@13))
 )))
-(assert (forall ((v1@@15 T@$1_Diem_ToXDXExchangeRateUpdateEvent) (v2@@15 T@$1_Diem_ToXDXExchangeRateUpdateEvent) ) (! (= (= v1@@15 v2@@15) (= (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v1@@15) (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v2@@15)))
+(assert (forall ((v1@@15 T@$1_DualAttestation_BaseUrlRotationEvent) (v2@@15 T@$1_DualAttestation_BaseUrlRotationEvent) ) (! (= (= v1@@15 v2@@15) (= (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v1@@15) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v2@@15)))
  :qid |DiemBlockandybpl.3369:15|
  :skolemid |100|
- :pattern ( (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v1@@15) (|$ToEventRep'$1_Diem_ToXDXExchangeRateUpdateEvent'| v2@@15))
+ :pattern ( (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v1@@15) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v2@@15))
 )))
-(assert (forall ((h@@14 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| h@@14) true)
- :qid |DiemBlockandybpl.3419:82|
+(assert (forall ((h@@14 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| h@@14) true)
+ :qid |DiemBlockandybpl.3419:88|
  :skolemid |101|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| h@@14))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| h@@14))
 )))
-(assert (forall ((v1@@16 T@$1_DualAttestation_BaseUrlRotationEvent) (v2@@16 T@$1_DualAttestation_BaseUrlRotationEvent) ) (! (= (= v1@@16 v2@@16) (= (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v1@@16) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v2@@16)))
+(assert (forall ((v1@@16 T@$1_DualAttestation_ComplianceKeyRotationEvent) (v2@@16 T@$1_DualAttestation_ComplianceKeyRotationEvent) ) (! (= (= v1@@16 v2@@16) (= (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v1@@16) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v2@@16)))
  :qid |DiemBlockandybpl.3425:15|
  :skolemid |102|
- :pattern ( (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v1@@16) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| v2@@16))
+ :pattern ( (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v1@@16) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v2@@16))
 )))
-(assert (forall ((h@@15 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| h@@15) true)
- :qid |DiemBlockandybpl.3475:88|
+(assert (forall ((h@@15 T@$1_Event_EventHandle) ) (! (= (|$IsValid'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''| h@@15) true)
+ :qid |DiemBlockandybpl.3475:72|
  :skolemid |103|
- :pattern ( (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| h@@15))
+ :pattern ( (|$IsValid'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''| h@@15))
 )))
-(assert (forall ((v1@@17 T@$1_DualAttestation_ComplianceKeyRotationEvent) (v2@@17 T@$1_DualAttestation_ComplianceKeyRotationEvent) ) (! (= (= v1@@17 v2@@17) (= (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v1@@17) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v2@@17)))
+(assert (forall ((v1@@17 T@$1_VASPDomain_VASPDomainEvent) (v2@@17 T@$1_VASPDomain_VASPDomainEvent) ) (! (= (= v1@@17 v2@@17) (= (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| v1@@17) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| v2@@17)))
  :qid |DiemBlockandybpl.3481:15|
  :skolemid |104|
- :pattern ( (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v1@@17) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| v2@@17))
+ :pattern ( (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| v1@@17) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| v2@@17))
 )))
 (assert (forall ((s T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) (! (= (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s) (|$IsValid'u64'| (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| s)))
- :qid |DiemBlockandybpl.3684:61|
+ :qid |DiemBlockandybpl.3560:61|
  :skolemid |105|
  :pattern ( (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s))
 )))
-(assert (forall ((s@@0 T@$1_SlidingNonce_SlidingNonce) ) (! (= (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@0)  (and (|$IsValid'u64'| (|$min_nonce#$1_SlidingNonce_SlidingNonce| s@@0)) (|$IsValid'u128'| (|$nonce_mask#$1_SlidingNonce_SlidingNonce| s@@0))))
- :qid |DiemBlockandybpl.4207:49|
+(assert (forall ((s@@0 T@$1_Roles_RoleId) ) (! (= (|$IsValid'$1_Roles_RoleId'| s@@0) (|$IsValid'u64'| (|$role_id#$1_Roles_RoleId| s@@0)))
+ :qid |DiemBlockandybpl.4105:36|
  :skolemid |107|
- :pattern ( (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@0))
+ :pattern ( (|$IsValid'$1_Roles_RoleId'| s@@0))
 )))
-(assert (forall ((s@@1 T@$1_Roles_RoleId) ) (! (= (|$IsValid'$1_Roles_RoleId'| s@@1) (|$IsValid'u64'| (|$role_id#$1_Roles_RoleId| s@@1)))
- :qid |DiemBlockandybpl.4257:36|
+(assert (forall ((s@@1 T@$1_ValidatorOperatorConfig_ValidatorOperatorConfig) ) (! (= (|$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| s@@1) (|$IsValid'vec'u8''| (|$human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig| s@@1)))
+ :qid |DiemBlockandybpl.4124:71|
  :skolemid |108|
- :pattern ( (|$IsValid'$1_Roles_RoleId'| s@@1))
+ :pattern ( (|$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| s@@1))
 )))
-(assert (forall ((s@@2 T@$1_FixedPoint32_FixedPoint32) ) (! (= (|$IsValid'$1_FixedPoint32_FixedPoint32'| s@@2) (|$IsValid'u64'| (|$value#$1_FixedPoint32_FixedPoint32| s@@2)))
- :qid |DiemBlockandybpl.4276:49|
+(assert (forall ((s@@2 |T@$1_Option_Option'address'|) ) (! (= (|$IsValid'$1_Option_Option'address''| s@@2) (|$IsValid'vec'address''| (|$vec#$1_Option_Option'address'| s@@2)))
+ :qid |DiemBlockandybpl.4188:46|
  :skolemid |109|
- :pattern ( (|$IsValid'$1_FixedPoint32_FixedPoint32'| s@@2))
+ :pattern ( (|$IsValid'$1_Option_Option'address''| s@@2))
 )))
-(assert (forall ((s@@3 |T@$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@3) (|$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| (|$payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| s@@3)))
- :qid |DiemBlockandybpl.4364:91|
+(assert (forall ((s@@3 |T@$1_Option_Option'$1_ValidatorConfig_Config'|) ) (! (= (|$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| s@@3) (|$IsValid'vec'$1_ValidatorConfig_Config''| (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| s@@3)))
+ :qid |DiemBlockandybpl.4201:64|
  :skolemid |110|
- :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@3))
+ :pattern ( (|$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| s@@3))
 )))
-(assert (forall ((s@@4 |T@$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@4) (|$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| s@@4)))
- :qid |DiemBlockandybpl.4378:113|
+(assert (forall ((s@@4 |T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) ) (! (= (|$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| s@@4) (|$IsValid'vec'$1_DiemAccount_KeyRotationCapability''| (|$vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'| s@@4)))
+ :qid |DiemBlockandybpl.4214:75|
  :skolemid |111|
- :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@4))
+ :pattern ( (|$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| s@@4))
 )))
-(assert (forall ((s@@5 |T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| s@@5) (|$IsValid'$1_DiemSystem_DiemSystem'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| s@@5)))
- :qid |DiemBlockandybpl.4392:71|
+(assert (forall ((s@@5 |T@$1_Option_Option'$1_DiemAccount_WithdrawCapability'|) ) (! (= (|$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| s@@5) (|$IsValid'vec'$1_DiemAccount_WithdrawCapability''| (|$vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'| s@@5)))
+ :qid |DiemBlockandybpl.4227:72|
  :skolemid |112|
- :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| s@@5))
+ :pattern ( (|$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| s@@5))
 )))
-(assert (forall ((s@@6 |T@$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''| s@@6) (|$IsValid'$1_DiemVMConfig_DiemVMConfig'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| s@@6)))
- :qid |DiemBlockandybpl.4406:75|
+(assert (forall ((s@@6 T@$1_ValidatorConfig_ValidatorConfig) ) (! (= (|$IsValid'$1_ValidatorConfig_ValidatorConfig'| s@@6)  (and (and (|$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| (|$config#$1_ValidatorConfig_ValidatorConfig| s@@6)) (|$IsValid'$1_Option_Option'address''| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| s@@6))) (|$IsValid'vec'u8''| (|$human_name#$1_ValidatorConfig_ValidatorConfig| s@@6))))
+ :qid |DiemBlockandybpl.4256:55|
  :skolemid |113|
- :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''| s@@6))
+ :pattern ( (|$IsValid'$1_ValidatorConfig_ValidatorConfig'| s@@6))
 )))
-(assert (forall ((s@@7 |T@$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion''| s@@7) (|$IsValid'$1_DiemVersion_DiemVersion'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| s@@7)))
- :qid |DiemBlockandybpl.4420:73|
+(assert (forall ((s@@7 T@$1_ValidatorConfig_Config) ) (! (= (|$IsValid'$1_ValidatorConfig_Config'| s@@7)  (and (and (|$IsValid'vec'u8''| (|$consensus_pubkey#$1_ValidatorConfig_Config| s@@7)) (|$IsValid'vec'u8''| (|$validator_network_addresses#$1_ValidatorConfig_Config| s@@7))) (|$IsValid'vec'u8''| (|$fullnode_network_addresses#$1_ValidatorConfig_Config| s@@7))))
+ :qid |DiemBlockandybpl.4278:46|
  :skolemid |114|
- :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion''| s@@7))
+ :pattern ( (|$IsValid'$1_ValidatorConfig_Config'| s@@7))
 )))
-(assert (forall ((s@@8 T@$1_DiemConfig_Configuration) ) (! (= (|$IsValid'$1_DiemConfig_Configuration'| s@@8)  (and (and (|$IsValid'u64'| (|$epoch#$1_DiemConfig_Configuration| s@@8)) (|$IsValid'u64'| (|$last_reconfiguration_time#$1_DiemConfig_Configuration| s@@8))) (|$IsValid'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''| (|$events#$1_DiemConfig_Configuration| s@@8))))
- :qid |DiemBlockandybpl.4440:48|
+(assert (forall ((s@@8 T@$1_SlidingNonce_SlidingNonce) ) (! (= (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@8)  (and (|$IsValid'u64'| (|$min_nonce#$1_SlidingNonce_SlidingNonce| s@@8)) (|$IsValid'u128'| (|$nonce_mask#$1_SlidingNonce_SlidingNonce| s@@8))))
+ :qid |DiemBlockandybpl.4296:49|
  :skolemid |115|
- :pattern ( (|$IsValid'$1_DiemConfig_Configuration'| s@@8))
+ :pattern ( (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@8))
 )))
-(assert (forall ((s@@9 T@$1_DiemConfig_DisableReconfiguration) ) (! (= (|$IsValid'$1_DiemConfig_DisableReconfiguration'| s@@9) true)
- :qid |DiemBlockandybpl.4456:57|
+(assert (forall ((s@@9 |T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| s@@9) (|$IsValid'$1_DiemSystem_DiemSystem'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| s@@9)))
+ :qid |DiemBlockandybpl.4371:71|
  :skolemid |116|
- :pattern ( (|$IsValid'$1_DiemConfig_DisableReconfiguration'| s@@9))
+ :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| s@@9))
 )))
-(assert (forall ((s@@10 |T@$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@10) true)
- :qid |DiemBlockandybpl.4470:103|
+(assert (forall ((s@@10 |T@$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@10) (|$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| (|$payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'| s@@10)))
+ :qid |DiemBlockandybpl.4385:91|
  :skolemid |117|
- :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@10))
+ :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@10))
 )))
-(assert (forall ((s@@11 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@11) true)
- :qid |DiemBlockandybpl.4484:125|
+(assert (forall ((s@@11 |T@$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@11) (|$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| s@@11)))
+ :qid |DiemBlockandybpl.4399:113|
  :skolemid |118|
- :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@11))
+ :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@11))
 )))
-(assert (forall ((s@@12 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| s@@12) true)
- :qid |DiemBlockandybpl.4498:83|
+(assert (forall ((s@@12 |T@$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''| s@@12) (|$IsValid'$1_DiemVMConfig_DiemVMConfig'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'| s@@12)))
+ :qid |DiemBlockandybpl.4413:75|
  :skolemid |119|
- :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| s@@12))
+ :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''| s@@12))
 )))
-(assert (forall ((s@@13 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig''| s@@13) true)
- :qid |DiemBlockandybpl.4512:87|
+(assert (forall ((s@@13 |T@$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'|) ) (! (= (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion''| s@@13) (|$IsValid'$1_DiemVersion_DiemVersion'| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'| s@@13)))
+ :qid |DiemBlockandybpl.4427:73|
  :skolemid |120|
- :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig''| s@@13))
+ :pattern ( (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion''| s@@13))
 )))
-(assert (forall ((s@@14 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion''| s@@14) true)
- :qid |DiemBlockandybpl.4526:85|
+(assert (forall ((s@@14 T@$1_DiemConfig_Configuration) ) (! (= (|$IsValid'$1_DiemConfig_Configuration'| s@@14)  (and (and (|$IsValid'u64'| (|$epoch#$1_DiemConfig_Configuration| s@@14)) (|$IsValid'u64'| (|$last_reconfiguration_time#$1_DiemConfig_Configuration| s@@14))) (|$IsValid'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''| (|$events#$1_DiemConfig_Configuration| s@@14))))
+ :qid |DiemBlockandybpl.4447:48|
  :skolemid |121|
- :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion''| s@@14))
+ :pattern ( (|$IsValid'$1_DiemConfig_Configuration'| s@@14))
 )))
-(assert (forall ((s@@15 T@$1_DiemConfig_NewEpochEvent) ) (! (= (|$IsValid'$1_DiemConfig_NewEpochEvent'| s@@15) (|$IsValid'u64'| (|$epoch#$1_DiemConfig_NewEpochEvent| s@@15)))
- :qid |DiemBlockandybpl.4540:48|
+(assert (forall ((s@@15 T@$1_DiemConfig_DisableReconfiguration) ) (! (= (|$IsValid'$1_DiemConfig_DisableReconfiguration'| s@@15) true)
+ :qid |DiemBlockandybpl.4463:57|
  :skolemid |122|
- :pattern ( (|$IsValid'$1_DiemConfig_NewEpochEvent'| s@@15))
+ :pattern ( (|$IsValid'$1_DiemConfig_DisableReconfiguration'| s@@15))
 )))
-(assert (forall ((s@@16 T@$1_RegisteredCurrencies_RegisteredCurrencies) ) (! (= (|$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| s@@16) (|$IsValid'vec'vec'u8'''| (|$currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies| s@@16)))
- :qid |DiemBlockandybpl.4553:65|
+(assert (forall ((s@@16 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| s@@16) true)
+ :qid |DiemBlockandybpl.4477:83|
  :skolemid |123|
- :pattern ( (|$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| s@@16))
+ :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| s@@16))
 )))
-(assert (forall ((s@@17 |T@$1_Diem_Diem'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| s@@17) (|$IsValid'u64'| (|$value#$1_Diem_Diem'$1_XUS_XUS'| s@@17)))
- :qid |DiemBlockandybpl.5057:45|
+(assert (forall ((s@@17 |T@$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@17) true)
+ :qid |DiemBlockandybpl.4491:103|
  :skolemid |124|
- :pattern ( (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| s@@17))
+ :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies''| s@@17))
 )))
-(assert (forall ((s@@18 |T@$1_Diem_Diem'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_Diem'$1_XDX_XDX''| s@@18) (|$IsValid'u64'| (|$value#$1_Diem_Diem'$1_XDX_XDX'| s@@18)))
- :qid |DiemBlockandybpl.5070:45|
+(assert (forall ((s@@18 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@18) true)
+ :qid |DiemBlockandybpl.4505:125|
  :skolemid |125|
- :pattern ( (|$IsValid'$1_Diem_Diem'$1_XDX_XDX''| s@@18))
+ :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''| s@@18))
 )))
-(assert (forall ((s@@19 |T@$1_Diem_BurnCapability'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_BurnCapability'$1_XUS_XUS''| s@@19) true)
- :qid |DiemBlockandybpl.5083:55|
+(assert (forall ((s@@19 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig''| s@@19) true)
+ :qid |DiemBlockandybpl.4519:87|
  :skolemid |126|
- :pattern ( (|$IsValid'$1_Diem_BurnCapability'$1_XUS_XUS''| s@@19))
+ :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVMConfig_DiemVMConfig''| s@@19))
 )))
-(assert (forall ((s@@20 |T@$1_Diem_BurnCapability'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_BurnCapability'$1_XDX_XDX''| s@@20) true)
- :qid |DiemBlockandybpl.5097:55|
+(assert (forall ((s@@20 |T@$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion'|) ) (! (= (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion''| s@@20) true)
+ :qid |DiemBlockandybpl.4533:85|
  :skolemid |127|
- :pattern ( (|$IsValid'$1_Diem_BurnCapability'$1_XDX_XDX''| s@@20))
+ :pattern ( (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemVersion_DiemVersion''| s@@20))
 )))
-(assert (forall ((s@@21 T@$1_Diem_BurnEvent) ) (! (= (|$IsValid'$1_Diem_BurnEvent'| s@@21)  (and (and (|$IsValid'u64'| (|$amount#$1_Diem_BurnEvent| s@@21)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_BurnEvent| s@@21))) (|$IsValid'address'| (|$preburn_address#$1_Diem_BurnEvent| s@@21))))
- :qid |DiemBlockandybpl.5117:38|
+(assert (forall ((s@@21 T@$1_DiemConfig_NewEpochEvent) ) (! (= (|$IsValid'$1_DiemConfig_NewEpochEvent'| s@@21) (|$IsValid'u64'| (|$epoch#$1_DiemConfig_NewEpochEvent| s@@21)))
+ :qid |DiemBlockandybpl.4547:48|
  :skolemid |128|
- :pattern ( (|$IsValid'$1_Diem_BurnEvent'| s@@21))
+ :pattern ( (|$IsValid'$1_DiemConfig_NewEpochEvent'| s@@21))
 )))
-(assert (forall ((s@@22 T@$1_Diem_CancelBurnEvent) ) (! (= (|$IsValid'$1_Diem_CancelBurnEvent'| s@@22)  (and (and (|$IsValid'u64'| (|$amount#$1_Diem_CancelBurnEvent| s@@22)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_CancelBurnEvent| s@@22))) (|$IsValid'address'| (|$preburn_address#$1_Diem_CancelBurnEvent| s@@22))))
- :qid |DiemBlockandybpl.5138:44|
- :skolemid |129|
- :pattern ( (|$IsValid'$1_Diem_CancelBurnEvent'| s@@22))
-)))
-(assert (forall ((s@@23 |T@$1_Diem_CurrencyInfo'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''| s@@23)  (and (and (and (and (and (and (and (and (and (and (and (and (|$IsValid'u128'| (|$total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23)) (|$IsValid'u64'| (|$preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'$1_FixedPoint32_FixedPoint32'| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) true) (|$IsValid'u64'| (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'u64'| (|$fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) true) (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| (|$mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| (|$burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| (|$preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))) (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@23))))
- :qid |DiemBlockandybpl.5189:53|
+(assert (forall ((s@@22 T@$1_DiemSystem_DiemSystem) ) (! (= (|$IsValid'$1_DiemSystem_DiemSystem'| s@@22)  (and (|$IsValid'u8'| (|$scheme#$1_DiemSystem_DiemSystem| s@@22)) (|$IsValid'vec'$1_DiemSystem_ValidatorInfo''| (|$validators#$1_DiemSystem_DiemSystem| s@@22))))
+ :qid |DiemBlockandybpl.4574:45|
  :skolemid |130|
- :pattern ( (|$IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''| s@@23))
+ :pattern ( (|$IsValid'$1_DiemSystem_DiemSystem'| s@@22))
 )))
-(assert (forall ((s@@24 |T@$1_Diem_CurrencyInfo'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''| s@@24)  (and (and (and (and (and (and (and (and (and (and (and (and (|$IsValid'u128'| (|$total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24)) (|$IsValid'u64'| (|$preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'$1_FixedPoint32_FixedPoint32'| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) true) (|$IsValid'u64'| (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'u64'| (|$fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) true) (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| (|$mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| (|$burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| (|$preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))) (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@24))))
- :qid |DiemBlockandybpl.5251:53|
+(assert (forall ((s@@23 T@$1_DiemSystem_CapabilityHolder) ) (! (= (|$IsValid'$1_DiemSystem_CapabilityHolder'| s@@23) (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| (|$cap#$1_DiemSystem_CapabilityHolder| s@@23)))
+ :qid |DiemBlockandybpl.4588:51|
  :skolemid |131|
- :pattern ( (|$IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''| s@@24))
+ :pattern ( (|$IsValid'$1_DiemSystem_CapabilityHolder'| s@@23))
 )))
-(assert (forall ((s@@25 |T@$1_Diem_MintCapability'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_MintCapability'$1_XUS_XUS''| s@@25) true)
- :qid |DiemBlockandybpl.5277:55|
+(assert (forall ((s@@24 T@$1_DiemSystem_ValidatorInfo) ) (! (= (|$IsValid'$1_DiemSystem_ValidatorInfo'| s@@24)  (and (and (and (|$IsValid'address'| (|$addr#$1_DiemSystem_ValidatorInfo| s@@24)) (|$IsValid'u64'| (|$consensus_voting_power#$1_DiemSystem_ValidatorInfo| s@@24))) (|$IsValid'$1_ValidatorConfig_Config'| (|$config#$1_DiemSystem_ValidatorInfo| s@@24))) (|$IsValid'u64'| (|$last_config_update_time#$1_DiemSystem_ValidatorInfo| s@@24))))
+ :qid |DiemBlockandybpl.4611:48|
  :skolemid |132|
- :pattern ( (|$IsValid'$1_Diem_MintCapability'$1_XUS_XUS''| s@@25))
+ :pattern ( (|$IsValid'$1_DiemSystem_ValidatorInfo'| s@@24))
 )))
-(assert (forall ((s@@26 |T@$1_Diem_MintCapability'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_MintCapability'$1_XDX_XDX''| s@@26) true)
- :qid |DiemBlockandybpl.5291:55|
+(assert (forall ((s@@25 T@$1_FixedPoint32_FixedPoint32) ) (! (= (|$IsValid'$1_FixedPoint32_FixedPoint32'| s@@25) (|$IsValid'u64'| (|$value#$1_FixedPoint32_FixedPoint32| s@@25)))
+ :qid |DiemBlockandybpl.4917:49|
  :skolemid |133|
- :pattern ( (|$IsValid'$1_Diem_MintCapability'$1_XDX_XDX''| s@@26))
+ :pattern ( (|$IsValid'$1_FixedPoint32_FixedPoint32'| s@@25))
 )))
-(assert (forall ((s@@27 T@$1_Diem_MintEvent) ) (! (= (|$IsValid'$1_Diem_MintEvent'| s@@27)  (and (|$IsValid'u64'| (|$amount#$1_Diem_MintEvent| s@@27)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_MintEvent| s@@27))))
- :qid |DiemBlockandybpl.5308:38|
+(assert (forall ((s@@26 T@$1_RegisteredCurrencies_RegisteredCurrencies) ) (! (= (|$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| s@@26) (|$IsValid'vec'vec'u8'''| (|$currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies| s@@26)))
+ :qid |DiemBlockandybpl.4930:65|
  :skolemid |134|
- :pattern ( (|$IsValid'$1_Diem_MintEvent'| s@@27))
+ :pattern ( (|$IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'| s@@26))
 )))
-(assert (forall ((s@@28 |T@$1_Diem_Preburn'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| s@@28) (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| (|$to_burn#$1_Diem_Preburn'$1_XUS_XUS'| s@@28)))
- :qid |DiemBlockandybpl.5322:48|
+(assert (forall ((s@@27 |T@$1_Diem_Diem'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| s@@27) (|$IsValid'u64'| (|$value#$1_Diem_Diem'$1_XUS_XUS'| s@@27)))
+ :qid |DiemBlockandybpl.5434:45|
  :skolemid |135|
- :pattern ( (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| s@@28))
+ :pattern ( (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| s@@27))
 )))
-(assert (forall ((s@@29 |T@$1_Diem_Preburn'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| s@@29) (|$IsValid'$1_Diem_Diem'$1_XDX_XDX''| (|$to_burn#$1_Diem_Preburn'$1_XDX_XDX'| s@@29)))
- :qid |DiemBlockandybpl.5336:48|
+(assert (forall ((s@@28 |T@$1_Diem_Diem'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_Diem'$1_XDX_XDX''| s@@28) (|$IsValid'u64'| (|$value#$1_Diem_Diem'$1_XDX_XDX'| s@@28)))
+ :qid |DiemBlockandybpl.5447:45|
  :skolemid |136|
- :pattern ( (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| s@@29))
+ :pattern ( (|$IsValid'$1_Diem_Diem'$1_XDX_XDX''| s@@28))
 )))
-(assert (forall ((s@@30 T@$1_Diem_PreburnEvent) ) (! (= (|$IsValid'$1_Diem_PreburnEvent'| s@@30)  (and (and (|$IsValid'u64'| (|$amount#$1_Diem_PreburnEvent| s@@30)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_PreburnEvent| s@@30))) (|$IsValid'address'| (|$preburn_address#$1_Diem_PreburnEvent| s@@30))))
- :qid |DiemBlockandybpl.5356:41|
+(assert (forall ((s@@29 |T@$1_Diem_BurnCapability'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_BurnCapability'$1_XUS_XUS''| s@@29) true)
+ :qid |DiemBlockandybpl.5460:55|
  :skolemid |137|
- :pattern ( (|$IsValid'$1_Diem_PreburnEvent'| s@@30))
+ :pattern ( (|$IsValid'$1_Diem_BurnCapability'$1_XUS_XUS''| s@@29))
 )))
-(assert (forall ((s@@31 |T@$1_Diem_PreburnQueue'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_PreburnQueue'$1_XUS_XUS''| s@@31) (|$IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''| (|$preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'| s@@31)))
- :qid |DiemBlockandybpl.5371:53|
+(assert (forall ((s@@30 |T@$1_Diem_BurnCapability'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_BurnCapability'$1_XDX_XDX''| s@@30) true)
+ :qid |DiemBlockandybpl.5474:55|
  :skolemid |138|
- :pattern ( (|$IsValid'$1_Diem_PreburnQueue'$1_XUS_XUS''| s@@31))
+ :pattern ( (|$IsValid'$1_Diem_BurnCapability'$1_XDX_XDX''| s@@30))
 )))
-(assert (forall ((s@@32 |T@$1_Diem_PreburnQueue'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_PreburnQueue'$1_XDX_XDX''| s@@32) (|$IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''| (|$preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'| s@@32)))
- :qid |DiemBlockandybpl.5385:53|
+(assert (forall ((s@@31 T@$1_Diem_BurnEvent) ) (! (= (|$IsValid'$1_Diem_BurnEvent'| s@@31)  (and (and (|$IsValid'u64'| (|$amount#$1_Diem_BurnEvent| s@@31)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_BurnEvent| s@@31))) (|$IsValid'address'| (|$preburn_address#$1_Diem_BurnEvent| s@@31))))
+ :qid |DiemBlockandybpl.5494:38|
  :skolemid |139|
- :pattern ( (|$IsValid'$1_Diem_PreburnQueue'$1_XDX_XDX''| s@@32))
+ :pattern ( (|$IsValid'$1_Diem_BurnEvent'| s@@31))
 )))
-(assert (forall ((s@@33 |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''| s@@33)  (and (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| s@@33)) (|$IsValid'vec'u8''| (|$metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| s@@33))))
- :qid |DiemBlockandybpl.5402:60|
+(assert (forall ((s@@32 T@$1_Diem_CancelBurnEvent) ) (! (= (|$IsValid'$1_Diem_CancelBurnEvent'| s@@32)  (and (and (|$IsValid'u64'| (|$amount#$1_Diem_CancelBurnEvent| s@@32)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_CancelBurnEvent| s@@32))) (|$IsValid'address'| (|$preburn_address#$1_Diem_CancelBurnEvent| s@@32))))
+ :qid |DiemBlockandybpl.5515:44|
  :skolemid |140|
- :pattern ( (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''| s@@33))
+ :pattern ( (|$IsValid'$1_Diem_CancelBurnEvent'| s@@32))
 )))
-(assert (forall ((s@@34 |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''| s@@34)  (and (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| s@@34)) (|$IsValid'vec'u8''| (|$metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| s@@34))))
- :qid |DiemBlockandybpl.5419:60|
+(assert (forall ((s@@33 |T@$1_Diem_CurrencyInfo'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''| s@@33)  (and (and (and (and (and (and (and (and (and (and (and (and (|$IsValid'u128'| (|$total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33)) (|$IsValid'u64'| (|$preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'$1_FixedPoint32_FixedPoint32'| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) true) (|$IsValid'u64'| (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'u64'| (|$fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) true) (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| (|$mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| (|$burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| (|$preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))) (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'| s@@33))))
+ :qid |DiemBlockandybpl.5566:53|
  :skolemid |141|
- :pattern ( (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''| s@@34))
+ :pattern ( (|$IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''| s@@33))
 )))
-(assert (forall ((s@@35 T@$1_Diem_ToXDXExchangeRateUpdateEvent) ) (! (= (|$IsValid'$1_Diem_ToXDXExchangeRateUpdateEvent'| s@@35)  (and (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent| s@@35)) (|$IsValid'u64'| (|$new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent| s@@35))))
- :qid |DiemBlockandybpl.5436:57|
+(assert (forall ((s@@34 |T@$1_Diem_CurrencyInfo'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''| s@@34)  (and (and (and (and (and (and (and (and (and (and (and (and (|$IsValid'u128'| (|$total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34)) (|$IsValid'u64'| (|$preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'$1_FixedPoint32_FixedPoint32'| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) true) (|$IsValid'u64'| (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'u64'| (|$fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) true) (|$IsValid'$1_Event_EventHandle'$1_Diem_MintEvent''| (|$mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'$1_Event_EventHandle'$1_Diem_BurnEvent''| (|$burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'$1_Event_EventHandle'$1_Diem_PreburnEvent''| (|$preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''| (|$cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))) (|$IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''| (|$exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'| s@@34))))
+ :qid |DiemBlockandybpl.5628:53|
  :skolemid |142|
- :pattern ( (|$IsValid'$1_Diem_ToXDXExchangeRateUpdateEvent'| s@@35))
+ :pattern ( (|$IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''| s@@34))
 )))
-(assert (forall ((s@@36 T@$1_AccountLimits_AccountLimitMutationCapability) ) (! (= (|$IsValid'$1_AccountLimits_AccountLimitMutationCapability'| s@@36) true)
- :qid |DiemBlockandybpl.7647:68|
+(assert (forall ((s@@35 |T@$1_Diem_MintCapability'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_MintCapability'$1_XUS_XUS''| s@@35) true)
+ :qid |DiemBlockandybpl.5654:55|
  :skolemid |143|
- :pattern ( (|$IsValid'$1_AccountLimits_AccountLimitMutationCapability'| s@@36))
+ :pattern ( (|$IsValid'$1_Diem_MintCapability'$1_XUS_XUS''| s@@35))
 )))
-(assert (forall ((s@@37 |T@$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XUS_XUS''| s@@37)  (and (and (and (|$IsValid'u64'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@37)) (|$IsValid'u64'| (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@37))) (|$IsValid'u64'| (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@37))) (|$IsValid'u64'| (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@37))))
- :qid |DiemBlockandybpl.7669:66|
+(assert (forall ((s@@36 |T@$1_Diem_MintCapability'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_MintCapability'$1_XDX_XDX''| s@@36) true)
+ :qid |DiemBlockandybpl.5668:55|
  :skolemid |144|
- :pattern ( (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XUS_XUS''| s@@37))
+ :pattern ( (|$IsValid'$1_Diem_MintCapability'$1_XDX_XDX''| s@@36))
 )))
-(assert (forall ((s@@38 |T@$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XDX_XDX''| s@@38)  (and (and (and (|$IsValid'u64'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@38)) (|$IsValid'u64'| (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@38))) (|$IsValid'u64'| (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@38))) (|$IsValid'u64'| (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@38))))
- :qid |DiemBlockandybpl.7695:66|
+(assert (forall ((s@@37 T@$1_Diem_MintEvent) ) (! (= (|$IsValid'$1_Diem_MintEvent'| s@@37)  (and (|$IsValid'u64'| (|$amount#$1_Diem_MintEvent| s@@37)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_MintEvent| s@@37))))
+ :qid |DiemBlockandybpl.5685:38|
  :skolemid |145|
- :pattern ( (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XDX_XDX''| s@@38))
+ :pattern ( (|$IsValid'$1_Diem_MintEvent'| s@@37))
 )))
-(assert (forall ((s@@39 T@$1_XUS_XUS) ) (! (= (|$IsValid'$1_XUS_XUS'| s@@39) true)
- :qid |DiemBlockandybpl.8028:31|
+(assert (forall ((s@@38 |T@$1_Diem_Preburn'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| s@@38) (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| (|$to_burn#$1_Diem_Preburn'$1_XUS_XUS'| s@@38)))
+ :qid |DiemBlockandybpl.5699:48|
  :skolemid |146|
- :pattern ( (|$IsValid'$1_XUS_XUS'| s@@39))
+ :pattern ( (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| s@@38))
 )))
-(assert (forall ((s@@40 T@$1_XDX_XDX) ) (! (= (|$IsValid'$1_XDX_XDX'| s@@40) true)
- :qid |DiemBlockandybpl.8372:31|
+(assert (forall ((s@@39 |T@$1_Diem_Preburn'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| s@@39) (|$IsValid'$1_Diem_Diem'$1_XDX_XDX''| (|$to_burn#$1_Diem_Preburn'$1_XDX_XDX'| s@@39)))
+ :qid |DiemBlockandybpl.5713:48|
  :skolemid |147|
- :pattern ( (|$IsValid'$1_XDX_XDX'| s@@40))
+ :pattern ( (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| s@@39))
 )))
-(assert (forall ((s@@41 T@$1_XDX_Reserve) ) (! (= (|$IsValid'$1_XDX_Reserve'| s@@41)  (and (and (|$IsValid'$1_Diem_MintCapability'$1_XDX_XDX''| (|$mint_cap#$1_XDX_Reserve| s@@41)) (|$IsValid'$1_Diem_BurnCapability'$1_XDX_XDX''| (|$burn_cap#$1_XDX_Reserve| s@@41))) (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| (|$preburn_cap#$1_XDX_Reserve| s@@41))))
- :qid |DiemBlockandybpl.8391:35|
+(assert (forall ((s@@40 T@$1_Diem_PreburnEvent) ) (! (= (|$IsValid'$1_Diem_PreburnEvent'| s@@40)  (and (and (|$IsValid'u64'| (|$amount#$1_Diem_PreburnEvent| s@@40)) (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_PreburnEvent| s@@40))) (|$IsValid'address'| (|$preburn_address#$1_Diem_PreburnEvent| s@@40))))
+ :qid |DiemBlockandybpl.5733:41|
  :skolemid |148|
- :pattern ( (|$IsValid'$1_XDX_Reserve'| s@@41))
+ :pattern ( (|$IsValid'$1_Diem_PreburnEvent'| s@@40))
 )))
-(assert (forall ((s@@42 T@$1_ValidatorOperatorConfig_ValidatorOperatorConfig) ) (! (= (|$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| s@@42) (|$IsValid'vec'u8''| (|$human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig| s@@42)))
- :qid |DiemBlockandybpl.8817:71|
+(assert (forall ((s@@41 |T@$1_Diem_PreburnQueue'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_PreburnQueue'$1_XUS_XUS''| s@@41) (|$IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''| (|$preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'| s@@41)))
+ :qid |DiemBlockandybpl.5748:53|
  :skolemid |149|
- :pattern ( (|$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| s@@42))
+ :pattern ( (|$IsValid'$1_Diem_PreburnQueue'$1_XUS_XUS''| s@@41))
 )))
-(assert (forall ((s@@43 |T@$1_Option_Option'address'|) ) (! (= (|$IsValid'$1_Option_Option'address''| s@@43) (|$IsValid'vec'address''| (|$vec#$1_Option_Option'address'| s@@43)))
- :qid |DiemBlockandybpl.8866:46|
+(assert (forall ((s@@42 |T@$1_Diem_PreburnQueue'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_PreburnQueue'$1_XDX_XDX''| s@@42) (|$IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''| (|$preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'| s@@42)))
+ :qid |DiemBlockandybpl.5762:53|
  :skolemid |150|
- :pattern ( (|$IsValid'$1_Option_Option'address''| s@@43))
+ :pattern ( (|$IsValid'$1_Diem_PreburnQueue'$1_XDX_XDX''| s@@42))
 )))
-(assert (forall ((s@@44 |T@$1_Option_Option'$1_ValidatorConfig_Config'|) ) (! (= (|$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| s@@44) (|$IsValid'vec'$1_ValidatorConfig_Config''| (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| s@@44)))
- :qid |DiemBlockandybpl.8879:64|
+(assert (forall ((s@@43 |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''| s@@43)  (and (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| s@@43)) (|$IsValid'vec'u8''| (|$metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'| s@@43))))
+ :qid |DiemBlockandybpl.5779:60|
  :skolemid |151|
- :pattern ( (|$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| s@@44))
+ :pattern ( (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''| s@@43))
 )))
-(assert (forall ((s@@45 |T@$1_Option_Option'$1_DiemAccount_KeyRotationCapability'|) ) (! (= (|$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| s@@45) (|$IsValid'vec'$1_DiemAccount_KeyRotationCapability''| (|$vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'| s@@45)))
- :qid |DiemBlockandybpl.8892:75|
+(assert (forall ((s@@44 |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''| s@@44)  (and (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| (|$preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| s@@44)) (|$IsValid'vec'u8''| (|$metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'| s@@44))))
+ :qid |DiemBlockandybpl.5796:60|
  :skolemid |152|
- :pattern ( (|$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| s@@45))
+ :pattern ( (|$IsValid'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''| s@@44))
 )))
-(assert (forall ((s@@46 |T@$1_Option_Option'$1_DiemAccount_WithdrawCapability'|) ) (! (= (|$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| s@@46) (|$IsValid'vec'$1_DiemAccount_WithdrawCapability''| (|$vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'| s@@46)))
- :qid |DiemBlockandybpl.8905:72|
+(assert (forall ((s@@45 T@$1_Diem_ToXDXExchangeRateUpdateEvent) ) (! (= (|$IsValid'$1_Diem_ToXDXExchangeRateUpdateEvent'| s@@45)  (and (|$IsValid'vec'u8''| (|$currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent| s@@45)) (|$IsValid'u64'| (|$new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent| s@@45))))
+ :qid |DiemBlockandybpl.5813:57|
  :skolemid |153|
- :pattern ( (|$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| s@@46))
+ :pattern ( (|$IsValid'$1_Diem_ToXDXExchangeRateUpdateEvent'| s@@45))
 )))
-(assert (forall ((s@@47 T@$1_ValidatorConfig_Config) ) (! (= (|$IsValid'$1_ValidatorConfig_Config'| s@@47)  (and (and (|$IsValid'vec'u8''| (|$consensus_pubkey#$1_ValidatorConfig_Config| s@@47)) (|$IsValid'vec'u8''| (|$validator_network_addresses#$1_ValidatorConfig_Config| s@@47))) (|$IsValid'vec'u8''| (|$fullnode_network_addresses#$1_ValidatorConfig_Config| s@@47))))
- :qid |DiemBlockandybpl.8934:46|
+(assert (forall ((s@@46 T@$1_AccountLimits_AccountLimitMutationCapability) ) (! (= (|$IsValid'$1_AccountLimits_AccountLimitMutationCapability'| s@@46) true)
+ :qid |DiemBlockandybpl.8014:68|
  :skolemid |154|
- :pattern ( (|$IsValid'$1_ValidatorConfig_Config'| s@@47))
+ :pattern ( (|$IsValid'$1_AccountLimits_AccountLimitMutationCapability'| s@@46))
 )))
-(assert (forall ((s@@48 T@$1_ValidatorConfig_ValidatorConfig) ) (! (= (|$IsValid'$1_ValidatorConfig_ValidatorConfig'| s@@48)  (and (and (|$IsValid'$1_Option_Option'$1_ValidatorConfig_Config''| (|$config#$1_ValidatorConfig_ValidatorConfig| s@@48)) (|$IsValid'$1_Option_Option'address''| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| s@@48))) (|$IsValid'vec'u8''| (|$human_name#$1_ValidatorConfig_ValidatorConfig| s@@48))))
- :qid |DiemBlockandybpl.8955:55|
+(assert (forall ((s@@47 |T@$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XUS_XUS''| s@@47)  (and (and (and (|$IsValid'u64'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@47)) (|$IsValid'u64'| (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@47))) (|$IsValid'u64'| (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@47))) (|$IsValid'u64'| (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'| s@@47))))
+ :qid |DiemBlockandybpl.8036:66|
  :skolemid |155|
- :pattern ( (|$IsValid'$1_ValidatorConfig_ValidatorConfig'| s@@48))
+ :pattern ( (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XUS_XUS''| s@@47))
 )))
-(assert (forall ((s@@49 |T@$1_TransactionFee_TransactionFee'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_TransactionFee_TransactionFee'$1_XUS_XUS''| s@@49)  (and (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| (|$balance#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| s@@49)) (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| (|$preburn#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| s@@49))))
- :qid |DiemBlockandybpl.8984:65|
+(assert (forall ((s@@48 |T@$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'|) ) (! (= (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XDX_XDX''| s@@48)  (and (and (and (|$IsValid'u64'| (|$max_inflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@48)) (|$IsValid'u64'| (|$max_outflow#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@48))) (|$IsValid'u64'| (|$time_period#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@48))) (|$IsValid'u64'| (|$max_holding#$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'| s@@48))))
+ :qid |DiemBlockandybpl.8062:66|
  :skolemid |156|
- :pattern ( (|$IsValid'$1_TransactionFee_TransactionFee'$1_XUS_XUS''| s@@49))
+ :pattern ( (|$IsValid'$1_AccountLimits_LimitsDefinition'$1_XDX_XDX''| s@@48))
 )))
-(assert (forall ((s@@50 T@$1_DualAttestation_BaseUrlRotationEvent) ) (! (= (|$IsValid'$1_DualAttestation_BaseUrlRotationEvent'| s@@50)  (and (|$IsValid'vec'u8''| (|$new_base_url#$1_DualAttestation_BaseUrlRotationEvent| s@@50)) (|$IsValid'u64'| (|$time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent| s@@50))))
- :qid |DiemBlockandybpl.9383:60|
+(assert (forall ((s@@49 T@$1_XUS_XUS) ) (! (= (|$IsValid'$1_XUS_XUS'| s@@49) true)
+ :qid |DiemBlockandybpl.8395:31|
  :skolemid |157|
- :pattern ( (|$IsValid'$1_DualAttestation_BaseUrlRotationEvent'| s@@50))
+ :pattern ( (|$IsValid'$1_XUS_XUS'| s@@49))
 )))
-(assert (forall ((s@@51 T@$1_DualAttestation_ComplianceKeyRotationEvent) ) (! (= (|$IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'| s@@51)  (and (|$IsValid'vec'u8''| (|$new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent| s@@51)) (|$IsValid'u64'| (|$time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent| s@@51))))
- :qid |DiemBlockandybpl.9400:66|
+(assert (forall ((s@@50 T@$1_XDX_XDX) ) (! (= (|$IsValid'$1_XDX_XDX'| s@@50) true)
+ :qid |DiemBlockandybpl.8739:31|
  :skolemid |158|
- :pattern ( (|$IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'| s@@51))
+ :pattern ( (|$IsValid'$1_XDX_XDX'| s@@50))
 )))
-(assert (forall ((s@@52 T@$1_DualAttestation_Credential) ) (! (= (|$IsValid'$1_DualAttestation_Credential'| s@@52)  (and (and (and (and (and (|$IsValid'vec'u8''| (|$human_name#$1_DualAttestation_Credential| s@@52)) (|$IsValid'vec'u8''| (|$base_url#$1_DualAttestation_Credential| s@@52))) (|$IsValid'vec'u8''| (|$compliance_public_key#$1_DualAttestation_Credential| s@@52))) (|$IsValid'u64'| (|$expiration_date#$1_DualAttestation_Credential| s@@52))) (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| (|$compliance_key_rotation_events#$1_DualAttestation_Credential| s@@52))) (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| (|$base_url_rotation_events#$1_DualAttestation_Credential| s@@52))))
- :qid |DiemBlockandybpl.9429:50|
+(assert (forall ((s@@51 T@$1_XDX_Reserve) ) (! (= (|$IsValid'$1_XDX_Reserve'| s@@51)  (and (and (|$IsValid'$1_Diem_MintCapability'$1_XDX_XDX''| (|$mint_cap#$1_XDX_Reserve| s@@51)) (|$IsValid'$1_Diem_BurnCapability'$1_XDX_XDX''| (|$burn_cap#$1_XDX_Reserve| s@@51))) (|$IsValid'$1_Diem_Preburn'$1_XDX_XDX''| (|$preburn_cap#$1_XDX_Reserve| s@@51))))
+ :qid |DiemBlockandybpl.8758:35|
  :skolemid |159|
- :pattern ( (|$IsValid'$1_DualAttestation_Credential'| s@@52))
+ :pattern ( (|$IsValid'$1_XDX_Reserve'| s@@51))
 )))
-(assert (forall ((s@@53 T@$1_DualAttestation_Limit) ) (! (= (|$IsValid'$1_DualAttestation_Limit'| s@@53) (|$IsValid'u64'| (|$micro_xdx_limit#$1_DualAttestation_Limit| s@@53)))
- :qid |DiemBlockandybpl.9448:45|
+(assert (forall ((s@@52 T@$1_VASPDomain_VASPDomain) ) (! (= (|$IsValid'$1_VASPDomain_VASPDomain'| s@@52) (|$IsValid'vec'u8''| (|$domain#$1_VASPDomain_VASPDomain| s@@52)))
+ :qid |DiemBlockandybpl.9179:45|
  :skolemid |160|
- :pattern ( (|$IsValid'$1_DualAttestation_Limit'| s@@53))
+ :pattern ( (|$IsValid'$1_VASPDomain_VASPDomain'| s@@52))
 )))
-(assert (forall ((s@@54 T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption) ) (! (= (|$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| s@@54)  (and (|$IsValid'vec'vec'u8'''| (|$script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption| s@@54)) true))
- :qid |DiemBlockandybpl.9772:87|
+(assert (forall ((s@@53 T@$1_VASPDomain_VASPDomainEvent) ) (! (= (|$IsValid'$1_VASPDomain_VASPDomainEvent'| s@@53)  (and (and true (|$IsValid'$1_VASPDomain_VASPDomain'| (|$domain#$1_VASPDomain_VASPDomainEvent| s@@53))) (|$IsValid'address'| (|$address#$1_VASPDomain_VASPDomainEvent| s@@53))))
+ :qid |DiemBlockandybpl.9198:50|
  :skolemid |161|
- :pattern ( (|$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| s@@54))
+ :pattern ( (|$IsValid'$1_VASPDomain_VASPDomainEvent'| s@@53))
 )))
-(assert (forall ((s@@55 T@$1_DiemId_DiemIdDomain) ) (! (= (|$IsValid'$1_DiemId_DiemIdDomain'| s@@55) (|$IsValid'vec'u8''| (|$domain#$1_DiemId_DiemIdDomain| s@@55)))
- :qid |DiemBlockandybpl.9989:43|
+(assert (forall ((s@@54 T@$1_VASPDomain_VASPDomainManager) ) (! (= (|$IsValid'$1_VASPDomain_VASPDomainManager'| s@@54) (|$IsValid'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''| (|$vasp_domain_events#$1_VASPDomain_VASPDomainManager| s@@54)))
+ :qid |DiemBlockandybpl.9213:52|
  :skolemid |162|
- :pattern ( (|$IsValid'$1_DiemId_DiemIdDomain'| s@@55))
+ :pattern ( (|$IsValid'$1_VASPDomain_VASPDomainManager'| s@@54))
 )))
-(assert (forall ((s@@56 T@$1_DiemId_DiemIdDomainEvent) ) (! (= (|$IsValid'$1_DiemId_DiemIdDomainEvent'| s@@56)  (and (and true (|$IsValid'$1_DiemId_DiemIdDomain'| (|$domain#$1_DiemId_DiemIdDomainEvent| s@@56))) (|$IsValid'address'| (|$address#$1_DiemId_DiemIdDomainEvent| s@@56))))
- :qid |DiemBlockandybpl.10008:48|
+(assert (forall ((s@@55 |T@$1_TransactionFee_TransactionFee'$1_XUS_XUS'|) ) (! (= (|$IsValid'$1_TransactionFee_TransactionFee'$1_XUS_XUS''| s@@55)  (and (|$IsValid'$1_Diem_Diem'$1_XUS_XUS''| (|$balance#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| s@@55)) (|$IsValid'$1_Diem_Preburn'$1_XUS_XUS''| (|$preburn#$1_TransactionFee_TransactionFee'$1_XUS_XUS'| s@@55))))
+ :qid |DiemBlockandybpl.9240:65|
  :skolemid |163|
- :pattern ( (|$IsValid'$1_DiemId_DiemIdDomainEvent'| s@@56))
+ :pattern ( (|$IsValid'$1_TransactionFee_TransactionFee'$1_XUS_XUS''| s@@55))
 )))
-(assert (forall ((s@@57 T@$1_DiemId_DiemIdDomainManager) ) (! (= (|$IsValid'$1_DiemId_DiemIdDomainManager'| s@@57) (|$IsValid'$1_Event_EventHandle'$1_DiemId_DiemIdDomainEvent''| (|$diem_id_domain_events#$1_DiemId_DiemIdDomainManager| s@@57)))
- :qid |DiemBlockandybpl.10023:50|
+(assert (forall ((s@@56 T@$1_DualAttestation_BaseUrlRotationEvent) ) (! (= (|$IsValid'$1_DualAttestation_BaseUrlRotationEvent'| s@@56)  (and (|$IsValid'vec'u8''| (|$new_base_url#$1_DualAttestation_BaseUrlRotationEvent| s@@56)) (|$IsValid'u64'| (|$time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent| s@@56))))
+ :qid |DiemBlockandybpl.9625:60|
  :skolemid |164|
- :pattern ( (|$IsValid'$1_DiemId_DiemIdDomainManager'| s@@57))
+ :pattern ( (|$IsValid'$1_DualAttestation_BaseUrlRotationEvent'| s@@56))
 )))
-(assert (forall ((s@@58 T@$1_DesignatedDealer_Dealer) ) (! (= (|$IsValid'$1_DesignatedDealer_Dealer'| s@@58) (|$IsValid'$1_Event_EventHandle'$1_DesignatedDealer_ReceivedMintEvent''| (|$mint_event_handle#$1_DesignatedDealer_Dealer| s@@58)))
- :qid |DiemBlockandybpl.10037:47|
+(assert (forall ((s@@57 T@$1_DualAttestation_ComplianceKeyRotationEvent) ) (! (= (|$IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'| s@@57)  (and (|$IsValid'vec'u8''| (|$new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent| s@@57)) (|$IsValid'u64'| (|$time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent| s@@57))))
+ :qid |DiemBlockandybpl.9642:66|
  :skolemid |165|
- :pattern ( (|$IsValid'$1_DesignatedDealer_Dealer'| s@@58))
+ :pattern ( (|$IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'| s@@57))
 )))
-(assert (forall ((s@@59 T@$1_DesignatedDealer_ReceivedMintEvent) ) (! (= (|$IsValid'$1_DesignatedDealer_ReceivedMintEvent'| s@@59)  (and (and (|$IsValid'vec'u8''| (|$currency_code#$1_DesignatedDealer_ReceivedMintEvent| s@@59)) (|$IsValid'address'| (|$destination_address#$1_DesignatedDealer_ReceivedMintEvent| s@@59))) (|$IsValid'u64'| (|$amount#$1_DesignatedDealer_ReceivedMintEvent| s@@59))))
- :qid |DiemBlockandybpl.10057:58|
+(assert (forall ((s@@58 T@$1_DualAttestation_Credential) ) (! (= (|$IsValid'$1_DualAttestation_Credential'| s@@58)  (and (and (and (and (and (|$IsValid'vec'u8''| (|$human_name#$1_DualAttestation_Credential| s@@58)) (|$IsValid'vec'u8''| (|$base_url#$1_DualAttestation_Credential| s@@58))) (|$IsValid'vec'u8''| (|$compliance_public_key#$1_DualAttestation_Credential| s@@58))) (|$IsValid'u64'| (|$expiration_date#$1_DualAttestation_Credential| s@@58))) (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''| (|$compliance_key_rotation_events#$1_DualAttestation_Credential| s@@58))) (|$IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''| (|$base_url_rotation_events#$1_DualAttestation_Credential| s@@58))))
+ :qid |DiemBlockandybpl.9671:50|
  :skolemid |166|
- :pattern ( (|$IsValid'$1_DesignatedDealer_ReceivedMintEvent'| s@@59))
+ :pattern ( (|$IsValid'$1_DualAttestation_Credential'| s@@58))
 )))
-(assert (forall ((s@@60 T@$1_ChainId_ChainId) ) (! (= (|$IsValid'$1_ChainId_ChainId'| s@@60) (|$IsValid'u8'| (|$id#$1_ChainId_ChainId| s@@60)))
- :qid |DiemBlockandybpl.10072:39|
+(assert (forall ((s@@59 T@$1_DualAttestation_Limit) ) (! (= (|$IsValid'$1_DualAttestation_Limit'| s@@59) (|$IsValid'u64'| (|$micro_xdx_limit#$1_DualAttestation_Limit| s@@59)))
+ :qid |DiemBlockandybpl.9690:45|
  :skolemid |167|
- :pattern ( (|$IsValid'$1_ChainId_ChainId'| s@@60))
+ :pattern ( (|$IsValid'$1_DualAttestation_Limit'| s@@59))
 )))
-(assert (forall ((s@@61 T@$1_AccountFreezing_FreezeAccountEvent) ) (! (= (|$IsValid'$1_AccountFreezing_FreezeAccountEvent'| s@@61)  (and (|$IsValid'address'| (|$initiator_address#$1_AccountFreezing_FreezeAccountEvent| s@@61)) (|$IsValid'address'| (|$frozen_address#$1_AccountFreezing_FreezeAccountEvent| s@@61))))
- :qid |DiemBlockandybpl.10094:58|
+(assert (forall ((s@@60 T@$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption) ) (! (= (|$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| s@@60)  (and (|$IsValid'vec'vec'u8'''| (|$script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption| s@@60)) true))
+ :qid |DiemBlockandybpl.10009:87|
  :skolemid |168|
- :pattern ( (|$IsValid'$1_AccountFreezing_FreezeAccountEvent'| s@@61))
+ :pattern ( (|$IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'| s@@60))
 )))
-(assert (forall ((s@@62 T@$1_AccountFreezing_FreezeEventsHolder) ) (! (= (|$IsValid'$1_AccountFreezing_FreezeEventsHolder'| s@@62)  (and (|$IsValid'$1_Event_EventHandle'$1_AccountFreezing_FreezeAccountEvent''| (|$freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder| s@@62)) (|$IsValid'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''| (|$unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder| s@@62))))
- :qid |DiemBlockandybpl.10111:58|
+(assert (forall ((s@@61 T@$1_DesignatedDealer_Dealer) ) (! (= (|$IsValid'$1_DesignatedDealer_Dealer'| s@@61) (|$IsValid'$1_Event_EventHandle'$1_DesignatedDealer_ReceivedMintEvent''| (|$mint_event_handle#$1_DesignatedDealer_Dealer| s@@61)))
+ :qid |DiemBlockandybpl.10221:47|
  :skolemid |169|
- :pattern ( (|$IsValid'$1_AccountFreezing_FreezeEventsHolder'| s@@62))
+ :pattern ( (|$IsValid'$1_DesignatedDealer_Dealer'| s@@61))
 )))
-(assert (forall ((s@@63 T@$1_AccountFreezing_FreezingBit) ) (! (= (|$IsValid'$1_AccountFreezing_FreezingBit'| s@@63) true)
- :qid |DiemBlockandybpl.10126:51|
+(assert (forall ((s@@62 T@$1_DesignatedDealer_ReceivedMintEvent) ) (! (= (|$IsValid'$1_DesignatedDealer_ReceivedMintEvent'| s@@62)  (and (and (|$IsValid'vec'u8''| (|$currency_code#$1_DesignatedDealer_ReceivedMintEvent| s@@62)) (|$IsValid'address'| (|$destination_address#$1_DesignatedDealer_ReceivedMintEvent| s@@62))) (|$IsValid'u64'| (|$amount#$1_DesignatedDealer_ReceivedMintEvent| s@@62))))
+ :qid |DiemBlockandybpl.10241:58|
  :skolemid |170|
- :pattern ( (|$IsValid'$1_AccountFreezing_FreezingBit'| s@@63))
+ :pattern ( (|$IsValid'$1_DesignatedDealer_ReceivedMintEvent'| s@@62))
 )))
-(assert (forall ((s@@64 T@$1_AccountFreezing_UnfreezeAccountEvent) ) (! (= (|$IsValid'$1_AccountFreezing_UnfreezeAccountEvent'| s@@64)  (and (|$IsValid'address'| (|$initiator_address#$1_AccountFreezing_UnfreezeAccountEvent| s@@64)) (|$IsValid'address'| (|$unfrozen_address#$1_AccountFreezing_UnfreezeAccountEvent| s@@64))))
- :qid |DiemBlockandybpl.10143:60|
+(assert (forall ((s@@63 T@$1_ChainId_ChainId) ) (! (= (|$IsValid'$1_ChainId_ChainId'| s@@63) (|$IsValid'u8'| (|$id#$1_ChainId_ChainId| s@@63)))
+ :qid |DiemBlockandybpl.10256:39|
  :skolemid |171|
- :pattern ( (|$IsValid'$1_AccountFreezing_UnfreezeAccountEvent'| s@@64))
+ :pattern ( (|$IsValid'$1_ChainId_ChainId'| s@@63))
 )))
-(assert (forall ((s@@65 T@$1_DiemAccount_DiemAccount) ) (! (= (|$IsValid'$1_DiemAccount_DiemAccount'| s@@65)  (and (and (and (and (and (|$IsValid'vec'u8''| (|$authentication_key#$1_DiemAccount_DiemAccount| s@@65)) (|$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| (|$withdraw_capability#$1_DiemAccount_DiemAccount| s@@65))) (|$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| (|$key_rotation_capability#$1_DiemAccount_DiemAccount| s@@65))) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_ReceivedPaymentEvent''| (|$received_events#$1_DiemAccount_DiemAccount| s@@65))) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_SentPaymentEvent''| (|$sent_events#$1_DiemAccount_DiemAccount| s@@65))) (|$IsValid'u64'| (|$sequence_number#$1_DiemAccount_DiemAccount| s@@65))))
- :qid |DiemBlockandybpl.10441:47|
+(assert (forall ((s@@64 T@$1_AccountFreezing_FreezeAccountEvent) ) (! (= (|$IsValid'$1_AccountFreezing_FreezeAccountEvent'| s@@64)  (and (|$IsValid'address'| (|$initiator_address#$1_AccountFreezing_FreezeAccountEvent| s@@64)) (|$IsValid'address'| (|$frozen_address#$1_AccountFreezing_FreezeAccountEvent| s@@64))))
+ :qid |DiemBlockandybpl.10278:58|
  :skolemid |172|
- :pattern ( (|$IsValid'$1_DiemAccount_DiemAccount'| s@@65))
+ :pattern ( (|$IsValid'$1_AccountFreezing_FreezeAccountEvent'| s@@64))
 )))
-(assert (forall ((s@@66 T@$1_DiemAccount_AccountOperationsCapability) ) (! (= (|$IsValid'$1_DiemAccount_AccountOperationsCapability'| s@@66)  (and (|$IsValid'$1_AccountLimits_AccountLimitMutationCapability'| (|$limits_cap#$1_DiemAccount_AccountOperationsCapability| s@@66)) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_CreateAccountEvent''| (|$creation_events#$1_DiemAccount_AccountOperationsCapability| s@@66))))
- :qid |DiemBlockandybpl.10463:63|
+(assert (forall ((s@@65 T@$1_AccountFreezing_FreezeEventsHolder) ) (! (= (|$IsValid'$1_AccountFreezing_FreezeEventsHolder'| s@@65)  (and (|$IsValid'$1_Event_EventHandle'$1_AccountFreezing_FreezeAccountEvent''| (|$freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder| s@@65)) (|$IsValid'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''| (|$unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder| s@@65))))
+ :qid |DiemBlockandybpl.10295:58|
  :skolemid |173|
- :pattern ( (|$IsValid'$1_DiemAccount_AccountOperationsCapability'| s@@66))
+ :pattern ( (|$IsValid'$1_AccountFreezing_FreezeEventsHolder'| s@@65))
 )))
-(assert (forall ((s@@67 T@$1_DiemAccount_AdminTransactionEvent) ) (! (= (|$IsValid'$1_DiemAccount_AdminTransactionEvent'| s@@67) (|$IsValid'u64'| (|$committed_timestamp_secs#$1_DiemAccount_AdminTransactionEvent| s@@67)))
- :qid |DiemBlockandybpl.10478:57|
+(assert (forall ((s@@66 T@$1_AccountFreezing_FreezingBit) ) (! (= (|$IsValid'$1_AccountFreezing_FreezingBit'| s@@66) true)
+ :qid |DiemBlockandybpl.10310:51|
  :skolemid |174|
- :pattern ( (|$IsValid'$1_DiemAccount_AdminTransactionEvent'| s@@67))
+ :pattern ( (|$IsValid'$1_AccountFreezing_FreezingBit'| s@@66))
 )))
-(assert (forall ((s@@68 T@$1_DiemAccount_CreateAccountEvent) ) (! (= (|$IsValid'$1_DiemAccount_CreateAccountEvent'| s@@68)  (and (|$IsValid'address'| (|$created#$1_DiemAccount_CreateAccountEvent| s@@68)) (|$IsValid'u64'| (|$role_id#$1_DiemAccount_CreateAccountEvent| s@@68))))
- :qid |DiemBlockandybpl.10494:54|
+(assert (forall ((s@@67 T@$1_AccountFreezing_UnfreezeAccountEvent) ) (! (= (|$IsValid'$1_AccountFreezing_UnfreezeAccountEvent'| s@@67)  (and (|$IsValid'address'| (|$initiator_address#$1_AccountFreezing_UnfreezeAccountEvent| s@@67)) (|$IsValid'address'| (|$unfrozen_address#$1_AccountFreezing_UnfreezeAccountEvent| s@@67))))
+ :qid |DiemBlockandybpl.10327:60|
  :skolemid |175|
- :pattern ( (|$IsValid'$1_DiemAccount_CreateAccountEvent'| s@@68))
+ :pattern ( (|$IsValid'$1_AccountFreezing_UnfreezeAccountEvent'| s@@67))
 )))
-(assert (forall ((s@@69 T@$1_DiemAccount_DiemWriteSetManager) ) (! (= (|$IsValid'$1_DiemAccount_DiemWriteSetManager'| s@@69) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_AdminTransactionEvent''| (|$upgrade_events#$1_DiemAccount_DiemWriteSetManager| s@@69)))
- :qid |DiemBlockandybpl.10508:55|
+(assert (forall ((s@@68 T@$1_DiemAccount_DiemAccount) ) (! (= (|$IsValid'$1_DiemAccount_DiemAccount'| s@@68)  (and (and (and (and (and (|$IsValid'vec'u8''| (|$authentication_key#$1_DiemAccount_DiemAccount| s@@68)) (|$IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''| (|$withdraw_capability#$1_DiemAccount_DiemAccount| s@@68))) (|$IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''| (|$key_rotation_capability#$1_DiemAccount_DiemAccount| s@@68))) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_ReceivedPaymentEvent''| (|$received_events#$1_DiemAccount_DiemAccount| s@@68))) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_SentPaymentEvent''| (|$sent_events#$1_DiemAccount_DiemAccount| s@@68))) (|$IsValid'u64'| (|$sequence_number#$1_DiemAccount_DiemAccount| s@@68))))
+ :qid |DiemBlockandybpl.10625:47|
  :skolemid |176|
- :pattern ( (|$IsValid'$1_DiemAccount_DiemWriteSetManager'| s@@69))
+ :pattern ( (|$IsValid'$1_DiemAccount_DiemAccount'| s@@68))
 )))
-(assert (forall ((s@@70 T@$1_DiemAccount_KeyRotationCapability) ) (! (= (|$IsValid'$1_DiemAccount_KeyRotationCapability'| s@@70) (|$IsValid'address'| (|$account_address#$1_DiemAccount_KeyRotationCapability| s@@70)))
- :qid |DiemBlockandybpl.10522:57|
+(assert (forall ((s@@69 T@$1_DiemAccount_AccountOperationsCapability) ) (! (= (|$IsValid'$1_DiemAccount_AccountOperationsCapability'| s@@69)  (and (|$IsValid'$1_AccountLimits_AccountLimitMutationCapability'| (|$limits_cap#$1_DiemAccount_AccountOperationsCapability| s@@69)) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_CreateAccountEvent''| (|$creation_events#$1_DiemAccount_AccountOperationsCapability| s@@69))))
+ :qid |DiemBlockandybpl.10647:63|
  :skolemid |177|
- :pattern ( (|$IsValid'$1_DiemAccount_KeyRotationCapability'| s@@70))
+ :pattern ( (|$IsValid'$1_DiemAccount_AccountOperationsCapability'| s@@69))
 )))
-(assert (forall ((s@@71 T@$1_DiemAccount_ReceivedPaymentEvent) ) (! (= (|$IsValid'$1_DiemAccount_ReceivedPaymentEvent'| s@@71)  (and (and (and (|$IsValid'u64'| (|$amount#$1_DiemAccount_ReceivedPaymentEvent| s@@71)) (|$IsValid'vec'u8''| (|$currency_code#$1_DiemAccount_ReceivedPaymentEvent| s@@71))) (|$IsValid'address'| (|$payer#$1_DiemAccount_ReceivedPaymentEvent| s@@71))) (|$IsValid'vec'u8''| (|$metadata#$1_DiemAccount_ReceivedPaymentEvent| s@@71))))
- :qid |DiemBlockandybpl.10544:56|
+(assert (forall ((s@@70 T@$1_DiemAccount_AdminTransactionEvent) ) (! (= (|$IsValid'$1_DiemAccount_AdminTransactionEvent'| s@@70) (|$IsValid'u64'| (|$committed_timestamp_secs#$1_DiemAccount_AdminTransactionEvent| s@@70)))
+ :qid |DiemBlockandybpl.10662:57|
  :skolemid |178|
- :pattern ( (|$IsValid'$1_DiemAccount_ReceivedPaymentEvent'| s@@71))
+ :pattern ( (|$IsValid'$1_DiemAccount_AdminTransactionEvent'| s@@70))
 )))
-(assert (forall ((s@@72 T@$1_DiemAccount_SentPaymentEvent) ) (! (= (|$IsValid'$1_DiemAccount_SentPaymentEvent'| s@@72)  (and (and (and (|$IsValid'u64'| (|$amount#$1_DiemAccount_SentPaymentEvent| s@@72)) (|$IsValid'vec'u8''| (|$currency_code#$1_DiemAccount_SentPaymentEvent| s@@72))) (|$IsValid'address'| (|$payee#$1_DiemAccount_SentPaymentEvent| s@@72))) (|$IsValid'vec'u8''| (|$metadata#$1_DiemAccount_SentPaymentEvent| s@@72))))
- :qid |DiemBlockandybpl.10569:52|
+(assert (forall ((s@@71 T@$1_DiemAccount_CreateAccountEvent) ) (! (= (|$IsValid'$1_DiemAccount_CreateAccountEvent'| s@@71)  (and (|$IsValid'address'| (|$created#$1_DiemAccount_CreateAccountEvent| s@@71)) (|$IsValid'u64'| (|$role_id#$1_DiemAccount_CreateAccountEvent| s@@71))))
+ :qid |DiemBlockandybpl.10678:54|
  :skolemid |179|
- :pattern ( (|$IsValid'$1_DiemAccount_SentPaymentEvent'| s@@72))
+ :pattern ( (|$IsValid'$1_DiemAccount_CreateAccountEvent'| s@@71))
 )))
-(assert (forall ((s@@73 T@$1_DiemAccount_WithdrawCapability) ) (! (= (|$IsValid'$1_DiemAccount_WithdrawCapability'| s@@73) (|$IsValid'address'| (|$account_address#$1_DiemAccount_WithdrawCapability| s@@73)))
- :qid |DiemBlockandybpl.10585:54|
+(assert (forall ((s@@72 T@$1_DiemAccount_DiemWriteSetManager) ) (! (= (|$IsValid'$1_DiemAccount_DiemWriteSetManager'| s@@72) (|$IsValid'$1_Event_EventHandle'$1_DiemAccount_AdminTransactionEvent''| (|$upgrade_events#$1_DiemAccount_DiemWriteSetManager| s@@72)))
+ :qid |DiemBlockandybpl.10692:55|
  :skolemid |180|
- :pattern ( (|$IsValid'$1_DiemAccount_WithdrawCapability'| s@@73))
+ :pattern ( (|$IsValid'$1_DiemAccount_DiemWriteSetManager'| s@@72))
 )))
-(assert (forall ((s@@74 T@$1_DiemSystem_DiemSystem) ) (! (= (|$IsValid'$1_DiemSystem_DiemSystem'| s@@74)  (and (|$IsValid'u8'| (|$scheme#$1_DiemSystem_DiemSystem| s@@74)) (|$IsValid'vec'$1_DiemSystem_ValidatorInfo''| (|$validators#$1_DiemSystem_DiemSystem| s@@74))))
- :qid |DiemBlockandybpl.11462:45|
+(assert (forall ((s@@73 T@$1_DiemAccount_KeyRotationCapability) ) (! (= (|$IsValid'$1_DiemAccount_KeyRotationCapability'| s@@73) (|$IsValid'address'| (|$account_address#$1_DiemAccount_KeyRotationCapability| s@@73)))
+ :qid |DiemBlockandybpl.10706:57|
+ :skolemid |181|
+ :pattern ( (|$IsValid'$1_DiemAccount_KeyRotationCapability'| s@@73))
+)))
+(assert (forall ((s@@74 T@$1_DiemAccount_ReceivedPaymentEvent) ) (! (= (|$IsValid'$1_DiemAccount_ReceivedPaymentEvent'| s@@74)  (and (and (and (|$IsValid'u64'| (|$amount#$1_DiemAccount_ReceivedPaymentEvent| s@@74)) (|$IsValid'vec'u8''| (|$currency_code#$1_DiemAccount_ReceivedPaymentEvent| s@@74))) (|$IsValid'address'| (|$payer#$1_DiemAccount_ReceivedPaymentEvent| s@@74))) (|$IsValid'vec'u8''| (|$metadata#$1_DiemAccount_ReceivedPaymentEvent| s@@74))))
+ :qid |DiemBlockandybpl.10728:56|
  :skolemid |182|
- :pattern ( (|$IsValid'$1_DiemSystem_DiemSystem'| s@@74))
+ :pattern ( (|$IsValid'$1_DiemAccount_ReceivedPaymentEvent'| s@@74))
 )))
-(assert (forall ((s@@75 T@$1_DiemSystem_CapabilityHolder) ) (! (= (|$IsValid'$1_DiemSystem_CapabilityHolder'| s@@75) (|$IsValid'$1_DiemConfig_ModifyConfigCapability'$1_DiemSystem_DiemSystem''| (|$cap#$1_DiemSystem_CapabilityHolder| s@@75)))
- :qid |DiemBlockandybpl.11476:51|
+(assert (forall ((s@@75 T@$1_DiemAccount_SentPaymentEvent) ) (! (= (|$IsValid'$1_DiemAccount_SentPaymentEvent'| s@@75)  (and (and (and (|$IsValid'u64'| (|$amount#$1_DiemAccount_SentPaymentEvent| s@@75)) (|$IsValid'vec'u8''| (|$currency_code#$1_DiemAccount_SentPaymentEvent| s@@75))) (|$IsValid'address'| (|$payee#$1_DiemAccount_SentPaymentEvent| s@@75))) (|$IsValid'vec'u8''| (|$metadata#$1_DiemAccount_SentPaymentEvent| s@@75))))
+ :qid |DiemBlockandybpl.10753:52|
  :skolemid |183|
- :pattern ( (|$IsValid'$1_DiemSystem_CapabilityHolder'| s@@75))
+ :pattern ( (|$IsValid'$1_DiemAccount_SentPaymentEvent'| s@@75))
 )))
-(assert (forall ((s@@76 T@$1_DiemSystem_ValidatorInfo) ) (! (= (|$IsValid'$1_DiemSystem_ValidatorInfo'| s@@76)  (and (and (and (|$IsValid'address'| (|$addr#$1_DiemSystem_ValidatorInfo| s@@76)) (|$IsValid'u64'| (|$consensus_voting_power#$1_DiemSystem_ValidatorInfo| s@@76))) (|$IsValid'$1_ValidatorConfig_Config'| (|$config#$1_DiemSystem_ValidatorInfo| s@@76))) (|$IsValid'u64'| (|$last_config_update_time#$1_DiemSystem_ValidatorInfo| s@@76))))
- :qid |DiemBlockandybpl.11499:48|
+(assert (forall ((s@@76 T@$1_DiemAccount_WithdrawCapability) ) (! (= (|$IsValid'$1_DiemAccount_WithdrawCapability'| s@@76) (|$IsValid'address'| (|$account_address#$1_DiemAccount_WithdrawCapability| s@@76)))
+ :qid |DiemBlockandybpl.10769:54|
  :skolemid |184|
- :pattern ( (|$IsValid'$1_DiemSystem_ValidatorInfo'| s@@76))
+ :pattern ( (|$IsValid'$1_DiemAccount_WithdrawCapability'| s@@76))
 )))
 (assert (forall ((s@@77 T@$1_DiemBlock_BlockMetadata) ) (! (= (|$IsValid'$1_DiemBlock_BlockMetadata'| s@@77)  (and (|$IsValid'u64'| (|$height#$1_DiemBlock_BlockMetadata| s@@77)) (|$IsValid'$1_Event_EventHandle'$1_DiemBlock_NewBlockEvent''| (|$new_block_events#$1_DiemBlock_BlockMetadata| s@@77))))
- :qid |DiemBlockandybpl.11818:47|
+ :qid |DiemBlockandybpl.11645:47|
  :skolemid |185|
  :pattern ( (|$IsValid'$1_DiemBlock_BlockMetadata'| s@@77))
 )))
 (assert (forall ((s@@78 T@$1_DiemBlock_NewBlockEvent) ) (! (= (|$IsValid'$1_DiemBlock_NewBlockEvent'| s@@78)  (and (and (and (|$IsValid'u64'| (|$round#$1_DiemBlock_NewBlockEvent| s@@78)) (|$IsValid'address'| (|$proposer#$1_DiemBlock_NewBlockEvent| s@@78))) (|$IsValid'vec'address''| (|$previous_block_votes#$1_DiemBlock_NewBlockEvent| s@@78))) (|$IsValid'u64'| (|$time_microseconds#$1_DiemBlock_NewBlockEvent| s@@78))))
- :qid |DiemBlockandybpl.11842:47|
+ :qid |DiemBlockandybpl.11669:47|
  :skolemid |186|
  :pattern ( (|$IsValid'$1_DiemBlock_NewBlockEvent'| s@@78))
 )))
 (assert (forall ((s@@79 T@$1_DiemVMConfig_DiemVMConfig) ) (! (= (|$IsValid'$1_DiemVMConfig_DiemVMConfig'| s@@79) (|$IsValid'$1_DiemVMConfig_GasSchedule'| (|$gas_schedule#$1_DiemVMConfig_DiemVMConfig| s@@79)))
- :qid |DiemBlockandybpl.13099:49|
+ :qid |DiemBlockandybpl.12883:49|
  :skolemid |197|
  :pattern ( (|$IsValid'$1_DiemVMConfig_DiemVMConfig'| s@@79))
 )))
 (assert (forall ((s@@80 T@$1_DiemVMConfig_GasConstants) ) (! (= (|$IsValid'$1_DiemVMConfig_GasConstants'| s@@80)  (and (and (and (and (and (and (and (and (and (and (|$IsValid'u64'| (|$global_memory_per_byte_cost#$1_DiemVMConfig_GasConstants| s@@80)) (|$IsValid'u64'| (|$global_memory_per_byte_write_cost#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$min_transaction_gas_units#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$large_transaction_cutoff#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$intrinsic_gas_per_byte#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$maximum_number_of_gas_units#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$min_price_per_gas_unit#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$max_price_per_gas_unit#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$max_transaction_size_in_bytes#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$gas_unit_scaling_factor#$1_DiemVMConfig_GasConstants| s@@80))) (|$IsValid'u64'| (|$default_account_size#$1_DiemVMConfig_GasConstants| s@@80))))
- :qid |DiemBlockandybpl.13142:49|
+ :qid |DiemBlockandybpl.12926:49|
  :skolemid |198|
  :pattern ( (|$IsValid'$1_DiemVMConfig_GasConstants'| s@@80))
 )))
 (assert (forall ((s@@81 T@$1_DiemVMConfig_GasSchedule) ) (! (= (|$IsValid'$1_DiemVMConfig_GasSchedule'| s@@81)  (and (and (|$IsValid'vec'u8''| (|$instruction_schedule#$1_DiemVMConfig_GasSchedule| s@@81)) (|$IsValid'vec'u8''| (|$native_schedule#$1_DiemVMConfig_GasSchedule| s@@81))) (|$IsValid'$1_DiemVMConfig_GasConstants'| (|$gas_constants#$1_DiemVMConfig_GasSchedule| s@@81))))
- :qid |DiemBlockandybpl.13171:48|
+ :qid |DiemBlockandybpl.12955:48|
  :skolemid |199|
  :pattern ( (|$IsValid'$1_DiemVMConfig_GasSchedule'| s@@81))
 )))
 (assert (forall ((s@@82 T@$1_DiemVersion_DiemVersion) ) (! (= (|$IsValid'$1_DiemVersion_DiemVersion'| s@@82) (|$IsValid'u64'| (|$major#$1_DiemVersion_DiemVersion| s@@82)))
- :qid |DiemBlockandybpl.13466:47|
+ :qid |DiemBlockandybpl.13250:47|
  :skolemid |200|
  :pattern ( (|$IsValid'$1_DiemVersion_DiemVersion'| s@@82))
 )))
@@ -1241,7 +1241,7 @@
  :skolemid |1|
  :pattern ( (ReverseVec_12182 v@@25))
 )))
-(assert (forall ((v@@26 (Seq (Seq Int))) ) (! (let ((r@@1 (ReverseVec_56871 v@@26)))
+(assert (forall ((v@@26 (Seq T@$1_ValidatorConfig_Config)) ) (! (let ((r@@1 (ReverseVec_55952 v@@26)))
  (and (= (seq.len r@@1) (seq.len v@@26)) (forall ((i@@31 Int) ) (!  (=> (and (>= i@@31 0) (< i@@31 (seq.len r@@1))) (= (seq.nth r@@1 i@@31) (seq.nth v@@26 (- (- (seq.len v@@26) i@@31) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1249,9 +1249,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_56871 v@@26))
+ :pattern ( (ReverseVec_55952 v@@26))
 )))
-(assert (forall ((v@@27 (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) ) (! (let ((r@@2 (ReverseVec_56477 v@@27)))
+(assert (forall ((v@@27 (Seq T@$1_DiemAccount_KeyRotationCapability)) ) (! (let ((r@@2 (ReverseVec_54967 v@@27)))
  (and (= (seq.len r@@2) (seq.len v@@27)) (forall ((i@@32 Int) ) (!  (=> (and (>= i@@32 0) (< i@@32 (seq.len r@@2))) (= (seq.nth r@@2 i@@32) (seq.nth v@@27 (- (- (seq.len v@@27) i@@32) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1259,9 +1259,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_56477 v@@27))
+ :pattern ( (ReverseVec_54967 v@@27))
 )))
-(assert (forall ((v@@28 (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) ) (! (let ((r@@3 (ReverseVec_56280 v@@28)))
+(assert (forall ((v@@28 (Seq T@$1_DiemAccount_WithdrawCapability)) ) (! (let ((r@@3 (ReverseVec_55164 v@@28)))
  (and (= (seq.len r@@3) (seq.len v@@28)) (forall ((i@@33 Int) ) (!  (=> (and (>= i@@33 0) (< i@@33 (seq.len r@@3))) (= (seq.nth r@@3 i@@33) (seq.nth v@@28 (- (- (seq.len v@@28) i@@33) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1269,9 +1269,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_56280 v@@28))
+ :pattern ( (ReverseVec_55164 v@@28))
 )))
-(assert (forall ((v@@29 (Seq T@$1_ValidatorConfig_Config)) ) (! (let ((r@@4 (ReverseVec_56674 v@@29)))
+(assert (forall ((v@@29 (Seq T@$1_DiemSystem_ValidatorInfo)) ) (! (let ((r@@4 (ReverseVec_55361 v@@29)))
  (and (= (seq.len r@@4) (seq.len v@@29)) (forall ((i@@34 Int) ) (!  (=> (and (>= i@@34 0) (< i@@34 (seq.len r@@4))) (= (seq.nth r@@4 i@@34) (seq.nth v@@29 (- (- (seq.len v@@29) i@@34) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1279,9 +1279,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_56674 v@@29))
+ :pattern ( (ReverseVec_55361 v@@29))
 )))
-(assert (forall ((v@@30 (Seq T@$1_DiemAccount_KeyRotationCapability)) ) (! (let ((r@@5 (ReverseVec_55689 v@@30)))
+(assert (forall ((v@@30 (Seq (Seq Int))) ) (! (let ((r@@5 (ReverseVec_56149 v@@30)))
  (and (= (seq.len r@@5) (seq.len v@@30)) (forall ((i@@35 Int) ) (!  (=> (and (>= i@@35 0) (< i@@35 (seq.len r@@5))) (= (seq.nth r@@5 i@@35) (seq.nth v@@30 (- (- (seq.len v@@30) i@@35) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1289,9 +1289,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_55689 v@@30))
+ :pattern ( (ReverseVec_56149 v@@30))
 )))
-(assert (forall ((v@@31 (Seq T@$1_DiemAccount_WithdrawCapability)) ) (! (let ((r@@6 (ReverseVec_55886 v@@31)))
+(assert (forall ((v@@31 (Seq |T@$1_Diem_PreburnWithMetadata'$1_XUS_XUS'|)) ) (! (let ((r@@6 (ReverseVec_55755 v@@31)))
  (and (= (seq.len r@@6) (seq.len v@@31)) (forall ((i@@36 Int) ) (!  (=> (and (>= i@@36 0) (< i@@36 (seq.len r@@6))) (= (seq.nth r@@6 i@@36) (seq.nth v@@31 (- (- (seq.len v@@31) i@@36) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1299,9 +1299,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_55886 v@@31))
+ :pattern ( (ReverseVec_55755 v@@31))
 )))
-(assert (forall ((v@@32 (Seq T@$1_DiemSystem_ValidatorInfo)) ) (! (let ((r@@7 (ReverseVec_56083 v@@32)))
+(assert (forall ((v@@32 (Seq |T@$1_Diem_PreburnWithMetadata'$1_XDX_XDX'|)) ) (! (let ((r@@7 (ReverseVec_55558 v@@32)))
  (and (= (seq.len r@@7) (seq.len v@@32)) (forall ((i@@37 Int) ) (!  (=> (and (>= i@@37 0) (< i@@37 (seq.len r@@7))) (= (seq.nth r@@7 i@@37) (seq.nth v@@32 (- (- (seq.len v@@32) i@@37) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1309,9 +1309,9 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_56083 v@@32))
+ :pattern ( (ReverseVec_55558 v@@32))
 )))
-(assert (forall ((v@@33 (Seq |T@#0|)) ) (! (let ((r@@8 (ReverseVec_55492 v@@33)))
+(assert (forall ((v@@33 (Seq |T@#0|)) ) (! (let ((r@@8 (ReverseVec_54770 v@@33)))
  (and (= (seq.len r@@8) (seq.len v@@33)) (forall ((i@@38 Int) ) (!  (=> (and (>= i@@38 0) (< i@@38 (seq.len r@@8))) (= (seq.nth r@@8 i@@38) (seq.nth v@@33 (- (- (seq.len v@@33) i@@38) 1))))
  :qid |DiemBlockandybpl.67:18|
  :skolemid |0|
@@ -1319,19 +1319,19 @@
 ))))
  :qid |DiemBlockandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_55492 v@@33))
+ :pattern ( (ReverseVec_54770 v@@33))
 )))
 (assert (forall ((|l#0| Bool) (i@@39 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@39) |l#0|)
  :qid |DiemBlockandybpl.245:54|
  :skolemid |255|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@39))
 )))
-(assert (forall ((|l#0@@0| |T@[$1_Event_EventHandle]Multiset_62435|) (|l#1| |T@[$1_Event_EventHandle]Multiset_62435|) (handle@@0 T@$1_Event_EventHandle) ) (! (= (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|lambda#2| |l#0@@0| |l#1|) handle@@0) (let ((len1 (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| |l#0@@0| handle@@0))))
-(let ((len2 (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| |l#1| handle@@0))))
-(Multiset_62435 (|lambda#3| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| |l#0@@0| handle@@0)) (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| |l#1| handle@@0))) (- len1 len2)))))
+(assert (forall ((|l#0@@0| |T@[$1_Event_EventHandle]Multiset_61713|) (|l#1| |T@[$1_Event_EventHandle]Multiset_61713|) (handle@@0 T@$1_Event_EventHandle) ) (! (= (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|lambda#2| |l#0@@0| |l#1|) handle@@0) (let ((len1 (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| |l#0@@0| handle@@0))))
+(let ((len2 (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| |l#1| handle@@0))))
+(Multiset_61713 (|lambda#3| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| |l#0@@0| handle@@0)) (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| |l#1| handle@@0))) (- len1 len2)))))
  :qid |DiemBlockandybpl.2548:13|
  :skolemid |256|
- :pattern ( (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|lambda#2| |l#0@@0| |l#1|) handle@@0))
+ :pattern ( (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|lambda#2| |l#0@@0| |l#1|) handle@@0))
 )))
 (assert (forall ((|l#0@@1| |T@[$EventRep]Int|) (|l#1@@0| |T@[$EventRep]Int|) (v@@34 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|lambda#3| |l#0@@1| |l#1@@0|) v@@34) (- (|Select__T@[$EventRep]Int_| |l#0@@1| v@@34) (|Select__T@[$EventRep]Int_| |l#1@@0| v@@34)))
  :qid |DiemBlockandybpl.124:29|
@@ -1340,13 +1340,13 @@
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (declare-fun $t24@0 () T@$Mutation_12329)
-(declare-fun $t14@1 () T@$Mutation_91839)
+(declare-fun $t14@1 () T@$Mutation_90996)
 (declare-fun $t24@1 () T@$Mutation_12329)
 (declare-fun _$t2 () Int)
-(declare-fun $t14@2 () T@$Mutation_91839)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory () T@$Memory_91365)
-(declare-fun $1_DiemBlock_BlockMetadata_$memory () T@$Memory_92811)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0 () T@$Memory_91365)
+(declare-fun $t14@2 () T@$Mutation_90996)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory () T@$Memory_90527)
+(declare-fun $1_DiemBlock_BlockMetadata_$memory () T@$Memory_91934)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0 () T@$Memory_90527)
 (declare-fun |Store__T@[Int]Bool_| (|T@[Int]Bool| Int Bool) |T@[Int]Bool|)
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?x2 Bool)) (! (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?y1 Int) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]Bool_| ?x0 ?y1))) :weight 0)))
@@ -1366,63 +1366,57 @@
 (declare-fun $t15@0 () Int)
 (declare-fun $t23 () Int)
 (declare-fun $abort_flag@0 () Bool)
-(declare-fun $abort_code@1 () Int)
 (declare-fun |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0| () T@$1_DiemTimestamp_CurrentTimeMicroseconds)
-(declare-fun $t14 () T@$Mutation_91839)
-(declare-fun $t14@0 () T@$Mutation_91839)
+(declare-fun $abort_code@1 () Int)
+(declare-fun $t14 () T@$Mutation_90996)
+(declare-fun $t14@0 () T@$Mutation_90996)
 (declare-fun $abort_code@0 () Int)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies () |T@[Int]Bool|)
 (declare-fun $t12 () Bool)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies () |T@[Int]Bool|)
 (declare-fun $t11 () Int)
 (declare-fun $t10 () Bool)
 (declare-fun $es () T@$EventStore)
-(declare-fun $t3 () T@$Mutation_91839)
+(declare-fun $t3 () T@$Mutation_90996)
 (declare-fun $t24 () T@$Mutation_12329)
 (push 1)
 (set-info :boogie-vc-id $1_DiemTimestamp_update_global_time$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 193522) (let ((L5_correct  (=> (= $t24@0 ($Mutation_12329 (|l#$Mutation_91839| $t14@1) (seq.++ (|p#$Mutation_91839| $t14@1) (seq.unit 0)) (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|v#$Mutation_91839| $t14@1)))) (=> (and (and (= $t24@1 ($Mutation_12329 (|l#$Mutation_12329| $t24@0) (|p#$Mutation_12329| $t24@0) _$t2)) (= $t14@2 ($Mutation_91839 (|l#$Mutation_91839| $t14@1) (|p#$Mutation_91839| $t14@1) ($1_DiemTimestamp_CurrentTimeMicroseconds (|v#$Mutation_12329| $t24@1))))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0 ($Memory_91365 (|Store__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) (|a#$Global| (|l#$Mutation_91839| $t14@2)) true) (|Store__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) (|a#$Global| (|l#$Mutation_91839| $t14@2)) (|v#$Mutation_91839| $t14@2)))))) (and (=> (= (ControlFlow 0 142216) (- 0 194226)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (=> (= $t25 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0) 173345816))) (and (=> (= (ControlFlow 0 142216) (- 0 194251)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (and (=> (= (ControlFlow 0 142216) (- 0 194261)) (not (not (= _$t0 0)))) (=> (not (not (= _$t0 0))) (and (=> (= (ControlFlow 0 142216) (- 0 194275)) (not (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2)))) (=> (not (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2))) (=> (= (ControlFlow 0 142216) (- 0 194299)) (= $t25 _$t2)))))))))))))))
-(let ((anon31_Then_correct  (=> (and $t18@0 (= (ControlFlow 0 142274) 142216)) L5_correct)))
-(let ((anon32_Then_correct  (=> (and inline$$Lt$0$dst@1 (= (ControlFlow 0 142074) 142216)) L5_correct)))
-(let ((L8_correct  (and (=> (= (ControlFlow 0 142070) (- 0 194349)) (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0 0))) (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2)))) (=> (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0 0))) (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2))) (=> (= (ControlFlow 0 142070) (- 0 194386)) (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t11@0)) (and (not (= _$t0 0)) (= 2 $t11@0))) (ite (= _$t1 0)  (not (= $t9 _$t2))  (and (>= $t9 _$t2) (= 7 $t11@0)))))))))
-(let ((anon31_Else_correct  (=> (and (and (not $t18@0) (= $t20 $t20)) (and (= $t11@0 $t20) (= (ControlFlow 0 142270) 142070))) L8_correct)))
-(let ((anon30_Then_correct  (=> $t17@0 (=> (and (= $t18@0 (= $t15@0 _$t2)) (|$IsValid'u64'| 2)) (=> (and (and (|$IsValid'u64'| $t20) (= $t20 7)) (and (= $t20 $t20) (= $t18@0 $t18@0))) (and (=> (= (ControlFlow 0 142254) 142274) anon31_Then_correct) (=> (= (ControlFlow 0 142254) 142270) anon31_Else_correct)))))))
-(let ((anon32_Else_correct  (=> (and (and (not inline$$Lt$0$dst@1) (= $t23 $t23)) (and (= $t11@0 $t23) (= (ControlFlow 0 141954) 142070))) L8_correct)))
-(let ((anon30_Else$1_correct  (=> (|$IsValid'u64'| 2) (=> (and (and (|$IsValid'u64'| $t23) (= $t23 7)) (and (= $t23 $t23) (= inline$$Lt$0$dst@1 inline$$Lt$0$dst@1))) (and (=> (= (ControlFlow 0 141938) 142074) anon32_Then_correct) (=> (= (ControlFlow 0 141938) 141954) anon32_Else_correct))))))
-(let ((inline$$Lt$0$anon0_correct  (=> (and (= inline$$Lt$0$dst@1 (< $t15@0 _$t2)) (= (ControlFlow 0 141902) 141938)) anon30_Else$1_correct)))
-(let ((anon30_Else_correct  (=> (and (not $t17@0) (= (ControlFlow 0 141908) 141902)) inline$$Lt$0$anon0_correct)))
-(let ((anon29_Else_correct  (=> (and (not $abort_flag@0) (= $t17@0 (= _$t1 0))) (and (=> (= (ControlFlow 0 141856) 142254) anon30_Then_correct) (=> (= (ControlFlow 0 141856) 141908) anon30_Else_correct)))))
-(let ((anon29_Then_correct  (=> (and (and $abort_flag@0 (= $abort_code@1 $abort_code@1)) (and (= $t11@0 $abort_code@1) (= (ControlFlow 0 142288) 142070))) L8_correct)))
-(let ((inline$$1_CoreAddresses_VM_RESERVED_ADDRESS$0$anon0_correct  (=> (and (|$IsValid'address'| 0) (= 0 0)) (and (=> (= (ControlFlow 0 141836) 142288) anon29_Then_correct) (=> (= (ControlFlow 0 141836) 141856) anon29_Else_correct)))))
-(let ((anon28_Else_correct  (=> (and (not $abort_flag@0) (= |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0| (|v#$Mutation_91839| $t14@1))) (=> (and (and (= |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0| |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0|) (= $t15@0 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|v#$Mutation_91839| $t14@1)))) (and (= $t15@0 $t15@0) (= (ControlFlow 0 141842) 141836))) inline$$1_CoreAddresses_VM_RESERVED_ADDRESS$0$anon0_correct))))
-(let ((anon28_Then_correct  (=> (and (and $abort_flag@0 (= $abort_code@1 $abort_code@1)) (and (= $t11@0 $abort_code@1) (= (ControlFlow 0 142302) 142070))) L8_correct)))
-(let ((anon27_Then$1_correct  (=> (= $t14@1 $t14) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 142354) 142302) anon28_Then_correct) (=> (= (ControlFlow 0 142354) 141842) anon28_Else_correct))))))
-(let ((anon27_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= (ControlFlow 0 142352) 142354)) anon27_Then$1_correct)))
-(let ((anon27_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (=> (and (and (= $t14@0 ($Mutation_91839 ($Global 173345816) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= $t14@1 $t14@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 141739) 142302) anon28_Then_correct) (=> (= (ControlFlow 0 141739) 141842) anon28_Else_correct))))))
-(let ((anon26_Else_correct  (=> (not false) (and (=> (= (ControlFlow 0 141717) (- 0 193867)) (|Select__T@[Int]Bool_| $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies 173345816)) (=> (|Select__T@[Int]Bool_| $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies 173345816) (and (=> (= (ControlFlow 0 141717) 142352) anon27_Then_correct) (=> (= (ControlFlow 0 141717) 141739) anon27_Else_correct)))))))
-(let ((anon25_Then_correct  (=> $t12 (=> (and (and (and (not (= _$t0 0)) (= 2 $t11)) (= $t11 $t11)) (and (= $t11@0 $t11) (= (ControlFlow 0 142398) 142070))) L8_correct))))
-(let ((anon24_Then_correct  (=> $t10 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t11)) (= $t11 $t11)) (and (= $t11@0 $t11) (= (ControlFlow 0 142424) 142070))) L8_correct))))
-(let ((anon26_Then_correct true))
-(let ((inline$$1_CoreAddresses_DIEM_ROOT_ADDRESS$0$anon0_correct  (=> (and (|$IsValid'address'| 173345816) (= 173345816 173345816)) (and (=> (= (ControlFlow 0 141697) 142368) anon26_Then_correct) (=> (= (ControlFlow 0 141697) 141717) anon26_Else_correct)))))
-(let ((anon25_Else_correct  (=> (and (not $t12) (= (ControlFlow 0 141703) 141697)) inline$$1_CoreAddresses_DIEM_ROOT_ADDRESS$0$anon0_correct)))
-(let ((anon24_Else_correct  (=> (and (not $t10) (= $t12  (not (= _$t0 0)))) (and (=> (= (ControlFlow 0 141626) 142398) anon25_Then_correct) (=> (= (ControlFlow 0 141626) 141703) anon25_Else_correct)))))
-(let ((anon0$1_correct  (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (and (|$IsValid'address'| _$t0) (|$IsValid'address'| _$t1)) (=> (and (and (and (|$IsValid'u64'| _$t2) (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0)))
+ (=> (= (ControlFlow 0 0) 190601) (let ((L5_correct  (=> (= $t24@0 ($Mutation_12329 (|l#$Mutation_90996| $t14@1) (seq.++ (|p#$Mutation_90996| $t14@1) (seq.unit 0)) (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|v#$Mutation_90996| $t14@1)))) (=> (and (and (= $t24@1 ($Mutation_12329 (|l#$Mutation_12329| $t24@0) (|p#$Mutation_12329| $t24@0) _$t2)) (= $t14@2 ($Mutation_90996 (|l#$Mutation_90996| $t14@1) (|p#$Mutation_90996| $t14@1) ($1_DiemTimestamp_CurrentTimeMicroseconds (|v#$Mutation_12329| $t24@1))))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0 ($Memory_90527 (|Store__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) (|a#$Global| (|l#$Mutation_90996| $t14@2)) true) (|Store__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) (|a#$Global| (|l#$Mutation_90996| $t14@2)) (|v#$Mutation_90996| $t14@2)))))) (and (=> (= (ControlFlow 0 140777) (- 0 191223)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (=> (= $t25 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0) 173345816))) (and (=> (= (ControlFlow 0 140777) (- 0 191248)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (and (=> (= (ControlFlow 0 140777) (- 0 191258)) (not (not (= _$t0 0)))) (=> (not (not (= _$t0 0))) (and (=> (= (ControlFlow 0 140777) (- 0 191272)) (not (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2)))) (=> (not (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2))) (=> (= (ControlFlow 0 140777) (- 0 191296)) (= $t25 _$t2)))))))))))))))
+(let ((anon25_Then_correct  (=> (and $t18@0 (= (ControlFlow 0 140835) 140777)) L5_correct)))
+(let ((anon26_Then_correct  (=> (and inline$$Lt$0$dst@1 (= (ControlFlow 0 140635) 140777)) L5_correct)))
+(let ((L8_correct  (and (=> (= (ControlFlow 0 140631) (- 0 191340)) (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0 0))) (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2)))) (=> (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0 0))) (ite (= _$t1 0)  (not (= $t9 _$t2)) (>= $t9 _$t2))) (=> (= (ControlFlow 0 140631) (- 0 191377)) (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t11@0)) (and (not (= _$t0 0)) (= 2 $t11@0))) (ite (= _$t1 0)  (not (= $t9 _$t2))  (and (>= $t9 _$t2) (= 7 $t11@0)))))))))
+(let ((anon25_Else_correct  (=> (and (and (not $t18@0) (= $t20 $t20)) (and (= $t11@0 $t20) (= (ControlFlow 0 140831) 140631))) L8_correct)))
+(let ((anon24_Then_correct  (=> $t17@0 (=> (and (= $t18@0 (= $t15@0 _$t2)) (|$IsValid'u64'| 2)) (=> (and (and (|$IsValid'u64'| $t20) (= $t20 7)) (and (= $t20 $t20) (= $t18@0 $t18@0))) (and (=> (= (ControlFlow 0 140815) 140835) anon25_Then_correct) (=> (= (ControlFlow 0 140815) 140831) anon25_Else_correct)))))))
+(let ((anon26_Else_correct  (=> (and (and (not inline$$Lt$0$dst@1) (= $t23 $t23)) (and (= $t11@0 $t23) (= (ControlFlow 0 140515) 140631))) L8_correct)))
+(let ((anon24_Else$1_correct  (=> (|$IsValid'u64'| 2) (=> (and (and (|$IsValid'u64'| $t23) (= $t23 7)) (and (= $t23 $t23) (= inline$$Lt$0$dst@1 inline$$Lt$0$dst@1))) (and (=> (= (ControlFlow 0 140499) 140635) anon26_Then_correct) (=> (= (ControlFlow 0 140499) 140515) anon26_Else_correct))))))
+(let ((inline$$Lt$0$anon0_correct  (=> (and (= inline$$Lt$0$dst@1 (< $t15@0 _$t2)) (= (ControlFlow 0 140463) 140499)) anon24_Else$1_correct)))
+(let ((anon24_Else_correct  (=> (and (not $t17@0) (= (ControlFlow 0 140469) 140463)) inline$$Lt$0$anon0_correct)))
+(let ((anon23_Else_correct  (=> (not $abort_flag@0) (=> (and (= |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0| (|v#$Mutation_90996| $t14@1)) (= |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0| |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0|)) (=> (and (and (= $t15@0 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|v#$Mutation_90996| $t14@1))) (= $t15@0 $t15@0)) (and (|$IsValid'address'| 0) (= $t17@0 (= _$t1 0)))) (and (=> (= (ControlFlow 0 140417) 140815) anon24_Then_correct) (=> (= (ControlFlow 0 140417) 140469) anon24_Else_correct)))))))
+(let ((anon23_Then_correct  (=> (and (and $abort_flag@0 (= $abort_code@1 $abort_code@1)) (and (= $t11@0 $abort_code@1) (= (ControlFlow 0 140849) 140631))) L8_correct)))
+(let ((anon22_Then$1_correct  (=> (= $t14@1 $t14) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 140901) 140849) anon23_Then_correct) (=> (= (ControlFlow 0 140901) 140417) anon23_Else_correct))))))
+(let ((anon22_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= (ControlFlow 0 140899) 140901)) anon22_Then$1_correct)))
+(let ((anon22_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (=> (and (and (= $t14@0 ($Mutation_90996 ($Global 173345816) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= $t14@1 $t14@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 140371) 140849) anon23_Then_correct) (=> (= (ControlFlow 0 140371) 140417) anon23_Else_correct))))))
+(let ((anon21_Else_correct  (=> (and (not $t12) (|$IsValid'address'| 173345816)) (and (=> (= (ControlFlow 0 140349) (- 0 190899)) (|Select__T@[Int]Bool_| $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies 173345816)) (=> (|Select__T@[Int]Bool_| $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies 173345816) (and (=> (= (ControlFlow 0 140349) 140899) anon22_Then_correct) (=> (= (ControlFlow 0 140349) 140371) anon22_Else_correct)))))))
+(let ((anon21_Then_correct  (=> $t12 (=> (and (and (and (not (= _$t0 0)) (= 2 $t11)) (= $t11 $t11)) (and (= $t11@0 $t11) (= (ControlFlow 0 140931) 140631))) L8_correct))))
+(let ((anon20_Else_correct  (=> (and (not $t10) (= $t12  (not (= _$t0 0)))) (and (=> (= (ControlFlow 0 140329) 140931) anon21_Then_correct) (=> (= (ControlFlow 0 140329) 140349) anon21_Else_correct)))))
+(let ((anon20_Then_correct  (=> $t10 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t11)) (= $t11 $t11)) (and (= $t11@0 $t11) (= (ControlFlow 0 140957) 140631))) L8_correct))))
+(let ((anon0$1_correct  (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (and (|$IsValid'address'| _$t0) (|$IsValid'address'| _$t1)) (=> (and (and (and (|$IsValid'u64'| _$t2) (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0)))
 (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| $rsc))
- :qid |DiemBlockandybpl.3872:20|
+ :qid |DiemBlockandybpl.3748:20|
  :skolemid |106|
- :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0))
-))) (and (= $t9 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (|Select__T@[Int]Bool_| $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies 173345816))) (and (and (= _$t0 _$t0) (= _$t1 _$t1)) (and (= _$t2 _$t2) (= $t10  (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))))) (and (=> (= (ControlFlow 0 141604) 142424) anon24_Then_correct) (=> (= (ControlFlow 0 141604) 141626) anon24_Else_correct)))))))
-(let ((inline$$InitEventStore$0$anon0_correct  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@1 T@$1_Event_EventHandle) ) (! (let ((stream@@0 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $es) handle@@1)))
- (and (= (|l#Multiset_62435| stream@@0) 0) (forall ((v@@35 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@0) v@@35) 0)
+ :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0))
+))) (and (= $t9 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (|Select__T@[Int]Bool_| $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies 173345816))) (and (and (= _$t0 _$t0) (= _$t1 _$t1)) (and (= _$t2 _$t2) (= $t10  (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))))) (and (=> (= (ControlFlow 0 140307) 140957) anon20_Then_correct) (=> (= (ControlFlow 0 140307) 140329) anon20_Else_correct)))))))
+(let ((inline$$InitEventStore$0$anon0_correct  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@1 T@$1_Event_EventHandle) ) (! (let ((stream@@0 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $es) handle@@1)))
+ (and (= (|l#Multiset_61713| stream@@0) 0) (forall ((v@@35 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@0) v@@35) 0)
  :qid |DiemBlockandybpl.129:13|
  :skolemid |2|
 ))))
  :qid |DiemBlockandybpl.2538:13|
  :skolemid |69|
-))) (= (ControlFlow 0 141492) 141604)) anon0$1_correct)))
-(let ((anon0_correct  (=> (and (and (= (seq.len (|p#$Mutation_91839| $t3)) 0) (= (seq.len (|p#$Mutation_91839| $t14)) 0)) (and (= (seq.len (|p#$Mutation_12329| $t24)) 0) (= (ControlFlow 0 141502) 141492))) inline$$InitEventStore$0$anon0_correct)))
-(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 193522) 141502) anon0_correct)))
-PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))
+))) (= (ControlFlow 0 140195) 140307)) anon0$1_correct)))
+(let ((anon0_correct  (=> (and (and (= (seq.len (|p#$Mutation_90996| $t3)) 0) (= (seq.len (|p#$Mutation_90996| $t14)) 0)) (and (= (seq.len (|p#$Mutation_12329| $t24)) 0) (= (ControlFlow 0 140205) 140195))) inline$$InitEventStore$0$anon0_correct)))
+(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 190601) 140205) anon0_correct)))
+PreconditionGeneratedEntry_correct))))))))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
@@ -1430,23 +1424,23 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))
 (push 1)
 (set-info :boogie-vc-id $1_DiemBlock_is_initialized$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 194624) true)
+ (=> (= (ControlFlow 0 0) 191610) true)
 ))
 (check-sat)
 (pop 1)
 ; Valid
 (declare-fun $abort_flag@1 () Bool)
-(declare-fun $1_DiemBlock_BlockMetadata_$memory@0 () T@$Memory_92811)
-(declare-fun $t22@2 () T@$Mutation_124317)
+(declare-fun $1_DiemBlock_BlockMetadata_$memory@0 () T@$Memory_91934)
+(declare-fun $t22@2 () T@$Mutation_123173)
 (declare-fun |Store__T@[Int]$1_DiemBlock_BlockMetadata_| (|T@[Int]$1_DiemBlock_BlockMetadata| Int T@$1_DiemBlock_BlockMetadata) |T@[Int]$1_DiemBlock_BlockMetadata|)
 (declare-fun |Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|T@[Int]$1_DiemBlock_BlockMetadata| Int) T@$1_DiemBlock_BlockMetadata)
 (assert (forall ( ( ?x0 |T@[Int]$1_DiemBlock_BlockMetadata|) ( ?x1 Int) ( ?x2 T@$1_DiemBlock_BlockMetadata)) (! (= (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|Store__T@[Int]$1_DiemBlock_BlockMetadata_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]$1_DiemBlock_BlockMetadata|) ( ?x1 Int) ( ?y1 Int) ( ?x2 T@$1_DiemBlock_BlockMetadata)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|Store__T@[Int]$1_DiemBlock_BlockMetadata_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| ?x0 ?y1))) :weight 0)))
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2 () T@$Memory_91365)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2 () T@$Memory_90527)
 (declare-fun _$t0@@0 () Int)
 (declare-fun _$t4 () Int)
 (declare-fun |Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| Int) |T@$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'|)
-(declare-fun |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory| () T@$Memory_93874)
+(declare-fun |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory| () T@$Memory_93681)
 (declare-fun _$t2@@0 () Int)
 (declare-fun $es@0 () T@$EventStore)
 (declare-fun $t9@@0 () T@$1_Event_EventHandle)
@@ -1454,16 +1448,16 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))
 (declare-fun |Store__T@[$EventRep]Int_| (|T@[$EventRep]Int| T@$EventRep Int) |T@[$EventRep]Int|)
 (assert (forall ( ( ?x0 |T@[$EventRep]Int|) ( ?x1 T@$EventRep) ( ?x2 Int)) (! (= (|Select__T@[$EventRep]Int_| (|Store__T@[$EventRep]Int_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[$EventRep]Int|) ( ?x1 T@$EventRep) ( ?y1 T@$EventRep) ( ?x2 Int)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$EventRep]Int_| (|Store__T@[$EventRep]Int_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$EventRep]Int_| ?x0 ?y1))) :weight 0)))
-(declare-fun |Store__T@[$1_Event_EventHandle]Multiset_62435_| (|T@[$1_Event_EventHandle]Multiset_62435| T@$1_Event_EventHandle T@Multiset_62435) |T@[$1_Event_EventHandle]Multiset_62435|)
-(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Multiset_62435|) ( ?x1 T@$1_Event_EventHandle) ( ?x2 T@Multiset_62435)) (! (= (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|Store__T@[$1_Event_EventHandle]Multiset_62435_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
-(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Multiset_62435|) ( ?x1 T@$1_Event_EventHandle) ( ?y1 T@$1_Event_EventHandle) ( ?x2 T@Multiset_62435)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|Store__T@[$1_Event_EventHandle]Multiset_62435_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$1_Event_EventHandle]Multiset_62435_| ?x0 ?y1))) :weight 0)))
+(declare-fun |Store__T@[$1_Event_EventHandle]Multiset_61713_| (|T@[$1_Event_EventHandle]Multiset_61713| T@$1_Event_EventHandle T@Multiset_61713) |T@[$1_Event_EventHandle]Multiset_61713|)
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Multiset_61713|) ( ?x1 T@$1_Event_EventHandle) ( ?x2 T@Multiset_61713)) (! (= (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|Store__T@[$1_Event_EventHandle]Multiset_61713_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Multiset_61713|) ( ?x1 T@$1_Event_EventHandle) ( ?y1 T@$1_Event_EventHandle) ( ?x2 T@Multiset_61713)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|Store__T@[$1_Event_EventHandle]Multiset_61713_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$1_Event_EventHandle]Multiset_61713_| ?x0 ?y1))) :weight 0)))
 (declare-fun $t12@0 () Int)
 (declare-fun $abort_code@2 () Int)
 (declare-fun |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1| () T@$1_Event_EventHandle)
-(declare-fun $t30@0 () T@$Mutation_85125)
+(declare-fun $t30@0 () T@$Mutation_84403)
 (declare-fun $t31@0 () T@$1_DiemBlock_NewBlockEvent)
 (declare-fun $t29@0 () T@$Mutation_12329)
-(declare-fun $t22@1 () T@$Mutation_124317)
+(declare-fun $t22@1 () T@$Mutation_123173)
 (declare-fun $t29@1 () T@$Mutation_12329)
 (declare-fun inline$$AddU64$0$dst@2 () Int)
 (declare-fun _$t1@@0 () Int)
@@ -1475,15 +1469,15 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))
 (declare-fun $abort_code@1@@0 () Int)
 (declare-fun $t25@@0 () Int)
 (declare-fun |$temp_0'bool'@0| () Bool)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@1 () T@$Memory_91365)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0@@0 () T@$Memory_91365)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@1 () T@$Memory_90527)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0@@0 () T@$Memory_90527)
 (declare-fun |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0@@0| () T@$1_DiemTimestamp_CurrentTimeMicroseconds)
 (declare-fun $t24@@0 () Bool)
 (declare-fun $t12@@0 () Int)
 (declare-fun |$temp_0'$1_DiemBlock_BlockMetadata'@0| () T@$1_DiemBlock_BlockMetadata)
 (declare-fun $t23@@0 () Int)
-(declare-fun $t22 () T@$Mutation_124317)
-(declare-fun $t22@0 () T@$Mutation_124317)
+(declare-fun $t22 () T@$Mutation_123173)
+(declare-fun $t22@0 () T@$Mutation_123173)
 (declare-fun $abort_code@0@@0 () Int)
 (declare-fun $t8@0 () Bool)
 (declare-fun $t20@@0 () Int)
@@ -1492,177 +1486,171 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))
 (declare-fun $t15@0@@0 () Bool)
 (declare-fun $t13 () Bool)
 (declare-fun $t11@@0 () Bool)
-(declare-fun $1_DiemConfig_Configuration_$memory () T@$Memory_94187)
-(declare-fun $1_DiemSystem_CapabilityHolder_$memory () T@$Memory_122491)
-(declare-fun $1_Roles_RoleId_$memory () T@$Memory_93313)
+(declare-fun $1_DiemConfig_Configuration_$memory () T@$Memory_94152)
+(declare-fun $1_DiemSystem_CapabilityHolder_$memory () T@$Memory_95644)
+(declare-fun $1_Roles_RoleId_$memory () T@$Memory_92310)
 (declare-fun |Select__T@[Int]$1_Roles_RoleId_| (|T@[Int]$1_Roles_RoleId| Int) T@$1_Roles_RoleId)
-(declare-fun $t5 () T@$Mutation_124317)
+(declare-fun $t5 () T@$Mutation_123173)
 (declare-fun $t29 () T@$Mutation_12329)
-(declare-fun $t30 () T@$Mutation_85125)
+(declare-fun $t30 () T@$Mutation_84403)
 (push 1)
 (set-info :boogie-vc-id $1_DiemBlock_block_prologue$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 194781) (let ((anon44_Else_correct  (=> (and (not $abort_flag@1) (= $1_DiemBlock_BlockMetadata_$memory@0 ($Memory_92811 (|Store__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) (|a#$Global| (|l#$Mutation_124317| $t22@2)) true) (|Store__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) (|a#$Global| (|l#$Mutation_124317| $t22@2)) (|v#$Mutation_124317| $t22@2))))) (and (=> (= (ControlFlow 0 144218) (- 0 196333)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@0) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@0) 173345816)) (and (=> (= (ControlFlow 0 144218) (- 0 196347)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (and (=> (= (ControlFlow 0 144218) (- 0 196357)) (not (not (= _$t0@@0 0)))) (=> (not (not (= _$t0@@0 0))) (and (=> (= (ControlFlow 0 144218) (- 0 196371)) (not (and (not (= _$t4 0)) (not (let (($range_0 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr))))))
+ (=> (= (ControlFlow 0 0) 191716) (let ((anon38_Else_correct  (=> (and (not $abort_flag@1) (= $1_DiemBlock_BlockMetadata_$memory@0 ($Memory_91934 (|Store__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) (|a#$Global| (|l#$Mutation_123173| $t22@2)) true) (|Store__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) (|a#$Global| (|l#$Mutation_123173| $t22@2)) (|v#$Mutation_123173| $t22@2))))) (and (=> (= (ControlFlow 0 142520) (- 0 193180)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@0) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@0) 173345816)) (and (=> (= (ControlFlow 0 142520) (- 0 193194)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (and (=> (= (ControlFlow 0 142520) (- 0 193204)) (not (not (= _$t0@@0 0)))) (=> (not (not (= _$t0@@0 0))) (and (=> (= (ControlFlow 0 142520) (- 0 193218)) (not (and (not (= _$t4 0)) (not (let (($range_0 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr))))))
 (exists (($i_1 Int) ) (!  (and (and (>= $i_1 0) (< $i_1 (seq.len $range_0))) (let ((v@@36 (seq.nth $range_0 $i_1)))
 (= (|$addr#$1_DiemSystem_ValidatorInfo| v@@36) _$t4)))
- :qid |DiemBlockandybpl.11444:125|
- :skolemid |181|
-))))))) (=> (not (and (not (= _$t4 0)) (not (let (($range_0 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr))))))
-(exists (($i_1@@0 Int) ) (!  (and (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0))) (let ((v@@36 (seq.nth $range_0 $i_1@@0)))
-(= (|$addr#$1_DiemSystem_ValidatorInfo| v@@36) _$t4)))
- :qid |DiemBlockandybpl.11444:125|
- :skolemid |181|
-)))))) (and (=> (= (ControlFlow 0 144218) (- 0 196391)) (not (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615))) (=> (not (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615)) (and (=> (= (ControlFlow 0 144218) (- 0 196407)) (= (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816)) _$t2@@0)) (=> (= (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816)) _$t2@@0) (and (=> (= (ControlFlow 0 144218) (- 0 196416)) (= (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@0) 173345816)) (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1))) (=> (= (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@0) 173345816)) (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1)) (and (=> (= (ControlFlow 0 144218) (- 0 196431)) (let ((actual ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
-(let ((expected (let ((stream@@1 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) $t9@@0)))
-(let ((stream_new (let ((len (|l#Multiset_62435| stream@@1)))
-(let ((cnt (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@1) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0))))
-(Multiset_62435 (|Store__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@1) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0) (+ cnt 1)) (+ len 1))))))
-($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) $t9@@0 stream_new))))))
- (and (<= (|counter#$EventStore| expected) (|counter#$EventStore| actual)) (forall ((handle@@2 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| expected) handle@@2)) (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| actual) handle@@2))) (forall ((v@@37 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| expected) handle@@2)) v@@37) (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| actual) handle@@2)) v@@37))
+ :qid |DiemBlockandybpl.4556:125|
+ :skolemid |129|
+))))))) (=> (not (and (not (= _$t4 0)) (not (let (($range_0@@0 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@0 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@0))))))
+(exists (($i_1@@0 Int) ) (!  (and (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0@@0))) (let ((v@@37 (seq.nth $range_0@@0 $i_1@@0)))
+(= (|$addr#$1_DiemSystem_ValidatorInfo| v@@37) _$t4)))
+ :qid |DiemBlockandybpl.4556:125|
+ :skolemid |129|
+)))))) (and (=> (= (ControlFlow 0 142520) (- 0 193238)) (not (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615))) (=> (not (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615)) (and (=> (= (ControlFlow 0 142520) (- 0 193254)) (= (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816)) _$t2@@0)) (=> (= (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816)) _$t2@@0) (and (=> (= (ControlFlow 0 142520) (- 0 193263)) (= (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@0) 173345816)) (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1))) (=> (= (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@0) 173345816)) (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1)) (and (=> (= (ControlFlow 0 142520) (- 0 193278)) (let ((actual ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
+(let ((expected (let ((stream@@1 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) $t9@@0)))
+(let ((stream_new (let ((len (|l#Multiset_61713| stream@@1)))
+(let ((cnt (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@1) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0))))
+(Multiset_61713 (|Store__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@1) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0) (+ cnt 1)) (+ len 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) $t9@@0 stream_new))))))
+ (and (<= (|counter#$EventStore| expected) (|counter#$EventStore| actual)) (forall ((handle@@2 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| expected) handle@@2)) (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| actual) handle@@2))) (forall ((v@@38 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| expected) handle@@2)) v@@38) (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| actual) handle@@2)) v@@38))
  :qid |DiemBlockandybpl.134:13|
  :skolemid |3|
 )))
  :qid |DiemBlockandybpl.2554:13|
  :skolemid |70|
-)))))) (=> (let ((actual ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
-(let ((expected (let ((stream@@1 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) $t9@@0)))
-(let ((stream_new (let ((len (|l#Multiset_62435| stream@@1)))
-(let ((cnt (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@1) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0))))
-(Multiset_62435 (|Store__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@1) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0) (+ cnt 1)) (+ len 1))))))
-($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) $t9@@0 stream_new))))))
- (and (<= (|counter#$EventStore| expected) (|counter#$EventStore| actual)) (forall ((handle@@3 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| expected) handle@@3)) (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| actual) handle@@3))) (forall ((v@@38 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| expected) handle@@3)) v@@38) (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| actual) handle@@3)) v@@38))
+)))))) (=> (let ((actual@@0 ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
+(let ((expected@@0 (let ((stream@@2 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) $t9@@0)))
+(let ((stream_new@@0 (let ((len@@0 (|l#Multiset_61713| stream@@2)))
+(let ((cnt@@0 (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@2) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0))))
+(Multiset_61713 (|Store__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@2) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0) (+ cnt@@0 1)) (+ len@@0 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) $t9@@0 stream_new@@0))))))
+ (and (<= (|counter#$EventStore| expected@@0) (|counter#$EventStore| actual@@0)) (forall ((handle@@3 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| expected@@0) handle@@3)) (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| actual@@0) handle@@3))) (forall ((v@@39 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| expected@@0) handle@@3)) v@@39) (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| actual@@0) handle@@3)) v@@39))
  :qid |DiemBlockandybpl.134:13|
  :skolemid |3|
 )))
  :qid |DiemBlockandybpl.2554:13|
  :skolemid |70|
-))))) (=> (= (ControlFlow 0 144218) (- 0 196456)) (let ((actual@@0 ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
-(let ((expected@@0 (let ((stream@@2 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) $t9@@0)))
-(let ((stream_new@@0 (let ((len@@0 (|l#Multiset_62435| stream@@2)))
-(let ((cnt@@0 (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@2) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0))))
-(Multiset_62435 (|Store__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@2) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0) (+ cnt@@0 1)) (+ len@@0 1))))))
-($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $EmptyEventStore) $t9@@0 stream_new@@0))))))
- (and (<= (|counter#$EventStore| actual@@0) (|counter#$EventStore| expected@@0)) (forall ((handle@@4 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| actual@@0) handle@@4)) (|l#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| expected@@0) handle@@4))) (forall ((v@@39 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| actual@@0) handle@@4)) v@@39) (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| expected@@0) handle@@4)) v@@39))
+))))) (=> (= (ControlFlow 0 142520) (- 0 193303)) (let ((actual@@1 ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
+(let ((expected@@1 (let ((stream@@3 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) $t9@@0)))
+(let ((stream_new@@1 (let ((len@@1 (|l#Multiset_61713| stream@@3)))
+(let ((cnt@@1 (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@3) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0))))
+(Multiset_61713 (|Store__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@3) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t10@@0) (+ cnt@@1 1)) (+ len@@1 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $EmptyEventStore) $t9@@0 stream_new@@1))))))
+ (and (<= (|counter#$EventStore| actual@@1) (|counter#$EventStore| expected@@1)) (forall ((handle@@4 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| actual@@1) handle@@4)) (|l#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| expected@@1) handle@@4))) (forall ((v@@40 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| actual@@1) handle@@4)) v@@40) (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| expected@@1) handle@@4)) v@@40))
  :qid |DiemBlockandybpl.134:13|
  :skolemid |3|
 )))
  :qid |DiemBlockandybpl.2554:13|
  :skolemid |70|
 )))))))))))))))))))))))))
-(let ((anon38_Then_correct true))
-(let ((L7_correct  (and (=> (= (ControlFlow 0 143539) (- 0 196184)) (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0@@0 0))) (and (not (= _$t4 0)) (not (let (($range_0@@0 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@0 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@0))))))
-(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0@@0))) (let ((v@@40 (seq.nth $range_0@@0 $i_1@@1)))
-(= (|$addr#$1_DiemSystem_ValidatorInfo| v@@40) _$t4)))
- :qid |DiemBlockandybpl.11444:125|
- :skolemid |181|
-)))))) (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615))) (=> (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0@@0 0))) (and (not (= _$t4 0)) (not (let (($range_0@@0 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@0 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@0))))))
-(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@0))) (let ((v@@40 (seq.nth $range_0@@0 $i_1@@2)))
-(= (|$addr#$1_DiemSystem_ValidatorInfo| v@@40) _$t4)))
- :qid |DiemBlockandybpl.11444:125|
- :skolemid |181|
-)))))) (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615)) (=> (= (ControlFlow 0 143539) (- 0 196230)) (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t12@0)) (and (not (= _$t0@@0 0)) (= 2 $t12@0))) (and (and (not (= _$t4 0)) (not (let (($range_0@@1 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@1 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@1))))))
-(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@1))) (let ((v@@41 (seq.nth $range_0@@1 $i_1@@3)))
+(let ((L7_correct  (and (=> (= (ControlFlow 0 141912) (- 0 193031)) (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0@@0 0))) (and (not (= _$t4 0)) (not (let (($range_0@@1 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@1 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@1))))))
+(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0@@1))) (let ((v@@41 (seq.nth $range_0@@1 $i_1@@1)))
 (= (|$addr#$1_DiemSystem_ValidatorInfo| v@@41) _$t4)))
- :qid |DiemBlockandybpl.11444:125|
- :skolemid |181|
-))))) (= 2 $t12@0))) (and (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615) (= (- 0 1) $t12@0))))))))
-(let ((anon44_Then_correct  (=> (and (and $abort_flag@1 (= $abort_code@2 $abort_code@2)) (and (= $t12@0 $abort_code@2) (= (ControlFlow 0 144232) 143539))) L7_correct)))
-(let ((|inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|  (=> (and (= |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1| (|v#$Mutation_85125| $t30@0)) (= $es@0 (let ((stream@@3 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1|)))
-(let ((stream_new@@1 (let ((len@@1 (|l#Multiset_62435| stream@@3)))
-(let ((cnt@@1 (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@3) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t31@0))))
-(Multiset_62435 (|Store__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@3) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t31@0) (+ cnt@@1 1)) (+ len@@1 1))))))
-($EventStore (+ (|counter#$EventStore| $es) 1) (|Store__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1| stream_new@@1)))))) (and (=> (= (ControlFlow 0 144034) 144232) anon44_Then_correct) (=> (= (ControlFlow 0 144034) 144218) anon44_Else_correct)))))
-(let ((anon43_Else_correct  (=> (not $abort_flag@1) (=> (and (= $t29@0 ($Mutation_12329 (|l#$Mutation_124317| $t22@1) (seq.++ (|p#$Mutation_124317| $t22@1) (seq.unit 0)) (|$height#$1_DiemBlock_BlockMetadata| (|v#$Mutation_124317| $t22@1)))) (= $t29@1 ($Mutation_12329 (|l#$Mutation_12329| $t29@0) (|p#$Mutation_12329| $t29@0) inline$$AddU64$0$dst@2))) (=> (and (and (= $t22@2 ($Mutation_124317 (|l#$Mutation_124317| $t22@1) (|p#$Mutation_124317| $t22@1) ($1_DiemBlock_BlockMetadata (|v#$Mutation_12329| $t29@1) (|$new_block_events#$1_DiemBlock_BlockMetadata| (|v#$Mutation_124317| $t22@1))))) (= $t30@0 ($Mutation_85125 (|l#$Mutation_124317| $t22@2) (seq.++ (|p#$Mutation_124317| $t22@2) (seq.unit 1)) (|$new_block_events#$1_DiemBlock_BlockMetadata| (|v#$Mutation_124317| $t22@2))))) (and (= $t31@0 ($1_DiemBlock_NewBlockEvent _$t1@@0 _$t4 _$t3 _$t2@@0)) (= (ControlFlow 0 144040) 144034))) |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|)))))
-(let ((anon43_Then_correct  (=> (and (and $abort_flag@1 (= $abort_code@2 $abort_code@2)) (and (= $t12@0 $abort_code@2) (= (ControlFlow 0 144246) 143539))) L7_correct)))
-(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@1 true) (=> (and (= $abort_code@2 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 143891) 144246) anon43_Then_correct) (=> (= (ControlFlow 0 143891) 144040) anon43_Else_correct))))))
-(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ $t26@0 1) $MAX_U64) (= (ControlFlow 0 143889) 143891)) inline$$AddU64$0$anon3_Then$1_correct)))
-(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ $t26@0 1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ $t26@0 1)) (= $abort_flag@1 $abort_flag@0@@0)) (and (= $abort_code@2 $abort_code@1@@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 143837) 144246) anon43_Then_correct) (=> (= (ControlFlow 0 143837) 144040) anon43_Else_correct))))))
-(let ((anon25_correct  (=> (and (and (= $t25@@0 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816))) (= $t25@@0 _$t2@@0)) (and (= $t26@0 (|$height#$1_DiemBlock_BlockMetadata| (|v#$Mutation_124317| $t22@1))) (|$IsValid'u64'| 1))) (and (=> (= (ControlFlow 0 143897) 143889) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 143897) 143837) inline$$AddU64$0$anon3_Else_correct)))))
-(let ((anon42_Else_correct  (=> (and (and (not |$temp_0'bool'@0|) (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@1 ($Memory_91365 (|Store__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816 false) (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory)))) (and (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2 $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@1) (= (ControlFlow 0 143714) 143897))) anon25_correct)))
-(let ((anon42_Then_correct  (=> (and (and |$temp_0'bool'@0| (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0@@0 ($Memory_91365 (|Store__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816 true) (|Store__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816 |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0@@0|)))) (and (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2 $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0@@0) (= (ControlFlow 0 144258) 143897))) anon25_correct)))
-(let ((anon41_Else_correct  (=> (not $t24@@0) (and (=> (= (ControlFlow 0 143702) 144258) anon42_Then_correct) (=> (= (ControlFlow 0 143702) 143714) anon42_Else_correct)))))
-(let ((anon41_Then_correct  (=> $t24@@0 (=> (and (and (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t12@@0)) (and (not (= _$t0@@0 0)) (= 2 $t12@@0))) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 144304) 143539))) L7_correct))))
-(let ((anon40_Else_correct  (=> (not $abort_flag@0@@0) (=> (and (and (= |$temp_0'$1_DiemBlock_BlockMetadata'@0| (|v#$Mutation_124317| $t22@1)) (= |$temp_0'$1_DiemBlock_BlockMetadata'@0| |$temp_0'$1_DiemBlock_BlockMetadata'@0|)) (and (= $t23@@0 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= $t24@@0  (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0@@0 0)))))) (and (=> (= (ControlFlow 0 143696) 144304) anon41_Then_correct) (=> (= (ControlFlow 0 143696) 143702) anon41_Else_correct))))))
-(let ((anon40_Then_correct  (=> (and (and $abort_flag@0@@0 (= $abort_code@1@@0 $abort_code@1@@0)) (and (= $t12@0 $abort_code@1@@0) (= (ControlFlow 0 144318) 143539))) L7_correct)))
-(let ((anon39_Then$1_correct  (=> (= $t22@1 $t22) (=> (and (= $abort_flag@0@@0 true) (= $abort_code@1@@0 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 144370) 144318) anon40_Then_correct) (=> (= (ControlFlow 0 144370) 143696) anon40_Else_correct))))))
-(let ((anon39_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (= (ControlFlow 0 144368) 144370)) anon39_Then$1_correct)))
-(let ((anon39_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816) (=> (and (and (= $t22@0 ($Mutation_124317 ($Global 173345816) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (= $t22@1 $t22@0)) (and (= $abort_flag@0@@0 false) (= $abort_code@1@@0 $abort_code@0@@0))) (and (=> (= (ControlFlow 0 143642) 144318) anon40_Then_correct) (=> (= (ControlFlow 0 143642) 143696) anon40_Else_correct))))))
-(let ((anon38_Else_correct  (=> (not false) (and (=> (= (ControlFlow 0 143620) 144368) anon39_Then_correct) (=> (= (ControlFlow 0 143620) 143642) anon39_Else_correct)))))
-(let ((inline$$1_CoreAddresses_DIEM_ROOT_ADDRESS$0$anon0_correct@@0  (=> (and (|$IsValid'address'| 173345816) (= 173345816 173345816)) (and (=> (= (ControlFlow 0 143606) 144384) anon38_Then_correct) (=> (= (ControlFlow 0 143606) 143620) anon38_Else_correct)))))
-(let ((anon37_Then_correct  (=> (and $t8@0 (= (ControlFlow 0 143612) 143606)) inline$$1_CoreAddresses_DIEM_ROOT_ADDRESS$0$anon0_correct@@0)))
-(let ((anon37_Else_correct  (=> (and (and (not $t8@0) (= $t20@@0 $t20@@0)) (and (= $t12@0 $t20@@0) (= (ControlFlow 0 143393) 143539))) L7_correct)))
-(let ((L3_correct  (=> (|$IsValid'u64'| 1) (=> (and (and (|$IsValid'u64'| $t20@@0) (= $t20@@0 2)) (and (= $t20@@0 $t20@@0) (= $t8@0 $t8@0))) (and (=> (= (ControlFlow 0 143377) 143612) anon37_Then_correct) (=> (= (ControlFlow 0 143377) 143393) anon37_Else_correct))))))
-(let ((anon36_Else_correct  (=> (not $t18) (=> (and (and (= $t17 (let (($range_0@@2 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@2 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@2))))))
-(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@2))) (let ((v@@42 (seq.nth $range_0@@2 $i_1@@4)))
+ :qid |DiemBlockandybpl.4556:125|
+ :skolemid |129|
+)))))) (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615))) (=> (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0@@0 0))) (and (not (= _$t4 0)) (not (let (($range_0@@2 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@2 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@2))))))
+(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@2))) (let ((v@@42 (seq.nth $range_0@@2 $i_1@@2)))
 (= (|$addr#$1_DiemSystem_ValidatorInfo| v@@42) _$t4)))
- :qid |DiemBlockandybpl.11444:125|
- :skolemid |181|
-)))) (= $t17 $t17)) (and (= $t8@0 $t17) (= (ControlFlow 0 143343) 143377))) L3_correct))))
-(let ((anon35_Then_correct  (=> (and (and $t15@0@@0 (= true true)) (and (= $t8@0 true) (= (ControlFlow 0 144430) 143377))) L3_correct)))
-(let ((anon36_Then_correct  (=> $t18 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816)) (= 5 $t12@@0)) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 144412) 143539))) L7_correct))))
-(let ((anon35_Else_correct  (=> (and (not $t15@0@@0) (= $t18  (not (|Select__T@[Int]Bool_| (|domain#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816)))) (and (=> (= (ControlFlow 0 143315) 144412) anon36_Then_correct) (=> (= (ControlFlow 0 143315) 143343) anon36_Else_correct)))))
-(let ((anon34_Else_correct  (=> (and (not false) (= $t15@0@@0 (= _$t4 0))) (and (=> (= (ControlFlow 0 143297) 144430) anon35_Then_correct) (=> (= (ControlFlow 0 143297) 143315) anon35_Else_correct)))))
-(let ((anon33_Then_correct  (=> $t13 (=> (and (and (and (not (= _$t0@@0 0)) (= 2 $t12@@0)) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 144474) 143539))) L7_correct))))
-(let ((anon32_Then_correct@@0  (=> $t11@@0 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t12@@0)) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 144500) 143539))) L7_correct))))
-(let ((anon34_Then_correct true))
-(let ((inline$$1_CoreAddresses_VM_RESERVED_ADDRESS$0$anon0_correct@@0  (=> (and (|$IsValid'address'| 0) (= 0 0)) (and (=> (= (ControlFlow 0 143277) 144444) anon34_Then_correct) (=> (= (ControlFlow 0 143277) 143297) anon34_Else_correct)))))
-(let ((anon33_Else_correct  (=> (and (not $t13) (= (ControlFlow 0 143283) 143277)) inline$$1_CoreAddresses_VM_RESERVED_ADDRESS$0$anon0_correct@@0)))
-(let ((anon32_Else_correct@@0  (=> (and (not $t11@@0) (= $t13  (not (= _$t0@@0 0)))) (and (=> (= (ControlFlow 0 143206) 144474) anon33_Then_correct) (=> (= (ControlFlow 0 143206) 143283) anon33_Else_correct)))))
-(let ((anon0$1_correct@@0  (=> (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_94187| $1_DiemConfig_Configuration_$memory) 173345816))) (=> (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (and (|Select__T@[Int]Bool_| (|domain#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_122491| $1_DiemSystem_CapabilityHolder_$memory) 173345816))) (let (($range_0@@3 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@3 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@3))))))))
-(forall (($i_1@@5 Int) ) (!  (=> ($InRange $range_0@@3 $i_1@@5) (let ((i1 $i_1@@5))
- (and (|Select__T@[Int]Bool_| (|domain#$Memory_93313| $1_Roles_RoleId_$memory) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@4 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@4)))) i1))) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_93313| $1_Roles_RoleId_$memory) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@4 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@4)))) i1)))) 3))))
- :qid |DiemBlockandybpl.12026:151|
+ :qid |DiemBlockandybpl.4556:125|
+ :skolemid |129|
+)))))) (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615)) (=> (= (ControlFlow 0 141912) (- 0 193077)) (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t12@0)) (and (not (= _$t0@@0 0)) (= 2 $t12@0))) (and (and (not (= _$t4 0)) (not (let (($range_0@@3 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@3 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@3))))))
+(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@3))) (let ((v@@43 (seq.nth $range_0@@3 $i_1@@3)))
+(= (|$addr#$1_DiemSystem_ValidatorInfo| v@@43) _$t4)))
+ :qid |DiemBlockandybpl.4556:125|
+ :skolemid |129|
+))))) (= 2 $t12@0))) (and (> (+ (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) 1) 18446744073709551615) (= (- 0 1) $t12@0))))))))
+(let ((anon38_Then_correct  (=> (and (and $abort_flag@1 (= $abort_code@2 $abort_code@2)) (and (= $t12@0 $abort_code@2) (= (ControlFlow 0 142534) 141912))) L7_correct)))
+(let ((|inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|  (=> (and (= |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1| (|v#$Mutation_84403| $t30@0)) (= $es@0 (let ((stream@@4 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1|)))
+(let ((stream_new@@2 (let ((len@@2 (|l#Multiset_61713| stream@@4)))
+(let ((cnt@@2 (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@4) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t31@0))))
+(Multiset_61713 (|Store__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@4) (|$ToEventRep'$1_DiemBlock_NewBlockEvent'| $t31@0) (+ cnt@@2 1)) (+ len@@2 1))))))
+($EventStore (+ (|counter#$EventStore| $es) 1) (|Store__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$handle@1| stream_new@@2)))))) (and (=> (= (ControlFlow 0 142336) 142534) anon38_Then_correct) (=> (= (ControlFlow 0 142336) 142520) anon38_Else_correct)))))
+(let ((anon37_Else_correct  (=> (not $abort_flag@1) (=> (and (= $t29@0 ($Mutation_12329 (|l#$Mutation_123173| $t22@1) (seq.++ (|p#$Mutation_123173| $t22@1) (seq.unit 0)) (|$height#$1_DiemBlock_BlockMetadata| (|v#$Mutation_123173| $t22@1)))) (= $t29@1 ($Mutation_12329 (|l#$Mutation_12329| $t29@0) (|p#$Mutation_12329| $t29@0) inline$$AddU64$0$dst@2))) (=> (and (and (= $t22@2 ($Mutation_123173 (|l#$Mutation_123173| $t22@1) (|p#$Mutation_123173| $t22@1) ($1_DiemBlock_BlockMetadata (|v#$Mutation_12329| $t29@1) (|$new_block_events#$1_DiemBlock_BlockMetadata| (|v#$Mutation_123173| $t22@1))))) (= $t30@0 ($Mutation_84403 (|l#$Mutation_123173| $t22@2) (seq.++ (|p#$Mutation_123173| $t22@2) (seq.unit 1)) (|$new_block_events#$1_DiemBlock_BlockMetadata| (|v#$Mutation_123173| $t22@2))))) (and (= $t31@0 ($1_DiemBlock_NewBlockEvent _$t1@@0 _$t4 _$t3 _$t2@@0)) (= (ControlFlow 0 142342) 142336))) |inline$$1_Event_emit_event'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|)))))
+(let ((anon37_Then_correct  (=> (and (and $abort_flag@1 (= $abort_code@2 $abort_code@2)) (and (= $t12@0 $abort_code@2) (= (ControlFlow 0 142548) 141912))) L7_correct)))
+(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@1 true) (=> (and (= $abort_code@2 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 142193) 142548) anon37_Then_correct) (=> (= (ControlFlow 0 142193) 142342) anon37_Else_correct))))))
+(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ $t26@0 1) $MAX_U64) (= (ControlFlow 0 142191) 142193)) inline$$AddU64$0$anon3_Then$1_correct)))
+(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ $t26@0 1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ $t26@0 1)) (= $abort_flag@1 $abort_flag@0@@0)) (and (= $abort_code@2 $abort_code@1@@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 142139) 142548) anon37_Then_correct) (=> (= (ControlFlow 0 142139) 142342) anon37_Else_correct))))))
+(let ((anon21_correct  (=> (and (and (= $t25@@0 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2) 173345816))) (= $t25@@0 _$t2@@0)) (and (= $t26@0 (|$height#$1_DiemBlock_BlockMetadata| (|v#$Mutation_123173| $t22@1))) (|$IsValid'u64'| 1))) (and (=> (= (ControlFlow 0 142199) 142191) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 142199) 142139) inline$$AddU64$0$anon3_Else_correct)))))
+(let ((anon36_Else_correct  (=> (and (and (not |$temp_0'bool'@0|) (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@1 ($Memory_90527 (|Store__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816 false) (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory)))) (and (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2 $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@1) (= (ControlFlow 0 142016) 142199))) anon21_correct)))
+(let ((anon36_Then_correct  (=> (and (and |$temp_0'bool'@0| (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0@@0 ($Memory_90527 (|Store__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816 true) (|Store__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816 |$temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'@0@@0|)))) (and (= $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@2 $1_DiemTimestamp_CurrentTimeMicroseconds_$memory@0@@0) (= (ControlFlow 0 142560) 142199))) anon21_correct)))
+(let ((anon35_Else_correct  (=> (not $t24@@0) (and (=> (= (ControlFlow 0 142004) 142560) anon36_Then_correct) (=> (= (ControlFlow 0 142004) 142016) anon36_Else_correct)))))
+(let ((anon35_Then_correct  (=> $t24@@0 (=> (and (and (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t12@@0)) (and (not (= _$t0@@0 0)) (= 2 $t12@@0))) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 142606) 141912))) L7_correct))))
+(let ((anon34_Else_correct  (=> (not $abort_flag@0@@0) (=> (and (and (= |$temp_0'$1_DiemBlock_BlockMetadata'@0| (|v#$Mutation_123173| $t22@1)) (= |$temp_0'$1_DiemBlock_BlockMetadata'@0| |$temp_0'$1_DiemBlock_BlockMetadata'@0|)) (and (= $t23@@0 (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= $t24@@0  (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (not (= _$t0@@0 0)))))) (and (=> (= (ControlFlow 0 141998) 142606) anon35_Then_correct) (=> (= (ControlFlow 0 141998) 142004) anon35_Else_correct))))))
+(let ((anon34_Then_correct  (=> (and (and $abort_flag@0@@0 (= $abort_code@1@@0 $abort_code@1@@0)) (and (= $t12@0 $abort_code@1@@0) (= (ControlFlow 0 142620) 141912))) L7_correct)))
+(let ((anon33_Then$1_correct  (=> (= $t22@1 $t22) (=> (and (= $abort_flag@0@@0 true) (= $abort_code@1@@0 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 142672) 142620) anon34_Then_correct) (=> (= (ControlFlow 0 142672) 141998) anon34_Else_correct))))))
+(let ((anon33_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (= (ControlFlow 0 142670) 142672)) anon33_Then$1_correct)))
+(let ((anon33_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816) (=> (and (and (= $t22@0 ($Mutation_123173 ($Global 173345816) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (= $t22@1 $t22@0)) (and (= $abort_flag@0@@0 false) (= $abort_code@1@@0 $abort_code@0@@0))) (and (=> (= (ControlFlow 0 141944) 142620) anon34_Then_correct) (=> (= (ControlFlow 0 141944) 141998) anon34_Else_correct))))))
+(let ((anon32_Then_correct  (=> (and $t8@0 (|$IsValid'address'| 173345816)) (and (=> (= (ControlFlow 0 141922) 142670) anon33_Then_correct) (=> (= (ControlFlow 0 141922) 141944) anon33_Else_correct)))))
+(let ((anon32_Else_correct  (=> (and (and (not $t8@0) (= $t20@@0 $t20@@0)) (and (= $t12@0 $t20@@0) (= (ControlFlow 0 141766) 141912))) L7_correct)))
+(let ((L3_correct  (=> (|$IsValid'u64'| 1) (=> (and (and (|$IsValid'u64'| $t20@@0) (= $t20@@0 2)) (and (= $t20@@0 $t20@@0) (= $t8@0 $t8@0))) (and (=> (= (ControlFlow 0 141750) 141922) anon32_Then_correct) (=> (= (ControlFlow 0 141750) 141766) anon32_Else_correct))))))
+(let ((anon31_Else_correct  (=> (not $t18) (=> (and (and (= $t17 (let (($range_0@@4 (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@4 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@4))))))
+(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@4))) (let ((v@@44 (seq.nth $range_0@@4 $i_1@@4)))
+(= (|$addr#$1_DiemSystem_ValidatorInfo| v@@44) _$t4)))
+ :qid |DiemBlockandybpl.4556:125|
+ :skolemid |129|
+)))) (= $t17 $t17)) (and (= $t8@0 $t17) (= (ControlFlow 0 141716) 141750))) L3_correct))))
+(let ((anon30_Then_correct  (=> (and (and $t15@0@@0 (= true true)) (and (= $t8@0 true) (= (ControlFlow 0 142718) 141750))) L3_correct)))
+(let ((anon31_Then_correct  (=> $t18 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816)) (= 5 $t12@@0)) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 142700) 141912))) L7_correct))))
+(let ((anon30_Else_correct  (=> (and (not $t15@0@@0) (= $t18  (not (|Select__T@[Int]Bool_| (|domain#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816)))) (and (=> (= (ControlFlow 0 141688) 142700) anon31_Then_correct) (=> (= (ControlFlow 0 141688) 141716) anon31_Else_correct)))))
+(let ((anon29_Else_correct  (=> (not $t13) (=> (and (|$IsValid'address'| 0) (= $t15@0@@0 (= _$t4 0))) (and (=> (= (ControlFlow 0 141670) 142718) anon30_Then_correct) (=> (= (ControlFlow 0 141670) 141688) anon30_Else_correct))))))
+(let ((anon29_Then_correct  (=> $t13 (=> (and (and (and (not (= _$t0@@0 0)) (= 2 $t12@@0)) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 142748) 141912))) L7_correct))))
+(let ((anon28_Else_correct  (=> (and (not $t11@@0) (= $t13  (not (= _$t0@@0 0)))) (and (=> (= (ControlFlow 0 141650) 142748) anon29_Then_correct) (=> (= (ControlFlow 0 141650) 141670) anon29_Else_correct)))))
+(let ((anon28_Then_correct  (=> $t11@@0 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t12@@0)) (= $t12@@0 $t12@@0)) (and (= $t12@0 $t12@@0) (= (ControlFlow 0 142774) 141912))) L7_correct))))
+(let ((anon0$1_correct@@0  (=> (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_94152| $1_DiemConfig_Configuration_$memory) 173345816))) (=> (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (and (|Select__T@[Int]Bool_| (|domain#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_95644| $1_DiemSystem_CapabilityHolder_$memory) 173345816))) (let (($range_0@@5 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@5 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@5))))))))
+(forall (($i_1@@5 Int) ) (!  (=> ($InRange $range_0@@5 $i_1@@5) (let ((i1 $i_1@@5))
+ (and (|Select__T@[Int]Bool_| (|domain#$Memory_92310| $1_Roles_RoleId_$memory) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@6 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@6)))) i1))) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_92310| $1_Roles_RoleId_$memory) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@6 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@6)))) i1)))) 3))))
+ :qid |DiemBlockandybpl.11825:151|
  :skolemid |188|
-)))) (and (let (($range_0@@4 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@5 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@5))))))))
-(forall (($i_1@@6 Int) ) (!  (=> ($InRange $range_0@@4 $i_1@@6) (let ((i1@@0 $i_1@@6))
-(= (|$consensus_voting_power#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@6 173345816))
-(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@6)))) i1@@0)) 1)))
- :qid |DiemBlockandybpl.12031:151|
+)))) (and (let (($range_0@@6 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@7 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@7))))))))
+(forall (($i_1@@6 Int) ) (!  (=> ($InRange $range_0@@6 $i_1@@6) (let ((i1@@0 $i_1@@6))
+(= (|$consensus_voting_power#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@8 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@8)))) i1@@0)) 1)))
+ :qid |DiemBlockandybpl.11830:151|
  :skolemid |189|
-))) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)))) (=> (and (and (and (and (|$IsValid'address'| _$t0@@0) (|$IsValid'u64'| _$t1@@0)) (and (|$IsValid'u64'| _$t2@@0) (|$IsValid'vec'address''| _$t3))) (and (and (|$IsValid'address'| _$t4) (forall (($a_0@@0 Int) ) (! (let (($rsc@@0 (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@0)))
+))) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)))) (=> (and (and (and (and (|$IsValid'address'| _$t0@@0) (|$IsValid'u64'| _$t1@@0)) (and (|$IsValid'u64'| _$t2@@0) (|$IsValid'vec'address''| _$t3))) (and (and (|$IsValid'address'| _$t4) (forall (($a_0@@0 Int) ) (! (let (($rsc@@0 (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@0)))
 (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| $rsc@@0))
- :qid |DiemBlockandybpl.12054:20|
+ :qid |DiemBlockandybpl.11853:20|
  :skolemid |190|
- :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@0))
-))) (and (forall (($a_0@@1 Int) ) (! (let (($rsc@@1 (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) $a_0@@1)))
+ :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@0))
+))) (and (forall (($a_0@@1 Int) ) (! (let (($rsc@@1 (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) $a_0@@1)))
  (and (|$IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''| $rsc@@1) (let (($range_1 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| $rsc@@1))))))
 (let (($range_2 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| $rsc@@1))))))
 (forall (($i_3 Int) ($i_4 Int) ) (!  (=> ($InRange $range_1 $i_3) (=> ($InRange $range_2 $i_4) (let ((i@@40 $i_3))
 (let ((j@@9 $i_4))
  (=> (= (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| $rsc@@1)) i@@40)) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| $rsc@@1)) j@@9))) (= i@@40 j@@9))))))
- :qid |DiemBlockandybpl.12059:367|
+ :qid |DiemBlockandybpl.11858:367|
  :skolemid |191|
 ))))))
- :qid |DiemBlockandybpl.12058:20|
+ :qid |DiemBlockandybpl.11857:20|
  :skolemid |192|
- :pattern ( (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) $a_0@@1))
-)) (forall (($a_0@@2 Int) ) (! (let (($rsc@@2 (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) $a_0@@2)))
+ :pattern ( (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) $a_0@@1))
+)) (forall (($a_0@@2 Int) ) (! (let (($rsc@@2 (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) $a_0@@2)))
 (|$IsValid'$1_DiemBlock_BlockMetadata'| $rsc@@2))
- :qid |DiemBlockandybpl.12064:20|
+ :qid |DiemBlockandybpl.11863:20|
  :skolemid |193|
- :pattern ( (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) $a_0@@2))
-))))) (and (and (and (= $t9@@0 (|$new_block_events#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (= $t10@@0 ($1_DiemBlock_NewBlockEvent _$t1@@0 _$t4 _$t3 _$t2@@0))) (and (= _$t0@@0 _$t0@@0) (= _$t1@@0 _$t1@@0))) (and (and (= _$t2@@0 _$t2@@0) (= _$t3 _$t3)) (and (= _$t4 _$t4) (= $t11@@0  (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))))))) (and (=> (= (ControlFlow 0 143184) 144500) anon32_Then_correct@@0) (=> (= (ControlFlow 0 143184) 143206) anon32_Else_correct@@0)))))))
-(let ((inline$$InitEventStore$0$anon0_correct@@0  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@5 T@$1_Event_EventHandle) ) (! (let ((stream@@4 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $es) handle@@5)))
- (and (= (|l#Multiset_62435| stream@@4) 0) (forall ((v@@43 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@4) v@@43) 0)
+ :pattern ( (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) $a_0@@2))
+))))) (and (and (and (= $t9@@0 (|$new_block_events#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (= $t10@@0 ($1_DiemBlock_NewBlockEvent _$t1@@0 _$t4 _$t3 _$t2@@0))) (and (= _$t0@@0 _$t0@@0) (= _$t1@@0 _$t1@@0))) (and (and (= _$t2@@0 _$t2@@0) (= _$t3 _$t3)) (and (= _$t4 _$t4) (= $t11@@0  (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))))))) (and (=> (= (ControlFlow 0 141628) 142774) anon28_Then_correct) (=> (= (ControlFlow 0 141628) 141650) anon28_Else_correct)))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@0  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@5 T@$1_Event_EventHandle) ) (! (let ((stream@@5 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $es) handle@@5)))
+ (and (= (|l#Multiset_61713| stream@@5) 0) (forall ((v@@45 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@5) v@@45) 0)
  :qid |DiemBlockandybpl.129:13|
  :skolemid |2|
 ))))
  :qid |DiemBlockandybpl.2538:13|
  :skolemid |69|
-))) (= (ControlFlow 0 142781) 143184)) anon0$1_correct@@0)))
-(let ((anon0_correct@@0  (=> (= (seq.len (|p#$Mutation_124317| $t5)) 0) (=> (and (and (= (seq.len (|p#$Mutation_124317| $t22)) 0) (= (seq.len (|p#$Mutation_12329| $t29)) 0)) (and (= (seq.len (|p#$Mutation_85125| $t30)) 0) (= (ControlFlow 0 142791) 142781))) inline$$InitEventStore$0$anon0_correct@@0))))
-(let ((PreconditionGeneratedEntry_correct@@0  (=> (= (ControlFlow 0 194781) 142791) anon0_correct@@0)))
-PreconditionGeneratedEntry_correct@@0)))))))))))))))))))))))))))))))))))))))))
+))) (= (ControlFlow 0 141225) 141628)) anon0$1_correct@@0)))
+(let ((anon0_correct@@0  (=> (= (seq.len (|p#$Mutation_123173| $t5)) 0) (=> (and (and (= (seq.len (|p#$Mutation_123173| $t22)) 0) (= (seq.len (|p#$Mutation_12329| $t29)) 0)) (and (= (seq.len (|p#$Mutation_84403| $t30)) 0) (= (ControlFlow 0 141235) 141225))) inline$$InitEventStore$0$anon0_correct@@0))))
+(let ((PreconditionGeneratedEntry_correct@@0  (=> (= (ControlFlow 0 191716) 141235) anon0_correct@@0)))
+PreconditionGeneratedEntry_correct@@0)))))))))))))))))))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
@@ -1670,20 +1658,19 @@ PreconditionGeneratedEntry_correct@@0)))))))))))))))))))))))))))))))))))))))))
 (push 1)
 (set-info :boogie-vc-id $1_DiemBlock_get_current_block_height$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 196488) true)
+ (=> (= (ControlFlow 0 0) 193333) true)
 ))
 (check-sat)
 (pop 1)
 ; Valid
-(declare-fun $abort_flag@1@@0 () Bool)
-(declare-fun $1_DiemBlock_BlockMetadata_$memory@1 () T@$Memory_92811)
+(declare-fun $abort_flag@0@@1 () Bool)
+(declare-fun $1_DiemBlock_BlockMetadata_$memory@1 () T@$Memory_91934)
 (declare-fun _$t0@@1 () Int)
 (declare-fun $t4@0 () Int)
 (declare-fun $abort_code@1@@1 () Int)
-(declare-fun $1_DiemBlock_BlockMetadata_$memory@0@@0 () T@$Memory_92811)
+(declare-fun $1_DiemBlock_BlockMetadata_$memory@0@@0 () T@$Memory_91934)
 (declare-fun $t12@0@@0 () T@$1_DiemBlock_BlockMetadata)
 (declare-fun $abort_code@0@@1 () Int)
-(declare-fun $abort_flag@0@@1 () Bool)
 (declare-fun |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0| () T@$1_Event_EventHandle)
 (declare-sort |T@[$1_Event_EventHandle]Bool| 0)
 (declare-fun |Select__T@[$1_Event_EventHandle]Bool_| (|T@[$1_Event_EventHandle]Bool| T@$1_Event_EventHandle) Bool)
@@ -1694,58 +1681,54 @@ PreconditionGeneratedEntry_correct@@0)))))))))))))))))))))))))))))))))))))))))
 (assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Bool|) ( ?x1 T@$1_Event_EventHandle) ( ?y1 T@$1_Event_EventHandle) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$1_Event_EventHandle]Bool_| (|Store__T@[$1_Event_EventHandle]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$1_Event_EventHandle]Bool_| ?x0 ?y1))) :weight 0)))
 (declare-fun inline$$Not$0$dst@1 () Bool)
 (declare-fun $t9@@1 () Int)
-(declare-fun inline$$1_DiemBlock_is_initialized$0$$ret0@1 () Bool)
-(declare-fun inline$$1_DiemBlock_is_initialized$0$$t2@1 () Bool)
+(declare-fun inline$$1_DiemBlock_is_initialized$0$$t1@1 () Bool)
 (declare-fun $t5@@0 () Bool)
 (declare-fun $t4 () Int)
 (declare-fun $t3@@0 () Bool)
 (push 1)
 (set-info :boogie-vc-id $1_DiemBlock_initialize_block_metadata$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 196920) (let ((anon24_Else_correct@@0  (=> (not $abort_flag@1@@0) (and (=> (= (ControlFlow 0 146082) (- 0 197650)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@1) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@1) 173345816)) (and (=> (= (ControlFlow 0 146082) (- 0 197665)) (not (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))))) (=> (not (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (and (=> (= (ControlFlow 0 146082) (- 0 197675)) (not (not (= _$t0@@1 173345816)))) (=> (not (not (= _$t0@@1 173345816))) (and (=> (= (ControlFlow 0 146082) (- 0 197689)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (and (=> (= (ControlFlow 0 146082) (- 0 197697)) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@1) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@1) 173345816) (=> (= (ControlFlow 0 146082) (- 0 197703)) (= (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory@1) 173345816)) 0)))))))))))))))
-(let ((L3_correct@@0  (and (=> (= (ControlFlow 0 145890) (- 0 197576)) (or (or (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (not (= _$t0@@1 173345816))) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (=> (or (or (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (not (= _$t0@@1 173345816))) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (=> (= (ControlFlow 0 145890) (- 0 197597)) (or (or (and (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= 1 $t4@0)) (and (not (= _$t0@@1 173345816)) (= 2 $t4@0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816) (= 6 $t4@0))))))))
-(let ((anon24_Then_correct@@0  (=> (and (and $abort_flag@1@@0 (= $abort_code@1@@1 $abort_code@1@@1)) (and (= $t4@0 $abort_code@1@@1) (= (ControlFlow 0 146096) 145890))) L3_correct@@0)))
-(let ((anon23_Then$1_correct  (=> (= $1_DiemBlock_BlockMetadata_$memory@1 $1_DiemBlock_BlockMetadata_$memory) (=> (and (= $abort_code@1@@1 $EXEC_FAILURE_CODE) (= $abort_flag@1@@0 true)) (and (=> (= (ControlFlow 0 146146) 146096) anon24_Then_correct@@0) (=> (= (ControlFlow 0 146146) 146082) anon24_Else_correct@@0))))))
-(let ((anon23_Then_correct  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1) (= (ControlFlow 0 146144) 146146)) anon23_Then$1_correct)))
-(let ((anon23_Else_correct  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1)) (=> (and (and (= $1_DiemBlock_BlockMetadata_$memory@0@@0 ($Memory_92811 (|Store__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1 true) (|Store__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1 $t12@0@@0))) (= $1_DiemBlock_BlockMetadata_$memory@1 $1_DiemBlock_BlockMetadata_$memory@0@@0)) (and (= $abort_code@1@@1 $abort_code@0@@1) (= $abort_flag@1@@0 $abort_flag@0@@1))) (and (=> (= (ControlFlow 0 146012) 146096) anon24_Then_correct@@0) (=> (= (ControlFlow 0 146012) 146082) anon24_Else_correct@@0))))))
-(let ((anon22_Else_correct  (=> (and (not $abort_flag@0@@1) (= $t12@0@@0 ($1_DiemBlock_BlockMetadata 0 |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0|))) (and (=> (= (ControlFlow 0 145994) 146144) anon23_Then_correct) (=> (= (ControlFlow 0 145994) 146012) anon23_Else_correct)))))
-(let ((anon22_Then_correct  (=> (and (and $abort_flag@0@@1 (= $abort_code@0@@1 $abort_code@0@@1)) (and (= $t4@0 $abort_code@0@@1) (= (ControlFlow 0 146160) 145890))) L3_correct@@0)))
-(let ((|inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|  (=> (and (= (|Select__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0|) false) (= $1_Event_EventHandles@0 (|Store__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0| true))) (and (=> (= (ControlFlow 0 145970) 146160) anon22_Then_correct) (=> (= (ControlFlow 0 145970) 145994) anon22_Else_correct)))))
-(let ((anon21_Then_correct  (=> inline$$Not$0$dst@1 (=> (and (|$IsValid'u64'| 0) (= (ControlFlow 0 145976) 145970)) |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|))))
-(let ((anon21_Else_correct  (=> (and (and (not inline$$Not$0$dst@1) (= $t9@@1 $t9@@1)) (and (= $t4@0 $t9@@1) (= (ControlFlow 0 145810) 145890))) L3_correct@@0)))
-(let ((anon20_Else$1_correct  (=> (|$IsValid'u64'| 0) (=> (and (and (|$IsValid'u64'| $t9@@1) (= $t9@@1 6)) (and (= $t9@@1 $t9@@1) (= inline$$Not$0$dst@1 inline$$Not$0$dst@1))) (and (=> (= (ControlFlow 0 145794) 145976) anon21_Then_correct) (=> (= (ControlFlow 0 145794) 145810) anon21_Else_correct))))))
-(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not inline$$1_DiemBlock_is_initialized$0$$ret0@1)) (= (ControlFlow 0 145758) 145794)) anon20_Else$1_correct)))
-(let ((anon20_Else_correct  (=> (and (not $abort_flag@0@@1) (= (ControlFlow 0 145764) 145758)) inline$$Not$0$anon0_correct)))
-(let ((anon20_Then_correct  (=> (and (and $abort_flag@0@@1 (= $abort_code@0@@1 $abort_code@0@@1)) (and (= $t4@0 $abort_code@0@@1) (= (ControlFlow 0 146174) 145890))) L3_correct@@0)))
-(let ((inline$$1_DiemBlock_is_initialized$0$anon3_Else_correct  (=> (not false) (=> (and (and (= inline$$1_DiemBlock_is_initialized$0$$t2@1 (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (= inline$$1_DiemBlock_is_initialized$0$$t2@1 inline$$1_DiemBlock_is_initialized$0$$t2@1)) (and (= $abort_flag@0@@1 false) (= inline$$1_DiemBlock_is_initialized$0$$ret0@1 inline$$1_DiemBlock_is_initialized$0$$t2@1))) (and (=> (= (ControlFlow 0 145696) 146174) anon20_Then_correct) (=> (= (ControlFlow 0 145696) 145764) anon20_Else_correct))))))
-(let ((anon19_Then_correct  (=> $t5@@0 (=> (and (and (and (not (= _$t0@@1 173345816)) (= 2 $t4)) (= $t4 $t4)) (and (= $t4@0 $t4) (= (ControlFlow 0 146204) 145890))) L3_correct@@0))))
-(let ((anon18_Then_correct  (=> $t3@@0 (=> (and (and (and (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= 1 $t4)) (= $t4 $t4)) (and (= $t4@0 $t4) (= (ControlFlow 0 146230) 145890))) L3_correct@@0))))
-(let ((inline$$1_DiemBlock_is_initialized$0$anon3_Then_correct true))
-(let ((inline$$1_CoreAddresses_DIEM_ROOT_ADDRESS$0$anon0_correct@@1  (=> (and (|$IsValid'address'| 173345816) (= 173345816 173345816)) (and (=> (= (ControlFlow 0 145666) 145714) inline$$1_DiemBlock_is_initialized$0$anon3_Then_correct) (=> (= (ControlFlow 0 145666) 145696) inline$$1_DiemBlock_is_initialized$0$anon3_Else_correct)))))
-(let ((inline$$1_DiemBlock_is_initialized$0$anon0_correct  (=> (= (ControlFlow 0 145672) 145666) inline$$1_CoreAddresses_DIEM_ROOT_ADDRESS$0$anon0_correct@@1)))
-(let ((anon19_Else_correct  (=> (and (not $t5@@0) (= (ControlFlow 0 145720) 145672)) inline$$1_DiemBlock_is_initialized$0$anon0_correct)))
-(let ((anon18_Else_correct  (=> (and (not $t3@@0) (= $t5@@0  (not (= _$t0@@1 173345816)))) (and (=> (= (ControlFlow 0 145487) 146204) anon19_Then_correct) (=> (= (ControlFlow 0 145487) 145720) anon19_Else_correct)))))
-(let ((anon0$1_correct@@1  (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (and (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_94187| $1_DiemConfig_Configuration_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (and (|Select__T@[Int]Bool_| (|domain#$Memory_93874| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_122491| $1_DiemSystem_CapabilityHolder_$memory) 173345816)))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (|$IsValid'address'| _$t0@@1))) (and (and (forall (($a_0@@3 Int) ) (! (let (($rsc@@3 (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@3)))
+ (=> (= (ControlFlow 0 0) 193645) (let ((anon24_Else_correct@@0  (=> (not $abort_flag@0@@1) (and (=> (= (ControlFlow 0 143991) (- 0 194296)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@1) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@1) 173345816)) (and (=> (= (ControlFlow 0 143991) (- 0 194311)) (not (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))))) (=> (not (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (and (=> (= (ControlFlow 0 143991) (- 0 194321)) (not (not (= _$t0@@1 173345816)))) (=> (not (not (= _$t0@@1 173345816))) (and (=> (= (ControlFlow 0 143991) (- 0 194335)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (and (=> (= (ControlFlow 0 143991) (- 0 194343)) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@1) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@1) 173345816) (=> (= (ControlFlow 0 143991) (- 0 194349)) (= (|$height#$1_DiemBlock_BlockMetadata| (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory@1) 173345816)) 0)))))))))))))))
+(let ((anon22_Then_correct@@0 true))
+(let ((L3_correct@@0  (and (=> (= (ControlFlow 0 143799) (- 0 194222)) (or (or (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (not (= _$t0@@1 173345816))) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816))) (=> (or (or (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (not (= _$t0@@1 173345816))) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (=> (= (ControlFlow 0 143799) (- 0 194243)) (or (or (and (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= 1 $t4@0)) (and (not (= _$t0@@1 173345816)) (= 2 $t4@0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816) (= 6 $t4@0))))))))
+(let ((anon24_Then_correct@@0  (=> (and (and $abort_flag@0@@1 (= $abort_code@1@@1 $abort_code@1@@1)) (and (= $t4@0 $abort_code@1@@1) (= (ControlFlow 0 144005) 143799))) L3_correct@@0)))
+(let ((anon23_Then$1_correct  (=> (= $1_DiemBlock_BlockMetadata_$memory@1 $1_DiemBlock_BlockMetadata_$memory) (=> (and (= $abort_flag@0@@1 true) (= $abort_code@1@@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 144055) 144005) anon24_Then_correct@@0) (=> (= (ControlFlow 0 144055) 143991) anon24_Else_correct@@0))))))
+(let ((anon23_Then_correct@@0  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1) (= (ControlFlow 0 144053) 144055)) anon23_Then$1_correct)))
+(let ((anon23_Else_correct@@0  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1)) (=> (and (and (= $1_DiemBlock_BlockMetadata_$memory@0@@0 ($Memory_91934 (|Store__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1 true) (|Store__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) _$t0@@1 $t12@0@@0))) (= $1_DiemBlock_BlockMetadata_$memory@1 $1_DiemBlock_BlockMetadata_$memory@0@@0)) (and (= $abort_flag@0@@1 false) (= $abort_code@1@@1 $abort_code@0@@1))) (and (=> (= (ControlFlow 0 143921) 144005) anon24_Then_correct@@0) (=> (= (ControlFlow 0 143921) 143991) anon24_Else_correct@@0))))))
+(let ((anon22_Else_correct@@0  (=> (and (not false) (= $t12@0@@0 ($1_DiemBlock_BlockMetadata 0 |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0|))) (and (=> (= (ControlFlow 0 143903) 144053) anon23_Then_correct@@0) (=> (= (ControlFlow 0 143903) 143921) anon23_Else_correct@@0)))))
+(let ((|inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|  (=> (and (= (|Select__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0|) false) (= $1_Event_EventHandles@0 (|Store__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$res@0| true))) (and (=> (= (ControlFlow 0 143879) 144069) anon22_Then_correct@@0) (=> (= (ControlFlow 0 143879) 143903) anon22_Else_correct@@0)))))
+(let ((anon21_Then_correct@@0  (=> inline$$Not$0$dst@1 (=> (and (|$IsValid'u64'| 0) (= (ControlFlow 0 143885) 143879)) |inline$$1_Event_new_event_handle'$1_DiemBlock_NewBlockEvent'$0$anon0_correct|))))
+(let ((anon21_Else_correct@@0  (=> (and (and (not inline$$Not$0$dst@1) (= $t9@@1 $t9@@1)) (and (= $t4@0 $t9@@1) (= (ControlFlow 0 143719) 143799))) L3_correct@@0)))
+(let ((anon20_Else$1_correct  (=> (|$IsValid'u64'| 0) (=> (and (and (|$IsValid'u64'| $t9@@1) (= $t9@@1 6)) (and (= $t9@@1 $t9@@1) (= inline$$Not$0$dst@1 inline$$Not$0$dst@1))) (and (=> (= (ControlFlow 0 143703) 143885) anon21_Then_correct@@0) (=> (= (ControlFlow 0 143703) 143719) anon21_Else_correct@@0))))))
+(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not inline$$1_DiemBlock_is_initialized$0$$t1@1)) (= (ControlFlow 0 143667) 143703)) anon20_Else$1_correct)))
+(let ((anon20_Else_correct@@0  (=> (and (not false) (= (ControlFlow 0 143673) 143667)) inline$$Not$0$anon0_correct)))
+(let ((anon19_Then_correct  (=> $t5@@0 (=> (and (and (and (not (= _$t0@@1 173345816)) (= 2 $t4)) (= $t4 $t4)) (and (= $t4@0 $t4) (= (ControlFlow 0 144113) 143799))) L3_correct@@0))))
+(let ((anon18_Then_correct  (=> $t3@@0 (=> (and (and (and (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (= 1 $t4)) (= $t4 $t4)) (and (= $t4@0 $t4) (= (ControlFlow 0 144139) 143799))) L3_correct@@0))))
+(let ((anon20_Then_correct@@0 true))
+(let ((inline$$1_DiemBlock_is_initialized$0$anon0_correct  (=> (|$IsValid'address'| 173345816) (=> (and (= inline$$1_DiemBlock_is_initialized$0$$t1@1 (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (= inline$$1_DiemBlock_is_initialized$0$$t1@1 inline$$1_DiemBlock_is_initialized$0$$t1@1)) (and (=> (= (ControlFlow 0 143623) 144083) anon20_Then_correct@@0) (=> (= (ControlFlow 0 143623) 143673) anon20_Else_correct@@0))))))
+(let ((anon19_Else_correct  (=> (and (not $t5@@0) (= (ControlFlow 0 143629) 143623)) inline$$1_DiemBlock_is_initialized$0$anon0_correct)))
+(let ((anon18_Else_correct  (=> (and (not $t3@@0) (= $t5@@0  (not (= _$t0@@1 173345816)))) (and (=> (= (ControlFlow 0 143536) 144113) anon19_Then_correct) (=> (= (ControlFlow 0 143536) 143629) anon19_Else_correct)))))
+(let ((anon0$1_correct@@1  (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (and (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_94152| $1_DiemConfig_Configuration_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (and (|Select__T@[Int]Bool_| (|domain#$Memory_93681| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_95644| $1_DiemSystem_CapabilityHolder_$memory) 173345816)))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) 173345816)) (|$IsValid'address'| _$t0@@1))) (and (and (forall (($a_0@@3 Int) ) (! (let (($rsc@@3 (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@3)))
 (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| $rsc@@3))
- :qid |DiemBlockandybpl.12868:20|
+ :qid |DiemBlockandybpl.12652:20|
  :skolemid |195|
- :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@3))
-)) (forall (($a_0@@4 Int) ) (! (let (($rsc@@4 (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) $a_0@@4)))
+ :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@3))
+)) (forall (($a_0@@4 Int) ) (! (let (($rsc@@4 (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) $a_0@@4)))
 (|$IsValid'$1_DiemBlock_BlockMetadata'| $rsc@@4))
- :qid |DiemBlockandybpl.12872:20|
+ :qid |DiemBlockandybpl.12656:20|
  :skolemid |196|
- :pattern ( (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_92811| $1_DiemBlock_BlockMetadata_$memory) $a_0@@4))
-))) (and (= _$t0@@1 _$t0@@1) (= $t3@@0  (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_91365| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))))))) (and (=> (= (ControlFlow 0 145465) 146230) anon18_Then_correct) (=> (= (ControlFlow 0 145465) 145487) anon18_Else_correct))))))
-(let ((inline$$InitEventStore$0$anon0_correct@@1  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@6 T@$1_Event_EventHandle) ) (! (let ((stream@@5 (|Select__T@[$1_Event_EventHandle]Multiset_62435_| (|streams#$EventStore| $es) handle@@6)))
- (and (= (|l#Multiset_62435| stream@@5) 0) (forall ((v@@44 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_62435| stream@@5) v@@44) 0)
+ :pattern ( (|Select__T@[Int]$1_DiemBlock_BlockMetadata_| (|contents#$Memory_91934| $1_DiemBlock_BlockMetadata_$memory) $a_0@@4))
+))) (and (= _$t0@@1 _$t0@@1) (= $t3@@0  (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_90527| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))))))) (and (=> (= (ControlFlow 0 143514) 144139) anon18_Then_correct) (=> (= (ControlFlow 0 143514) 143536) anon18_Else_correct))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@1  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@6 T@$1_Event_EventHandle) ) (! (let ((stream@@6 (|Select__T@[$1_Event_EventHandle]Multiset_61713_| (|streams#$EventStore| $es) handle@@6)))
+ (and (= (|l#Multiset_61713| stream@@6) 0) (forall ((v@@46 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_61713| stream@@6) v@@46) 0)
  :qid |DiemBlockandybpl.129:13|
  :skolemid |2|
 ))))
  :qid |DiemBlockandybpl.2538:13|
  :skolemid |69|
-))) (= (ControlFlow 0 145331) 145465)) anon0$1_correct@@1)))
-(let ((anon0_correct@@1  (=> (= (ControlFlow 0 196920) 145331) inline$$InitEventStore$0$anon0_correct@@1)))
-anon0_correct@@1)))))))))))))))))))))))))))
+))) (= (ControlFlow 0 143380) 143514)) anon0$1_correct@@1)))
+(let ((anon0_correct@@1  (=> (= (ControlFlow 0 193645) 143380) inline$$InitEventStore$0$anon0_correct@@1)))
+anon0_correct@@1))))))))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
@@ -1753,7 +1736,7 @@ anon0_correct@@1)))))))))))))))))))))))))))
 (push 1)
 (set-info :boogie-vc-id $1_Genesis_initialize$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 197728) true)
+ (=> (= (ControlFlow 0 0) 194375) true)
 ))
 (check-sat)
 (pop 1)

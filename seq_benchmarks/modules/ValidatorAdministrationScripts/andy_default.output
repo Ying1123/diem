@@ -1,4 +1,3 @@
 /home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy_default.smt2:380.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-unsat
-/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy_default.smt2:1418.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy_default.smt2:1410.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 (error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")

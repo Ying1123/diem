@@ -3,48 +3,21 @@
 -monomorphize
 /env:2
 /proverLog:TreasuryComplianceScripts.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.393 s, 0 proof obligations]  verified
+  [1.249 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
   [0.007 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_add_diem_id_domain$verify ...
-  [1.697 s, 12 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_remove_diem_id_domain$verify ...
-  [0.093 s, 1 proof obligation]  verified
-
-Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
-  [1.469 s, 34 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
-  [0.031 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
-  [0.006 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
-  [0.036 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
-  [0.555 s, 18 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify ...
-  [2.396 s, 30 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_update_dual_attestation_limit$verify ...
-  [0.046 s, 0 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

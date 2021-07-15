@@ -3,38 +3,38 @@
 -monomorphize
 /env:2
 /proverLog:TransactionFee.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/TransactionFee/TransactionFee.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.222 s, 8 proof obligations]  verified
+  [1.503 s, 8 proof obligations]  verified
 
 Verifying $1_TransactionFee_initialize$verify ...
-  [0.058 s, 10 proof obligations]  verified
+  [0.717 s, 10 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
-  [0.005 s, 0 proof obligations]  verified
+  [0.009 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify ...
-  [0.483 s, 17 proof obligations]  verified
+  [9.189 s, 17 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_coin_initialized$verify ...
-  [0.023 s, 0 proof obligations]  verified
+  [0.091 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_initialized$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.004 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify ...
-  [0.036 s, 6 proof obligations]  verified
+  [0.550 s, 6 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.163 s, 0 proof obligations]  verified
+  [0.176 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 8 verified, 0 errors

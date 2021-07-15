@@ -3,38 +3,38 @@
 -monomorphize
 /env:2
 /proverLog:DiemTimestamp.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemTimestamp_assert_genesis$verify ...
-  [0.187 s, 3 proof obligations]  verified
+  [1.018 s, 3 proof obligations]  verified
 
 Verifying $1_DiemTimestamp_assert_operating$verify ...
-  [0.011 s, 3 proof obligations]  verified
+  [0.067 s, 3 proof obligations]  verified
 
 Verifying $1_DiemTimestamp_is_genesis$verify ...
-  [0.005 s, 2 proof obligations]  verified
+  [0.025 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTimestamp_is_operating$verify ...
-  [0.005 s, 2 proof obligations]  verified
+  [0.020 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTimestamp_now_microseconds$verify ...
-  [0.030 s, 4 proof obligations]  verified
+  [0.127 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTimestamp_now_seconds$verify ...
-  [0.011 s, 4 proof obligations]  verified
+  [0.134 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.042 s, 9 proof obligations]  verified
+  [0.529 s, 9 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.178 s, 0 proof obligations]  verified
+  [0.145 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 8 verified, 0 errors

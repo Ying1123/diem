@@ -3,9 +3,9 @@
 -monomorphize
 /env:2
 /proverLog:Signature.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------

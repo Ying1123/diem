@@ -1,275 +1,55 @@
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key_with_recovery_address` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::create_diem_id_domains` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_shared_ed25519_public_key` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::create_recovery_address` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key_with_nonce_admin` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key_with_nonce` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::add_recovery_rotation_capability` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::publish_shared_ed25519_public_key` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::add_currency_to_account` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_dual_attestation_info` to be verified
-23:32:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Genesis::initialize` to be verified
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module CoreAddresses
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTimestamp
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SlidingNonce
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signature
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Roles
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module FixedPoint32
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemConfig
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RegisteredCurrencies
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Diem
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountLimits
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XUS
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XDX
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorOperatorConfig
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Option
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorConfig
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASP
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module TransactionFee
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DualAttestation
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTransactionPublishingOption
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemId
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DesignatedDealer
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ChainId
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountFreezing
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemAccount
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Authenticator
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SharedEd25519PublicKey
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RecoveryAddress
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key_with_recovery_address` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::create_vasp_domains` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_shared_ed25519_public_key` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::create_recovery_address` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key_with_nonce_admin` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_authentication_key_with_nonce` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::add_recovery_rotation_capability` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::publish_shared_ed25519_public_key` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::add_currency_to_account` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AccountAdministrationScripts::rotate_dual_attestation_info` to be verified
+22:04:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Genesis::initialize` to be verified
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module CoreAddresses
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTimestamp
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Roles
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorOperatorConfig
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Option
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signature
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorConfig
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SlidingNonce
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemConfig
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemSystem
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module FixedPoint32
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RegisteredCurrencies
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Diem
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountLimits
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XUS
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XDX
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASPDomain
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASP
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module TransactionFee
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DualAttestation
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTransactionPublishingOption
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DesignatedDealer
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ChainId
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountFreezing
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemAccount
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Authenticator
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SharedEd25519PublicKey
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RecoveryAddress
 [INFO] translating module AccountAdministrationScripts
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemSystem
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemBlock
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVMConfig
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVersion
-23:32:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Genesis
-23:32:10 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemBlock
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVMConfig
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVersion
+22:04:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Genesis
+22:04:26 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-23:32:10 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
-23:32:10 [DEBUG] (5) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-23:32:12 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-Boogie error (signal: 6 (core dumped)): Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-output.bpl(14877,27): Verification inconclusive ($1_AccountAdministrationScripts_rotate_authentication_key$verify)
-output.bpl(15240,27): Verification inconclusive ($1_AccountAdministrationScripts_add_recovery_rotation_capability$verify)
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-output.bpl(15621,27): Verification inconclusive ($1_AccountAdministrationScripts_create_recovery_address$verify)
-
-
-stderr:
-Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
- ---> System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
-   --- End of inner exception stack trace ---
-   at System.AggregateException.Handle(Func`2 predicate)
-   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
-   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
-   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
- ---> (Inner Exception #1) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
-
- ---> (Inner Exception #2) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
-
- ---> (Inner Exception #3) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
-
- ---> (Inner Exception #4) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
-
- ---> (Inner Exception #5) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
-
- ---> (Inner Exception #6) System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
-   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
-
-
+22:04:26 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
+22:04:26 [DEBUG] (13) boogie_backend::prover_task_runner: runing Boogie command with seed 1

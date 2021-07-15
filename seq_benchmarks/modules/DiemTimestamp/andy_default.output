@@ -5,6 +5,6 @@ unsat
 unsat
 unsat
 unsat
-/home/ying/diem/seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_default.smt2:1572.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_default.smt2:1551.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat

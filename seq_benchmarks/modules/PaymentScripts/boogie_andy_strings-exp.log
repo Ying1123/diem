@@ -3,18 +3,18 @@
 -monomorphize
 /env:2
 /proverLog:PaymentScripts.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_prod/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.384 s, 0 proof obligations]  verified
+  [1.045 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 1 verified, 0 errors

@@ -125,6 +125,7 @@ codes!(
         InvalidFriendDeclaration:
             { msg: "invalid 'friend' declaration", severity: NonblockingError },
         InvalidAcquiresItem: { msg: "invalid 'acquires' item", severity: NonblockingError },
+        InvalidPhantomUse: { msg: "invalid phantom type parameter usage", severity: NonblockingError },
     ],
     // errors name resolution, mostly expansion/translate and naming/translate
     NameResolution: [
@@ -146,6 +147,10 @@ codes!(
         BuiltinOperation: { msg: "built-in operation not supported", severity: BlockingError },
         ExpectedBaseType: { msg: "expected a single non-reference type", severity: BlockingError },
         ExpectedSingleType: { msg: "expected a single type", severity: BlockingError },
+        SubtypeError: { msg: "invalid subtype", severity: BlockingError },
+        JoinError: { msg: "incompatible types", severity: BlockingError },
+        RecursiveType: { msg: "invalid type. recursive type found", severity: BlockingError },
+
     ],
     // errors for ability rules. mostly typing/translate
     AbilitySafety: [

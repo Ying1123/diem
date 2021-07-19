@@ -6,8 +6,10 @@ use super::{
     expand, globals, infinite_instantiations, recursive_structs,
 };
 use crate::{
+    diag,
+    errors::diagnostic_codes::*,
     expansion::ast::{Fields, ModuleIdent, Value_},
-    naming::ast::{self as N, Type, TypeName_, Type_},
+    naming::ast::{self as N, TParam, TParamID, Type, TypeName_, Type_},
     parser::ast::{Ability_, BinOp_, ConstantName, Field, FunctionName, StructName, UnaryOp_, Var},
     shared::{unique_map::UniqueMap, *},
     typing::ast as T,
@@ -548,11 +550,10 @@ fn struct_def(context: &mut Context, s: &mut N::StructDefinition) {
 
     let declared_abilities = &s.abilities;
     let tparam_subst = &core::make_tparam_subst(
-        &s.type_parameters,
+        s.type_parameters.iter().map(|tp| &tp.param),
         s.type_parameters
             .iter()
-            .map(|tp| sp(tp.user_specified_name.loc, Type_::Anything))
-            .collect(),
+            .map(|tp| sp(tp.param.user_specified_name.loc, Type_::Anything)),
     );
     for (_field_loc, _field, idx_ty) in field_map.iter() {
         let loc = idx_ty.1.loc;
@@ -571,62 +572,194 @@ fn struct_def(context: &mut Context, s: &mut N::StructDefinition) {
     }
     core::solve_constraints(context);
 
+    let type_params: BTreeMap<_, _> = s
+        .type_parameters
+        .iter()
+        .map(|sp| {
+            let loc = sp.param.user_specified_name.loc;
+            (sp.param.id, (sp.is_phantom, loc))
+        })
+        .collect();
+
     for (_field_loc, _field_, idx_ty) in field_map.iter_mut() {
         expand::type_(context, &mut idx_ty.1);
+        check_phantom_params(
+            context,
+            &type_params,
+            &idx_ty.1,
+            Some(NonPhantomPos::FieldType),
+        );
     }
+}
+
+enum NonPhantomPos {
+    FieldType,
+    TypeArg,
+}
+
+fn check_phantom_params(
+    context: &mut Context,
+    type_parameters: &BTreeMap<TParamID, (bool, Loc)>,
+    ty: &Type,
+    non_phantom_pos: Option<NonPhantomPos>,
+) {
+    use NonPhantomPos::*;
+
+    match &ty.value {
+        Type_::Param(param) => {
+            // Don't bother checking unbound type parameters as it should fail somewhere else
+            match (type_parameters.get(&param.id), non_phantom_pos) {
+                (Some(&(is_phantom, param_decl_loc)), Some(non_phantom_pos)) if is_phantom => {
+                    invalid_phantom_use_error(
+                        context,
+                        non_phantom_pos,
+                        param_decl_loc,
+                        param,
+                        ty.loc,
+                    );
+                }
+                _ => {}
+            }
+        }
+        Type_::Apply(_, n, ty_args) => match &n.value {
+            // Tuples cannot appear in structs, but we still report them as a non-phantom position in
+            // case they are ever allowed.
+            TypeName_::Builtin(_) | TypeName_::Multiple(_) => {
+                for ty_arg in ty_args {
+                    check_phantom_params(context, type_parameters, ty_arg, Some(TypeArg));
+                }
+            }
+            TypeName_::ModuleType(m, n) => {
+                let param_is_phantom: Vec<_> = context
+                    .struct_tparams(m, n)
+                    .iter()
+                    .map(|param| param.is_phantom)
+                    .collect();
+                // Length of params and args may be different but we can still report errors
+                // for parameters with information
+                for (is_phantom, ty_arg) in param_is_phantom.into_iter().zip(ty_args) {
+                    check_phantom_params(
+                        context,
+                        type_parameters,
+                        ty_arg,
+                        (!is_phantom).then(|| TypeArg),
+                    );
+                }
+            }
+        },
+        // References cannot appear in structs, but we still report them as a non-phantom position
+        // in case they are ever allowed.
+        Type_::Ref(_, inner) => {
+            check_phantom_params(context, type_parameters, &inner, Some(TypeArg))
+        }
+        Type_::Var(_) | Type_::Anything | Type_::Unit | Type_::UnresolvedError => {}
+    }
+}
+
+fn invalid_phantom_use_error(
+    context: &mut Context,
+    non_phantom_pos: NonPhantomPos,
+    param_decl_loc: Loc,
+    param: &TParam,
+    ty_loc: Loc,
+) {
+    let msg = match non_phantom_pos {
+        NonPhantomPos::FieldType => "Phantom type parameter cannot be used as a field type",
+        NonPhantomPos::TypeArg => "Phantom type parameter cannot be used as an argument to a parameter not declared as phantom",
+    };
+    let decl_msg = format!("'{}' declared here as phantom", &param.user_specified_name);
+    context.env.add_diag(diag!(
+        Declarations::InvalidPhantomUse,
+        (ty_loc, msg),
+        (param_decl_loc, decl_msg),
+    ));
 }
 
 //**************************************************************************************************
 // Types
 //**************************************************************************************************
 
-fn typing_error<T: Into<String>, F: FnOnce() -> T>(
+fn typing_error<T: ToString, F: FnOnce() -> T>(
     context: &mut Context,
+    from_subtype: bool,
     loc: Loc,
-    msg: F,
+    mk_msg: F,
     e: core::TypingError,
 ) {
     use super::core::TypingError::*;
+    let msg = mk_msg().to_string();
     let subst = &context.subst;
-    let error = match e {
+    let diag = match e {
         SubtypeError(t1, t2) => {
             let loc1 = core::best_loc(subst, &t1);
             let loc2 = core::best_loc(subst, &t2);
-            let m1 = format!("The type: {}", core::error_format(&t1, subst));
-            let m2 = format!("Is not a subtype of: {}", core::error_format(&t2, subst));
-            vec![(loc, msg().into()), (loc1, m1), (loc2, m2)]
+            let t1_str = core::error_format(&t1, subst);
+            let t2_str = core::error_format(&t2, subst);
+            let m1 = format!("Given: {}", t1_str);
+            let m2 = format!("Expected: {}", t2_str);
+            diag!(TypeSafety::SubtypeError, (loc, msg), (loc1, m1), (loc2, m2))
         }
         ArityMismatch(n1, t1, n2, t2) => {
             let loc1 = core::best_loc(subst, &t1);
             let loc2 = core::best_loc(subst, &t2);
-            let msg1 = format!(
-                "The expression list type of length {}: {}",
-                n1,
-                core::error_format(&t1, subst)
-            );
-            let msg2 = format!(
-                "Is not compatible with the expression list type of length {}: {}",
-                n2,
-                core::error_format(&t2, subst)
-            );
-            vec![(loc, msg().into()), (loc1, msg1), (loc2, msg2)]
+            let t1_str = core::error_format(&t1, subst);
+            let t2_str = core::error_format(&t2, subst);
+            let msg1 = if from_subtype {
+                format!("Given expression list of length {}: {}", n1, t1_str)
+            } else {
+                format!(
+                    "Found expression list of length {}: {}. It is not compatible with the other \
+                     type of length {}.",
+                    n1, t1_str, n2
+                )
+            };
+            let msg2 = if from_subtype {
+                format!("Expected expression list of length {}: {}", n2, t2_str)
+            } else {
+                format!(
+                    "Found expression list of length {}: {}. It is not compatible with the other \
+                     type of length {}.",
+                    n2, t2_str, n1
+                )
+            };
+
+            diag!(
+                TypeSafety::JoinError,
+                (loc, msg),
+                (loc1, msg1),
+                (loc2, msg2)
+            )
         }
         Incompatible(t1, t2) => {
             let loc1 = core::best_loc(subst, &t1);
             let loc2 = core::best_loc(subst, &t2);
-            let m1 = format!("The type: {}", core::error_format(&t1, subst));
-            let m2 = format!("Is not compatible with: {}", core::error_format(&t2, subst));
-            vec![(loc, msg().into()), (loc1, m1), (loc2, m2)]
+            let t1_str = core::error_format(&t1, subst);
+            let t2_str = core::error_format(&t2, subst);
+            let m1 = if from_subtype {
+                format!("Given: {}", t1_str)
+            } else {
+                format!(
+                    "Found: {}. It is not compatible with the other type.",
+                    t1_str
+                )
+            };
+            let m2 = if from_subtype {
+                format!("Expected: {}", t2_str)
+            } else {
+                format!(
+                    "Found: {}. It is not compatible with the other type.",
+                    t2_str
+                )
+            };
+            diag!(TypeSafety::JoinError, (loc, msg), (loc1, m1), (loc2, m2))
         }
-        RecursiveType(rloc) => vec![
-            (loc, msg().into()),
-            (
-                rloc,
-                "Unable to infer the type. Recursive type found.".into(),
-            ),
-        ],
+        RecursiveType(rloc) => diag!(
+            TypeSafety::RecursiveType,
+            (loc, msg),
+            (rloc, "Unable to infer the type. Recursive type found."),
+        ),
     };
-    context.env.add_error_deprecated(error);
+    context.env.add_diag(diag)
 }
 
 fn subtype_no_report(
@@ -643,30 +776,56 @@ fn subtype_no_report(
     })
 }
 
-fn subtype<T: Into<String>, F: FnOnce() -> T>(
+fn subtype_impl<T: ToString, F: FnOnce() -> T>(
     context: &mut Context,
     loc: Loc,
     msg: F,
     pre_lhs: Type,
     pre_rhs: Type,
-) -> Type {
+) -> Result<Type, Type> {
     let subst = std::mem::replace(&mut context.subst, Subst::empty());
     let lhs = core::ready_tvars(&subst, pre_lhs);
     let rhs = core::ready_tvars(&subst, pre_rhs);
     match core::subtype(subst.clone(), &lhs, &rhs) {
         Err(e) => {
             context.subst = subst;
-            typing_error(context, loc, msg, e);
-            rhs
+            typing_error(context, /* from_subtype */ true, loc, msg, e);
+            Err(rhs)
         }
         Ok((next_subst, ty)) => {
             context.subst = next_subst;
-            ty
+            Ok(ty)
         }
     }
 }
 
-fn join_opt<T: Into<String>, F: FnOnce() -> T>(
+fn subtype_opt<T: ToString, F: FnOnce() -> T>(
+    context: &mut Context,
+    loc: Loc,
+    msg: F,
+    pre_lhs: Type,
+    pre_rhs: Type,
+) -> Option<Type> {
+    match subtype_impl(context, loc, msg, pre_lhs, pre_rhs) {
+        Err(_rhs) => None,
+        Ok(t) => Some(t),
+    }
+}
+
+fn subtype<T: ToString, F: FnOnce() -> T>(
+    context: &mut Context,
+    loc: Loc,
+    msg: F,
+    pre_lhs: Type,
+    pre_rhs: Type,
+) -> Type {
+    match subtype_impl(context, loc, msg, pre_lhs, pre_rhs) {
+        Err(rhs) => rhs,
+        Ok(t) => t,
+    }
+}
+
+fn join_opt<T: ToString, F: FnOnce() -> T>(
     context: &mut Context,
     loc: Loc,
     msg: F,
@@ -679,7 +838,7 @@ fn join_opt<T: Into<String>, F: FnOnce() -> T>(
     match core::join(subst.clone(), &t1, &t2) {
         Err(e) => {
             context.subst = subst;
-            typing_error(context, loc, msg, e);
+            typing_error(context, /* from_subtype */ false, loc, msg, e);
             None
         }
         Ok((next_subst, ty)) => {
@@ -689,7 +848,7 @@ fn join_opt<T: Into<String>, F: FnOnce() -> T>(
     }
 }
 
-fn join<T: Into<String>, F: FnOnce() -> T>(
+fn join<T: ToString, F: FnOnce() -> T>(
     context: &mut Context,
     loc: Loc,
     msg: F,
@@ -848,7 +1007,6 @@ fn exp_(context: &mut Context, initial_ne: N::Exp) -> T::Exp {
                     let context = &mut s.context;
                     let (ty, operand_ty) = match &bop.value {
                         Sub | Add | Mul | Mod | Div => {
-                            // TODO after typing refactor, just add to operand ty
                             context.add_numeric_constraint(
                                 el.exp.loc,
                                 bop.value.symbol(),
@@ -860,12 +1018,11 @@ fn exp_(context: &mut Context, initial_ne: N::Exp) -> T::Exp {
                                 el.ty.clone(),
                             );
                             let operand_ty =
-                                join(context, er.exp.loc, msg, el.ty.clone(), er.ty.clone());
+                                join(context, bop.loc, msg, el.ty.clone(), er.ty.clone());
                             (operand_ty.clone(), operand_ty)
                         }
 
                         BitOr | BitAnd | Xor => {
-                            // TODO after typing refactor, just add to operand ty
                             context.add_bits_constraint(
                                 el.exp.loc,
                                 bop.value.symbol(),
@@ -877,12 +1034,7 @@ fn exp_(context: &mut Context, initial_ne: N::Exp) -> T::Exp {
                                 el.ty.clone(),
                             );
                             let operand_ty =
-                                join(context, er.exp.loc, msg, el.ty.clone(), er.ty.clone());
-                            context.add_bits_constraint(
-                                loc,
-                                bop.value.symbol(),
-                                operand_ty.clone(),
-                            );
+                                join(context, bop.loc, msg, el.ty.clone(), er.ty.clone());
                             (operand_ty.clone(), operand_ty)
                         }
 
@@ -899,7 +1051,6 @@ fn exp_(context: &mut Context, initial_ne: N::Exp) -> T::Exp {
                         }
 
                         Lt | Gt | Le | Ge => {
-                            // TODO after typing refactor, just add to operand ty
                             context.add_ordered_constraint(
                                 el.exp.loc,
                                 bop.value.symbol(),
@@ -911,29 +1062,40 @@ fn exp_(context: &mut Context, initial_ne: N::Exp) -> T::Exp {
                                 el.ty.clone(),
                             );
                             let operand_ty =
-                                join(context, er.exp.loc, msg, el.ty.clone(), er.ty.clone());
+                                join(context, bop.loc, msg, el.ty.clone(), er.ty.clone());
                             (Type_::bool(loc), operand_ty)
                         }
 
                         Eq | Neq => {
-                            let ty = join(context, er.exp.loc, msg, el.ty.clone(), er.ty.clone());
-                            let msg = format!("Invalid arguments to '{}'", &bop);
-                            context.add_single_type_constraint(loc, msg, ty.clone());
-                            let msg = Some(format!(
+                            let ability_msg = Some(format!(
                                 "'{}' requires the '{}' ability as the value is consumed. Try \
                                  borrowing the values with '&' first.'",
                                 &bop,
                                 Ability_::Drop,
                             ));
-                            context.add_ability_constraint(loc, msg, ty.clone(), Ability_::Drop);
+                            context.add_ability_constraint(
+                                el.exp.loc,
+                                ability_msg.clone(),
+                                el.ty.clone(),
+                                Ability_::Drop,
+                            );
+                            context.add_ability_constraint(
+                                er.exp.loc,
+                                ability_msg,
+                                er.ty.clone(),
+                                Ability_::Drop,
+                            );
+                            let ty = join(context, bop.loc, msg, el.ty.clone(), er.ty.clone());
+                            context.add_single_type_constraint(loc, msg(), ty.clone());
                             (Type_::bool(loc), ty)
                         }
 
                         And | Or => {
+                            let msg = || format!("Invalid argument to '{}'", &bop);
                             let lloc = el.exp.loc;
-                            subtype(context, lloc, msg, el.ty.clone(), Type_::bool(lloc));
+                            subtype(context, lloc, msg, el.ty.clone(), Type_::bool(bop.loc));
                             let rloc = er.exp.loc;
-                            subtype(context, rloc, msg, er.ty.clone(), Type_::bool(lloc));
+                            subtype(context, rloc, msg, er.ty.clone(), Type_::bool(bop.loc));
                             (Type_::bool(loc), Type_::bool(loc))
                         }
 
@@ -1107,7 +1269,7 @@ fn exp_inner(context: &mut Context, sp!(eloc, ne_): N::Exp) -> T::Exp {
                 None => current_break_ty,
                 Some(t) => {
                     let t = t.clone();
-                    join(context, eloc, || "Invalid break.", current_break_ty, t)
+                    join(context, eloc, || "Invalid break.", t, current_break_ty)
                 }
             };
             context.set_break_type(break_ty);
@@ -1173,7 +1335,7 @@ fn exp_inner(context: &mut Context, sp!(eloc, ne_): N::Exp) -> T::Exp {
                 join(
                     context,
                     e.exp.loc,
-                    || "ICE failed tvar join",
+                    || -> String { panic!("ICE failed tvar join") },
                     e.ty.clone(),
                     tvar.clone(),
                 );
@@ -1372,7 +1534,7 @@ fn lvalue_list(
         _ => Type_::multiple(loc, ty_vars.clone()),
     };
     if let Some(ty) = ty_opt {
-        let result = join_opt(
+        let result = subtype_opt(
             context,
             loc,
             || {
@@ -1384,8 +1546,8 @@ fn lvalue_list(
                     }
                 )
             },
-            var_ty,
             ty,
+            var_ty,
         );
         if result.is_none() {
             for ty_var in ty_vars.clone() {
@@ -1487,7 +1649,7 @@ fn lvalue(
                 }
             };
             match case {
-                C::Bind => join(
+                C::Bind => subtype(
                     context,
                     loc,
                     || "Invalid deconstruction binding",

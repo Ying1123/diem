@@ -402,14 +402,14 @@ impl<'env, 'translator, 'module_translator> ExpTranslator<'env, 'translator, 'mo
 
     /// Analyzes the sequence of type parameters as they are provided via the source AST and enters
     /// them into the environment. Returns a vector for representing them in the target AST.
-    pub fn analyze_and_add_type_params<T>(
-        &mut self,
-        type_params: &[(Name, T)],
-    ) -> Vec<(Symbol, Type)> {
+    pub fn analyze_and_add_type_params<'a, I>(&mut self, type_params: I) -> Vec<(Symbol, Type)>
+    where
+        I: IntoIterator<Item = &'a Name>,
+    {
         type_params
-            .iter()
+            .into_iter()
             .enumerate()
-            .map(|(i, (n, _))| {
+            .map(|(i, n)| {
                 let ty = Type::TypeParameter(i as u16);
                 let sym = self.symbol_pool().make(n.value.as_str());
                 self.define_type_param(&self.to_loc(&n.loc), sym, ty.clone());
@@ -1837,7 +1837,12 @@ impl<'env, 'translator, 'module_translator> ExpTranslator<'env, 'translator, 'mo
         // the build. This is because we also need to inherently borrow self via the
         // type_display_context which is passed into unification.
         let mut subs = std::mem::replace(&mut self.subs, Substitution::new());
-        let result = match subs.unify(&self.type_display_context(), Variance::Allow, ty, expected) {
+        let result = match subs.unify(
+            &self.type_display_context(),
+            Variance::Shallow,
+            ty,
+            expected,
+        ) {
             Ok(t) => t,
             Err(err) => {
                 self.error(&loc, &format!("{} {}", err.message, context_msg));

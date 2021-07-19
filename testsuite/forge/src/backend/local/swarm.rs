@@ -1,7 +1,7 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::{ChainInfo, FullNode, HealthCheckError, LocalNode, Node, Swarm, Validator};
+use crate::{ChainInfo, FullNode, HealthCheckError, LocalNode, Node, NodeExt, Swarm, Validator};
 use anyhow::{anyhow, Result};
 use diem_config::config::NodeConfig;
 use diem_genesis_tool::validator_builder::ValidatorBuilder;
@@ -9,6 +9,7 @@ use diem_sdk::{
     crypto::ed25519::Ed25519PrivateKey,
     types::{chain_id::ChainId, AccountKey, LocalAccount, PeerId},
 };
+use itertools::Itertools;
 use std::{
     collections::HashMap,
     convert::TryFrom,
@@ -114,10 +115,13 @@ impl LocalSwarmBuilder {
             SwarmDirectory::Temporary(TempDir::new()?)
         };
 
-        let (root_keys, validators) = ValidatorBuilder::new(&dir)
-            .num_validators(self.number_of_validators)
-            .template(self.template)
-            .build()?;
+        let (root_keys, validators) = ValidatorBuilder::new(
+            &dir,
+            diem_framework_releases::current_module_blobs().to_vec(),
+        )
+        .num_validators(self.number_of_validators)
+        .template(self.template)
+        .build()?;
         let diem_node_bin_path = self.diem_node_bin_path;
 
         let validators = validators
@@ -192,6 +196,7 @@ impl LocalSwarm {
         // Wait for all of them to startup
         self.wait_for_startup()?;
         self.wait_for_connectivity()?;
+        self.liveness_check()?;
 
         Ok(())
     }
@@ -254,6 +259,28 @@ impl LocalSwarm {
         }
 
         Err(anyhow!("Waiting for connectivity timed out"))
+    }
+
+    fn liveness_check(&self) -> Result<()> {
+        let num_attempts = 60;
+        for i in 0..num_attempts {
+            println!("Wait for liveness check attempt: {}", i);
+
+            if self
+                .validators
+                .values()
+                .map(|node| node.liveness_check(10))
+                .collect_vec()
+                .into_iter()
+                .all(|b| matches!(b, Ok(..)))
+            {
+                return Ok(());
+            }
+
+            ::std::thread::sleep(::std::time::Duration::from_millis(1000));
+        }
+
+        Err(anyhow!("Liveness check timed out"))
     }
 }
 

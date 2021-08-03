@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.baseline.bpl
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.baseline.bpl
 -monomorphize
 /env:2
 /proverLog:ValidatorConfig.baseline.smt2
@@ -8,48 +8,48 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.baseline.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.baseline.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.186 s, 9 proof obligations]  verified
-
-Verifying $1_ValidatorConfig_publish$verify ...
-  [0.055 s, 15 proof obligations]  verified
+  [0.196 s, 9 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.031 s, 5 proof obligations]  verified
+  [0.040 s, 5 proof obligations]  verified
+
+Verifying $1_ValidatorConfig_publish$verify ...
+  [0.066 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.030 s, 2 proof obligations]  verified
+  [0.033 s, 2 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.034 s, 6 proof obligations]  verified
+  [0.038 s, 6 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
-  [0.028 s, 2 proof obligations]  verified
+  [0.034 s, 2 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_operator$verify ...
-  [0.035 s, 6 proof obligations]  verified
+  [0.039 s, 6 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.028 s, 2 proof obligations]  verified
+  [0.027 s, 2 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
-  [0.037 s, 4 proof obligations]  verified
+  [0.035 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.057 s, 13 proof obligations]  verified
+  [0.059 s, 13 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.044 s, 16 proof obligations]  verified
+  [0.065 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.040 s, 18 proof obligations]  verified
+  [0.077 s, 18 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.183 s, 0 proof obligations]  verified
+  [0.211 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 13 verified, 0 errors

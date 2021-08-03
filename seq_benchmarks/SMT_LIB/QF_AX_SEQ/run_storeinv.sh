@@ -1,5 +1,5 @@
 seq_dir=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_SEQ/storeinv
-cvc=/home/ying/CVC4/seq_debug/bin/cvc5
+cvc=/home/ying/CVC4/seq_prod/bin/cvc5
 time_new=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_SEQ/result/storeinv.t
 time_old=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_SEQ/result/storeinv_old_seq.t
 
@@ -22,7 +22,7 @@ find $seq_dir -type f -print0 | while read -d $'\0' file; do
 	if [ $ret -eq 0 ]; then
 		echo $file
 		start=$(date +%s)
-		timeout 10 $cvc $file --incremental --strings-exp --strings-seq-update
+		timeout 10 $cvc $file --incremental --strings-exp --strings-seq-update --check-models
 		end=$(date +%s)
 		take=$(( end - start ))
         filename=$(basename $file .move)
@@ -30,7 +30,7 @@ find $seq_dir -type f -print0 | while read -d $'\0' file; do
 		echo ${take} >> $time_new
 
 		start=$(date +%s)
-		timeout 10 $cvc $file --incremental --strings-exp
+		timeout 10 $cvc $file --incremental --strings-exp --check-models
 		end=$(date +%s)
 		take=$(( end - start ))
 		echo $filename >> $time_old

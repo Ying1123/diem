@@ -1,0 +1,42 @@
+---Command arguments
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.seqArray.bpl
+-monomorphize
+/env:2
+/proverLog:TransactionFee.seqArray.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.seqArray.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.225 s, 8 proof obligations]  verified
+
+Verifying $1_TransactionFee_initialize$verify ...
+  [0.058 s, 10 proof obligations]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
+  [0.006 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify ...
+  [0.489 s, 17 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_coin_initialized$verify ...
+  [0.025 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_initialized$verify ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_pay_fee$verify ...
+  [0.039 s, 6 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.186 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 8 verified, 0 errors

@@ -1,0 +1,17 @@
+---Command arguments
+/home/ying/diem/old_seq_benchmarks/modules/Signature/Signature.seqArray.bpl
+-monomorphize
+/env:2
+/proverLog:Signature.seqArray.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/old_seq_benchmarks/modules/Signature/Signature.seqArray.bpl
+Coalescing blocks...
+Inlining...
+
+Boogie program verifier finished with 0 verified, 0 errors

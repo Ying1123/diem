@@ -1,0 +1,132 @@
+---Command arguments
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl
+-monomorphize
+/env:2
+/proverLog:AccountAdministrationScripts.seqArray.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
+  [0.313 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
+  [0.087 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
+  [0.291 s, 9 proof obligations]  error
+assert_failed(2,8556,8719): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15477,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(2713,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15477,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12737,9): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12595,9): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12554,9): inline$$1_DiemAccount_exists_at$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12605,5): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon11_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12636,16): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon12_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12659,13): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon13_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12661,5): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon14_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12771,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon19_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(566,9): inline$$Not$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12771,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon19_Else$1
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12807,17): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon20_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12554,9): inline$$1_DiemAccount_exists_at$1$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12828,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon21_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12859,17): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon22_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12882,14): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12884,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12911,35): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15577,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14830,9): inline$$1_RecoveryAddress_add_rotation_capability$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14876,17): inline$$1_RecoveryAddress_add_rotation_capability$0$anon22_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12995,9): inline$$1_DiemAccount_key_rotation_capability_address$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14897,5): inline$$1_RecoveryAddress_add_rotation_capability$0$anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14947,17): inline$$1_RecoveryAddress_add_rotation_capability$0$anon24_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14970,14): inline$$1_RecoveryAddress_add_rotation_capability$0$anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14972,5): inline$$1_RecoveryAddress_add_rotation_capability$0$anon26_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(837,7): inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14992,5): inline$$1_RecoveryAddress_add_rotation_capability$0$anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14992,5): inline$$1_RecoveryAddress_add_rotation_capability$0$anon27_Else$1
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15032,17): inline$$1_RecoveryAddress_add_rotation_capability$0$anon28_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(808,8): inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15055,5): inline$$1_RecoveryAddress_add_rotation_capability$0$anon29_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15591,5): anon7_Else
+
+Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
+  [0.264 s, 11 proof obligations]  error
+assert_failed(2,41535,41616): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15679,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(2713,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15679,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12737,9): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12595,9): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12554,9): inline$$1_DiemAccount_exists_at$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12605,5): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon11_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12636,16): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon12_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12659,13): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon13_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12661,5): inline$$1_DiemAccount_delegated_key_rotation_capability$0$anon14_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12771,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon19_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(566,9): inline$$Not$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12771,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon19_Else$1
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12807,17): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon20_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12554,9): inline$$1_DiemAccount_exists_at$1$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12828,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon21_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12859,17): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon22_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12882,14): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12884,5): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12911,35): inline$$1_DiemAccount_extract_key_rotation_capability$0$anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15772,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14052,9): inline$$1_RecoveryAddress_publish$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14126,17): inline$$1_RecoveryAddress_publish$0$anon19_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(12995,9): inline$$1_DiemAccount_key_rotation_capability_address$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14149,5): inline$$1_RecoveryAddress_publish$0$anon20_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14185,17): inline$$1_RecoveryAddress_publish$0$anon21_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(566,9): inline$$Not$1$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14185,17): inline$$1_RecoveryAddress_publish$0$anon21_Then$1
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14236,17): inline$$1_RecoveryAddress_publish$0$anon22_Then
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(4446,9): inline$$1_Vector_singleton'$1_DiemAccount_KeyRotationCapability'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(796,7): inline$$1_Vector_empty'$1_DiemAccount_KeyRotationCapability'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(4457,5): inline$$1_Vector_singleton'$1_DiemAccount_KeyRotationCapability'$0$anon5_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(808,8): inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(4473,5): inline$$1_Vector_singleton'$1_DiemAccount_KeyRotationCapability'$0$anon6_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14260,5): inline$$1_RecoveryAddress_publish$0$anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14275,52): inline$$1_RecoveryAddress_publish$0$anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(14277,5): inline$$1_RecoveryAddress_publish$0$anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.bpl(15790,5): anon7_Else
+
+Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
+  [0.050 s, 7 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
+  [0.128 s, 10 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
+  [0.170 s, 10 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
+  [0.180 s, 10 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_recovery_address$verify ...
+  [0.573 s, 16 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_dual_attestation_info$verify ...
+  [0.676 s, 15 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_shared_ed25519_public_key$verify ...
+  [0.091 s, 7 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.159 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 10 verified, 2 errors

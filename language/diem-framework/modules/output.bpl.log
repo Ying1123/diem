@@ -1,0 +1,4 @@
+output.bpl(15240,27): Verification of '$1_AccountAdministrationScripts_add_recovery_rotation_capability$verify' timed out after 40 seconds
+output.bpl(16459,27): Verification of '$1_AccountAdministrationScripts_rotate_authentication_key_with_recovery_address$verify' timed out after 40 seconds
+
+Boogie program verifier finished with 0 errors, 2 time outs

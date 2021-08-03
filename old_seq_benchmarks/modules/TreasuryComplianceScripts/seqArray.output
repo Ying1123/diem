@@ -1,0 +1,48 @@
+/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.smt2:454.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.smt2:1659.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+cvc5 interrupted by SIGTERM.

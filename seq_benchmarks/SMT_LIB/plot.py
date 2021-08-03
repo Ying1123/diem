@@ -25,4 +25,8 @@ for line in f_array.readlines():
 print("lens: {} {} {}".format(len(new), len(old), len(array)))
 print(new)
 
+plt.plot([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+plt.xlabel("array solver")
+plt.ylabel("new solver")
 plt.scatter(np.array(array), np.array(new))
+plt.show()

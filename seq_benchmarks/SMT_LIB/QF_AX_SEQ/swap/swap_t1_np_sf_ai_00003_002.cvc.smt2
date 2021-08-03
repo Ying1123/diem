@@ -1,0 +1,51 @@
+(set-info :smt-lib-version 2.6)
+(set-logic ALL)
+(set-info :source |
+Benchmarks used in the followin paper:
+Big proof engines as little proof engines: new results on rewrite-based satisfiability procedure
+Alessandro Armando, Maria Paola Bonacina, Silvio Ranise, Stephan Schulz. 
+PDPAR'05
+http://www.ai.dist.unige.it/pdpar05/
+
+
+|)
+(set-info :category "crafted")
+(set-info :status unsat)
+
+(declare-sort Element 0)
+(declare-fun a_176 () (Seq Element))
+(declare-fun a_177 () (Seq Element))
+(declare-fun a_179 () (Seq Element))
+(declare-fun a_181 () (Seq Element))
+(declare-fun a_183 () (Seq Element))
+(declare-fun a_184 () (Seq Element))
+(declare-fun a_185 () (Seq Element))
+(declare-fun a_186 () (Seq Element))
+(declare-fun a_188 () (Seq Element))
+(declare-fun a_189 () (Seq Element))
+(declare-fun e_175 () Element)
+(declare-fun e_178 () Element)
+(declare-fun e_180 () Element)
+(declare-fun e_182 () Element)
+(declare-fun e_187 () Element)
+(declare-fun a1 () (Seq Element))
+(declare-fun i0 () Int)
+(declare-fun i2 () Int)
+(assert (= a_176 (seq.update a1 i0 (seq.unit e_175))))
+(assert (= a_177 (seq.update a_176 i0 (seq.unit e_175))))
+(assert (= a_179 (seq.update a_177 i0 (seq.unit e_178))))
+(assert (= a_181 (seq.update a_179 i2 (seq.unit e_180))))
+(assert (= a_183 (seq.update a_181 i2 (seq.unit e_182))))
+(assert (= a_184 (seq.update a_183 i2 (seq.unit e_182))))
+(assert (= a_185 (seq.update a_177 i2 (seq.unit e_180))))
+(assert (= a_186 (seq.update a_185 i0 (seq.unit e_178))))
+(assert (= a_188 (seq.update a_186 i2 (seq.unit e_187))))
+(assert (= a_189 (seq.update a_188 i2 (seq.unit e_187))))
+(assert (= e_175 (seq.nth a1 i0)))
+(assert (= e_178 (seq.nth a_177 i2)))
+(assert (= e_180 (seq.nth a_177 i0)))
+(assert (= e_182 (seq.nth a_181 i2)))
+(assert (= e_187 (seq.nth a_186 i2)))
+(assert (not (= a_184 a_189)))
+(check-sat)
+(exit)

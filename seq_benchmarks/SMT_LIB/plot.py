@@ -3,7 +3,7 @@ import numpy as np
 
 f_new = open('QF_AX_SEQ/result/swap.t', 'r')
 f_old = open('QF_AX_SEQ/result/swap_old_seq.t', 'r')
-f_array = open('QF_AX/result/swap_array.t', 'r')
+f_array = open('QF_AX_ARRAY/result/swap_array.t', 'r')
 
 new = []
 old = []

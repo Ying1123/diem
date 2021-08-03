@@ -1,6 +1,6 @@
-seq_dir=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX/swap
+seq_dir=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_ARRAY/swap
 cvc=/home/ying/CVC4/seq_prod/bin/cvc5
-time_array=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX/result/swap_array.t
+time_array=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_ARRAY/result/swap_array.t
 
 function IsSuffix() {
     local filename="$1"

@@ -20,7 +20,7 @@ find $seq_dir -type f -print0 | while read -d $'\0' file; do
 	if [ $ret -eq 0 ]; then
 		echo $file
 		start=$(date +%s)
-		timeout 10 $cvc $file --incremental
+		timeout 300 $cvc $file --incremental
 		end=$(date +%s)
 		take=$(( end - start ))
         filename=$(basename $file .move)

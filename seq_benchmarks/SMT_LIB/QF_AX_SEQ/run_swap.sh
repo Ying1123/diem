@@ -14,7 +14,7 @@ function IsSuffix() {
 }
 
 rm $time_new
-rm $time_old
+#rm $time_old
 
 find $seq_dir -type f -print0 | while read -d $'\0' file; do
 	IsSuffix ${file} "smt2"
@@ -22,19 +22,19 @@ find $seq_dir -type f -print0 | while read -d $'\0' file; do
 	if [ $ret -eq 0 ]; then
 		echo $file
 		start=$(date +%s)
-		timeout 10 $cvc $file --incremental --strings-exp --strings-seq-update
+		timeout 300 $cvc $file --incremental --strings-exp --strings-seq-update
 		end=$(date +%s)
 		take=$(( end - start ))
         filename=$(basename $file .move)
 		echo $filename >> $time_new
 		echo ${take} >> $time_new
 
-		start=$(date +%s)
-		timeout 10 $cvc $file --incremental --strings-exp
-		end=$(date +%s)
-		take=$(( end - start ))
-		echo $filename >> $time_old
-		echo ${take} >> $time_old
+#		start=$(date +%s)
+#		timeout 10 $cvc $file --incremental --strings-exp
+#		end=$(date +%s)
+#		take=$(( end - start ))
+#		echo $filename >> $time_old
+#		echo ${take} >> $time_old
 	fi
 done
 

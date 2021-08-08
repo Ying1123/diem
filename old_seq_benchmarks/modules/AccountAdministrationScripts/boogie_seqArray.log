@@ -16,39 +16,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
-  [0.339 s, 8 proof obligations]  verified
+  [0.398 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
-  [0.089 s, 8 proof obligations]  verified
+  [0.104 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
-  [0.170 s, 9 proof obligations]  verified
+  [0.201 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
-  [0.129 s, 11 proof obligations]  verified
+  [0.148 s, 11 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
-  [0.046 s, 7 proof obligations]  verified
+  [0.047 s, 7 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
-  [0.137 s, 10 proof obligations]  verified
+  [0.136 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
-  [0.219 s, 10 proof obligations]  verified
+  [0.256 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
-  [0.175 s, 10 proof obligations]  verified
+  [0.197 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_recovery_address$verify ...
-  [3.489 s, 16 proof obligations]  verified
+  [5.028 s, 16 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_dual_attestation_info$verify ...
-  [0.825 s, 15 proof obligations]  verified
+  [1.904 s, 15 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_shared_ed25519_public_key$verify ...
-  [0.094 s, 7 proof obligations]  verified
+  [0.195 s, 7 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.158 s, 0 proof obligations]  verified
+  [0.363 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

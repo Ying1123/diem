@@ -1,0 +1,34 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/ModifiesTest/ModifiesTest.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:ModifiesTest.cvc4.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/ModifiesTest/ModifiesTest.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $0_A_mutate_at$verify ...
+  [0.160 s, 4 proof obligations]  verified
+
+Verifying $0_A_read_at$verify ...
+  [0.014 s, 3 proof obligations]  verified
+
+Verifying $0_B_move_from_test$verify ...
+  [0.006 s, 2 proof obligations]  verified
+
+Verifying $0_B_move_to_test$verify ...
+  [0.017 s, 2 proof obligations]  verified
+
+Verifying $0_B_mutate_S_test$verify ...
+  [0.020 s, 6 proof obligations]  verified
+
+Verifying $0_B_mutate_at_test$verify ...
+  [0.018 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 6 verified, 0 errors

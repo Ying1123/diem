@@ -1,0 +1,158 @@
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_outer_invariant_incorrect` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_inner_invariant_incorrect` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_correct` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_with_two_back_edges_incorrect` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_with_two_back_edges_correct` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_invariant_induction_invalid` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_invariant_base_invalid` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_no_abort_incorrect` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_no_abort` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_missing_inc_spec2` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_missing_inc_spec1` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_abort_incorrect` to be verified
+02:36:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_abort` to be verified
+[INFO] translating module VerifyLoops
+02:36:57 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:36:57 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:36:57 [DEBUG] (17) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:36:58 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:36:58 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.010s build, 0.012s trafo, 0.004s gen, 0.722s verify
+error: abort not covered by any of the `aborts_if` clauses
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:86:5 ───
+    │
+ 86 │ ╭     spec iter10_abort_incorrect { // Disproved. Abort always happens.
+ 87 │ │         pragma verify=true;
+ 88 │ │         aborts_if false;
+ 89 │ │     }
+    │ ╰─────^
+    ·
+ 82 │             if (i == 7) abort 7;
+    │                         ------- abort happened here with code 0x7
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:77: iter10_abort_incorrect
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79: iter10_abort_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:80: iter10_abort_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78: iter10_abort_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82: iter10_abort_incorrect
+    =         ABORTED
+
+error: function does not abort under this condition
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:58:9 ───
+    │
+ 58 │         aborts_if true;
+    │         ^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:48: iter10_no_abort_incorrect
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50: iter10_no_abort_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:51: iter10_no_abort_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49: iter10_no_abort_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:58
+
+error: base case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17 ───
+     │
+ 210 │                 assert x != 0;
+     │                 ^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:206: loop_invariant_base_invalid
+     =         n = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:207: loop_invariant_base_invalid
+     =         x = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:209: loop_invariant_base_invalid
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210: loop_invariant_base_invalid
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17 ───
+     │
+ 223 │                 assert x == 0;
+     │                 ^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:219: loop_invariant_induction_invalid
+     =         n = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:220: loop_invariant_induction_invalid
+     =         x = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:222: loop_invariant_induction_invalid
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223: loop_invariant_induction_invalid
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:225: loop_invariant_induction_invalid
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:221: loop_invariant_induction_invalid
+     =         x = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223: loop_invariant_induction_invalid
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17 ───
+     │
+ 189 │                 assert x != y;
+     │                 ^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:183: loop_with_two_back_edges_incorrect
+     =         x = 0
+     =         y = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:185: loop_with_two_back_edges_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:188: loop_with_two_back_edges_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189: loop_with_two_back_edges_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:191: loop_with_two_back_edges_incorrect
+     =         x = 18446744073709551615
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:197: loop_with_two_back_edges_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189: loop_with_two_back_edges_incorrect
+
+error: base case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21 ───
+     │
+ 145 │                     assert x != y;
+     │                     ^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138: nested_loop_inner_invariant_incorrect
+     =         x = 0
+     =         y = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:140: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:144: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145: nested_loop_inner_invariant_incorrect
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21 ───
+     │
+ 145 │                     assert x != y;
+     │                     ^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138: nested_loop_inner_invariant_incorrect
+     =         x = 0
+     =         y = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:140: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:144: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:147: nested_loop_inner_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:150: nested_loop_inner_invariant_incorrect
+     =         y = 18446744073709551614
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145: nested_loop_inner_invariant_incorrect
+
+error: induction case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17 ───
+     │
+ 119 │                 assert x != y;
+     │                 ^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:113: nested_loop_outer_invariant_incorrect
+     =         x = 0
+     =         y = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:115: nested_loop_outer_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:118: nested_loop_outer_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119: nested_loop_outer_invariant_incorrect
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122: nested_loop_outer_invariant_incorrect
+     =         x = 18446744073709551615
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119: nested_loop_outer_invariant_incorrect
+
+exiting with boogie verification errors

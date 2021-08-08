@@ -1,0 +1,438 @@
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move is move
+file name is aborts_if
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move is move
+file name is aborts_if_with_code
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_check.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_check.move is move
+file name is aborts_with_check
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_negative_check.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/aborts_with_negative_check.move is move
+file name is aborts_with_negative_check
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/address_quant.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move is move
+file name is address_quant
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/address_serialization_constant_size.move is move
+file name is address_serialization_constant_size
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/arithm.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/arithm.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move is move
+file name is arithm
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/axioms.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move is move
+file name is axioms
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/cast.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/cast.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/cast.move is move
+file name is cast
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/choice.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/choice.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/choice.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/choice.move is move
+file name is choice
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/consts.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/consts.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/consts.move is move
+file name is consts
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/cross_module_invariant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/cross_module_invariant.move is move
+file name is cross_module_invariant
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/defines.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/defines.move is move
+file name is defines
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.inv-v1_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move is move
+file name is disable_inv_friends
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.inv-v1_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.inv_v2_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv.move is move
+file name is disable_inv
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/emits.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/emits.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/emits.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/emits.move is move
+file name is emits
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move is move
+file name is exists_in_vector
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/fixed_point_arithm.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/fixed_point_arithm.move is move
+file name is fixed_point_arithm
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/friend_error.inv-v1_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/friend_error.move is move
+file name is friend_error
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/friend.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/friend.move is move
+file name is friend
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move is move
+file name is global_invariants
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/global_vars.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/global_vars.move is move
+file name is global_vars
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/hash_model_invalid.move is move
+file name is hash_model_invalid
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/hash_model.move is move
+file name is hash_model
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency.move is move
+file name is inconsistency
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move is move
+file name is invariants
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/invariants_resources.move is move
+file name is invariants_resources
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move is move
+file name is invariants_with_quant
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/let.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/let.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/let.move is move
+file name is let
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/loops.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/loops.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/loops.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/loops.move is move
+file name is loops
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move is move
+file name is loops_with_memory_ops
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema_apply.move is move
+file name is marketcap_as_schema_apply
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_as_schema.move is move
+file name is marketcap_as_schema
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap_generic.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap_generic.move is move
+file name is marketcap_generic
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/marketcap.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/marketcap.move is move
+file name is marketcap
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move is move
+file name is ModifiesErrorTest
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move is move
+file name is ModifiesSchemaTest
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move is move
+file name is ModifiesTest
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTypeTest.move is move
+file name is ModifiesTypeTest
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/module_invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/module_invariants.move is move
+file name is module_invariants
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move is move
+file name is module_level_spec
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/mono.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/mono.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/mono.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mono.move is move
+file name is mono
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_accross_modules.move is move
+file name is mut_ref_accross_modules
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref.move is move
+file name is mut_ref
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/mut_ref_unpack.move is move
+file name is mut_ref_unpack
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/nested_invariants.move is move
+file name is nested_invariants
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/opaque.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/opaque.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move is move
+file name is opaque
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/pack_unpack.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pack_unpack.move is move
+file name is pack_unpack
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/parse_error.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/parse_error.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/parse_error.move is move
+file name is parse_error
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/pragma.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/pragma.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pragma.move is move
+file name is pragma
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move is move
+file name is pure_function_call_incorrect
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call.move is move
+file name is pure_function_call
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/references.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/references.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/references.move is move
+file name is references
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/resources.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/resources.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/resources.move is move
+file name is resources
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/restrictions.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/restrictions.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/restrictions.move is move
+file name is restrictions
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/return_values.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/return_values.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/return_values.move is move
+file name is return_values
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/schema_exp.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/schema_exp.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/schema_exp.move is move
+file name is schema_exp
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/script_incorrect.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/script_incorrect.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/script_incorrect.move is move
+file name is script_incorrect
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/script.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/script.move is move
+file name is script
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/script_provider.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/script_provider.move is move
+file name is script_provider
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/serialize_model.move is move
+file name is serialize_model
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move is move
+file name is simple_vector_client
+dir exists
+rm: cannot remove '*.bpl.log': No such file or directory
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move is move
+file name is specs_in_fun
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun_ref.move is move
+file name is specs_in_fun_ref
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move is move
+file name is strong_edges
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/txn.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/txn.move is move
+file name is txn
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move is move
+file name is unused_schema
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move is move
+file name is verify_bcs
+dir exists
+output exists
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_signature.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/verify_signature.move is move
+file name is verify_signature
+dir exists
+rm: cannot remove '*.smt': No such file or directory
+rm: cannot remove '*.bpl.log': No such file or directory
+output doesn't exist
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.cvc4_exp is a file
+/home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move is a file
+the suffix of the /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move is move
+file name is verify_vector
+dir exists
+output exists

@@ -1,0 +1,219 @@
+02:37:24 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNestedInvariants::new_outer_data_invariant_invalid` to be verified
+02:37:24 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNestedInvariants::new_inner_data_invariant_invalid` to be verified
+02:37:24 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNestedInvariants::new` to be verified
+02:37:24 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNestedInvariants::mutate_outer_data_invariant_invalid` to be verified
+02:37:24 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNestedInvariants::mutate_inner_data_invariant_invalid` to be verified
+02:37:24 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestNestedInvariants::mutate` to be verified
+[INFO] translating module TestNestedInvariants
+02:37:24 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:37:24 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:37:24 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:37:24 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+[internal] boogie exited with prover errors:
+Prover error: Unexpected value: (seq.unit 0)
+
+Prover error: Unexpected value: (seq.unit 1)
+
+Advisory: $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
+Advisory: $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
+output.bpl(1063,27): Verification inconclusive ($42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify)
+output.bpl(1183,27): Verification inconclusive ($42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify)
+assert_failed(2,287,303): data invariant does not hold
+Execution trace:
+    output.bpl(1367,5): anon0
+    output.bpl(1367,5): anon0$1
+Augmented execution trace:
+$at(2,1032,1033)
+$at(2,287,303)
+*** MODEL
+$EXEC_FAILURE_CODE -> (- 1)
+$MAX_U128 -> 340282366920938463463374607431768211455
+$MAX_U64 -> 18446744073709551615
+$MAX_U8 -> 255
+$t2@0 -> ($42_TestNestedInvariants_Nested 0)
+$t2@0@@0 -> ($42_TestNestedInvariants_Nested 0)
+$t3@0 -> ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0))
+$t3@0@@0 -> ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0))
+$1_Hash_sha2 -> {
+  else -> (seq.empty)
+}
+$1_Hash_sha3 -> {
+  else -> (seq.empty)
+}
+$1_Signature_$ed25519_validate_pubkey -> {
+  else -> false
+}
+$1_Signature_$ed25519_verify -> {
+  else -> false
+}
+$ConstMemoryDomain -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+$IndexOfVec'u8' -> {
+  else -> 0
+}
+$InRange -> {
+  else -> false
+}
+$IsValid'$42_TestNestedInvariants_Nested' -> {
+  else -> false
+}
+$IsValid'$42_TestNestedInvariants_Outer' -> {
+  else -> false
+}
+$IsValid'address' -> {
+  else -> false
+}
+$IsValid'num' -> {
+  else -> false
+}
+$IsValid'u128' -> {
+  else -> false
+}
+$IsValid'u64' -> {
+  0 -> true
+  2 -> true
+  else -> true
+}
+$IsValid'u8' -> {
+  else -> false
+}
+$IsValid'vec'u8'' -> {
+  else -> false
+}
+$shl -> {
+  else -> 0
+}
+$shr -> {
+  else -> 0
+}
+ControlFlow -> {
+  0 0 -> 15078
+  0 13693 -> (- 15165)
+  0 15078 -> 13693
+  else -> (- 15165)
+}
+lambda#0 -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+ReverseVec_3283 -> {
+  else -> (seq.empty)
+}
+Select__T@[Int]Bool_ -> {
+  else -> false
+}
+*** END_MODEL
+assert_failed(2,689,707): data invariant does not hold
+Execution trace:
+    output.bpl(1429,5): anon0
+    output.bpl(1429,5): anon0$1
+Augmented execution trace:
+$at(2,936,937)
+$at(2,287,303)
+$at(2,927,955)
+$at(2,585,601)
+$at(2,689,707)
+*** MODEL
+$EXEC_FAILURE_CODE -> (- 1)
+$MAX_U128 -> 340282366920938463463374607431768211455
+$MAX_U64 -> 18446744073709551615
+$MAX_U8 -> 255
+$t0@0 -> ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0))
+$t1 -> ($Mutation_9945 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0)))
+$t10 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t10@0 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t10@1 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t2@0 -> ($42_TestNestedInvariants_Nested 2)
+$t3@0 -> ($42_TestNestedInvariants_Outer 2 ($42_TestNestedInvariants_Nested 2))
+$t4@0 -> ($42_TestNestedInvariants_Nested 0)
+$t5 -> ($Mutation_9945 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0)))
+$t5@0 -> ($Mutation_9945 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0)))
+$t5@1 -> ($Mutation_9945 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0)))
+$t5@2 -> ($Mutation_9945 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0)))
+$t7 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t7@0 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t7@1 -> ($Mutation_3430 ($Global 0) (seq.empty) 0)
+$t9 -> ($Mutation_9992 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Nested 0))
+$t9@0 -> ($Mutation_9992 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Nested 0))
+$t9@1 -> ($Mutation_9992 ($Global 0) (seq.empty) ($42_TestNestedInvariants_Nested 0))
+$temp_0'$42_TestNestedInvariants_Outer'@0 -> ($42_TestNestedInvariants_Outer 0 ($42_TestNestedInvariants_Nested 0))
+$1_Hash_sha2 -> {
+  else -> (seq.empty)
+}
+$1_Hash_sha3 -> {
+  else -> (seq.empty)
+}
+$1_Signature_$ed25519_validate_pubkey -> {
+  else -> false
+}
+$1_Signature_$ed25519_verify -> {
+  else -> false
+}
+$ConstMemoryDomain -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+$IndexOfVec'u8' -> {
+  else -> 0
+}
+$InRange -> {
+  else -> false
+}
+$IsValid'$42_TestNestedInvariants_Nested' -> {
+  else -> false
+}
+$IsValid'$42_TestNestedInvariants_Outer' -> {
+  else -> false
+}
+$IsValid'address' -> {
+  else -> false
+}
+$IsValid'num' -> {
+  else -> false
+}
+$IsValid'u128' -> {
+  else -> false
+}
+$IsValid'u64' -> {
+  2 -> true
+  else -> true
+}
+$IsValid'u8' -> {
+  else -> false
+}
+$IsValid'vec'u8'' -> {
+  else -> false
+}
+$shl -> {
+  else -> 0
+}
+$shr -> {
+  else -> 0
+}
+ControlFlow -> {
+  0 0 -> 15083
+  0 13834 -> (- 15281)
+  0 15083 -> 13834
+  else -> (- 15281)
+}
+lambda#0 -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+ReverseVec_3283 -> {
+  else -> (seq.empty)
+}
+Select__T@[Int]Bool_ -> {
+  else -> false
+}
+*** END_MODEL
+
+Boogie program verifier finished with 2 errors, 2 inconclusives
+

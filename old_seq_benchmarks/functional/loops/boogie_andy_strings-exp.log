@@ -1,0 +1,116 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/loops/loops.andy.bpl
+-monomorphize
+/env:2
+/proverLog:loops.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_VerifyLoops_iter10_abort$verify ...
+  [0.318 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_abort_incorrect$verify ...
+  [0.159 s, 4 proof obligations]  error
+assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1108,5): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1108,5): anon0$1
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1108,5): anon0$2
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1171,16): anon12_Then
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1191,16): anon13_Then
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1273,1): L9
+
+Verifying $42_VerifyLoops_iter10_missing_inc_spec1$verify ...
+  [0.030 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_missing_inc_spec2$verify ...
+  [0.018 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_no_abort$verify ...
+  [0.095 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_no_abort_incorrect$verify ...
+  [0.127 s, 4 proof obligations]  error
+assert_failed(2,1634,1649): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1804,5): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1804,5): anon0$1
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1804,5): anon0$2
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1867,34): anon12_Else
+
+Verifying $42_VerifyLoops_loop_invariant_base_invalid$verify ...
+  [0.051 s, 2 proof obligations]  error
+assert_failed(2,4881,4895): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1995,9): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(1995,9): anon0$1
+
+Verifying $42_VerifyLoops_loop_invariant_induction_invalid$verify ...
+  [0.097 s, 2 proof obligations]  error
+assert_failed(2,5129,5143): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2137,9): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2137,9): anon0$1
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2137,9): anon0$2
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2195,16): anon8_Then
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2213,5): anon9_Else
+
+Verifying $42_VerifyLoops_loop_with_two_back_edges_correct$verify ...
+  [0.171 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify ...
+  [0.212 s, 4 proof obligations]  error
+assert_failed(2,4425,4439): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2480,9): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2480,9): anon0$1
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2556,16): anon15_Then
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(415,5): inline$$AddU64$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2574,5): anon16_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2643,1): L7
+
+Verifying $42_VerifyLoops_nested_loop_correct$verify ...
+  [0.163 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify ...
+  [0.226 s, 4 proof obligations]  errors
+assert_failed(2,3489,3503): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2915,9): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2915,9): anon0$1
+assert_failed(2,3489,3503): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2915,9): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(2915,9): anon0$1
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3014,34): anon14_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3029,5): anon15_Else
+
+Verifying $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify ...
+  [0.221 s, 4 proof obligations]  error
+assert_failed(2,2937,2951): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3145,9): anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3145,9): anon0$1
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3243,16): anon14_Then
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3279,34): anon16_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(415,5): inline$$AddU64$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/loops/loops.andy.bpl(3291,5): anon17_Else
+
+Boogie program verifier finished with 6 verified, 8 errors

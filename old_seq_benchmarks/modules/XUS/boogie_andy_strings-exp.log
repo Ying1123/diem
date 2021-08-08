@@ -1,0 +1,26 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/XUS/XUS.andy.bpl
+-monomorphize
+/env:2
+/proverLog:XUS.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/XUS/XUS.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [1.428 s, 9 proof obligations]  verified
+
+Verifying $1_XUS_initialize$verify ...
+  [6.491 s, 30 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.157 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 3 verified, 0 errors

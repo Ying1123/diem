@@ -1,0 +1,26 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/opaque/opaque.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:opaque.cvc4.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/opaque/opaque.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $42_TestOpaque_opaque_caller$verify ...
+  [0.146 s, 1 proof obligation]  verified
+
+Verifying $42_TestOpaque_opaque_incorrect$verify ...
+  [0.015 s, 1 proof obligation]  error
+assert_failed(2,271,291): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/opaque/opaque.cvc4.bpl(977,5): anon0
+    /home/ying/diem/seq_benchmarks/opaque/opaque.cvc4.bpl(977,5): anon0$1
+
+Boogie program verifier finished with 1 verified, 1 error

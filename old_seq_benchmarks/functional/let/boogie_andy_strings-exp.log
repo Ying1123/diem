@@ -1,0 +1,55 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/let/let.andy.bpl
+-monomorphize
+/env:2
+/proverLog:let.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/let/let.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestLet_local_let_with_memory_access$verify ...
+  [0.266 s, 1 proof obligation]  verified
+
+Verifying $42_TestLet_spec_let$verify ...
+  [0.180 s, 2 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_abort$verify ...
+  [1.613 s, 6 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_abort_incorrect$verify ...
+  [0.470 s, 6 proof obligations]  errors
+assert_failed(2,1867,1886): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1318,9): anon0
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1318,9): anon0$1
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1373,5): anon8_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(516,5): inline$$Div$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1382,5): anon9_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(498,5): inline$$MulU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1398,5): anon10_Else
+assert_failed(2,1768,2061): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1318,9): anon0
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1318,9): anon0$1
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1373,5): anon8_Else
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(517,9): inline$$Div$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(517,9): inline$$Div$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1383,9): anon9_Then
+    /home/ying/diem/seq_benchmarks/let/let.andy.bpl(1456,1): L2
+
+Verifying $42_TestLet_spec_let_with_abort_opaque_caller$verify ...
+  [0.141 s, 6 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_old$verify ...
+  [0.223 s, 2 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

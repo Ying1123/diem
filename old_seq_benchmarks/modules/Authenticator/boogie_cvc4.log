@@ -1,0 +1,34 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:Authenticator.cvc4.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $1_Authenticator_create_multi_ed25519$verify ...
+  [0.152 s, 0 proof obligations]  verified
+
+Verifying $1_Authenticator_public_keys$verify ...
+  [0.002 s, 0 proof obligations]  verified
+
+Verifying $1_Authenticator_threshold$verify ...
+  [0.002 s, 0 proof obligations]  verified
+
+Verifying $1_Authenticator_ed25519_authentication_key$verify ...
+  [0.020 s, 1 proof obligation]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Authenticator_multi_ed25519_authentication_key$verify ...
+  [0.027 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.cvc4.bpl(1536,27): Verification inconclusive ($1_Authenticator_multi_ed25519_authentication_key$verify)
+
+Boogie program verifier finished with 4 verified, 0 errors, 1 inconclusive

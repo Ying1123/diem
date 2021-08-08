@@ -1,0 +1,31 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc5.bpl
+-monomorphize
+/env:2
+/proverLog:ValidatorOperatorConfig.cvc5.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc5.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.209 s, 7 proof obligations]  verified
+
+Verifying $1_ValidatorOperatorConfig_publish$verify ...
+  [0.041 s, 17 proof obligations]  verified
+
+Verifying $1_ValidatorOperatorConfig_get_human_name$verify ...
+  [0.027 s, 4 proof obligations]  verified
+
+Verifying $1_ValidatorOperatorConfig_has_validator_operator_config$verify ...
+  [0.004 s, 1 proof obligation]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.167 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 5 verified, 0 errors

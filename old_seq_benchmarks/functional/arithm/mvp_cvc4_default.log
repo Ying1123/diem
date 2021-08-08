@@ -1,0 +1,159 @@
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::underflow` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u8_mul_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u8_mul` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u8_add_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u8_add` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u64_mul_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u64_mul` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u64_add_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u64_add` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u128_mul_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u128_mul` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u128_add_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::overflow_u128_add` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::multiple_ops` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::g` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::f` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::div_by_zero_u64_incorrect` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::div_by_zero_u64` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::div_by_zero` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::div` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::bool_ops` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::arithmetic_ops` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::add_two_number` to be verified
+05:26:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestArithmetic::h` to be verified
+[INFO] translating module TestArithmetic
+05:26:32 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+05:26:32 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:26:32 [DEBUG] (10) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:26:32 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:26:32 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.011s build, 0.010s trafo, 0.005s gen, 0.721s verify
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:128:5 ───
+     │
+ 128 │ ╭     spec div_by_zero_u64_incorrect {
+ 129 │ │         aborts_if false;
+ 130 │ │     }
+     │ ╰─────^
+     ·
+ 126 │         x / y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:125: div_by_zero_u64_incorrect
+     =         x = 0
+     =         y = 0
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:126: div_by_zero_u64_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:180:5 ───
+     │
+ 180 │ ╭     spec overflow_u128_add_incorrect {
+ 181 │ │         aborts_if false;
+ 182 │ │     }
+     │ ╰─────^
+     ·
+ 178 │         x + y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:177: overflow_u128_add_incorrect
+     =         x = 340282366920938463463374607431768211455u128
+     =         y = 1u128
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:178: overflow_u128_add_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:232:5 ───
+     │
+ 232 │ ╭     spec overflow_u128_mul_incorrect {
+ 233 │ │         aborts_if false;
+ 234 │ │     }
+     │ ╰─────^
+     ·
+ 230 │         x * y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:229: overflow_u128_mul_incorrect
+     =         x = 2u128
+     =         y = 2u128
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:230: overflow_u128_mul_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:164:5 ───
+     │
+ 164 │ ╭     spec overflow_u64_add_incorrect {
+ 165 │ │         aborts_if false;
+ 166 │ │     }
+     │ ╰─────^
+     ·
+ 162 │         x + y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:161: overflow_u64_add_incorrect
+     =         x = 18446744073709551615
+     =         y = 1
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:162: overflow_u64_add_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:217:5 ───
+     │
+ 217 │ ╭     spec overflow_u64_mul_incorrect {
+ 218 │ │         aborts_if false;
+ 219 │ │     }
+     │ ╰─────^
+     ·
+ 215 │         x * y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:214: overflow_u64_mul_incorrect
+     =         x = 2
+     =         y = 2
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:215: overflow_u64_mul_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:148:5 ───
+     │
+ 148 │ ╭     spec overflow_u8_add_incorrect {
+ 149 │ │         aborts_if false;
+ 150 │ │     }
+     │ ╰─────^
+     ·
+ 146 │         x + y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:145: overflow_u8_add_incorrect
+     =         x = 255u8
+     =         y = 1u8
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:146: overflow_u8_add_incorrect
+     =         ABORTED
+
+error: abort not covered by any of the `aborts_if` clauses
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:201:5 ───
+     │
+ 201 │ ╭     spec overflow_u8_mul_incorrect {
+ 202 │ │         aborts_if false;
+ 203 │ │     }
+     │ ╰─────^
+     ·
+ 199 │         x * y
+     │           - abort happened here with execution failure
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:198: overflow_u8_mul_incorrect
+     =         x = 2u8
+     =         y = 2u8
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:199: overflow_u8_mul_incorrect
+     =         ABORTED
+
+exiting with boogie verification errors

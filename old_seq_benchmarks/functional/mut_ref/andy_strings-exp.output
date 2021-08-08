@@ -1,0 +1,5 @@
+/home/ying/diem/seq_benchmarks/mut_ref/mut_ref.andy_strings.smt2:58.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+cvc5 interrupted by SIGTERM.

@@ -1,0 +1,96 @@
+05:26:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::with_spec_fun_choice` to be verified
+05:26:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::simple_incorrect` to be verified
+05:26:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::simple` to be verified
+05:26:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::populate_R` to be verified
+05:26:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::test_not_using_min_incorrect` to be verified
+05:26:39 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::test_min` to be verified
+05:26:39 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+05:26:39 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+[INFO] translating module TestSome
+05:26:39 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+05:26:39 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+05:26:39 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+05:26:40 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+05:26:40 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.012s build, 0.010s trafo, 0.006s gen, 0.678s verify
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:54:9 ───
+    │
+ 54 │         ensures choice == Signer::spec_address_of(s2);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:49
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:50
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:53
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:52
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44: populate_R
+    =         s1 = 0x0
+    =         s2 = 0x1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:45: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:46: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:47: populate_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:54
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:9 ───
+    │
+ 21 │         ensures result == TRACE(choose x: u64 where x >= 4 && x <= 5);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:15: simple_incorrect
+    =         b = true
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16: simple_incorrect
+    =         tmp#$1 = 4
+    =         result = 4
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:17: simple_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21
+    =         `TRACE(choose x: u64 where x >= 4 && x <= 5)` = 5
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:70:9 ───
+    │
+ 70 │         ensures (choose min i in 0..len(result) where result[i] == 2) == 1;
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:61: test_min
+    =         v = vector{}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:62: test_min
+    =         v_ref = &vector{}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:63: test_min
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:64: test_min
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:65: test_min
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:66: test_min
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:67: test_min
+    =         result = vector{(size): 4, 1, 3: 2, default: 3}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:68: test_min
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:70
+
+error: post-condition does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:9 ───
+    │
+ 85 │         ensures TRACE(choose i in 0..len(result) where result[i] == 2) == 1;
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:74: test_not_using_min_incorrect
+    =         v = vector{}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:75: test_not_using_min_incorrect
+    =         v_ref = &vector{}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:76: test_not_using_min_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:77: test_not_using_min_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:78: test_not_using_min_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:79: test_not_using_min_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:80: test_not_using_min_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:81: test_not_using_min_incorrect
+    =         result = vector{(size): 5, 1, 4: 2, default: 3}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:82: test_not_using_min_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85
+    =         `TRACE(choose i in 0..len(result) where result[i] == 2)` = 4num
+
+exiting with boogie verification errors

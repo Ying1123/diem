@@ -1,0 +1,28 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl
+-monomorphize
+/env:2
+/proverLog:invariants_resources.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestInvariants_get$verify ...
+  [0.119 s, 1 proof obligation]  verified
+
+Verifying $42_TestInvariants_get_invalid$verify ...
+  [0.024 s, 1 proof obligation]  error
+assert_failed(2,710,729): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl(1003,9): anon0
+    /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl(1003,9): anon0$1
+    /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl(1026,13): anon7_Else
+    /home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.z3.bpl(1028,5): anon8_Else
+
+Boogie program verifier finished with 1 verified, 1 error

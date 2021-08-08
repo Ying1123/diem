@@ -1,0 +1,19 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/unused_schema/unused_schema.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:unused_schema.cvc4.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/unused_schema/unused_schema.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $42_TestUnusedSchema_foo$verify ...
+  [0.154 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 1 verified, 0 errors

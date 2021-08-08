@@ -1,0 +1,47 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:hash_model.SmtSeq.cvc5.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestHash_hash_test1$verify ...
+  [0.623 s, 5 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test1_incorrect$verify ...
+  [0.241 s, 2 proof obligations]  error
+assert_failed(2,1327,1380): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1023,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1023,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1047,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1060,5): anon7_Else
+
+Verifying $42_TestHash_hash_test2$verify ...
+  [0.076 s, 2 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test2_incorrect$verify ...
+  [0.216 s, 2 proof obligations]  error
+assert_failed(2,2561,2614): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1226,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1226,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1250,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/functional/hash_model/hash_model.SmtSeq.cvc4.bpl(1263,5): anon7_Else
+
+Verifying $42_TestHash_hash_test3$verify ...
+  [0.391 s, 5 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test4$verify ...
+  [0.072 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 2 errors

@@ -1,0 +1,5 @@
+(error "Parse Error: /home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.andy_default.smt2:7.114: Symbol 'T@#0' not declared as a type
+
+  ...T'#0'| (|$v#$42_TestVector_T'#0'| (Seq |T@#0|)) ) ) ))
+                                                ^
+")

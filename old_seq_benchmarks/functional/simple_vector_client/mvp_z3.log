@@ -1,0 +1,209 @@
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_vector_equal` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_id1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_empty` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::none` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::vector_of_proper_positives` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_slice` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_push` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_neq2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_neq1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_length4` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_length3` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_length2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_borrow_mut` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::some` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_swap_abort2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_swap_abort1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_swap` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_push_pop` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_length1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_borrow3` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_borrow2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_borrow1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_id2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::unwrap_or` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_reverse1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_reverse3` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_reverse2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_id3` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_destroy_empty2` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_destroy_empty1` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_contains` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::test_index_of` to be verified
+02:45:58 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestVector::option_type` to be verified
+02:45:58 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestVector
+02:45:58 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:45:58 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:45:58 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:45:59 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+[internal] boogie exited with prover errors:
+Prover error: line 18 column 108: unknown sort 'T@#0'
+
+Prover error: line 18 column 108: unknown sort 'T@#0'
+
+Prover error: line 18 column 108: unknown sort 'T@#0'
+
+Prover error: line 18 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: Prover died
+
+Prover error: Prover died
+
+Prover error: Prover died
+
+output.bpl(1329,27): Verification inconclusive ($42_TestVector_none$verify)
+output.bpl(1376,27): Verification inconclusive ($42_TestVector_option_type$verify)
+output.bpl(1568,27): Verification inconclusive ($42_TestVector_some$verify)
+output.bpl(1652,27): Verification inconclusive ($42_TestVector_test_borrow1$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(1748,27): Verification inconclusive ($42_TestVector_test_borrow2$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(1844,27): Verification inconclusive ($42_TestVector_test_borrow3$verify)
+output.bpl(1945,27): Verification inconclusive ($42_TestVector_test_borrow_mut$verify)
+output.bpl(2069,27): Verification inconclusive ($42_TestVector_test_contains$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(2362,27): Verification inconclusive ($42_TestVector_test_destroy_empty1$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: Prover died
+
+output.bpl(2479,27): Verification inconclusive ($42_TestVector_test_destroy_empty2$verify)
+output.bpl(2607,27): Verification inconclusive ($42_TestVector_test_empty$verify)
+output.bpl(2690,27): Verification inconclusive ($42_TestVector_test_id1$verify)
+output.bpl(2729,27): Verification inconclusive ($42_TestVector_test_id2$verify)
+output.bpl(2822,27): Verification inconclusive ($42_TestVector_test_id3$verify)
+output.bpl(3033,27): Verification inconclusive ($42_TestVector_test_index_of$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(3373,27): Verification inconclusive ($42_TestVector_test_length1$verify)
+output.bpl(3493,27): Verification inconclusive ($42_TestVector_test_length2$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(3654,27): Verification inconclusive ($42_TestVector_test_length3$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(3773,27): Verification inconclusive ($42_TestVector_test_length4$verify)
+output.bpl(3901,27): Verification inconclusive ($42_TestVector_test_neq1$verify)
+output.bpl(4049,27): Verification inconclusive ($42_TestVector_test_neq2$verify)
+output.bpl(4174,27): Verification inconclusive ($42_TestVector_test_push$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(4309,27): Verification inconclusive ($42_TestVector_test_push_pop$verify)
+output.bpl(4429,27): Verification inconclusive ($42_TestVector_test_reverse1$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(4523,27): Verification inconclusive ($42_TestVector_test_reverse2$verify)
+output.bpl(4712,27): Verification inconclusive ($42_TestVector_test_reverse3$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(4901,27): Verification inconclusive ($42_TestVector_test_slice$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(5189,27): Verification inconclusive ($42_TestVector_test_swap$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(5416,27): Verification inconclusive ($42_TestVector_test_swap_abort1$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(5520,27): Verification inconclusive ($42_TestVector_test_swap_abort2$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(5624,27): Verification inconclusive ($42_TestVector_test_vector_equal$verify)
+Prover error: line 16 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+output.bpl(5827,27): Verification inconclusive ($42_TestVector_unwrap_or$verify)
+output.bpl(5957,27): Verification inconclusive ($42_TestVector_vector_of_proper_positives$verify)
+
+Boogie program verifier finished with 0 errors, 33 inconclusives
+

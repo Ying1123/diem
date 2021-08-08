@@ -1,0 +1,46 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/VASP/VASP.andy.bpl
+-monomorphize
+/env:2
+/proverLog:VASP.andy_default.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/VASP/VASP.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+
+Verifying $1_VASP_has_account_limits$verify ...
+  [1.001 s, 1 proof obligation]  verified
+
+Verifying $1_VASP_is_child$verify ...
+  [0.060 s, 4 proof obligations]  verified
+
+Verifying $1_VASP_is_parent$verify ...
+  [0.053 s, 4 proof obligations]  verified
+
+Verifying $1_VASP_is_same_vasp$verify ...
+  [0.171 s, 5 proof obligations]  verified
+
+Verifying $1_VASP_is_vasp$verify ...
+  [0.086 s, 4 proof obligations]  verified
+
+Verifying $1_VASP_num_children$verify ...
+  [0.218 s, 5 proof obligations]  verified
+
+Verifying $1_VASP_parent_address$verify ...
+  [0.192 s, 6 proof obligations]  verified
+
+Verifying $1_VASP_publish_child_vasp_credential$verify ...
+  [2.170 s, 18 proof obligations]  verified
+
+Verifying $1_VASP_publish_parent_vasp_credential$verify ...
+  [0.946 s, 16 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.183 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 10 verified, 0 errors

@@ -1,0 +1,202 @@
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_push_back` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_pop_back` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_length` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_empty` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_destroy_empty` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow_mut` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_is_empty` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_singleton` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_reverse` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_index_of` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_contains` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_swap_remove` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_remove` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_reverse` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_remove` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_is_empty` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_index_of` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_contains` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_append` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap_remove` to be verified
+02:46:11 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_append` to be verified
+02:46:11 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module VerifyVector
+02:46:11 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:46:11 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:46:11 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:48:12 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:48:12 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.017s build, 0.015s trafo, 0.005s gen, 121.336s verify
+error: base case of the loop invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144:17 ───
+     │
+ 144 │                 assert forall k in 0..len(o): o[k] == other[len(other)-1-k];
+     │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:135: verify_append
+     =         v = &vector{<generic>}
+     =         other = vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:136: verify_append
+     =         o = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:137: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:139: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:140: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:141: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:142: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:143: verify_append
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:144: verify_append
+
+error: post-condition does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:131:9 ───
+     │
+ 131 │         ensures forall i in 0..len(v): old(v[i]) == v[len(v)-1-i];
+     │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:126: verify_model_reverse
+     =         v = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:127: verify_model_reverse
+     =         v = &vector{<generic>}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:128: verify_model_reverse
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:130
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:131
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:221:5 ───
+     │
+ 221 │ ╭     fun verify_contains<Element>(v: &vector<Element>, e: &Element): bool {
+ 222 │ │         let i = 0;
+ 223 │ │         let len = Vector::length(v);
+ 224 │ │         while ({
+ 225 │ │             spec {
+ 226 │ │                assert !(exists j in 0..i: v[j]==e);
+ 227 │ │             };
+ 228 │ │             i < len
+ 229 │ │         }) {
+ 230 │ │             if (Vector::borrow(v, i) == e) return true;
+ 231 │ │             i = i + 1;
+ 232 │ │         };
+ 233 │ │         spec {
+ 234 │ │            assert !(exists x in v: x==e);
+ 235 │ │         };
+ 236 │ │         false
+ 237 │ │     }
+     │ ╰─────^
+     │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:244:5 ───
+     │
+ 244 │ ╭     fun verify_model_contains<Element>(v: &vector<Element>, e: &Element): bool {
+ 245 │ │         Vector::contains(v, e) // inlining the built-in Boogie procedure.
+ 246 │ │     }
+     │ ╰─────^
+     │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:209:5 ───
+     │
+ 209 │ ╭     fun verify_model_index_of<Element>(v: &vector<Element>, e: &Element): (bool, u64) {
+ 210 │ │         Vector::index_of(v, e) // inlining the built-in Boogie procedure
+ 211 │ │     }
+     │ ╰─────^
+     │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:77:5 ───
+    │
+ 77 │ ╭     fun verify_model_swap<Element>(v: &mut vector<Element>, i: u64, j: u64) {
+ 78 │ │         Vector::swap(v, i, j); // inlining the built-in Boogie procedure
+ 79 │ │     }
+    │ ╰─────^
+    │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:316:5 ───
+     │
+ 316 │ ╭     fun verify_model_swap_remove<Element>(v: &mut vector<Element>, i: u64): Element {
+ 317 │ │         Vector::swap_remove(v, i) // inlining the built-in Boogie procedure.
+ 318 │ │     }
+     │ ╰─────^
+     │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:254:5 ───
+     │
+ 254 │ ╭     fun verify_remove<Element>(v: &mut vector<Element>, j: u64): Element {
+ 255 │ │         let vlen = Vector::length(v);
+ 256 │ │         let i = j;
+ 257 │ │         // i out of bounds; abort
+ 258 │ │         if (i >= vlen) abort 10;
+ 259 │ │ 
+ 260 │ │         vlen = vlen - 1;
+ 261 │ │         while ({
+ 262 │ │             spec {
+ 263 │ │                 assert j <= i && i <= vlen;
+ 264 │ │                 assert vlen + 1 == len(v);
+ 265 │ │                 assert v[0..j] == old(v)[0..j];
+ 266 │ │                 assert forall k in j..i: v[k] == old(v)[k+1];
+ 267 │ │                 assert forall k in i+1..len(v): v[k] == old(v)[k];
+ 268 │ │                 assert v[i] == old(v)[j];
+ 269 │ │             };
+ 270 │ │             i < vlen
+ 271 │ │             }) {
+ 272 │ │             Vector::swap(v, i, i + 1);
+ 273 │ │             i = i + 1;
+ 274 │ │         };
+ 275 │ │         Vector::pop_back(v)
+ 276 │ │     }
+     │ ╰─────^
+     │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:99:5 ───
+     │
+  99 │ ╭     fun verify_reverse<Element>(v: &mut vector<Element>) {
+ 100 │ │         let vlen = Vector::length(v);
+ 101 │ │         if (vlen == 0) return ();
+ 102 │ │ 
+ 103 │ │         let front_index = 0;
+ 104 │ │         let back_index = vlen -1;
+ 105 │ │         while ({
+ 106 │ │             spec {
+ 107 │ │                 assert front_index + back_index == vlen - 1;
+ 108 │ │                 assert forall i in 0..front_index: v[i] == old(v)[vlen-1-i];
+ 109 │ │                 assert forall i in 0..front_index: v[vlen-1-i] == old(v)[i];
+ 110 │ │                 assert forall j in front_index..back_index+1: v[j] == old(v)[j];
+ 111 │ │                 assert len(v) == vlen;
+ 112 │ │             };
+ 113 │ │             (front_index < back_index)
+ 114 │ │         }) {
+ 115 │ │             Vector::swap(v, front_index, back_index);
+ 116 │ │             front_index = front_index + 1;
+ 117 │ │             back_index = back_index - 1;
+ 118 │ │         };
+ 119 │ │     }
+     │ ╰─────^
+     │
+
+error: verification out of resources/timeout (global timeout set to 40s)
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/verify_vector.move:301:5 ───
+     │
+ 301 │ ╭     fun verify_swap_remove<Element>(v: &mut vector<Element>, i: u64): Element {
+ 302 │ │         let last_idx = Vector::length(v) - 1;
+ 303 │ │         Vector::swap(v, i, last_idx);
+ 304 │ │         Vector::pop_back(v)
+ 305 │ │     }
+     │ ╰─────^
+     │
+
+exiting with boogie verification errors

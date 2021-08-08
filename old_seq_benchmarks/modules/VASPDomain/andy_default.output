@@ -1,0 +1,9 @@
+/home/ying/diem/seq_benchmarks/modules/VASPDomain/VASPDomain.andy_default.smt2:383.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/VASPDomain/VASPDomain.andy_default.smt2:1404.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")
+Fatal failure within void cvc5::Minisat::Solver::pop() at /home/ying/CVC4/src/prop/minisat/core/Solver.cc:1969
+Check failure
+
+ decisionLevel() == 0
+
+timeout: the monitored command dumped core

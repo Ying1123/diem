@@ -1,0 +1,143 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl
+-monomorphize
+/env:2
+/proverLog:loops_with_memory_ops.SmtSeq.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop1$verify ...
+  [0.158 s, 11 proof obligations]  verified
+
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop2$verify ...
+  [1.959 s, 11 proof obligations]  errors
+assert_failed(2,2724,2767): unknown assertion failed
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1722,5): anon32_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1751,5): anon33_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1765,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2022,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2067,17): anon37_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2116,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2131,17): anon40_Then
+assert_failed(2,2035,2059): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1722,5): anon32_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1751,5): anon33_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1765,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2022,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2067,17): anon37_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2116,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2131,35): anon40_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2139,5): anon41_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2153,5): anon42_Else
+assert_failed(2,2076,2100): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1722,5): anon32_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1751,5): anon33_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1765,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2022,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2067,17): anon37_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2116,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2131,35): anon40_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2139,5): anon41_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2153,5): anon42_Else
+assert_failed(2,2152,2190): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1722,5): anon32_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1751,5): anon33_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1765,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2022,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2067,17): anon37_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2116,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2131,35): anon40_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2139,5): anon41_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2153,5): anon42_Else
+assert_failed(2,2789,2839): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1686,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1722,5): anon32_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1751,5): anon33_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(1765,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2022,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2067,17): anon37_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2116,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2131,35): anon40_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2139,5): anon41_Else
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(682,9): inline$$1_Vector_borrow_mut'u64'$3$anon3_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(682,9): inline$$1_Vector_borrow_mut'u64'$3$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2154,9): anon42_Then
+    /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.z3.bpl(2251,1): L14
+
+Boogie program verifier finished with 1 verified, 5 errors

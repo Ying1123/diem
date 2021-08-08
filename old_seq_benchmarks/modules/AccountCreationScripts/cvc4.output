@@ -1,0 +1,3 @@
+/home/ying/diem/seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.cvc4.smt2:423.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.cvc4.smt2:1557.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

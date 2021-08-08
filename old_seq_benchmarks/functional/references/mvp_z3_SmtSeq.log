@@ -1,0 +1,43 @@
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::withdrawal_capability_address` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_b` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::increment` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_return` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::ref_param_vec` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector_param` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref_incorrect` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mut_ref` to be verified
+22:34:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestReferences::mutate_vector` to be verified
+22:34:32 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module TestReferences
+22:34:32 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+22:34:32 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+22:34:32 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+22:34:33 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+22:34:33 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.012s build, 0.010s trafo, 0.003s gen, 0.641s verify
+error: function does not abort under this condition
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/references.move:76:9 ───
+    │
+ 76 │         aborts_if true;
+    │         ^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:69: mut_ref_incorrect
+    =         b = 20
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:70: mut_ref_incorrect
+    =         b_ref = &20
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:71: mut_ref_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:50: mut_b
+    =         b = &20
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:51: mut_b
+    =         b = &10
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:52: mut_b
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:72: mut_ref_incorrect
+    =         b = 10
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:73: mut_ref_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:74: mut_ref_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/references.move:76
+
+exiting with boogie verification errors

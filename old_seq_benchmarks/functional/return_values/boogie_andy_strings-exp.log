@@ -1,0 +1,50 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl
+-monomorphize
+/env:2
+/proverLog:return_values.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestReturnValue_one_two$verify ...
+  [0.234 s, 3 proof obligations]  verified
+
+Verifying $42_TestReturnValue_one_two_incorrect$verify ...
+  [0.004 s, 0 proof obligations]  verified
+
+Verifying $42_TestReturnValue_one_two_wrapper$verify ...
+  [0.018 s, 4 proof obligations]  verified
+
+Verifying $42_TestReturnValue_one_two_wrapper_incorrect$verify ...
+  [0.058 s, 7 proof obligations]  error
+assert_failed(2,345,367): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1100,5): anon0
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1100,5): anon0$1
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(905,5): inline$$42_TestReturnValue_one_two$0$anon0
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1106,5): anon4_Else
+
+Verifying $42_TestReturnValue_true_one$verify ...
+  [0.013 s, 3 proof obligations]  verified
+
+Verifying $42_TestReturnValue_true_one_wrapper$verify ...
+  [0.028 s, 2 proof obligations]  verified
+
+Verifying $42_TestReturnValue_true_one_wrapper_incorrect$verify ...
+  [0.032 s, 5 proof obligations]  error
+assert_failed(2,1296,1310): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1335,5): anon0
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1335,5): anon0$1
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1185,5): inline$$42_TestReturnValue_true_one$0$anon0
+    /home/ying/diem/seq_benchmarks/return_values/return_values.andy.bpl(1341,5): anon4_Else
+
+Boogie program verifier finished with 5 verified, 2 errors

@@ -1,0 +1,51 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl
+-monomorphize
+/env:2
+/proverLog:strong_edges.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestStrongEdges_glob_and_field_edges$verify ...
+  [0.461 s, 4 proof obligations]  verified
+
+Verifying $42_TestStrongEdges_glob_and_field_edges_incorrect$verify ...
+  [0.257 s, 4 proof obligations]  error
+assert_failed(2,1208,1239): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1218,9): anon0
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1218,9): anon0$1
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1255,13): anon7_Else
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1257,5): anon8_Else
+
+Verifying $42_TestStrongEdges_loc__edge_incorrect$verify ...
+  [0.064 s, 1 proof obligation]  error
+assert_failed(2,1443,1457): unknown assertion failed
+Execution trace:
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1329,5): anon0
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1329,5): anon0$1
+
+Verifying $42_TestStrongEdges_loc_edge$verify ...
+  [0.033 s, 1 proof obligation]  verified
+
+Verifying $42_TestStrongEdges_vec_edge$verify ...
+  [1.644 s, 4 proof obligations]  error
+assert_failed(2,953,979): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1459,9): anon0
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1459,9): anon0$1
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(665,5): inline$$1_Vector_borrow'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1493,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/strong_edges/strong_edges.andy.bpl(1514,5): anon7_Else
+
+Boogie program verifier finished with 2 verified, 3 errors

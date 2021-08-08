@@ -1,0 +1,125 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl
+-monomorphize
+/env:2
+/proverLog:aborts_if.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestAbortsIf_abort1$verify ...
+  [0.126 s, 2 proof obligations]  verified
+
+Verifying $42_TestAbortsIf_abort2_incorrect$verify ...
+  [0.021 s, 1 proof obligation]  error
+assert_failed(2,758,777): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(993,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(993,9): anon0$1
+
+Verifying $42_TestAbortsIf_abort3$verify ...
+  [0.012 s, 1 proof obligation]  verified
+
+Verifying $42_TestAbortsIf_abort4_incorrect$verify ...
+  [0.010 s, 1 proof obligation]  error
+assert_failed(2,1117,1134): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1089,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1089,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1114,34): anon4_Else
+
+Verifying $42_TestAbortsIf_abort5_incorrect$verify ...
+  [0.011 s, 2 proof obligations]  error
+assert_failed(2,1312,1366): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1171,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1171,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1196,16): anon4_Then
+
+Verifying $42_TestAbortsIf_abort6_incorrect$verify ...
+  [0.008 s, 2 proof obligations]  error
+assert_failed(2,1533,1550): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1258,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1258,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1283,34): anon4_Else
+
+Verifying $42_TestAbortsIf_abort_1$verify ...
+  [0.009 s, 2 proof obligations]  verified
+
+Verifying $42_TestAbortsIf_abort_at_2_or_3$verify ...
+  [0.010 s, 1 proof obligation]  verified
+
+Verifying $42_TestAbortsIf_abort_at_2_or_3_spec_incorrect$verify ...
+  [0.011 s, 1 proof obligation]  error
+assert_failed(2,3711,3728): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1517,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1517,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1539,34): anon6_Else
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1583,34): anon7_Else
+
+Verifying $42_TestAbortsIf_abort_at_2_or_3_strict_incorrect$verify ...
+  [0.011 s, 2 proof obligations]  error
+assert_failed(2,3836,4011): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1645,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1645,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1667,34): anon5_Else
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1711,16): anon6_Then
+
+Verifying $42_TestAbortsIf_abort_at_2_or_3_total_incorrect$verify ...
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,3251,3455): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1776,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1776,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1798,34): anon6_Else
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(1842,16): anon7_Then
+
+Verifying $42_TestAbortsIf_aborts_if_with_code$verify ...
+  [0.008 s, 2 proof obligations]  verified
+
+Verifying $42_TestAbortsIf_multi_abort1$verify ...
+  [0.009 s, 3 proof obligations]  verified
+
+Verifying $42_TestAbortsIf_multi_abort2_incorrect$verify ...
+  [0.012 s, 3 proof obligations]  error
+assert_failed(2,2095,2112): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2148,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2148,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2173,34): anon4_Else
+
+Verifying $42_TestAbortsIf_multi_abort3_incorrect$verify ...
+  [0.008 s, 1 proof obligation]  error
+assert_failed(2,2284,2374): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2239,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2239,9): anon0$1
+
+Verifying $42_TestAbortsIf_multi_abort4$verify ...
+  [0.010 s, 1 proof obligation]  verified
+
+Verifying $42_TestAbortsIf_multi_abort5_incorrect$verify ...
+  [0.008 s, 3 proof obligations]  error
+assert_failed(2,2732,2747): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2346,9): anon0
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2346,9): anon0$1
+    /home/ying/diem/seq_benchmarks/aborts_if/aborts_if.z3.bpl(2368,34): anon6_Else
+
+Verifying $42_TestAbortsIf_no_aborts_if$verify ...
+  [0.010 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 8 verified, 10 errors

@@ -1,0 +1,80 @@
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 26157))
+(((ControlFlow 0 26157) 18601))
+(((ControlFlow 0 18601) 18593))
+(((ControlFlow 0 18593) 18595))
+(((ControlFlow 0 18595) 18647))
+(((ControlFlow 0 18647) (- 26320)))
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 28135))
+(((ControlFlow 0 28135) 21331))
+(((ControlFlow 0 21331) 21323))
+(((ControlFlow 0 21323) 21325))
+(((ControlFlow 0 21325) 21377))
+(((ControlFlow 0 21377) (- 28304)))
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 28560))
+(((ControlFlow 0 28560) 21909))
+(((ControlFlow 0 21909) 21901))
+(((ControlFlow 0 21901) 21903))
+(((ControlFlow 0 21903) 21955))
+(((ControlFlow 0 21955) (- 28729)))
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 28985))
+(((ControlFlow 0 28985) 22487))
+(((ControlFlow 0 22487) 22479))
+(((ControlFlow 0 22479) 22481))
+(((ControlFlow 0 22481) 22533))
+(((ControlFlow 0 22533) (- 29154)))
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 29410))
+(((ControlFlow 0 29410) 23065))
+(((ControlFlow 0 23065) 23057))
+(((ControlFlow 0 23057) 23059))
+(((ControlFlow 0 23059) 23111))
+(((ControlFlow 0 23111) (- 29579)))
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 29835))
+(((ControlFlow 0 29835) 23643))
+(((ControlFlow 0 23643) 23635))
+(((ControlFlow 0 23635) 23637))
+(((ControlFlow 0 23637) 23689))
+(((ControlFlow 0 23689) (- 30004)))
+unsat
+unsat
+unknown
+(:reason-unknown "(incomplete quantifiers)")
+(((ControlFlow 0 0) 30260))
+(((ControlFlow 0 30260) 24221))
+(((ControlFlow 0 24221) 24213))
+(((ControlFlow 0 24213) 24215))
+(((ControlFlow 0 24215) 24267))
+(((ControlFlow 0 24267) (- 30429)))
+unsat
+unsat

@@ -1,0 +1,341 @@
+02:36:14 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::with_spec_fun_choice` to be verified
+02:36:14 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::simple_incorrect` to be verified
+02:36:14 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::simple` to be verified
+02:36:14 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::populate_R` to be verified
+02:36:14 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::test_not_using_min_incorrect` to be verified
+02:36:14 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestSome::test_min` to be verified
+02:36:14 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+02:36:14 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+[INFO] translating module TestSome
+02:36:14 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:36:14 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:36:14 [DEBUG] (13) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:36:15 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+Boogie error (signal: 6 (core dumped)): Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+assert_failed(2,1601,1647): post-condition does not hold
+Execution trace:
+    output.bpl(1109,9): anon0
+    output.bpl(1109,9): anon0$1
+    output.bpl(1162,32): anon12_Else
+    output.bpl(1164,5): anon13_Else
+    output.bpl(1183,32): anon14_Else
+    output.bpl(1185,5): anon15_Else
+Augmented execution trace:
+$at(2,1128,1242)
+$at(2,1273,1310)
+$at(2,1319,1356)
+$at(2,1519,1592)
+$at(2,1468,1510)
+$at(2,1128,1129)
+$track_local(2,0,0):0
+$track_local(2,0,1):1
+$at(2,1199,1200)
+$at(2,1232,1233)
+$at(2,1241,1242)
+$at(2,1601,1647)
+*** MODEL
+_$t0 -> 0
+_$t1 -> 1
+$42_TestSome_R_$memory@@0 -> ($Memory_12554 T@[Int]Bool!val!2 T@[Int]$42_TestSome_R!val!1)
+$42_TestSome_R_$memory@0 -> ($Memory_12554 T@[Int]Bool!val!4 T@[Int]$42_TestSome_R!val!2)
+$42_TestSome_R_$memory@1 -> ($Memory_12554 T@[Int]Bool!val!4 T@[Int]$42_TestSome_R!val!2)
+$42_TestSome_R_$memory@2 -> ($Memory_12554 T@[Int]Bool!val!3 T@[Int]$42_TestSome_R!val!0)
+$abort_code@0 -> 0
+$abort_code@1 -> 0
+$abort_code@2 -> 0
+$abort_flag@0 -> false
+$abort_flag@1 -> false
+$choice_2 -> (- 1)
+$choice_3 -> (- 1)
+$EXEC_FAILURE_CODE -> (- 1)
+$MAX_U128 -> 340282366920938463463374607431768211455
+$MAX_U64 -> 18446744073709551615
+$MAX_U8 -> 255
+$t2 -> 0
+$t3 -> 1
+$t4 -> 2
+$t6@0 -> ($42_TestSome_R 1)
+$t9@0 -> ($42_TestSome_R 2)
+$1_Hash_sha2 -> {
+  else -> (seq.empty)
+}
+$1_Hash_sha3 -> {
+  else -> (seq.empty)
+}
+$1_Signature_$ed25519_validate_pubkey -> {
+  else -> false
+}
+$1_Signature_$ed25519_verify -> {
+  else -> false
+}
+$choice_0 -> {
+  else -> 0
+}
+$choice_1 -> {
+  ($Memory_12554 T@[Int]Bool!val!2 T@[Int]$42_TestSome_R!val!1) -> 2
+  else -> 2
+}
+$choice_4 -> {
+  else -> 0
+}
+$choice_5 -> {
+  else -> 0
+}
+$ConstMemoryDomain -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+$IndexOfVec'u64' -> {
+  else -> 0
+}
+$IndexOfVec'u8' -> {
+  else -> 0
+}
+$InRange -> {
+  else -> false
+}
+$IsValid'$42_TestSome_R' -> {
+  else -> false
+}
+$IsValid'address' -> {
+  0 -> true
+  1 -> true
+  2 -> true
+  else -> true
+}
+$IsValid'num' -> {
+  else -> false
+}
+$IsValid'u128' -> {
+  else -> false
+}
+$IsValid'u64' -> {
+  (- 1) -> false
+  1 -> true
+  2 -> true
+  else -> false
+}
+$IsValid'u8' -> {
+  else -> false
+}
+$IsValid'vec'u64'' -> {
+  else -> false
+}
+$IsValid'vec'u8'' -> {
+  else -> false
+}
+$shl -> {
+  else -> 0
+}
+$shr -> {
+  else -> 0
+}
+ControlFlow -> {
+  0 0 -> 17087
+  0 14968 -> 14986
+  0 14986 -> 15006
+  0 15006 -> 15024
+  0 15024 -> 15044
+  0 15044 -> (- 17867)
+  0 17087 -> 14968
+  else -> (- 17867)
+}
+lambda#0 -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+ReverseVec_3283 -> {
+  else -> (seq.empty)
+}
+Select__T@[Int]$42_TestSome_R_ -> {
+  T@[Int]$42_TestSome_R!val!0 1 -> ($42_TestSome_R 2)
+  T@[Int]$42_TestSome_R!val!1 0 -> ($42_TestSome_R 3)
+  T@[Int]$42_TestSome_R!val!1 1 -> ($42_TestSome_R (- 3))
+  T@[Int]$42_TestSome_R!val!1 2 -> ($42_TestSome_R (- 2))
+  T@[Int]$42_TestSome_R!val!2 0 -> ($42_TestSome_R 1)
+  else -> ($42_TestSome_R 3)
+}
+Select__T@[Int]Bool_ -> {
+  T@[Int]Bool!val!2 0 -> false
+  T@[Int]Bool!val!2 1 -> false
+  T@[Int]Bool!val!2 2 -> false
+  T@[Int]Bool!val!3 1 -> true
+  T@[Int]Bool!val!4 0 -> true
+  T@[Int]Bool!val!4 1 -> false
+  else -> false
+}
+Store__T@[Int]$42_TestSome_R_ -> {
+  T@[Int]$42_TestSome_R!val!1 0 ($42_TestSome_R 1) -> T@[Int]$42_TestSome_R!val!2
+  T@[Int]$42_TestSome_R!val!2 1 ($42_TestSome_R 2) -> T@[Int]$42_TestSome_R!val!0
+  else -> T@[Int]$42_TestSome_R!val!0
+}
+Store__T@[Int]Bool_ -> {
+  T@[Int]Bool!val!2 0 true -> T@[Int]Bool!val!4
+  T@[Int]Bool!val!4 1 true -> T@[Int]Bool!val!3
+  else -> T@[Int]Bool!val!4
+}
+*** END_MODEL
+assert_failed(2,615,677): post-condition does not hold
+Execution trace:
+    output.bpl(1259,9): anon0
+    output.bpl(1259,9): anon0$1
+    output.bpl(1275,16): anon3_Then
+    output.bpl(1313,1): L3
+Augmented execution trace:
+$at(2,623,629)
+$at(2,358,359)
+$track_local(2,2,0):true
+$at(2,403,418)
+$track_local(2,2,1):4
+$track_return(2,2,0):4
+$at(2,423,424)
+$at(2,633,676)
+$track_exp(382):5
+*** MODEL
+_$t0 -> true
+$choice_2 -> 4
+$choice_3 -> 5
+$EXEC_FAILURE_CODE -> (- 1)
+$MAX_U128 -> 340282366920938463463374607431768211455
+$MAX_U64 -> 18446744073709551615
+$MAX_U8 -> 255
+$t1@0 -> 4
+$t4 -> 5
+$1_Hash_sha2 -> {
+  else -> (seq.empty)
+}
+$1_Hash_sha3 -> {
+  else -> (seq.empty)
+}
+$1_Signature_$ed25519_validate_pubkey -> {
+  else -> false
+}
+$1_Signature_$ed25519_verify -> {
+  else -> false
+}
+$choice_0 -> {
+  else -> 0
+}
+$choice_1 -> {
+  else -> 0
+}
+$choice_4 -> {
+  else -> 0
+}
+$choice_5 -> {
+  else -> 0
+}
+$ConstMemoryDomain -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+$IndexOfVec'u64' -> {
+  else -> 0
+}
+$IndexOfVec'u8' -> {
+  else -> 0
+}
+$InRange -> {
+  else -> false
+}
+$IsValid'$42_TestSome_R' -> {
+  else -> false
+}
+$IsValid'address' -> {
+  else -> false
+}
+$IsValid'num' -> {
+  else -> false
+}
+$IsValid'u128' -> {
+  else -> false
+}
+$IsValid'u64' -> {
+  4 -> true
+  5 -> true
+  else -> true
+}
+$IsValid'u8' -> {
+  else -> false
+}
+$IsValid'vec'u64'' -> {
+  else -> false
+}
+$IsValid'vec'u8'' -> {
+  else -> false
+}
+$shl -> {
+  else -> 0
+}
+$shr -> {
+  else -> 0
+}
+ControlFlow -> {
+  0 0 -> 17085
+  0 15348 -> 15414
+  0 15396 -> (- 17570)
+  0 15414 -> 15396
+  0 17085 -> 15348
+  else -> (- 17570)
+}
+lambda#0 -> {
+  false -> T@[Int]Bool!val!0
+  true -> T@[Int]Bool!val!1
+  else -> T@[Int]Bool!val!1
+}
+ReverseVec_3283 -> {
+  else -> (seq.empty)
+}
+Select__T@[Int]$42_TestSome_R_ -> {
+  else -> ($42_TestSome_R 0)
+}
+Select__T@[Int]Bool_ -> {
+  else -> false
+}
+*** END_MODEL
+output.bpl(1340,27): Verification inconclusive ($42_TestSome_test_min$verify)
+output.bpl(1472,27): Verification inconclusive ($42_TestSome_test_not_using_min_incorrect$verify)
+
+
+stderr:
+Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
+ ---> System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.FlushInternalBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.FileStream.Flush()
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+   at System.AggregateException.Handle(Func`2 predicate)
+   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
+   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
+   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
+

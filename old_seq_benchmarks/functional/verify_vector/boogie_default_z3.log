@@ -1,0 +1,85 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/verify_vector/verify_vector.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:verify_vector.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/verify_vector/verify_vector.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_VerifyVector_verify_append$verify ...
+  [0.148 s, 15 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_contains$verify ...
+  [0.022 s, 6 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_index_of$verify ...
+  [0.018 s, 8 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_is_empty$verify ...
+  [0.009 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_append$verify ...
+  [0.015 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_borrow$verify ...
+  [0.009 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_borrow_mut$verify ...
+  [0.011 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_contains$verify ...
+  [0.013 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_destroy_empty$verify ...
+  [0.012 s, 2 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_empty$verify ...
+  [0.009 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_index_of$verify ...
+  [0.018 s, 6 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_is_empty$verify ...
+  [0.012 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_length$verify ...
+  [0.011 s, 1 proof obligation]  verified
+
+Verifying $42_VerifyVector_verify_model_pop_back$verify ...
+  [0.018 s, 5 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_push_back$verify ...
+  [0.015 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_remove$verify ...
+  [0.016 s, 6 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_reverse$verify ...
+  [0.013 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_swap$verify ...
+  [0.012 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_model_swap_remove$verify ...
+  [0.017 s, 5 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_remove$verify ...
+  [0.047 s, 18 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_reverse$verify ...
+  [0.037 s, 13 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_singleton$verify ...
+  [0.010 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyVector_verify_swap_remove$verify ...
+  [0.023 s, 5 proof obligations]  verified
+
+Boogie program verifier finished with 23 verified, 0 errors

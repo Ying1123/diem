@@ -1,0 +1,8 @@
+/home/ying/diem/seq_benchmarks/ModifiesTest/ModifiesTest.cvc4.smt2:49.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/ModifiesTest/ModifiesTest.cvc4.smt2:164.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat

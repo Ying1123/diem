@@ -1,0 +1,69 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:invariants.SmtSeq.cvc5.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestInvariants_invalid_R_pack$verify ...
+  [0.274 s, 2 proof obligations]  error
+assert_failed(2,248,273): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(948,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(948,5): anon0$1
+
+Verifying $42_TestInvariants_invalid_R_update$verify ...
+  [0.084 s, 4 proof obligations]  verified
+
+Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
+  [0.145 s, 7 proof obligations]  verified
+
+Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
+  [0.117 s, 2 proof obligations]  verified
+
+Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
+  [0.130 s, 3 proof obligations]  verified
+
+Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
+  [0.233 s, 3 proof obligations]  error
+assert_failed(2,248,273): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1461,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1461,5): anon0$1
+
+Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
+  [0.237 s, 3 proof obligations]  verified
+
+Verifying $42_TestInvariants_lifetime_invalid_S_branching$verify ...
+  [0.947 s, 8 proof obligations]  error
+assert_failed(2,3033,3049): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1756,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1756,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1831,34): anon16_Else
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1887,1): L3
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1895,34): anon17_Else
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1982,36): anon20_Else
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1991,1): L13
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(1997,17): anon21_Then
+    /home/ying/diem/seq_benchmarks/functional/invariants/invariants.SmtSeq.cvc4.bpl(2006,1): L15
+
+Verifying $42_TestInvariants_update_helper$verify ...
+  [0.046 s, 0 proof obligations]  verified
+
+Verifying $42_TestInvariants_valid_R_pack$verify ...
+  [0.016 s, 2 proof obligations]  verified
+
+Verifying $42_TestInvariants_valid_R_update$verify ...
+  [0.086 s, 4 proof obligations]  verified
+
+Boogie program verifier finished with 8 verified, 3 errors

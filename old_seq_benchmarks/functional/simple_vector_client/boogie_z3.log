@@ -1,0 +1,280 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl
+-monomorphize
+/env:2
+/proverLog:simple_vector_client.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+Prover error: line 14 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_none$verify ...
+  [0.120 s, 0 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1329,27): Verification inconclusive ($42_TestVector_none$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_option_type$verify ...
+  [0.045 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1376,27): Verification inconclusive ($42_TestVector_option_type$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_some$verify ...
+  [0.026 s, 0 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1568,27): Verification inconclusive ($42_TestVector_some$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_borrow1$verify ...
+  [0.025 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1652,27): Verification inconclusive ($42_TestVector_test_borrow1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_borrow2$verify ...
+  [0.024 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1748,27): Verification inconclusive ($42_TestVector_test_borrow2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_borrow3$verify ...
+  [0.023 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1844,27): Verification inconclusive ($42_TestVector_test_borrow3$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_borrow_mut$verify ...
+  [0.031 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(1945,27): Verification inconclusive ($42_TestVector_test_borrow_mut$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_contains$verify ...
+  [0.028 s, 13 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2069,27): Verification inconclusive ($42_TestVector_test_contains$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_destroy_empty1$verify ...
+  [0.042 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2362,27): Verification inconclusive ($42_TestVector_test_destroy_empty1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_destroy_empty2$verify ...
+  [0.031 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2479,27): Verification inconclusive ($42_TestVector_test_destroy_empty2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_empty$verify ...
+  [0.022 s, 3 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2607,27): Verification inconclusive ($42_TestVector_test_empty$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_id1$verify ...
+  [0.044 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2690,27): Verification inconclusive ($42_TestVector_test_id1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_id2$verify ...
+  [0.021 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2729,27): Verification inconclusive ($42_TestVector_test_id2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_id3$verify ...
+  [0.032 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(2822,27): Verification inconclusive ($42_TestVector_test_id3$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_index_of$verify ...
+  [0.044 s, 7 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(3033,27): Verification inconclusive ($42_TestVector_test_index_of$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_length1$verify ...
+  [0.048 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(3373,27): Verification inconclusive ($42_TestVector_test_length1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_length2$verify ...
+  [0.022 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(3493,27): Verification inconclusive ($42_TestVector_test_length2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_length3$verify ...
+  [0.026 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(3654,27): Verification inconclusive ($42_TestVector_test_length3$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_length4$verify ...
+  [0.030 s, 4 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(3773,27): Verification inconclusive ($42_TestVector_test_length4$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_neq1$verify ...
+  [0.035 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(3901,27): Verification inconclusive ($42_TestVector_test_neq1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_neq2$verify ...
+  [0.026 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4049,27): Verification inconclusive ($42_TestVector_test_neq2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_push$verify ...
+  [0.025 s, 3 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4174,27): Verification inconclusive ($42_TestVector_test_push$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_push_pop$verify ...
+  [0.021 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4309,27): Verification inconclusive ($42_TestVector_test_push_pop$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_reverse1$verify ...
+  [0.027 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4429,27): Verification inconclusive ($42_TestVector_test_reverse1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_reverse2$verify ...
+  [0.023 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4523,27): Verification inconclusive ($42_TestVector_test_reverse2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_reverse3$verify ...
+  [0.031 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4712,27): Verification inconclusive ($42_TestVector_test_reverse3$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_slice$verify ...
+  [0.027 s, 6 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(4901,27): Verification inconclusive ($42_TestVector_test_slice$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_swap$verify ...
+  [0.039 s, 1 proof obligation]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(5189,27): Verification inconclusive ($42_TestVector_test_swap$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_swap_abort1$verify ...
+  [0.033 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(5416,27): Verification inconclusive ($42_TestVector_test_swap_abort1$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_swap_abort2$verify ...
+  [0.025 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(5520,27): Verification inconclusive ($42_TestVector_test_swap_abort2$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_test_vector_equal$verify ...
+  [0.020 s, 7 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(5624,27): Verification inconclusive ($42_TestVector_test_vector_equal$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_unwrap_or$verify ...
+  [0.026 s, 0 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(5827,27): Verification inconclusive ($42_TestVector_unwrap_or$verify)
+Prover error: line 12 column 108: unknown sort 'T@#0'
+
+Prover error: Prover died
+
+
+Verifying $42_TestVector_vector_of_proper_positives$verify ...
+  [0.025 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/simple_vector_client/simple_vector_client.z3.bpl(5957,27): Verification inconclusive ($42_TestVector_vector_of_proper_positives$verify)
+
+Boogie program verifier finished with 0 verified, 0 errors, 33 inconclusives

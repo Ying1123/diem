@@ -1,0 +1,71 @@
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple4_incorrect` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple4` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple3_incorrect` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple3` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple2_incorrect` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple2` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple1_incorrect` to be verified
+02:46:01 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple1` to be verified
+[INFO] translating module TestAssertAndAssume
+02:46:01 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:46:01 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:46:01 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:46:02 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:46:02 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.008s build, 0.003s trafo, 0.007s gen, 0.630s verify
+error: unknown assertion failed
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:45:13 ───
+    │
+ 45 │             assert x == y;
+    │             ^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:42: simple1_incorrect
+    =         x = 18468
+    =         y = 18467
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:43: simple1_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:45: simple1_incorrect
+
+error: unknown assertion failed
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:53:13 ───
+    │
+ 53 │             assert x == y;
+    │             ^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:49: simple2_incorrect
+    =         x = 41
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:51: simple2_incorrect
+    =         y = 42
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:53: simple2_incorrect
+
+error: unknown assertion failed
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:60:13 ───
+    │
+ 60 │             assert x > y;
+    │             ^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:57: simple3_incorrect
+    =         x = 0
+    =         y = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:59: simple3_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:60: simple3_incorrect
+
+error: unknown assertion failed
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:69:13 ───
+    │
+ 69 │             assert z > 2*x;
+    │             ^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:64: simple4_incorrect
+    =         x = 42
+    =         y = 41
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:66: simple4_incorrect
+    =         z = 83
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:68: simple4_incorrect
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/specs_in_fun.move:69: simple4_incorrect
+
+exiting with boogie verification errors

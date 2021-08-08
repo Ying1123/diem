@@ -1,0 +1,31 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.z3.bpl
+-monomorphize
+/env:2
+/proverLog:AccountCreationScripts.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_AccountCreationScripts_create_designated_dealer$verify ...
+  [0.467 s, 39 proof obligations]  verified
+
+Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify ...
+  [0.327 s, 36 proof obligations]  verified
+
+Verifying $1_AccountCreationScripts_create_validator_account$verify ...
+  [0.116 s, 25 proof obligations]  verified
+
+Verifying $1_AccountCreationScripts_create_validator_operator_account$verify ...
+  [0.112 s, 25 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.202 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 5 verified, 0 errors

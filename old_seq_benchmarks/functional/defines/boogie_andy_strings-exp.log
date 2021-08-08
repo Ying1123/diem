@@ -1,0 +1,29 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/defines/defines.andy.bpl
+-monomorphize
+/env:2
+/proverLog:defines.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/defines/defines.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestDefines_add$verify ...
+  [0.324 s, 3 proof obligations]  verified
+
+Verifying $42_TestDefines_add_as_spec_fun$verify ...
+  [0.005 s, 0 proof obligations]  verified
+
+Verifying $42_TestDefines_add_fun$verify ...
+  [0.072 s, 1 proof obligation]  verified
+
+Verifying $42_TestDefines_equal_R$verify ...
+  [0.119 s, 3 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 0 errors

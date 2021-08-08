@@ -1,0 +1,20 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.cvc4.bpl
+-monomorphize
+/env:2
+/proverLog:loops_with_memory_ops.SmtSeq.cvc5.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/loops_with_memory_ops/loops_with_memory_ops.SmtSeq.cvc4.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop1$verify ...
+  [6.461 s, 11 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

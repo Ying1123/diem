@@ -1,0 +1,49 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl
+-monomorphize
+/env:2
+/proverLog:return_values.SmtSeq.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestReturnValue_one_two$verify ...
+  [0.125 s, 3 proof obligations]  verified
+
+Verifying $42_TestReturnValue_one_two_incorrect$verify ...
+  [0.014 s, 0 proof obligations]  verified
+
+Verifying $42_TestReturnValue_one_two_wrapper$verify ...
+  [0.012 s, 4 proof obligations]  verified
+
+Verifying $42_TestReturnValue_one_two_wrapper_incorrect$verify ...
+  [0.014 s, 7 proof obligations]  error
+assert_failed(2,345,367): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1100,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1100,5): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(905,5): inline$$42_TestReturnValue_one_two$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1106,5): anon4_Else
+
+Verifying $42_TestReturnValue_true_one$verify ...
+  [0.007 s, 3 proof obligations]  verified
+
+Verifying $42_TestReturnValue_true_one_wrapper$verify ...
+  [0.006 s, 2 proof obligations]  verified
+
+Verifying $42_TestReturnValue_true_one_wrapper_incorrect$verify ...
+  [0.011 s, 5 proof obligations]  error
+assert_failed(2,1296,1310): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1335,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1335,5): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1185,5): inline$$42_TestReturnValue_true_one$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/return_values/return_values.SmtSeq.z3.bpl(1341,5): anon4_Else
+
+Boogie program verifier finished with 5 verified, 2 errors

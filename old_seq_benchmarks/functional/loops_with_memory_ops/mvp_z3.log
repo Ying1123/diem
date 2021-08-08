@@ -1,0 +1,211 @@
+02:45:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop2` to be verified
+02:45:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop1` to be verified
+02:45:06 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+[INFO] translating module VerifyLoopsWithMemoryOps
+02:45:06 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:45:06 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:45:06 [DEBUG] (11) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:45:09 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:45:09 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.012s build, 0.013s trafo, 0.003s gen, 2.549s verify
+error: unknown assertion failed
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:93:13 ───
+    │
+ 93 │             assert forall m in 0..length: a[m] == b[m];
+    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56: nested_loop2
+    =         a = &vector{1646}
+    =         b = &vector{1646}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57: nested_loop2
+    =         length = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:59: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:60: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62: nested_loop2
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63: nested_loop2
+    =         x = &1646
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64: nested_loop2
+    =         y = &1646
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:66: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85: nested_loop2
+    =         i = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:93: nested_loop2
+
+error: induction case of the loop invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67:17 ───
+    │
+ 67 │                 assert length == len(a);
+    │                 ^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56: nested_loop2
+    =         a = &vector{18446744073709524746, 24182}
+    =         b = &vector{18446744073709524746, 24182}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57: nested_loop2
+    =         length = 2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:59: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:60: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62: nested_loop2
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63: nested_loop2
+    =         x = &18446744073709524746
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64: nested_loop2
+    =         y = &18446744073709524746
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:66: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85: nested_loop2
+    =         i = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86: nested_loop2
+    =         x = &24182
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:90: nested_loop2
+    =         y = &0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+
+error: induction case of the loop invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68:17 ───
+    │
+ 68 │                 assert length == len(b);
+    │                 ^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56: nested_loop2
+    =         a = &vector{18446744073709528890, 24182, 8492}
+    =         b = &vector{18446744073709528890, 24182, 8492}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57: nested_loop2
+    =         length = 3
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:59: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:60: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62: nested_loop2
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63: nested_loop2
+    =         x = &18446744073709528890
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64: nested_loop2
+    =         y = &18446744073709528890
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:66: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85: nested_loop2
+    =         i = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86: nested_loop2
+    =         x = &24182
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:90: nested_loop2
+    =         y = &24183
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+
+error: induction case of the loop invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17 ───
+    │
+ 70 │                 assert forall n in 0..i: a[n] == b[n];
+    │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56: nested_loop2
+    =         a = &vector{18446744073709524745, 28434}
+    =         b = &vector{18446744073709524745, 28434}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57: nested_loop2
+    =         length = 2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:59: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:60: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62: nested_loop2
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63: nested_loop2
+    =         x = &18446744073709524745
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64: nested_loop2
+    =         y = &18446744073709524745
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:66: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85: nested_loop2
+    =         i = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86: nested_loop2
+    =         x = &0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:90: nested_loop2
+    =         y = &28433
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+
+error: abort not covered by any of the `aborts_if` clauses
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:96:5 ───
+    │
+ 96 │ ╭     spec nested_loop2 {
+ 97 │ │         aborts_if false;
+ 98 │ │     }
+    │ ╰─────^
+    ·
+ 89 │             x = Vector::borrow_mut(a, i);
+    │                 ------------------------ abort happened here with execution failure
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56: nested_loop2
+    =         a = &vector{2, 14343}
+    =         b = &vector{2, 14343}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57: nested_loop2
+    =         length = 2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:59: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:60: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62: nested_loop2
+    =         i = 0
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63: nested_loop2
+    =         x = &2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64: nested_loop2
+    =         y = &2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:66: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85: nested_loop2
+    =         i = 1
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86: nested_loop2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:89: nested_loop2
+    =         ABORTED
+
+exiting with boogie verification errors

@@ -1,0 +1,10 @@
+/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.seqArray.smt2:375.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.seqArray.smt2:1553.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat

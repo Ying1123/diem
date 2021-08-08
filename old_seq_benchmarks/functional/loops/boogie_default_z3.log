@@ -1,0 +1,115 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:loops.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_VerifyLoops_iter10_abort$verify ...
+  [0.131 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_abort_incorrect$verify ...
+  [0.021 s, 4 proof obligations]  error
+assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1139,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1139,5): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(576,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1139,5): anon0$2
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1202,16): anon12_Then
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1222,16): anon13_Then
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1304,1): L9
+
+Verifying $42_VerifyLoops_iter10_missing_inc_spec1$verify ...
+  [0.019 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_missing_inc_spec2$verify ...
+  [0.008 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_no_abort$verify ...
+  [0.013 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_no_abort_incorrect$verify ...
+  [0.012 s, 4 proof obligations]  error
+assert_failed(2,1634,1649): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1835,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1835,5): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(576,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1835,5): anon0$2
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(1898,34): anon12_Else
+
+Verifying $42_VerifyLoops_loop_invariant_base_invalid$verify ...
+  [0.019 s, 2 proof obligations]  error
+assert_failed(2,4881,4895): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2026,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2026,9): anon0$1
+
+Verifying $42_VerifyLoops_loop_invariant_induction_invalid$verify ...
+  [0.011 s, 2 proof obligations]  error
+assert_failed(2,5129,5143): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2168,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2168,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(566,9): inline$$Lt$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2168,9): anon0$2
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2226,16): anon8_Then
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(445,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2244,5): anon9_Else
+
+Verifying $42_VerifyLoops_loop_with_two_back_edges_correct$verify ...
+  [0.014 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify ...
+  [0.016 s, 4 proof obligations]  error
+assert_failed(2,4425,4439): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2511,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2511,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(571,9): inline$$Gt$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2587,16): anon15_Then
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(445,5): inline$$AddU64$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2605,5): anon16_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2674,1): L7
+
+Verifying $42_VerifyLoops_nested_loop_correct$verify ...
+  [0.015 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify ...
+  [0.015 s, 4 proof obligations]  errors
+assert_failed(2,3489,3503): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2946,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2946,9): anon0$1
+assert_failed(2,3489,3503): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2946,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(2946,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(576,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3045,34): anon14_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(445,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3060,5): anon15_Else
+
+Verifying $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify ...
+  [0.013 s, 4 proof obligations]  error
+assert_failed(2,2937,2951): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3176,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3176,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(576,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3274,16): anon14_Then
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(576,9): inline$$Le$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3310,34): anon16_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(445,5): inline$$AddU64$1$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/loops/loops.default.z3.bpl(3322,5): anon17_Else
+
+Boogie program verifier finished with 6 verified, 8 errors

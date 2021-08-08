@@ -1,0 +1,31 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl
+-monomorphize
+/env:2
+/proverLog:address_quant.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_AddressQuant_f$verify ...
+  [0.137 s, 3 proof obligations]  verified
+
+Verifying $42_AddressQuant_initialize$verify ...
+  [0.018 s, 3 proof obligations]  verified
+
+Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
+  [0.019 s, 2 proof obligations]  error
+assert_failed(2,1555,1577): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl(1200,9): anon0
+    /home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl(1200,9): anon0$1
+    /home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl(1238,36): anon7_Else
+    /home/ying/diem/seq_benchmarks/address_quant/address_quant.z3.bpl(1240,5): anon8_Else
+
+Boogie program verifier finished with 2 verified, 1 error

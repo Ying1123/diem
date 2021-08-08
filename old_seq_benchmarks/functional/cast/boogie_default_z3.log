@@ -1,0 +1,48 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:cast.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestCast_aborting_u64_cast$verify ...
+  [0.127 s, 3 proof obligations]  verified
+
+Verifying $42_TestCast_aborting_u64_cast_incorrect$verify ...
+  [0.040 s, 2 proof obligations]  error
+assert_failed(2,807,872): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(1004,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(1004,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(419,9): inline$$CastU64$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(419,9): inline$$CastU64$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(1021,9): anon4_Then
+
+Verifying $42_TestCast_aborting_u8_cast$verify ...
+  [0.014 s, 2 proof obligations]  verified
+
+Verifying $42_TestCast_aborting_u8_cast_incorrect$verify ...
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,535,599): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(1132,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(1132,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(410,9): inline$$CastU8$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(410,9): inline$$CastU8$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/functional/cast/cast.default.z3.bpl(1149,9): anon4_Then
+
+Verifying $42_TestCast_u64_cast$verify ...
+  [0.008 s, 0 proof obligations]  verified
+
+Verifying $42_TestCast_u8_cast_incorrect$verify ...
+  [0.014 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 2 errors

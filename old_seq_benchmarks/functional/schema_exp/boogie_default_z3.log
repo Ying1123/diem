@@ -1,0 +1,40 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:schema_exp.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestSchemaExp_bar_incorrect$verify ...
+  [0.133 s, 2 proof obligations]  error
+assert_failed(2,416,722): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(934,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(934,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(596,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(952,16): anon4_Then
+
+Verifying $42_TestSchemaExp_baz$verify ...
+  [0.023 s, 2 proof obligations]  verified
+
+Verifying $42_TestSchemaExp_baz_incorrect$verify ...
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,975,999): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(1141,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(1141,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(445,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/schema_exp/schema_exp.default.z3.bpl(1162,5): anon4_Else
+
+Verifying $42_TestSchemaExp_foo$verify ...
+  [0.010 s, 3 proof obligations]  verified
+
+Boogie program verifier finished with 2 verified, 2 errors

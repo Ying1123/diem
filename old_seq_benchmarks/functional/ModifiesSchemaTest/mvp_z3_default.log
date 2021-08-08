@@ -1,0 +1,33 @@
+22:34:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+22:34:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at_wrapper2` to be verified
+22:34:04 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at_wrapper1` to be verified
+[INFO] translating module A
+22:34:04 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+22:34:04 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+22:34:04 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+22:34:05 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+22:34:05 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.008s build, 0.002s trafo, 0.004s gen, 0.605s verify
+error: caller does not have permission to modify `A::S` at given address
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:31:9 ───
+    │
+ 31 │         mutate_at(addr2)
+    │         ^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29: mutate_at_wrapper2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:9
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:29: mutate_at_wrapper2
+    =         addr1 = 0x29
+    =         addr2 = 0x4823
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:30: mutate_at_wrapper2
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:12: mutate_at
+    =         addr = 0x29
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:13: mutate_at
+    =         s = &A.S{x = 6334}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:14: mutate_at
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:15: mutate_at
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesSchemaTest.move:31: mutate_at_wrapper2
+
+exiting with boogie verification errors

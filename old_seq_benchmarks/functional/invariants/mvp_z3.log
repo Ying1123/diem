@@ -1,0 +1,79 @@
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_update` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_pack` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::update_helper` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_S_branching` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R_2` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_ref` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_indirectly` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_branching` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update` to be verified
+02:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_pack` to be verified
+[INFO] translating module TestInvariants
+02:44:57 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+[INFO] running solver
+02:44:57 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+02:44:57 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
+02:44:57 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+02:44:57 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.010s build, 0.009s trafo, 0.007s gen, 0.642s verify
+error: data invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:16:9 ───
+    │
+ 16 │         invariant greater_one(x);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:43: invalid_R_pack
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:16
+
+error: data invariant does not hold
+
+    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:16:9 ───
+    │
+ 16 │         invariant greater_one(x);
+    │         ^^^^^^^^^^^^^^^^^^^^^^^^^
+    │
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:113: lifetime_invalid_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:16
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:113: lifetime_invalid_R
+    =         r = TestInvariants.R{x = 3}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:114: lifetime_invalid_R
+    =         r_ref = &TestInvariants.R{x = 3}
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:115: lifetime_invalid_R
+    =         x_ref = &3
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:116: lifetime_invalid_R
+    =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:16
+
+error: data invariant does not hold
+
+     ┌── /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9 ───
+     │
+ 150 │         invariant y > 1;
+     │         ^^^^^^^^^^^^^^^^
+     │
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:153: lifetime_invalid_S_branching
+     =         cond = false
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:154: lifetime_invalid_S_branching
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:143
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:154: lifetime_invalid_S_branching
+     =         a = TestInvariants.T{x = 3}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155: lifetime_invalid_S_branching
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155: lifetime_invalid_S_branching
+     =         b = TestInvariants.S{y = 4}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:156: lifetime_invalid_S_branching
+     =         a_ref = &TestInvariants.T{x = 3}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:157: lifetime_invalid_S_branching
+     =         b_ref = &TestInvariants.S{y = 4}
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158: lifetime_invalid_S_branching
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:143
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158: lifetime_invalid_S_branching
+     =         tmp#$5 = &4
+     =         x_ref = &4
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:160: lifetime_invalid_S_branching
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:143
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163: lifetime_invalid_S_branching
+     =     at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150
+
+exiting with boogie verification errors

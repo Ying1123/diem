@@ -1,0 +1,21 @@
+andy/stringsExtDeq run over lookup_mini.smt2 enter infinite loop,
+                   run over lookup_good.smt2 return unsat as expected.
+	The difference between lookup_mini.smt2 and lookup_good.smt2 is a single trivial line.
+
+with option -t im, see the following pattern appeared infinitely recursive(93 -> 94 -> 95 ...):
+
+773:    skv2 <= 93 || skv2 >= 93
+774:    skv2 == 94 || skv2 < 93 || skv2 == 93 || i >= 94 || i < skv2
+775:    i != i || i < 94 || i >= 94
+776:    i != i || i < 94 || i >= 94
+777:    i < 94 || i != i || i >= skv2 + 1 || skv2 >= 94
+
+778:    skv2 != 93 || skv2 < 94
+
+779:    sspre4 {sst3} sssufr5 == {sst3}
+780:    sspre10 {sst9} sssufr11 == {sst9}
+
+781:    skv2 <= 94 || skv2 >= 94
+
+This change fixed the bug (by Andy):
+https://github.com/ajreynol/CVC4/commit/16193fe9e85aec52e51a3fda1b470bc433bef5c7

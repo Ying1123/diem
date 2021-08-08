@@ -1,0 +1,22 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/friend_error/friend_error.SmtSeq.z3.bpl
+-monomorphize
+/env:2
+/proverLog:friend_error.SmtSeq.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/friend_error/friend_error.SmtSeq.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestFriendError_f$verify ...
+  [0.125 s, 0 proof obligations]  verified
+
+Verifying $42_TestFriendError_i$verify ...
+  [0.015 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 2 verified, 0 errors

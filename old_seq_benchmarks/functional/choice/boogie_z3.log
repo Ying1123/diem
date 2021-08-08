@@ -1,0 +1,37 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/choice/choice.z3.bpl
+-monomorphize
+/env:2
+/proverLog:choice.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestSome_populate_R$verify ...
+  [0.137 s, 1 proof obligation]  error
+assert_failed(2,1601,1647): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1109,9): anon0
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1109,9): anon0$1
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1162,32): anon12_Else
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1164,5): anon13_Else
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1183,32): anon14_Else
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1185,5): anon15_Else
+
+Verifying $42_TestSome_simple$verify ...
+  [0.015 s, 1 proof obligation]  verified
+
+Verifying $42_TestSome_simple_incorrect$verify ...
+  [0.010 s, 1 proof obligation]  error
+assert_failed(2,615,677): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1259,9): anon0
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1259,9): anon0$1
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1275,34): anon3_Else
+    /home/ying/diem/seq_benchmarks/choice/choice.z3.bpl(1313,1): L3

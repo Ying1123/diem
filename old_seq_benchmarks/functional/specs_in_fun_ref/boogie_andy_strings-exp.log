@@ -1,0 +1,38 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/specs_in_fun_ref/specs_in_fun_ref.andy.bpl
+-monomorphize
+/env:2
+/proverLog:specs_in_fun_ref.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/specs_in_fun_ref/specs_in_fun_ref.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestAssertWithReferences_simple1$verify ...
+  [0.273 s, 3 proof obligations]  verified
+
+Verifying $42_TestAssertWithReferences_simple2$verify ...
+  [0.022 s, 1 proof obligation]  verified
+
+Verifying $42_TestAssertWithReferences_simple3$verify ...
+  [0.091 s, 2 proof obligations]  verified
+
+Verifying $42_TestAssertWithReferences_simple4$verify ...
+  [0.180 s, 5 proof obligations]  verified
+
+Verifying $42_TestAssertWithReferences_simple5$verify ...
+  [0.106 s, 4 proof obligations]  verified
+
+Verifying $42_TestAssertWithReferences_simple6$verify ...
+  [0.103 s, 4 proof obligations]  verified
+
+Verifying $42_TestAssertWithReferences_simple7$verify ...
+  [0.070 s, 4 proof obligations]  verified
+
+Boogie program verifier finished with 7 verified, 0 errors

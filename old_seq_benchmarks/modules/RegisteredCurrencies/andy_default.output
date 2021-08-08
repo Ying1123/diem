@@ -1,0 +1,5 @@
+/home/ying/diem/seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy_default.smt2:373.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy_default.smt2:1350.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+(error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")

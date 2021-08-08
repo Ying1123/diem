@@ -1,0 +1,71 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules/DualAttestation/DualAttestation.andy.bpl
+-monomorphize
+/env:2
+/proverLog:DualAttestation.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules/DualAttestation/DualAttestation.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [1.441 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.364 s, 7 proof obligations]  verified
+
+Verifying $1_DualAttestation_initialize$verify ...
+  [0.741 s, 13 proof obligations]  verified
+
+Verifying $1_DualAttestation_human_name$verify ...
+  [0.176 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify ...
+  [0.668 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_signature_is_valid$verify ...
+  [0.517 s, 11 proof obligations]  verified
+
+Verifying $1_DualAttestation_base_url$verify ...
+  [0.185 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_compliance_public_key$verify ...
+  [0.188 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_credential_address$verify ...
+  [0.151 s, 8 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_message$verify ...
+  [0.223 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify ...
+  [0.460 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_expiration_date$verify ...
+  [0.176 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_get_cur_microdiem_limit$verify ...
+  [0.178 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_publish_credential$verify ...
+  [1.253 s, 15 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_base_url$verify ...
+  [3.988 s, 13 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
+  [4.072 s, 14 proof obligations]  verified
+
+Verifying $1_DualAttestation_set_microdiem_limit$verify ...
+  [0.584 s, 12 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.173 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 18 verified, 0 errors

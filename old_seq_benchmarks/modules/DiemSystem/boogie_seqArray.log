@@ -1,0 +1,24 @@
+---Command arguments
+/home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl
+-monomorphize
+/env:2
+/proverLog:DiemSystem.seqArray.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.255 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.034 s, 7 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

@@ -1,0 +1,28 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.z3.bpl
+-monomorphize
+/env:2
+/proverLog:serialize_model.SmtSeq.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestBCS_bcs_test1$verify ...
+  [0.133 s, 4 proof obligations]  verified
+
+Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
+  [0.020 s, 3 proof obligations]  error
+assert_failed(2,879,908): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.z3.bpl(1050,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.z3.bpl(1050,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.z3.bpl(1074,5): anon6_Else
+    /home/ying/diem/seq_benchmarks/functional/serialize_model/serialize_model.SmtSeq.z3.bpl(1087,5): anon7_Else
+
+Boogie program verifier finished with 1 verified, 1 error

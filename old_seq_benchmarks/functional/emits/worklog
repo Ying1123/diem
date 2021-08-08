@@ -1,0 +1,8 @@
+using andy_seq/bin/cvc5 as a backend of boogie not terminating.
+using ~/bin/cvc4 looks good, generate emits.smt2
+
+~/bin/cvc4 can verify emits.smt2
+andy_seq/bin/cvc5 will not terminate on emits.smt2
+
+
+prover error: assert_failed(2,9040,9075): function does not emit the expected event

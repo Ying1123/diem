@@ -1,0 +1,24 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/pragma/pragma.andy.bpl
+-monomorphize
+/env:2
+/proverLog:pragma.andy_strings.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:SOLVER=CVC4
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/pragma/pragma.andy.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+
+Verifying $42_TestPragma_always_aborts_with_verify_incorrect$verify ...
+  [0.266 s, 1 proof obligation]  error
+assert_failed(2,243,341): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/pragma/pragma.andy.bpl(902,9): anon0
+    /home/ying/diem/seq_benchmarks/pragma/pragma.andy.bpl(902,9): anon0$1
+
+Boogie program verifier finished with 0 verified, 1 error

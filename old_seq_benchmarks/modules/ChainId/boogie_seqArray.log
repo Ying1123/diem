@@ -1,0 +1,30 @@
+---Command arguments
+/home/ying/diem/old_seq_benchmarks/modules/ChainId/ChainId.seqArray.bpl
+-monomorphize
+/env:2
+/proverLog:ChainId.seqArray.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/old_seq_benchmarks/modules/ChainId/ChainId.seqArray.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.228 s, 8 proof obligations]  verified
+
+Verifying $1_ChainId_initialize$verify ...
+  [0.030 s, 8 proof obligations]  verified
+
+Verifying $1_ChainId_get$verify ...
+  [0.004 s, 0 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.204 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 0 errors

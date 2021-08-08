@@ -1,0 +1,64 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl
+-monomorphize
+/env:2
+/proverLog:choice.default.z3.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $42_TestSome_populate_R$verify ...
+  [0.139 s, 1 proof obligation]  error
+assert_failed(2,1601,1647): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1141,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1141,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1194,32): anon12_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1196,5): anon13_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1215,32): anon14_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1217,5): anon15_Else
+
+Verifying $42_TestSome_simple$verify ...
+  [0.017 s, 1 proof obligation]  verified
+
+Verifying $42_TestSome_simple_incorrect$verify ...
+  [0.019 s, 1 proof obligation]  error
+assert_failed(2,615,677): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1291,9): anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1291,9): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1307,34): anon3_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1345,1): L3
+
+Verifying $42_TestSome_test_min$verify ...
+  [0.045 s, 1 proof obligation]  verified
+
+Verifying $42_TestSome_test_not_using_min_incorrect$verify ...
+  [0.085 s, 1 proof obligation]  error
+assert_failed(2,2516,2584): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1520,5): anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1520,5): anon0$1
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(647,7): inline$$1_Vector_empty'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1530,5): anon14_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(659,8): inline$$1_Vector_push_back'u64'$0$anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1555,5): anon15_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(659,8): inline$$1_Vector_push_back'u64'$1$anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1569,5): anon16_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(659,8): inline$$1_Vector_push_back'u64'$2$anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1583,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(659,8): inline$$1_Vector_push_back'u64'$3$anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1597,5): anon18_Else
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(659,8): inline$$1_Vector_push_back'u64'$4$anon0
+    /home/ying/diem/seq_benchmarks/functional/choice/choice.default.z3.bpl(1611,5): anon19_Else
+
+Verifying $42_TestSome_with_spec_fun_choice$verify ...
+  [0.012 s, 1 proof obligation]  verified
+
+Boogie program verifier finished with 3 verified, 3 errors

@@ -16,18 +16,18 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.213 s, 10 proof obligations]  verified
+  [0.246 s, 10 proof obligations]  verified
 
 Verifying $1_XDX_initialize$verify ...
-  [0.356 s, 29 proof obligations]  verified
+  [0.382 s, 29 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify ...
-  [0.017 s, 4 proof obligations]  verified
+  [0.019 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_reserve_address$verify ...
   [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.183 s, 0 proof obligations]  verified
+  [0.193 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 5 verified, 0 errors

@@ -22,7 +22,7 @@ find $seq_dir -type f -print0 | while read -d $'\0' file; do
 	if [ $ret -eq 0 ]; then
 		echo $file
 		start=$(date +%s)
-		timeout 10 $cvc $file --incremental --strings-exp --strings-seq-update
+		timeout 10 $cvc $file --incremental --strings-exp --strings-seq-update --check-models
 		end=$(date +%s)
 		take=$(( end - start ))
         filename=$(basename $file .move)

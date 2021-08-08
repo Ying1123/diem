@@ -16,95 +16,12 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.278 s, 14 proof obligations]  verified
+  [0.275 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.060 s, 14 proof obligations]  verified
+  [0.052 s, 14 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_publish$verify ...
-  [0.247 s, 13 proof obligations]  error
-assert_failed(24,9571,9805): global memory invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12445,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(2533,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12445,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12554,17): anon20_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(11945,9): inline$$1_DiemAccount_key_rotation_capability_address$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12577,5): anon21_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12613,17): anon22_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(566,9): inline$$Not$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12613,17): anon22_Then$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12664,17): anon23_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(3780,9): inline$$1_Vector_singleton'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(796,7): inline$$1_Vector_empty'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(3791,5): inline$$1_Vector_singleton'$1_DiemAccount_KeyRotationCapability'$0$anon5_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(808,8): inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(3807,5): inline$$1_Vector_singleton'$1_DiemAccount_KeyRotationCapability'$0$anon6_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12688,5): anon24_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12716,52): anon25_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(12718,5): anon26_Else
+  [0.244 s, 13 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Verifying $1_RecoveryAddress_rotate_authentication_key$verify ...
-  [0.504 s, 14 proof obligations]  verified
-
-Verifying $1_RecoveryAddress_add_rotation_capability$verify ...
-  [0.994 s, 11 proof obligations]  errors
-assert_failed(24,9571,9805): global memory invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13437,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(2533,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13437,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13518,17): anon23_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(11945,9): inline$$1_DiemAccount_key_rotation_capability_address$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13539,5): anon24_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13589,17): anon25_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13612,14): anon26_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13614,5): anon27_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(837,7): inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13634,5): anon28_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(536,9): inline$$Lt$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13634,5): anon28_Else$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13674,17): anon29_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(808,8): inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13697,5): anon30_Else
-assert_failed(24,10444,10765): global memory invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13437,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(2533,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13437,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13518,17): anon23_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(11945,9): inline$$1_DiemAccount_key_rotation_capability_address$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13539,5): anon24_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13589,17): anon25_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13612,14): anon26_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13614,5): anon27_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(837,7): inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13634,5): anon28_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(536,9): inline$$Lt$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13634,5): anon28_Else$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13674,17): anon29_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(808,8): inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13697,5): anon30_Else
-assert_failed(24,9223,9309): post-condition does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13437,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(2533,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13437,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13518,17): anon23_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(11945,9): inline$$1_DiemAccount_key_rotation_capability_address$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13539,5): anon24_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13589,17): anon25_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13612,14): anon26_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13614,5): anon27_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(837,7): inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13634,5): anon28_Else
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(536,9): inline$$Lt$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13634,5): anon28_Else$1
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13674,17): anon29_Then
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(808,8): inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.bpl(13697,5): anon30_Else
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.178 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 4 verified, 4 errors

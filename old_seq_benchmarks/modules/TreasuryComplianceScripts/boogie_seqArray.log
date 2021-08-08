@@ -16,71 +16,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.403 s, 0 proof obligations]  verified
+  [0.438 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify ...
-  [1.815 s, 41 proof obligations]  verified
+  [2.943 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
-  [0.036 s, 0 proof obligations]  verified
+  [0.039 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
-  [0.551 s, 12 proof obligations]  error
-assert_failed(34,7540,7589): post-condition does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(21353,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(3073,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(21353,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13120,9): inline$$1_VASPDomain_add_vasp_domain$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13171,35): inline$$1_VASPDomain_add_vasp_domain$0$anon32_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13980,5): inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13194,5): inline$$1_VASPDomain_add_vasp_domain$0$anon33_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13225,17): inline$$1_VASPDomain_add_vasp_domain$0$anon34_Then
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13273,17): inline$$1_VASPDomain_add_vasp_domain$0$anon35_Then
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13296,14): inline$$1_VASPDomain_add_vasp_domain$0$anon36_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13298,5): inline$$1_VASPDomain_add_vasp_domain$0$anon37_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13485,9): inline$$1_VASPDomain_create_vasp_domain$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(2817,7): inline$$1_Vector_length'u8'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13495,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(546,9): inline$$Le$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13495,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13533,16): inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13312,5): inline$$1_VASPDomain_add_vasp_domain$0$anon38_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(2004,9): inline$$1_Vector_contains'$1_VASPDomain_VASPDomain'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13328,5): inline$$1_VASPDomain_add_vasp_domain$0$anon39_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(566,9): inline$$Not$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13328,5): inline$$1_VASPDomain_add_vasp_domain$0$anon39_Else$1
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13364,17): inline$$1_VASPDomain_add_vasp_domain$0$anon40_Then
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(1888,8): inline$$1_Vector_push_back'$1_VASPDomain_VASPDomain'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13392,5): inline$$1_VASPDomain_add_vasp_domain$0$anon41_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13417,14): inline$$1_VASPDomain_add_vasp_domain$0$anon42_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13419,5): inline$$1_VASPDomain_add_vasp_domain$0$anon43_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(4037,12): inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(13441,5): inline$$1_VASPDomain_add_vasp_domain$0$anon44_Else
-    /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.bpl(21497,5): anon4_Else
+  [3.185 s, 12 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
-  [0.097 s, 1 proof obligation]  verified
+  [0.145 s, 1 proof obligation]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
-  [0.826 s, 34 proof obligations]  verified
+  [1.005 s, 34 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
-  [0.030 s, 0 proof obligations]  verified
+  [0.038 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
-  [0.013 s, 0 proof obligations]  verified
+  [0.015 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
-  [0.028 s, 0 proof obligations]  verified
+  [0.032 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
-  [0.472 s, 18 proof obligations]  verified
+  [0.688 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify ...
-  [1.455 s, 30 proof obligations]  verified
+  [2.432 s, 30 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_dual_attestation_limit$verify ...
-  [0.038 s, 0 proof obligations]  verified
+  [0.044 s, 0 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

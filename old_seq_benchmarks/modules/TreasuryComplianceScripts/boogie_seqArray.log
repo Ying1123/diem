@@ -16,39 +16,30 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.438 s, 0 proof obligations]  verified
+  [0.367 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify ...
-  [2.943 s, 41 proof obligations]  verified
+  [3.441 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
+  [3.291 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_1 ...
+  [3.861 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
-  [0.039 s, 0 proof obligations]  verified
+  [0.048 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_0 ...
+  [0.009 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_1 ...
+  [0.010 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
-  [3.185 s, 12 proof obligations]  verified
+  [2.979 s, 12 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
-  [0.145 s, 1 proof obligation]  verified
-
-Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
-  [1.005 s, 34 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
-  [0.038 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
-  [0.015 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
-  [0.032 s, 0 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
-  [0.688 s, 18 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify ...
-  [2.432 s, 30 proof obligations]  verified
-
-Verifying $1_TreasuryComplianceScripts_update_dual_attestation_limit$verify ...
-  [0.044 s, 0 proof obligations]  verified
+  [0.181 s, 1 proof obligation]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

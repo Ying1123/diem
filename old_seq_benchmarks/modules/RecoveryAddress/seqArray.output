@@ -1,6 +1,8 @@
-/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.smt2:388.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.smt2:1390.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.smt2:450.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.seqArray.smt2:1635.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
-cvc5 interrupted by SIGTERM.
+unsat
+unsat
+unsat

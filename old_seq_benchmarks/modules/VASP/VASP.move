@@ -7,6 +7,7 @@ module DiemFramework::VASP {
     use DiemFramework::AccountLimits;
     use Std::Errors;
     use Std::Signer;
+    friend DiemFramework::DiemAccount;
 
     /// Each VASP has a unique root account that holds a `ParentVASP` resource. This resource holds
     /// the VASP's globally unique name and all of the metadata that other VASPs need to perform
@@ -39,7 +40,7 @@ module DiemFramework::VASP {
     /// Create a new `ParentVASP` resource under `vasp`
     /// Aborts if `dr_account` is not the diem root account,
     /// or if there is already a VASP (child or parent) at this account.
-    public fun publish_parent_vasp_credential(vasp: &signer, tc_account: &signer) {
+    public(friend) fun publish_parent_vasp_credential(vasp: &signer, tc_account: &signer) {
         DiemTimestamp::assert_operating();
         Roles::assert_treasury_compliance(tc_account);
         Roles::assert_parent_vasp_role(vasp);
@@ -65,7 +66,7 @@ module DiemFramework::VASP {
 
     /// Create a child VASP resource for the `parent`
     /// Aborts if `parent` is not a ParentVASP
-    public fun publish_child_vasp_credential(
+    public(friend) fun publish_child_vasp_credential(
         parent: &signer,
         child: &signer,
     ) acquires ParentVASP {
@@ -111,7 +112,7 @@ module DiemFramework::VASP {
     /// Return `true` if `addr` is a parent or child VASP whose parent VASP account contains an
     /// `AccountLimits<CoinType>` resource.
     /// Aborts if `addr` is not a VASP
-    public fun has_account_limits<CoinType: store>(addr: address): bool acquires ChildVASP {
+    public fun has_account_limits<CoinType>(addr: address): bool acquires ChildVASP {
         AccountLimits::has_window_published<CoinType>(parent_address(addr))
     }
 

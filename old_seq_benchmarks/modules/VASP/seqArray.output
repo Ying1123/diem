@@ -1,4 +1,4 @@
-/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.seqArray.smt2:387.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.seqArray.smt2:409.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -6,7 +6,7 @@ unsat
 unsat
 unsat
 unsat
-/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.seqArray.smt2:1746.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.seqArray.smt2:1820.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

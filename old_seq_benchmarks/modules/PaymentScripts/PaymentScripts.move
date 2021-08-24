@@ -60,7 +60,7 @@ module DiemFramework::PaymentScripts {
     /// * `AccountCreationScripts::create_parent_vasp_account`
     /// * `AccountAdministrationScripts::add_currency_to_account`
     /// * `PaymentScripts::peer_to_peer_by_signers`
-    public(script) fun peer_to_peer_with_metadata<Currency: store>(
+    public(script) fun peer_to_peer_with_metadata<Currency>(
         payer: signer,
         payee: address,
         amount: u64,
@@ -119,7 +119,7 @@ module DiemFramework::PaymentScripts {
     /// * `AccountCreationScripts::create_parent_vasp_account`
     /// * `AccountAdministrationScripts::add_currency_to_account`
     /// * `PaymentScripts::peer_to_peer_with_metadata`
-    public(script) fun peer_to_peer_by_signers<Currency: store>(
+    public(script) fun peer_to_peer_by_signers<Currency>(
         payer: signer,
         payee: signer,
         amount: u64,
@@ -133,7 +133,7 @@ module DiemFramework::PaymentScripts {
     }
 
     spec peer_to_peer_with_metadata {
-        include PeerToPeer<Currency>;
+        include PeerToPeer<Currency>{payer_signer: payer};
         include DualAttestation::AssertPaymentOkAbortsIf<Currency>{
             payer: Signer::spec_address_of(payer),
             value: amount
@@ -141,19 +141,19 @@ module DiemFramework::PaymentScripts {
     }
 
     spec peer_to_peer_by_signers {
-        include PeerToPeer<Currency>{payee: Signer::spec_address_of(payee)};
+        include PeerToPeer<Currency>{payer_signer: payer, payee: Signer::spec_address_of(payee)};
     }
 
     spec schema PeerToPeer<Currency> {
         use Std::Errors;
 
-        payer: signer;
+        payer_signer: signer;
         payee: address;
         amount: u64;
         metadata: vector<u8>;
 
-        include DiemAccount::TransactionChecks{sender: payer}; // properties checked by the prologue.
-        let payer_addr = Signer::spec_address_of(payer);
+        include DiemAccount::TransactionChecks{sender: payer_signer}; // properties checked by the prologue.
+        let payer_addr = Signer::spec_address_of(payer_signer);
         let cap = DiemAccount::spec_get_withdraw_cap(payer_addr);
         include DiemAccount::ExtractWithdrawCapAbortsIf{sender_addr: payer_addr};
         include DiemAccount::PayFromAbortsIf<Currency>{cap: cap};

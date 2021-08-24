@@ -1,5 +1,5 @@
 seq_dir=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_SEQ/cvc
-cvc=/home/ying/CVC4/seq_debug/bin/cvc5
+cvc=/home/ying/CVC4/seq_prod/bin/cvc5
 time_new=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_SEQ/result/cvc.t
 time_old=/home/ying/diem/seq_benchmarks/SMT_LIB/QF_AX_SEQ/result/cvc_old_seq.t
 

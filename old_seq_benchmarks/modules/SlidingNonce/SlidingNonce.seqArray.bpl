@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -891,6 +896,15 @@ procedure {:inline 1} $InitEventStore() {
 
 // Given Types for Type Parameters
 
+
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:145:5+90
 function {:inline} $1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds): bool {
@@ -911,13 +925,13 @@ function {:inline} $IsEqual'$1_DiemTimestamp_CurrentTimeMicroseconds'(s1: $1_Die
 }
 var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
 
-// spec fun at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:256:10+64
-function {:inline} $1_SlidingNonce_spec_try_record_nonce(account: int, seq_nonce: int): int;
-axiom (forall account: int, seq_nonce: int ::
+// spec fun at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:257:10+64
+function {:inline} $1_SlidingNonce_spec_try_record_nonce(account: $signer, seq_nonce: int): int;
+axiom (forall account: $signer, seq_nonce: int ::
 (var $$res := $1_SlidingNonce_spec_try_record_nonce(account, seq_nonce);
 $IsValid'u64'($$res)));
 
-// struct SlidingNonce::SlidingNonce at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:10:5+341
+// struct SlidingNonce::SlidingNonce at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:11:5+341
 type {:datatype} $1_SlidingNonce_SlidingNonce;
 function {:constructor} $1_SlidingNonce_SlidingNonce($min_nonce: int, $nonce_mask: int): $1_SlidingNonce_SlidingNonce;
 function {:inline} $Update'$1_SlidingNonce_SlidingNonce'_min_nonce(s: $1_SlidingNonce_SlidingNonce, x: int): $1_SlidingNonce_SlidingNonce {
@@ -935,8 +949,8 @@ function {:inline} $IsEqual'$1_SlidingNonce_SlidingNonce'(s1: $1_SlidingNonce_Sl
 }
 var $1_SlidingNonce_SlidingNonce_$memory: $Memory $1_SlidingNonce_SlidingNonce;
 
-// fun SlidingNonce::publish [verification] at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:260:5+238
-procedure {:timeLimit 40} $1_SlidingNonce_publish$verify(_$t0: int) returns ()
+// fun SlidingNonce::publish [verification] at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:5+246
+procedure {:timeLimit 40} $1_SlidingNonce_publish$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
@@ -950,193 +964,193 @@ procedure {:timeLimit 40} $1_SlidingNonce_publish$verify(_$t0: int) returns ()
     var $t9: int;
     var $t10: int;
     var $t11: $1_SlidingNonce_SlidingNonce;
-    var $t0: int;
+    var $t0: $signer;
     var $1_SlidingNonce_SlidingNonce_$modifies: [int]bool;
-    var $temp_0'address': int;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_SlidingNonce_SlidingNonce_$memory#89: $Memory $1_SlidingNonce_SlidingNonce;
+    var $1_SlidingNonce_SlidingNonce_$memory#102: $Memory $1_SlidingNonce_SlidingNonce;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:260:5+238
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:280:9+88
-    assume {:print "$at(29,13027,13265)"} true;
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:5+246
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume {:print "$at(30,13066,13312)"} true;
     assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
 
-    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:260:5+238
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:283:9+98
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:5+246
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
     assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:260:5+238
-    assume $IsValid'address'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:5+246
+    assume $IsValid'signer'($t0);
 
-    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:260:5+238
+    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:5+246
     assume (forall $a_0: int :: {$ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0)}(var $rsc := $ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0);
     ($IsValid'$1_SlidingNonce_SlidingNonce'($rsc))));
 
-    // assume CanModify<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:266:9+64
-    assume {:print "$at(29,13316,13380)"} true;
+    // assume CanModify<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:267:9+64
+    assume {:print "$at(30,13363,13427)"} true;
     assume $1_SlidingNonce_SlidingNonce_$modifies[$1_Signer_spec_address_of($t0)];
 
-    // @89 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:266:9+64
-    $1_SlidingNonce_SlidingNonce_$memory#89 := $1_SlidingNonce_SlidingNonce_$memory;
+    // @102 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:267:9+64
+    $1_SlidingNonce_SlidingNonce_$memory#102 := $1_SlidingNonce_SlidingNonce_$memory;
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:260:5+1
-    assume {:print "$at(29,13027,13028)"} true;
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:5+1
+    assume {:print "$at(30,13066,13067)"} true;
     assume {:print "$track_local(10,0,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:38+27
+    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:38+27
     // >> opaque call: $t3 := Signer::address_of($t0)
-    assume {:print "$at(29,13103,13130)"} true;
+    assume {:print "$at(30,13150,13177)"} true;
 
-    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:38+27
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:38+27
 
-    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:38+27
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:38+27
     assume $IsValid'address'($t3);
 
-    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:38+27
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:38+27
     assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
 
-    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:38+27
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:38+27
 
-    // $t4 := exists<SlidingNonce::SlidingNonce>($t3) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:17+6
+    // $t4 := exists<SlidingNonce::SlidingNonce>($t3) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:17+6
     $t4 := $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $t3);
 
-    // $t5 := !($t4) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:16+1
+    // $t5 := !($t4) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:16+1
     call $t5 := $Not($t4);
 
-    // $t6 := 4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:94+24
+    // $t6 := 4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:94+24
     $t6 := 4;
     assume $IsValid'u64'($t6);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:68+51
+    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:68+51
     // >> opaque call: $t7 := Errors::already_published($t6)
 
-    // $t7 := opaque begin: Errors::already_published($t6) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:68+51
+    // $t7 := opaque begin: Errors::already_published($t6) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:68+51
 
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:68+51
+    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:68+51
     assume $IsValid'u64'($t7);
 
-    // assume Eq<u64>($t7, 6) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:68+51
+    // assume Eq<u64>($t7, 6) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:68+51
     assume $IsEqual'u64'($t7, 6);
 
-    // $t7 := opaque end: Errors::already_published($t6) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:68+51
+    // $t7 := opaque end: Errors::already_published($t6) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:68+51
 
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
     assume {:print "$track_local(10,0,2):", $t7} $t7 == $t7;
 
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
     assume {:print "$track_local(10,0,1):", $t5} $t5 == $t5;
 
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
     if ($t5) { goto L0; } else { goto L1; }
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // label L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
 L1:
 
-    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
-    assume {:print "$at(29,13074,13185)"} true;
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
+    assume {:print "$at(30,13121,13232)"} true;
     assume {:print "$track_abort(10,0):", $t7} $t7 == $t7;
 
-    // $t8 := move($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // $t8 := move($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
     $t8 := $t7;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:261:9+111
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+111
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:17+7
-    assume {:print "$at(29,13203,13210)"} true;
+    // label L0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:17+7
+    assume {:print "$at(30,13250,13257)"} true;
 L0:
 
-    // $t9 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:53+1
+    // $t9 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:53+1
     $t9 := 0;
     assume $IsValid'u64'($t9);
 
-    // $t10 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:68+1
+    // $t10 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:68+1
     $t10 := 0;
     assume $IsValid'u128'($t10);
 
-    // $t11 := pack SlidingNonce::SlidingNonce($t9, $t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:26+45
+    // $t11 := pack SlidingNonce::SlidingNonce($t9, $t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:26+45
     $t11 := $1_SlidingNonce_SlidingNonce($t9, $t10);
 
-    // assert CanModify<SlidingNonce::SlidingNonce>($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+7
-    assert {:msg "assert_failed(29,13195,13202): caller does not have permission to modify `SlidingNonce::SlidingNonce` at given address"}
-      $1_SlidingNonce_SlidingNonce_$modifies[$t0];
+    // assert CanModify<SlidingNonce::SlidingNonce>($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:9+7
+    assert {:msg "assert_failed(30,13242,13249): caller does not have permission to modify `SlidingNonce::SlidingNonce` at given address"}
+      $1_SlidingNonce_SlidingNonce_$modifies[$1_Signer_spec_address_of($t0)];
 
-    // move_to<SlidingNonce::SlidingNonce>($t11, $t0) on_abort goto L3 with $t8 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:262:9+7
-    if ($ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $t0)) {
+    // move_to<SlidingNonce::SlidingNonce>($t11, $t0) on_abort goto L3 with $t8 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:9+7
+    if ($ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $1_SlidingNonce_SlidingNonce_$memory := $ResourceUpdate($1_SlidingNonce_SlidingNonce_$memory, $t0, $t11);
+        $1_SlidingNonce_SlidingNonce_$memory := $ResourceUpdate($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0), $t11);
     }
     if ($abort_flag) {
-        assume {:print "$at(29,13195,13202)"} true;
+        assume {:print "$at(30,13242,13249)"} true;
         $t8 := $abort_code;
         assume {:print "$track_abort(10,0):", $t8} $t8 == $t8;
         goto L3;
     }
 
-    // assert Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:280:9+88
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:280:9+88
-    assume {:print "$at(29,13888,13976)"} true;
-    assert {:msg "assert_failed(29,13888,13976): global memory invariant does not hold"}
+    // assert Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume {:print "$at(30,13935,14023)"} true;
+    assert {:msg "assert_failed(30,13935,14023): global memory invariant does not hold"}
       ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
 
-    // assert Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:283:9+98
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:283:9+98
-    assume {:print "$at(29,13986,14084)"} true;
-    assert {:msg "assert_failed(29,13986,14084): global memory invariant does not hold"}
+    // assert Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
+    assume {:print "$at(30,14033,14131)"} true;
+    assert {:msg "assert_failed(30,14033,14131): global memory invariant does not hold"}
       ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:5+1
-    assume {:print "$at(29,13264,13265)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:264:5+1
+    assume {:print "$at(30,13311,13312)"} true;
 L2:
 
-    // assert Not(exists[@89]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:267:9+96
-    assume {:print "$at(29,13389,13485)"} true;
-    assert {:msg "assert_failed(29,13389,13485): function does not abort under this condition"}
-      !$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#89, $1_Signer_spec_address_of($t0));
+    // assert Not(exists[@102]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:268:9+96
+    assume {:print "$at(30,13436,13532)"} true;
+    assert {:msg "assert_failed(30,13436,13532): function does not abort under this condition"}
+      !$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#102, $1_Signer_spec_address_of($t0));
 
-    // assert exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:268:9+63
-    assume {:print "$at(29,13494,13557)"} true;
-    assert {:msg "assert_failed(29,13494,13557): post-condition does not hold"}
+    // assert exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:269:9+63
+    assume {:print "$at(30,13541,13604)"} true;
+    assert {:msg "assert_failed(30,13541,13604): post-condition does not hold"}
       $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0));
 
-    // return () at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:268:9+63
+    // return () at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:269:9+63
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:263:5+1
-    assume {:print "$at(29,13264,13265)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:264:5+1
+    assume {:print "$at(30,13311,13312)"} true;
 L3:
 
-    // assert exists[@89]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:264:5+293
-    assume {:print "$at(29,13270,13563)"} true;
-    assert {:msg "assert_failed(29,13270,13563): abort not covered by any of the `aborts_if` clauses"}
-      $ResourceExists($1_SlidingNonce_SlidingNonce_$memory#89, $1_Signer_spec_address_of($t0));
+    // assert exists[@102]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:265:5+293
+    assume {:print "$at(30,13317,13610)"} true;
+    assert {:msg "assert_failed(30,13317,13610): abort not covered by any of the `aborts_if` clauses"}
+      $ResourceExists($1_SlidingNonce_SlidingNonce_$memory#102, $1_Signer_spec_address_of($t0));
 
-    // assert And(exists[@89]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)), Eq(6, $t8)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:264:5+293
-    assert {:msg "assert_failed(29,13270,13563): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($ResourceExists($1_SlidingNonce_SlidingNonce_$memory#89, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(6, $t8));
+    // assert And(exists[@102]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)), Eq(6, $t8)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:265:5+293
+    assert {:msg "assert_failed(30,13317,13610): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      ($ResourceExists($1_SlidingNonce_SlidingNonce_$memory#102, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(6, $t8));
 
-    // abort($t8) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:264:5+293
+    // abort($t8) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:265:5+293
     $abort_code := $t8;
     $abort_flag := true;
     return;
 
 }
 
-// fun SlidingNonce::record_nonce_or_abort [verification] at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+212
-procedure {:timeLimit 40} $1_SlidingNonce_record_nonce_or_abort$verify(_$t0: int, _$t1: int) returns ()
+// fun SlidingNonce::record_nonce_or_abort [verification] at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
+procedure {:timeLimit 40} $1_SlidingNonce_record_nonce_or_abort$verify(_$t0: $signer, _$t1: int) returns ()
 {
     // declare local variables
-    var $t2: int;
-    var $t3: bool;
+    var $t2: bool;
+    var $t3: int;
     var $t4: int;
     var $t5: int;
     var $t6: bool;
@@ -1144,13 +1158,13 @@ procedure {:timeLimit 40} $1_SlidingNonce_record_nonce_or_abort$verify(_$t0: int
     var $t8: int;
     var $t9: bool;
     var $t10: int;
-    var $t0: int;
+    var $t0: $signer;
     var $t1: int;
     var $temp_0'$1_SlidingNonce_SlidingNonce': $1_SlidingNonce_SlidingNonce;
-    var $temp_0'address': int;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_SlidingNonce_SlidingNonce_$memory#90: $Memory $1_SlidingNonce_SlidingNonce;
+    var $1_SlidingNonce_SlidingNonce_$memory#103: $Memory $1_SlidingNonce_SlidingNonce;
     $t0 := _$t0;
     $t1 := _$t1;
 
@@ -1158,63 +1172,63 @@ procedure {:timeLimit 40} $1_SlidingNonce_record_nonce_or_abort$verify(_$t0: int
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+212
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:280:9+88
-    assume {:print "$at(29,1546,1758)"} true;
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume {:print "$at(30,1585,1797)"} true;
     assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
 
-    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+212
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:283:9+98
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
     assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+212
-    assume $IsValid'address'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
+    assume $IsValid'signer'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+212
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
     assume $IsValid'u64'($t1);
 
-    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+212
+    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
     assume (forall $a_0: int :: {$ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0)}(var $rsc := $ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0);
     ($IsValid'$1_SlidingNonce_SlidingNonce'($rsc))));
 
-    // @90 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+1
-    $1_SlidingNonce_SlidingNonce_$memory#90 := $1_SlidingNonce_SlidingNonce_$memory;
+    // @103 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+1
+    $1_SlidingNonce_SlidingNonce_$memory#103 := $1_SlidingNonce_SlidingNonce_$memory;
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+1
     assume {:print "$track_local(10,1,0):", $t0} $t0 == $t0;
 
-    // trace_local[seq_nonce]($t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:34:5+1
+    // trace_local[seq_nonce]($t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+1
     assume {:print "$track_local(10,1,1):", $t1} $t1 == $t1;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     // >> opaque call: $t5 := SlidingNonce::try_record_nonce($t0, $t1)
-    assume {:print "$at(29,1656,1692)"} true;
+    assume {:print "$at(30,1695,1731)"} true;
 
-    // $t5 := opaque begin: SlidingNonce::try_record_nonce($t0, $t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // $t5 := opaque begin: SlidingNonce::try_record_nonce($t0, $t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
 
-    // assume Identical($t6, Not(exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // assume Identical($t6, Not(exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     assume ($t6 == !$ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0)));
 
-    // if ($t6) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // if ($t6) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     if ($t6) { goto L5; } else { goto L4; }
 
-    // label L5 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // label L5 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
 L5:
 
-    // assume And(Not(exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0))), Eq(5, $t7)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // assume And(Not(exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0))), Eq(5, $t7)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     assume (!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t7));
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
-    assume {:print "$at(29,1656,1692)"} true;
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    assume {:print "$at(30,1695,1731)"} true;
     assume {:print "$track_abort(10,1):", $t7} $t7 == $t7;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     goto L3;
 
-    // label L4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // label L4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
 L4:
 
-    // modifies global<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // modifies global<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     havoc $temp_0'bool';
     if ($temp_0'bool') {
         havoc $temp_0'$1_SlidingNonce_SlidingNonce';
@@ -1223,94 +1237,94 @@ L4:
         $1_SlidingNonce_SlidingNonce_$memory := $ResourceRemove($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0));
     }
 
-    // assume WellFormed($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // assume WellFormed($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     assume $IsValid'u64'($t5);
 
-    // assume Eq<u64>($t5, SlidingNonce::spec_try_record_nonce($t0, $t1)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // assume Eq<u64>($t5, SlidingNonce::spec_try_record_nonce($t0, $t1)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
     assume $IsEqual'u64'($t5, $1_SlidingNonce_spec_try_record_nonce($t0, $t1));
 
-    // $t5 := opaque end: SlidingNonce::try_record_nonce($t0, $t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:20+36
+    // $t5 := opaque end: SlidingNonce::try_record_nonce($t0, $t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
 
-    // trace_local[code]($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:13+4
-    assume {:print "$track_local(10,1,2):", $t5} $t5 == $t5;
+    // trace_local[code]($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:13+4
+    assume {:print "$track_local(10,1,4):", $t5} $t5 == $t5;
 
-    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:24+1
-    assume {:print "$at(29,1717,1718)"} true;
+    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:24+1
+    assume {:print "$at(30,1756,1757)"} true;
     $t8 := 0;
     assume $IsValid'u64'($t8);
 
-    // $t9 := ==($t5, $t8) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:21+2
+    // $t9 := ==($t5, $t8) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:21+2
     $t9 := $IsEqual'u64'($t5, $t8);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:27+30
+    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
     // >> opaque call: $t8 := Errors::invalid_argument($t5)
 
-    // $t10 := opaque begin: Errors::invalid_argument($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:27+30
+    // $t10 := opaque begin: Errors::invalid_argument($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
 
-    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:27+30
+    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
     assume $IsValid'u64'($t10);
 
-    // assume Eq<u64>($t10, 7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:27+30
+    // assume Eq<u64>($t10, 7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
     assume $IsEqual'u64'($t10, 7);
 
-    // $t10 := opaque end: Errors::invalid_argument($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:27+30
+    // $t10 := opaque end: Errors::invalid_argument($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
 
-    // trace_local[tmp#$4]($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
-    assume {:print "$track_local(10,1,4):", $t10} $t10 == $t10;
+    // trace_local[tmp#$3]($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    assume {:print "$track_local(10,1,3):", $t10} $t10 == $t10;
 
-    // trace_local[tmp#$3]($t9) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
-    assume {:print "$track_local(10,1,3):", $t9} $t9 == $t9;
+    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    assume {:print "$track_local(10,1,2):", $t9} $t9 == $t9;
 
-    // if ($t9) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
+    // if ($t9) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
     if ($t9) { goto L0; } else { goto L1; }
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
+    // label L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
 L1:
 
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
-    assume {:print "$at(29,1702,1751)"} true;
+    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    assume {:print "$at(30,1741,1790)"} true;
     assume {:print "$track_abort(10,1):", $t10} $t10 == $t10;
 
-    // $t7 := move($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
+    // $t7 := move($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
     $t7 := $t10;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:9+49
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:58+1
+    // label L0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:58+1
 L0:
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:5+1
-    assume {:print "$at(29,1757,1758)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:38:5+1
+    assume {:print "$at(30,1796,1797)"} true;
 L2:
 
-    // assert Not(Not(exists[@90]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:46:9+93
-    assume {:print "$at(29,1932,2025)"} true;
-    assert {:msg "assert_failed(29,1932,2025): function does not abort under this condition"}
-      !!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#90, $1_Signer_spec_address_of($t0));
+    // assert Not(Not(exists[@103]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:47:9+93
+    assume {:print "$at(30,1971,2064)"} true;
+    assert {:msg "assert_failed(30,1971,2064): function does not abort under this condition"}
+      !!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#103, $1_Signer_spec_address_of($t0));
 
-    // assert Not(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:47:9+87
-    assume {:print "$at(29,2034,2121)"} true;
-    assert {:msg "assert_failed(29,2034,2121): function does not abort under this condition"}
+    // assert Not(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:48:9+87
+    assume {:print "$at(30,2073,2160)"} true;
+    assert {:msg "assert_failed(30,2073,2160): function does not abort under this condition"}
       !!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0);
 
-    // return () at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:47:9+87
+    // return () at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:48:9+87
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:5+1
-    assume {:print "$at(29,1757,1758)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:38:5+1
+    assume {:print "$at(30,1796,1797)"} true;
 L3:
 
-    // assert Or(Not(exists[@90]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:39:5+71
-    assume {:print "$at(29,1764,1835)"} true;
-    assert {:msg "assert_failed(29,1764,1835): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#90, $1_Signer_spec_address_of($t0)) || !$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0));
+    // assert Or(Not(exists[@103]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:40:5+71
+    assume {:print "$at(30,1803,1874)"} true;
+    assert {:msg "assert_failed(30,1803,1874): abort not covered by any of the `aborts_if` clauses"}
+      (!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#103, $1_Signer_spec_address_of($t0)) || !$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0));
 
-    // assert Or(And(Not(exists[@90]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Eq(5, $t7)), And(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0), Eq(7, $t7))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:39:5+71
-    assert {:msg "assert_failed(29,1764,1835): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#90, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t7)) || (!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0) && $IsEqual'num'(7, $t7)));
+    // assert Or(And(Not(exists[@103]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Eq(5, $t7)), And(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0), Eq(7, $t7))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:40:5+71
+    assert {:msg "assert_failed(30,1803,1874): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      ((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#103, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t7)) || (!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0) && $IsEqual'num'(7, $t7)));
 
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:39:5+71
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:40:5+71
     $abort_code := $t7;
     $abort_flag := true;
     return;

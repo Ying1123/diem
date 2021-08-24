@@ -1,8 +1,6 @@
-/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.smt2:454.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.smt2:501.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.smt2:1659.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.seqArray.smt2:1809.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -12,4 +10,3 @@ unsat
 unsat
 unsat
 unsat
-cvc5 interrupted by SIGTERM.

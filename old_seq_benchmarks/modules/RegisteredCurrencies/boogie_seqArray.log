@@ -16,15 +16,15 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.245 s, 8 proof obligations]  verified
+  [0.202 s, 8 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.050 s, 16 proof obligations]  verified
+  [0.034 s, 16 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
-  [0.159 s, 10 proof obligations]  verified
+  [0.158 s, 10 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.204 s, 0 proof obligations]  verified
+  [0.234 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

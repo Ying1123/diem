@@ -32,7 +32,7 @@ module DiemFramework::DiemConfig {
     }
 
     /// Accounts with this privilege can modify DiemConfig<TypeName> under Diem root address.
-    struct ModifyConfigCapability<TypeName> has key, store {}
+    struct ModifyConfigCapability<phantom TypeName> has key, store {}
 
     /// Reconfiguration disabled if this resource occurs under LibraRoot.
     struct DisableReconfiguration has key {}
@@ -276,6 +276,7 @@ module DiemFramework::DiemConfig {
         modifies global<Configuration>(@DiemRoot);
         include Roles::AbortsIfNotDiemRoot{account: dr_account};
         include ReconfigureAbortsIf;
+        include ReconfigureEmits;
     }
 
     /// Private function to do reconfiguration.  Updates reconfiguration status resource

@@ -16,18 +16,36 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DesignatedDealer_add_currency$verify ...
-  [0.244 s, 13 proof obligations]  verified
+  [0.218 s, 13 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_add_currency$verify_instantiated_0 ...
+  [0.045 s, 13 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_add_currency$verify_instantiated_1 ...
+  [0.043 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_exists_at$verify ...
-  [0.004 s, 2 proof obligations]  verified
+  [0.003 s, 2 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify ...
-  [0.067 s, 21 proof obligations]  verified
+  [0.087 s, 21 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_0 ...
+  [0.062 s, 21 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_1 ...
+  [0.070 s, 21 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify ...
-  [0.113 s, 18 proof obligations]  verified
+  [0.711 s, 21 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_0 ...
+  [0.781 s, 21 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_1 ...
+  [0.784 s, 21 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.189 s, 0 proof obligations]  verified
+  [0.173 s, 0 proof obligations]  verified
 
-Boogie program verifier finished with 5 verified, 0 errors
+Boogie program verifier finished with 11 verified, 0 errors

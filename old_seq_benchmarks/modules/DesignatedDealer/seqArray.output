@@ -1,5 +1,11 @@
-/home/ying/diem/old_seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.seqArray.smt2:406.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.seqArray.smt2:1477.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.seqArray.smt2:440.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.seqArray.smt2:1559.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
 unsat
 unsat
 unsat

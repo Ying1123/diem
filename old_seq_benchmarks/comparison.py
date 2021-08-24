@@ -69,7 +69,7 @@ with open('comparison_result.csv', mode='w') as result_file:
 					with open(dirName + "/" + fname, "r") as f:
 						lines = f.readlines()
 						last_line = lines[-1]
-						if "SIGTERM" in last_line or "dumped core" in last_line:
+						if "SIGTERM" in last_line or "timeout" in last_line:
 							results["timeout"] += 1
 							result_map[belong] = "timeout"
 						elif "0 errors" in last_line:
@@ -79,9 +79,9 @@ with open('comparison_result.csv', mode='w') as result_file:
 								if folder_name in timebooks[belong].keys():
 									result_map[belong] = timebooks[belong][folder_name]
 								else:
-									result_map[belong] = "unknown succ"
+									result_map[belong] = "not found in timebook"
 							else:
-								result_map[belong] = "unknown succ"
+								result_map[belong] = str(belong) + "not found"
 						else:
 							results["fail"] += 1
 							result_map[belong] = "fail"

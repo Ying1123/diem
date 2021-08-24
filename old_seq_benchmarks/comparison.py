@@ -7,7 +7,7 @@ SPECIAL_MAPPING = {
 }
 
 # Set the directory you want to start from
-rootDir = '/home/ying/xu/diem/old_seq_benchmarks/modules'
+rootDir = '/home/ying/diem/old_seq_benchmarks/modules'
 print(rootDir)
 
 timebooks = {}
@@ -79,9 +79,9 @@ with open('comparison_result.csv', mode='w') as result_file:
 								if folder_name in timebooks[belong].keys():
 									result_map[belong] = timebooks[belong][folder_name]
 								else:
-									result_map[belong] = "not found in timebook"
+									result_map[belong] = str(folder_name) + " not found in timebook " + str(belong)
 							else:
-								result_map[belong] = str(belong) + "not found"
+								result_map[belong] = str(belong) + " not found"
 						else:
 							results["fail"] += 1
 							result_map[belong] = "fail"

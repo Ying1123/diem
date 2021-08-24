@@ -69,7 +69,7 @@ with open('comparison_result.csv', mode='w') as result_file:
 					with open(dirName + "/" + fname, "r") as f:
 						lines = f.readlines()
 						last_line = lines[-1]
-						if "SIGTERM" in last_line or "timeout" in last_line:
+						if "SIGTERM" in lines or "timeout" in last_line:
 							results["timeout"] += 1
 							result_map[belong] = "timeout"
 						elif "0 errors" in last_line:

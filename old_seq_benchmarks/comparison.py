@@ -42,6 +42,12 @@ results = {
 	"timeout": 0
 }
 
+def exists(st, vector):
+	for word in vector:
+		if st in word:
+			return True
+	return False
+
 with open('comparison_result.csv', mode='w') as result_file:
 	result_writer = csv.writer(result_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	result_writer.writerow(COLUMN_NAME)
@@ -69,7 +75,7 @@ with open('comparison_result.csv', mode='w') as result_file:
 					with open(dirName + "/" + fname, "r") as f:
 						lines = f.readlines()
 						last_line = lines[-1]
-						if "SIGTERM" in lines or "timeout" in last_line:
+						if exists("SIGTERM", lines) or exists("timeout", last_line):
 							results["timeout"] += 1
 							result_map[belong] = "timeout"
 						elif "0 errors" in last_line:

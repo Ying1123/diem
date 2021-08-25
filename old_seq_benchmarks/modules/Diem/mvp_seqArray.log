@@ -1,96 +1,96 @@
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::is_synthetic_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::is_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::value` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::is_SCS_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::withdraw` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::destroy_zero` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::deposit` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::assert_is_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::remove_burn_capability` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::remove_preburn_from_queue` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::add_preburn_to_queue` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::zero` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::withdraw_all` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::xdx_exchange_rate` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::split` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::scaling_factor` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::preburn_value` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::market_cap` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::join` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::fractional_part` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::currency_code` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::assert_is_SCS_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_child_vasp_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::publish_preburn_queue` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_diem_root_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::update_minting_ability` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::approx_xdx_for_value` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_operator_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_parent_vasp_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_designated_dealer_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::update_xdx_exchange_rate` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::publish_burn_capability` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::cancel_burn_with_capability` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::mint_with_capability` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::preburn_with_resource` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_treasury_compliance_role` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::upgrade_preburn` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::create_preburn` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::publish_preburn_queue_to_account` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn_with_resource_cap` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::approx_xdx_for_coin` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::mint` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::cancel_burn` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn_with_capability` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn_now` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::preburn_to` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::initialize` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::register_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::register_SCS_currency` to be verified
-00:35:05 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Genesis::initialize` to be verified
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module CoreAddresses
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTimestamp
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Roles
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorOperatorConfig
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Option
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signature
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorConfig
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SlidingNonce
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemConfig
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemSystem
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module FixedPoint32
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RegisteredCurrencies
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::is_synthetic_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::is_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::value` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::is_SCS_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::withdraw` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::destroy_zero` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::deposit` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::assert_is_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::remove_burn_capability` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::remove_preburn_from_queue` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::add_preburn_to_queue` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::zero` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::withdraw_all` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::xdx_exchange_rate` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::split` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::scaling_factor` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::preburn_value` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::market_cap` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::join` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::fractional_part` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::currency_code` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::assert_is_SCS_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_child_vasp_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::publish_preburn_queue` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_diem_root_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::update_minting_ability` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::approx_xdx_for_value` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_operator_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_parent_vasp_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_designated_dealer_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::update_xdx_exchange_rate` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::publish_burn_capability` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::cancel_burn_with_capability` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::mint_with_capability` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::preburn_with_resource` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_treasury_compliance_role` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::upgrade_preburn` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::create_preburn` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::publish_preburn_queue_to_account` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn_with_resource_cap` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::approx_xdx_for_coin` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::mint` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::cancel_burn` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn_with_capability` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn_now` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::preburn_to` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::burn` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::initialize` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::register_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Diem::register_SCS_currency` to be verified
+19:12:48 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Genesis::initialize` to be verified
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module CoreAddresses
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTimestamp
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Roles
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorOperatorConfig
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Option
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signature
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorConfig
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SlidingNonce
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemConfig
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemSystem
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module FixedPoint32
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RegisteredCurrencies
 [INFO] translating module Diem
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountLimits
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XUS
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XDX
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASPDomain
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASP
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module TransactionFee
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DualAttestation
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTransactionPublishingOption
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DesignatedDealer
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ChainId
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountFreezing
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemAccount
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Authenticator
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SharedEd25519PublicKey
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RecoveryAddress
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountAdministrationScripts
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemBlock
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVMConfig
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVersion
-00:35:05 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Genesis
-00:35:05 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountLimits
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XUS
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XDX
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASPDomain
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASP
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module TransactionFee
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DualAttestation
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTransactionPublishingOption
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DesignatedDealer
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ChainId
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountFreezing
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemAccount
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Authenticator
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SharedEd25519PublicKey
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RecoveryAddress
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountAdministrationScripts
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemBlock
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVMConfig
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVersion
+19:12:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Genesis
+19:12:49 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-00:35:05 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
-00:35:05 [DEBUG] (11) boogie_backend::prover_task_runner: running Boogie command with seed 1
+19:12:49 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
+19:12:49 [DEBUG] (14) boogie_backend::prover_task_runner: running Boogie command with seed 1

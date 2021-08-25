@@ -16,13 +16,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.228 s, 8 proof obligations]  verified
+  [0.236 s, 8 proof obligations]  verified
 
 Verifying $1_TransactionFee_initialize$verify ...
-  [0.071 s, 10 proof obligations]  verified
+  [0.067 s, 10 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
-  [0.029 s, 1 proof obligation]  verified
+  [0.028 s, 1 proof obligation]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
   [0.036 s, 1 proof obligation]  verified
@@ -31,13 +31,13 @@ Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
   [0.010 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify ...
-  [0.613 s, 18 proof obligations]  verified
+  [0.597 s, 18 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify_instantiated_0 ...
-  [0.629 s, 18 proof obligations]  verified
+  [0.655 s, 18 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify_instantiated_1 ...
-  [0.151 s, 17 proof obligations]  verified
+  [0.141 s, 17 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_coin_initialized$verify ...
   [0.024 s, 0 proof obligations]  verified
@@ -46,15 +46,15 @@ Verifying $1_TransactionFee_is_coin_initialized$verify_instantiated_0 ...
   [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_initialized$verify ...
-  [0.003 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify ...
-  [0.059 s, 7 proof obligations]  verified
+  [0.053 s, 7 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify_instantiated_0 ...
-  [0.066 s, 7 proof obligations]  verified
+  [0.071 s, 7 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.159 s, 0 proof obligations]  verified
+  [0.157 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 14 verified, 0 errors

@@ -16,78 +16,9 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.082 s, 23 proof obligations]  verified
+  [1.327 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.035 s, 8 proof obligations]  verified
+  [0.032 s, 8 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Verifying $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify ...
-  [1.802 s, 19 proof obligations]  errors
-assert_failed(16,12177,12267): post-condition does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14058,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(2718,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14058,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4602,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4623,34): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon8_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4644,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon9_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4651,5): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon5
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4689,16): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon10_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14230,5): anon11_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14247,35): anon12_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14280,17): anon13_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6079,9): inline$$1_DiemSystem_remove_validator$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6130,35): inline$$1_DiemSystem_remove_validator$0$anon22_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6165,35): inline$$1_DiemSystem_remove_validator$0$anon23_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6195,35): inline$$1_DiemSystem_remove_validator$0$anon24_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6297,17): inline$$1_DiemSystem_remove_validator$0$anon25_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6325,36): inline$$1_DiemSystem_remove_validator$0$anon26_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(1273,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(1275,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6363,5): inline$$1_DiemSystem_remove_validator$0$anon27_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6410,36): inline$$1_DiemSystem_remove_validator$0$anon28_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6431,9): inline$$1_DiemSystem_remove_validator$0$anon29_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6440,9): inline$$1_DiemSystem_remove_validator$0$anon30_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6447,5): inline$$1_DiemSystem_remove_validator$0$anon21
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14334,5): anon14_Else
-assert_failed(16,12407,12450): post-condition does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14058,9): anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(2718,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14058,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4602,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4623,34): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon8_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4644,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon9_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4651,5): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon5
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(4689,16): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon10_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14230,5): anon11_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14247,35): anon12_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14280,17): anon13_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6079,9): inline$$1_DiemSystem_remove_validator$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6130,35): inline$$1_DiemSystem_remove_validator$0$anon22_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6165,35): inline$$1_DiemSystem_remove_validator$0$anon23_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6195,35): inline$$1_DiemSystem_remove_validator$0$anon24_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6297,17): inline$$1_DiemSystem_remove_validator$0$anon25_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6325,36): inline$$1_DiemSystem_remove_validator$0$anon26_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(1273,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(1275,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6363,5): inline$$1_DiemSystem_remove_validator$0$anon27_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6410,36): inline$$1_DiemSystem_remove_validator$0$anon28_Else
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6431,9): inline$$1_DiemSystem_remove_validator$0$anon29_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6440,9): inline$$1_DiemSystem_remove_validator$0$anon30_Then
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(6447,5): inline$$1_DiemSystem_remove_validator$0$anon21
-    /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14334,5): anon14_Else
-
-Verifying $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify ...
-  [1.055 s, 23 proof obligations]  verified
-
-Verifying $1_ValidatorAdministrationScripts_set_validator_operator$verify ...
-  [0.157 s, 14 proof obligations]  verified
-
-Verifying $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify ...
-  [0.132 s, 16 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.195 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 6 verified, 2 errors

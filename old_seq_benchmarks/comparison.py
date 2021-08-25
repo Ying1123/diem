@@ -1,6 +1,7 @@
 import csv
 import os
 
+TIME_LIMIT = 20
 COLUMN_NAME = ["Benchmark", "andy_default", "andy_strings-exp", "cvc4", "cvc5", "seqArray", "z3"]
 SPECIAL_MAPPING = {
 	"andy_strings-exp" : "andy_strings"
@@ -78,8 +79,7 @@ with open('comparison_result.csv', mode='w') as result_file:
 						if exists("SIGTERM", lines) or exists("timeout", last_line):
 							results["timeout"] += 1
 							result_map[belong] = "timeout"
-						elif "0 errors" in last_line:
-							results["succ"] += 1
+						else:
 							# fetch process time
 							if belong in timebooks.keys():
 								if folder_name in timebooks[belong].keys():
@@ -88,9 +88,15 @@ with open('comparison_result.csv', mode='w') as result_file:
 									result_map[belong] = str(folder_name) + " not found in timebook " + str(belong)
 							else:
 								result_map[belong] = str(belong) + " not found"
-						else:
-							results["fail"] += 1
-							result_map[belong] = "fail"
+							if "0 errors" in last_line:
+								results["succ"] += 1
+							else:
+								if int(result_map[belong]) == TIME_LIMIT:
+									results["timeout"] += 1
+									result_map[belong] = "timeout"
+								else:
+									results["fail"] += 1
+									result_map[belong] = "fail"
 		formatted_line = [folder_name]
 		for i in COLUMN_NAME[1:]:
 			if i in result_map.keys():

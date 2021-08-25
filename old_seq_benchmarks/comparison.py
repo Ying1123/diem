@@ -2,7 +2,7 @@ import csv
 import os
 
 TIME_LIMIT = 20
-COLUMN_NAME = ["Benchmark", "andy_default", "andy_strings-exp", "cvc4", "cvc5", "seqArray", "z3"]
+COLUMN_NAME = ["Benchmark", "z3", "cvc4", "cvc5", "andy_default", "andy_strings-exp", "seqArray"]
 SPECIAL_MAPPING = {
 	"andy_strings-exp" : "andy_strings"
 }

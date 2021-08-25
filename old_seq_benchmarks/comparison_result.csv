@@ -1,0 +1,41 @@
+Benchmark,z3,cvc4,cvc5,andy_default,andy_strings-exp,seqArray
+modules,not found,not found,not found,not found,not found,not found
+TransactionFee,2,fail,2,timeout,timeout,3
+DiemConsensusConfig,1,2,2,3,3,2
+DiemTimestamp,2,1,1,3,3,1
+RecoveryAddress,timeout,fail,fail,fail,timeout,timeout
+NetworkIdentity,not found,not found,not found,fail,7,2
+Signature,1,1,0,0,1,0
+AccountLimits,2,fail,1,timeout,timeout,7
+DualAttestation,2,fail,2,timeout,timeout,4
+TreasuryComplianceScripts,timeout,fail,fail,fail,timeout,timeout
+DiemAccount,timeout,fail,fail,timeout,timeout,timeout
+PaymentScripts,1,1,1,fail,timeout,timeout
+XDX,timeout,fail,fail,fail,12,1
+DiemSystem,timeout,fail,fail,fail,timeout,fail
+VASPDomain,not found,not found,not found,fail,timeout,timeout
+ValidatorConfig,1,fail,fail,fail,timeout,3
+VASP,2,2,2,8,7,1
+Diem,timeout,fail,fail,timeout,timeout,timeout
+AccountCreationScripts,2,fail,fail,fail,timeout,timeout
+AccountFreezing,2,fail,2,14,14,2
+RegisteredCurrencies,timeout,fail,fail,fail,6,fail
+ChainId,1,1,1,4,3,1
+SlidingNonce,0,0,1,1,1,1
+DiemBlock,1,fail,1,9,9,1
+DiemTransactionPublishingOption,1,1,2,5,5,2
+Authenticator,timeout,1,1,1,1,1
+Genesis,1,2,1,2,3,1
+DesignatedDealer,2,2,1,timeout,timeout,5
+XUS,timeout,fail,fail,fail,10,2
+DiemConfig,2,fail,2,timeout,timeout,2
+SystemAdministrationScripts,2,2,1,2,2,1
+DiemVersion,1,2,1,4,3,1
+ValidatorOperatorConfig,1,1,1,15,15,2
+Roles,2,3,3,timeout,timeout,3
+DiemVMConfig,1,1,2,6,6,2
+CoreAddresses,0,1,1,1,1,1
+SharedEd25519PublicKey,1,fail,fail,fail,6,1
+ValidatorAdministrationScripts,timeout,fail,fail,fail,timeout,fail
+DiemId,timeout,fail,fail,fail,timeout,timeout
+AccountAdministrationScripts,4,fail,fail,fail,timeout,6

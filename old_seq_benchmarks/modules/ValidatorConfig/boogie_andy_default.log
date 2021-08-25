@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
 -monomorphize
 /env:2
 /proverLog:ValidatorConfig.andy_default.smt2
@@ -8,28 +8,49 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [2.353 s, 17 proof obligations]  verified
+
 Verifying $1_Roles_grant_role$verify ...
-  [1.400 s, 9 proof obligations]  verified
+  [1.070 s, 9 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [1.605 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [1.431 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [1.490 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [1.492 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [1.443 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [1.512 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.169 s, 5 proof obligations]  verified
+  [0.238 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [1.192 s, 15 proof obligations]  verified
+  [1.772 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.066 s, 2 proof obligations]  verified
+  [0.122 s, 2 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.163 s, 6 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl(4915,27): Verification inconclusive ($1_ValidatorConfig_get_config$verify)
+  [0.199 s, 6 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl(6810,27): Verification inconclusive ($1_ValidatorConfig_get_config$verify)
 Prover error: Prover died
 
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
@@ -52,10 +73,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
    --- End of inner exception stack trace ---
    at System.AggregateException.Handle(Func`2 predicate)
@@ -82,10 +101,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #2) System.IO.IOException: Broken pipe
@@ -109,10 +126,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #3) System.IO.IOException: Broken pipe
@@ -136,10 +151,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #4) System.IO.IOException: Broken pipe
@@ -163,10 +176,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #5) System.IO.IOException: Broken pipe
@@ -190,10 +201,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #6) System.IO.IOException: Broken pipe
@@ -217,10 +226,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #7) System.IO.IOException: Broken pipe
@@ -244,10 +251,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
 timeout: the monitored command dumped core

@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy.bpl
 -monomorphize
 /env:2
 /proverLog:RecoveryAddress.andy_strings.smt2
@@ -9,18 +9,15 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [2.191 s, 14 proof obligations]  verified
+  [3.119 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.664 s, 14 proof obligations]  verified
-
-Verifying $1_RecoveryAddress_publish$verify ...
-  [3.660 s, 13 proof obligations]  verified
+  [1.193 s, 14 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

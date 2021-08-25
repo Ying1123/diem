@@ -1,6 +1,5 @@
-/home/ying/diem/seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy_strings.smt2:387.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy_strings.smt2:1389.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy_strings.smt2:449.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy_strings.smt2:1634.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 cvc5 interrupted by SIGTERM.

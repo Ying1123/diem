@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/DiemConfig/DiemConfig.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/DiemConfig/DiemConfig.andy.bpl
 -monomorphize
 /env:2
 /proverLog:DiemConfig.andy_strings.smt2
@@ -9,42 +9,66 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/DiemConfig/DiemConfig.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemConfig/DiemConfig.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [1.521 s, 9 proof obligations]  verified
+  [1.769 s, 9 proof obligations]  verified
 
 Verifying $1_DiemConfig_initialize$verify ...
-  [0.302 s, 10 proof obligations]  verified
+  [0.483 s, 10 proof obligations]  verified
 
 Verifying $1_DiemConfig_disable_reconfiguration$verify ...
-  [0.006 s, 0 proof obligations]  verified
+  [0.020 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_emit_genesis_reconfiguration_event$verify ...
-  [1.876 s, 3 proof obligations]  verified
+  [3.531 s, 3 proof obligations]  verified
 
 Verifying $1_DiemConfig_enable_reconfiguration$verify ...
-  [0.056 s, 0 proof obligations]  verified
+  [0.023 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify ...
-  [0.105 s, 4 proof obligations]  verified
+  [0.132 s, 4 proof obligations]  verified
+
+Verifying $1_DiemConfig_get$verify_instantiated_0 ...
+  [0.130 s, 4 proof obligations]  verified
+
+Verifying $1_DiemConfig_get$verify_instantiated_1 ...
+  [0.128 s, 4 proof obligations]  verified
+
+Verifying $1_DiemConfig_get$verify_instantiated_2 ...
+  [0.131 s, 4 proof obligations]  verified
+
+Verifying $1_DiemConfig_get$verify_instantiated_3 ...
+  [0.133 s, 4 proof obligations]  verified
+
+Verifying $1_DiemConfig_get$verify_instantiated_4 ...
+  [0.186 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.346 s, 13 proof obligations]  verified
+  [0.667 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
+  [0.660 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
+  [0.716 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
+  [0.676 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
+  [0.691 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_4 ...
+  [0.751 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfiguration_enabled$verify ...
-  [0.005 s, 0 proof obligations]  verified
+  [0.011 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfigure$verify ...
-  [0.280 s, 7 proof obligations]  verified
+  [3.250 s, 9 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Verifying $1_DiemConfig_reconfigure_$verify ...
-  [2.664 s, 12 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.170 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 11 verified, 0 errors

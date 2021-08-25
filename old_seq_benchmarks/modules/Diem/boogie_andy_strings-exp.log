@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/Diem/Diem.andy.bpl
 -monomorphize
 /env:2
 /proverLog:Diem.andy_strings.smt2
@@ -9,56 +9,48 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/Diem/Diem.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [2.465 s, 17 proof obligations]  verified
+
 Verifying $1_Roles_grant_role$verify ...
-  [2.775 s, 9 proof obligations]  verified
+  [2.833 s, 9 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [1.691 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [1.487 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [1.537 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [1.552 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [1.555 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [1.576 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_initialize$verify ...
-  [0.637 s, 18 proof obligations]  verified
+  [0.685 s, 18 proof obligations]  verified
 
 Verifying $1_Diem_value$verify ...
-  [0.152 s, 11 proof obligations]  verified
+  [0.090 s, 11 proof obligations]  verified
 
 Verifying $1_Diem_currency_code$verify ...
-  [0.215 s, 15 proof obligations]  verified
+  [0.248 s, 15 proof obligations]  verified
 
-Verifying $1_Diem_add_preburn_to_queue$verify ...
-  [5.558 s, 23 proof obligations]  error
-assert_failed(10,10493,10571): data invariant does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6862,9): anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(2713,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6862,9): anon0$1
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6967,17): anon22_Then
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6488,9): inline$$1_Diem_value'#0'$0$anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6994,5): anon23_Else
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(541,9): inline$$Gt$0$anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(6994,5): anon23_Else$1
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7032,17): anon24_Then
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7059,14): anon25_Else
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7061,5): anon26_Else
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(1377,7): inline$$1_Vector_length'$1_Diem_PreburnWithMetadata'#0''$0$anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7081,5): anon27_Else
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(536,9): inline$$Lt$0$anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7081,5): anon27_Else$1
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7121,17): anon28_Then
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(1348,8): inline$$1_Vector_push_back'$1_Diem_PreburnWithMetadata'#0''$0$anon0
-    /home/ying/diem/seq_benchmarks/modules/Diem/Diem.andy.bpl(7158,5): anon29_Else
+Verifying $1_Diem_currency_code$verify_instantiated_0 ...
+  [0.246 s, 15 proof obligations]  verified
 
-Verifying $1_Diem_approx_xdx_for_coin$verify ...
-  [0.170 s, 11 proof obligations]  verified
-
-Verifying $1_Diem_approx_xdx_for_value$verify ...
-  [0.309 s, 16 proof obligations]  verified
-
-Verifying $1_Diem_assert_is_SCS_currency$verify ...
-  [0.235 s, 11 proof obligations]  verified
-
-Verifying $1_Diem_assert_is_currency$verify ...
-  [0.198 s, 14 proof obligations]  verified
+Verifying $1_Diem_currency_code$verify_instantiated_1 ...
+  [0.318 s, 15 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

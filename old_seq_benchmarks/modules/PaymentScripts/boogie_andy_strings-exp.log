@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl
 -monomorphize
 /env:2
 /proverLog:PaymentScripts.andy_strings.smt2
@@ -9,12 +9,12 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [1.052 s, 0 proof obligations]  verified
+  [1.328 s, 0 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Boogie program verifier finished with 1 verified, 0 errors

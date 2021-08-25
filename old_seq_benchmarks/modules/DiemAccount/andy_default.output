@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/modules/DiemAccount/DiemAccount.andy_default.smt2:472.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/DiemAccount/DiemAccount.andy_default.smt2:1647.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.andy_default.smt2:513.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.andy_default.smt2:1781.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

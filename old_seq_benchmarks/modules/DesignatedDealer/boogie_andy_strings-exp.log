@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.andy.bpl
 -monomorphize
 /env:2
 /proverLog:DesignatedDealer.andy_strings.smt2
@@ -9,24 +9,30 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DesignatedDealer/DesignatedDealer.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DesignatedDealer_add_currency$verify ...
-  [1.421 s, 13 proof obligations]  verified
+  [1.534 s, 13 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_add_currency$verify_instantiated_0 ...
+  [0.533 s, 13 proof obligations]  verified
+
+Verifying $1_DesignatedDealer_add_currency$verify_instantiated_1 ...
+  [0.508 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_exists_at$verify ...
-  [0.031 s, 2 proof obligations]  verified
+  [0.027 s, 2 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify ...
-  [0.856 s, 21 proof obligations]  verified
+  [1.447 s, 21 proof obligations]  verified
 
-Verifying $1_DesignatedDealer_tiered_mint$verify ...
-  [1.494 s, 18 proof obligations]  verified
+Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_0 ...
+  [1.323 s, 21 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.162 s, 0 proof obligations]  verified
+Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_1 ...
+  [1.423 s, 21 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Boogie program verifier finished with 5 verified, 0 errors

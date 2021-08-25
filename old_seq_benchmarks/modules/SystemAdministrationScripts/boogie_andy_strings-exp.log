@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/SystemAdministrationScripts/SystemAdministrationScripts.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/SystemAdministrationScripts/SystemAdministrationScripts.andy.bpl
 -monomorphize
 /env:2
 /proverLog:SystemAdministrationScripts.andy_strings.smt2
@@ -9,22 +9,22 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/SystemAdministrationScripts/SystemAdministrationScripts.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/SystemAdministrationScripts/SystemAdministrationScripts.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [1.098 s, 0 proof obligations]  verified
+  [1.123 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_set_gas_constants$verify ...
-  [0.027 s, 0 proof obligations]  verified
+  [0.017 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_initialize_diem_consensus_config$verify ...
-  [0.010 s, 0 proof obligations]  verified
+  [0.009 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_consensus_config$verify ...
-  [0.011 s, 0 proof obligations]  verified
+  [0.015 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_version$verify ...
   [0.009 s, 0 proof obligations]  verified

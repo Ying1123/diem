@@ -1,3 +1,4 @@
-/home/ying/diem/seq_benchmarks/modules/Genesis/Genesis.andy_strings.smt2:376.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/Genesis/Genesis.andy_strings.smt2:407.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
 unsat
 unsat

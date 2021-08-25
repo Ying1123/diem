@@ -16,21 +16,27 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify ...
-  [2.077 s, 51 proof obligations]  verified
+  [2.084 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_0 ...
-  [1.624 s, 51 proof obligations]  verified
+  [1.954 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_1 ...
-  [2.081 s, 51 proof obligations]  verified
+  [2.249 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify ...
-  [3.878 s, 39 proof obligations]  verified
+  [2.081 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_0 ...
-  [3.625 s, 39 proof obligations]  verified
+  [1.923 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_1 ...
-  [3.738 s, 39 proof obligations]  verified
+  [2.181 s, 39 proof obligations]  verified
+
+Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify ...
+  [2.568 s, 36 proof obligations]  verified
+
+Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_0 ...
+  [2.893 s, 36 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

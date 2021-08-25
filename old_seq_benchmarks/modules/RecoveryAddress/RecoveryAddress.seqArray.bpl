@@ -157,7 +157,7 @@ function {:inline} $IsValid'bool'(v: bool): bool {
   true
 }
 
-function {:define} $IsValid'u8'(v: int): bool {
+function $IsValid'u8'(v: int): bool {
   v >= 0 && v <= $MAX_U8
 }
 

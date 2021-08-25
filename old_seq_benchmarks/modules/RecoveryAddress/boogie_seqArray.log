@@ -16,19 +16,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.262 s, 14 proof obligations]  verified
+  [0.314 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.065 s, 14 proof obligations]  verified
+  [0.091 s, 14 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [4.671 s, 34 proof obligations]  verified
+  [2.691 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [4.408 s, 34 proof obligations]  verified
+  [2.627 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [4.520 s, 34 proof obligations]  verified
+  [2.875 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [4.838 s, 34 proof obligations]  verified
+  [2.833 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
+  [2.945 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
+  [2.863 s, 34 proof obligations]  verified
+
+Verifying $1_RecoveryAddress_publish$verify ...
+  [0.390 s, 13 proof obligations]  verified
+
+Verifying $1_RecoveryAddress_rotate_authentication_key$verify ...
+  [0.771 s, 14 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

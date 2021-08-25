@@ -1,5 +1,7 @@
-/home/ying/diem/seq_benchmarks/modules/DualAttestation/DualAttestation.andy_default.smt2:391.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/DualAttestation/DualAttestation.andy_default.smt2:1416.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.andy_default.smt2:426.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.andy_default.smt2:1529.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
 unsat
 unsat
 unsat

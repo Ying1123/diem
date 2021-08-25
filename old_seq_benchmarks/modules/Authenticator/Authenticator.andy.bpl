@@ -987,13 +987,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -1001,9 +1001,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -1067,21 +1087,6 @@ function {:inline} $1_BCS_$to_bytes'u8'(v: int): Vec int {
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -1120,12 +1125,12 @@ function {:inline} $IsEqual'$1_Authenticator_MultiEd25519PublicKey'(s1: $1_Authe
 procedure {:timeLimit 40} $1_Authenticator_create_multi_ed25519$verify(_$t0: Vec (Vec (int)), _$t1: int) returns ($ret0: $1_Authenticator_MultiEd25519PublicKey)
 {
     // declare local variables
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: bool;
+    var $t2: bool;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
     var $t8: int;
     var $t9: int;
     var $t10: int;
@@ -1180,7 +1185,7 @@ procedure {:timeLimit 40} $1_Authenticator_create_multi_ed25519$verify(_$t0: Vec
     }
 
     // trace_local[len]($t9) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:42:13+3
-    assume {:print "$track_local(4,0,2):", $t9} $t9 == $t9;
+    assume {:print "$track_local(4,0,8):", $t9} $t9 == $t9;
 
     // $t11 := 0 at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:29+1
     assume {:print "$at(6,1880,1881)"} true;
@@ -1207,11 +1212,11 @@ procedure {:timeLimit 40} $1_Authenticator_create_multi_ed25519$verify(_$t0: Vec
 
     // $t14 := opaque end: Errors::invalid_argument($t13) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:32+41
 
-    // trace_local[tmp#$4]($t14) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:9+65
-    assume {:print "$track_local(4,0,4):", $t14} $t14 == $t14;
+    // trace_local[tmp#$3]($t14) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:9+65
+    assume {:print "$track_local(4,0,3):", $t14} $t14 == $t14;
 
-    // trace_local[tmp#$3]($t12) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:9+65
-    assume {:print "$track_local(4,0,3):", $t12} $t12 == $t12;
+    // trace_local[tmp#$2]($t12) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:9+65
+    assume {:print "$track_local(4,0,2):", $t12} $t12 == $t12;
 
     // if ($t12) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:9+65
     if ($t12) { goto L0; } else { goto L1; }
@@ -1263,12 +1268,12 @@ L0:
 
     // $t18 := opaque end: Errors::invalid_argument($t17) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:46:13+56
 
-    // trace_local[tmp#$6]($t18) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:44:9+125
+    // trace_local[tmp#$5]($t18) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:44:9+125
     assume {:print "$at(6,1935,2060)"} true;
-    assume {:print "$track_local(4,0,6):", $t18} $t18 == $t18;
+    assume {:print "$track_local(4,0,5):", $t18} $t18 == $t18;
 
-    // trace_local[tmp#$5]($t16) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:44:9+125
-    assume {:print "$track_local(4,0,5):", $t16} $t16 == $t16;
+    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:44:9+125
+    assume {:print "$track_local(4,0,4):", $t16} $t16 == $t16;
 
     // if ($t16) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Authenticator.move:44:9+125
     if ($t16) { goto L2; } else { goto L3; }
@@ -1315,12 +1320,12 @@ L2:
 
     // $t22 := opaque end: Errors::invalid_argument($t21) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:51:13+55
 
-    // trace_local[tmp#$8]($t22) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:49:9+128
+    // trace_local[tmp#$7]($t22) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:49:9+128
     assume {:print "$at(6,2138,2266)"} true;
-    assume {:print "$track_local(4,0,8):", $t22} $t22 == $t22;
+    assume {:print "$track_local(4,0,7):", $t22} $t22 == $t22;
 
-    // trace_local[tmp#$7]($t20) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:49:9+128
-    assume {:print "$track_local(4,0,7):", $t20} $t20 == $t20;
+    // trace_local[tmp#$6]($t20) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:49:9+128
+    assume {:print "$track_local(4,0,6):", $t20} $t20 == $t20;
 
     // if ($t20) goto L4 else goto L5 at /home/ying/diem/language/diem-framework/modules/Authenticator.move:49:9+128
     if ($t20) { goto L4; } else { goto L5; }

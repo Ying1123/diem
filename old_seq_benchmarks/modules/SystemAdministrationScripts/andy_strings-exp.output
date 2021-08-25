@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/modules/SystemAdministrationScripts/SystemAdministrationScripts.andy_strings.smt2:387.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/SystemAdministrationScripts/SystemAdministrationScripts.andy_strings.smt2:413.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

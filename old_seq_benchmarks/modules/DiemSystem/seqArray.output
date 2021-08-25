@@ -9,6 +9,29 @@ unsat
 unsat
 unsat
 unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
 unknown
 (:reason-unknown incomplete)
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
@@ -28,7 +51,27 @@ unknown
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
+unknown
+(:reason-unknown incomplete)
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
-cvc5 interrupted by SIGTERM.
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unsat
+unsat
+unsat
+unsat

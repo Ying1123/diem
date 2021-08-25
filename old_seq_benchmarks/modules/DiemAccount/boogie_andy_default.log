@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/DiemAccount/DiemAccount.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.andy.bpl
 -monomorphize
 /env:2
 /proverLog:DiemAccount.andy_default.smt2
@@ -8,33 +8,33 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/DiemAccount/DiemAccount.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [1.685 s, 9 proof obligations]  verified
+  [2.011 s, 9 proof obligations]  verified
+
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [1.605 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [1.190 s, 10 proof obligations]  verified
+  [3.135 s, 15 proof obligations]  verified
 
-Verifying $1_DualAttestation_publish_credential$verify ...
-  [1.323 s, 15 proof obligations]  verified
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [1.818 s, 20 proof obligations]  verified
 
-Verifying $1_DualAttestation_rotate_base_url$verify ...
-  [3.690 s, 13 proof obligations]  verified
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [1.598 s, 18 proof obligations]  verified
 
-Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
-  [3.859 s, 14 proof obligations]  verified
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [1.657 s, 20 proof obligations]  verified
 
-Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify ...
-  [1.213 s, 21 proof obligations]  verified
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [1.668 s, 20 proof obligations]  verified
 
-Verifying $1_DesignatedDealer_tiered_mint$verify ...
-  [1.958 s, 18 proof obligations]  verified
-
-Verifying $1_AccountFreezing_create$verify ...
-  [0.478 s, 7 proof obligations]  verified
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [1.655 s, 20 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

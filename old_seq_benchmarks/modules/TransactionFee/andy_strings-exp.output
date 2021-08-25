@@ -1,10 +1,9 @@
-/home/ying/diem/seq_benchmarks/modules/TransactionFee/TransactionFee.andy_strings.smt2:407.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/TransactionFee/TransactionFee.andy_strings.smt2:1449.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.andy_strings.smt2:444.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.andy_strings.smt2:1529.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
 unsat
 unsat
 unsat
-unsat
-unsat
+cvc5 interrupted by SIGTERM.

@@ -16,30 +16,116 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.203 s, 8 proof obligations]  verified
+  [0.215 s, 8 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.062 s, 17 proof obligations]  verified
+  [0.094 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.043 s, 7 proof obligations]  verified
+  [0.050 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.077 s, 20 proof obligations]  verified
+  [0.107 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.058 s, 18 proof obligations]  verified
+  [0.079 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.076 s, 20 proof obligations]  verified
+  [0.088 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.072 s, 20 proof obligations]  verified
+  [0.092 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.065 s, 20 proof obligations]  verified
+  [0.100 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.063 s, 20 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.106 s, 20 proof obligations]  verified
 
+Verifying $1_DiemSystem_add_validator$verify ...
+  [1.660 s, 21 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_diem_system_config$verify ...
+  [0.047 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_ith_validator_address$verify ...
+  [0.086 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_config$verify ...
+  [0.105 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_index_$verify ...
+  [0.129 s, 12 proof obligations]  verified
+
+Verifying $1_DiemSystem_initialize_validator_set$verify ...
+  [0.092 s, 14 proof obligations]  verified
+
+Verifying $1_DiemSystem_is_validator$verify ...
+  [0.077 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_is_validator_$verify ...
+  [0.043 s, 3 proof obligations]  verified
+
+Verifying $1_DiemSystem_remove_validator$verify ...
+  [2.161 s, 17 proof obligations]  errors
+assert_failed(16,2603,2750): data invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(9984,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(2718,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(9984,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10129,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10164,35): anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10194,35): anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10296,17): anon26_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10324,36): anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(1273,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(1275,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10362,5): anon28_Else
+assert_failed(16,12177,12267): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(9984,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(2718,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(9984,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10129,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10164,35): anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10194,35): anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10296,17): anon26_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10324,36): anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(1273,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(1275,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10362,5): anon28_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10420,36): anon29_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10441,9): anon30_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10450,9): anon31_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10457,5): anon21
+assert_failed(16,12407,12450): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(9984,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(2718,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(9984,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10129,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10164,35): anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10194,35): anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10296,17): anon26_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10324,36): anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(1273,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(1275,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10362,5): anon28_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10420,36): anon29_Else
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10441,9): anon30_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10450,9): anon31_Then
+    /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.seqArray.bpl(10457,5): anon21
+
+Verifying $1_DiemSystem_set_diem_system_config$verify ...
+  [0.381 s, 9 proof obligations]  verified
+
+Verifying $1_DiemSystem_update_ith_validator_info_$verify ...
+  [1.109 s, 8 proof obligations]  verified
+
+Verifying $1_DiemSystem_validator_set_size$verify ...
+  [0.046 s, 5 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.175 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 21 verified, 3 errors

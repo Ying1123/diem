@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.andy.bpl
 -monomorphize
 /env:2
 /proverLog:DiemSystem.andy_strings.smt2
@@ -9,15 +9,36 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/DiemSystem/DiemSystem.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [1.433 s, 8 proof obligations]  verified
+  [1.668 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [1.494 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.560 s, 7 proof obligations]  verified
+  [1.034 s, 7 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [1.667 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [1.393 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [1.502 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [1.504 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [1.513 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [1.539 s, 20 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

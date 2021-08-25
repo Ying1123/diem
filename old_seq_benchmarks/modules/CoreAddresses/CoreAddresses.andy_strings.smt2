@@ -5,9 +5,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7257 0)) ((($Mutation_7257 (|l#$Mutation_7257| T@$Location) (|p#$Mutation_7257| (Seq Int)) (|v#$Mutation_7257| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7394 0)) ((($Mutation_7394 (|l#$Mutation_7394| T@$Location) (|p#$Mutation_7394| (Seq Int)) (|v#$Mutation_7394| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -30,6 +31,7 @@
 (declare-fun $1_Hash_sha3 ((Seq Int)) (Seq Int))
 (declare-fun $1_Signature_$ed25519_validate_pubkey ((Seq Int)) Bool)
 (declare-fun $1_Signature_$ed25519_verify ((Seq Int) (Seq Int) (Seq Int)) Bool)
+(declare-fun $1_Signer_is_signer (Int) Bool)
 (declare-fun ReverseVec_3283 ((Seq Int)) (Seq Int))
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
 (assert (= $MAX_U8 255))
@@ -109,14 +111,22 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |CoreAddressesandybpl.839:15|
+ :qid |CoreAddressesandybpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |CoreAddressesandybpl.842:15|
+ :qid |CoreAddressesandybpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
+)))
+(assert (forall ((s T@$signer) ) (!  (=> (|$IsValid'address'| (|$addr#$signer| s)) ($1_Signer_is_signer (|$addr#$signer| s)))
+ :qid |CoreAddressesandybpl.901:15|
+ :skolemid |24|
+)))
+(assert (forall ((addr Int) ) (! true
+ :qid |CoreAddressesandybpl.905:15|
+ :skolemid |25|
 )))
 (assert (forall ((v@@6 (Seq Int)) ) (! (let ((r@@0 (ReverseVec_3283 v@@6)))
  (and (= (seq.len r@@0) (seq.len v@@6)) (forall ((i@@3 Int) ) (!  (=> (and (>= i@@3 0) (< i@@3 (seq.len r@@0))) (= (seq.nth r@@0 i@@3) (seq.nth v@@6 (- (- (seq.len v@@6) i@@3) 1))))
@@ -130,21 +140,21 @@
 )))
 (assert (forall ((|l#0| Bool) (i@@4 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4) |l#0|)
  :qid |CoreAddressesandybpl.245:54|
- :skolemid |24|
+ :skolemid |26|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4))
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (declare-fun $t5@0 () Bool)
 (declare-fun $t7 () Int)
-(declare-fun _$t0 () Int)
+(declare-fun _$t0 () T@$signer)
 (declare-fun $t3 () Int)
 (push 1)
 (set-info :boogie-vc-id $1_CoreAddresses_assert_currency_info$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10594) (let ((anon4_Else_correct  (=> (and (not $t5@0) (= $t7 $t7)) (and (=> (= (ControlFlow 0 9947) (- 0 10732)) (not (= _$t0 173345816))) (=> (not (= _$t0 173345816)) (=> (= (ControlFlow 0 9947) (- 0 10741)) (and (not (= _$t0 173345816)) (= 2 $t7))))))))
-(let ((anon4_Then_correct  (=> (and $t5@0 (= (ControlFlow 0 9967) (- 0 10705))) (not (not (= _$t0 173345816))))))
-(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (= _$t0 _$t0) (|$IsValid'address'| $t3)) (=> (and (and (and (= $t3 _$t0) (|$IsValid'address'| 173345816)) (and (= $t5@0 (= $t3 173345816)) (|$IsValid'u64'| 3))) (and (and (|$IsValid'u64'| $t7) (= $t7 2)) (and (= $t7 $t7) (= $t5@0 $t5@0)))) (and (=> (= (ControlFlow 0 9899) 9967) anon4_Then_correct) (=> (= (ControlFlow 0 9899) 9947) anon4_Else_correct)))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 10594) 9899) anon0$1_correct)))
+ (=> (= (ControlFlow 0 0) 10934) (let ((anon4_Else_correct  (=> (and (not $t5@0) (= $t7 $t7)) (and (=> (= (ControlFlow 0 10239) (- 0 11072)) (not (= (|$addr#$signer| _$t0) 173345816))) (=> (not (= (|$addr#$signer| _$t0) 173345816)) (=> (= (ControlFlow 0 10239) (- 0 11081)) (and (not (= (|$addr#$signer| _$t0) 173345816)) (= 2 $t7))))))))
+(let ((anon4_Then_correct  (=> (and $t5@0 (= (ControlFlow 0 10259) (- 0 11045))) (not (not (= (|$addr#$signer| _$t0) 173345816))))))
+(let ((anon0$1_correct  (=> (|$IsValid'address'| (|$addr#$signer| _$t0)) (=> (and (= _$t0 _$t0) (|$IsValid'address'| $t3)) (=> (and (and (and (= $t3 (|$addr#$signer| _$t0)) (|$IsValid'address'| 173345816)) (and (= $t5@0 (= $t3 173345816)) (|$IsValid'u64'| 3))) (and (and (|$IsValid'u64'| $t7) (= $t7 2)) (and (= $t7 $t7) (= $t5@0 $t5@0)))) (and (=> (= (ControlFlow 0 10191) 10259) anon4_Then_correct) (=> (= (ControlFlow 0 10191) 10239) anon4_Else_correct)))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 10934) 10191) anon0$1_correct)))
 anon0_correct)))))
 ))
 (check-sat)
@@ -152,15 +162,15 @@ anon0_correct)))))
 ; Valid
 (declare-fun $t5@0@@0 () Bool)
 (declare-fun $t7@@0 () Int)
-(declare-fun _$t0@@0 () Int)
+(declare-fun _$t0@@0 () T@$signer)
 (declare-fun $t3@@0 () Int)
 (push 1)
 (set-info :boogie-vc-id $1_CoreAddresses_assert_diem_root$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10784) (let ((anon4_Else_correct@@0  (=> (and (not $t5@0@@0) (= $t7@@0 $t7@@0)) (and (=> (= (ControlFlow 0 10137) (- 0 10922)) (not (= _$t0@@0 173345816))) (=> (not (= _$t0@@0 173345816)) (=> (= (ControlFlow 0 10137) (- 0 10931)) (and (not (= _$t0@@0 173345816)) (= 2 $t7@@0))))))))
-(let ((anon4_Then_correct@@0  (=> (and $t5@0@@0 (= (ControlFlow 0 10157) (- 0 10895))) (not (not (= _$t0@@0 173345816))))))
-(let ((anon0$1_correct@@0  (=> (|$IsValid'address'| _$t0@@0) (=> (and (= _$t0@@0 _$t0@@0) (|$IsValid'address'| $t3@@0)) (=> (and (and (and (= $t3@@0 _$t0@@0) (|$IsValid'address'| 173345816)) (and (= $t5@0@@0 (= $t3@@0 173345816)) (|$IsValid'u64'| 0))) (and (and (|$IsValid'u64'| $t7@@0) (= $t7@@0 2)) (and (= $t7@@0 $t7@@0) (= $t5@0@@0 $t5@0@@0)))) (and (=> (= (ControlFlow 0 10089) 10157) anon4_Then_correct@@0) (=> (= (ControlFlow 0 10089) 10137) anon4_Else_correct@@0)))))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 10784) 10089) anon0$1_correct@@0)))
+ (=> (= (ControlFlow 0 0) 11125) (let ((anon4_Else_correct@@0  (=> (and (not $t5@0@@0) (= $t7@@0 $t7@@0)) (and (=> (= (ControlFlow 0 10441) (- 0 11263)) (not (= (|$addr#$signer| _$t0@@0) 173345816))) (=> (not (= (|$addr#$signer| _$t0@@0) 173345816)) (=> (= (ControlFlow 0 10441) (- 0 11272)) (and (not (= (|$addr#$signer| _$t0@@0) 173345816)) (= 2 $t7@@0))))))))
+(let ((anon4_Then_correct@@0  (=> (and $t5@0@@0 (= (ControlFlow 0 10461) (- 0 11236))) (not (not (= (|$addr#$signer| _$t0@@0) 173345816))))))
+(let ((anon0$1_correct@@0  (=> (|$IsValid'address'| (|$addr#$signer| _$t0@@0)) (=> (and (= _$t0@@0 _$t0@@0) (|$IsValid'address'| $t3@@0)) (=> (and (and (and (= $t3@@0 (|$addr#$signer| _$t0@@0)) (|$IsValid'address'| 173345816)) (and (= $t5@0@@0 (= $t3@@0 173345816)) (|$IsValid'u64'| 0))) (and (and (|$IsValid'u64'| $t7@@0) (= $t7@@0 2)) (and (= $t7@@0 $t7@@0) (= $t5@0@@0 $t5@0@@0)))) (and (=> (= (ControlFlow 0 10393) 10461) anon4_Then_correct@@0) (=> (= (ControlFlow 0 10393) 10441) anon4_Else_correct@@0)))))))
+(let ((anon0_correct@@0  (=> (= (ControlFlow 0 11125) 10393) anon0$1_correct@@0)))
 anon0_correct@@0)))))
 ))
 (check-sat)
@@ -168,15 +178,15 @@ anon0_correct@@0)))))
 ; Valid
 (declare-fun $t5@0@@1 () Bool)
 (declare-fun $t7@@1 () Int)
-(declare-fun _$t0@@1 () Int)
+(declare-fun _$t0@@1 () T@$signer)
 (declare-fun $t3@@1 () Int)
 (push 1)
 (set-info :boogie-vc-id $1_CoreAddresses_assert_treasury_compliance$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10962) (let ((anon4_Else_correct@@1  (=> (and (not $t5@0@@1) (= $t7@@1 $t7@@1)) (and (=> (= (ControlFlow 0 10331) (- 0 11106)) (not (= _$t0@@1 186537453))) (=> (not (= _$t0@@1 186537453)) (=> (= (ControlFlow 0 10331) (- 0 11115)) (and (not (= _$t0@@1 186537453)) (= 2 $t7@@1))))))))
-(let ((anon4_Then_correct@@1  (=> (and $t5@0@@1 (= (ControlFlow 0 10351) (- 0 11079))) (not (not (= _$t0@@1 186537453))))))
-(let ((anon0$1_correct@@1  (=> (|$IsValid'address'| _$t0@@1) (=> (and (= _$t0@@1 _$t0@@1) (|$IsValid'address'| $t3@@1)) (=> (and (and (and (= $t3@@1 _$t0@@1) (|$IsValid'address'| 186537453)) (and (= $t5@0@@1 (= $t3@@1 186537453)) (|$IsValid'u64'| 1))) (and (and (|$IsValid'u64'| $t7@@1) (= $t7@@1 2)) (and (= $t7@@1 $t7@@1) (= $t5@0@@1 $t5@0@@1)))) (and (=> (= (ControlFlow 0 10283) 10351) anon4_Then_correct@@1) (=> (= (ControlFlow 0 10283) 10331) anon4_Else_correct@@1)))))))
-(let ((anon0_correct@@1  (=> (= (ControlFlow 0 10962) 10283) anon0$1_correct@@1)))
+ (=> (= (ControlFlow 0 0) 11303) (let ((anon4_Else_correct@@1  (=> (and (not $t5@0@@1) (= $t7@@1 $t7@@1)) (and (=> (= (ControlFlow 0 10647) (- 0 11447)) (not (= (|$addr#$signer| _$t0@@1) 186537453))) (=> (not (= (|$addr#$signer| _$t0@@1) 186537453)) (=> (= (ControlFlow 0 10647) (- 0 11456)) (and (not (= (|$addr#$signer| _$t0@@1) 186537453)) (= 2 $t7@@1))))))))
+(let ((anon4_Then_correct@@1  (=> (and $t5@0@@1 (= (ControlFlow 0 10667) (- 0 11420))) (not (not (= (|$addr#$signer| _$t0@@1) 186537453))))))
+(let ((anon0$1_correct@@1  (=> (|$IsValid'address'| (|$addr#$signer| _$t0@@1)) (=> (and (= _$t0@@1 _$t0@@1) (|$IsValid'address'| $t3@@1)) (=> (and (and (and (= $t3@@1 (|$addr#$signer| _$t0@@1)) (|$IsValid'address'| 186537453)) (and (= $t5@0@@1 (= $t3@@1 186537453)) (|$IsValid'u64'| 1))) (and (and (|$IsValid'u64'| $t7@@1) (= $t7@@1 2)) (and (= $t7@@1 $t7@@1) (= $t5@0@@1 $t5@0@@1)))) (and (=> (= (ControlFlow 0 10599) 10667) anon4_Then_correct@@1) (=> (= (ControlFlow 0 10599) 10647) anon4_Else_correct@@1)))))))
+(let ((anon0_correct@@1  (=> (= (ControlFlow 0 11303) 10599) anon0$1_correct@@1)))
 anon0_correct@@1)))))
 ))
 (check-sat)
@@ -184,15 +194,15 @@ anon0_correct@@1)))))
 ; Valid
 (declare-fun $t5@0@@2 () Bool)
 (declare-fun $t7@@2 () Int)
-(declare-fun _$t0@@2 () Int)
+(declare-fun _$t0@@2 () T@$signer)
 (declare-fun $t3@@2 () Int)
 (push 1)
 (set-info :boogie-vc-id $1_CoreAddresses_assert_vm$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 11146) (let ((anon4_Else_correct@@2  (=> (and (not $t5@0@@2) (= $t7@@2 $t7@@2)) (and (=> (= (ControlFlow 0 10521) (- 0 11284)) (not (= _$t0@@2 0))) (=> (not (= _$t0@@2 0)) (=> (= (ControlFlow 0 10521) (- 0 11293)) (and (not (= _$t0@@2 0)) (= 2 $t7@@2))))))))
-(let ((anon4_Then_correct@@2  (=> (and $t5@0@@2 (= (ControlFlow 0 10541) (- 0 11257))) (not (not (= _$t0@@2 0))))))
-(let ((anon0$1_correct@@2  (=> (|$IsValid'address'| _$t0@@2) (=> (and (= _$t0@@2 _$t0@@2) (|$IsValid'address'| $t3@@2)) (=> (and (and (and (= $t3@@2 _$t0@@2) (|$IsValid'address'| 0)) (and (= $t5@0@@2 (= $t3@@2 0)) (|$IsValid'u64'| 2))) (and (and (|$IsValid'u64'| $t7@@2) (= $t7@@2 2)) (and (= $t7@@2 $t7@@2) (= $t5@0@@2 $t5@0@@2)))) (and (=> (= (ControlFlow 0 10473) 10541) anon4_Then_correct@@2) (=> (= (ControlFlow 0 10473) 10521) anon4_Else_correct@@2)))))))
-(let ((anon0_correct@@2  (=> (= (ControlFlow 0 11146) 10473) anon0$1_correct@@2)))
+ (=> (= (ControlFlow 0 0) 11487) (let ((anon4_Else_correct@@2  (=> (and (not $t5@0@@2) (= $t7@@2 $t7@@2)) (and (=> (= (ControlFlow 0 10849) (- 0 11625)) (not (= (|$addr#$signer| _$t0@@2) 0))) (=> (not (= (|$addr#$signer| _$t0@@2) 0)) (=> (= (ControlFlow 0 10849) (- 0 11634)) (and (not (= (|$addr#$signer| _$t0@@2) 0)) (= 2 $t7@@2))))))))
+(let ((anon4_Then_correct@@2  (=> (and $t5@0@@2 (= (ControlFlow 0 10869) (- 0 11598))) (not (not (= (|$addr#$signer| _$t0@@2) 0))))))
+(let ((anon0$1_correct@@2  (=> (|$IsValid'address'| (|$addr#$signer| _$t0@@2)) (=> (and (= _$t0@@2 _$t0@@2) (|$IsValid'address'| $t3@@2)) (=> (and (and (and (= $t3@@2 (|$addr#$signer| _$t0@@2)) (|$IsValid'address'| 0)) (and (= $t5@0@@2 (= $t3@@2 0)) (|$IsValid'u64'| 2))) (and (and (|$IsValid'u64'| $t7@@2) (= $t7@@2 2)) (and (= $t7@@2 $t7@@2) (= $t5@0@@2 $t5@0@@2)))) (and (=> (= (ControlFlow 0 10801) 10869) anon4_Then_correct@@2) (=> (= (ControlFlow 0 10801) 10849) anon4_Else_correct@@2)))))))
+(let ((anon0_correct@@2  (=> (= (ControlFlow 0 11487) 10801) anon0$1_correct@@2)))
 anon0_correct@@2)))))
 ))
 (check-sat)

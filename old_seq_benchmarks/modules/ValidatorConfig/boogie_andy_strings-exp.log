@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
 -monomorphize
 /env:2
 /proverLog:ValidatorConfig.andy_strings.smt2
@@ -9,48 +9,60 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [2.331 s, 17 proof obligations]  verified
+
 Verifying $1_Roles_grant_role$verify ...
-  [1.429 s, 9 proof obligations]  verified
+  [1.065 s, 9 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [1.582 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [1.437 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [1.481 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [1.490 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [1.442 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [1.523 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.160 s, 5 proof obligations]  verified
+  [0.217 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [1.213 s, 15 proof obligations]  verified
+  [1.766 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.066 s, 2 proof obligations]  verified
+  [0.120 s, 2 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.229 s, 6 proof obligations]  verified
+  [0.226 s, 6 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
-  [0.093 s, 2 proof obligations]  verified
+  [0.024 s, 2 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_operator$verify ...
-  [0.241 s, 6 proof obligations]  verified
+  [0.250 s, 6 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.040 s, 2 proof obligations]  verified
+  [0.024 s, 2 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
-  [0.155 s, 4 proof obligations]  verified
+  [0.150 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [1.504 s, 13 proof obligations]  verified
+  [2.177 s, 13 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Verifying $1_ValidatorConfig_set_config$verify ...
-  [2.645 s, 16 proof obligations]  verified
-
-Verifying $1_ValidatorConfig_set_operator$verify ...
-  [2.766 s, 18 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.173 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 13 verified, 0 errors

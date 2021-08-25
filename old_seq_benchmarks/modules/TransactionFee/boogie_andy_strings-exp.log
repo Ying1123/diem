@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/TransactionFee/TransactionFee.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.andy.bpl
 -monomorphize
 /env:2
 /proverLog:TransactionFee.andy_strings.smt2
@@ -9,33 +9,27 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/TransactionFee/TransactionFee.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [1.481 s, 8 proof obligations]  verified
+  [1.731 s, 8 proof obligations]  verified
 
 Verifying $1_TransactionFee_initialize$verify ...
-  [0.727 s, 10 proof obligations]  verified
+  [0.977 s, 10 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
+  [0.379 s, 1 proof obligation]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
+  [0.322 s, 1 proof obligation]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
   [0.011 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify ...
-  [8.968 s, 17 proof obligations]  verified
+  [11.447 s, 18 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Verifying $1_TransactionFee_is_coin_initialized$verify ...
-  [0.090 s, 0 proof obligations]  verified
-
-Verifying $1_TransactionFee_is_initialized$verify ...
-  [0.004 s, 0 proof obligations]  verified
-
-Verifying $1_TransactionFee_pay_fee$verify ...
-  [0.541 s, 6 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.188 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 8 verified, 0 errors

@@ -10,4 +10,7 @@ unsat
 unsat
 unsat
 unsat
-(error "The model was computed to have strings of length 18446744073709551615. We only allow strings up to length 4294967295")
+unsat
+unsat
+unsat
+unsat

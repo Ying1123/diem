@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/AccountLimits/AccountLimits.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.andy.bpl
 -monomorphize
 /env:2
 /proverLog:AccountLimits.andy_default.smt2
@@ -8,57 +8,42 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/AccountLimits/AccountLimits.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [2.344 s, 17 proof obligations]  verified
+
 Verifying $1_Roles_grant_role$verify ...
-  [1.257 s, 7 proof obligations]  verified
+  [1.220 s, 7 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [1.596 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [1.417 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [1.483 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [1.484 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [1.488 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [1.449 s, 20 proof obligations]  verified
 
 Verifying $1_AccountLimits_current_time$verify ...
-  [0.010 s, 0 proof obligations]  verified
+  [0.073 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify ...
-  [1.990 s, 9 proof obligations]  verified
+  [2.922 s, 9 proof obligations]  verified
 
-Verifying $1_AccountLimits_can_withdraw_and_update_window$verify ...
-  [2.172 s, 8 proof obligations]  verified
+Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_0 ...
+  [2.972 s, 9 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
 
-Verifying $1_AccountLimits_grant_mutation_capability$verify ...
-  [0.149 s, 6 proof obligations]  verified
-
-Verifying $1_AccountLimits_has_limits_published$verify ...
-  [0.004 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_has_window_published$verify ...
-  [0.021 s, 1 proof obligation]  verified
-
-Verifying $1_AccountLimits_is_unrestricted$verify ...
-  [0.125 s, 2 proof obligations]  verified
-
-Verifying $1_AccountLimits_limits_definition_address$verify ...
-  [0.004 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_publish_window$verify ...
-  [0.410 s, 9 proof obligations]  verified
-
-Verifying $1_AccountLimits_reset_window$verify ...
-  [0.778 s, 5 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_deposit_limits$verify ...
-  [1.638 s, 11 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_limits_definition$verify ...
-  [1.169 s, 8 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_window_info$verify ...
-  [0.011 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_withdrawal_limits$verify ...
-  [1.696 s, 10 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.176 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 16 verified, 0 errors

@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl
 -monomorphize
 /env:2
 /proverLog:ValidatorAdministrationScripts.andy_default.smt2
@@ -8,7 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
@@ -16,8 +16,8 @@ Prover error: Term of kind STRING_SUBSTR not supported in default mode, try --st
 
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.923 s, 23 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl(13198,27): Verification inconclusive ($1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify)
+  [1.951 s, 23 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl(13352,27): Verification inconclusive ($1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify)
 Prover error: Prover died
 
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)

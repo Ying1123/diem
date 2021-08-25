@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.andy_strings.smt2:413.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.andy_strings.smt2:1485.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.andy_strings.smt2:456.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.andy_strings.smt2:1661.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

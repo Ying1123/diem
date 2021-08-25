@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl
 -monomorphize
 /env:2
 /proverLog:AccountCreationScripts.andy_strings.smt2
@@ -9,7 +9,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5

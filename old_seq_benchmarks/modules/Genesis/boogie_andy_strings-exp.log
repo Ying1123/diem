@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/Genesis/Genesis.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/Genesis/Genesis.andy.bpl
 -monomorphize
 /env:2
 /proverLog:Genesis.andy_strings.smt2
@@ -9,15 +9,18 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/Genesis/Genesis.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/Genesis/Genesis.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [1.077 s, 0 proof obligations]  verified
+  [1.192 s, 0 proof obligations]  verified
 
 Verifying $1_Genesis_create_initialize_owners_operators$verify ...
-  [0.102 s, 0 proof obligations]  verified
+  [0.098 s, 0 proof obligations]  verified
 
-Boogie program verifier finished with 2 verified, 0 errors
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.182 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 3 verified, 0 errors

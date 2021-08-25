@@ -16,21 +16,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_SharedEd25519PublicKey_publish$verify ...
-  [0.300 s, 11 proof obligations]  verified
+  [0.326 s, 11 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_exists_at$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.011 s, 0 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_key$verify ...
-  [0.013 s, 0 proof obligations]  verified
+  [0.007 s, 0 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_rotate_key$verify ...
-  [0.070 s, 8 proof obligations]  verified
+  [0.081 s, 8 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_rotate_key_$verify ...
-  [0.042 s, 6 proof obligations]  verified
+  [0.038 s, 6 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.210 s, 0 proof obligations]  verified
+  [0.233 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 6 verified, 0 errors

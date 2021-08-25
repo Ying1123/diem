@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy.bpl
+/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy.bpl
 -monomorphize
 /env:2
 /proverLog:CoreAddresses.andy_strings.smt2
@@ -9,21 +9,21 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
 
 Verifying $1_CoreAddresses_assert_currency_info$verify ...
-  [0.273 s, 3 proof obligations]  verified
+  [0.261 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_diem_root$verify ...
-  [0.040 s, 3 proof obligations]  verified
+  [0.042 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_treasury_compliance$verify ...
-  [0.035 s, 3 proof obligations]  verified
+  [0.037 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_vm$verify ...
-  [0.035 s, 3 proof obligations]  verified
+  [0.037 s, 3 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

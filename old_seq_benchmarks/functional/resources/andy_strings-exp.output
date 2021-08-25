@@ -1,7 +1,7 @@
-/home/ying/diem/seq_benchmarks/resources/resources.andy_strings.smt2:53.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/resources/resources.andy_strings.smt2:55.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
-/home/ying/diem/seq_benchmarks/resources/resources.andy_strings.smt2:237.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/resources/resources.andy_strings.smt2:247.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unknown

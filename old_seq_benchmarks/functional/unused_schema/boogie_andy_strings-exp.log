@@ -1,20 +1,20 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/unused_schema/unused_schema.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/unused_schema/unused_schema.andy.bpl
 -monomorphize
 /env:2
 /proverLog:unused_schema.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/unused_schema/unused_schema.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/unused_schema/unused_schema.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestUnusedSchema_foo$verify ...
-  [0.346 s, 2 proof obligations]  verified
+  [0.140 s, 2 proof obligations]  verified
 
 Boogie program verifier finished with 1 verified, 0 errors

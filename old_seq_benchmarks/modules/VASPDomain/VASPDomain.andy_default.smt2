@@ -1760,32 +1760,3 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))))))))))))))))))
 (check-sat)
 (pop 1)
 ; Undetermined
-(declare-fun _$t0@@0 () (Seq Int))
-(declare-fun $t4@0 () Int)
-(declare-fun inline$$Le$0$dst@1@@0 () Bool)
-(declare-fun $t8 () Int)
-(declare-fun $t9@0 () T@$1_VASPDomain_VASPDomain)
-(declare-fun |inline$$1_Vector_length'u8'$0$l@1@@0| () Int)
-(push 1)
-(set-info :boogie-vc-id $1_VASPDomain_create_vasp_domain$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 222548) (let ((L3_correct  (and (=> (= (ControlFlow 0 162108) (- 0 222790)) (> (seq.len _$t0@@0) 63)) (=> (> (seq.len _$t0@@0) 63) (=> (= (ControlFlow 0 162108) (- 0 222797)) (and (> (seq.len _$t0@@0) 63) (= 7 $t4@0)))))))
-(let ((anon8_Else_correct  (=> (and (and (not inline$$Le$0$dst@1@@0) (= $t8 $t8)) (and (= $t4@0 $t8) (= (ControlFlow 0 162076) 162108))) L3_correct)))
-(let ((anon8_Then_correct  (=> (and inline$$Le$0$dst@1@@0 (= $t9@0 ($1_VASPDomain_VASPDomain _$t0@@0))) (and (=> (= (ControlFlow 0 162162) (- 0 222719)) (<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $t9@0)) 63)) (=> (<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $t9@0)) 63) (=> (= $t9@0 $t9@0) (and (=> (= (ControlFlow 0 162162) (- 0 222742)) (not (> (seq.len _$t0@@0) 63))) (=> (not (> (seq.len _$t0@@0) 63)) (=> (= (ControlFlow 0 162162) (- 0 222754)) (= $t9@0 ($1_VASPDomain_VASPDomain _$t0@@0)))))))))))
-(let ((anon7_Else$1_correct  (=> (|$IsValid'u64'| 5) (=> (and (and (|$IsValid'u64'| $t8) (= $t8 7)) (and (= $t8 $t8) (= inline$$Le$0$dst@1@@0 inline$$Le$0$dst@1@@0))) (and (=> (= (ControlFlow 0 162060) 162162) anon8_Then_correct) (=> (= (ControlFlow 0 162060) 162076) anon8_Else_correct))))))
-(let ((inline$$Le$0$anon0_correct@@0  (=> (and (= inline$$Le$0$dst@1@@0 (<= |inline$$1_Vector_length'u8'$0$l@1@@0| 63)) (= (ControlFlow 0 162024) 162060)) anon7_Else$1_correct)))
-(let ((anon7_Else_correct  (=> (not false) (=> (and (|$IsValid'u64'| 63) (= (ControlFlow 0 162030) 162024)) inline$$Le$0$anon0_correct@@0))))
-(let ((anon7_Then_correct true))
-(let ((|inline$$1_Vector_length'u8'$0$anon0_correct@@0|  (=> (= |inline$$1_Vector_length'u8'$0$l@1@@0| (seq.len _$t0@@0)) (and (=> (= (ControlFlow 0 161964) 162176) anon7_Then_correct) (=> (= (ControlFlow 0 161964) 162030) anon7_Else_correct)))))
-(let ((anon0$1_correct@@0  (=> (|$IsValid'vec'u8''| _$t0@@0) (=> (and (= _$t0@@0 _$t0@@0) (= (ControlFlow 0 161970) 161964)) |inline$$1_Vector_length'u8'$0$anon0_correct@@0|))))
-(let ((inline$$InitEventStore$0$anon0_correct@@0  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@5 T@$1_Event_EventHandle) ) (! (let ((stream@@5 (|Select__T@[$1_Event_EventHandle]Multiset_69287_| (|streams#$EventStore| $es) handle@@5)))
- (and (= (|l#Multiset_69287| stream@@5) 0) (forall ((v@@42 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_69287| stream@@5) v@@42) 0)
- :qid |VASPDomainandybpl.129:13|
- :skolemid |2|
-))))
- :qid |VASPDomainandybpl.2723:13|
- :skolemid |74|
-))) (= (ControlFlow 0 161906) 161970)) anon0$1_correct@@0)))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 222548) 161906) inline$$InitEventStore$0$anon0_correct@@0)))
-anon0_correct@@0))))))))))))
-))

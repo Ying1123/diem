@@ -1,17 +1,7 @@
-error: 
-
-   ┌── /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move:3:9 ───
+error: unbound address
+   ┌─ /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move:66:20
    │
- 3 │     use 0x1::CoreAddresses;
-   │         ^^^^^^^^^^^^^^^^^^ Invalid 'use'. Unbound module: '0x1::CoreAddresses'
-   │
-
-error: 
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/pure_function_call_incorrect.move:67:19 ───
-    │
- 67 │             get_x(CoreAddresses::DIEM_ROOT_ADDRESS())
-    │                   ^^^^^^^^^^^^^ Unbound module alias 'CoreAddresses'
-    │
+66 │             get_x(@DiemRoot)
+   │                    ^^^^^^^^ Unbound address 'DiemRoot'. Try declaring it with 'address DiemRoot;'
 
 exiting with model building errors

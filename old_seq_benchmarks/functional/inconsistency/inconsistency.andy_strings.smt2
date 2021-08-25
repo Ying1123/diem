@@ -5,9 +5,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6972 0)) ((($Mutation_6972 (|l#$Mutation_6972| T@$Location) (|p#$Mutation_6972| (Seq Int)) (|v#$Mutation_6972| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7007 0)) ((($Mutation_7007 (|l#$Mutation_7007| T@$Location) (|p#$Mutation_7007| (Seq Int)) (|v#$Mutation_7007| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -109,12 +110,12 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |inconsistencyandybpl.839:15|
+ :qid |inconsistencyandybpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |inconsistencyandybpl.842:15|
+ :qid |inconsistencyandybpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -135,17 +136,9 @@
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (push 1)
-(set-info :boogie-vc-id $42_Inconsistency_always_abort$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 10076) true)
-))
-(check-sat)
-(pop 1)
-; Valid
-(push 1)
 (set-info :boogie-vc-id $42_Inconsistency_assume_false$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10144) true)
+ (=> (= (ControlFlow 0 0) 10052) true)
 ))
 (check-sat)
 (pop 1)
@@ -153,7 +146,7 @@
 (push 1)
 (set-info :boogie-vc-id $42_Inconsistency_call_inconsistent_opaque$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10197) true)
+ (=> (= (ControlFlow 0 0) 10118) true)
 ))
 (check-sat)
 (pop 1)
@@ -168,13 +161,13 @@
 (push 1)
 (set-info :boogie-vc-id $42_Inconsistency_dec$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10264) (let ((anon4_Else_correct  (=> (and (not $abort_flag@0) (= inline$$Sub$0$dst@2 inline$$Sub$0$dst@2)) (and (=> (= (ControlFlow 0 10002) (- 0 10447)) (not (= _$t0 0))) (=> (not (= _$t0 0)) (=> (= (ControlFlow 0 10002) (- 0 10457)) (= inline$$Sub$0$dst@2 (- _$t0 1))))))))
-(let ((anon4_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 10028) (- 0 10423))) (= _$t0 0)))))
-(let ((inline$$Sub$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$Sub$0$dst@2 inline$$Sub$0$dst@0)) (and (=> (= (ControlFlow 0 9956) 10028) anon4_Then_correct) (=> (= (ControlFlow 0 9956) 10002) anon4_Else_correct))))))
-(let ((inline$$Sub$0$anon3_Then_correct  (=> (and (< _$t0 1) (= (ControlFlow 0 9954) 9956)) inline$$Sub$0$anon3_Then$1_correct)))
-(let ((inline$$Sub$0$anon3_Else_correct  (=> (<= 1 _$t0) (=> (and (and (= inline$$Sub$0$dst@1 (- _$t0 1)) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$Sub$0$dst@2 inline$$Sub$0$dst@1))) (and (=> (= (ControlFlow 0 9906) 10028) anon4_Then_correct) (=> (= (ControlFlow 0 9906) 10002) anon4_Else_correct))))))
-(let ((anon0$1_correct  (=> (|$IsValid'u64'| _$t0) (=> (and (= _$t0 _$t0) (|$IsValid'u64'| 1)) (and (=> (= (ControlFlow 0 9962) 9954) inline$$Sub$0$anon3_Then_correct) (=> (= (ControlFlow 0 9962) 9906) inline$$Sub$0$anon3_Else_correct))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 10264) 9962) anon0$1_correct)))
+ (=> (= (ControlFlow 0 0) 10185) (let ((anon4_Else_correct  (=> (and (not $abort_flag@0) (= inline$$Sub$0$dst@2 inline$$Sub$0$dst@2)) (and (=> (= (ControlFlow 0 9975) (- 0 10368)) (not (= _$t0 0))) (=> (not (= _$t0 0)) (=> (= (ControlFlow 0 9975) (- 0 10378)) (= inline$$Sub$0$dst@2 (- _$t0 1))))))))
+(let ((anon4_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 10001) (- 0 10344))) (= _$t0 0)))))
+(let ((inline$$Sub$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$Sub$0$dst@2 inline$$Sub$0$dst@0)) (and (=> (= (ControlFlow 0 9929) 10001) anon4_Then_correct) (=> (= (ControlFlow 0 9929) 9975) anon4_Else_correct))))))
+(let ((inline$$Sub$0$anon3_Then_correct  (=> (and (< _$t0 1) (= (ControlFlow 0 9927) 9929)) inline$$Sub$0$anon3_Then$1_correct)))
+(let ((inline$$Sub$0$anon3_Else_correct  (=> (<= 1 _$t0) (=> (and (and (= inline$$Sub$0$dst@1 (- _$t0 1)) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$Sub$0$dst@2 inline$$Sub$0$dst@1))) (and (=> (= (ControlFlow 0 9879) 10001) anon4_Then_correct) (=> (= (ControlFlow 0 9879) 9975) anon4_Else_correct))))))
+(let ((anon0$1_correct  (=> (|$IsValid'u64'| _$t0) (=> (and (= _$t0 _$t0) (|$IsValid'u64'| 1)) (and (=> (= (ControlFlow 0 9935) 9927) inline$$Sub$0$anon3_Then_correct) (=> (= (ControlFlow 0 9935) 9879) inline$$Sub$0$anon3_Else_correct))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 10185) 9935) anon0$1_correct)))
 anon0_correct))))))))
 ))
 (check-sat)

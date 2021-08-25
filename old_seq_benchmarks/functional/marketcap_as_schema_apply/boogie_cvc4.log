@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/marketcap_as_schema_apply/marketcap_as_schema_apply.cvc4.bpl
+/home/ying/diem/old_seq_benchmarks/functional/marketcap_as_schema_apply/marketcap_as_schema_apply.cvc4.bpl
 -monomorphize
 /env:2
 /proverLog:marketcap_as_schema_apply.cvc4.smt2
@@ -8,7 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/marketcap_as_schema_apply/marketcap_as_schema_apply.cvc4.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/marketcap_as_schema_apply/marketcap_as_schema_apply.cvc4.bpl
 Coalescing blocks...
 Inlining...
 

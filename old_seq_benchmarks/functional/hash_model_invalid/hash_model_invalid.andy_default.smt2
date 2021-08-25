@@ -4,9 +4,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6973 0)) ((($Mutation_6973 (|l#$Mutation_6973| T@$Location) (|p#$Mutation_6973| (Seq Int)) (|v#$Mutation_6973| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7052 0)) ((($Mutation_7052 (|l#$Mutation_7052| T@$Location) (|p#$Mutation_7052| (Seq Int)) (|v#$Mutation_7052| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -108,12 +109,12 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |hashmodelinvalidandybpl.839:15|
+ :qid |hashmodelinvalidandybpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |hashmodelinvalidandybpl.842:15|
+ :qid |hashmodelinvalidandybpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -140,29 +141,12 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestHash_hash_test1$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 9803) (let ((anon7_Else_correct  (=> (and (and (not false) (= call1formal@res@0 call1formal@res@0)) (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 call1formal@res@0))) (and (=> (= (ControlFlow 0 9437) (- 0 10043)) (not false)) (=> (not false) (=> (= (ControlFlow 0 9437) (- 0 10050)) (=> (> (seq.len call1formal@res@0@@0) 0) (< (seq.nth call1formal@res@0@@0 0) $MAX_U8))))))))
+ (=> (= (ControlFlow 0 0) 9931) (let ((anon7_Else_correct  (=> (and (and (not false) (= call1formal@res@0 call1formal@res@0)) (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 call1formal@res@0))) (and (=> (= (ControlFlow 0 9565) (- 0 10171)) (not false)) (=> (not false) (=> (= (ControlFlow 0 9565) (- 0 10178)) (=> (> (seq.len call1formal@res@0@@0) 0) (< (seq.nth call1formal@res@0@@0 0) $MAX_U8))))))))
 (let ((anon7_Then_correct true))
-(let ((anon6_Else_correct  (=> (not false) (=> (and (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 ($1_Hash_sha2 _$t1))) (and (|$IsValid'vec'u8''| call1formal@res@0) (= (seq.len call1formal@res@0) 32))) (and (=> (= (ControlFlow 0 9377) 9451) anon7_Then_correct) (=> (= (ControlFlow 0 9377) 9437) anon7_Else_correct))))))
+(let ((anon6_Else_correct  (=> (not false) (=> (and (and (= call1formal@res@0@@0 call1formal@res@0@@0) (= call1formal@res@0 ($1_Hash_sha2 _$t1))) (and (|$IsValid'vec'u8''| call1formal@res@0) (= (seq.len call1formal@res@0) 32))) (and (=> (= (ControlFlow 0 9505) 9579) anon7_Then_correct) (=> (= (ControlFlow 0 9505) 9565) anon7_Else_correct))))))
 (let ((anon6_Then_correct true))
-(let ((anon0$1_correct  (=> (|$IsValid'vec'u8''| _$t0) (=> (and (|$IsValid'vec'u8''| _$t1) (= _$t0 _$t0)) (=> (and (and (= _$t1 _$t1) (= call1formal@res@0@@0 ($1_Hash_sha2 _$t0))) (and (|$IsValid'vec'u8''| call1formal@res@0@@0) (= (seq.len call1formal@res@0@@0) 32))) (and (=> (= (ControlFlow 0 9363) 9475) anon6_Then_correct) (=> (= (ControlFlow 0 9363) 9377) anon6_Else_correct)))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 9803) 9363) anon0$1_correct)))
+(let ((anon0$1_correct  (=> (|$IsValid'vec'u8''| _$t0) (=> (and (|$IsValid'vec'u8''| _$t1) (= _$t0 _$t0)) (=> (and (and (= _$t1 _$t1) (= call1formal@res@0@@0 ($1_Hash_sha2 _$t0))) (and (|$IsValid'vec'u8''| call1formal@res@0@@0) (= (seq.len call1formal@res@0@@0) 32))) (and (=> (= (ControlFlow 0 9491) 9603) anon6_Then_correct) (=> (= (ControlFlow 0 9491) 9505) anon6_Else_correct)))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 9931) 9491) anon0$1_correct)))
 anon0_correct)))))))
 ))
 (check-sat)
-(pop 1)
-; Undetermined
-(declare-fun call1formal@res@0@@1 () (Seq Int))
-(declare-fun call1formal@res@0@@2 () (Seq Int))
-(declare-fun _$t1@@0 () (Seq Int))
-(declare-fun _$t0@@0 () (Seq Int))
-(push 1)
-(set-info :boogie-vc-id $42_TestHash_hash_test2$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 10107) (let ((anon7_Else_correct@@0  (=> (and (and (not false) (= call1formal@res@0@@1 call1formal@res@0@@1)) (and (= call1formal@res@0@@2 call1formal@res@0@@2) (= call1formal@res@0@@1 call1formal@res@0@@1))) (and (=> (= (ControlFlow 0 9671) (- 0 10347)) (not false)) (=> (not false) (=> (= (ControlFlow 0 9671) (- 0 10354)) (=> (> (seq.len call1formal@res@0@@2) 0) (< (seq.nth call1formal@res@0@@2 0) $MAX_U8))))))))
-(let ((anon7_Then_correct@@0 true))
-(let ((anon6_Else_correct@@0  (=> (not false) (=> (and (and (= call1formal@res@0@@2 call1formal@res@0@@2) (= call1formal@res@0@@1 ($1_Hash_sha3 _$t1@@0))) (and (|$IsValid'vec'u8''| call1formal@res@0@@1) (= (seq.len call1formal@res@0@@1) 32))) (and (=> (= (ControlFlow 0 9611) 9685) anon7_Then_correct@@0) (=> (= (ControlFlow 0 9611) 9671) anon7_Else_correct@@0))))))
-(let ((anon6_Then_correct@@0 true))
-(let ((anon0$1_correct@@0  (=> (|$IsValid'vec'u8''| _$t0@@0) (=> (and (|$IsValid'vec'u8''| _$t1@@0) (= _$t0@@0 _$t0@@0)) (=> (and (and (= _$t1@@0 _$t1@@0) (= call1formal@res@0@@2 ($1_Hash_sha3 _$t0@@0))) (and (|$IsValid'vec'u8''| call1formal@res@0@@2) (= (seq.len call1formal@res@0@@2) 32))) (and (=> (= (ControlFlow 0 9597) 9709) anon6_Then_correct@@0) (=> (= (ControlFlow 0 9597) 9611) anon6_Else_correct@@0)))))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 10107) 9597) anon0$1_correct@@0)))
-anon0_correct@@0)))))))
-))

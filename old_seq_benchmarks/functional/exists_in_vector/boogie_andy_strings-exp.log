@@ -1,23 +1,23 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/exists_in_vector/exists_in_vector.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/exists_in_vector/exists_in_vector.andy.bpl
 -monomorphize
 /env:2
 /proverLog:exists_in_vector.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/exists_in_vector/exists_in_vector.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/exists_in_vector/exists_in_vector.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_VectorExists_do_nothing_ref$verify ...
-  [0.476 s, 10 proof obligations]  verified
+  [0.144 s, 10 proof obligations]  verified
 
 Verifying $42_VectorExists_do_nothing_ref_mut$verify ...
-  [0.255 s, 11 proof obligations]  verified
+  [0.023 s, 11 proof obligations]  verified
 
 Boogie program verifier finished with 2 verified, 0 errors

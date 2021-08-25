@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/verify_bcs/verify_bcs.cvc4.bpl
+/home/ying/diem/old_seq_benchmarks/functional/verify_bcs/verify_bcs.cvc4.bpl
 -monomorphize
 /env:2
 /proverLog:verify_bcs.cvc4.smt2
@@ -8,12 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/verify_bcs/verify_bcs.cvc4.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/verify_bcs/verify_bcs.cvc4.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/cvc4
-
-Verifying $42_VerifyBCS_verify_to_bytes$verify ...
-  [0.157 s, 1 proof obligation]  verified
-
-Boogie program verifier finished with 1 verified, 0 errors
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'

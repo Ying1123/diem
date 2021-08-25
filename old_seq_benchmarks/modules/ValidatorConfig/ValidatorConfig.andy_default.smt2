@@ -2332,23 +2332,3 @@ anon0_correct@@10)))))))))))))))))))
 (check-sat)
 (pop 1)
 ; Undetermined
-(declare-fun _$t0@@11 () T@$1_ValidatorConfig_Config)
-(declare-fun $t1@0@@0 () (Seq Int))
-(push 1)
-(set-info :boogie-vc-id $1_ValidatorConfig_get_consensus_pubkey$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 255349) (let ((anon0$1_correct@@11  (=> (and (and (|$IsValid'$1_ValidatorConfig_Config'| _$t0@@11) (= _$t0@@11 _$t0@@11)) (and (= $t1@0@@0 (|$consensus_pubkey#$1_ValidatorConfig_Config| _$t0@@11)) (= $t1@0@@0 $t1@0@@0))) (and (=> (= (ControlFlow 0 187914) (- 0 255417)) (not false)) (=> (not false) (=> (= (ControlFlow 0 187914) (- 0 255424)) (forall ((addr1@@3 Int) ) (!  (=> (|$IsValid'address'| addr1@@3) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr1@@3) (= (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr1@@3)) (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr1@@3)))))
- :qid |ValidatorConfigandybpl.7130:15|
- :skolemid |201|
-))))))))
-(let ((inline$$InitEventStore$0$anon0_correct@@11  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@13 T@$1_Event_EventHandle) ) (! (let ((stream@@12 (|Select__T@[$1_Event_EventHandle]Multiset_76192_| (|streams#$EventStore| $es) handle@@13)))
- (and (= (|l#Multiset_76192| stream@@12) 0) (forall ((v@@47 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_76192| stream@@12) v@@47) 0)
- :qid |ValidatorConfigandybpl.129:13|
- :skolemid |2|
-))))
- :qid |ValidatorConfigandybpl.2543:13|
- :skolemid |69|
-))) (= (ControlFlow 0 187831) 187914)) anon0$1_correct@@11)))
-(let ((anon0_correct@@11  (=> (= (ControlFlow 0 255349) 187831) inline$$InitEventStore$0$anon0_correct@@11)))
-anon0_correct@@11))))
-))

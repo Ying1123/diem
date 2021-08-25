@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/ModifiesTest/ModifiesTest.andy_default.smt2:49.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/ModifiesTest/ModifiesTest.andy_default.smt2:164.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/ModifiesTest/ModifiesTest.andy_default.smt2:51.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/ModifiesTest/ModifiesTest.andy_default.smt2:174.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

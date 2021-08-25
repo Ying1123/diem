@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/consts/consts.cvc4.bpl
+/home/ying/diem/old_seq_benchmarks/functional/consts/consts.cvc4.bpl
 -monomorphize
 /env:2
 /proverLog:consts.cvc4.smt2
@@ -8,19 +8,8 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/consts/consts.cvc4.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/consts/consts.cvc4.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/cvc4
-
-Verifying $42_TestConst_init$verify ...
-  [0.149 s, 2 proof obligations]  verified
-
-Verifying $42_TestConst_init_incorrect$verify ...
-  [0.015 s, 2 proof obligations]  error
-assert_failed(2,612,630): post-condition does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/consts/consts.cvc4.bpl(984,5): anon0
-    /home/ying/diem/seq_benchmarks/consts/consts.cvc4.bpl(984,5): anon0$1
-
-Boogie program verifier finished with 1 verified, 1 error
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'

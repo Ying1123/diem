@@ -1,32 +1,32 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl
 -monomorphize
 /env:2
 /proverLog:address_quant.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_AddressQuant_f$verify ...
-  [0.594 s, 3 proof obligations]  verified
+  [0.142 s, 3 proof obligations]  verified
 
 Verifying $42_AddressQuant_initialize$verify ...
-  [0.173 s, 3 proof obligations]  verified
+  [0.018 s, 3 proof obligations]  verified
 
 Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
-  [0.206 s, 2 proof obligations]  error
+  [0.023 s, 2 proof obligations]  error
 assert_failed(2,1555,1577): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl(1200,9): anon0
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl(1200,9): anon0$1
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl(1238,36): anon7_Else
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.andy.bpl(1240,5): anon8_Else
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1215,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1215,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1253,36): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1255,5): anon8_Else
 
 Boogie program verifier finished with 2 verified, 1 error

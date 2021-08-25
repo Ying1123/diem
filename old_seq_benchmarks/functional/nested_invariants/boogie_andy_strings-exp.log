@@ -1,51 +1,51 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl
 -monomorphize
 /env:2
 /proverLog:nested_invariants.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestNestedInvariants_mutate$verify ...
-  [0.521 s, 6 proof obligations]  verified
+  [0.153 s, 6 proof obligations]  verified
 
 Verifying $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify ...
-  [0.249 s, 6 proof obligations]  error
+  [0.025 s, 6 proof obligations]  error
 assert_failed(2,287,303): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1076,5): anon0
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1076,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1081,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1081,5): anon0$1
 
 Verifying $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify ...
-  [0.183 s, 6 proof obligations]  error
+  [0.017 s, 6 proof obligations]  error
 assert_failed(2,689,707): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1195,5): anon0
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1195,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1200,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1200,5): anon0$1
 
 Verifying $42_TestNestedInvariants_new$verify ...
-  [0.038 s, 3 proof obligations]  verified
+  [0.003 s, 3 proof obligations]  verified
 
 Verifying $42_TestNestedInvariants_new_inner_data_invariant_invalid$verify ...
-  [0.033 s, 3 proof obligations]  error
+  [0.005 s, 3 proof obligations]  error
 assert_failed(2,287,303): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1367,5): anon0
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1367,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1372,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1372,5): anon0$1
 
 Verifying $42_TestNestedInvariants_new_outer_data_invariant_invalid$verify ...
-  [0.047 s, 3 proof obligations]  error
+  [0.007 s, 3 proof obligations]  error
 assert_failed(2,689,707): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1429,5): anon0
-    /home/ying/diem/seq_benchmarks/nested_invariants/nested_invariants.andy.bpl(1429,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1434,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1434,5): anon0$1
 
 Boogie program verifier finished with 2 verified, 4 errors

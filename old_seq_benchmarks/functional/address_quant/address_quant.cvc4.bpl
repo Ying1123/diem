@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -891,6 +896,15 @@ procedure {:inline 1} $InitEventStore() {
 
 // Given Types for Type Parameters
 
+
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
 
 // spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:15:9+119
 function {:inline} $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory: $Memory $42_AddressQuant_R): bool {
@@ -1045,7 +1059,7 @@ L2:
 }
 
 // fun AddressQuant::initialize [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
-procedure {:timeLimit 40} $42_AddressQuant_initialize$verify(_$t0: int, _$t1: int) returns ()
+procedure {:timeLimit 40} $42_AddressQuant_initialize$verify(_$t0: $signer, _$t1: int) returns ()
 {
     // declare local variables
     var $t2: bool;
@@ -1056,10 +1070,11 @@ procedure {:timeLimit 40} $42_AddressQuant_initialize$verify(_$t0: int, _$t1: in
     var $t7: int;
     var $t8: int;
     var $t9: $42_AddressQuant_R;
-    var $t0: int;
+    var $t0: $signer;
     var $t1: int;
     var $temp_0'address': int;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
     $t1 := _$t1;
 
@@ -1069,7 +1084,7 @@ procedure {:timeLimit 40} $42_AddressQuant_initialize$verify(_$t0: int, _$t1: in
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
     assume {:print "$at(2,465,627)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
     assume $IsValid'address'($t1);
@@ -1143,10 +1158,10 @@ L0:
     $t9 := $42_AddressQuant_R($t8);
 
     // move_to<AddressQuant::R>($t9, $t0) on_abort goto L3 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:25:9+7
-    if ($ResourceExists($42_AddressQuant_R_$memory, $t0)) {
+    if ($ResourceExists($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $t0, $t9);
+        $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0), $t9);
     }
     if ($abort_flag) {
         assume {:print "$at(2,596,603)"} true;
@@ -1189,14 +1204,14 @@ L3:
 }
 
 // fun AddressQuant::multiple_copy_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+91
-procedure {:timeLimit 40} $42_AddressQuant_multiple_copy_incorrect$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $42_AddressQuant_multiple_copy_incorrect$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: int;
     var $t2: $42_AddressQuant_R;
     var $t3: int;
-    var $t0: int;
-    var $temp_0'address': int;
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
@@ -1205,7 +1220,7 @@ procedure {:timeLimit 40} $42_AddressQuant_multiple_copy_incorrect$verify(_$t0: 
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+91
     assume {:print "$at(2,1283,1374)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<AddressQuant::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+91
     assume (forall $a_0: int :: {$ResourceValue($42_AddressQuant_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_AddressQuant_R_$memory, $a_0);
@@ -1232,10 +1247,10 @@ procedure {:timeLimit 40} $42_AddressQuant_multiple_copy_incorrect$verify(_$t0: 
     $t2 := $42_AddressQuant_R($t1);
 
     // move_to<AddressQuant::R>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:47:9+7
-    if ($ResourceExists($42_AddressQuant_R_$memory, $t0)) {
+    if ($ResourceExists($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $t0, $t2);
+        $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0), $t2);
     }
     if ($abort_flag) {
         assume {:print "$at(2,1343,1350)"} true;

@@ -3881,3 +3881,92 @@ anon0_correct@@24))))))))))))
 anon0_correct@@25))))))))))))
 ))
 (check-sat)
+(pop 1)
+; Valid
+(declare-fun $t2@@5 () Int)
+(declare-fun _$t0@@26 () T@$signer)
+(declare-fun _$t1@@7 () T@$signer)
+(declare-fun $t3@@5 () Int)
+(declare-fun $t6@@13 () Int)
+(declare-fun $t9@@13 () Bool)
+(declare-fun $t5@@7 () Bool)
+(declare-fun $t4@@6 () Int)
+(declare-fun $1_Roles_RoleId_$memory@2@@5 () T@$Memory_113696)
+(declare-fun |$temp_0'bool'@0@@5| () Bool)
+(declare-fun $1_Roles_RoleId_$memory@1@@6 () T@$Memory_113696)
+(declare-fun $1_Roles_RoleId_$memory@0@@6 () T@$Memory_113696)
+(declare-fun |$temp_0'$1_Roles_RoleId'@0@@5| () T@$1_Roles_RoleId)
+(declare-fun $t8@@7 () Int)
+(declare-fun $1_Roles_RoleId_$modifies@@6 () |T@[Int]Bool|)
+(push 1)
+(set-info :boogie-vc-id $1_Roles_new_validator_role$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 298045) (let ((L2_correct@@5  (and (=> (= (ControlFlow 0 222004) (- 0 298904)) (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) 0))) (not (= (|$addr#$signer| _$t0@@26) 173345816))) (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)) 0))) (not (= (|$addr#$signer| _$t0@@26) 173345816)))) (=> (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) 0))) (not (= (|$addr#$signer| _$t0@@26) 173345816))) (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)) 0))) (not (= (|$addr#$signer| _$t0@@26) 173345816))) (=> (= (ControlFlow 0 222004) (- 0 298980)) (or (or (or (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) (= 5 $t6@@13)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) 0)) (= 3 $t6@@13))) (and (not (= (|$addr#$signer| _$t0@@26) 173345816)) (= 2 $t6@@13))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7)) (= 6 $t6@@13))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)) (= 5 $t6@@13))) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)) 0)) (= 3 $t6@@13))) (and (not (= (|$addr#$signer| _$t0@@26) 173345816)) (= 2 $t6@@13))))))))
+(let ((anon10_Then_correct@@6  (=> $t9@@13 (=> (and (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7)) (= 6 $t6@@13)) (and (= $t6@@13 $t6@@13) (= (ControlFlow 0 221772) 222004))) L2_correct@@5))))
+(let ((anon9_Then_correct@@3  (=> (and (and $t5@@7 (or (or (or (and (not (= (|$addr#$signer| _$t0@@26) 173345816)) (= 2 $t6@@13)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t4@@6)) (= 5 $t6@@13))) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t4@@6)) 0)) (= 3 $t6@@13))) (and (not (= (|$addr#$signer| _$t0@@26) 173345816)) (= 2 $t6@@13)))) (and (= $t6@@13 $t6@@13) (= (ControlFlow 0 222096) 222004))) L2_correct@@5)))
+(let ((anon7_correct@@3  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) (|$addr#$signer| _$t1@@7)) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) (|$addr#$signer| _$t1@@7))) 3)) (and (=> (= (ControlFlow 0 221730) (- 0 298496)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5))) (and (=> (= (ControlFlow 0 221730) (- 0 298508)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) 0)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t2@@5)) 0))) (and (=> (= (ControlFlow 0 221730) (- 0 298526)) (not (not (= (|$addr#$signer| _$t0@@26) 173345816)))) (=> (not (not (= (|$addr#$signer| _$t0@@26) 173345816))) (and (=> (= (ControlFlow 0 221730) (- 0 298540)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7)))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7))) (and (=> (= (ControlFlow 0 221730) (- 0 298551)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5))) (and (=> (= (ControlFlow 0 221730) (- 0 298563)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)) 0)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t3@@5)) 0))) (and (=> (= (ControlFlow 0 221730) (- 0 298581)) (not (not (= (|$addr#$signer| _$t0@@26) 173345816)))) (=> (not (not (= (|$addr#$signer| _$t0@@26) 173345816))) (and (=> (= (ControlFlow 0 221730) (- 0 298595)) (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) (|$addr#$signer| _$t1@@7))) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) (|$addr#$signer| _$t1@@7)) (and (=> (= (ControlFlow 0 221730) (- 0 298604)) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) (|$addr#$signer| _$t1@@7))) 3)) (=> (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) (|$addr#$signer| _$t1@@7))) 3) (and (=> (= (ControlFlow 0 221730) (- 0 298619)) (forall ((addr@@342 Int) ) (!  (=> (|$IsValid'address'| addr@@342) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@342) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@342)) 0)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@342) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@342)) 0))))
+ :qid |Rolesandybpl.10186:15|
+ :skolemid |327|
+))) (=> (forall ((addr@@343 Int) ) (!  (=> (|$IsValid'address'| addr@@343) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@343) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@343)) 0)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@343) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@343)) 0))))
+ :qid |Rolesandybpl.10186:15|
+ :skolemid |327|
+)) (and (=> (= (ControlFlow 0 221730) (- 0 298666)) (forall ((addr@@344 Int) ) (!  (=> (|$IsValid'address'| addr@@344) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@344) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@344)) 1)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@344) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@344)) 1))))
+ :qid |Rolesandybpl.10190:15|
+ :skolemid |328|
+))) (=> (forall ((addr@@345 Int) ) (!  (=> (|$IsValid'address'| addr@@345) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@345) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@345)) 1)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@345) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@345)) 1))))
+ :qid |Rolesandybpl.10190:15|
+ :skolemid |328|
+)) (and (=> (= (ControlFlow 0 221730) (- 0 298713)) (forall ((addr@@346 Int) ) (!  (=> (|$IsValid'address'| addr@@346) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@346) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@346)) 4)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@346) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@346)) 4))))
+ :qid |Rolesandybpl.10194:15|
+ :skolemid |329|
+))) (=> (forall ((addr@@347 Int) ) (!  (=> (|$IsValid'address'| addr@@347) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@347) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@347)) 4)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@347) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@347)) 4))))
+ :qid |Rolesandybpl.10194:15|
+ :skolemid |329|
+)) (and (=> (= (ControlFlow 0 221730) (- 0 298760)) (forall ((addr@@348 Int) ) (!  (=> (|$IsValid'address'| addr@@348) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@348) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@348)) 2)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@348) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@348)) 2))))
+ :qid |Rolesandybpl.10198:15|
+ :skolemid |330|
+))) (=> (forall ((addr@@349 Int) ) (!  (=> (|$IsValid'address'| addr@@349) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@349) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@349)) 2)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@349) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@349)) 2))))
+ :qid |Rolesandybpl.10198:15|
+ :skolemid |330|
+)) (and (=> (= (ControlFlow 0 221730) (- 0 298807)) (forall ((addr@@350 Int) ) (!  (=> (|$IsValid'address'| addr@@350) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@350) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@350)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@350) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@350)) 5))))
+ :qid |Rolesandybpl.10202:15|
+ :skolemid |331|
+))) (=> (forall ((addr@@351 Int) ) (!  (=> (|$IsValid'address'| addr@@351) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@351) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@351)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@351) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@351)) 5))))
+ :qid |Rolesandybpl.10202:15|
+ :skolemid |331|
+)) (=> (= (ControlFlow 0 221730) (- 0 298854)) (forall ((addr@@352 Int) ) (!  (=> (|$IsValid'address'| addr@@352) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@352) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory@2@@5) addr@@352)) 6)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) addr@@352) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) addr@@352)) 6))))
+ :qid |Rolesandybpl.10206:15|
+ :skolemid |332|
+))))))))))))))))))))))))))))))))))
+(let ((anon11_Else_correct@@7  (=> (and (and (not |$temp_0'bool'@0@@5|) (= $1_Roles_RoleId_$memory@1@@6 ($Memory_113696 (|Store__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7) false) (|contents#$Memory_113696| $1_Roles_RoleId_$memory)))) (and (= $1_Roles_RoleId_$memory@2@@5 $1_Roles_RoleId_$memory@1@@6) (= (ControlFlow 0 221270) 221730))) anon7_correct@@3)))
+(let ((anon11_Then_correct@@7  (=> (and (and |$temp_0'bool'@0@@5| (= $1_Roles_RoleId_$memory@0@@6 ($Memory_113696 (|Store__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7) true) (|Store__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7) |$temp_0'$1_Roles_RoleId'@0@@5|)))) (and (= $1_Roles_RoleId_$memory@2@@5 $1_Roles_RoleId_$memory@0@@6) (= (ControlFlow 0 221744) 221730))) anon7_correct@@3)))
+(let ((anon10_Else_correct@@6  (=> (not $t9@@13) (and (=> (= (ControlFlow 0 221256) 221744) anon11_Then_correct@@7) (=> (= (ControlFlow 0 221256) 221270) anon11_Else_correct@@7)))))
+(let ((anon9_Else_correct@@3  (=> (not $t5@@7) (=> (and (|$IsValid'u64'| 3) (= $t8@@7 (|$addr#$signer| _$t1@@7))) (and (=> (= (ControlFlow 0 221250) (- 0 298346)) (=> (= 3 0) (= $t8@@7 173345816))) (=> (=> (= 3 0) (= $t8@@7 173345816)) (and (=> (= (ControlFlow 0 221250) (- 0 298362)) (=> (= 3 1) (= $t8@@7 186537453))) (=> (=> (= 3 1) (= $t8@@7 186537453)) (and (=> (= (ControlFlow 0 221250) (- 0 298378)) (|Select__T@[Int]Bool_| $1_Roles_RoleId_$modifies@@6 (|$addr#$signer| _$t1@@7))) (=> (|Select__T@[Int]Bool_| $1_Roles_RoleId_$modifies@@6 (|$addr#$signer| _$t1@@7)) (=> (= $t9@@13 (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t1@@7))) (and (=> (= (ControlFlow 0 221250) 221772) anon10_Then_correct@@6) (=> (= (ControlFlow 0 221250) 221256) anon10_Else_correct@@6)))))))))))))
+(let ((anon0$1_correct@@26  (=> (and (|$IsValid'address'| (|$addr#$signer| _$t0@@26)) (|$IsValid'address'| (|$addr#$signer| _$t1@@7))) (=> (and (and (and (forall (($a_0@@28 Int) ) (! (let (($rsc@@28 (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $a_0@@28)))
+(|$IsValid'$1_Roles_RoleId'| $rsc@@28))
+ :qid |Rolesandybpl.10007:20|
+ :skolemid |326|
+ :pattern ( (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $a_0@@28))
+)) (= $t2@@5 (|$addr#$signer| _$t0@@26))) (and (= $t3@@5 (|$addr#$signer| _$t0@@26)) (|Select__T@[Int]Bool_| $1_Roles_RoleId_$modifies@@6 (|$addr#$signer| _$t1@@7)))) (and (and (= _$t0@@26 _$t0@@26) (= _$t1@@7 _$t1@@7)) (and (= $t4@@6 (|$addr#$signer| _$t0@@26)) (= $t5@@7  (or (or (or (not (= (|$addr#$signer| _$t0@@26) 173345816)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_113696| $1_Roles_RoleId_$memory) $t4@@6))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_113696| $1_Roles_RoleId_$memory) $t4@@6)) 0))) (not (= (|$addr#$signer| _$t0@@26) 173345816))))))) (and (=> (= (ControlFlow 0 221172) 222096) anon9_Then_correct@@3) (=> (= (ControlFlow 0 221172) 221250) anon9_Else_correct@@3))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@26  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@28 T@$1_Event_EventHandle) ) (! (let ((stream@@27 (|Select__T@[$1_Event_EventHandle]Multiset_83261_| (|streams#$EventStore| $es) handle@@28)))
+ (and (= (|l#Multiset_83261| stream@@27) 0) (forall ((v@@62 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_83261| stream@@27) v@@62) 0)
+ :qid |Rolesandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |Rolesandybpl.2543:13|
+ :skolemid |69|
+))) (= (ControlFlow 0 221018) 221172)) anon0$1_correct@@26)))
+(let ((anon0_correct@@26  (=> (= (ControlFlow 0 298045) 221018) inline$$InitEventStore$0$anon0_correct@@26)))
+anon0_correct@@26))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(push 1)
+(set-info :boogie-vc-id $1_Genesis_initialize$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 299135) true)
+))
+(check-sat)
+(pop 1)
+; Valid

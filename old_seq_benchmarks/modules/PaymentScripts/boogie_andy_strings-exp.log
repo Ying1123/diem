@@ -3,7 +3,7 @@
 -monomorphize
 /env:2
 /proverLog:PaymentScripts.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
 /proverOpt:SOLVER=CVC5
 /trace
@@ -12,9 +12,21 @@
 Parsing /home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [1.328 s, 0 proof obligations]  verified
+  [0.420 s, 0 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify ...
+  [3.585 s, 39 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_0 ...
+  [3.722 s, 39 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_1 ...
+  [4.388 s, 39 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify ...
+  [4.253 s, 46 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

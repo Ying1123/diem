@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/XDX/XDX.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/XDX/XDX.z3.bpl
 -monomorphize
 /env:2
 /proverLog:XDX.z3.smt2
@@ -8,10 +8,10 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/XDX/XDX.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/XDX/XDX.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.170 s, 10 proof obligations]  verified
+  [0.165 s, 10 proof obligations]  verified

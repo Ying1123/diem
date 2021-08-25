@@ -2,4 +2,6 @@
 /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy_strings.smt2:1634.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
-cvc5 interrupted by SIGTERM.
+unsat
+unsat
+unsat

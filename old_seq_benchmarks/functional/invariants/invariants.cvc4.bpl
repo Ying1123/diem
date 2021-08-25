@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -858,21 +878,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 // ==================================================================================
 // Native BCS::serialize
 
-
-// ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
 
 // ==================================================================================
 // Native Event module
@@ -1728,11 +1733,11 @@ L1:
 procedure {:timeLimit 40} $42_TestInvariants_lifetime_invalid_S_branching$verify(_$t0: bool) returns ($ret0: $42_TestInvariants_T, $ret1: $42_TestInvariants_S)
 {
     // declare local variables
-    var $t1: $42_TestInvariants_T;
-    var $t2: $Mutation ($42_TestInvariants_T);
-    var $t3: $42_TestInvariants_S;
-    var $t4: $Mutation ($42_TestInvariants_S);
-    var $t5: $Mutation (int);
+    var $t1: $Mutation (int);
+    var $t2: $42_TestInvariants_T;
+    var $t3: $Mutation ($42_TestInvariants_T);
+    var $t4: $42_TestInvariants_S;
+    var $t5: $Mutation ($42_TestInvariants_S);
     var $t6: $Mutation (int);
     var $t7: int;
     var $t8: int;
@@ -1754,8 +1759,8 @@ procedure {:timeLimit 40} $42_TestInvariants_lifetime_invalid_S_branching$verify
     var $temp_0'bool': bool;
     var $temp_0'u64': int;
     $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t2));
-    assume IsEmptyVec(p#$Mutation($t4));
+    assume IsEmptyVec(p#$Mutation($t1));
+    assume IsEmptyVec(p#$Mutation($t3));
     assume IsEmptyVec(p#$Mutation($t5));
     assume IsEmptyVec(p#$Mutation($t6));
     assume IsEmptyVec(p#$Mutation($t9));
@@ -1779,52 +1784,52 @@ procedure {:timeLimit 40} $42_TestInvariants_lifetime_invalid_S_branching$verify
     $t7 := 3;
     assume $IsValid'u64'($t7);
 
-    // $t1 := pack TestInvariants::T($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:154:15+8
-    $t1 := $42_TestInvariants_T($t7);
+    // $t2 := pack TestInvariants::T($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:154:15+8
+    $t2 := $42_TestInvariants_T($t7);
 
-    // assert Gt(select TestInvariants::T.x($t1), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:143:9+16
+    // assert Gt(select TestInvariants::T.x($t2), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:143:9+16
     // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:143:9+16
     assume {:print "$at(2,2952,2968)"} true;
     assert {:msg "assert_failed(2,2952,2968): data invariant does not hold"}
-      ($x#$42_TestInvariants_T($t1) > 1);
+      ($x#$42_TestInvariants_T($t2) > 1);
 
-    // trace_local[a]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:154:11+1
+    // trace_local[a]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:154:11+1
     assume {:print "$at(2,3126,3127)"} true;
-    assume {:print "$track_local(0,7,1):", $t1} $t1 == $t1;
+    assume {:print "$track_local(0,7,2):", $t2} $t2 == $t2;
 
     // $t8 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155:21+1
     assume {:print "$at(2,3160,3161)"} true;
     $t8 := 4;
     assume $IsValid'u64'($t8);
 
-    // $t3 := pack TestInvariants::S($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155:15+8
-    $t3 := $42_TestInvariants_S($t8);
+    // $t4 := pack TestInvariants::S($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155:15+8
+    $t4 := $42_TestInvariants_S($t8);
 
-    // assert Gt(select TestInvariants::S.y($t3), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
+    // assert Gt(select TestInvariants::S.y($t4), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
     // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
     assume {:print "$at(2,3033,3049)"} true;
     assert {:msg "assert_failed(2,3033,3049): data invariant does not hold"}
-      ($y#$42_TestInvariants_S($t3) > 1);
+      ($y#$42_TestInvariants_S($t4) > 1);
 
-    // trace_local[b]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155:11+1
+    // trace_local[b]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:155:11+1
     assume {:print "$at(2,3150,3151)"} true;
-    assume {:print "$track_local(0,7,3):", $t3} $t3 == $t3;
+    assume {:print "$track_local(0,7,4):", $t4} $t4 == $t4;
 
-    // $t9 := borrow_local($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:156:19+6
+    // $t9 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:156:19+6
     assume {:print "$at(2,3182,3188)"} true;
-    $t9 := $Mutation($Local(1), EmptyVec(), $t1);
+    $t9 := $Mutation($Local(2), EmptyVec(), $t2);
 
     // trace_local[a_ref]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:156:11+5
     $temp_0'$42_TestInvariants_T' := $Dereference($t9);
-    assume {:print "$track_local(0,7,2):", $temp_0'$42_TestInvariants_T'} $temp_0'$42_TestInvariants_T' == $temp_0'$42_TestInvariants_T';
+    assume {:print "$track_local(0,7,3):", $temp_0'$42_TestInvariants_T'} $temp_0'$42_TestInvariants_T' == $temp_0'$42_TestInvariants_T';
 
-    // $t10 := borrow_local($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:157:19+6
+    // $t10 := borrow_local($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:157:19+6
     assume {:print "$at(2,3208,3214)"} true;
-    $t10 := $Mutation($Local(3), EmptyVec(), $t3);
+    $t10 := $Mutation($Local(4), EmptyVec(), $t4);
 
     // trace_local[b_ref]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:157:11+5
     $temp_0'$42_TestInvariants_S' := $Dereference($t10);
-    assume {:print "$track_local(0,7,4):", $temp_0'$42_TestInvariants_S'} $temp_0'$42_TestInvariants_S' == $temp_0'$42_TestInvariants_S';
+    assume {:print "$track_local(0,7,5):", $temp_0'$42_TestInvariants_S'} $temp_0'$42_TestInvariants_S' == $temp_0'$42_TestInvariants_S';
 
     // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
     assume {:print "$at(2,3234,3282)"} true;
@@ -1851,12 +1856,12 @@ L0:
     // $t11 := borrow_field<TestInvariants::T>.x($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:31+12
     $t11 := $ChildMutation($t9, 0, $x#$42_TestInvariants_T($Dereference($t9)));
 
-    // $t5 := $t11 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
-    $t5 := $t11;
+    // $t1 := $t11 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
+    $t1 := $t11;
 
-    // trace_local[tmp#$5]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
+    // trace_local[tmp#$1]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
     $temp_0'u64' := $Dereference($t11);
-    assume {:print "$track_local(0,7,5):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+    assume {:print "$track_local(0,7,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
     // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
     goto L3;
@@ -1876,18 +1881,18 @@ L2:
     // $t12 := borrow_field<TestInvariants::S>.y($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:53+12
     $t12 := $ChildMutation($t10, 0, $y#$42_TestInvariants_S($Dereference($t10)));
 
-    // $t5 := $t12 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
-    $t5 := $t12;
+    // $t1 := $t12 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
+    $t1 := $t12;
 
-    // trace_local[tmp#$5]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
+    // trace_local[tmp#$1]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
     $temp_0'u64' := $Dereference($t12);
-    assume {:print "$track_local(0,7,5):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+    assume {:print "$track_local(0,7,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
     // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:19+48
 L3:
 
-    // trace_local[x_ref]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:11+5
-    $temp_0'u64' := $Dereference($t5);
+    // trace_local[x_ref]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:158:11+5
+    $temp_0'u64' := $Dereference($t1);
     assume {:print "$track_local(0,7,6):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
     // if ($t0) goto L4 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:160:7+113
@@ -1908,11 +1913,11 @@ L4:
     $t13 := 2;
     assume $IsValid'u64'($t13);
 
-    // write_ref($t5, $t13) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
-    $t5 := $UpdateMutation($t5, $t13);
+    // write_ref($t1, $t13) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    $t1 := $UpdateMutation($t1, $t13);
 
-    // $t14 := is_parent[Reference($t9).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
-    $t14 := $IsParentMutation($t9, 0, $t5);
+    // $t14 := is_parent[Reference($t9).x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    $t14 := $IsParentMutation($t9, 0, $t1);
 
     // if ($t14) goto L8 else goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
     if ($t14) { goto L8; } else { goto L9; }
@@ -1920,14 +1925,14 @@ L4:
     // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
 L8:
 
-    // write_back[Reference($t9).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
-    $t9 := $UpdateMutation($t9, $Update'$42_TestInvariants_T'_x($Dereference($t9), $Dereference($t5)));
+    // write_back[Reference($t9).x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    $t9 := $UpdateMutation($t9, $Update'$42_TestInvariants_T'_x($Dereference($t9), $Dereference($t1)));
 
     // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
 L9:
 
-    // $t15 := is_parent[Reference($t10).y]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
-    $t15 := $IsParentMutation($t10, 0, $t5);
+    // $t15 := is_parent[Reference($t10).y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    $t15 := $IsParentMutation($t10, 0, $t1);
 
     // if ($t15) goto L10 else goto L17 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
     if ($t15) { goto L10; } else { goto L17; }
@@ -1935,8 +1940,8 @@ L9:
     // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
 L10:
 
-    // write_back[Reference($t10).y]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
-    $t10 := $UpdateMutation($t10, $Update'$42_TestInvariants_S'_y($Dereference($t10), $Dereference($t5)));
+    // write_back[Reference($t10).y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    $t10 := $UpdateMutation($t10, $Update'$42_TestInvariants_S'_y($Dereference($t10), $Dereference($t1)));
 
     // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
 L11:
@@ -1947,9 +1952,9 @@ L11:
     assert {:msg "assert_failed(2,2952,2968): data invariant does not hold"}
       ($x#$42_TestInvariants_T($Dereference($t9)) > 1);
 
-    // write_back[LocalRoot($t1)@]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    // write_back[LocalRoot($t2)@]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
     assume {:print "$at(2,3313,3323)"} true;
-    $t1 := $Dereference($t9);
+    $t2 := $Dereference($t9);
 
     // assert Gt(select TestInvariants::S.y($t10), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
     // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
@@ -1957,9 +1962,9 @@ L11:
     assert {:msg "assert_failed(2,3033,3049): data invariant does not hold"}
       ($y#$42_TestInvariants_S($Dereference($t10)) > 1);
 
-    // write_back[LocalRoot($t3)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
+    // write_back[LocalRoot($t4)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:11+10
     assume {:print "$at(2,3313,3323)"} true;
-    $t3 := $Dereference($t10);
+    $t4 := $Dereference($t10);
 
     // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:161:21+1
     goto L7;
@@ -1972,11 +1977,11 @@ L6:
     $t16 := 0;
     assume $IsValid'u64'($t16);
 
-    // write_ref($t5, $t16) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
-    $t5 := $UpdateMutation($t5, $t16);
+    // write_ref($t1, $t16) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    $t1 := $UpdateMutation($t1, $t16);
 
-    // $t17 := is_parent[Reference($t9).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
-    $t17 := $IsParentMutation($t9, 0, $t5);
+    // $t17 := is_parent[Reference($t9).x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    $t17 := $IsParentMutation($t9, 0, $t1);
 
     // if ($t17) goto L12 else goto L13 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
     if ($t17) { goto L12; } else { goto L13; }
@@ -1984,14 +1989,14 @@ L6:
     // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
 L12:
 
-    // write_back[Reference($t9).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
-    $t9 := $UpdateMutation($t9, $Update'$42_TestInvariants_T'_x($Dereference($t9), $Dereference($t5)));
+    // write_back[Reference($t9).x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    $t9 := $UpdateMutation($t9, $Update'$42_TestInvariants_T'_x($Dereference($t9), $Dereference($t1)));
 
     // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
 L13:
 
-    // $t18 := is_parent[Reference($t10).y]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
-    $t18 := $IsParentMutation($t10, 0, $t5);
+    // $t18 := is_parent[Reference($t10).y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    $t18 := $IsParentMutation($t10, 0, $t1);
 
     // if ($t18) goto L14 else goto L18 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
     if ($t18) { goto L14; } else { goto L18; }
@@ -1999,8 +2004,8 @@ L13:
     // label L14 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
 L14:
 
-    // write_back[Reference($t10).y]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
-    $t10 := $UpdateMutation($t10, $Update'$42_TestInvariants_S'_y($Dereference($t10), $Dereference($t5)));
+    // write_back[Reference($t10).y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    $t10 := $UpdateMutation($t10, $Update'$42_TestInvariants_S'_y($Dereference($t10), $Dereference($t1)));
 
     // label L15 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
 L15:
@@ -2011,9 +2016,9 @@ L15:
     assert {:msg "assert_failed(2,2952,2968): data invariant does not hold"}
       ($x#$42_TestInvariants_T($Dereference($t9)) > 1);
 
-    // write_back[LocalRoot($t1)@]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    // write_back[LocalRoot($t2)@]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
     assume {:print "$at(2,3350,3360)"} true;
-    $t1 := $Dereference($t9);
+    $t2 := $Dereference($t9);
 
     // assert Gt(select TestInvariants::S.y($t10), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
     // data invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:150:9+16
@@ -2021,19 +2026,19 @@ L15:
     assert {:msg "assert_failed(2,3033,3049): data invariant does not hold"}
       ($y#$42_TestInvariants_S($Dereference($t10)) > 1);
 
-    // write_back[LocalRoot($t3)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
+    // write_back[LocalRoot($t4)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:163:11+10
     assume {:print "$at(2,3350,3360)"} true;
-    $t3 := $Dereference($t10);
+    $t4 := $Dereference($t10);
 
     // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:166:8+1
     assume {:print "$at(2,3414,3415)"} true;
 L7:
 
-    // $t19 := move($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:166:8+1
-    $t19 := $t1;
+    // $t19 := move($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:166:8+1
+    $t19 := $t2;
 
-    // $t20 := move($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:166:11+1
-    $t20 := $t3;
+    // $t20 := move($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:166:11+1
+    $t20 := $t4;
 
     // trace_return[0]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants.move:166:7+6
     assume {:print "$track_return(0,7,0):", $t19} $t19 == $t19;
@@ -2054,7 +2059,7 @@ L16:
     assume {:print "$at(1,0,10)"} true;
 L17:
 
-    // destroy($t5) at <internal>:1:1+10
+    // destroy($t1) at <internal>:1:1+10
 
     // goto L11 at <internal>:1:1+10
     goto L11;
@@ -2062,7 +2067,7 @@ L17:
     // label L18 at <internal>:1:1+10
 L18:
 
-    // destroy($t5) at <internal>:1:1+10
+    // destroy($t1) at <internal>:1:1+10
 
     // goto L15 at <internal>:1:1+10
     goto L15;

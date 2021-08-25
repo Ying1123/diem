@@ -1,29 +1,29 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl
 -monomorphize
 /env:2
 /proverLog:serialize_model.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.451 s, 4 proof obligations]  verified
+  [0.146 s, 4 proof obligations]  verified
 
 Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
-  [0.114 s, 3 proof obligations]  error
+  [0.017 s, 3 proof obligations]  error
 assert_failed(2,879,908): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(1050,9): anon0
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(1050,9): anon0$1
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(1074,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(1087,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl(1055,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl(1055,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl(1079,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl(1092,5): anon7_Else
 
 Boogie program verifier finished with 1 verified, 1 error

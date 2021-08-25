@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/script_provider/script_provider.cvc4.bpl
+/home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.cvc4.bpl
 -monomorphize
 /env:2
 /proverLog:script_provider.cvc4.smt2
@@ -8,7 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/script_provider/script_provider.cvc4.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.cvc4.bpl
 Coalescing blocks...
 Inlining...
 

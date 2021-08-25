@@ -5,9 +5,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6706 0)) ((($Mutation_6706 (|l#$Mutation_6706| T@$Location) (|p#$Mutation_6706| (Seq Int)) (|v#$Mutation_6706| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_6785 0)) ((($Mutation_6785 (|l#$Mutation_6785| T@$Location) (|p#$Mutation_6785| (Seq Int)) (|v#$Mutation_6785| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -111,23 +112,23 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |verifybcsandybpl.839:15|
+ :qid |verifybcsandybpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |verifybcsandybpl.842:15|
+ :qid |verifybcsandybpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((v1@@1 |T@#0|) (v2@@1 |T@#0|) ) (! (= (= v1@@1 v2@@1) (= (|$1_BCS_serialize'#0'| v1@@1) (|$1_BCS_serialize'#0'| v2@@1)))
- :qid |verifybcsandybpl.869:15|
+ :qid |verifybcsandybpl.889:15|
  :skolemid |24|
  :pattern ( (|$1_BCS_serialize'#0'| v1@@1) (|$1_BCS_serialize'#0'| v2@@1))
 )))
 (assert (forall ((v@@6 |T@#0|) ) (! (let ((r@@0 (|$1_BCS_serialize'#0'| v@@6)))
  (and (|$IsValid'vec'u8''| r@@0) (> (seq.len r@@0) 0)))
- :qid |verifybcsandybpl.874:15|
+ :qid |verifybcsandybpl.894:15|
  :skolemid |25|
  :pattern ( (|$1_BCS_serialize'#0'| v@@6))
 )))
@@ -152,10 +153,10 @@
 (push 1)
 (set-info :boogie-vc-id $42_VerifyBCS_verify_to_bytes$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 8951) (let ((anon4_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= (ControlFlow 0 8862) (- 0 9067))) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))))))
+ (=> (= (ControlFlow 0 0) 9079) (let ((anon4_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= (ControlFlow 0 8990) (- 0 9195))) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))))))
 (let ((anon4_Then_correct true))
-(let ((anon0$1_correct  (=> (and (= _$t0 _$t0) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))) (and (=> (= (ControlFlow 0 8836) 8880) anon4_Then_correct) (=> (= (ControlFlow 0 8836) 8862) anon4_Else_correct)))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 8951) 8836) anon0$1_correct)))
+(let ((anon0$1_correct  (=> (and (= _$t0 _$t0) (= call1formal@res@0 (|$1_BCS_serialize'#0'| _$t0))) (and (=> (= (ControlFlow 0 8964) 9008) anon4_Then_correct) (=> (= (ControlFlow 0 8964) 8990) anon4_Else_correct)))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 9079) 8964) anon0$1_correct)))
 anon0_correct)))))
 ))
 (check-sat)

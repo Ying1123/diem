@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.z3.bpl
 -monomorphize
 /env:2
 /proverLog:RegisteredCurrencies.z3.smt2
@@ -8,13 +8,13 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.171 s, 8 proof obligations]  verified
+  [0.162 s, 8 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.043 s, 16 proof obligations]  verified
+  [0.045 s, 16 proof obligations]  verified

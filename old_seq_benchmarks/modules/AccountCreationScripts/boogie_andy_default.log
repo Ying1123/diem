@@ -3,7 +3,7 @@
 -monomorphize
 /env:2
 /proverLog:AccountCreationScripts.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -11,12 +11,12 @@
 Parsing /home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify ...
-  [6.488 s, 51 proof obligations]  inconclusive
+  [0.739 s, 51 proof obligations]  inconclusive
 /home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl(21278,27): Verification inconclusive ($1_AccountCreationScripts_create_child_vasp_account$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe

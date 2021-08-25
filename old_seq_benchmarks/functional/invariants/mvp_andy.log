@@ -1,121 +1,16 @@
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_update` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_pack` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::update_helper` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_S_branching` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R_2` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_ref` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_indirectly` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_branching` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update` to be verified
-05:34:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_pack` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_update` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::valid_R_pack` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::update_helper` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_S_branching` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R_2` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::lifetime_invalid_R` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_ref` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_indirectly` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update_branching` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_update` to be verified
+06:11:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestInvariants::invalid_R_pack` to be verified
 [INFO] translating module TestInvariants
-05:34:57 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+06:11:12 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-05:34:57 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-05:34:57 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-05:34:58 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-[internal] boogie exited with prover errors:
-Prover error: Unexpected value: (seq.unit 0)
-
-Advisory: $42_TestInvariants_lifetime_invalid_R$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
-Prover error: Invalid PING response from the prover: unsat
-
-assert_failed(2,248,273): data invariant does not hold
-Execution trace:
-    output.bpl(948,5): anon0
-    output.bpl(948,5): anon0$1
-Augmented execution trace:
-$at(2,942,943)
-$at(2,248,273)
-*** MODEL
-$EXEC_FAILURE_CODE -> (- 1)
-$MAX_U128 -> 340282366920938463463374607431768211455
-$MAX_U64 -> 18446744073709551615
-$MAX_U8 -> 255
-$t1@0 -> ($42_TestInvariants_R 1)
-$1_Hash_sha2 -> {
-  else -> (seq.empty)
-}
-$1_Hash_sha3 -> {
-  else -> (seq.empty)
-}
-$1_Signature_$ed25519_validate_pubkey -> {
-  else -> false
-}
-$1_Signature_$ed25519_verify -> {
-  else -> false
-}
-$ConstMemoryDomain -> {
-  false -> T@[Int]Bool!val!0
-  true -> T@[Int]Bool!val!1
-  else -> T@[Int]Bool!val!1
-}
-$IndexOfVec'u8' -> {
-  else -> 0
-}
-$InRange -> {
-  else -> false
-}
-$IsValid'$42_TestInvariants_R' -> {
-  else -> false
-}
-$IsValid'$42_TestInvariants_S' -> {
-  else -> false
-}
-$IsValid'$42_TestInvariants_T' -> {
-  else -> false
-}
-$IsValid'address' -> {
-  else -> false
-}
-$IsValid'num' -> {
-  else -> false
-}
-$IsValid'u128' -> {
-  else -> false
-}
-$IsValid'u64' -> {
-  1 -> true
-  else -> true
-}
-$IsValid'u8' -> {
-  else -> false
-}
-$IsValid'vec'u8'' -> {
-  else -> false
-}
-$shl -> {
-  else -> 0
-}
-$shr -> {
-  else -> 0
-}
-ControlFlow -> {
-  0 0 -> 20869
-  0 17666 -> (- 21189)
-  0 20869 -> 17666
-  else -> (- 21189)
-}
-lambda#0 -> {
-  false -> T@[Int]Bool!val!0
-  true -> T@[Int]Bool!val!1
-  else -> T@[Int]Bool!val!1
-}
-ReverseVec_3283 -> {
-  else -> (seq.empty)
-}
-Select__T@[Int]Bool_ -> {
-  else -> false
-}
-*** END_MODEL
-output.bpl(1445,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_R$verify)
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-output.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
-output.bpl(2110,27): Verification inconclusive ($42_TestInvariants_update_helper$verify)
-output.bpl(2154,27): Verification inconclusive ($42_TestInvariants_valid_R_pack$verify)
-output.bpl(2199,27): Verification inconclusive ($42_TestInvariants_valid_R_update$verify)
-
-Boogie program verifier finished with 1 error, 5 inconclusives
-
+06:11:12 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+06:11:12 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1

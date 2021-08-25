@@ -4,9 +4,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_8370 0)) ((($Mutation_8370 (|l#$Mutation_8370| T@$Location) (|p#$Mutation_8370| (Seq Int)) (|v#$Mutation_8370| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_8449 0)) ((($Mutation_8449 (|l#$Mutation_8449| T@$Location) (|p#$Mutation_8449| (Seq Int)) (|v#$Mutation_8449| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -130,12 +131,12 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |invariantswithquantandybpl.1019:15|
+ :qid |invariantswithquantandybpl.1039:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |invariantswithquantandybpl.1022:15|
+ :qid |invariantswithquantandybpl.1042:15|
  :skolemid |28|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -156,78 +157,76 @@
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (declare-fun $t0@2 () (Seq Int))
-(declare-fun |inline$$1_Vector_push_back'u64'$2$m'@1| () T@$Mutation_8370)
-(declare-fun $t6@0 () T@$Mutation_8370)
+(declare-fun |inline$$1_Vector_push_back'u64'$2$m'@1| () T@$Mutation_8449)
+(declare-fun $t6@0 () T@$Mutation_8449)
 (declare-fun $t0@1 () (Seq Int))
-(declare-fun |inline$$1_Vector_push_back'u64'$1$m'@1| () T@$Mutation_8370)
-(declare-fun $t4@0 () T@$Mutation_8370)
+(declare-fun |inline$$1_Vector_push_back'u64'$1$m'@1| () T@$Mutation_8449)
+(declare-fun $t4@0 () T@$Mutation_8449)
 (declare-fun $t0@0 () (Seq Int))
-(declare-fun |inline$$1_Vector_push_back'u64'$0$m'@1| () T@$Mutation_8370)
-(declare-fun $t2@0 () T@$Mutation_8370)
+(declare-fun |inline$$1_Vector_push_back'u64'$0$m'@1| () T@$Mutation_8449)
+(declare-fun $t2@0 () T@$Mutation_8449)
 (declare-fun |inline$$1_Vector_empty'u64'$0$v@1| () (Seq Int))
-(declare-fun $t2 () T@$Mutation_8370)
-(declare-fun $t4 () T@$Mutation_8370)
-(declare-fun $t6 () T@$Mutation_8370)
+(declare-fun $t2 () T@$Mutation_8449)
+(declare-fun $t4 () T@$Mutation_8449)
+(declare-fun $t6 () T@$Mutation_8449)
 (push 1)
 (set-info :boogie-vc-id $42_TestQuantInvariant_vector_of_proper_positives$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 12913) (let ((anon13_Else_correct  (=> (not false) (=> (and (= $t0@2 (|v#$Mutation_8370| |inline$$1_Vector_push_back'u64'$2$m'@1|)) (= $t0@2 $t0@2)) (and (=> (= (ControlFlow 0 12705) (- 0 13276)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 12705) (- 0 13283)) (let (($range_0 $t0@2))
+ (=> (= (ControlFlow 0 0) 13041) (let ((anon13_Else_correct  (=> (not false) (=> (and (= $t0@2 (|v#$Mutation_8449| |inline$$1_Vector_push_back'u64'$2$m'@1|)) (= $t0@2 $t0@2)) (and (=> (= (ControlFlow 0 12833) (- 0 13404)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 12833) (- 0 13411)) (let (($range_0 $t0@2))
 (forall (($i_1 Int) ) (!  (=> (and (>= $i_1 0) (< $i_1 (seq.len $range_0))) (let ((n (seq.nth $range_0 $i_1)))
 (> n 0)))
- :qid |invariantswithquantandybpl.1189:37|
+ :qid |invariantswithquantandybpl.1194:37|
  :skolemid |29|
-)))) (=> (let (($range_0 $t0@2))
-(forall (($i_1@@0 Int) ) (!  (=> (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0))) (let ((n (seq.nth $range_0 $i_1@@0)))
-(> n 0)))
- :qid |invariantswithquantandybpl.1189:37|
+)))) (=> (let (($range_0@@0 $t0@2))
+(forall (($i_1@@0 Int) ) (!  (=> (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0@@0))) (let ((n@@0 (seq.nth $range_0@@0 $i_1@@0)))
+(> n@@0 0)))
+ :qid |invariantswithquantandybpl.1194:37|
  :skolemid |29|
-))) (and (=> (= (ControlFlow 0 12705) (- 0 13314)) (let (($range_0@@0 ($Range 0 (seq.len $t0@2))))
+))) (and (=> (= (ControlFlow 0 12833) (- 0 13442)) (let (($range_0@@1 ($Range 0 (seq.len $t0@2))))
 (let (($range_1 ($Range 0 (seq.len $t0@2))))
-(forall (($i_2 Int) ($i_3 Int) ) (!  (=> ($InRange $range_0@@0 $i_2) (=> ($InRange $range_1 $i_3) (let ((i@@8 $i_2))
+(forall (($i_2 Int) ($i_3 Int) ) (!  (=> ($InRange $range_0@@1 $i_2) (=> ($InRange $range_1 $i_3) (let ((i@@8 $i_2))
 (let ((j@@1 $i_3))
  (=> (= (seq.nth $t0@2 i@@8) (seq.nth $t0@2 j@@1)) (= i@@8 j@@1))))))
- :qid |invariantswithquantandybpl.1195:97|
+ :qid |invariantswithquantandybpl.1200:97|
  :skolemid |30|
-))))) (=> (let (($range_0@@0 ($Range 0 (seq.len $t0@2))))
-(let (($range_1 ($Range 0 (seq.len $t0@2))))
-(forall (($i_2@@0 Int) ($i_3@@0 Int) ) (!  (=> ($InRange $range_0@@0 $i_2@@0) (=> ($InRange $range_1 $i_3@@0) (let ((i@@8 $i_2@@0))
-(let ((j@@1 $i_3@@0))
- (=> (= (seq.nth $t0@2 i@@8) (seq.nth $t0@2 j@@1)) (= i@@8 j@@1))))))
- :qid |invariantswithquantandybpl.1195:97|
+))))) (=> (let (($range_0@@2 ($Range 0 (seq.len $t0@2))))
+(let (($range_1@@0 ($Range 0 (seq.len $t0@2))))
+(forall (($i_2@@0 Int) ($i_3@@0 Int) ) (!  (=> ($InRange $range_0@@2 $i_2@@0) (=> ($InRange $range_1@@0 $i_3@@0) (let ((i@@9 $i_2@@0))
+(let ((j@@2 $i_3@@0))
+ (=> (= (seq.nth $t0@2 i@@9) (seq.nth $t0@2 j@@2)) (= i@@9 j@@2))))))
+ :qid |invariantswithquantandybpl.1200:97|
  :skolemid |30|
-)))) (and (=> (= (ControlFlow 0 12705) (- 0 13382)) (forall ((i@@9 Int) (j@@2 Int) ) (!  (=> (|$IsValid'u64'| i@@9) (=> (|$IsValid'u64'| j@@2) (=> (and (and (and (and (= (seq.nth $t0@2 i@@9) (seq.nth $t0@2 j@@2)) (>= i@@9 0)) (< i@@9 (seq.len $t0@2))) (>= j@@2 0)) (< j@@2 (seq.len $t0@2))) (= i@@9 j@@2))))
- :qid |invariantswithquantandybpl.1202:15|
- :skolemid |31|
- :pattern ( (seq.nth $t0@2 i@@9) (seq.nth $t0@2 j@@2))
-))) (=> (forall ((i@@10 Int) (j@@3 Int) ) (!  (=> (|$IsValid'u64'| i@@10) (=> (|$IsValid'u64'| j@@3) (=> (and (and (and (and (= (seq.nth $t0@2 i@@10) (seq.nth $t0@2 j@@3)) (>= i@@10 0)) (< i@@10 (seq.len $t0@2))) (>= j@@3 0)) (< j@@3 (seq.len $t0@2))) (= i@@10 j@@3))))
- :qid |invariantswithquantandybpl.1202:15|
+)))) (and (=> (= (ControlFlow 0 12833) (- 0 13510)) (forall ((i@@10 Int) (j@@3 Int) ) (!  (=> (|$IsValid'u64'| i@@10) (=> (|$IsValid'u64'| j@@3) (=> (and (and (and (and (= (seq.nth $t0@2 i@@10) (seq.nth $t0@2 j@@3)) (>= i@@10 0)) (< i@@10 (seq.len $t0@2))) (>= j@@3 0)) (< j@@3 (seq.len $t0@2))) (= i@@10 j@@3))))
+ :qid |invariantswithquantandybpl.1207:15|
  :skolemid |31|
  :pattern ( (seq.nth $t0@2 i@@10) (seq.nth $t0@2 j@@3))
-)) (=> (= (ControlFlow 0 12705) (- 0 13465)) (let (($range_0@@1 ($Range 0 (seq.len $t0@2))))
-(forall (($i_1@@1 Int) ) (!  (=> ($InRange $range_0@@1 $i_1@@1) (let ((i@@11 $i_1@@1))
-(let ((i@@12 (seq.nth $t0@2 i@@11)))
-(> i@@12 0))))
- :qid |invariantswithquantandybpl.1207:56|
+))) (=> (forall ((i@@11 Int) (j@@4 Int) ) (!  (=> (|$IsValid'u64'| i@@11) (=> (|$IsValid'u64'| j@@4) (=> (and (and (and (and (= (seq.nth $t0@2 i@@11) (seq.nth $t0@2 j@@4)) (>= i@@11 0)) (< i@@11 (seq.len $t0@2))) (>= j@@4 0)) (< j@@4 (seq.len $t0@2))) (= i@@11 j@@4))))
+ :qid |invariantswithquantandybpl.1207:15|
+ :skolemid |31|
+ :pattern ( (seq.nth $t0@2 i@@11) (seq.nth $t0@2 j@@4))
+)) (=> (= (ControlFlow 0 12833) (- 0 13593)) (let (($range_0@@3 ($Range 0 (seq.len $t0@2))))
+(forall (($i_1@@1 Int) ) (!  (=> ($InRange $range_0@@3 $i_1@@1) (let ((i@@12 $i_1@@1))
+(let ((i@@13 (seq.nth $t0@2 i@@12)))
+(> i@@13 0))))
+ :qid |invariantswithquantandybpl.1212:56|
  :skolemid |32|
- :pattern ( (let ((i@@13 $i_1@@1))
-(seq.nth $t0@2 i@@13)))
+ :pattern ( (let ((i@@14 $i_1@@1))
+(seq.nth $t0@2 i@@14)))
 ))))))))))))))))
 (let ((anon13_Then_correct true))
-(let ((|inline$$1_Vector_push_back'u64'$2$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u64'$2$m'@1| ($Mutation_8370 (|l#$Mutation_8370| $t6@0) (|p#$Mutation_8370| $t6@0) (seq.++ (|v#$Mutation_8370| $t6@0) (seq.unit 3)))) (and (=> (= (ControlFlow 0 12425) 12719) anon13_Then_correct) (=> (= (ControlFlow 0 12425) 12705) anon13_Else_correct)))))
-(let ((anon12_Else_correct  (=> (not false) (=> (and (and (= $t0@1 (|v#$Mutation_8370| |inline$$1_Vector_push_back'u64'$1$m'@1|)) (= $t6@0 ($Mutation_8370 ($Local 0) (as seq.empty (Seq Int)) $t0@1))) (and (|$IsValid'u64'| 3) (= (ControlFlow 0 12431) 12425))) |inline$$1_Vector_push_back'u64'$2$anon0_correct|))))
+(let ((|inline$$1_Vector_push_back'u64'$2$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u64'$2$m'@1| ($Mutation_8449 (|l#$Mutation_8449| $t6@0) (|p#$Mutation_8449| $t6@0) (seq.++ (|v#$Mutation_8449| $t6@0) (seq.unit 3)))) (and (=> (= (ControlFlow 0 12553) 12847) anon13_Then_correct) (=> (= (ControlFlow 0 12553) 12833) anon13_Else_correct)))))
+(let ((anon12_Else_correct  (=> (not false) (=> (and (and (= $t0@1 (|v#$Mutation_8449| |inline$$1_Vector_push_back'u64'$1$m'@1|)) (= $t6@0 ($Mutation_8449 ($Local 0) (as seq.empty (Seq Int)) $t0@1))) (and (|$IsValid'u64'| 3) (= (ControlFlow 0 12559) 12553))) |inline$$1_Vector_push_back'u64'$2$anon0_correct|))))
 (let ((anon12_Then_correct true))
-(let ((|inline$$1_Vector_push_back'u64'$1$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u64'$1$m'@1| ($Mutation_8370 (|l#$Mutation_8370| $t4@0) (|p#$Mutation_8370| $t4@0) (seq.++ (|v#$Mutation_8370| $t4@0) (seq.unit 2)))) (and (=> (= (ControlFlow 0 12338) 12743) anon12_Then_correct) (=> (= (ControlFlow 0 12338) 12431) anon12_Else_correct)))))
-(let ((anon11_Else_correct  (=> (not false) (=> (and (and (= $t0@0 (|v#$Mutation_8370| |inline$$1_Vector_push_back'u64'$0$m'@1|)) (= $t4@0 ($Mutation_8370 ($Local 0) (as seq.empty (Seq Int)) $t0@0))) (and (|$IsValid'u64'| 2) (= (ControlFlow 0 12344) 12338))) |inline$$1_Vector_push_back'u64'$1$anon0_correct|))))
+(let ((|inline$$1_Vector_push_back'u64'$1$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u64'$1$m'@1| ($Mutation_8449 (|l#$Mutation_8449| $t4@0) (|p#$Mutation_8449| $t4@0) (seq.++ (|v#$Mutation_8449| $t4@0) (seq.unit 2)))) (and (=> (= (ControlFlow 0 12466) 12871) anon12_Then_correct) (=> (= (ControlFlow 0 12466) 12559) anon12_Else_correct)))))
+(let ((anon11_Else_correct  (=> (not false) (=> (and (and (= $t0@0 (|v#$Mutation_8449| |inline$$1_Vector_push_back'u64'$0$m'@1|)) (= $t4@0 ($Mutation_8449 ($Local 0) (as seq.empty (Seq Int)) $t0@0))) (and (|$IsValid'u64'| 2) (= (ControlFlow 0 12472) 12466))) |inline$$1_Vector_push_back'u64'$1$anon0_correct|))))
 (let ((anon11_Then_correct true))
-(let ((|inline$$1_Vector_push_back'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u64'$0$m'@1| ($Mutation_8370 (|l#$Mutation_8370| $t2@0) (|p#$Mutation_8370| $t2@0) (seq.++ (|v#$Mutation_8370| $t2@0) (seq.unit 1)))) (and (=> (= (ControlFlow 0 12251) 12757) anon11_Then_correct) (=> (= (ControlFlow 0 12251) 12344) anon11_Else_correct)))))
-(let ((anon10_Else_correct  (=> (not false) (=> (and (and (= |inline$$1_Vector_empty'u64'$0$v@1| |inline$$1_Vector_empty'u64'$0$v@1|) (= $t2@0 ($Mutation_8370 ($Local 0) (as seq.empty (Seq Int)) |inline$$1_Vector_empty'u64'$0$v@1|))) (and (|$IsValid'u64'| 1) (= (ControlFlow 0 12257) 12251))) |inline$$1_Vector_push_back'u64'$0$anon0_correct|))))
+(let ((|inline$$1_Vector_push_back'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u64'$0$m'@1| ($Mutation_8449 (|l#$Mutation_8449| $t2@0) (|p#$Mutation_8449| $t2@0) (seq.++ (|v#$Mutation_8449| $t2@0) (seq.unit 1)))) (and (=> (= (ControlFlow 0 12379) 12885) anon11_Then_correct) (=> (= (ControlFlow 0 12379) 12472) anon11_Else_correct)))))
+(let ((anon10_Else_correct  (=> (not false) (=> (and (and (= |inline$$1_Vector_empty'u64'$0$v@1| |inline$$1_Vector_empty'u64'$0$v@1|) (= $t2@0 ($Mutation_8449 ($Local 0) (as seq.empty (Seq Int)) |inline$$1_Vector_empty'u64'$0$v@1|))) (and (|$IsValid'u64'| 1) (= (ControlFlow 0 12385) 12379))) |inline$$1_Vector_push_back'u64'$0$anon0_correct|))))
 (let ((anon10_Then_correct true))
-(let ((|inline$$1_Vector_empty'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_empty'u64'$0$v@1| (as seq.empty (Seq Int))) (and (=> (= (ControlFlow 0 12162) 12771) anon10_Then_correct) (=> (= (ControlFlow 0 12162) 12257) anon10_Else_correct)))))
-(let ((anon0$1_correct  (=> (= (ControlFlow 0 12168) 12162) |inline$$1_Vector_empty'u64'$0$anon0_correct|)))
-(let ((anon0_correct  (=> (and (and (= (seq.len (|p#$Mutation_8370| $t2)) 0) (= (seq.len (|p#$Mutation_8370| $t4)) 0)) (and (= (seq.len (|p#$Mutation_8370| $t6)) 0) (= (ControlFlow 0 12138) 12168))) anon0$1_correct)))
-(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 12913) 12138) anon0_correct)))
+(let ((|inline$$1_Vector_empty'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_empty'u64'$0$v@1| (as seq.empty (Seq Int))) (and (=> (= (ControlFlow 0 12290) 12899) anon10_Then_correct) (=> (= (ControlFlow 0 12290) 12385) anon10_Else_correct)))))
+(let ((anon0$1_correct  (=> (= (ControlFlow 0 12296) 12290) |inline$$1_Vector_empty'u64'$0$anon0_correct|)))
+(let ((anon0_correct  (=> (and (and (= (seq.len (|p#$Mutation_8449| $t2)) 0) (= (seq.len (|p#$Mutation_8449| $t4)) 0)) (and (= (seq.len (|p#$Mutation_8449| $t6)) 0) (= (ControlFlow 0 12266) 12296))) anon0$1_correct)))
+(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 13041) 12266) anon0_correct)))
 PreconditionGeneratedEntry_correct))))))))))))))))
 ))
 (check-sat)
-(pop 1)
-; Undetermined

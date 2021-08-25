@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -891,6 +896,15 @@ procedure {:inline 1} $InitEventStore() {
 
 // Given Types for Type Parameters
 
+
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
 
 // struct A::S at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move:4:5+39
 type {:datatype} $0_A_S;
@@ -1210,15 +1224,15 @@ L2:
 }
 
 // fun B::move_to_test [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move:47:5+87
-procedure {:timeLimit 40} $0_B_move_to_test$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $0_B_move_to_test$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: int;
     var $t2: $0_B_T;
     var $t3: int;
-    var $t0: int;
+    var $t0: $signer;
     var $0_B_T_$modifies: [int]bool;
-    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
@@ -1227,7 +1241,7 @@ procedure {:timeLimit 40} $0_B_move_to_test$verify(_$t0: int) returns ()
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move:47:5+87
     assume {:print "$at(2,971,1058)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<B::T>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move:47:5+87
     assume (forall $a_0: int :: {$ResourceValue($0_B_T_$memory, $a_0)}(var $rsc := $ResourceValue($0_B_T_$memory, $a_0);
@@ -1251,13 +1265,13 @@ procedure {:timeLimit 40} $0_B_move_to_test$verify(_$t0: int) returns ()
 
     // assert CanModify<B::T>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move:48:9+7
     assert {:msg "assert_failed(2,1023,1030): caller does not have permission to modify `B::T` at given address"}
-      $0_B_T_$modifies[$t0];
+      $0_B_T_$modifies[$1_Signer_spec_address_of($t0)];
 
     // move_to<B::T>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesTest.move:48:9+7
-    if ($ResourceExists($0_B_T_$memory, $t0)) {
+    if ($ResourceExists($0_B_T_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $0_B_T_$memory := $ResourceUpdate($0_B_T_$memory, $t0, $t2);
+        $0_B_T_$memory := $ResourceUpdate($0_B_T_$memory, $1_Signer_spec_address_of($t0), $t2);
     }
     if ($abort_flag) {
         assume {:print "$at(2,1023,1030)"} true;

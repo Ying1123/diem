@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -858,21 +878,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 // ==================================================================================
 // Native BCS::serialize
 
-
-// ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
 
 // ==================================================================================
 // Native Event module
@@ -1155,11 +1160,11 @@ L0:
     // $t7 := >=($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:24+2
     call $t7 := $Ge($t0, $t1);
 
-    // $t4 := $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
-    $t4 := $t7;
+    // $t2 := $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
+    $t2 := $t7;
 
-    // trace_local[tmp#$4]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
-    assume {:print "$track_local(0,2,4):", $t7} $t7 == $t7;
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
+    assume {:print "$track_local(0,2,2):", $t7} $t7 == $t7;
 
     // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
     goto L3;
@@ -1171,17 +1176,17 @@ L2:
     $t8 := false;
     assume $IsValid'bool'($t8);
 
-    // $t4 := $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
-    $t4 := $t8;
+    // $t2 := $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
+    $t2 := $t8;
 
-    // trace_local[tmp#$4]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
-    assume {:print "$track_local(0,2,4):", $t8} $t8 == $t8;
+    // trace_local[tmp#$2]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
+    assume {:print "$track_local(0,2,2):", $t8} $t8 == $t8;
 
     // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:13+15
 L3:
 
-    // trace_local[c]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:9+1
-    assume {:print "$track_local(0,2,2):", $t4} $t4 == $t4;
+    // trace_local[c]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:47:9+1
+    assume {:print "$track_local(0,2,4):", $t2} $t2 == $t2;
 
     // $t9 := <($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:15+1
     assume {:print "$at(2,1041,1042)"} true;
@@ -1203,11 +1208,11 @@ L4:
     $t10 := true;
     assume $IsValid'bool'($t10);
 
-    // $t5 := $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
-    $t5 := $t10;
+    // $t3 := $t10 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
+    $t3 := $t10;
 
-    // trace_local[tmp#$5]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
-    assume {:print "$track_local(0,2,5):", $t10} $t10 == $t10;
+    // trace_local[tmp#$3]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
+    assume {:print "$track_local(0,2,3):", $t10} $t10 == $t10;
 
     // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
     goto L7;
@@ -1218,21 +1223,21 @@ L6:
     // $t11 := <=($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:24+2
     call $t11 := $Le($t0, $t1);
 
-    // $t5 := $t11 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
-    $t5 := $t11;
+    // $t3 := $t11 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
+    $t3 := $t11;
 
-    // trace_local[tmp#$5]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
-    assume {:print "$track_local(0,2,5):", $t11} $t11 == $t11;
+    // trace_local[tmp#$3]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
+    assume {:print "$track_local(0,2,3):", $t11} $t11 == $t11;
 
     // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:13+15
 L7:
 
-    // trace_local[d]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:9+1
-    assume {:print "$track_local(0,2,3):", $t5} $t5 == $t5;
+    // trace_local[d]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:48:9+1
+    assume {:print "$track_local(0,2,5):", $t3} $t3 == $t3;
 
-    // $t12 := !=($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:49:17+2
+    // $t12 := !=($t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:49:17+2
     assume {:print "$at(2,1072,1074)"} true;
-    $t12 := !$IsEqual'bool'($t4, $t5);
+    $t12 := !$IsEqual'bool'($t2, $t3);
 
     // $t13 := !($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:49:13+1
     call $t13 := $Not($t12);
@@ -1264,29 +1269,29 @@ L8:
     assume {:print "$at(2,1098,1099)"} true;
 L10:
 
-    // trace_return[0]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:50:9+6
-    assume {:print "$track_return(0,2,0):", $t4} $t4 == $t4;
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:50:9+6
+    assume {:print "$track_return(0,2,0):", $t2} $t2 == $t2;
 
-    // trace_return[1]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:50:9+6
-    assume {:print "$track_return(0,2,1):", $t5} $t5 == $t5;
+    // trace_return[1]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:50:9+6
+    assume {:print "$track_return(0,2,1):", $t3} $t3 == $t3;
 
     // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:51:5+1
     assume {:print "$at(2,1108,1109)"} true;
 L11:
 
-    // assert Iff($t4, And(Gt($t0, $t1), Ge($t0, $t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:53:9+40
+    // assert Iff($t2, And(Gt($t0, $t1), Ge($t0, $t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:53:9+40
     assume {:print "$at(2,1138,1178)"} true;
     assert {:msg "assert_failed(2,1138,1178): post-condition does not hold"}
-      ($t4 <==> (($t0 > $t1) && ($t0 >= $t1)));
+      ($t2 <==> (($t0 > $t1) && ($t0 >= $t1)));
 
-    // assert Iff($t5, Or(Lt($t0, $t1), Le($t0, $t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:54:9+40
+    // assert Iff($t3, Or(Lt($t0, $t1), Le($t0, $t1))) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:54:9+40
     assume {:print "$at(2,1187,1227)"} true;
     assert {:msg "assert_failed(2,1187,1227): post-condition does not hold"}
-      ($t5 <==> (($t0 < $t1) || ($t0 <= $t1)));
+      ($t3 <==> (($t0 < $t1) || ($t0 <= $t1)));
 
-    // return ($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:54:9+40
-    $ret0 := $t4;
-    $ret1 := $t5;
+    // return ($t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:54:9+40
+    $ret0 := $t2;
+    $ret1 := $t3;
     return;
 
     // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/arithm.move:51:5+1

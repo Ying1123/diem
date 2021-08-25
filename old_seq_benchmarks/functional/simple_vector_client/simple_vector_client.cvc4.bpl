@@ -1167,13 +1167,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -1181,9 +1181,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -1218,21 +1238,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 // ==================================================================================
 // Native BCS::serialize
 
-
-// ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
 
 // ==================================================================================
 // Native Event module
@@ -2069,12 +2074,12 @@ L2:
 procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: Vec (int), $ret1: bool, $ret2: bool)
 {
     // declare local variables
-    var $t0: bool;
-    var $t1: bool;
-    var $t2: Vec (int);
-    var $t3: int;
-    var $t4: Vec (int);
-    var $t5: int;
+    var $t0: int;
+    var $t1: Vec (int);
+    var $t2: int;
+    var $t3: Vec (int);
+    var $t4: bool;
+    var $t5: bool;
     var $t6: Vec (int);
     var $t7: int;
     var $t8: $Mutation (Vec (int));
@@ -2104,9 +2109,9 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t2 := Vector::empty<u64>() on_abort goto L2 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:261:19+20
+    // $t6 := Vector::empty<u64>() on_abort goto L2 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:261:19+20
     assume {:print "$at(2,7206,7226)"} true;
-    call $t2 := $1_Vector_empty'u64'();
+    call $t6 := $1_Vector_empty'u64'();
     if ($abort_flag) {
         assume {:print "$at(2,7206,7226)"} true;
         $t7 := $abort_code;
@@ -2114,12 +2119,12 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
         goto L2;
     }
 
-    // trace_local[ev1]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:261:13+3
-    assume {:print "$track_local(1,7,2):", $t2} $t2 == $t2;
+    // trace_local[ev1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:261:13+3
+    assume {:print "$track_local(1,7,6):", $t6} $t6 == $t6;
 
-    // $t8 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:262:27+8
+    // $t8 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:262:27+8
     assume {:print "$at(2,7254,7262)"} true;
-    $t8 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t8 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t9 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:262:37+1
     $t9 := 1;
@@ -2134,12 +2139,12 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:262:9+30
-    $t2 := $Dereference($t8);
+    // write_back[LocalRoot($t6)@]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:262:9+30
+    $t6 := $Dereference($t8);
 
-    // $t10 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:263:27+8
+    // $t10 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:263:27+8
     assume {:print "$at(2,7294,7302)"} true;
-    $t10 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t10 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t11 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:263:37+1
     $t11 := 2;
@@ -2154,12 +2159,12 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:263:9+30
-    $t2 := $Dereference($t10);
+    // write_back[LocalRoot($t6)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:263:9+30
+    $t6 := $Dereference($t10);
 
-    // $t12 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:264:27+8
+    // $t12 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:264:27+8
     assume {:print "$at(2,7334,7342)"} true;
-    $t12 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t12 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t13 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:264:37+1
     $t13 := 3;
@@ -2174,12 +2179,12 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:264:9+30
-    $t2 := $Dereference($t12);
+    // write_back[LocalRoot($t6)@]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:264:9+30
+    $t6 := $Dereference($t12);
 
-    // $t14 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:265:27+8
+    // $t14 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:265:27+8
     assume {:print "$at(2,7374,7382)"} true;
-    $t14 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t14 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t15 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:265:37+1
     $t15 := 5;
@@ -2194,22 +2199,22 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:265:9+30
-    $t2 := $Dereference($t14);
+    // write_back[LocalRoot($t6)@]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:265:9+30
+    $t6 := $Dereference($t14);
 
-    // $t16 := copy($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:31+4
+    // $t16 := copy($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:31+4
     assume {:print "$at(2,7418,7422)"} true;
-    $t16 := $t2;
+    $t16 := $t6;
 
-    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:31+4
-    assume {:print "$track_local(1,7,4):", $t16} $t16 == $t16;
+    // trace_local[tmp#$1]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:31+4
+    assume {:print "$track_local(1,7,1):", $t16} $t16 == $t16;
 
     // $t17 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:38+1
     $t17 := 3;
     assume $IsValid'u64'($t17);
 
-    // trace_local[tmp#$3]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:38+1
-    assume {:print "$track_local(1,7,3):", $t17} $t17 == $t17;
+    // trace_local[tmp#$0]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:38+1
+    assume {:print "$track_local(1,7,0):", $t17} $t17 == $t17;
 
     // $t18 := Vector::contains<u64>($t16, $t17) on_abort goto L2 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:14+26
     call $t18 := $1_Vector_contains'u64'($t16, $t17);
@@ -2221,21 +2226,21 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
     }
 
     // trace_local[b1]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:266:9+2
-    assume {:print "$track_local(1,7,0):", $t18} $t18 == $t18;
+    assume {:print "$track_local(1,7,4):", $t18} $t18 == $t18;
 
-    // $t19 := copy($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:31+4
+    // $t19 := copy($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:31+4
     assume {:print "$at(2,7459,7463)"} true;
-    $t19 := $t2;
+    $t19 := $t6;
 
-    // trace_local[tmp#$6]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:31+4
-    assume {:print "$track_local(1,7,6):", $t19} $t19 == $t19;
+    // trace_local[tmp#$3]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:31+4
+    assume {:print "$track_local(1,7,3):", $t19} $t19 == $t19;
 
     // $t20 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:38+1
     $t20 := 4;
     assume $IsValid'u64'($t20);
 
-    // trace_local[tmp#$5]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:38+1
-    assume {:print "$track_local(1,7,5):", $t20} $t20 == $t20;
+    // trace_local[tmp#$2]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:38+1
+    assume {:print "$track_local(1,7,2):", $t20} $t20 == $t20;
 
     // $t21 := Vector::contains<u64>($t19, $t20) on_abort goto L2 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:14+26
     call $t21 := $1_Vector_contains'u64'($t19, $t20);
@@ -2247,11 +2252,11 @@ procedure {:timeLimit 40} $42_TestVector_test_contains$verify() returns ($ret0: 
     }
 
     // trace_local[b2]($t21) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:267:9+2
-    assume {:print "$track_local(1,7,1):", $t21} $t21 == $t21;
+    assume {:print "$track_local(1,7,5):", $t21} $t21 == $t21;
 
-    // $t22 := move($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:268:10+3
+    // $t22 := move($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:268:10+3
     assume {:print "$at(2,7479,7482)"} true;
-    $t22 := $t2;
+    $t22 := $t6;
 
     // trace_return[0]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:268:9+13
     assume {:print "$track_return(1,7,0):", $t22} $t22 == $t22;
@@ -3033,15 +3038,15 @@ L8:
 procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: Vec (int), $ret1: bool, $ret2: int, $ret3: bool, $ret4: int)
 {
     // declare local variables
-    var $t0: bool;
-    var $t1: bool;
-    var $t2: Vec (int);
-    var $t3: int;
-    var $t4: int;
-    var $t5: int;
+    var $t0: int;
+    var $t1: Vec (int);
+    var $t2: int;
+    var $t3: Vec (int);
+    var $t4: bool;
+    var $t5: bool;
     var $t6: Vec (int);
     var $t7: int;
-    var $t8: Vec (int);
+    var $t8: int;
     var $t9: int;
     var $t10: $Mutation (Vec (int));
     var $t11: int;
@@ -3080,9 +3085,9 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t2 := Vector::empty<u64>() on_abort goto L2 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:291:19+20
+    // $t6 := Vector::empty<u64>() on_abort goto L2 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:291:19+20
     assume {:print "$at(2,8311,8331)"} true;
-    call $t2 := $1_Vector_empty'u64'();
+    call $t6 := $1_Vector_empty'u64'();
     if ($abort_flag) {
         assume {:print "$at(2,8311,8331)"} true;
         $t9 := $abort_code;
@@ -3090,12 +3095,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // trace_local[ev1]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:291:13+3
-    assume {:print "$track_local(1,14,2):", $t2} $t2 == $t2;
+    // trace_local[ev1]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:291:13+3
+    assume {:print "$track_local(1,14,6):", $t6} $t6 == $t6;
 
-    // $t10 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:292:27+8
+    // $t10 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:292:27+8
     assume {:print "$at(2,8359,8367)"} true;
-    $t10 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t10 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t11 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:292:37+1
     $t11 := 1;
@@ -3110,12 +3115,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:292:9+30
-    $t2 := $Dereference($t10);
+    // write_back[LocalRoot($t6)@]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:292:9+30
+    $t6 := $Dereference($t10);
 
-    // $t12 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:293:27+8
+    // $t12 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:293:27+8
     assume {:print "$at(2,8399,8407)"} true;
-    $t12 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t12 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t13 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:293:37+1
     $t13 := 2;
@@ -3130,12 +3135,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:293:9+30
-    $t2 := $Dereference($t12);
+    // write_back[LocalRoot($t6)@]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:293:9+30
+    $t6 := $Dereference($t12);
 
-    // $t14 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:294:27+8
+    // $t14 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:294:27+8
     assume {:print "$at(2,8439,8447)"} true;
-    $t14 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t14 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t15 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:294:37+1
     $t15 := 3;
@@ -3150,12 +3155,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:294:9+30
-    $t2 := $Dereference($t14);
+    // write_back[LocalRoot($t6)@]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:294:9+30
+    $t6 := $Dereference($t14);
 
-    // $t16 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:295:27+8
+    // $t16 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:295:27+8
     assume {:print "$at(2,8479,8487)"} true;
-    $t16 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t16 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t17 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:295:37+1
     $t17 := 7;
@@ -3170,12 +3175,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:295:9+30
-    $t2 := $Dereference($t16);
+    // write_back[LocalRoot($t6)@]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:295:9+30
+    $t6 := $Dereference($t16);
 
-    // $t18 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:296:27+8
+    // $t18 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:296:27+8
     assume {:print "$at(2,8519,8527)"} true;
-    $t18 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t18 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t19 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:296:37+1
     $t19 := 7;
@@ -3190,12 +3195,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:296:9+30
-    $t2 := $Dereference($t18);
+    // write_back[LocalRoot($t6)@]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:296:9+30
+    $t6 := $Dereference($t18);
 
-    // $t20 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:297:27+8
+    // $t20 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:297:27+8
     assume {:print "$at(2,8559,8567)"} true;
-    $t20 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t20 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // $t21 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:297:37+1
     $t21 := 1;
@@ -3210,12 +3215,12 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:297:9+30
-    $t2 := $Dereference($t20);
+    // write_back[LocalRoot($t6)@]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:297:9+30
+    $t6 := $Dereference($t20);
 
-    // $t22 := borrow_local($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:298:25+8
+    // $t22 := borrow_local($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:298:25+8
     assume {:print "$at(2,8597,8605)"} true;
-    $t22 := $Mutation($Local(2), EmptyVec(), $t2);
+    $t22 := $Mutation($Local(6), EmptyVec(), $t6);
 
     // Vector::reverse<u64>($t22) on_abort goto L2 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:298:9+25
     call $t22 := $1_Vector_reverse'u64'($t22);
@@ -3226,22 +3231,22 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
         goto L2;
     }
 
-    // write_back[LocalRoot($t2)@]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:298:9+25
-    $t2 := $Dereference($t22);
+    // write_back[LocalRoot($t6)@]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:298:9+25
+    $t6 := $Dereference($t22);
 
-    // $t23 := copy($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:42+4
+    // $t23 := copy($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:42+4
     assume {:print "$at(2,8649,8653)"} true;
-    $t23 := $t2;
+    $t23 := $t6;
 
-    // trace_local[tmp#$6]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:42+4
-    assume {:print "$track_local(1,14,6):", $t23} $t23 == $t23;
+    // trace_local[tmp#$1]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:42+4
+    assume {:print "$track_local(1,14,1):", $t23} $t23 == $t23;
 
     // $t24 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:49+1
     $t24 := 4;
     assume $IsValid'u64'($t24);
 
-    // trace_local[tmp#$5]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:49+1
-    assume {:print "$track_local(1,14,5):", $t24} $t24 == $t24;
+    // trace_local[tmp#$0]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:49+1
+    assume {:print "$track_local(1,14,0):", $t24} $t24 == $t24;
 
     // ($t25, $t26) := Vector::index_of<u64>($t23, $t24) on_abort goto L2 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:20+31
     call $t25,$t26 := $1_Vector_index_of'u64'($t23, $t24);
@@ -3253,24 +3258,24 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
     }
 
     // trace_local[i1]($t26) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:14+2
-    assume {:print "$track_local(1,14,3):", $t26} $t26 == $t26;
+    assume {:print "$track_local(1,14,7):", $t26} $t26 == $t26;
 
     // trace_local[b1]($t25) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:299:10+2
-    assume {:print "$track_local(1,14,0):", $t25} $t25 == $t25;
+    assume {:print "$track_local(1,14,4):", $t25} $t25 == $t25;
 
-    // $t27 := copy($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:42+4
+    // $t27 := copy($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:42+4
     assume {:print "$at(2,8701,8705)"} true;
-    $t27 := $t2;
+    $t27 := $t6;
 
-    // trace_local[tmp#$8]($t27) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:42+4
-    assume {:print "$track_local(1,14,8):", $t27} $t27 == $t27;
+    // trace_local[tmp#$3]($t27) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:42+4
+    assume {:print "$track_local(1,14,3):", $t27} $t27 == $t27;
 
     // $t28 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:49+1
     $t28 := 7;
     assume $IsValid'u64'($t28);
 
-    // trace_local[tmp#$7]($t28) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:49+1
-    assume {:print "$track_local(1,14,7):", $t28} $t28 == $t28;
+    // trace_local[tmp#$2]($t28) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:49+1
+    assume {:print "$track_local(1,14,2):", $t28} $t28 == $t28;
 
     // ($t29, $t30) := Vector::index_of<u64>($t27, $t28) on_abort goto L2 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:20+31
     call $t29,$t30 := $1_Vector_index_of'u64'($t27, $t28);
@@ -3282,14 +3287,14 @@ procedure {:timeLimit 40} $42_TestVector_test_index_of$verify() returns ($ret0: 
     }
 
     // trace_local[i2]($t30) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:14+2
-    assume {:print "$track_local(1,14,4):", $t30} $t30 == $t30;
+    assume {:print "$track_local(1,14,8):", $t30} $t30 == $t30;
 
     // trace_local[b2]($t29) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:300:10+2
-    assume {:print "$track_local(1,14,1):", $t29} $t29 == $t29;
+    assume {:print "$track_local(1,14,5):", $t29} $t29 == $t29;
 
-    // $t31 := move($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:301:10+3
+    // $t31 := move($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:301:10+3
     assume {:print "$at(2,8721,8724)"} true;
-    $t31 := $t2;
+    $t31 := $t6;
 
     // trace_return[0]($t31) at /home/ying/diem/language/move-prover/tests/sources/functional/simple_vector_client.move:301:9+21
     assume {:print "$track_return(1,14,0):", $t31} $t31 == $t31;

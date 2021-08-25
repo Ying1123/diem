@@ -1,64 +1,64 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl
 -monomorphize
 /env:2
 /proverLog:specs_in_fun.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestAssertAndAssume_simple1$verify ...
-  [0.244 s, 1 proof obligation]  verified
+  [0.128 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple1_incorrect$verify ...
-  [0.075 s, 1 proof obligation]  error
+  [0.021 s, 1 proof obligation]  error
 assert_failed(2,792,806): unknown assertion failed
 Execution trace:
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(991,9): anon0
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(991,9): anon0$1
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(541,9): inline$$Gt$0$anon0
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(566,9): inline$$Not$0$anon0
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1019,34): anon4_Else
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(996,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(996,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(566,9): inline$$Not$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1024,34): anon4_Else
 
 Verifying $42_TestAssertAndAssume_simple2$verify ...
-  [0.073 s, 1 proof obligation]  verified
+  [0.014 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple2_incorrect$verify ...
-  [0.073 s, 1 proof obligation]  error
+  [0.007 s, 1 proof obligation]  error
 assert_failed(2,926,940): unknown assertion failed
 Execution trace:
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1139,9): anon0
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1139,9): anon0$1
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1159,5): anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1144,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1144,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1164,5): anon3_Else
 
 Verifying $42_TestAssertAndAssume_simple3$verify ...
-  [0.027 s, 1 proof obligation]  verified
+  [0.002 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple3_incorrect$verify ...
-  [0.038 s, 1 proof obligation]  error
+  [0.004 s, 1 proof obligation]  error
 assert_failed(2,1056,1069): unknown assertion failed
 Execution trace:
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1243,9): anon0
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1243,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1248,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1248,9): anon0$1
 
 Verifying $42_TestAssertAndAssume_simple4$verify ...
-  [0.062 s, 1 proof obligation]  verified
+  [0.006 s, 1 proof obligation]  verified
 
 Verifying $42_TestAssertAndAssume_simple4_incorrect$verify ...
-  [0.082 s, 1 proof obligation]  error
+  [0.008 s, 1 proof obligation]  error
 assert_failed(2,1223,1238): unknown assertion failed
 Execution trace:
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1360,9): anon0
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1360,9): anon0$1
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
-    /home/ying/diem/seq_benchmarks/specs_in_fun/specs_in_fun.andy.bpl(1383,5): anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1365,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1365,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/specs_in_fun/specs_in_fun.andy.bpl(1388,5): anon3_Else
 
 Boogie program verifier finished with 4 verified, 4 errors

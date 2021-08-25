@@ -1,122 +1,14 @@
-02:37:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc_edge` to be verified
-02:37:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc__edge_incorrect` to be verified
-02:37:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges_incorrect` to be verified
-02:37:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges` to be verified
-02:37:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::vec_edge` to be verified
-02:37:50 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+06:42:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc_edge` to be verified
+06:42:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::loc__edge_incorrect` to be verified
+06:42:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges_incorrect` to be verified
+06:42:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::glob_and_field_edges` to be verified
+06:42:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestStrongEdges::vec_edge` to be verified
+06:42:57 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestStrongEdges
-02:37:50 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+06:42:57 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:37:50 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-02:37:50 [DEBUG] (14) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-02:37:51 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-[internal] boogie exited with prover errors:
-Prover error: Unexpected value: (seq.unit 0)
-
-Advisory: $42_TestStrongEdges_glob_and_field_edges_incorrect$verify SKIPPED because of internal error: unexpected prover output: Exception of type 'Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver+BadExprFromProver' was thrown.
-output.bpl(1205,27): Verification inconclusive ($42_TestStrongEdges_glob_and_field_edges_incorrect$verify)
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-assert_failed(2,1443,1457): unknown assertion failed
-Execution trace:
-    output.bpl(1329,5): anon0
-    output.bpl(1329,5): anon0$1
-Augmented execution trace:
-$at(2,1365,1366)
-$track_local(1,2,0):5
-$at(2,1388,1394)
-$track_local(1,2,1):5
-$at(2,1413,1414)
-$at(2,1443,1457)
-*** MODEL
-$EXEC_FAILURE_CODE -> (- 1)
-$MAX_U128 -> 340282366920938463463374607431768211455
-$MAX_U64 -> 18446744073709551615
-$MAX_U8 -> 255
-$t0@0 -> 6
-$t1 -> ($Mutation_3430 ($Global 0) (seq.empty) 1)
-$t3 -> ($Mutation_3430 ($Local 0) (seq.empty) (- 1))
-$t3@0 -> ($Mutation_3430 ($Local 0) (seq.empty) 5)
-$t3@1 -> ($Mutation_3430 ($Local 0) (seq.empty) 6)
-$temp_0'u64'@0 -> 5
-$1_Hash_sha2 -> {
-  else -> (seq.empty)
-}
-$1_Hash_sha3 -> {
-  else -> (seq.empty)
-}
-$1_Signature_$ed25519_validate_pubkey -> {
-  else -> false
-}
-$1_Signature_$ed25519_verify -> {
-  else -> false
-}
-$ConstMemoryDomain -> {
-  false -> T@[Int]Bool!val!0
-  true -> T@[Int]Bool!val!1
-  else -> T@[Int]Bool!val!1
-}
-$IndexOfVec'u64' -> {
-  else -> 0
-}
-$IndexOfVec'u8' -> {
-  else -> 0
-}
-$InRange -> {
-  else -> false
-}
-$IsValid'$42_TestStrongEdges_S' -> {
-  else -> false
-}
-$IsValid'address' -> {
-  else -> false
-}
-$IsValid'num' -> {
-  else -> false
-}
-$IsValid'u128' -> {
-  else -> false
-}
-$IsValid'u64' -> {
-  5 -> true
-  6 -> true
-  else -> true
-}
-$IsValid'u8' -> {
-  else -> false
-}
-$IsValid'vec'u64'' -> {
-  else -> false
-}
-$IsValid'vec'u8'' -> {
-  else -> false
-}
-$shl -> {
-  else -> 0
-}
-$shr -> {
-  else -> 0
-}
-ControlFlow -> {
-  0 0 -> 16253
-  0 15259 -> 15327
-  0 15327 -> (- 16761)
-  0 16253 -> 15259
-  else -> (- 16761)
-}
-lambda#0 -> {
-  false -> T@[Int]Bool!val!0
-  true -> T@[Int]Bool!val!1
-  else -> T@[Int]Bool!val!1
-}
-ReverseVec_3283 -> {
-  else -> (seq.empty)
-}
-Select__T@[Int]Bool_ -> {
-  else -> false
-}
-*** END_MODEL
-output.bpl(1442,27): Verification inconclusive ($42_TestStrongEdges_vec_edge$verify)
-
-Boogie program verifier finished with 1 error, 2 inconclusives
-
+06:42:57 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+06:42:57 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
+06:42:57 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+06:42:57 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.007s build, 0.007s trafo, 0.003s gen, 0.470s verify

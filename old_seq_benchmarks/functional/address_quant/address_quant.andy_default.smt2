@@ -7,11 +7,12 @@
 (declare-datatypes ((T@$42_AddressQuant_R 0)) ((($42_AddressQuant_R (|$x#$42_AddressQuant_R| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$42_AddressQuant_R| 0)
-(declare-datatypes ((T@$Memory_9167 0)) ((($Memory_9167 (|domain#$Memory_9167| |T@[Int]Bool|) (|contents#$Memory_9167| |T@[Int]$42_AddressQuant_R|) ) ) ))
+(declare-datatypes ((T@$Memory_9396 0)) ((($Memory_9396 (|domain#$Memory_9396| |T@[Int]Bool|) (|contents#$Memory_9396| |T@[Int]$42_AddressQuant_R|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_9359 0)) ((($Mutation_9359 (|l#$Mutation_9359| T@$Location) (|p#$Mutation_9359| (Seq Int)) (|v#$Mutation_9359| T@$42_AddressQuant_R) ) ) ))
+(declare-datatypes ((T@$Mutation_9588 0)) ((($Mutation_9588 (|l#$Mutation_9588| T@$Location) (|p#$Mutation_9588| (Seq Int)) (|v#$Mutation_9588| T@$42_AddressQuant_R) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7539 0)) ((($Mutation_7539 (|l#$Mutation_7539| T@$Location) (|p#$Mutation_7539| (Seq Int)) (|v#$Mutation_7539| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7677 0)) ((($Mutation_7677 (|l#$Mutation_7677| T@$Location) (|p#$Mutation_7677| (Seq Int)) (|v#$Mutation_7677| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -33,6 +34,7 @@
 (declare-fun $1_Hash_sha3 ((Seq Int)) (Seq Int))
 (declare-fun $1_Signature_$ed25519_validate_pubkey ((Seq Int)) Bool)
 (declare-fun $1_Signature_$ed25519_verify ((Seq Int) (Seq Int) (Seq Int)) Bool)
+(declare-fun $1_Signer_is_signer (Int) Bool)
 (declare-fun |$IsValid'$42_AddressQuant_R'| (T@$42_AddressQuant_R) Bool)
 (declare-fun ReverseVec_3283 ((Seq Int)) (Seq Int))
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
@@ -113,19 +115,27 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |addressquantandybpl.839:15|
+ :qid |addressquantandybpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |addressquantandybpl.842:15|
+ :qid |addressquantandybpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
-(assert (forall ((s T@$42_AddressQuant_R) ) (! (= (|$IsValid'$42_AddressQuant_R'| s) (|$IsValid'u64'| (|$x#$42_AddressQuant_R| s)))
- :qid |addressquantandybpl.911:39|
- :skolemid |26|
- :pattern ( (|$IsValid'$42_AddressQuant_R'| s))
+(assert (forall ((s T@$signer) ) (!  (=> (|$IsValid'address'| (|$addr#$signer| s)) ($1_Signer_is_signer (|$addr#$signer| s)))
+ :qid |addressquantandybpl.901:15|
+ :skolemid |24|
+)))
+(assert (forall ((addr Int) ) (! true
+ :qid |addressquantandybpl.905:15|
+ :skolemid |25|
+)))
+(assert (forall ((s@@0 T@$42_AddressQuant_R) ) (! (= (|$IsValid'$42_AddressQuant_R'| s@@0) (|$IsValid'u64'| (|$x#$42_AddressQuant_R| s@@0)))
+ :qid |addressquantandybpl.925:39|
+ :skolemid |28|
+ :pattern ( (|$IsValid'$42_AddressQuant_R'| s@@0))
 )))
 (assert (forall ((v@@6 (Seq Int)) ) (! (let ((r@@0 (ReverseVec_3283 v@@6)))
  (and (= (seq.len r@@0) (seq.len v@@6)) (forall ((i@@3 Int) ) (!  (=> (and (>= i@@3 0) (< i@@3 (seq.len r@@0))) (= (seq.nth r@@0 i@@3) (seq.nth v@@6 (- (- (seq.len v@@6) i@@3) 1))))
@@ -139,21 +149,21 @@
 )))
 (assert (forall ((|l#0| Bool) (i@@4 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4) |l#0|)
  :qid |addressquantandybpl.245:54|
- :skolemid |32|
+ :skolemid |34|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4))
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (declare-fun $abort_flag@1 () Bool)
 (declare-fun $t7@0 () T@$Mutation_3430)
-(declare-fun $t2@1 () T@$Mutation_9359)
+(declare-fun $t2@1 () T@$Mutation_9588)
 (declare-fun $t7@1 () T@$Mutation_3430)
 (declare-fun inline$$AddU64$0$dst@2 () Int)
-(declare-fun $t2@2 () T@$Mutation_9359)
-(declare-fun $42_AddressQuant_R_$memory@0 () T@$Memory_9167)
+(declare-fun $t2@2 () T@$Mutation_9588)
+(declare-fun $42_AddressQuant_R_$memory@0 () T@$Memory_9396)
 (declare-fun |Store__T@[Int]Bool_| (|T@[Int]Bool| Int Bool) |T@[Int]Bool|)
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?x2 Bool)) (! (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?y1 Int) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]Bool_| ?x0 ?y1))) :weight 0)))
-(declare-fun $42_AddressQuant_R_$memory () T@$Memory_9167)
+(declare-fun $42_AddressQuant_R_$memory () T@$Memory_9396)
 (declare-fun |Store__T@[Int]$42_AddressQuant_R_| (|T@[Int]$42_AddressQuant_R| Int T@$42_AddressQuant_R) |T@[Int]$42_AddressQuant_R|)
 (declare-fun |Select__T@[Int]$42_AddressQuant_R_| (|T@[Int]$42_AddressQuant_R| Int) T@$42_AddressQuant_R)
 (assert (forall ( ( ?x0 |T@[Int]$42_AddressQuant_R|) ( ?x1 Int) ( ?x2 T@$42_AddressQuant_R)) (! (= (|Select__T@[Int]$42_AddressQuant_R_| (|Store__T@[Int]$42_AddressQuant_R_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
@@ -166,58 +176,58 @@
 (declare-fun $abort_flag@0 () Bool)
 (declare-fun $abort_code@1 () Int)
 (declare-fun |$temp_0'$42_AddressQuant_R'@0| () T@$42_AddressQuant_R)
-(declare-fun $t2 () T@$Mutation_9359)
-(declare-fun $t2@0 () T@$Mutation_9359)
+(declare-fun $t2 () T@$Mutation_9588)
+(declare-fun $t2@0 () T@$Mutation_9588)
 (declare-fun $abort_code@0 () Int)
-(declare-fun $t1 () T@$Mutation_9359)
+(declare-fun $t1 () T@$Mutation_9588)
 (declare-fun $t7 () T@$Mutation_3430)
 (push 1)
 (set-info :boogie-vc-id $42_AddressQuant_f$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 12063) (let ((anon11_Else_correct  (=> (not $abort_flag@1) (=> (and (and (= $t7@0 ($Mutation_3430 (|l#$Mutation_9359| $t2@1) (seq.++ (|p#$Mutation_9359| $t2@1) (seq.unit 0)) (|$x#$42_AddressQuant_R| (|v#$Mutation_9359| $t2@1)))) (= $t7@1 ($Mutation_3430 (|l#$Mutation_3430| $t7@0) (|p#$Mutation_3430| $t7@0) inline$$AddU64$0$dst@2))) (and (= $t2@2 ($Mutation_9359 (|l#$Mutation_9359| $t2@1) (|p#$Mutation_9359| $t2@1) ($42_AddressQuant_R (|v#$Mutation_3430| $t7@1)))) (= $42_AddressQuant_R_$memory@0 ($Memory_9167 (|Store__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) (|a#$Global| (|l#$Mutation_9359| $t2@2)) true) (|Store__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) (|a#$Global| (|l#$Mutation_9359| $t2@2)) (|v#$Mutation_9359| $t2@2)))))) (and (=> (= (ControlFlow 0 11307) (- 0 12486)) (= (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory@0) _$t0)) (+ (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) _$t0)) 1))) (=> (= (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory@0) _$t0)) (+ (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) _$t0)) 1)) (and (=> (= (ControlFlow 0 11307) (- 0 12507)) (forall ((a Int) (b Int) ) (!  (=> (|$IsValid'address'| a) (=> (|$IsValid'address'| b) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@0) a) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@0) b)) (= a b))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-))) (=> (forall ((a@@0 Int) (b@@0 Int) ) (!  (=> (|$IsValid'address'| a@@0) (=> (|$IsValid'address'| b@@0) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@0) a@@0) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@0) b@@0)) (= a@@0 b@@0))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-)) (=> (= (ControlFlow 0 11307) (- 0 12513)) (exists ((a@@1 Int) ) (!  (and (|$IsValid'address'| a@@1) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@0) a@@1))
- :qid |addressquantandybpl.902:13|
- :skolemid |25|
+ (=> (= (ControlFlow 0 0) 12376) (let ((anon11_Else_correct  (=> (not $abort_flag@1) (=> (and (and (= $t7@0 ($Mutation_3430 (|l#$Mutation_9588| $t2@1) (seq.++ (|p#$Mutation_9588| $t2@1) (seq.unit 0)) (|$x#$42_AddressQuant_R| (|v#$Mutation_9588| $t2@1)))) (= $t7@1 ($Mutation_3430 (|l#$Mutation_3430| $t7@0) (|p#$Mutation_3430| $t7@0) inline$$AddU64$0$dst@2))) (and (= $t2@2 ($Mutation_9588 (|l#$Mutation_9588| $t2@1) (|p#$Mutation_9588| $t2@1) ($42_AddressQuant_R (|v#$Mutation_3430| $t7@1)))) (= $42_AddressQuant_R_$memory@0 ($Memory_9396 (|Store__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|a#$Global| (|l#$Mutation_9588| $t2@2)) true) (|Store__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) (|a#$Global| (|l#$Mutation_9588| $t2@2)) (|v#$Mutation_9588| $t2@2)))))) (and (=> (= (ControlFlow 0 11585) (- 0 12799)) (= (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory@0) _$t0)) (+ (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) _$t0)) 1))) (=> (= (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory@0) _$t0)) (+ (|$x#$42_AddressQuant_R| (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) _$t0)) 1)) (and (=> (= (ControlFlow 0 11585) (- 0 12820)) (forall ((a Int) (b Int) ) (!  (=> (|$IsValid'address'| a) (=> (|$IsValid'address'| b) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@0) a) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@0) b)) (= a b))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+))) (=> (forall ((a@@0 Int) (b@@0 Int) ) (!  (=> (|$IsValid'address'| a@@0) (=> (|$IsValid'address'| b@@0) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@0) a@@0) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@0) b@@0)) (= a@@0 b@@0))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+)) (=> (= (ControlFlow 0 11585) (- 0 12826)) (exists ((a@@1 Int) ) (!  (and (|$IsValid'address'| a@@1) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@0) a@@1))
+ :qid |addressquantandybpl.916:13|
+ :skolemid |27|
 )))))))))))
 (let ((anon11_Then_correct true))
-(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@1 true) (=> (and (= $abort_code@2 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 11211) 11321) anon11_Then_correct) (=> (= (ControlFlow 0 11211) 11307) anon11_Else_correct))))))
-(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ $t4@0 1) $MAX_U64) (= (ControlFlow 0 11209) 11211)) inline$$AddU64$0$anon3_Then$1_correct)))
-(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ $t4@0 1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ $t4@0 1)) (= $abort_flag@1 $abort_flag@0)) (and (= $abort_code@2 $abort_code@1) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 11157) 11321) anon11_Then_correct) (=> (= (ControlFlow 0 11157) 11307) anon11_Else_correct))))))
-(let ((anon10_Else_correct  (=> (not $abort_flag@0) (=> (and (and (= |$temp_0'$42_AddressQuant_R'@0| (|v#$Mutation_9359| $t2@1)) (= |$temp_0'$42_AddressQuant_R'@0| |$temp_0'$42_AddressQuant_R'@0|)) (and (= $t4@0 (|$x#$42_AddressQuant_R| (|v#$Mutation_9359| $t2@1))) (|$IsValid'u64'| 1))) (and (=> (= (ControlFlow 0 11217) 11209) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 11217) 11157) inline$$AddU64$0$anon3_Else_correct))))))
+(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@1 true) (=> (and (= $abort_code@2 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 11489) 11599) anon11_Then_correct) (=> (= (ControlFlow 0 11489) 11585) anon11_Else_correct))))))
+(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ $t4@0 1) $MAX_U64) (= (ControlFlow 0 11487) 11489)) inline$$AddU64$0$anon3_Then$1_correct)))
+(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ $t4@0 1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ $t4@0 1)) (= $abort_flag@1 $abort_flag@0)) (and (= $abort_code@2 $abort_code@1) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 11435) 11599) anon11_Then_correct) (=> (= (ControlFlow 0 11435) 11585) anon11_Else_correct))))))
+(let ((anon10_Else_correct  (=> (not $abort_flag@0) (=> (and (and (= |$temp_0'$42_AddressQuant_R'@0| (|v#$Mutation_9588| $t2@1)) (= |$temp_0'$42_AddressQuant_R'@0| |$temp_0'$42_AddressQuant_R'@0|)) (and (= $t4@0 (|$x#$42_AddressQuant_R| (|v#$Mutation_9588| $t2@1))) (|$IsValid'u64'| 1))) (and (=> (= (ControlFlow 0 11495) 11487) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 11495) 11435) inline$$AddU64$0$anon3_Else_correct))))))
 (let ((anon10_Then_correct true))
-(let ((anon9_Then$1_correct  (=> (= $t2@1 $t2) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11393) 11341) anon10_Then_correct) (=> (= (ControlFlow 0 11393) 11217) anon10_Else_correct))))))
-(let ((anon9_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0)) (= (ControlFlow 0 11391) 11393)) anon9_Then$1_correct)))
-(let ((anon9_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0) (=> (and (and (= $t2@0 ($Mutation_9359 ($Global _$t0) (as seq.empty (Seq Int)) (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) _$t0))) (= $t2@1 $t2@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 11032) 11341) anon10_Then_correct) (=> (= (ControlFlow 0 11032) 11217) anon10_Else_correct))))))
-(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (and (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) $a_0)))
+(let ((anon9_Then$1_correct  (=> (= $t2@1 $t2) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11671) 11619) anon10_Then_correct) (=> (= (ControlFlow 0 11671) 11495) anon10_Else_correct))))))
+(let ((anon9_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) _$t0)) (= (ControlFlow 0 11669) 11671)) anon9_Then$1_correct)))
+(let ((anon9_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) _$t0) (=> (and (and (= $t2@0 ($Mutation_9588 ($Global _$t0) (as seq.empty (Seq Int)) (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) _$t0))) (= $t2@1 $t2@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 11310) 11619) anon10_Then_correct) (=> (= (ControlFlow 0 11310) 11495) anon10_Else_correct))))))
+(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (and (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) $a_0)))
 (|$IsValid'$42_AddressQuant_R'| $rsc))
- :qid |addressquantandybpl.948:20|
+ :qid |addressquantandybpl.962:20|
+ :skolemid |29|
+ :pattern ( (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) $a_0))
+)) (forall ((a@@2 Int) (b@@1 Int) ) (!  (=> (|$IsValid'address'| a@@2) (=> (|$IsValid'address'| b@@1) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) a@@2) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) b@@1)) (= a@@2 b@@1))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+))) (and (exists ((a@@3 Int) ) (!  (and (|$IsValid'address'| a@@3) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) a@@3))
+ :qid |addressquantandybpl.916:13|
  :skolemid |27|
- :pattern ( (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) $a_0))
-)) (forall ((a@@2 Int) (b@@1 Int) ) (!  (=> (|$IsValid'address'| a@@2) (=> (|$IsValid'address'| b@@1) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) a@@2) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) b@@1)) (= a@@2 b@@1))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-))) (and (exists ((a@@3 Int) ) (!  (and (|$IsValid'address'| a@@3) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) a@@3))
- :qid |addressquantandybpl.902:13|
- :skolemid |25|
-)) (= _$t0 _$t0))) (and (=> (= (ControlFlow 0 11010) 11391) anon9_Then_correct) (=> (= (ControlFlow 0 11010) 11032) anon9_Else_correct))))))
-(let ((anon0_correct  (=> (and (and (= (seq.len (|p#$Mutation_9359| $t1)) 0) (= (seq.len (|p#$Mutation_9359| $t2)) 0)) (and (= (seq.len (|p#$Mutation_3430| $t7)) 0) (= (ControlFlow 0 10956) 11010))) anon0$1_correct)))
-(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 12063) 10956) anon0_correct)))
+)) (= _$t0 _$t0))) (and (=> (= (ControlFlow 0 11288) 11669) anon9_Then_correct) (=> (= (ControlFlow 0 11288) 11310) anon9_Else_correct))))))
+(let ((anon0_correct  (=> (and (and (= (seq.len (|p#$Mutation_9588| $t1)) 0) (= (seq.len (|p#$Mutation_9588| $t2)) 0)) (and (= (seq.len (|p#$Mutation_3430| $t7)) 0) (= (ControlFlow 0 11234) 11288))) anon0$1_correct)))
+(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 12376) 11234) anon0_correct)))
 PreconditionGeneratedEntry_correct))))))))))))))
 ))
 (check-sat)
 (pop 1)
 ; Valid
 (declare-fun $abort_flag@0@@0 () Bool)
-(declare-fun $42_AddressQuant_R_$memory@1 () T@$Memory_9167)
+(declare-fun $42_AddressQuant_R_$memory@1 () T@$Memory_9396)
 (declare-fun _$t1 () Int)
 (declare-fun $abort_code@1@@0 () Int)
-(declare-fun _$t0@@0 () Int)
-(declare-fun $42_AddressQuant_R_$memory@0@@0 () T@$Memory_9167)
+(declare-fun _$t0@@0 () T@$signer)
+(declare-fun $42_AddressQuant_R_$memory@0@@0 () T@$Memory_9396)
 (declare-fun $t9@0 () T@$42_AddressQuant_R)
 (declare-fun $abort_code@0@@0 () Int)
 (declare-fun $t5@0 () Bool)
@@ -225,90 +235,90 @@ PreconditionGeneratedEntry_correct))))))))))))))
 (push 1)
 (set-info :boogie-vc-id $42_AddressQuant_initialize$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 12546) (let ((anon12_Else_correct  (=> (not $abort_flag@0@@0) (and (=> (= (ControlFlow 0 11692) (- 0 12818)) (forall ((a@@4 Int) ) (!  (=> (|$IsValid'address'| a@@4) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) a@@4) (= a@@4 _$t1)))
- :qid |addressquantandybpl.1165:15|
- :skolemid |30|
-))) (=> (forall ((a@@5 Int) ) (!  (=> (|$IsValid'address'| a@@5) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) a@@5) (= a@@5 _$t1)))
- :qid |addressquantandybpl.1165:15|
- :skolemid |30|
-)) (and (=> (= (ControlFlow 0 11692) (- 0 12842)) (forall ((a@@6 Int) (b@@2 Int) ) (!  (=> (|$IsValid'address'| a@@6) (=> (|$IsValid'address'| b@@2) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) a@@6) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) b@@2)) (= a@@6 b@@2))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-))) (=> (forall ((a@@7 Int) (b@@3 Int) ) (!  (=> (|$IsValid'address'| a@@7) (=> (|$IsValid'address'| b@@3) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) a@@7) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) b@@3)) (= a@@7 b@@3))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-)) (=> (= (ControlFlow 0 11692) (- 0 12848)) (exists ((a@@8 Int) ) (!  (and (|$IsValid'address'| a@@8) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1) a@@8))
- :qid |addressquantandybpl.902:13|
- :skolemid |25|
+ (=> (= (ControlFlow 0 0) 12860) (let ((anon12_Else_correct  (=> (not $abort_flag@0@@0) (and (=> (= (ControlFlow 0 11974) (- 0 13138)) (forall ((a@@4 Int) ) (!  (=> (|$IsValid'address'| a@@4) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) a@@4) (= a@@4 _$t1)))
+ :qid |addressquantandybpl.1180:15|
+ :skolemid |32|
+))) (=> (forall ((a@@5 Int) ) (!  (=> (|$IsValid'address'| a@@5) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) a@@5) (= a@@5 _$t1)))
+ :qid |addressquantandybpl.1180:15|
+ :skolemid |32|
+)) (and (=> (= (ControlFlow 0 11974) (- 0 13162)) (forall ((a@@6 Int) (b@@2 Int) ) (!  (=> (|$IsValid'address'| a@@6) (=> (|$IsValid'address'| b@@2) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) a@@6) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) b@@2)) (= a@@6 b@@2))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+))) (=> (forall ((a@@7 Int) (b@@3 Int) ) (!  (=> (|$IsValid'address'| a@@7) (=> (|$IsValid'address'| b@@3) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) a@@7) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) b@@3)) (= a@@7 b@@3))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+)) (=> (= (ControlFlow 0 11974) (- 0 13168)) (exists ((a@@8 Int) ) (!  (and (|$IsValid'address'| a@@8) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1) a@@8))
+ :qid |addressquantandybpl.916:13|
+ :skolemid |27|
 ))))))))))
 (let ((anon12_Then_correct true))
-(let ((anon11_Then$1_correct  (=> (= $42_AddressQuant_R_$memory@1 $42_AddressQuant_R_$memory) (=> (and (= $abort_flag@0@@0 true) (= $abort_code@1@@0 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11756) 11706) anon12_Then_correct) (=> (= (ControlFlow 0 11756) 11692) anon12_Else_correct))))))
-(let ((anon11_Then_correct@@0  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@0) (= (ControlFlow 0 11754) 11756)) anon11_Then$1_correct)))
-(let ((anon11_Else_correct@@0  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@0)) (=> (and (and (= $42_AddressQuant_R_$memory@0@@0 ($Memory_9167 (|Store__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@0 true) (|Store__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@0 $t9@0))) (= $42_AddressQuant_R_$memory@1 $42_AddressQuant_R_$memory@0@@0)) (and (= $abort_flag@0@@0 false) (= $abort_code@1@@0 $abort_code@0@@0))) (and (=> (= (ControlFlow 0 11645) 11706) anon12_Then_correct) (=> (= (ControlFlow 0 11645) 11692) anon12_Else_correct))))))
-(let ((anon10_Then_correct@@0  (=> $t5@0 (=> (and (|$IsValid'u64'| 1) (= $t9@0 ($42_AddressQuant_R 1))) (and (=> (= (ControlFlow 0 11627) 11754) anon11_Then_correct@@0) (=> (= (ControlFlow 0 11627) 11645) anon11_Else_correct@@0))))))
+(let ((anon11_Then$1_correct  (=> (= $42_AddressQuant_R_$memory@1 $42_AddressQuant_R_$memory) (=> (and (= $abort_flag@0@@0 true) (= $abort_code@1@@0 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 12040) 11988) anon12_Then_correct) (=> (= (ControlFlow 0 12040) 11974) anon12_Else_correct))))))
+(let ((anon11_Then_correct@@0  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@0)) (= (ControlFlow 0 12038) 12040)) anon11_Then$1_correct)))
+(let ((anon11_Else_correct@@0  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@0))) (=> (and (and (= $42_AddressQuant_R_$memory@0@@0 ($Memory_9396 (|Store__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@0) true) (|Store__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@0) $t9@0))) (= $42_AddressQuant_R_$memory@1 $42_AddressQuant_R_$memory@0@@0)) (and (= $abort_flag@0@@0 false) (= $abort_code@1@@0 $abort_code@0@@0))) (and (=> (= (ControlFlow 0 11927) 11988) anon12_Then_correct) (=> (= (ControlFlow 0 11927) 11974) anon12_Else_correct))))))
+(let ((anon10_Then_correct@@0  (=> $t5@0 (=> (and (|$IsValid'u64'| 1) (= $t9@0 ($42_AddressQuant_R 1))) (and (=> (= (ControlFlow 0 11905) 12038) anon11_Then_correct@@0) (=> (= (ControlFlow 0 11905) 11927) anon11_Else_correct@@0))))))
 (let ((anon10_Else_correct@@0 true))
-(let ((anon0$1_correct@@0  (=> (and (|$IsValid'address'| _$t0@@0) (|$IsValid'address'| _$t1)) (=> (and (and (and (forall (($a_0@@0 Int) ) (! (let (($rsc@@0 (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) $a_0@@0)))
+(let ((anon0$1_correct@@0  (=> (and (|$IsValid'address'| (|$addr#$signer| _$t0@@0)) (|$IsValid'address'| _$t1)) (=> (and (and (and (forall (($a_0@@0 Int) ) (! (let (($rsc@@0 (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) $a_0@@0)))
 (|$IsValid'$42_AddressQuant_R'| $rsc@@0))
- :qid |addressquantandybpl.1078:20|
- :skolemid |28|
- :pattern ( (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) $a_0@@0))
-)) (forall ((a@@9 Int) ) (!  (=> (|$IsValid'address'| a@@9) (not (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) a@@9)))
- :qid |addressquantandybpl.1083:20|
- :skolemid |29|
-))) (and (= _$t0@@0 _$t0@@0) (= _$t1 _$t1))) (and (and (|$IsValid'address'| $t4) (= $t4 _$t0@@0)) (and (= $t5@0 (= $t4 _$t1)) (= $t5@0 $t5@0)))) (and (=> (= (ControlFlow 0 11585) 11627) anon10_Then_correct@@0) (=> (= (ControlFlow 0 11585) 11607) anon10_Else_correct@@0))))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 12546) 11585) anon0$1_correct@@0)))
+ :qid |addressquantandybpl.1093:20|
+ :skolemid |30|
+ :pattern ( (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) $a_0@@0))
+)) (forall ((a@@9 Int) ) (!  (=> (|$IsValid'address'| a@@9) (not (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) a@@9)))
+ :qid |addressquantandybpl.1098:20|
+ :skolemid |31|
+))) (and (= _$t0@@0 _$t0@@0) (= _$t1 _$t1))) (and (and (|$IsValid'address'| $t4) (= $t4 (|$addr#$signer| _$t0@@0))) (and (= $t5@0 (= $t4 _$t1)) (= $t5@0 $t5@0)))) (and (=> (= (ControlFlow 0 11863) 11905) anon10_Then_correct@@0) (=> (= (ControlFlow 0 11863) 11885) anon10_Else_correct@@0))))))
+(let ((anon0_correct@@0  (=> (= (ControlFlow 0 12860) 11863) anon0$1_correct@@0)))
 anon0_correct@@0))))))))))
 ))
 (check-sat)
 (pop 1)
 ; Valid
 (declare-fun $abort_flag@0@@1 () Bool)
-(declare-fun $42_AddressQuant_R_$memory@1@@0 () T@$Memory_9167)
+(declare-fun $42_AddressQuant_R_$memory@1@@0 () T@$Memory_9396)
 (declare-fun $abort_code@1@@1 () Int)
-(declare-fun _$t0@@1 () Int)
-(declare-fun $42_AddressQuant_R_$memory@0@@1 () T@$Memory_9167)
+(declare-fun _$t0@@1 () T@$signer)
+(declare-fun $42_AddressQuant_R_$memory@0@@1 () T@$Memory_9396)
 (declare-fun $t2@0@@0 () T@$42_AddressQuant_R)
 (declare-fun $abort_code@0@@1 () Int)
 (push 1)
 (set-info :boogie-vc-id $42_AddressQuant_multiple_copy_incorrect$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 12859) (let ((anon8_Else_correct  (=> (not $abort_flag@0@@1) (and (=> (= (ControlFlow 0 11927) (- 0 13058)) (forall ((a@@10 Int) (b@@4 Int) ) (!  (=> (|$IsValid'address'| a@@10) (=> (|$IsValid'address'| b@@4) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1@@0) a@@10) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1@@0) b@@4)) (= a@@10 b@@4))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-))) (=> (forall ((a@@11 Int) (b@@5 Int) ) (!  (=> (|$IsValid'address'| a@@11) (=> (|$IsValid'address'| b@@5) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1@@0) a@@11) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1@@0) b@@5)) (= a@@11 b@@5))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-)) (=> (= (ControlFlow 0 11927) (- 0 13064)) (exists ((a@@12 Int) ) (!  (and (|$IsValid'address'| a@@12) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory@1@@0) a@@12))
- :qid |addressquantandybpl.902:13|
- :skolemid |25|
+ (=> (= (ControlFlow 0 0) 13179) (let ((anon8_Else_correct  (=> (not $abort_flag@0@@1) (and (=> (= (ControlFlow 0 12227) (- 0 13384)) (forall ((a@@10 Int) (b@@4 Int) ) (!  (=> (|$IsValid'address'| a@@10) (=> (|$IsValid'address'| b@@4) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1@@0) a@@10) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1@@0) b@@4)) (= a@@10 b@@4))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+))) (=> (forall ((a@@11 Int) (b@@5 Int) ) (!  (=> (|$IsValid'address'| a@@11) (=> (|$IsValid'address'| b@@5) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1@@0) a@@11) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1@@0) b@@5)) (= a@@11 b@@5))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+)) (=> (= (ControlFlow 0 12227) (- 0 13390)) (exists ((a@@12 Int) ) (!  (and (|$IsValid'address'| a@@12) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory@1@@0) a@@12))
+ :qid |addressquantandybpl.916:13|
+ :skolemid |27|
 ))))))))
 (let ((anon8_Then_correct true))
-(let ((anon7_Then$1_correct  (=> (= $42_AddressQuant_R_$memory@1@@0 $42_AddressQuant_R_$memory) (=> (and (= $abort_flag@0@@1 true) (= $abort_code@1@@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11995) 11945) anon8_Then_correct) (=> (= (ControlFlow 0 11995) 11927) anon8_Else_correct))))))
-(let ((anon7_Then_correct  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@1) (= (ControlFlow 0 11993) 11995)) anon7_Then$1_correct)))
-(let ((anon7_Else_correct  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@1)) (=> (and (and (= $42_AddressQuant_R_$memory@0@@1 ($Memory_9167 (|Store__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@1 true) (|Store__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) _$t0@@1 $t2@0@@0))) (= $42_AddressQuant_R_$memory@1@@0 $42_AddressQuant_R_$memory@0@@1)) (and (= $abort_flag@0@@1 false) (= $abort_code@1@@1 $abort_code@0@@1))) (and (=> (= (ControlFlow 0 11905) 11945) anon8_Then_correct) (=> (= (ControlFlow 0 11905) 11927) anon8_Else_correct))))))
-(let ((anon0$1_correct@@1  (=> (|$IsValid'address'| _$t0@@1) (=> (and (forall (($a_0@@1 Int) ) (! (let (($rsc@@1 (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) $a_0@@1)))
+(let ((anon7_Then$1_correct  (=> (= $42_AddressQuant_R_$memory@1@@0 $42_AddressQuant_R_$memory) (=> (and (= $abort_flag@0@@1 true) (= $abort_code@1@@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 12297) 12245) anon8_Then_correct) (=> (= (ControlFlow 0 12297) 12227) anon8_Else_correct))))))
+(let ((anon7_Then_correct  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@1)) (= (ControlFlow 0 12295) 12297)) anon7_Then$1_correct)))
+(let ((anon7_Else_correct  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@1))) (=> (and (and (= $42_AddressQuant_R_$memory@0@@1 ($Memory_9396 (|Store__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@1) true) (|Store__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) (|$addr#$signer| _$t0@@1) $t2@0@@0))) (= $42_AddressQuant_R_$memory@1@@0 $42_AddressQuant_R_$memory@0@@1)) (and (= $abort_flag@0@@1 false) (= $abort_code@1@@1 $abort_code@0@@1))) (and (=> (= (ControlFlow 0 12205) 12245) anon8_Then_correct) (=> (= (ControlFlow 0 12205) 12227) anon8_Else_correct))))))
+(let ((anon0$1_correct@@1  (=> (|$IsValid'address'| (|$addr#$signer| _$t0@@1)) (=> (and (forall (($a_0@@1 Int) ) (! (let (($rsc@@1 (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) $a_0@@1)))
 (|$IsValid'$42_AddressQuant_R'| $rsc@@1))
- :qid |addressquantandybpl.1211:20|
- :skolemid |31|
- :pattern ( (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9167| $42_AddressQuant_R_$memory) $a_0@@1))
-)) (forall ((a@@13 Int) (b@@6 Int) ) (!  (=> (|$IsValid'address'| a@@13) (=> (|$IsValid'address'| b@@6) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) a@@13) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) b@@6)) (= a@@13 b@@6))))
- :qid |addressquantandybpl.897:13|
- :skolemid |24|
-))) (=> (and (and (exists ((a@@14 Int) ) (!  (and (|$IsValid'address'| a@@14) (|Select__T@[Int]Bool_| (|domain#$Memory_9167| $42_AddressQuant_R_$memory) a@@14))
- :qid |addressquantandybpl.902:13|
- :skolemid |25|
-)) (= _$t0@@1 _$t0@@1)) (and (|$IsValid'u64'| 1) (= $t2@0@@0 ($42_AddressQuant_R 1)))) (and (=> (= (ControlFlow 0 11887) 11993) anon7_Then_correct) (=> (= (ControlFlow 0 11887) 11905) anon7_Else_correct)))))))
-(let ((anon0_correct@@1  (=> (= (ControlFlow 0 12859) 11887) anon0$1_correct@@1)))
+ :qid |addressquantandybpl.1226:20|
+ :skolemid |33|
+ :pattern ( (|Select__T@[Int]$42_AddressQuant_R_| (|contents#$Memory_9396| $42_AddressQuant_R_$memory) $a_0@@1))
+)) (forall ((a@@13 Int) (b@@6 Int) ) (!  (=> (|$IsValid'address'| a@@13) (=> (|$IsValid'address'| b@@6) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) a@@13) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) b@@6)) (= a@@13 b@@6))))
+ :qid |addressquantandybpl.911:13|
+ :skolemid |26|
+))) (=> (and (and (exists ((a@@14 Int) ) (!  (and (|$IsValid'address'| a@@14) (|Select__T@[Int]Bool_| (|domain#$Memory_9396| $42_AddressQuant_R_$memory) a@@14))
+ :qid |addressquantandybpl.916:13|
+ :skolemid |27|
+)) (= _$t0@@1 _$t0@@1)) (and (|$IsValid'u64'| 1) (= $t2@0@@0 ($42_AddressQuant_R 1)))) (and (=> (= (ControlFlow 0 12183) 12295) anon7_Then_correct) (=> (= (ControlFlow 0 12183) 12205) anon7_Else_correct)))))))
+(let ((anon0_correct@@1  (=> (= (ControlFlow 0 13179) 12183) anon0$1_correct@@1)))
 anon0_correct@@1))))))))
 ))
 (check-sat)
 (get-info :reason-unknown)
 (get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 12859)))
-(get-value ((ControlFlow 0 11887)))
-(get-value ((ControlFlow 0 11905)))
-(get-value ((ControlFlow 0 11927)))
-(assert (not (= (ControlFlow 0 11927) (- 13058))))
+(get-value ((ControlFlow 0 13179)))
+(get-value ((ControlFlow 0 12183)))
+(get-value ((ControlFlow 0 12205)))
+(get-value ((ControlFlow 0 12227)))
+(assert (not (= (ControlFlow 0 12227) (- 13384))))
 (check-sat)
 (pop 1)
 ; Invalid

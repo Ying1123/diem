@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -858,21 +878,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 // ==================================================================================
 // Native BCS::serialize
 
-
-// ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
 
 // ==================================================================================
 // Native Event module
@@ -1023,7 +1028,7 @@ L7:
 
     // assert Or(Eq<u64>($t0, 1), And(Eq<u64>($t0, 2), Eq(2, $t4))) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:64:5+97
     assert {:msg "assert_failed(2,1517,1614): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($IsEqual'u64'($t0, 1) || ($IsEqual'u64'($t0, 2) && $IsEqual'u128'(2, $t4)));
+      ($IsEqual'u64'($t0, 1) || ($IsEqual'u64'($t0, 2) && $IsEqual'num'(2, $t4)));
 
     // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:64:5+97
     $abort_code := $t4;
@@ -1163,7 +1168,7 @@ L7:
 
     // assert Or(Eq<u64>($t0, 1), And(Eq<u64>($t0, 2), Eq(1, $t4))) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:77:5+105
     assert {:msg "assert_failed(2,1786,1891): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($IsEqual'u64'($t0, 1) || ($IsEqual'u64'($t0, 2) && $IsEqual'u128'(1, $t4)));
+      ($IsEqual'u64'($t0, 1) || ($IsEqual'u64'($t0, 2) && $IsEqual'num'(1, $t4)));
 
     // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:77:5+105
     $abort_code := $t4;
@@ -1288,7 +1293,7 @@ L7:
     // assert Or(Eq(1, $t4), Eq(2, $t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:93:5+49
     assume {:print "$at(2,2078,2127)"} true;
     assert {:msg "assert_failed(2,2078,2127): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($IsEqual'u128'(1, $t4) || $IsEqual'u128'(2, $t4));
+      ($IsEqual'num'(1, $t4) || $IsEqual'num'(2, $t4));
 
     // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:93:5+49
     $abort_code := $t4;
@@ -1413,7 +1418,7 @@ L7:
     // assert Or(Eq(1, $t4), Eq(3, $t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:105:5+57
     assume {:print "$at(2,2285,2342)"} true;
     assert {:msg "assert_failed(2,2285,2342): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($IsEqual'u128'(1, $t4) || $IsEqual'u128'(3, $t4));
+      ($IsEqual'num'(1, $t4) || $IsEqual'num'(3, $t4));
 
     // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:105:5+57
     $abort_code := $t4;
@@ -1544,7 +1549,7 @@ L7:
     // assert Or(And(Eq<u64>($t0, 1), Eq(1, $t4)), Eq(2, $t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:117:5+130
     assume {:print "$at(2,2498,2628)"} true;
     assert {:msg "assert_failed(2,2498,2628): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (($IsEqual'u64'($t0, 1) && $IsEqual'u128'(1, $t4)) || $IsEqual'u128'(2, $t4));
+      (($IsEqual'u64'($t0, 1) && $IsEqual'num'(1, $t4)) || $IsEqual'num'(2, $t4));
 
     // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:117:5+130
     $abort_code := $t4;
@@ -1675,7 +1680,7 @@ L7:
     // assert Or(And(Eq<u64>($t0, 1), Eq(1, $t4)), Eq(2, $t4)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:131:5+138
     assume {:print "$at(2,2792,2930)"} true;
     assert {:msg "assert_failed(2,2792,2930): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (($IsEqual'u64'($t0, 1) && $IsEqual'u128'(1, $t4)) || $IsEqual'u128'(2, $t4));
+      (($IsEqual'u64'($t0, 1) && $IsEqual'num'(1, $t4)) || $IsEqual'num'(2, $t4));
 
     // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:131:5+138
     $abort_code := $t4;
@@ -1848,7 +1853,7 @@ L7:
 
     // assert Or(Or(And(Eq<u64>($t0, 1), Eq(2, $t5)), And(Eq<u64>($t1, 2), Eq(3, $t5))), And(Gt(Add($t0, $t1), 18446744073709551615), Eq(-1, $t5))) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:21:5+187
     assert {:msg "assert_failed(2,444,631): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((($IsEqual'u64'($t0, 1) && $IsEqual'u128'(2, $t5)) || ($IsEqual'u64'($t1, 2) && $IsEqual'u128'(3, $t5))) || ((($t0 + $t1) > 18446744073709551615) && $IsEqual'num'(-1, $t5)));
+      ((($IsEqual'u64'($t0, 1) && $IsEqual'num'(2, $t5)) || ($IsEqual'u64'($t1, 2) && $IsEqual'num'(3, $t5))) || ((($t0 + $t1) > 18446744073709551615) && $IsEqual'num'(-1, $t5)));
 
     // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:21:5+187
     $abort_code := $t5;
@@ -2006,7 +2011,7 @@ L7:
 
     // assert Or(And(Eq<u64>($t0, 1), Eq(1, $t5)), And(Eq<u64>($t1, 2), Eq(3, $t5))) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:38:5+147
     assert {:msg "assert_failed(2,872,1019): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (($IsEqual'u64'($t0, 1) && $IsEqual'u128'(1, $t5)) || ($IsEqual'u64'($t1, 2) && $IsEqual'u128'(3, $t5)));
+      (($IsEqual'u64'($t0, 1) && $IsEqual'num'(1, $t5)) || ($IsEqual'u64'($t1, 2) && $IsEqual'num'(3, $t5)));
 
     // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:38:5+147
     $abort_code := $t5;
@@ -2084,7 +2089,7 @@ L2:
 
     // assert And(Eq<u64>($t0, 0), Eq(1, $t3)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:48:5+114
     assert {:msg "assert_failed(2,1138,1252): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($IsEqual'u64'($t0, 0) && $IsEqual'u128'(1, $t3));
+      ($IsEqual'u64'($t0, 0) && $IsEqual'num'(1, $t3));
 
     // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if_with_code.move:48:5+114
     $abort_code := $t3;

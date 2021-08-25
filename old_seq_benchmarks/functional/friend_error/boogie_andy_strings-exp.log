@@ -1,23 +1,23 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/friend_error/friend_error.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/friend_error/friend_error.andy.bpl
 -monomorphize
 /env:2
 /proverLog:friend_error.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/friend_error/friend_error.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/friend_error/friend_error.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestFriendError_f$verify ...
-  [0.231 s, 0 proof obligations]  verified
+  [0.131 s, 0 proof obligations]  verified
 
 Verifying $42_TestFriendError_i$verify ...
-  [0.005 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 2 verified, 0 errors

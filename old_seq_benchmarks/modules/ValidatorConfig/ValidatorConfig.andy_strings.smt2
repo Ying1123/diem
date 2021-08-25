@@ -2716,3 +2716,132 @@ PreconditionGeneratedEntry_correct))))))))))))))))))
 PreconditionGeneratedEntry_correct@@0)))))))))))))))))))))))))
 ))
 (check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@7 () Bool)
+(declare-fun $t21@0 () T@$Mutation_124422)
+(declare-fun $t20@1 () T@$Mutation_124382)
+(declare-fun $t21@1 () T@$Mutation_124422)
+(declare-fun $t19 () |T@$1_Option_Option'address'|)
+(declare-fun $t20@2 () T@$Mutation_124382)
+(declare-fun $1_ValidatorConfig_ValidatorConfig_$memory@0@@2 () T@$Memory_107721)
+(declare-fun $t7@@3 () Int)
+(declare-fun _$t1@@8 () Int)
+(declare-fun $t8@@7 () Int)
+(declare-fun $t9@@9 () Int)
+(declare-fun $t11@0@@2 () Int)
+(declare-fun $abort_code@1@@7 () Int)
+(declare-fun $t20 () T@$Mutation_124382)
+(declare-fun $t15@@2 () Int)
+(declare-fun $t20@0 () T@$Mutation_124382)
+(declare-fun $abort_code@0@@7 () Int)
+(declare-fun inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2 () Bool)
+(declare-fun $t18@@0 () Int)
+(declare-fun inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1 () Bool)
+(declare-fun _$t0@@17 () T@$signer)
+(declare-fun $t14@@2 () Int)
+(declare-fun $t10@@4 () Bool)
+(declare-fun $t11@@2 () Int)
+(declare-fun |Select__T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig_| (|T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig| Int) T@$1_ValidatorOperatorConfig_ValidatorOperatorConfig)
+(declare-fun $t21@@0 () T@$Mutation_124422)
+(push 1)
+(set-info :boogie-vc-id $1_ValidatorConfig_set_operator$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 258896) (let ((anon25_Else_correct@@0  (=> (and (and (not $abort_flag@0@@7) (= $t21@0 ($Mutation_124422 (|l#$Mutation_124382| $t20@1) (seq.++ (|p#$Mutation_124382| $t20@1) (seq.unit 1)) (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@1))))) (and (= $t21@1 ($Mutation_124422 (|l#$Mutation_124422| $t21@0) (|p#$Mutation_124422| $t21@0) $t19)) (= $t20@2 ($Mutation_124382 (|l#$Mutation_124382| $t20@1) (|p#$Mutation_124382| $t20@1) ($1_ValidatorConfig_ValidatorConfig (|$config#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@1)) (|v#$Mutation_124422| $t21@1) (|$human_name#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@1))))))) (and (=> (= (ControlFlow 0 193115) (- 0 259963)) (<= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@2)))) 1)) (=> (<= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@2)))) 1) (and (=> (= (ControlFlow 0 193115) (- 0 259976)) (<= (seq.len (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@2)))) 1)) (=> (<= (seq.len (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|v#$Mutation_124382| $t20@2)))) 1) (=> (= $1_ValidatorConfig_ValidatorConfig_$memory@0@@2 ($Memory_107721 (|Store__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) (|a#$Global| (|l#$Mutation_124382| $t20@2)) true) (|Store__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) (|a#$Global| (|l#$Mutation_124382| $t20@2)) (|v#$Mutation_124382| $t20@2)))) (and (=> (= (ControlFlow 0 193115) (- 0 260017)) (forall ((validator@@5 Int) ) (!  (=> (|$IsValid'address'| validator@@5) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) validator@@5) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) validator@@5)))) 0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) validator@@5) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) validator@@5)))) 0)))))
+ :qid |ValidatorConfigandybpl.8721:15|
+ :skolemid |240|
+))) (=> (forall ((validator@@6 Int) ) (!  (=> (|$IsValid'address'| validator@@6) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) validator@@6) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) validator@@6)))) 0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) validator@@6) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) validator@@6)))) 0)))))
+ :qid |ValidatorConfigandybpl.8721:15|
+ :skolemid |240|
+)) (and (=> (= (ControlFlow 0 193115) (- 0 260041)) (forall ((addr@@131 Int) ) (!  (=> (|$IsValid'address'| addr@@131) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@131) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@131) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@131)) 3))))
+ :qid |ValidatorConfigandybpl.8727:15|
+ :skolemid |241|
+))) (=> (forall ((addr@@132 Int) ) (!  (=> (|$IsValid'address'| addr@@132) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@132) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@132) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@132)) 3))))
+ :qid |ValidatorConfigandybpl.8727:15|
+ :skolemid |241|
+)) (and (=> (= (ControlFlow 0 193115) (- 0 260066)) (forall ((addr@@133 Int) ) (!  (=> (|$IsValid'address'| addr@@133) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@133) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@133) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@133)) 3))))
+ :qid |ValidatorConfigandybpl.8733:15|
+ :skolemid |242|
+))) (=> (forall ((addr@@134 Int) ) (!  (=> (|$IsValid'address'| addr@@134) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@134) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@134) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@134)) 3))))
+ :qid |ValidatorConfigandybpl.8733:15|
+ :skolemid |242|
+)) (and (=> (= (ControlFlow 0 193115) (- 0 260091)) (forall ((addr@@135 Int) ) (!  (=> (|$IsValid'address'| addr@@135) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@135) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@135)))) 0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@135) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@135)) 3))))
+ :qid |ValidatorConfigandybpl.8739:15|
+ :skolemid |243|
+))) (=> (forall ((addr@@136 Int) ) (!  (=> (|$IsValid'address'| addr@@136) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@136) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@136)))) 0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@136) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@136)) 3))))
+ :qid |ValidatorConfigandybpl.8739:15|
+ :skolemid |243|
+)) (and (=> (= (ControlFlow 0 193115) (- 0 260119)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3))) (and (=> (= (ControlFlow 0 193115) (- 0 260131)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) 3)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) 3))) (and (=> (= (ControlFlow 0 193115) (- 0 260149)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8))) (and (=> (= (ControlFlow 0 193115) (- 0 260160)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8))) (and (=> (= (ControlFlow 0 193115) (- 0 260171)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7))) (and (=> (= (ControlFlow 0 193115) (- 0 260183)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)) 3)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)) 3))) (and (=> (= (ControlFlow 0 193115) (- 0 260201)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t8@@7)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t8@@7))) (and (=> (= (ControlFlow 0 193115) (- 0 260213)) (not (= (seq.len (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) $t9@@9)))) 0))) (=> (not (= (seq.len (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) $t9@@9)))) 0)) (and (=> (= (ControlFlow 0 193115) (- 0 260221)) (= (let ((t_ref@@9 (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) $t9@@9)))
+(seq.nth (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| t_ref@@9)) 0)) _$t1@@8)) (=> (= (let ((t_ref@@10 (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) $t9@@9)))
+(seq.nth (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| t_ref@@10)) 0)) _$t1@@8) (=> (= (ControlFlow 0 193115) (- 0 260232)) (forall ((addr@@137 Int) ) (!  (=> (|$IsValid'address'| addr@@137) (=> (not (= addr@@137 $t9@@9)) (= (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory@0@@2) addr@@137)) (|$operator_account#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@137)))))
+ :qid |ValidatorConfigandybpl.8793:15|
+ :skolemid |244|
+)))))))))))))))))))))))))))))))))))))
+(let ((anon22_Then_correct@@1 true))
+(let ((L5_correct@@1  (and (=> (= (ControlFlow 0 192541) (- 0 259717)) (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) 3))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)) 3))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t8@@7)))) (=> (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) 3))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)) 3))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t8@@7))) (=> (= (ControlFlow 0 192541) (- 0 259788)) (or (or (or (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) (= 5 $t11@0@@2)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t7@@3)) 3)) (= 3 $t11@0@@2))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8)) (= 7 $t11@0@@2))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8)) (= 5 $t11@0@@2))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)) (= 5 $t11@0@@2))) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $t8@@7)) 3)) (= 3 $t11@0@@2))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t8@@7)) (= 5 $t11@0@@2))))))))
+(let ((anon25_Then_correct@@0  (=> (and (and $abort_flag@0@@7 (= $abort_code@1@@7 $abort_code@1@@7)) (and (= $t11@0@@2 $abort_code@1@@7) (= (ControlFlow 0 193129) 192541))) L5_correct@@1)))
+(let ((anon24_Then$1_correct  (=> (= $t20@1 $t20) (=> (and (= $abort_flag@0@@7 true) (= $abort_code@1@@7 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 193181) 193129) anon25_Then_correct@@0) (=> (= (ControlFlow 0 193181) 193115) anon25_Else_correct@@0))))))
+(let ((anon24_Then_correct@@0  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t15@@2)) (= (ControlFlow 0 193179) 193181)) anon24_Then$1_correct)))
+(let ((anon24_Else_correct@@0  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t15@@2) (=> (and (and (= $t20@0 ($Mutation_124382 ($Global $t15@@2) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t15@@2))) (= $t20@1 $t20@0)) (and (= $abort_flag@0@@7 false) (= $abort_code@1@@7 $abort_code@0@@7))) (and (=> (= (ControlFlow 0 192770) 193129) anon25_Then_correct@@0) (=> (= (ControlFlow 0 192770) 193115) anon25_Else_correct@@0))))))
+(let ((anon23_Then_correct@@0  (=> inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2 (=> (and (and (|$IsValid'$1_Option_Option'address''| $t19) (<= (seq.len (|$vec#$1_Option_Option'address'| $t19)) 1)) (= $t19 (|$1_Option_Option'address'| (seq.unit _$t1@@8)))) (and (=> (= (ControlFlow 0 192748) 193179) anon24_Then_correct@@0) (=> (= (ControlFlow 0 192748) 192770) anon24_Else_correct@@0))))))
+(let ((anon23_Else_correct@@0  (=> (and (and (not inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2) (= $t18@@0 $t18@@0)) (and (= $t11@0@@2 $t18@@0) (= (ControlFlow 0 192720) 192541))) L5_correct@@1)))
+(let ((anon22_Else_correct@@1  (=> (and (not false) (|$IsValid'u64'| 0)) (=> (and (and (|$IsValid'u64'| $t18@@0) (= $t18@@0 5)) (and (= $t18@@0 $t18@@0) (= inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2 inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2))) (and (=> (= (ControlFlow 0 192704) 192748) anon23_Then_correct@@0) (=> (= (ControlFlow 0 192704) 192720) anon23_Else_correct@@0))))))
+(let ((inline$$1_ValidatorConfig_exists_config$0$anon0_correct@@2  (=> (= $t15@@2 $t15@@2) (=> (and (= inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2 (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $t15@@2)) (= inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2 inline$$1_ValidatorConfig_exists_config$0$$t1@1@@2)) (and (=> (= (ControlFlow 0 192662) 193195) anon22_Then_correct@@1) (=> (= (ControlFlow 0 192662) 192704) anon22_Else_correct@@1))))))
+(let ((anon21_Then_correct@@1  (=> inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1 (=> (and (and (|$IsValid'address'| $t15@@2) (= $t15@@2 (|$addr#$signer| _$t0@@17))) (and (= $t15@@2 $t15@@2) (= (ControlFlow 0 192668) 192662))) inline$$1_ValidatorConfig_exists_config$0$anon0_correct@@2))))
+(let ((anon21_Else_correct@@1  (=> (and (and (not inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1) (= $t14@@2 $t14@@2)) (and (= $t11@0@@2 $t14@@2) (= (ControlFlow 0 192317) 192541))) L5_correct@@1)))
+(let ((anon20_Else_correct@@1  (=> (and (not false) (|$IsValid'u64'| 3)) (=> (and (and (|$IsValid'u64'| $t14@@2) (= $t14@@2 7)) (and (= $t14@@2 $t14@@2) (= inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1 inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1))) (and (=> (= (ControlFlow 0 192301) 192668) anon21_Then_correct@@1) (=> (= (ControlFlow 0 192301) 192317) anon21_Else_correct@@1))))))
+(let ((anon19_Then_correct@@2  (=> $t10@@4 (=> (and (and (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t0@@17))) (= 5 $t11@@2)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t0@@17))) 3)) (= 3 $t11@@2))) (= $t11@@2 $t11@@2)) (and (= $t11@0@@2 $t11@@2) (= (ControlFlow 0 193265) 192541))) L5_correct@@1))))
+(let ((anon20_Then_correct@@1 true))
+(let ((inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$anon0_correct  (=> (= _$t1@@8 _$t1@@8) (=> (and (= inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1 (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) _$t1@@8)) (= inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1 inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$$t1@1)) (and (=> (= (ControlFlow 0 192255) 193209) anon20_Then_correct@@1) (=> (= (ControlFlow 0 192255) 192301) anon20_Else_correct@@1))))))
+(let ((anon19_Else_correct@@2  (=> (and (not $t10@@4) (= (ControlFlow 0 192261) 192255)) inline$$1_ValidatorOperatorConfig_has_validator_operator_config$0$anon0_correct)))
+(let ((anon0$1_correct@@17  (=> (forall ((addr@@138 Int) ) (!  (=> (|$IsValid'address'| addr@@138) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) addr@@138) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@138) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@138)) 4))))
+ :qid |ValidatorConfigandybpl.8445:20|
+ :skolemid |233|
+)) (=> (and (forall ((addr@@139 Int) ) (!  (=> (|$IsValid'address'| addr@@139) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@139) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@139) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@139)) 3))))
+ :qid |ValidatorConfigandybpl.8449:20|
+ :skolemid |234|
+)) (forall ((addr@@140 Int) ) (!  (=> (|$IsValid'address'| addr@@140) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@140) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@140) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@140)) 3))))
+ :qid |ValidatorConfigandybpl.8453:20|
+ :skolemid |235|
+))) (=> (and (and (forall ((addr@@141 Int) ) (!  (=> (|$IsValid'address'| addr@@141) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@141) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@141)))) 0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) addr@@141) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) addr@@141)) 3))))
+ :qid |ValidatorConfigandybpl.8457:20|
+ :skolemid |236|
+)) (|$IsValid'address'| (|$addr#$signer| _$t0@@17))) (and (|$IsValid'address'| _$t1@@8) (forall (($a_0@@20 Int) ) (! (let (($rsc@@20 (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $a_0@@20)))
+(|$IsValid'$1_Roles_RoleId'| $rsc@@20))
+ :qid |ValidatorConfigandybpl.8466:20|
+ :skolemid |237|
+ :pattern ( (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) $a_0@@20))
+)))) (=> (and (and (and (forall (($a_0@@21 Int) ) (! (let (($rsc@@21 (|Select__T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig_| (|contents#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) $a_0@@21)))
+(|$IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'| $rsc@@21))
+ :qid |ValidatorConfigandybpl.8470:20|
+ :skolemid |238|
+ :pattern ( (|Select__T@[Int]$1_ValidatorOperatorConfig_ValidatorOperatorConfig_| (|contents#$Memory_117851| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) $a_0@@21))
+)) (forall (($a_0@@22 Int) ) (! (let (($rsc@@22 (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $a_0@@22)))
+ (and (|$IsValid'$1_ValidatorConfig_ValidatorConfig'| $rsc@@22) (and (<= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| $rsc@@22))) 1) (<= (seq.len (|$vec#$1_Option_Option'address'| (|$operator_account#$1_ValidatorConfig_ValidatorConfig| $rsc@@22))) 1))))
+ :qid |ValidatorConfigandybpl.8474:20|
+ :skolemid |239|
+ :pattern ( (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_107721| $1_ValidatorConfig_ValidatorConfig_$memory) $a_0@@22))
+))) (and (= $t7@@3 (|$addr#$signer| _$t0@@17)) (= $t8@@7 (|$addr#$signer| _$t0@@17)))) (and (and (= $t9@@9 (|$addr#$signer| _$t0@@17)) (= _$t0@@17 _$t0@@17)) (and (= _$t1@@8 _$t1@@8) (= $t10@@4  (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_105677| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t0@@17))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_105677| $1_Roles_RoleId_$memory) (|$addr#$signer| _$t0@@17))) 3))))))) (and (=> (= (ControlFlow 0 192150) 193265) anon19_Then_correct@@2) (=> (= (ControlFlow 0 192150) 192261) anon19_Else_correct@@2))))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@17  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@19 T@$1_Event_EventHandle) ) (! (let ((stream@@18 (|Select__T@[$1_Event_EventHandle]Multiset_76192_| (|streams#$EventStore| $es) handle@@19)))
+ (and (= (|l#Multiset_76192| stream@@18) 0) (forall ((v@@53 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_76192| stream@@18) v@@53) 0)
+ :qid |ValidatorConfigandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |ValidatorConfigandybpl.2543:13|
+ :skolemid |69|
+))) (= (ControlFlow 0 191858) 192150)) anon0$1_correct@@17)))
+(let ((anon0_correct@@17  (=> (= (seq.len (|p#$Mutation_124382| $t20)) 0) (=> (and (= (seq.len (|p#$Mutation_124422| $t21@@0)) 0) (= (ControlFlow 0 191868) 191858)) inline$$InitEventStore$0$anon0_correct@@17))))
+(let ((PreconditionGeneratedEntry_correct@@1  (=> (= (ControlFlow 0 258896) 191868) anon0_correct@@17)))
+PreconditionGeneratedEntry_correct@@1)))))))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(push 1)
+(set-info :boogie-vc-id $1_Genesis_initialize$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 260286) true)
+))
+(check-sat)
+(pop 1)
+; Valid

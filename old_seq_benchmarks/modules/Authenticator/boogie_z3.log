@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.z3.bpl
 -monomorphize
 /env:2
 /proverLog:Authenticator.z3.smt2
@@ -8,19 +8,19 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Authenticator_create_multi_ed25519$verify ...
-  [0.132 s, 0 proof obligations]  verified
+  [0.126 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_public_keys$verify ...
-  [0.014 s, 0 proof obligations]  verified
+  [0.015 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_threshold$verify ...
-  [0.012 s, 0 proof obligations]  verified
+  [0.007 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_ed25519_authentication_key$verify ...
-  [0.019 s, 1 proof obligation]  verified
+  [0.020 s, 1 proof obligation]  verified

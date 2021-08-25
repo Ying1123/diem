@@ -1,25 +1,22 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl
 -monomorphize
 /env:2
 /proverLog:serialize_model.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+Advisory: $42_TestBCS_bcs_test1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 
 Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.292 s, 4 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/serialize_model/serialize_model.andy.bpl(926,27): Verification inconclusive ($42_TestBCS_bcs_test1$verify)
-Prover error: Prover died
-
+  [0.142 s, 4 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy.bpl(931,27): Verification inconclusive ($42_TestBCS_bcs_test1$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
@@ -31,9 +28,10 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendThisVC(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 202
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCheckSat() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 1883
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 588
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
    at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
    at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
    at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886

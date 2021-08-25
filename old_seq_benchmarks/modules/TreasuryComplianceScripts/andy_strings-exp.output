@@ -1,4 +1,6 @@
 /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.andy_strings.smt2:500.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.andy_strings.smt2:1808.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-cvc5 interrupted by SIGTERM.
+unsat
+unsat
+unsat

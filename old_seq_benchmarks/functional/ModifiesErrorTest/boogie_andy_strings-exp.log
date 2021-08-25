@@ -1,67 +1,67 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl
 -monomorphize
 /env:2
 /proverLog:ModifiesErrorTest.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $0_A_mutate_at$verify ...
-  [0.454 s, 4 proof obligations]  verified
+  [0.137 s, 4 proof obligations]  verified
 
 Verifying $0_A_read_at$verify ...
-  [0.086 s, 3 proof obligations]  verified
+  [0.011 s, 3 proof obligations]  verified
 
 Verifying $0_B_move_from_test_incorrect$verify ...
-  [0.184 s, 2 proof obligations]  error
-assert_failed(2,1563,1572): caller does not have permission to modify `B::T` at given address
+  [0.026 s, 2 proof obligations]  error
+assert_failed(2,1595,1604): caller does not have permission to modify `B::T` at given address
 Execution trace:
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1149,9): anon0
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1149,9): anon0$1
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1192,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1154,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1154,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1197,34): anon10_Else
 
 Verifying $0_B_move_to_test_incorrect$verify ...
-  [0.160 s, 2 proof obligations]  error
-assert_failed(2,1190,1197): caller does not have permission to modify `B::T` at given address
+  [0.014 s, 2 proof obligations]  error
+assert_failed(2,1222,1229): caller does not have permission to modify `B::T` at given address
 Execution trace:
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1321,9): anon0
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1321,9): anon0$1
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1364,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1327,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1327,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1370,34): anon10_Else
 
 Verifying $0_B_mutate_S_test1_incorrect$verify ...
-  [0.217 s, 2 proof obligations]  error
-assert_failed(2,1917,1936): caller does not have permission to modify `A::S` at given address
+  [0.016 s, 2 proof obligations]  error
+assert_failed(2,1949,1968): caller does not have permission to modify `A::S` at given address
 Execution trace:
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1492,9): anon0
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1492,9): anon0$1
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1535,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1498,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1498,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1541,34): anon10_Else
 
 Verifying $0_B_mutate_S_test2_incorrect$verify ...
-  [0.190 s, 2 proof obligations]  error
-assert_failed(2,2331,2347): unknown assertion failed
+  [0.015 s, 2 proof obligations]  error
+assert_failed(2,2363,2379): unknown assertion failed
 Execution trace:
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1680,9): anon0
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1680,9): anon0$1
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1712,34): anon10_Else
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1752,34): anon11_Else
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1770,9): anon12_Then
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1777,5): anon7
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1791,34): anon13_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1686,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1686,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1718,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1758,34): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1776,9): anon12_Then
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1783,5): anon7
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1797,34): anon13_Else
 
 Verifying $0_B_mutate_at_test_incorrect$verify ...
-  [0.306 s, 2 proof obligations]  error
-assert_failed(2,821,838): caller does not have permission to modify `B::T` at given address
+  [0.026 s, 2 proof obligations]  error
+assert_failed(2,853,870): caller does not have permission to modify `B::T` at given address
 Execution trace:
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1860,9): anon0
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1860,9): anon0$1
-    /home/ying/diem/seq_benchmarks/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1906,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1866,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1866,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/ModifiesErrorTest/ModifiesErrorTest.andy.bpl(1912,34): anon10_Else
 
 Boogie program verifier finished with 2 verified, 5 errors

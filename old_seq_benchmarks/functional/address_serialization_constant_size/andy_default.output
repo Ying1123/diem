@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/address_serialization_constant_size/address_serialization_constant_size.andy_default.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/address_serialization_constant_size/address_serialization_constant_size.andy_default.smt2:44.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

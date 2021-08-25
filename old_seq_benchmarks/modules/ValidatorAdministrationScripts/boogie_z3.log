@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.z3.bpl
 -monomorphize
 /env:2
 /proverLog:ValidatorAdministrationScripts.z3.smt2
@@ -8,10 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.343 s, 0 proof obligations]  verified

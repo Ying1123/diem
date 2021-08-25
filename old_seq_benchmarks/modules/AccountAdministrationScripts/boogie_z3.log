@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.z3.bpl
 -monomorphize
 /env:2
 /proverLog:AccountAdministrationScripts.z3.smt2
@@ -8,45 +8,37 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
-  [0.216 s, 8 proof obligations]  verified
+  [0.214 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
-  [0.087 s, 8 proof obligations]  verified
+  [0.079 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_0 ...
+  [0.067 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_1 ...
+  [0.070 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
-  [0.678 s, 9 proof obligations]  verified
-
-Verifying $1_AccountAdministrationScripts_create_diem_id_domains$verify ...
-  [0.050 s, 7 proof obligations]  verified
+  [0.107 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
-  [0.069 s, 11 proof obligations]  verified
+  [0.089 s, 11 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
+  [0.053 s, 7 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
-  [0.075 s, 10 proof obligations]  verified
+  [0.091 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
   [0.126 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
-  [0.132 s, 10 proof obligations]  verified
-
-Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_recovery_address$verify ...
-  [1.520 s, 16 proof obligations]  verified
-
-Verifying $1_AccountAdministrationScripts_rotate_dual_attestation_info$verify ...
-  [0.108 s, 15 proof obligations]  verified
-
-Verifying $1_AccountAdministrationScripts_rotate_shared_ed25519_public_key$verify ...
-  [0.066 s, 7 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.173 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 12 verified, 0 errors
+  [0.123 s, 10 proof obligations]  verified

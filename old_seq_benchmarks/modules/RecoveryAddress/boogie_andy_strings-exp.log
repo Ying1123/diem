@@ -3,7 +3,7 @@
 -monomorphize
 /env:2
 /proverLog:RecoveryAddress.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
 /proverOpt:SOLVER=CVC5
 /trace
@@ -12,12 +12,18 @@
 Parsing /home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [3.119 s, 14 proof obligations]  verified
+  [0.316 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [1.193 s, 14 proof obligations]  verified
+  [0.085 s, 14 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify ...
+  [5.911 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
+  [5.876 s, 34 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

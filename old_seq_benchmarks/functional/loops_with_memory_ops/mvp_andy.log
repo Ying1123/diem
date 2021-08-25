@@ -1,20 +1,8 @@
-05:35:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop2` to be verified
-05:35:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop1` to be verified
-05:35:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+06:12:22 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop2` to be verified
+06:12:22 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoopsWithMemoryOps::nested_loop1` to be verified
+06:12:22 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module VerifyLoopsWithMemoryOps
-05:35:49 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+06:12:22 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-05:35:49 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-05:35:49 [DEBUG] (15) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-05:35:50 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-[internal] boogie exited with prover errors:
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-Advisory: $42_VerifyLoopsWithMemoryOps_nested_loop1$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
-
-output.bpl(1076,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop1$verify)
-output.bpl(1652,27): Verification inconclusive ($42_VerifyLoopsWithMemoryOps_nested_loop2$verify)
-
-Boogie program verifier finished with 0 errors, 2 inconclusives
-
+06:12:22 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+06:12:22 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1

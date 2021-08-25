@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.z3.bpl
 -monomorphize
 /env:2
 /proverLog:PaymentScripts.z3.smt2
@@ -8,12 +8,30 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.337 s, 0 proof obligations]  verified
+  [0.393 s, 0 proof obligations]  verified
 
-Boogie program verifier finished with 1 verified, 0 errors
+Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify ...
+  [1.835 s, 39 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_0 ...
+  [1.760 s, 39 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_1 ...
+  [1.164 s, 39 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify ...
+  [1.740 s, 46 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_0 ...
+  [1.455 s, 46 proof obligations]  verified
+
+Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_1 ...
+  [1.625 s, 46 proof obligations]  verified
+
+Boogie program verifier finished with 7 verified, 0 errors

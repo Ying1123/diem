@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/address_quant/address_quant.cvc4.bpl
+/home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.cvc4.bpl
 -monomorphize
 /env:2
 /proverLog:address_quant.cvc4.smt2
@@ -8,24 +8,9 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/address_quant/address_quant.cvc4.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.cvc4.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/cvc4
-
-Verifying $42_AddressQuant_f$verify ...
-  [0.165 s, 3 proof obligations]  verified
-
-Verifying $42_AddressQuant_initialize$verify ...
-  [0.019 s, 3 proof obligations]  verified
-
-Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
-  [0.025 s, 2 proof obligations]  error
-assert_failed(2,1555,1577): post-condition does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.cvc4.bpl(1200,9): anon0
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.cvc4.bpl(1200,9): anon0$1
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.cvc4.bpl(1238,36): anon7_Else
-    /home/ying/diem/seq_benchmarks/address_quant/address_quant.cvc4.bpl(1240,5): anon8_Else
-
-Boogie program verifier finished with 2 verified, 1 error
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'

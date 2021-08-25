@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/address_quant/address_quant.andy_strings.smt2:45.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/address_quant/address_quant.andy_strings.smt2:155.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy_strings.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy_strings.smt2:165.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unknown

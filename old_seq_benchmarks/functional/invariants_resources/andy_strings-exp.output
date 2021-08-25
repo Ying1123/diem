@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/invariants_resources/invariants_resources.andy_strings.smt2:45.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.andy_strings.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

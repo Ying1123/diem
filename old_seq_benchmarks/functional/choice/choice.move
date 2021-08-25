@@ -1,8 +1,8 @@
 // separate_baseline: cvc4
 // TODO(cvc4): this test requires a separate baseline because cvc4 produces false positives for some of choices
 module 0x42::TestSome {
-    use 0x1::Signer;
-    use 0x1::Vector;
+    use Std::Signer;
+    use Std::Vector;
 
     // Basic tests
     // ===========
@@ -85,4 +85,26 @@ module 0x42::TestSome {
         ensures TRACE(choose i in 0..len(result) where result[i] == 2) == 1;
     }
 
+    // Testing choice duplication
+    // ==========================
+
+    // This is only a compilation test. It fails verification.
+
+    fun test_choice_dup_expected_fail(x: u64): u64 {
+        x + 1
+    }
+    spec test_choice_dup_expected_fail {
+        pragma opaque; // making this opaque lets the choice be injected at each call
+        ensures result == TRACE(choose y: u64 where y > x);
+    }
+
+    fun test_choice_use1(a: u64): u64 {
+        test_choice_dup_expected_fail(a)
+    }
+
+    fun test_choice_use2(_a: vector<u64>, b: u64): u64 {
+        // with incorrect use of parameters, this would use $t0 as a parameter to the choice
+        // function, which leads to a type error in boogie.
+        test_choice_dup_expected_fail(b)
+    }
 }

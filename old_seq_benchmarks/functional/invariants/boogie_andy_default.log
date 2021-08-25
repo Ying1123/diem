@@ -1,66 +1,65 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl
 -monomorphize
 /env:2
 /proverLog:invariants.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestInvariants_invalid_R_pack$verify ...
-  [0.278 s, 2 proof obligations]  error
+  [0.135 s, 2 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(948,5): anon0
-    /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(948,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(953,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(953,5): anon0$1
 
 Verifying $42_TestInvariants_invalid_R_update$verify ...
-  [0.090 s, 4 proof obligations]  verified
+  [0.010 s, 4 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
-  [0.147 s, 7 proof obligations]  verified
+  [0.010 s, 7 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
-  [0.121 s, 2 proof obligations]  verified
+  [0.011 s, 2 proof obligations]  verified
 
 Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
-  [0.128 s, 3 proof obligations]  verified
+  [0.009 s, 3 proof obligations]  verified
 
 Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
-  [0.225 s, 3 proof obligations]  error
+  [0.017 s, 3 proof obligations]  error
 assert_failed(2,248,273): data invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1461,5): anon0
-    /home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1461,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1466,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1466,5): anon0$1
 
 Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
-  [0.232 s, 3 proof obligations]  verified
+  [0.012 s, 3 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $42_TestInvariants_lifetime_invalid_S_branching$verify ...
-  [0.210 s, 8 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/invariants/invariants.andy.bpl(1728,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
-Prover error: Prover died
-
+  [0.027 s, 8 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1733,27): Verification inconclusive ($42_TestInvariants_lifetime_invalid_S_branching$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
    at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendThisVC(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 202
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCheckSat() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 1883
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 588
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 556
    at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
    at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
    at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
@@ -72,6 +71,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
    --- End of inner exception stack trace ---
    at System.AggregateException.Handle(Func`2 predicate)
@@ -81,7 +81,9 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #1) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -98,14 +100,18 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
  ---> (Inner Exception #2) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.FlushInternalBuffer()
    at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.FileStream.Flush()
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
@@ -123,8 +129,10 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
    at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
 
 timeout: the monitored command dumped core

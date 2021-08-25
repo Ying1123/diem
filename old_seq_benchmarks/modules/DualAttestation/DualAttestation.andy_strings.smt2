@@ -3285,3 +3285,897 @@ PreconditionGeneratedEntry_correct@@0))))))))))))))))))
 anon0_correct@@18))))))))))))))))))))))))))
 ))
 (check-sat)
+(pop 1)
+; Valid
+(declare-fun $t8@@9 () T@$1_FixedPoint32_FixedPoint32)
+(declare-fun _$t2@@6 () Int)
+(declare-fun $t11@@4 () Int)
+(declare-fun $t27@@0 () Bool)
+(declare-fun _$t1@@13 () Int)
+(declare-fun $t25@@1 () Bool)
+(declare-fun _$t0@@19 () Int)
+(declare-fun $t14@@5 () Bool)
+(declare-fun $t12@@4 () T@$1_FixedPoint32_FixedPoint32)
+(declare-fun $t10@@2 () Bool)
+(declare-fun $t18@0@@1 () Bool)
+(declare-fun $t4@0@@1 () Bool)
+(declare-fun $t26@@0 () Int)
+(declare-fun $t28@0@@0 () Bool)
+(declare-fun $t24@@2 () Int)
+(declare-fun $t3@0@@4 () Bool)
+(declare-fun $t21@@1 () Bool)
+(declare-fun $t22@@1 () Bool)
+(declare-fun $t19@0@@1 () Bool)
+(declare-fun inline$$Not$0$dst@1@@6 () Bool)
+(declare-fun inline$$Ge$0$dst@1@@0 () Bool)
+(declare-fun $t13@@3 () Int)
+(declare-fun $t9@@10 () Int)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_dual_attestation_required$verify_instantiated_0)
+(assert (not
+ (=> (= (ControlFlow 0 0) 320030) (let ((L15_correct@@0  (and (=> (= (ControlFlow 0 240181) (- 0 321060)) (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615))) (=> (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615)) (=> (= (ControlFlow 0 240181) (- 0 321083)) (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= 5 $t11@@4)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)) (= 5 $t11@@4))) (and (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615) (= 8 $t11@@4))))))))
+(let ((anon30_Then_correct@@2  (=> $t27@@0 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@13)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@13))) (= 7 $t11@@4)) (and (= $t11@@4 $t11@@4) (= (ControlFlow 0 240097) 240181))) L15_correct@@0))))
+(let ((anon29_Then_correct@@2  (=> $t25@@1 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@19)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@19))) (= 7 $t11@@4)) (and (= $t11@@4 $t11@@4) (= (ControlFlow 0 240219) 240181))) L15_correct@@0))))
+(let ((anon24_Then_correct@@1  (=> (and (and $t14@@5 (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)) (= 5 $t11@@4)) (and (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@4) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@4) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@4) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615) (= 8 $t11@@4)))) (and (= $t11@@4 $t11@@4) (= (ControlFlow 0 240329) 240181))) L15_correct@@0)))
+(let ((anon23_Then_correct@@1  (=> $t10@@2 (=> (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= 5 $t11@@4)) (and (= $t11@@4 $t11@@4) (= (ControlFlow 0 240355) 240181))) L15_correct@@0))))
+(let ((L14_correct@@0  (and (=> (= (ControlFlow 0 239949) (- 0 321005)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (and (=> (= (ControlFlow 0 239949) (- 0 321015)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) (and (=> (= (ControlFlow 0 239949) (- 0 321025)) (not (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615))) (=> (not (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@9) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615)) (=> (= (ControlFlow 0 239949) (- 0 321039)) (= $t18@0@@1  (and (and (>= (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (not (= _$t0@@19 _$t1@@13))) (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@19) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@19)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@13) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@13))) (not (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@19) _$t0@@19 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@19))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@13) _$t1@@13 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@13)))))))))))))))))
+(let ((L13_correct@@0  (=> (= $t4@0@@1 $t4@0@@1) (=> (and (= $t18@0@@1 $t4@0@@1) (= (ControlFlow 0 239889) 239949)) L14_correct@@0))))
+(let ((anon30_Else_correct@@2  (=> (not $t27@@0) (=> (and (|$IsValid'address'| $t26@@0) (= $t26@@0 (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@13) _$t1@@13 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@13))))) (=> (and (and (= $t28@0@@0  (not (= $t24@@2 $t26@@0))) (= $t28@0@@0 $t28@0@@0)) (and (= $t4@0@@1 $t28@0@@0) (= (ControlFlow 0 240059) 239889))) L13_correct@@0)))))
+(let ((anon29_Else_correct@@2  (=> (and (and (not $t25@@1) (|$IsValid'address'| $t24@@2)) (and (= $t24@@2 (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@19) _$t0@@19 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@19)))) (= $t27@@0  (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@13)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@13)))))) (and (=> (= (ControlFlow 0 240019) 240097) anon30_Then_correct@@2) (=> (= (ControlFlow 0 240019) 240059) anon30_Else_correct@@2)))))
+(let ((anon28_Then_correct@@2  (=> (and $t3@0@@4 (= $t25@@1  (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@19)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@19))))) (and (=> (= (ControlFlow 0 239975) 240219) anon29_Then_correct@@2) (=> (= (ControlFlow 0 239975) 240019) anon29_Else_correct@@2)))))
+(let ((anon28_Else_correct@@2  (=> (and (and (not $t3@0@@4) (= false false)) (and (= $t4@0@@1 false) (= (ControlFlow 0 239877) 239889))) L13_correct@@0)))
+(let ((anon27_Else_correct@@2  (=> (not $t21@@1) (=> (and (= false false) (= $t3@0@@4 false)) (and (=> (= (ControlFlow 0 239855) 239975) anon28_Then_correct@@2) (=> (= (ControlFlow 0 239855) 239877) anon28_Else_correct@@2))))))
+(let ((anon27_Then_correct@@2  (=> (and (and $t21@@1 (= $t22@@1  (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@13) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@13)))) (and (= $t22@@1 $t22@@1) (= $t3@0@@4 $t22@@1))) (and (=> (= (ControlFlow 0 240247) 239975) anon28_Then_correct@@2) (=> (= (ControlFlow 0 240247) 239877) anon28_Else_correct@@2)))))
+(let ((anon26_Else_correct@@2  (=> (and (not $t19@0@@1) (= $t21@@1  (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@19) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@19)))) (and (=> (= (ControlFlow 0 239835) 240247) anon27_Then_correct@@2) (=> (= (ControlFlow 0 239835) 239855) anon27_Else_correct@@2)))))
+(let ((anon26_Then_correct@@2  (=> (and (and $t19@0@@1 (= false false)) (and (= $t18@0@@1 false) (= (ControlFlow 0 240265) 239949))) L14_correct@@0)))
+(let ((anon25_Else_correct@@1  (=> (and (not inline$$Not$0$dst@1@@6) (= $t19@0@@1 (= _$t0@@19 _$t1@@13))) (and (=> (= (ControlFlow 0 239813) 240265) anon26_Then_correct@@2) (=> (= (ControlFlow 0 239813) 239835) anon26_Else_correct@@2)))))
+(let ((anon25_Then_correct@@1  (=> (and (and inline$$Not$0$dst@1@@6 (= false false)) (and (= $t18@0@@1 false) (= (ControlFlow 0 240283) 239949))) L14_correct@@0)))
+(let ((inline$$Not$0$anon0_correct@@6  (=> (= inline$$Not$0$dst@1@@6  (not inline$$Ge$0$dst@1@@0)) (and (=> (= (ControlFlow 0 239793) 240283) anon25_Then_correct@@1) (=> (= (ControlFlow 0 239793) 239813) anon25_Else_correct@@1)))))
+(let ((anon24_Else$1_correct@@1  (=> (and (= inline$$Ge$0$dst@1@@0 inline$$Ge$0$dst@1@@0) (= (ControlFlow 0 239799) 239793)) inline$$Not$0$anon0_correct@@6)))
+(let ((inline$$Ge$0$anon0_correct@@0  (=> (and (= inline$$Ge$0$dst@1@@0 (>= $t13@@3 $t9@@10)) (= (ControlFlow 0 239747) 239799)) anon24_Else$1_correct@@1)))
+(let ((anon24_Else_correct@@1  (=> (not $t14@@5) (=> (and (and (|$IsValid'u64'| $t13@@3) (= $t13@@3 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))))) (and (= $t13@@3 $t13@@3) (= (ControlFlow 0 239753) 239747))) inline$$Ge$0$anon0_correct@@0))))
+(let ((anon23_Else_correct@@1  (=> (and (not $t10@@2) (|$IsValid'u64'| $t9@@10)) (=> (and (and (= $t9@@10 (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (= $t9@@10 $t9@@10)) (and (= $t12@@4 (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))) (= $t14@@5  (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)) (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@4) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@4) 1) _$t2@@6 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@4) 2) (div _$t2@@6 2) (+ 18446744073709551615 1)))) 18446744073709551615))))) (and (=> (= (ControlFlow 0 239679) 240329) anon24_Then_correct@@1) (=> (= (ControlFlow 0 239679) 239753) anon24_Else_correct@@1))))))
+(let ((anon0$1_correct@@19  (=> (and (and (forall ((addr@@107 Int) ) (!  (=> (|$IsValid'address'| addr@@107) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149582| |$1_Diem_Preburn'$1_XUS_XUS'_$memory|) addr@@107) (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16135:22|
+ :skolemid |344|
+)) (forall ((addr@@108 Int) ) (!  (=> (|$IsValid'address'| addr@@108) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149673| |$1_Diem_Preburn'$1_XDX_XDX'_$memory|) addr@@108) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16135:222|
+ :skolemid |345|
+))) (forall ((addr@@109 Int) ) (!  (=> (|$IsValid'address'| addr@@109) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149764| |$1_Diem_Preburn'#0'_$memory|) addr@@109) (|Select__T@[Int]Bool_| (|domain#$Memory_144149| |$1_Diem_CurrencyInfo'#0'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16135:423|
+ :skolemid |346|
+))) (=> (and (and (and (and (and (forall ((addr@@110 Int) ) (!  (=> (|$IsValid'address'| addr@@110) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149991| |$1_Diem_PreburnQueue'$1_XUS_XUS'_$memory|) addr@@110) (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16139:22|
+ :skolemid |347|
+)) (forall ((addr@@111 Int) ) (!  (=> (|$IsValid'address'| addr@@111) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_150090| |$1_Diem_PreburnQueue'$1_XDX_XDX'_$memory|) addr@@111) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16139:227|
+ :skolemid |348|
+))) (forall ((addr@@112 Int) ) (!  (=> (|$IsValid'address'| addr@@112) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_150189| |$1_Diem_PreburnQueue'#0'_$memory|) addr@@112) (|Select__T@[Int]Bool_| (|domain#$Memory_144149| |$1_Diem_CurrencyInfo'#0'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16139:433|
+ :skolemid |349|
+))) (and (forall ((child_addr@@5 Int) ) (!  (=> (|$IsValid'address'| child_addr@@5) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) child_addr@@5) (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) child_addr@@5)))))
+ :qid |DualAttestationandybpl.16143:20|
+ :skolemid |350|
+)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (and (|$IsValid'address'| _$t0@@19) (|$IsValid'address'| _$t1@@13)) (and (|$IsValid'u64'| _$t2@@6) (forall (($a_0@@40 Int) ) (! (let (($rsc@@40 (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) $a_0@@40)))
+ (and (|$IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''| $rsc@@40) (and (< 0 (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'| $rsc@@40)) (<= (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'| $rsc@@40) 10000000000))))
+ :qid |DualAttestationandybpl.16160:20|
+ :skolemid |351|
+ :pattern ( (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) $a_0@@40))
+))))) (and (and (and (forall (($a_0@@41 Int) ) (! (let (($rsc@@41 (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) $a_0@@41)))
+(|$IsValid'$1_VASP_ChildVASP'| $rsc@@41))
+ :qid |DualAttestationandybpl.16164:20|
+ :skolemid |352|
+ :pattern ( (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) $a_0@@41))
+)) (forall (($a_0@@42 Int) ) (! (let (($rsc@@42 (|Select__T@[Int]$1_VASP_ParentVASP_| (|contents#$Memory_161384| $1_VASP_ParentVASP_$memory) $a_0@@42)))
+(|$IsValid'$1_VASP_ParentVASP'| $rsc@@42))
+ :qid |DualAttestationandybpl.16168:20|
+ :skolemid |353|
+ :pattern ( (|Select__T@[Int]$1_VASP_ParentVASP_| (|contents#$Memory_161384| $1_VASP_ParentVASP_$memory) $a_0@@42))
+))) (and (forall (($a_0@@43 Int) ) (! (let (($rsc@@43 (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@43)))
+(|$IsValid'$1_DualAttestation_Limit'| $rsc@@43))
+ :qid |DualAttestationandybpl.16172:20|
+ :skolemid |354|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@43))
+)) (= $t8@@9 (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XUS_XUS'_| (|contents#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816))))) (and (and (= _$t0@@19 _$t0@@19) (= _$t1@@13 _$t1@@13)) (and (= _$t2@@6 _$t2@@6) (= $t10@@2  (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))))) (and (=> (= (ControlFlow 0 239619) 240355) anon23_Then_correct@@1) (=> (= (ControlFlow 0 239619) 239679) anon23_Else_correct@@1))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@19  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@21 T@$1_Event_EventHandle) ) (! (let ((stream@@20 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@21)))
+ (and (= (|l#Multiset_91856| stream@@20) 0) (forall ((v@@61 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@20) v@@61) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 239262) 239619)) anon0$1_correct@@19)))
+(let ((anon0_correct@@19  (=> (= (ControlFlow 0 320030) 239262) inline$$InitEventStore$0$anon0_correct@@19)))
+anon0_correct@@19))))))))))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $t8@@10 () T@$1_FixedPoint32_FixedPoint32)
+(declare-fun _$t2@@7 () Int)
+(declare-fun $t11@@5 () Int)
+(declare-fun $t27@@1 () Bool)
+(declare-fun _$t1@@14 () Int)
+(declare-fun $t25@@2 () Bool)
+(declare-fun _$t0@@20 () Int)
+(declare-fun $t14@@6 () Bool)
+(declare-fun $t12@@5 () T@$1_FixedPoint32_FixedPoint32)
+(declare-fun $t10@@3 () Bool)
+(declare-fun $t18@0@@2 () Bool)
+(declare-fun $t4@0@@2 () Bool)
+(declare-fun $t26@@1 () Int)
+(declare-fun $t28@0@@1 () Bool)
+(declare-fun $t24@@3 () Int)
+(declare-fun $t3@0@@5 () Bool)
+(declare-fun $t21@@2 () Bool)
+(declare-fun $t22@@2 () Bool)
+(declare-fun $t19@0@@2 () Bool)
+(declare-fun inline$$Not$0$dst@1@@7 () Bool)
+(declare-fun inline$$Ge$0$dst@1@@1 () Bool)
+(declare-fun $t13@@4 () Int)
+(declare-fun $t9@@11 () Int)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_dual_attestation_required$verify_instantiated_1)
+(assert (not
+ (=> (= (ControlFlow 0 0) 321147) (let ((L15_correct@@1  (and (=> (= (ControlFlow 0 241426) (- 0 322187)) (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615))) (=> (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615)) (=> (= (ControlFlow 0 241426) (- 0 322210)) (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= 5 $t11@@5)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)) (= 5 $t11@@5))) (and (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615) (= 8 $t11@@5))))))))
+(let ((anon30_Then_correct@@3  (=> $t27@@1 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@14)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@14))) (= 7 $t11@@5)) (and (= $t11@@5 $t11@@5) (= (ControlFlow 0 241342) 241426))) L15_correct@@1))))
+(let ((anon29_Then_correct@@3  (=> $t25@@2 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@20)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@20))) (= 7 $t11@@5)) (and (= $t11@@5 $t11@@5) (= (ControlFlow 0 241464) 241426))) L15_correct@@1))))
+(let ((anon24_Then_correct@@2  (=> (and (and $t14@@6 (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)) (= 5 $t11@@5)) (and (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@5) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@5) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@5) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615) (= 8 $t11@@5)))) (and (= $t11@@5 $t11@@5) (= (ControlFlow 0 241574) 241426))) L15_correct@@1)))
+(let ((anon23_Then_correct@@2  (=> $t10@@3 (=> (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= 5 $t11@@5)) (and (= $t11@@5 $t11@@5) (= (ControlFlow 0 241600) 241426))) L15_correct@@1))))
+(let ((L14_correct@@1  (and (=> (= (ControlFlow 0 241194) (- 0 322132)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (and (=> (= (ControlFlow 0 241194) (- 0 322142)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) (and (=> (= (ControlFlow 0 241194) (- 0 322152)) (not (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615))) (=> (not (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t8@@10) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615)) (=> (= (ControlFlow 0 241194) (- 0 322166)) (= $t18@0@@2  (and (and (>= (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (not (= _$t0@@20 _$t1@@14))) (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@20) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@20)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@14) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@14))) (not (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@20) _$t0@@20 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@20))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@14) _$t1@@14 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@14)))))))))))))))))
+(let ((L13_correct@@1  (=> (= $t4@0@@2 $t4@0@@2) (=> (and (= $t18@0@@2 $t4@0@@2) (= (ControlFlow 0 241134) 241194)) L14_correct@@1))))
+(let ((anon30_Else_correct@@3  (=> (not $t27@@1) (=> (and (|$IsValid'address'| $t26@@1) (= $t26@@1 (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@14) _$t1@@14 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@14))))) (=> (and (and (= $t28@0@@1  (not (= $t24@@3 $t26@@1))) (= $t28@0@@1 $t28@0@@1)) (and (= $t4@0@@2 $t28@0@@1) (= (ControlFlow 0 241304) 241134))) L13_correct@@1)))))
+(let ((anon29_Else_correct@@3  (=> (and (and (not $t25@@2) (|$IsValid'address'| $t24@@3)) (and (= $t24@@3 (ite (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@20) _$t0@@20 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@20)))) (= $t27@@1  (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@14)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@14)))))) (and (=> (= (ControlFlow 0 241264) 241342) anon30_Then_correct@@3) (=> (= (ControlFlow 0 241264) 241304) anon30_Else_correct@@3)))))
+(let ((anon28_Then_correct@@3  (=> (and $t3@0@@5 (= $t25@@2  (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@20)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@20))))) (and (=> (= (ControlFlow 0 241220) 241464) anon29_Then_correct@@3) (=> (= (ControlFlow 0 241220) 241264) anon29_Else_correct@@3)))))
+(let ((anon28_Else_correct@@3  (=> (and (and (not $t3@0@@5) (= false false)) (and (= $t4@0@@2 false) (= (ControlFlow 0 241122) 241134))) L13_correct@@1)))
+(let ((anon27_Else_correct@@3  (=> (not $t21@@2) (=> (and (= false false) (= $t3@0@@5 false)) (and (=> (= (ControlFlow 0 241100) 241220) anon28_Then_correct@@3) (=> (= (ControlFlow 0 241100) 241122) anon28_Else_correct@@3))))))
+(let ((anon27_Then_correct@@3  (=> (and (and $t21@@2 (= $t22@@2  (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t1@@14) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t1@@14)))) (and (= $t22@@2 $t22@@2) (= $t3@0@@5 $t22@@2))) (and (=> (= (ControlFlow 0 241492) 241220) anon28_Then_correct@@3) (=> (= (ControlFlow 0 241492) 241122) anon28_Else_correct@@3)))))
+(let ((anon26_Else_correct@@3  (=> (and (not $t19@0@@2) (= $t21@@2  (or (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) _$t0@@20) (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) _$t0@@20)))) (and (=> (= (ControlFlow 0 241080) 241492) anon27_Then_correct@@3) (=> (= (ControlFlow 0 241080) 241100) anon27_Else_correct@@3)))))
+(let ((anon26_Then_correct@@3  (=> (and (and $t19@0@@2 (= false false)) (and (= $t18@0@@2 false) (= (ControlFlow 0 241510) 241194))) L14_correct@@1)))
+(let ((anon25_Else_correct@@2  (=> (and (not inline$$Not$0$dst@1@@7) (= $t19@0@@2 (= _$t0@@20 _$t1@@14))) (and (=> (= (ControlFlow 0 241058) 241510) anon26_Then_correct@@3) (=> (= (ControlFlow 0 241058) 241080) anon26_Else_correct@@3)))))
+(let ((anon25_Then_correct@@2  (=> (and (and inline$$Not$0$dst@1@@7 (= false false)) (and (= $t18@0@@2 false) (= (ControlFlow 0 241528) 241194))) L14_correct@@1)))
+(let ((inline$$Not$0$anon0_correct@@7  (=> (= inline$$Not$0$dst@1@@7  (not inline$$Ge$0$dst@1@@1)) (and (=> (= (ControlFlow 0 241038) 241528) anon25_Then_correct@@2) (=> (= (ControlFlow 0 241038) 241058) anon25_Else_correct@@2)))))
+(let ((anon24_Else$1_correct@@2  (=> (and (= inline$$Ge$0$dst@1@@1 inline$$Ge$0$dst@1@@1) (= (ControlFlow 0 241044) 241038)) inline$$Not$0$anon0_correct@@7)))
+(let ((inline$$Ge$0$anon0_correct@@1  (=> (and (= inline$$Ge$0$dst@1@@1 (>= $t13@@4 $t9@@11)) (= (ControlFlow 0 240992) 241044)) anon24_Else$1_correct@@2)))
+(let ((anon24_Else_correct@@2  (=> (not $t14@@6) (=> (and (and (|$IsValid'u64'| $t13@@4) (= $t13@@4 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))))) (and (= $t13@@4 $t13@@4) (= (ControlFlow 0 240998) 240992))) inline$$Ge$0$anon0_correct@@1))))
+(let ((anon23_Else_correct@@2  (=> (and (not $t10@@3) (|$IsValid'u64'| $t9@@11)) (=> (and (and (= $t9@@11 (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (= $t9@@11 $t9@@11)) (and (= $t12@@5 (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) (= $t14@@6  (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)) (> (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@5) 0) 0 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@5) 1) _$t2@@7 (ite (= (|$value#$1_FixedPoint32_FixedPoint32| $t12@@5) 2) (div _$t2@@7 2) (+ 18446744073709551615 1)))) 18446744073709551615))))) (and (=> (= (ControlFlow 0 240924) 241574) anon24_Then_correct@@2) (=> (= (ControlFlow 0 240924) 240998) anon24_Else_correct@@2))))))
+(let ((anon0$1_correct@@20  (=> (and (and (forall ((addr@@113 Int) ) (!  (=> (|$IsValid'address'| addr@@113) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149582| |$1_Diem_Preburn'$1_XUS_XUS'_$memory|) addr@@113) (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16638:22|
+ :skolemid |355|
+)) (forall ((addr@@114 Int) ) (!  (=> (|$IsValid'address'| addr@@114) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149673| |$1_Diem_Preburn'$1_XDX_XDX'_$memory|) addr@@114) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16638:222|
+ :skolemid |356|
+))) (forall ((addr@@115 Int) ) (!  (=> (|$IsValid'address'| addr@@115) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149764| |$1_Diem_Preburn'#0'_$memory|) addr@@115) (|Select__T@[Int]Bool_| (|domain#$Memory_144149| |$1_Diem_CurrencyInfo'#0'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16638:423|
+ :skolemid |357|
+))) (=> (and (and (and (and (and (and (forall ((addr@@116 Int) ) (!  (=> (|$IsValid'address'| addr@@116) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149991| |$1_Diem_PreburnQueue'$1_XUS_XUS'_$memory|) addr@@116) (|Select__T@[Int]Bool_| (|domain#$Memory_143949| |$1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16642:22|
+ :skolemid |358|
+)) (forall ((addr@@117 Int) ) (!  (=> (|$IsValid'address'| addr@@117) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_150090| |$1_Diem_PreburnQueue'$1_XDX_XDX'_$memory|) addr@@117) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16642:227|
+ :skolemid |359|
+))) (forall ((addr@@118 Int) ) (!  (=> (|$IsValid'address'| addr@@118) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_150189| |$1_Diem_PreburnQueue'#0'_$memory|) addr@@118) (|Select__T@[Int]Bool_| (|domain#$Memory_144149| |$1_Diem_CurrencyInfo'#0'_$memory|) 173345816)))
+ :qid |DualAttestationandybpl.16642:433|
+ :skolemid |360|
+))) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))) (and (forall ((child_addr@@6 Int) ) (!  (=> (|$IsValid'address'| child_addr@@6) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_161320| $1_VASP_ChildVASP_$memory) child_addr@@6) (|Select__T@[Int]Bool_| (|domain#$Memory_161384| $1_VASP_ParentVASP_$memory) (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) child_addr@@6)))))
+ :qid |DualAttestationandybpl.16650:20|
+ :skolemid |361|
+)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (and (|$IsValid'address'| _$t0@@20) (|$IsValid'address'| _$t1@@14)) (and (|$IsValid'u64'| _$t2@@7) (forall (($a_0@@44 Int) ) (! (let (($rsc@@44 (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) $a_0@@44)))
+ (and (|$IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''| $rsc@@44) (and (< 0 (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'| $rsc@@44)) (<= (|$scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'| $rsc@@44) 10000000000))))
+ :qid |DualAttestationandybpl.16667:20|
+ :skolemid |362|
+ :pattern ( (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) $a_0@@44))
+))))) (and (and (and (forall (($a_0@@45 Int) ) (! (let (($rsc@@45 (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) $a_0@@45)))
+(|$IsValid'$1_VASP_ChildVASP'| $rsc@@45))
+ :qid |DualAttestationandybpl.16671:20|
+ :skolemid |363|
+ :pattern ( (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_161320| $1_VASP_ChildVASP_$memory) $a_0@@45))
+)) (forall (($a_0@@46 Int) ) (! (let (($rsc@@46 (|Select__T@[Int]$1_VASP_ParentVASP_| (|contents#$Memory_161384| $1_VASP_ParentVASP_$memory) $a_0@@46)))
+(|$IsValid'$1_VASP_ParentVASP'| $rsc@@46))
+ :qid |DualAttestationandybpl.16675:20|
+ :skolemid |364|
+ :pattern ( (|Select__T@[Int]$1_VASP_ParentVASP_| (|contents#$Memory_161384| $1_VASP_ParentVASP_$memory) $a_0@@46))
+))) (and (forall (($a_0@@47 Int) ) (! (let (($rsc@@47 (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@47)))
+(|$IsValid'$1_DualAttestation_Limit'| $rsc@@47))
+ :qid |DualAttestationandybpl.16679:20|
+ :skolemid |365|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@47))
+)) (= $t8@@10 (|$to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'| (|Select__T@[Int]$1_Diem_CurrencyInfo'$1_XDX_XDX'_| (|contents#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816))))) (and (and (= _$t0@@20 _$t0@@20) (= _$t1@@14 _$t1@@14)) (and (= _$t2@@7 _$t2@@7) (= $t10@@3  (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))))) (and (=> (= (ControlFlow 0 240864) 241600) anon23_Then_correct@@2) (=> (= (ControlFlow 0 240864) 240924) anon23_Else_correct@@2))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@20  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@22 T@$1_Event_EventHandle) ) (! (let ((stream@@21 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@22)))
+ (and (= (|l#Multiset_91856| stream@@21) 0) (forall ((v@@62 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@21) v@@62) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 240497) 240864)) anon0$1_correct@@20)))
+(let ((anon0_correct@@20  (=> (= (ControlFlow 0 321147) 240497) inline$$InitEventStore$0$anon0_correct@@20)))
+anon0_correct@@20))))))))))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@5 () Bool)
+(declare-fun $t8@0@@6 () Int)
+(declare-fun $t7@1@@2 () T@$1_DualAttestation_Credential)
+(declare-fun _$t0@@21 () Int)
+(declare-fun $t6@0@@3 () Int)
+(declare-fun $abort_code@1@@5 () Int)
+(declare-fun $t7@@6 () T@$1_DualAttestation_Credential)
+(declare-fun $t7@0@@3 () T@$1_DualAttestation_Credential)
+(declare-fun $abort_code@0@@5 () Int)
+(declare-fun $t3@0@@6 () Bool)
+(declare-fun $t5@@11 () Int)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_expiration_date$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 322272) (let ((anon12_Else_correct@@5  (=> (not $abort_flag@0@@5) (=> (and (= $t8@0@@6 (|$expiration_date#$1_DualAttestation_Credential| $t7@1@@2)) (= $t8@0@@6 $t8@0@@6)) (and (=> (= (ControlFlow 0 242121) (- 0 322596)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21))) (and (=> (= (ControlFlow 0 242121) (- 0 322607)) (= $t8@0@@6 (|$expiration_date#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)))) (=> (= $t8@0@@6 (|$expiration_date#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21))) (and (=> (= (ControlFlow 0 242121) (- 0 322620)) (forall ((addr1@@58 Int) ) (!  (=> (|$IsValid'address'| addr1@@58) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@58) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@58)))
+ :qid |DualAttestationandybpl.17218:15|
+ :skolemid |368|
+))) (=> (forall ((addr1@@59 Int) ) (!  (=> (|$IsValid'address'| addr1@@59) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@59) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@59)))
+ :qid |DualAttestationandybpl.17218:15|
+ :skolemid |368|
+)) (and (=> (= (ControlFlow 0 242121) (- 0 322645)) (forall ((addr1@@60 Int) ) (!  (=> (|$IsValid'address'| addr1@@60) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@60)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@60))))
+ :qid |DualAttestationandybpl.17223:15|
+ :skolemid |369|
+))) (=> (forall ((addr1@@61 Int) ) (!  (=> (|$IsValid'address'| addr1@@61) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@61)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@61))))
+ :qid |DualAttestationandybpl.17223:15|
+ :skolemid |369|
+)) (and (=> (= (ControlFlow 0 242121) (- 0 322674)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (=> (= (ControlFlow 0 242121) (- 0 322691)) (forall ((addr1@@62 Int) ) (!  (=> (|$IsValid'address'| addr1@@62) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@62) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@62)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@62)))))
+ :qid |DualAttestationandybpl.17233:15|
+ :skolemid |370|
+))) (=> (forall ((addr1@@63 Int) ) (!  (=> (|$IsValid'address'| addr1@@63) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@63) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@63)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@63)))))
+ :qid |DualAttestationandybpl.17233:15|
+ :skolemid |370|
+)) (=> (= (ControlFlow 0 242121) (- 0 322727)) (forall ((addr1@@64 Int) ) (!  (=> (|$IsValid'address'| addr1@@64) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@64) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@64)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@64)))))
+ :qid |DualAttestationandybpl.17238:15|
+ :skolemid |371|
+)))))))))))))))))))
+(let ((L3_correct@@4  (and (=> (= (ControlFlow 0 241909) (- 0 322549)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)) (=> (= (ControlFlow 0 241909) (- 0 322555)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)) (= 5 $t6@0@@3)))))))
+(let ((anon12_Then_correct@@5  (=> (and (and $abort_flag@0@@5 (= $abort_code@1@@5 $abort_code@1@@5)) (and (= $t6@0@@3 $abort_code@1@@5) (= (ControlFlow 0 242135) 241909))) L3_correct@@4)))
+(let ((anon11_Then$1_correct@@3  (=> (= $t7@1@@2 $t7@@6) (=> (and (= $abort_flag@0@@5 true) (= $abort_code@1@@5 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 242187) 242135) anon12_Then_correct@@5) (=> (= (ControlFlow 0 242187) 242121) anon12_Else_correct@@5))))))
+(let ((anon11_Then_correct@@9  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)) (= (ControlFlow 0 242185) 242187)) anon11_Then$1_correct@@3)))
+(let ((anon11_Else_correct@@9  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21) (=> (and (and (= $t7@0@@3 (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)) (= $t7@1@@2 $t7@0@@3)) (and (= $abort_flag@0@@5 false) (= $abort_code@1@@5 $abort_code@0@@5))) (and (=> (= (ControlFlow 0 241927) 242135) anon12_Then_correct@@5) (=> (= (ControlFlow 0 241927) 242121) anon12_Else_correct@@5))))))
+(let ((anon10_Then_correct@@8  (=> $t3@0@@6 (and (=> (= (ControlFlow 0 241913) 242185) anon11_Then_correct@@9) (=> (= (ControlFlow 0 241913) 241927) anon11_Else_correct@@9)))))
+(let ((anon10_Else_correct@@8  (=> (and (and (not $t3@0@@6) (= $t5@@11 $t5@@11)) (and (= $t6@0@@3 $t5@@11) (= (ControlFlow 0 241877) 241909))) L3_correct@@4)))
+(let ((anon0$1_correct@@21  (=> (and (forall ((addr1@@65 Int) ) (!  (=> (|$IsValid'address'| addr1@@65) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@65) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@65) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@65)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@65) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@65)) 2)))))
+ :qid |DualAttestationandybpl.17115:20|
+ :skolemid |366|
+)) (|$IsValid'address'| _$t0@@21)) (=> (and (and (and (forall (($a_0@@48 Int) ) (! (let (($rsc@@48 (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@48)))
+(|$IsValid'$1_DualAttestation_Credential'| $rsc@@48))
+ :qid |DualAttestationandybpl.17122:20|
+ :skolemid |367|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@48))
+)) (= _$t0@@21 _$t0@@21)) (and (= $t3@0@@6 (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) _$t0@@21)) (|$IsValid'u64'| 0))) (and (and (|$IsValid'u64'| $t5@@11) (= $t5@@11 5)) (and (= $t5@@11 $t5@@11) (= $t3@0@@6 $t3@0@@6)))) (and (=> (= (ControlFlow 0 241861) 241913) anon10_Then_correct@@8) (=> (= (ControlFlow 0 241861) 241877) anon10_Else_correct@@8))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@21  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@23 T@$1_Event_EventHandle) ) (! (let ((stream@@22 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@23)))
+ (and (= (|l#Multiset_91856| stream@@22) 0) (forall ((v@@63 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@22) v@@63) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 241740) 241861)) anon0$1_correct@@21)))
+(let ((anon0_correct@@21  (=> (= (ControlFlow 0 322272) 241740) inline$$InitEventStore$0$anon0_correct@@21)))
+anon0_correct@@21))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@6 () Bool)
+(declare-fun $t9@0@@0 () Int)
+(declare-fun $t8@1 () T@$1_DualAttestation_Limit)
+(declare-fun $t6@0@@4 () Int)
+(declare-fun $abort_code@1@@6 () Int)
+(declare-fun $t8@@11 () T@$1_DualAttestation_Limit)
+(declare-fun $t8@0@@7 () T@$1_DualAttestation_Limit)
+(declare-fun $abort_code@0@@6 () Int)
+(declare-fun $t3@0@@7 () Bool)
+(declare-fun $t5@@12 () Int)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_get_cur_microdiem_limit$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 322770) (let ((anon12_Else_correct@@6  (=> (not $abort_flag@0@@6) (=> (and (= $t9@0@@0 (|$micro_xdx_limit#$1_DualAttestation_Limit| $t8@1)) (= $t9@0@@0 $t9@0@@0)) (and (=> (= (ControlFlow 0 242628) (- 0 323074)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (and (=> (= (ControlFlow 0 242628) (- 0 323084)) (= $t9@0@@0 (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (=> (= $t9@0@@0 (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (and (=> (= (ControlFlow 0 242628) (- 0 323094)) (forall ((addr1@@66 Int) ) (!  (=> (|$IsValid'address'| addr1@@66) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@66) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@66)))
+ :qid |DualAttestationandybpl.17395:15|
+ :skolemid |373|
+))) (=> (forall ((addr1@@67 Int) ) (!  (=> (|$IsValid'address'| addr1@@67) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@67) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@67)))
+ :qid |DualAttestationandybpl.17395:15|
+ :skolemid |373|
+)) (and (=> (= (ControlFlow 0 242628) (- 0 323119)) (forall ((addr1@@68 Int) ) (!  (=> (|$IsValid'address'| addr1@@68) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@68)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@68))))
+ :qid |DualAttestationandybpl.17400:15|
+ :skolemid |374|
+))) (=> (forall ((addr1@@69 Int) ) (!  (=> (|$IsValid'address'| addr1@@69) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@69)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@69))))
+ :qid |DualAttestationandybpl.17400:15|
+ :skolemid |374|
+)) (and (=> (= (ControlFlow 0 242628) (- 0 323148)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (=> (= (ControlFlow 0 242628) (- 0 323165)) (forall ((addr1@@70 Int) ) (!  (=> (|$IsValid'address'| addr1@@70) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@70) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@70)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@70)))))
+ :qid |DualAttestationandybpl.17410:15|
+ :skolemid |375|
+))) (=> (forall ((addr1@@71 Int) ) (!  (=> (|$IsValid'address'| addr1@@71) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@71) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@71)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@71)))))
+ :qid |DualAttestationandybpl.17410:15|
+ :skolemid |375|
+)) (=> (= (ControlFlow 0 242628) (- 0 323201)) (forall ((addr1@@72 Int) ) (!  (=> (|$IsValid'address'| addr1@@72) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@72) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@72)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@72)))))
+ :qid |DualAttestationandybpl.17415:15|
+ :skolemid |376|
+)))))))))))))))))))
+(let ((L3_correct@@5  (and (=> (= (ControlFlow 0 242416) (- 0 323029)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (=> (= (ControlFlow 0 242416) (- 0 323034)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= 5 $t6@0@@4)))))))
+(let ((anon12_Then_correct@@6  (=> (and (and $abort_flag@0@@6 (= $abort_code@1@@6 $abort_code@1@@6)) (and (= $t6@0@@4 $abort_code@1@@6) (= (ControlFlow 0 242642) 242416))) L3_correct@@5)))
+(let ((anon11_Then$1_correct@@4  (=> (= $t8@1 $t8@@11) (=> (and (= $abort_flag@0@@6 true) (= $abort_code@1@@6 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 242694) 242642) anon12_Then_correct@@6) (=> (= (ControlFlow 0 242694) 242628) anon12_Else_correct@@6))))))
+(let ((anon11_Then_correct@@10  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= (ControlFlow 0 242692) 242694)) anon11_Then$1_correct@@4)))
+(let ((anon11_Else_correct@@10  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (=> (and (and (= $t8@0@@7 (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= $t8@1 $t8@0@@7)) (and (= $abort_flag@0@@6 false) (= $abort_code@1@@6 $abort_code@0@@6))) (and (=> (= (ControlFlow 0 242440) 242642) anon12_Then_correct@@6) (=> (= (ControlFlow 0 242440) 242628) anon12_Else_correct@@6))))))
+(let ((anon10_Then_correct@@9  (=> (and $t3@0@@7 (|$IsValid'address'| 173345816)) (and (=> (= (ControlFlow 0 242426) 242692) anon11_Then_correct@@10) (=> (= (ControlFlow 0 242426) 242440) anon11_Else_correct@@10)))))
+(let ((anon10_Else_correct@@9  (=> (and (and (not $t3@0@@7) (= $t5@@12 $t5@@12)) (and (= $t6@0@@4 $t5@@12) (= (ControlFlow 0 242388) 242416))) L3_correct@@5)))
+(let ((anon0$1_correct@@22  (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (=> (and (and (and (forall (($a_0@@49 Int) ) (! (let (($rsc@@49 (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@49)))
+(|$IsValid'$1_DualAttestation_Limit'| $rsc@@49))
+ :qid |DualAttestationandybpl.17294:20|
+ :skolemid |372|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@49))
+)) (|$IsValid'address'| 173345816)) (and (= $t3@0@@7 (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$IsValid'u64'| 1))) (and (and (|$IsValid'u64'| $t5@@12) (= $t5@@12 5)) (and (= $t5@@12 $t5@@12) (= $t3@0@@7 $t3@0@@7)))) (and (=> (= (ControlFlow 0 242372) 242426) anon10_Then_correct@@9) (=> (= (ControlFlow 0 242372) 242388) anon10_Else_correct@@9))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@22  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@24 T@$1_Event_EventHandle) ) (! (let ((stream@@23 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@24)))
+ (and (= (|l#Multiset_91856| stream@@23) 0) (forall ((v@@64 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@23) v@@64) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 242276) 242372)) anon0$1_correct@@22)))
+(let ((anon0_correct@@22  (=> (= (ControlFlow 0 322770) 242276) inline$$InitEventStore$0$anon0_correct@@22)))
+anon0_correct@@22))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@7 () Bool)
+(declare-fun $1_DualAttestation_Credential_$memory@1 () T@$Memory_127241)
+(declare-fun $t5@@13 () Int)
+(declare-fun $t6@@10 () Int)
+(declare-fun $t7@@7 () Int)
+(declare-fun _$t1@@15 () T@$signer)
+(declare-fun _$t0@@22 () T@$signer)
+(declare-fun $t8@@12 () Int)
+(declare-fun $t9@@12 () Int)
+(declare-fun $t13@0 () Int)
+(declare-fun $abort_code@1@@7 () Int)
+(declare-fun $1_DualAttestation_Credential_$memory@0 () T@$Memory_127241)
+(declare-fun |Store__T@[Int]$1_DualAttestation_Credential_| (|T@[Int]$1_DualAttestation_Credential| Int T@$1_DualAttestation_Credential) |T@[Int]$1_DualAttestation_Credential|)
+(assert (forall ( ( ?x0 |T@[Int]$1_DualAttestation_Credential|) ( ?x1 Int) ( ?x2 T@$1_DualAttestation_Credential)) (! (= (|Select__T@[Int]$1_DualAttestation_Credential_| (|Store__T@[Int]$1_DualAttestation_Credential_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[Int]$1_DualAttestation_Credential|) ( ?x1 Int) ( ?y1 Int) ( ?x2 T@$1_DualAttestation_Credential)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]$1_DualAttestation_Credential_| (|Store__T@[Int]$1_DualAttestation_Credential_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]$1_DualAttestation_Credential_| ?x0 ?y1))) :weight 0)))
+(declare-fun $t26@0 () T@$1_DualAttestation_Credential)
+(declare-fun $abort_code@0@@7 () Int)
+(declare-fun _$t2@@8 () (Seq Int))
+(declare-fun |inline$$1_Vector_empty'u8'$0$v@1| () (Seq Int))
+(declare-fun |inline$$1_Vector_empty'u8'$1$v@1| () (Seq Int))
+(declare-fun |inline$$1_Event_new_event_handle'$1_DualAttestation_ComplianceKeyRotationEvent'$0$res@0| () T@$1_Event_EventHandle)
+(declare-fun |inline$$1_Event_new_event_handle'$1_DualAttestation_BaseUrlRotationEvent'$0$res@0| () T@$1_Event_EventHandle)
+(declare-sort |T@[$1_Event_EventHandle]Bool| 0)
+(declare-fun |Select__T@[$1_Event_EventHandle]Bool_| (|T@[$1_Event_EventHandle]Bool| T@$1_Event_EventHandle) Bool)
+(declare-fun $1_Event_EventHandles@0 () |T@[$1_Event_EventHandle]Bool|)
+(declare-fun $1_Event_EventHandles@1 () |T@[$1_Event_EventHandle]Bool|)
+(declare-fun |Store__T@[$1_Event_EventHandle]Bool_| (|T@[$1_Event_EventHandle]Bool| T@$1_Event_EventHandle Bool) |T@[$1_Event_EventHandle]Bool|)
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Bool|) ( ?x1 T@$1_Event_EventHandle) ( ?x2 Bool)) (! (= (|Select__T@[$1_Event_EventHandle]Bool_| (|Store__T@[$1_Event_EventHandle]Bool_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Bool|) ( ?x1 T@$1_Event_EventHandle) ( ?y1 T@$1_Event_EventHandle) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$1_Event_EventHandle]Bool_| (|Store__T@[$1_Event_EventHandle]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$1_Event_EventHandle]Bool_| ?x0 ?y1))) :weight 0)))
+(declare-fun $1_Event_EventHandles () |T@[$1_Event_EventHandle]Bool|)
+(declare-fun inline$$Not$0$dst@1@@8 () Bool)
+(declare-fun $t20@@0 () Int)
+(declare-fun $t17@0@@1 () Bool)
+(declare-fun $t15 () Bool)
+(declare-fun $t16 () Int)
+(declare-fun $t14@@7 () Int)
+(declare-fun $t13@@5 () Int)
+(declare-fun $t12@@6 () Bool)
+(declare-fun $t10@@4 () Int)
+(declare-fun $t11@@6 () Int)
+(declare-fun |$1_Diem_MintCapability'$1_XUS_XUS'_$memory| () T@$Memory_149322)
+(declare-fun |$1_Diem_MintCapability'$1_XDX_XDX'_$memory| () T@$Memory_149409)
+(declare-fun |$1_Diem_BurnCapability'$1_XUS_XUS'_$memory| () T@$Memory_144602)
+(declare-fun |$1_Diem_BurnCapability'$1_XDX_XDX'_$memory| () T@$Memory_144689)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_publish_credential$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 323246) (let ((anon30_Else_correct@@4  (=> (not $abort_flag@0@@7) (and (=> (= (ControlFlow 0 244221) (- 0 324593)) (forall ((addr1@@73 Int) ) (!  (=> (|$IsValid'address'| addr1@@73) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@73) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@73) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@73)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@73) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@73)) 2)))))
+ :qid |DualAttestationandybpl.17771:15|
+ :skolemid |386|
+))) (=> (forall ((addr1@@74 Int) ) (!  (=> (|$IsValid'address'| addr1@@74) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@74) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@74) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@74)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@74) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@74)) 2)))))
+ :qid |DualAttestationandybpl.17771:15|
+ :skolemid |386|
+)) (and (=> (= (ControlFlow 0 244221) (- 0 324629)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@13)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@13))) (and (=> (= (ControlFlow 0 244221) (- 0 324641)) (not (and (not (= $t6@@10 5)) (not (= $t6@@10 2))))) (=> (not (and (not (= $t6@@10 5)) (not (= $t6@@10 2)))) (and (=> (= (ControlFlow 0 244221) (- 0 324664)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7))) (and (=> (= (ControlFlow 0 244221) (- 0 324676)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)) 1)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)) 1))) (and (=> (= (ControlFlow 0 244221) (- 0 324694)) (not (not (= (|$addr#$signer| _$t1@@15) 186537453)))) (=> (not (not (= (|$addr#$signer| _$t1@@15) 186537453))) (and (=> (= (ControlFlow 0 244221) (- 0 324708)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22)))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22))) (and (=> (= (ControlFlow 0 244221) (- 0 324719)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t8@@12)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t8@@12))) (and (=> (= (ControlFlow 0 244221) (- 0 324731)) (not (and (not (= $t9@@12 5)) (not (= $t9@@12 2))))) (=> (not (and (not (= $t9@@12 5)) (not (= $t9@@12 2)))) (and (=> (= (ControlFlow 0 244221) (- 0 324754)) (forall ((addr1@@75 Int) ) (!  (=> (|$IsValid'address'| addr1@@75) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@75) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@75)))
+ :qid |DualAttestationandybpl.17820:15|
+ :skolemid |387|
+))) (=> (forall ((addr1@@76 Int) ) (!  (=> (|$IsValid'address'| addr1@@76) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@76) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@76)))
+ :qid |DualAttestationandybpl.17820:15|
+ :skolemid |387|
+)) (and (=> (= (ControlFlow 0 244221) (- 0 324778)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (=> (= (ControlFlow 0 244221) (- 0 324795)) (forall ((addr1@@77 Int) ) (!  (=> (|$IsValid'address'| addr1@@77) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@77) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@77)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@77)))))
+ :qid |DualAttestationandybpl.17830:15|
+ :skolemid |388|
+))) (=> (forall ((addr1@@78 Int) ) (!  (=> (|$IsValid'address'| addr1@@78) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@78) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@78)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@78)))))
+ :qid |DualAttestationandybpl.17830:15|
+ :skolemid |388|
+)) (=> (= (ControlFlow 0 244221) (- 0 324830)) (forall ((addr1@@79 Int) ) (!  (=> (|$IsValid'address'| addr1@@79) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@79) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@1) addr1@@79)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@79)))))
+ :qid |DualAttestationandybpl.17835:15|
+ :skolemid |389|
+))))))))))))))))))))))))))))))
+(let ((anon28_Then_correct@@4 true))
+(let ((anon27_Then_correct@@4 true))
+(let ((anon26_Then_correct@@4 true))
+(let ((anon25_Then_correct@@3 true))
+(let ((L3_correct@@6  (and (=> (= (ControlFlow 0 243651) (- 0 324328)) (or (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@13)) (and (not (= $t6@@10 5)) (not (= $t6@@10 2)))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)) 1))) (not (= (|$addr#$signer| _$t1@@15) 186537453))) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t8@@12))) (and (not (= $t9@@12 5)) (not (= $t9@@12 2))))) (=> (or (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@13)) (and (not (= $t6@@10 5)) (not (= $t6@@10 2)))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)) 1))) (not (= (|$addr#$signer| _$t1@@15) 186537453))) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t8@@12))) (and (not (= $t9@@12 5)) (not (= $t9@@12 2)))) (=> (= (ControlFlow 0 243651) (- 0 324427)) (or (or (or (or (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@13)) (= 5 $t13@0)) (and (and (not (= $t6@@10 5)) (not (= $t6@@10 2))) (= 3 $t13@0))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)) (= 5 $t13@0))) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t7@@7)) 1)) (= 3 $t13@0))) (and (not (= (|$addr#$signer| _$t1@@15) 186537453)) (= 2 $t13@0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22)) (= 6 $t13@0))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t8@@12)) (= 5 $t13@0))) (and (and (not (= $t9@@12 5)) (not (= $t9@@12 2))) (= 3 $t13@0))))))))
+(let ((anon30_Then_correct@@4  (=> (and (and $abort_flag@0@@7 (= $abort_code@1@@7 $abort_code@1@@7)) (and (= $t13@0 $abort_code@1@@7) (= (ControlFlow 0 244235) 243651))) L3_correct@@6)))
+(let ((anon29_Then$1_correct  (=> (= $1_DualAttestation_Credential_$memory@1 $1_DualAttestation_Credential_$memory) (=> (and (= $abort_flag@0@@7 true) (= $abort_code@1@@7 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 244287) 244235) anon30_Then_correct@@4) (=> (= (ControlFlow 0 244287) 244221) anon30_Else_correct@@4))))))
+(let ((anon29_Then_correct@@4  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22)) (= (ControlFlow 0 244285) 244287)) anon29_Then$1_correct)))
+(let ((anon29_Else_correct@@4  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22))) (=> (and (and (= $1_DualAttestation_Credential_$memory@0 ($Memory_127241 (|Store__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22) true) (|Store__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) (|$addr#$signer| _$t0@@22) $t26@0))) (= $1_DualAttestation_Credential_$memory@1 $1_DualAttestation_Credential_$memory@0)) (and (= $abort_flag@0@@7 false) (= $abort_code@1@@7 $abort_code@0@@7))) (and (=> (= (ControlFlow 0 243937) 244235) anon30_Then_correct@@4) (=> (= (ControlFlow 0 243937) 244221) anon30_Else_correct@@4))))))
+(let ((anon28_Else_correct@@4  (=> (and (not false) (= $t26@0 ($1_DualAttestation_Credential _$t2@@8 |inline$$1_Vector_empty'u8'$0$v@1| |inline$$1_Vector_empty'u8'$1$v@1| 18446744073709551615 |inline$$1_Event_new_event_handle'$1_DualAttestation_ComplianceKeyRotationEvent'$0$res@0| |inline$$1_Event_new_event_handle'$1_DualAttestation_BaseUrlRotationEvent'$0$res@0|))) (and (=> (= (ControlFlow 0 243915) 244285) anon29_Then_correct@@4) (=> (= (ControlFlow 0 243915) 243937) anon29_Else_correct@@4)))))
+(let ((|inline$$1_Event_new_event_handle'$1_DualAttestation_BaseUrlRotationEvent'$0$anon0_correct|  (=> (and (= (|Select__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles@0 |inline$$1_Event_new_event_handle'$1_DualAttestation_BaseUrlRotationEvent'$0$res@0|) false) (= $1_Event_EventHandles@1 (|Store__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles@0 |inline$$1_Event_new_event_handle'$1_DualAttestation_BaseUrlRotationEvent'$0$res@0| true))) (and (=> (= (ControlFlow 0 243885) 244301) anon28_Then_correct@@4) (=> (= (ControlFlow 0 243885) 243915) anon28_Else_correct@@4)))))
+(let ((anon27_Else_correct@@4  (=> (and (not false) (= (ControlFlow 0 243891) 243885)) |inline$$1_Event_new_event_handle'$1_DualAttestation_BaseUrlRotationEvent'$0$anon0_correct|)))
+(let ((|inline$$1_Event_new_event_handle'$1_DualAttestation_ComplianceKeyRotationEvent'$0$anon0_correct|  (=> (and (= (|Select__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles |inline$$1_Event_new_event_handle'$1_DualAttestation_ComplianceKeyRotationEvent'$0$res@0|) false) (= $1_Event_EventHandles@0 (|Store__T@[$1_Event_EventHandle]Bool_| $1_Event_EventHandles |inline$$1_Event_new_event_handle'$1_DualAttestation_ComplianceKeyRotationEvent'$0$res@0| true))) (and (=> (= (ControlFlow 0 243803) 244315) anon27_Then_correct@@4) (=> (= (ControlFlow 0 243803) 243891) anon27_Else_correct@@4)))))
+(let ((anon26_Else_correct@@4  (=> (not false) (=> (and (|$IsValid'u64'| 18446744073709551615) (= (ControlFlow 0 243809) 243803)) |inline$$1_Event_new_event_handle'$1_DualAttestation_ComplianceKeyRotationEvent'$0$anon0_correct|))))
+(let ((|inline$$1_Vector_empty'u8'$1$anon0_correct|  (=> (= |inline$$1_Vector_empty'u8'$1$v@1| (as seq.empty (Seq Int))) (and (=> (= (ControlFlow 0 243713) 244329) anon26_Then_correct@@4) (=> (= (ControlFlow 0 243713) 243809) anon26_Else_correct@@4)))))
+(let ((anon25_Else_correct@@3  (=> (and (not false) (= (ControlFlow 0 243719) 243713)) |inline$$1_Vector_empty'u8'$1$anon0_correct|)))
+(let ((|inline$$1_Vector_empty'u8'$0$anon0_correct|  (=> (= |inline$$1_Vector_empty'u8'$0$v@1| (as seq.empty (Seq Int))) (and (=> (= (ControlFlow 0 243677) 244343) anon25_Then_correct@@3) (=> (= (ControlFlow 0 243677) 243719) anon25_Else_correct@@3)))))
+(let ((anon24_Then_correct@@3  (=> (and inline$$Not$0$dst@1@@8 (= (ControlFlow 0 243683) 243677)) |inline$$1_Vector_empty'u8'$0$anon0_correct|)))
+(let ((anon24_Else_correct@@3  (=> (and (and (not inline$$Not$0$dst@1@@8) (= $t20@@0 $t20@@0)) (and (= $t13@0 $t20@@0) (= (ControlFlow 0 243367) 243651))) L3_correct@@6)))
+(let ((anon23_Else$1_correct  (=> (|$IsValid'u64'| 0) (=> (and (and (|$IsValid'u64'| $t20@@0) (= $t20@@0 6)) (and (= $t20@@0 $t20@@0) (= inline$$Not$0$dst@1@@8 inline$$Not$0$dst@1@@8))) (and (=> (= (ControlFlow 0 243351) 243683) anon24_Then_correct@@3) (=> (= (ControlFlow 0 243351) 243367) anon24_Else_correct@@3))))))
+(let ((inline$$Not$0$anon0_correct@@8  (=> (and (= inline$$Not$0$dst@1@@8  (not $t17@0@@1)) (= (ControlFlow 0 243311) 243351)) anon23_Else$1_correct)))
+(let ((anon23_Else_correct@@3  (=> (not $t15) (=> (and (and (|$IsValid'address'| $t16) (= $t16 (|$addr#$signer| _$t0@@22))) (and (= $t17@0@@1 (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t16)) (= (ControlFlow 0 243317) 243311))) inline$$Not$0$anon0_correct@@8))))
+(let ((anon23_Then_correct@@3  (=> $t15 (=> (and (and (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t14@@7)) (= 5 $t13@@5)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t14@@7)) 1)) (= 3 $t13@@5))) (and (not (= (|$addr#$signer| _$t1@@15) 186537453)) (= 2 $t13@@5))) (= $t13@@5 $t13@@5)) (and (= $t13@0 $t13@@5) (= (ControlFlow 0 244415) 243651))) L3_correct@@6))))
+(let ((anon22_Else_correct@@0  (=> (not $t12@@6) (=> (and (= $t14@@7 (|$addr#$signer| _$t1@@15)) (= $t15  (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t14@@7)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t14@@7)) 1))) (not (= (|$addr#$signer| _$t1@@15) 186537453))))) (and (=> (= (ControlFlow 0 243255) 244415) anon23_Then_correct@@3) (=> (= (ControlFlow 0 243255) 243317) anon23_Else_correct@@3))))))
+(let ((anon22_Then_correct@@0  (=> $t12@@6 (=> (and (and (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t10@@4)) (= 5 $t13@@5)) (and (and (not (= $t11@@6 5)) (not (= $t11@@6 2))) (= 3 $t13@@5))) (= $t13@@5 $t13@@5)) (and (= $t13@0 $t13@@5) (= (ControlFlow 0 244471) 243651))) L3_correct@@6))))
+(let ((anon0$1_correct@@23  (=> (and (and (and (forall ((mint_cap_owner Int) ) (!  (=> (|$IsValid'address'| mint_cap_owner) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149322| |$1_Diem_MintCapability'$1_XUS_XUS'_$memory|) mint_cap_owner) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner)) 1))))
+ :qid |DualAttestationandybpl.17490:21|
+ :skolemid |377|
+)) (forall ((mint_cap_owner@@0 Int) ) (!  (=> (|$IsValid'address'| mint_cap_owner@@0) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149409| |$1_Diem_MintCapability'$1_XDX_XDX'_$memory|) mint_cap_owner@@0) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner@@0) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner@@0)) 1))))
+ :qid |DualAttestationandybpl.17490:268|
+ :skolemid |378|
+))) (and (forall ((addr1@@80 Int) ) (!  (=> (|$IsValid'address'| addr1@@80) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_144602| |$1_Diem_BurnCapability'$1_XUS_XUS'_$memory|) addr1@@80) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@80) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@80)) 1))))
+ :qid |DualAttestationandybpl.17494:21|
+ :skolemid |379|
+)) (forall ((addr1@@81 Int) ) (!  (=> (|$IsValid'address'| addr1@@81) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_144689| |$1_Diem_BurnCapability'$1_XDX_XDX'_$memory|) addr1@@81) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@81) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@81)) 1))))
+ :qid |DualAttestationandybpl.17494:231|
+ :skolemid |380|
+)))) (and (and (forall ((addr1@@82 Int) ) (!  (=> (|$IsValid'address'| addr1@@82) (=> (or (|Select__T@[Int]Bool_| (|domain#$Memory_149991| |$1_Diem_PreburnQueue'$1_XUS_XUS'_$memory|) addr1@@82) (|Select__T@[Int]Bool_| (|domain#$Memory_149582| |$1_Diem_Preburn'$1_XUS_XUS'_$memory|) addr1@@82)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@82) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@82)) 2))))
+ :qid |DualAttestationandybpl.17498:21|
+ :skolemid |381|
+)) (forall ((addr1@@83 Int) ) (!  (=> (|$IsValid'address'| addr1@@83) (=> (or (|Select__T@[Int]Bool_| (|domain#$Memory_150090| |$1_Diem_PreburnQueue'$1_XDX_XDX'_$memory|) addr1@@83) (|Select__T@[Int]Bool_| (|domain#$Memory_149673| |$1_Diem_Preburn'$1_XDX_XDX'_$memory|) addr1@@83)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@83) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@83)) 2))))
+ :qid |DualAttestationandybpl.17498:292|
+ :skolemid |382|
+))) (forall ((addr1@@84 Int) ) (!  (=> (|$IsValid'address'| addr1@@84) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@84) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@84) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@84)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@84) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@84)) 2)))))
+ :qid |DualAttestationandybpl.17506:20|
+ :skolemid |383|
+)))) (=> (and (and (and (and (|$IsValid'address'| (|$addr#$signer| _$t0@@22)) (|$IsValid'address'| (|$addr#$signer| _$t1@@15))) (and (|$IsValid'vec'u8''| _$t2@@8) (forall (($a_0@@50 Int) ) (! (let (($rsc@@50 (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $a_0@@50)))
+(|$IsValid'$1_Roles_RoleId'| $rsc@@50))
+ :qid |DualAttestationandybpl.17518:20|
+ :skolemid |384|
+ :pattern ( (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $a_0@@50))
+)))) (and (and (forall (($a_0@@51 Int) ) (! (let (($rsc@@51 (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@51)))
+(|$IsValid'$1_DualAttestation_Credential'| $rsc@@51))
+ :qid |DualAttestationandybpl.17522:20|
+ :skolemid |385|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@51))
+)) (= $t5@@13 (|$addr#$signer| _$t0@@22))) (and (= $t6@@10 (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@13))) (= $t7@@7 (|$addr#$signer| _$t1@@15))))) (and (and (and (= $t8@@12 (|$addr#$signer| _$t0@@22)) (= $t9@@12 (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t8@@12)))) (and (= _$t0@@22 _$t0@@22) (= _$t1@@15 _$t1@@15))) (and (and (= _$t2@@8 _$t2@@8) (= $t10@@4 (|$addr#$signer| _$t0@@22))) (and (= $t11@@6 (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t10@@4))) (= $t12@@6  (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t10@@4)) (and (not (= $t11@@6 5)) (not (= $t11@@6 2))))))))) (and (=> (= (ControlFlow 0 243195) 244471) anon22_Then_correct@@0) (=> (= (ControlFlow 0 243195) 243255) anon22_Else_correct@@0))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@23  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@25 T@$1_Event_EventHandle) ) (! (let ((stream@@24 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@25)))
+ (and (= (|l#Multiset_91856| stream@@24) 0) (forall ((v@@65 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@24) v@@65) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 242788) 243195)) anon0$1_correct@@23)))
+(let ((anon0_correct@@23  (=> (= (ControlFlow 0 323246) 242788) inline$$InitEventStore$0$anon0_correct@@23)))
+anon0_correct@@23))))))))))))))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@8 () Bool)
+(declare-fun $1_DualAttestation_Credential_$memory@0@@0 () T@$Memory_127241)
+(declare-fun $t16@2 () T@$Mutation_188019)
+(declare-fun $t6@@11 () Int)
+(declare-fun $t7@@8 () Int)
+(declare-fun _$t1@@16 () (Seq Int))
+(declare-fun $es@0 () T@$EventStore)
+(declare-fun $t9@@13 () T@$1_Event_EventHandle)
+(declare-fun $t10@@5 () T@$1_DualAttestation_BaseUrlRotationEvent)
+(declare-fun |Store__T@[$EventRep]Int_| (|T@[$EventRep]Int| T@$EventRep Int) |T@[$EventRep]Int|)
+(assert (forall ( ( ?x0 |T@[$EventRep]Int|) ( ?x1 T@$EventRep) ( ?x2 Int)) (! (= (|Select__T@[$EventRep]Int_| (|Store__T@[$EventRep]Int_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[$EventRep]Int|) ( ?x1 T@$EventRep) ( ?y1 T@$EventRep) ( ?x2 Int)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$EventRep]Int_| (|Store__T@[$EventRep]Int_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$EventRep]Int_| ?x0 ?y1))) :weight 0)))
+(declare-fun |Store__T@[$1_Event_EventHandle]Multiset_91856_| (|T@[$1_Event_EventHandle]Multiset_91856| T@$1_Event_EventHandle T@Multiset_91856) |T@[$1_Event_EventHandle]Multiset_91856|)
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Multiset_91856|) ( ?x1 T@$1_Event_EventHandle) ( ?x2 T@Multiset_91856)) (! (= (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|Store__T@[$1_Event_EventHandle]Multiset_91856_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Multiset_91856|) ( ?x1 T@$1_Event_EventHandle) ( ?y1 T@$1_Event_EventHandle) ( ?x2 T@Multiset_91856)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|Store__T@[$1_Event_EventHandle]Multiset_91856_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$1_Event_EventHandle]Multiset_91856_| ?x0 ?y1))) :weight 0)))
+(declare-fun $t15@0@@0 () Int)
+(declare-fun $abort_code@1@@8 () Int)
+(declare-fun |inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$handle@1| () T@$1_Event_EventHandle)
+(declare-fun $t18@0@@3 () T@$Mutation_117132)
+(declare-fun $t21@0 () T@$1_DualAttestation_BaseUrlRotationEvent)
+(declare-fun $t20@@1 () Bool)
+(declare-fun $t19 () Int)
+(declare-fun $t15@@0 () Int)
+(declare-fun |$temp_0'$1_DualAttestation_Credential'@0| () T@$1_DualAttestation_Credential)
+(declare-fun $t16@1 () T@$Mutation_188019)
+(declare-fun $t17@0@@2 () T@$Mutation_112184)
+(declare-fun $t17@1 () T@$Mutation_112184)
+(declare-fun $t16@@0 () T@$Mutation_188019)
+(declare-fun $t11@@7 () Int)
+(declare-fun $t16@0 () T@$Mutation_188019)
+(declare-fun $abort_code@0@@8 () Int)
+(declare-fun $t12@0 () Bool)
+(declare-fun $t14@@8 () Int)
+(declare-fun _$t0@@23 () T@$signer)
+(declare-fun $t8@@13 () Int)
+(declare-fun $t5@@14 () T@$Mutation_188019)
+(declare-fun $t17@@0 () T@$Mutation_112184)
+(declare-fun $t18 () T@$Mutation_117132)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_rotate_base_url$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 324875) (let ((anon19_Else_correct  (=> (and (not $abort_flag@0@@8) (= $1_DualAttestation_Credential_$memory@0@@0 ($Memory_127241 (|Store__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|a#$Global| (|l#$Mutation_188019| $t16@2)) true) (|Store__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) (|a#$Global| (|l#$Mutation_188019| $t16@2)) (|v#$Mutation_188019| $t16@2))))) (and (=> (= (ControlFlow 0 245614) (- 0 325685)) (forall ((addr1@@85 Int) ) (!  (=> (|$IsValid'address'| addr1@@85) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@85) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@85) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@85)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@85) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@85)) 2)))))
+ :qid |DualAttestationandybpl.18141:15|
+ :skolemid |393|
+))) (=> (forall ((addr1@@86 Int) ) (!  (=> (|$IsValid'address'| addr1@@86) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@86) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@86) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@86)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@86) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@86)) 2)))))
+ :qid |DualAttestationandybpl.18141:15|
+ :skolemid |393|
+)) (and (=> (= (ControlFlow 0 245614) (- 0 325721)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t6@@11)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t6@@11))) (and (=> (= (ControlFlow 0 245614) (- 0 325733)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (and (=> (= (ControlFlow 0 245614) (- 0 325743)) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) $t7@@8)) _$t1@@16)) (=> (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) $t7@@8)) _$t1@@16) (and (=> (= (ControlFlow 0 245614) (- 0 325756)) (forall ((addr1@@87 Int) ) (!  (=> (|$IsValid'address'| addr1@@87) (=> (not (= addr1@@87 $t7@@8)) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@87)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@87)))))
+ :qid |DualAttestationandybpl.18165:15|
+ :skolemid |394|
+))) (=> (forall ((addr1@@88 Int) ) (!  (=> (|$IsValid'address'| addr1@@88) (=> (not (= addr1@@88 $t7@@8)) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@88)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@88)))))
+ :qid |DualAttestationandybpl.18165:15|
+ :skolemid |394|
+)) (and (=> (= (ControlFlow 0 245614) (- 0 325794)) (forall ((addr1@@89 Int) ) (!  (=> (|$IsValid'address'| addr1@@89) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@89) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@89)))
+ :qid |DualAttestationandybpl.18170:15|
+ :skolemid |395|
+))) (=> (forall ((addr1@@90 Int) ) (!  (=> (|$IsValid'address'| addr1@@90) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@90) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@90)))
+ :qid |DualAttestationandybpl.18170:15|
+ :skolemid |395|
+)) (and (=> (= (ControlFlow 0 245614) (- 0 325818)) (forall ((addr1@@91 Int) ) (!  (=> (|$IsValid'address'| addr1@@91) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@91)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@91))))
+ :qid |DualAttestationandybpl.18175:15|
+ :skolemid |396|
+))) (=> (forall ((addr1@@92 Int) ) (!  (=> (|$IsValid'address'| addr1@@92) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@92)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@92))))
+ :qid |DualAttestationandybpl.18175:15|
+ :skolemid |396|
+)) (and (=> (= (ControlFlow 0 245614) (- 0 325846)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (=> (= (ControlFlow 0 245614) (- 0 325863)) (forall ((addr1@@93 Int) ) (!  (=> (|$IsValid'address'| addr1@@93) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@93) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@93)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@93)))))
+ :qid |DualAttestationandybpl.18185:15|
+ :skolemid |397|
+))) (=> (forall ((addr1@@94 Int) ) (!  (=> (|$IsValid'address'| addr1@@94) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@94) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@0) addr1@@94)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@94)))))
+ :qid |DualAttestationandybpl.18185:15|
+ :skolemid |397|
+)) (and (=> (= (ControlFlow 0 245614) (- 0 325898)) (let ((actual ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
+(let ((expected (let ((stream@@25 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t9@@13)))
+(let ((stream_new (let ((len (|l#Multiset_91856| stream@@25)))
+(let ((cnt (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@25) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t10@@5))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@25) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t10@@5) (+ cnt 1)) (+ len 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t9@@13 stream_new))))))
+ (and (<= (|counter#$EventStore| expected) (|counter#$EventStore| actual)) (forall ((handle@@26 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected) handle@@26)) (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual) handle@@26))) (forall ((v@@66 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected) handle@@26)) v@@66) (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual) handle@@26)) v@@66))
+ :qid |DualAttestationandybpl.134:13|
+ :skolemid |3|
+)))
+ :qid |DualAttestationandybpl.2798:13|
+ :skolemid |80|
+)))))) (=> (let ((actual@@0 ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
+(let ((expected@@0 (let ((stream@@26 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t9@@13)))
+(let ((stream_new@@0 (let ((len@@0 (|l#Multiset_91856| stream@@26)))
+(let ((cnt@@0 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@26) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t10@@5))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@26) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t10@@5) (+ cnt@@0 1)) (+ len@@0 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t9@@13 stream_new@@0))))))
+ (and (<= (|counter#$EventStore| expected@@0) (|counter#$EventStore| actual@@0)) (forall ((handle@@27 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@0) handle@@27)) (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@0) handle@@27))) (forall ((v@@67 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@0) handle@@27)) v@@67) (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@0) handle@@27)) v@@67))
+ :qid |DualAttestationandybpl.134:13|
+ :skolemid |3|
+)))
+ :qid |DualAttestationandybpl.2798:13|
+ :skolemid |80|
+))))) (=> (= (ControlFlow 0 245614) (- 0 325923)) (let ((actual@@1 ($EventStore (- (|counter#$EventStore| $es@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0) (|streams#$EventStore| $es)))))
+(let ((expected@@1 (let ((stream@@27 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t9@@13)))
+(let ((stream_new@@1 (let ((len@@1 (|l#Multiset_91856| stream@@27)))
+(let ((cnt@@1 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@27) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t10@@5))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@27) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t10@@5) (+ cnt@@1 1)) (+ len@@1 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t9@@13 stream_new@@1))))))
+ (and (<= (|counter#$EventStore| actual@@1) (|counter#$EventStore| expected@@1)) (forall ((handle@@28 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@1) handle@@28)) (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@1) handle@@28))) (forall ((v@@68 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@1) handle@@28)) v@@68) (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@1) handle@@28)) v@@68))
+ :qid |DualAttestationandybpl.134:13|
+ :skolemid |3|
+)))
+ :qid |DualAttestationandybpl.2798:13|
+ :skolemid |80|
+)))))))))))))))))))))))))))))
+(let ((L3_correct@@7  (and (=> (= (ControlFlow 0 245110) (- 0 325616)) (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t6@@11)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t6@@11)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (=> (= (ControlFlow 0 245110) (- 0 325630)) (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t6@@11)) (= 5 $t15@0@@0)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t15@0@@0))))))))
+(let ((anon19_Then_correct  (=> (and (and $abort_flag@0@@8 (= $abort_code@1@@8 $abort_code@1@@8)) (and (= $t15@0@@0 $abort_code@1@@8) (= (ControlFlow 0 245628) 245110))) L3_correct@@7)))
+(let ((|inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$anon0_correct|  (=> (and (= |inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$handle@1| (|v#$Mutation_117132| $t18@0@@3)) (= $es@0 (let ((stream@@28 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$handle@1|)))
+(let ((stream_new@@2 (let ((len@@2 (|l#Multiset_91856| stream@@28)))
+(let ((cnt@@2 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@28) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t21@0))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@28) (|$ToEventRep'$1_DualAttestation_BaseUrlRotationEvent'| $t21@0) (+ cnt@@2 1)) (+ len@@2 1))))))
+($EventStore (+ (|counter#$EventStore| $es) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$handle@1| stream_new@@2)))))) (and (=> (= (ControlFlow 0 245313) 245628) anon19_Then_correct) (=> (= (ControlFlow 0 245313) 245614) anon19_Else_correct)))))
+(let ((anon18_Else_correct@@2  (=> (not $t20@@1) (=> (and (and (|$IsValid'u64'| $t19) (= $t19 (div (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) 1000000))) (and (= $t21@0 ($1_DualAttestation_BaseUrlRotationEvent _$t1@@16 $t19)) (= (ControlFlow 0 245319) 245313))) |inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$anon0_correct|))))
+(let ((anon18_Then_correct@@2  (=> $t20@@1 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t15@@0)) (= $t15@@0 $t15@@0)) (and (= $t15@0@@0 $t15@@0) (= (ControlFlow 0 245654) 245110))) L3_correct@@7))))
+(let ((anon17_Else_correct@@3  (=> (and (and (and (not $abort_flag@0@@8) (= |$temp_0'$1_DualAttestation_Credential'@0| (|v#$Mutation_188019| $t16@1))) (and (= |$temp_0'$1_DualAttestation_Credential'@0| |$temp_0'$1_DualAttestation_Credential'@0|) (= $t17@0@@2 ($Mutation_112184 (|l#$Mutation_188019| $t16@1) (seq.++ (|p#$Mutation_188019| $t16@1) (seq.unit 1)) (|$base_url#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@1)))))) (and (and (= $t17@1 ($Mutation_112184 (|l#$Mutation_112184| $t17@0@@2) (|p#$Mutation_112184| $t17@0@@2) _$t1@@16)) (= $t16@2 ($Mutation_188019 (|l#$Mutation_188019| $t16@1) (|p#$Mutation_188019| $t16@1) ($1_DualAttestation_Credential (|$human_name#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@1)) (|v#$Mutation_112184| $t17@1) (|$compliance_public_key#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@1)) (|$expiration_date#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@1)) (|$compliance_key_rotation_events#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@1)) (|$base_url_rotation_events#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@1)))))) (and (= $t18@0@@3 ($Mutation_117132 (|l#$Mutation_188019| $t16@2) (seq.++ (|p#$Mutation_188019| $t16@2) (seq.unit 5)) (|$base_url_rotation_events#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t16@2)))) (= $t20@@1  (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))))) (and (=> (= (ControlFlow 0 245214) 245654) anon18_Then_correct@@2) (=> (= (ControlFlow 0 245214) 245319) anon18_Else_correct@@2)))))
+(let ((anon17_Then_correct@@3  (=> (and (and $abort_flag@0@@8 (= $abort_code@1@@8 $abort_code@1@@8)) (and (= $t15@0@@0 $abort_code@1@@8) (= (ControlFlow 0 245668) 245110))) L3_correct@@7)))
+(let ((anon16_Then$1_correct  (=> (= $t16@1 $t16@@0) (=> (and (= $abort_flag@0@@8 true) (= $abort_code@1@@8 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 245720) 245668) anon17_Then_correct@@3) (=> (= (ControlFlow 0 245720) 245214) anon17_Else_correct@@3))))))
+(let ((anon16_Then_correct@@4  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t11@@7)) (= (ControlFlow 0 245718) 245720)) anon16_Then$1_correct)))
+(let ((anon16_Else_correct@@4  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t11@@7) (=> (and (and (= $t16@0 ($Mutation_188019 ($Global $t11@@7) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $t11@@7))) (= $t16@1 $t16@0)) (and (= $abort_flag@0@@8 false) (= $abort_code@1@@8 $abort_code@0@@8))) (and (=> (= (ControlFlow 0 245136) 245668) anon17_Then_correct@@3) (=> (= (ControlFlow 0 245136) 245214) anon17_Else_correct@@3))))))
+(let ((anon15_Then_correct@@4  (=> $t12@0 (and (=> (= (ControlFlow 0 245114) 245718) anon16_Then_correct@@4) (=> (= (ControlFlow 0 245114) 245136) anon16_Else_correct@@4)))))
+(let ((anon15_Else_correct@@4  (=> (and (and (not $t12@0) (= $t14@@8 $t14@@8)) (and (= $t15@0@@0 $t14@@8) (= (ControlFlow 0 245054) 245110))) L3_correct@@7)))
+(let ((anon0$1_correct@@24  (=> (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_138740| $1_DiemConfig_Configuration_$memory) 173345816))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_138350| |$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory|) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_159675| $1_XDX_Reserve_$memory) 173345816)))) (=> (and (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_157168| |$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'_$memory|) 173345816))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (forall ((addr1@@95 Int) ) (!  (=> (|$IsValid'address'| addr1@@95) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@95) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@95) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@95)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@95) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@95)) 2)))))
+ :qid |DualAttestationandybpl.17937:20|
+ :skolemid |390|
+)))) (and (and (|$IsValid'address'| (|$addr#$signer| _$t0@@23)) (|$IsValid'vec'u8''| _$t1@@16)) (and (forall (($a_0@@52 Int) ) (! (let (($rsc@@52 (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@52)))
+(|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| $rsc@@52))
+ :qid |DualAttestationandybpl.17946:20|
+ :skolemid |391|
+ :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@52))
+)) (forall (($a_0@@53 Int) ) (! (let (($rsc@@53 (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@53)))
+(|$IsValid'$1_DualAttestation_Credential'| $rsc@@53))
+ :qid |DualAttestationandybpl.17950:20|
+ :skolemid |392|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@53))
+))))) (=> (and (and (and (and (= $t6@@11 (|$addr#$signer| _$t0@@23)) (= $t7@@8 (|$addr#$signer| _$t0@@23))) (and (= $t8@@13 (|$addr#$signer| _$t0@@23)) (= $t9@@13 (|$base_url_rotation_events#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $t8@@13))))) (and (and (= $t10@@5 ($1_DualAttestation_BaseUrlRotationEvent _$t1@@16 (div (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) 1000000))) (= _$t0@@23 _$t0@@23)) (and (= _$t1@@16 _$t1@@16) (|$IsValid'address'| $t11@@7)))) (and (and (and (= $t11@@7 (|$addr#$signer| _$t0@@23)) (= $t11@@7 $t11@@7)) (and (= $t12@0 (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t11@@7)) (|$IsValid'u64'| 0))) (and (and (|$IsValid'u64'| $t14@@8) (= $t14@@8 5)) (and (= $t14@@8 $t14@@8) (= $t12@0 $t12@0))))) (and (=> (= (ControlFlow 0 245038) 245114) anon15_Then_correct@@4) (=> (= (ControlFlow 0 245038) 245054) anon15_Else_correct@@4)))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@24  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@29 T@$1_Event_EventHandle) ) (! (let ((stream@@29 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@29)))
+ (and (= (|l#Multiset_91856| stream@@29) 0) (forall ((v@@69 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@29) v@@69) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 244733) 245038)) anon0$1_correct@@24)))
+(let ((anon0_correct@@24  (=> (= (seq.len (|p#$Mutation_188019| $t5@@14)) 0) (=> (and (and (= (seq.len (|p#$Mutation_188019| $t16@@0)) 0) (= (seq.len (|p#$Mutation_112184| $t17@@0)) 0)) (and (= (seq.len (|p#$Mutation_117132| $t18)) 0) (= (ControlFlow 0 244743) 244733))) inline$$InitEventStore$0$anon0_correct@@24))))
+(let ((PreconditionGeneratedEntry_correct@@1  (=> (= (ControlFlow 0 324875) 244743) anon0_correct@@24)))
+PreconditionGeneratedEntry_correct@@1))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@9 () Bool)
+(declare-fun $1_DualAttestation_Credential_$memory@0@@1 () T@$Memory_127241)
+(declare-fun $t21@2 () T@$Mutation_188019)
+(declare-fun _$t1@@17 () (Seq Int))
+(declare-fun $t8@@14 () Int)
+(declare-fun $t9@@14 () Int)
+(declare-fun $es@0@@0 () T@$EventStore)
+(declare-fun $t11@@8 () T@$1_Event_EventHandle)
+(declare-fun $t12@@7 () T@$1_DualAttestation_ComplianceKeyRotationEvent)
+(declare-fun $t17@0@@3 () Int)
+(declare-fun $abort_code@1@@9 () Int)
+(declare-fun |inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$handle@1| () T@$1_Event_EventHandle)
+(declare-fun $t23@0 () T@$Mutation_117132)
+(declare-fun $t26@0@@0 () T@$1_DualAttestation_ComplianceKeyRotationEvent)
+(declare-fun $t25@@3 () Bool)
+(declare-fun $t24@@4 () Int)
+(declare-fun $t17@@1 () Int)
+(declare-fun |$temp_0'$1_DualAttestation_Credential'@0@@0| () T@$1_DualAttestation_Credential)
+(declare-fun $t21@1 () T@$Mutation_188019)
+(declare-fun $t22@0 () T@$Mutation_112184)
+(declare-fun $t22@1 () T@$Mutation_112184)
+(declare-fun $t21@@3 () T@$Mutation_188019)
+(declare-fun $t13@@6 () Int)
+(declare-fun $t21@0@@0 () T@$Mutation_188019)
+(declare-fun $abort_code@0@@9 () Int)
+(declare-fun inline$$1_Signature_ed25519_validate_pubkey$0$res@1 () Bool)
+(declare-fun $t20@@2 () Int)
+(declare-fun $t14@0@@0 () Bool)
+(declare-fun $t16@@1 () Int)
+(declare-fun _$t0@@24 () T@$signer)
+(declare-fun $t10@@6 () Int)
+(declare-fun $t7@@9 () T@$Mutation_188019)
+(declare-fun $t22@@3 () T@$Mutation_112184)
+(declare-fun $t23@@2 () T@$Mutation_117132)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_rotate_compliance_public_key$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 325954) (let ((anon26_Else_correct@@5  (=> (and (not $abort_flag@0@@9) (= $1_DualAttestation_Credential_$memory@0@@1 ($Memory_127241 (|Store__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) (|a#$Global| (|l#$Mutation_188019| $t21@2)) true) (|Store__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) (|a#$Global| (|l#$Mutation_188019| $t21@2)) (|v#$Mutation_188019| $t21@2))))) (and (=> (= (ControlFlow 0 246974) (- 0 326878)) (forall ((addr1@@96 Int) ) (!  (=> (|$IsValid'address'| addr1@@96) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@96) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@96) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@96)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@96) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@96)) 2)))))
+ :qid |DualAttestationandybpl.18569:15|
+ :skolemid |401|
+))) (=> (forall ((addr1@@97 Int) ) (!  (=> (|$IsValid'address'| addr1@@97) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@97) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@97) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@97)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@97) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@97)) 2)))))
+ :qid |DualAttestationandybpl.18569:15|
+ :skolemid |401|
+)) (and (=> (= (ControlFlow 0 246974) (- 0 326914)) (not (not ($1_Signature_$ed25519_validate_pubkey _$t1@@17)))) (=> (not (not ($1_Signature_$ed25519_validate_pubkey _$t1@@17))) (and (=> (= (ControlFlow 0 246974) (- 0 326924)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t8@@14)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t8@@14))) (and (=> (= (ControlFlow 0 246974) (- 0 326936)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (and (=> (= (ControlFlow 0 246974) (- 0 326946)) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) $t9@@14)) _$t1@@17)) (=> (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) $t9@@14)) _$t1@@17) (and (=> (= (ControlFlow 0 246974) (- 0 326959)) (forall ((addr1@@98 Int) ) (!  (=> (|$IsValid'address'| addr1@@98) (=> (not (= addr1@@98 $t9@@14)) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@98)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@98)))))
+ :qid |DualAttestationandybpl.18598:15|
+ :skolemid |402|
+))) (=> (forall ((addr1@@99 Int) ) (!  (=> (|$IsValid'address'| addr1@@99) (=> (not (= addr1@@99 $t9@@14)) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@99)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@99)))))
+ :qid |DualAttestationandybpl.18598:15|
+ :skolemid |402|
+)) (and (=> (= (ControlFlow 0 246974) (- 0 326997)) (forall ((addr1@@100 Int) ) (!  (=> (|$IsValid'address'| addr1@@100) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@100) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@100)))
+ :qid |DualAttestationandybpl.18603:15|
+ :skolemid |403|
+))) (=> (forall ((addr1@@101 Int) ) (!  (=> (|$IsValid'address'| addr1@@101) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@101) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@101)))
+ :qid |DualAttestationandybpl.18603:15|
+ :skolemid |403|
+)) (and (=> (= (ControlFlow 0 246974) (- 0 327021)) (forall ((addr1@@102 Int) ) (!  (=> (|$IsValid'address'| addr1@@102) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@102)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@102))))
+ :qid |DualAttestationandybpl.18608:15|
+ :skolemid |404|
+))) (=> (forall ((addr1@@103 Int) ) (!  (=> (|$IsValid'address'| addr1@@103) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@103)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@103))))
+ :qid |DualAttestationandybpl.18608:15|
+ :skolemid |404|
+)) (and (=> (= (ControlFlow 0 246974) (- 0 327049)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (and (=> (= (ControlFlow 0 246974) (- 0 327066)) (forall ((addr1@@104 Int) ) (!  (=> (|$IsValid'address'| addr1@@104) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@104) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@104)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@104)))))
+ :qid |DualAttestationandybpl.18618:15|
+ :skolemid |405|
+))) (=> (forall ((addr1@@105 Int) ) (!  (=> (|$IsValid'address'| addr1@@105) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@105) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory@0@@1) addr1@@105)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@105)))))
+ :qid |DualAttestationandybpl.18618:15|
+ :skolemid |405|
+)) (and (=> (= (ControlFlow 0 246974) (- 0 327101)) (let ((actual@@2 ($EventStore (- (|counter#$EventStore| $es@0@@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0@@0) (|streams#$EventStore| $es)))))
+(let ((expected@@2 (let ((stream@@30 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t11@@8)))
+(let ((stream_new@@3 (let ((len@@3 (|l#Multiset_91856| stream@@30)))
+(let ((cnt@@3 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@30) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t12@@7))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@30) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t12@@7) (+ cnt@@3 1)) (+ len@@3 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t11@@8 stream_new@@3))))))
+ (and (<= (|counter#$EventStore| expected@@2) (|counter#$EventStore| actual@@2)) (forall ((handle@@30 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@2) handle@@30)) (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@2) handle@@30))) (forall ((v@@70 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@2) handle@@30)) v@@70) (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@2) handle@@30)) v@@70))
+ :qid |DualAttestationandybpl.134:13|
+ :skolemid |3|
+)))
+ :qid |DualAttestationandybpl.2798:13|
+ :skolemid |80|
+)))))) (=> (let ((actual@@3 ($EventStore (- (|counter#$EventStore| $es@0@@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0@@0) (|streams#$EventStore| $es)))))
+(let ((expected@@3 (let ((stream@@31 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t11@@8)))
+(let ((stream_new@@4 (let ((len@@4 (|l#Multiset_91856| stream@@31)))
+(let ((cnt@@4 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@31) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t12@@7))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@31) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t12@@7) (+ cnt@@4 1)) (+ len@@4 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t11@@8 stream_new@@4))))))
+ (and (<= (|counter#$EventStore| expected@@3) (|counter#$EventStore| actual@@3)) (forall ((handle@@31 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@3) handle@@31)) (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@3) handle@@31))) (forall ((v@@71 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@3) handle@@31)) v@@71) (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@3) handle@@31)) v@@71))
+ :qid |DualAttestationandybpl.134:13|
+ :skolemid |3|
+)))
+ :qid |DualAttestationandybpl.2798:13|
+ :skolemid |80|
+))))) (=> (= (ControlFlow 0 246974) (- 0 327126)) (let ((actual@@4 ($EventStore (- (|counter#$EventStore| $es@0@@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0@@0) (|streams#$EventStore| $es)))))
+(let ((expected@@4 (let ((stream@@32 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t11@@8)))
+(let ((stream_new@@5 (let ((len@@5 (|l#Multiset_91856| stream@@32)))
+(let ((cnt@@5 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@32) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t12@@7))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@32) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t12@@7) (+ cnt@@5 1)) (+ len@@5 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $EmptyEventStore) $t11@@8 stream_new@@5))))))
+ (and (<= (|counter#$EventStore| actual@@4) (|counter#$EventStore| expected@@4)) (forall ((handle@@32 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@4) handle@@32)) (|l#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@4) handle@@32))) (forall ((v@@72 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| actual@@4) handle@@32)) v@@72) (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| expected@@4) handle@@32)) v@@72))
+ :qid |DualAttestationandybpl.134:13|
+ :skolemid |3|
+)))
+ :qid |DualAttestationandybpl.2798:13|
+ :skolemid |80|
+)))))))))))))))))))))))))))))))
+(let ((anon21_Then_correct@@0 true))
+(let ((L5_correct@@1  (and (=> (= (ControlFlow 0 246368) (- 0 326788)) (or (or (not ($1_Signature_$ed25519_validate_pubkey _$t1@@17)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t8@@14))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))) (=> (or (or (not ($1_Signature_$ed25519_validate_pubkey _$t1@@17)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t8@@14))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816))) (=> (= (ControlFlow 0 246368) (- 0 326809)) (or (or (and (not ($1_Signature_$ed25519_validate_pubkey _$t1@@17)) (= 7 $t17@0@@3)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t8@@14)) (= 5 $t17@0@@3))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t17@0@@3))))))))
+(let ((anon26_Then_correct@@5  (=> (and (and $abort_flag@0@@9 (= $abort_code@1@@9 $abort_code@1@@9)) (and (= $t17@0@@3 $abort_code@1@@9) (= (ControlFlow 0 246988) 246368))) L5_correct@@1)))
+(let ((|inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$anon0_correct|  (=> (and (= |inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$handle@1| (|v#$Mutation_117132| $t23@0)) (= $es@0@@0 (let ((stream@@33 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$handle@1|)))
+(let ((stream_new@@6 (let ((len@@6 (|l#Multiset_91856| stream@@33)))
+(let ((cnt@@6 (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@33) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t26@0@@0))))
+(Multiset_91856 (|Store__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@33) (|$ToEventRep'$1_DualAttestation_ComplianceKeyRotationEvent'| $t26@0@@0) (+ cnt@@6 1)) (+ len@@6 1))))))
+($EventStore (+ (|counter#$EventStore| $es) 1) (|Store__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$handle@1| stream_new@@6)))))) (and (=> (= (ControlFlow 0 246663) 246988) anon26_Then_correct@@5) (=> (= (ControlFlow 0 246663) 246974) anon26_Else_correct@@5)))))
+(let ((anon25_Else_correct@@4  (=> (not $t25@@3) (=> (and (and (|$IsValid'u64'| $t24@@4) (= $t24@@4 (div (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) 1000000))) (and (= $t26@0@@0 ($1_DualAttestation_ComplianceKeyRotationEvent _$t1@@17 $t24@@4)) (= (ControlFlow 0 246669) 246663))) |inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$anon0_correct|))))
+(let ((anon25_Then_correct@@4  (=> $t25@@3 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (= 1 $t17@@1)) (= $t17@@1 $t17@@1)) (and (= $t17@0@@3 $t17@@1) (= (ControlFlow 0 247014) 246368))) L5_correct@@1))))
+(let ((anon24_Else_correct@@4  (=> (and (and (and (not $abort_flag@0@@9) (= |$temp_0'$1_DualAttestation_Credential'@0@@0| (|v#$Mutation_188019| $t21@1))) (and (= |$temp_0'$1_DualAttestation_Credential'@0@@0| |$temp_0'$1_DualAttestation_Credential'@0@@0|) (= $t22@0 ($Mutation_112184 (|l#$Mutation_188019| $t21@1) (seq.++ (|p#$Mutation_188019| $t21@1) (seq.unit 2)) (|$compliance_public_key#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@1)))))) (and (and (= $t22@1 ($Mutation_112184 (|l#$Mutation_112184| $t22@0) (|p#$Mutation_112184| $t22@0) _$t1@@17)) (= $t21@2 ($Mutation_188019 (|l#$Mutation_188019| $t21@1) (|p#$Mutation_188019| $t21@1) ($1_DualAttestation_Credential (|$human_name#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@1)) (|$base_url#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@1)) (|v#$Mutation_112184| $t22@1) (|$expiration_date#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@1)) (|$compliance_key_rotation_events#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@1)) (|$base_url_rotation_events#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@1)))))) (and (= $t23@0 ($Mutation_117132 (|l#$Mutation_188019| $t21@2) (seq.++ (|p#$Mutation_188019| $t21@2) (seq.unit 4)) (|$compliance_key_rotation_events#$1_DualAttestation_Credential| (|v#$Mutation_188019| $t21@2)))) (= $t25@@3  (not (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)))))) (and (=> (= (ControlFlow 0 246564) 247014) anon25_Then_correct@@4) (=> (= (ControlFlow 0 246564) 246669) anon25_Else_correct@@4)))))
+(let ((anon24_Then_correct@@4  (=> (and (and $abort_flag@0@@9 (= $abort_code@1@@9 $abort_code@1@@9)) (and (= $t17@0@@3 $abort_code@1@@9) (= (ControlFlow 0 247028) 246368))) L5_correct@@1)))
+(let ((anon23_Then$1_correct  (=> (= $t21@1 $t21@@3) (=> (and (= $abort_flag@0@@9 true) (= $abort_code@1@@9 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 247080) 247028) anon24_Then_correct@@4) (=> (= (ControlFlow 0 247080) 246564) anon24_Else_correct@@4))))))
+(let ((anon23_Then_correct@@4  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t13@@6)) (= (ControlFlow 0 247078) 247080)) anon23_Then$1_correct)))
+(let ((anon23_Else_correct@@4  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t13@@6) (=> (and (and (= $t21@0@@0 ($Mutation_188019 ($Global $t13@@6) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $t13@@6))) (= $t21@1 $t21@0@@0)) (and (= $abort_flag@0@@9 false) (= $abort_code@1@@9 $abort_code@0@@9))) (and (=> (= (ControlFlow 0 246486) 247028) anon24_Then_correct@@4) (=> (= (ControlFlow 0 246486) 246564) anon24_Else_correct@@4))))))
+(let ((anon22_Then_correct@@1  (=> inline$$1_Signature_ed25519_validate_pubkey$0$res@1 (and (=> (= (ControlFlow 0 246464) 247078) anon23_Then_correct@@4) (=> (= (ControlFlow 0 246464) 246486) anon23_Else_correct@@4)))))
+(let ((anon22_Else_correct@@1  (=> (and (and (not inline$$1_Signature_ed25519_validate_pubkey$0$res@1) (= $t20@@2 $t20@@2)) (and (= $t17@0@@3 $t20@@2) (= (ControlFlow 0 246460) 246368))) L5_correct@@1)))
+(let ((anon21_Else_correct@@0  (=> (and (not false) (|$IsValid'u64'| 2)) (=> (and (and (|$IsValid'u64'| $t20@@2) (= $t20@@2 7)) (and (= $t20@@2 $t20@@2) (= inline$$1_Signature_ed25519_validate_pubkey$0$res@1 inline$$1_Signature_ed25519_validate_pubkey$0$res@1))) (and (=> (= (ControlFlow 0 246444) 246464) anon22_Then_correct@@1) (=> (= (ControlFlow 0 246444) 246460) anon22_Else_correct@@1))))))
+(let ((inline$$1_Signature_ed25519_validate_pubkey$0$anon0_correct  (=> (= inline$$1_Signature_ed25519_validate_pubkey$0$res@1 ($1_Signature_$ed25519_validate_pubkey _$t1@@17)) (and (=> (= (ControlFlow 0 246402) 247094) anon21_Then_correct@@0) (=> (= (ControlFlow 0 246402) 246444) anon21_Else_correct@@0)))))
+(let ((anon20_Then_correct@@0  (=> (and $t14@0@@0 (= (ControlFlow 0 246408) 246402)) inline$$1_Signature_ed25519_validate_pubkey$0$anon0_correct)))
+(let ((anon20_Else_correct@@0  (=> (and (and (not $t14@0@@0) (= $t16@@1 $t16@@1)) (and (= $t17@0@@3 $t16@@1) (= (ControlFlow 0 246288) 246368))) L5_correct@@1)))
+(let ((anon0$1_correct@@25  (=> (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_138740| $1_DiemConfig_Configuration_$memory) 173345816))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_138350| |$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory|) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_159675| $1_XDX_Reserve_$memory) 173345816)))) (=> (and (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_144013| |$1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory|) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_157168| |$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'_$memory|) 173345816))) (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (forall ((addr1@@106 Int) ) (!  (=> (|$IsValid'address'| addr1@@106) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@106) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@106) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@106)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@106) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@106)) 2)))))
+ :qid |DualAttestationandybpl.18313:20|
+ :skolemid |398|
+)))) (and (and (|$IsValid'address'| (|$addr#$signer| _$t0@@24)) (|$IsValid'vec'u8''| _$t1@@17)) (and (forall (($a_0@@54 Int) ) (! (let (($rsc@@54 (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@54)))
+(|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| $rsc@@54))
+ :qid |DualAttestationandybpl.18322:20|
+ :skolemid |399|
+ :pattern ( (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) $a_0@@54))
+)) (forall (($a_0@@55 Int) ) (! (let (($rsc@@55 (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@55)))
+(|$IsValid'$1_DualAttestation_Credential'| $rsc@@55))
+ :qid |DualAttestationandybpl.18326:20|
+ :skolemid |400|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $a_0@@55))
+))))) (=> (and (and (and (and (= $t8@@14 (|$addr#$signer| _$t0@@24)) (= $t9@@14 (|$addr#$signer| _$t0@@24))) (and (= $t10@@6 (|$addr#$signer| _$t0@@24)) (= $t11@@8 (|$compliance_key_rotation_events#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) $t10@@6))))) (and (and (= $t12@@7 ($1_DualAttestation_ComplianceKeyRotationEvent _$t1@@17 (div (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| (|Select__T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds_| (|contents#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816)) 1000000))) (= _$t0@@24 _$t0@@24)) (and (= _$t1@@17 _$t1@@17) (|$IsValid'address'| $t13@@6)))) (and (and (and (= $t13@@6 (|$addr#$signer| _$t0@@24)) (= $t13@@6 $t13@@6)) (and (= $t14@0@@0 (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) $t13@@6)) (|$IsValid'u64'| 0))) (and (and (|$IsValid'u64'| $t16@@1) (= $t16@@1 5)) (and (= $t16@@1 $t16@@1) (= $t14@0@@0 $t14@0@@0))))) (and (=> (= (ControlFlow 0 246272) 246408) anon20_Then_correct@@0) (=> (= (ControlFlow 0 246272) 246288) anon20_Else_correct@@0)))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@25  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@33 T@$1_Event_EventHandle) ) (! (let ((stream@@34 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@33)))
+ (and (= (|l#Multiset_91856| stream@@34) 0) (forall ((v@@73 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@34) v@@73) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 245967) 246272)) anon0$1_correct@@25)))
+(let ((anon0_correct@@25  (=> (= (seq.len (|p#$Mutation_188019| $t7@@9)) 0) (=> (and (and (= (seq.len (|p#$Mutation_188019| $t21@@3)) 0) (= (seq.len (|p#$Mutation_112184| $t22@@3)) 0)) (and (= (seq.len (|p#$Mutation_117132| $t23@@2)) 0) (= (ControlFlow 0 245977) 245967))) inline$$InitEventStore$0$anon0_correct@@25))))
+(let ((PreconditionGeneratedEntry_correct@@2  (=> (= (ControlFlow 0 325954) 245977) anon0_correct@@25)))
+PreconditionGeneratedEntry_correct@@2)))))))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@10 () Bool)
+(declare-fun $t14@0@@1 () T@$Mutation_13434)
+(declare-fun $t13@1 () T@$Mutation_191610)
+(declare-fun $t14@1@@0 () T@$Mutation_13434)
+(declare-fun _$t1@@18 () Int)
+(declare-fun $t13@2 () T@$Mutation_191610)
+(declare-fun $1_DualAttestation_Limit_$memory@0@@0 () T@$Memory_124816)
+(declare-fun $t4@@8 () Int)
+(declare-fun _$t0@@25 () T@$signer)
+(declare-fun $t7@0@@4 () Int)
+(declare-fun $abort_code@1@@10 () Int)
+(declare-fun $t13@@7 () T@$Mutation_191610)
+(declare-fun $t13@0@@0 () T@$Mutation_191610)
+(declare-fun $abort_code@0@@10 () Int)
+(declare-fun $t9@0@@1 () Bool)
+(declare-fun $t11@@9 () Int)
+(declare-fun $t6@@12 () Bool)
+(declare-fun $t5@@15 () Int)
+(declare-fun $t7@@10 () Int)
+(declare-fun $t14@@9 () T@$Mutation_13434)
+(push 1)
+(set-info :boogie-vc-id $1_DualAttestation_set_microdiem_limit$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 327158) (let ((anon15_Else_correct@@5  (=> (not $abort_flag@0@@10) (=> (and (and (= $t14@0@@1 ($Mutation_13434 (|l#$Mutation_191610| $t13@1) (seq.++ (|p#$Mutation_191610| $t13@1) (seq.unit 0)) (|$micro_xdx_limit#$1_DualAttestation_Limit| (|v#$Mutation_191610| $t13@1)))) (= $t14@1@@0 ($Mutation_13434 (|l#$Mutation_13434| $t14@0@@1) (|p#$Mutation_13434| $t14@0@@1) _$t1@@18))) (and (= $t13@2 ($Mutation_191610 (|l#$Mutation_191610| $t13@1) (|p#$Mutation_191610| $t13@1) ($1_DualAttestation_Limit (|v#$Mutation_13434| $t14@1@@0)))) (= $1_DualAttestation_Limit_$memory@0@@0 ($Memory_124816 (|Store__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) (|a#$Global| (|l#$Mutation_191610| $t13@2)) true) (|Store__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) (|a#$Global| (|l#$Mutation_191610| $t13@2)) (|v#$Mutation_191610| $t13@2)))))) (and (=> (= (ControlFlow 0 248175) (- 0 328005)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory@0@@0) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory@0@@0) 173345816)) (and (=> (= (ControlFlow 0 248175) (- 0 328020)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8))) (and (=> (= (ControlFlow 0 248175) (- 0 328032)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) 1)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) 1))) (and (=> (= (ControlFlow 0 248175) (- 0 328050)) (not (not (= (|$addr#$signer| _$t0@@25) 186537453)))) (=> (not (not (= (|$addr#$signer| _$t0@@25) 186537453))) (and (=> (= (ControlFlow 0 248175) (- 0 328064)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (and (=> (= (ControlFlow 0 248175) (- 0 328074)) (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory@0@@0) 173345816)) _$t1@@18)) (=> (= (|$micro_xdx_limit#$1_DualAttestation_Limit| (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory@0@@0) 173345816)) _$t1@@18) (and (=> (= (ControlFlow 0 248175) (- 0 328087)) (forall ((addr1@@107 Int) ) (!  (=> (|$IsValid'address'| addr1@@107) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@107) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@107)))
+ :qid |DualAttestationandybpl.18911:15|
+ :skolemid |415|
+))) (=> (forall ((addr1@@108 Int) ) (!  (=> (|$IsValid'address'| addr1@@108) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@108) (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@108)))
+ :qid |DualAttestationandybpl.18911:15|
+ :skolemid |415|
+)) (and (=> (= (ControlFlow 0 248175) (- 0 328112)) (forall ((addr1@@109 Int) ) (!  (=> (|$IsValid'address'| addr1@@109) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@109)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@109))))
+ :qid |DualAttestationandybpl.18916:15|
+ :skolemid |416|
+))) (=> (forall ((addr1@@110 Int) ) (!  (=> (|$IsValid'address'| addr1@@110) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@110)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@110))))
+ :qid |DualAttestationandybpl.18916:15|
+ :skolemid |416|
+)) (and (=> (= (ControlFlow 0 248175) (- 0 328141)) (forall ((addr1@@111 Int) ) (!  (=> (|$IsValid'address'| addr1@@111) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@111) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@111)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@111)))))
+ :qid |DualAttestationandybpl.18921:15|
+ :skolemid |417|
+))) (=> (forall ((addr1@@112 Int) ) (!  (=> (|$IsValid'address'| addr1@@112) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@112) (= (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@112)) (|$compliance_public_key#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@112)))))
+ :qid |DualAttestationandybpl.18921:15|
+ :skolemid |417|
+)) (=> (= (ControlFlow 0 248175) (- 0 328177)) (forall ((addr1@@113 Int) ) (!  (=> (|$IsValid'address'| addr1@@113) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@113) (= (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@113)) (|$base_url#$1_DualAttestation_Credential| (|Select__T@[Int]$1_DualAttestation_Credential_| (|contents#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@113)))))
+ :qid |DualAttestationandybpl.18926:15|
+ :skolemid |418|
+)))))))))))))))))))))))))
+(let ((L3_correct@@8  (and (=> (= (ControlFlow 0 247881) (- 0 327827)) (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) 1))) (not (= (|$addr#$signer| _$t0@@25) 186537453))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)))) (=> (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) 1))) (not (= (|$addr#$signer| _$t0@@25) 186537453))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (=> (= (ControlFlow 0 247881) (- 0 327867)) (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) (= 5 $t7@0@@4)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t4@@8)) 1)) (= 3 $t7@0@@4))) (and (not (= (|$addr#$signer| _$t0@@25) 186537453)) (= 2 $t7@0@@4))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= 5 $t7@0@@4))))))))
+(let ((anon15_Then_correct@@5  (=> (and (and $abort_flag@0@@10 (= $abort_code@1@@10 $abort_code@1@@10)) (and (= $t7@0@@4 $abort_code@1@@10) (= (ControlFlow 0 248189) 247881))) L3_correct@@8)))
+(let ((anon14_Then$1_correct  (=> (= $t13@1 $t13@@7) (=> (and (= $abort_flag@0@@10 true) (= $abort_code@1@@10 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 248241) 248189) anon15_Then_correct@@5) (=> (= (ControlFlow 0 248241) 248175) anon15_Else_correct@@5))))))
+(let ((anon14_Then_correct@@5  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (= (ControlFlow 0 248239) 248241)) anon14_Then$1_correct)))
+(let ((anon14_Else_correct@@5  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816) (=> (and (and (= $t13@0@@0 ($Mutation_191610 ($Global 173345816) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (= $t13@1 $t13@0@@0)) (and (= $abort_flag@0@@10 false) (= $abort_code@1@@10 $abort_code@0@@10))) (and (=> (= (ControlFlow 0 247913) 248189) anon15_Then_correct@@5) (=> (= (ControlFlow 0 247913) 248175) anon15_Else_correct@@5))))))
+(let ((anon13_Then_correct@@2  (=> (and $t9@0@@1 (|$IsValid'address'| 173345816)) (and (=> (= (ControlFlow 0 247891) 248239) anon14_Then_correct@@5) (=> (= (ControlFlow 0 247891) 247913) anon14_Else_correct@@5)))))
+(let ((anon13_Else_correct@@2  (=> (and (and (not $t9@0@@1) (= $t11@@9 $t11@@9)) (and (= $t7@0@@4 $t11@@9) (= (ControlFlow 0 247753) 247881))) L3_correct@@8)))
+(let ((anon12_Else_correct@@7  (=> (and (and (and (not $t6@@12) (|$IsValid'address'| 173345816)) (and (= $t9@0@@1 (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816)) (|$IsValid'u64'| 1))) (and (and (|$IsValid'u64'| $t11@@9) (= $t11@@9 5)) (and (= $t11@@9 $t11@@9) (= $t9@0@@1 $t9@0@@1)))) (and (=> (= (ControlFlow 0 247737) 247891) anon13_Then_correct@@2) (=> (= (ControlFlow 0 247737) 247753) anon13_Else_correct@@2)))))
+(let ((anon12_Then_correct@@7  (=> $t6@@12 (=> (and (and (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@15)) (= 5 $t7@@10)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@15)) 1)) (= 3 $t7@@10))) (and (not (= (|$addr#$signer| _$t0@@25) 186537453)) (= 2 $t7@@10))) (= $t7@@10 $t7@@10)) (and (= $t7@0@@4 $t7@@10) (= (ControlFlow 0 248313) 247881))) L3_correct@@8))))
+(let ((anon0$1_correct@@26  (=> (and (and (forall ((mint_cap_owner@@1 Int) ) (!  (=> (|$IsValid'address'| mint_cap_owner@@1) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149322| |$1_Diem_MintCapability'$1_XUS_XUS'_$memory|) mint_cap_owner@@1) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner@@1) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner@@1)) 1))))
+ :qid |DualAttestationandybpl.18701:21|
+ :skolemid |406|
+)) (forall ((mint_cap_owner@@2 Int) ) (!  (=> (|$IsValid'address'| mint_cap_owner@@2) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_149409| |$1_Diem_MintCapability'$1_XDX_XDX'_$memory|) mint_cap_owner@@2) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner@@2) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) mint_cap_owner@@2)) 1))))
+ :qid |DualAttestationandybpl.18701:268|
+ :skolemid |407|
+))) (and (forall ((addr1@@114 Int) ) (!  (=> (|$IsValid'address'| addr1@@114) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_144602| |$1_Diem_BurnCapability'$1_XUS_XUS'_$memory|) addr1@@114) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@114) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@114)) 1))))
+ :qid |DualAttestationandybpl.18705:21|
+ :skolemid |408|
+)) (forall ((addr1@@115 Int) ) (!  (=> (|$IsValid'address'| addr1@@115) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_144689| |$1_Diem_BurnCapability'$1_XDX_XDX'_$memory|) addr1@@115) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@115) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@115)) 1))))
+ :qid |DualAttestationandybpl.18705:231|
+ :skolemid |409|
+)))) (=> (and (and (and (and (forall ((addr1@@116 Int) ) (!  (=> (|$IsValid'address'| addr1@@116) (=> (or (|Select__T@[Int]Bool_| (|domain#$Memory_149991| |$1_Diem_PreburnQueue'$1_XUS_XUS'_$memory|) addr1@@116) (|Select__T@[Int]Bool_| (|domain#$Memory_149582| |$1_Diem_Preburn'$1_XUS_XUS'_$memory|) addr1@@116)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@116) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@116)) 2))))
+ :qid |DualAttestationandybpl.18709:21|
+ :skolemid |410|
+)) (forall ((addr1@@117 Int) ) (!  (=> (|$IsValid'address'| addr1@@117) (=> (or (|Select__T@[Int]Bool_| (|domain#$Memory_150090| |$1_Diem_PreburnQueue'$1_XDX_XDX'_$memory|) addr1@@117) (|Select__T@[Int]Bool_| (|domain#$Memory_149673| |$1_Diem_Preburn'$1_XDX_XDX'_$memory|) addr1@@117)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@117) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@117)) 2))))
+ :qid |DualAttestationandybpl.18709:292|
+ :skolemid |411|
+))) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_123348| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_124816| $1_DualAttestation_Limit_$memory) 173345816))) (and (forall ((addr1@@118 Int) ) (!  (=> (|$IsValid'address'| addr1@@118) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_127241| $1_DualAttestation_Credential_$memory) addr1@@118) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@118) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@118)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@118) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) addr1@@118)) 2)))))
+ :qid |DualAttestationandybpl.18721:20|
+ :skolemid |412|
+)) (|$IsValid'address'| (|$addr#$signer| _$t0@@25)))) (and (and (and (|$IsValid'u64'| _$t1@@18) (forall (($a_0@@56 Int) ) (! (let (($rsc@@56 (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $a_0@@56)))
+(|$IsValid'$1_Roles_RoleId'| $rsc@@56))
+ :qid |DualAttestationandybpl.18730:20|
+ :skolemid |413|
+ :pattern ( (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $a_0@@56))
+))) (and (forall (($a_0@@57 Int) ) (! (let (($rsc@@57 (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@57)))
+(|$IsValid'$1_DualAttestation_Limit'| $rsc@@57))
+ :qid |DualAttestationandybpl.18734:20|
+ :skolemid |414|
+ :pattern ( (|Select__T@[Int]$1_DualAttestation_Limit_| (|contents#$Memory_124816| $1_DualAttestation_Limit_$memory) $a_0@@57))
+)) (= $t4@@8 (|$addr#$signer| _$t0@@25)))) (and (and (= _$t0@@25 _$t0@@25) (= _$t1@@18 _$t1@@18)) (and (= $t5@@15 (|$addr#$signer| _$t0@@25)) (= $t6@@12  (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@15)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_125197| $1_Roles_RoleId_$memory) $t5@@15)) 1))) (not (= (|$addr#$signer| _$t0@@25) 186537453)))))))) (and (=> (= (ControlFlow 0 247689) 248313) anon12_Then_correct@@7) (=> (= (ControlFlow 0 247689) 247737) anon12_Else_correct@@7))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@26  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@34 T@$1_Event_EventHandle) ) (! (let ((stream@@35 (|Select__T@[$1_Event_EventHandle]Multiset_91856_| (|streams#$EventStore| $es) handle@@34)))
+ (and (= (|l#Multiset_91856| stream@@35) 0) (forall ((v@@74 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_91856| stream@@35) v@@74) 0)
+ :qid |DualAttestationandybpl.129:13|
+ :skolemid |2|
+))))
+ :qid |DualAttestationandybpl.2782:13|
+ :skolemid |79|
+))) (= (ControlFlow 0 247336) 247689)) anon0$1_correct@@26)))
+(let ((anon0_correct@@26  (=> (= (seq.len (|p#$Mutation_191610| $t13@@7)) 0) (=> (and (= (seq.len (|p#$Mutation_13434| $t14@@9)) 0) (= (ControlFlow 0 247346) 247336)) inline$$InitEventStore$0$anon0_correct@@26))))
+(let ((PreconditionGeneratedEntry_correct@@3  (=> (= (ControlFlow 0 327158) 247346) anon0_correct@@26)))
+PreconditionGeneratedEntry_correct@@3)))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(push 1)
+(set-info :boogie-vc-id $1_Genesis_initialize$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 328227) true)
+))
+(check-sat)
+(pop 1)
+; Valid

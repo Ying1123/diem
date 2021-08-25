@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -892,7 +897,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestOpaque::opaque_caller [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:16:5+59
+// fun TestOpaque::opaque_caller [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:5+59
 procedure {:timeLimit 40} $42_TestOpaque_opaque_caller$verify() returns ($ret0: int)
 {
     // declare local variables
@@ -905,68 +910,68 @@ procedure {:timeLimit 40} $42_TestOpaque_opaque_caller$verify() returns ($ret0: 
     call $InitVerification();
 
     // bytecode translation starts here
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     // >> opaque call: $t0 := TestOpaque::opaque_incorrect()
-    assume {:print "$at(2,338,356)"} true;
+    assume {:print "$at(2,370,388)"} true;
 
-    // $t0 := opaque begin: TestOpaque::opaque_incorrect() at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // $t0 := opaque begin: TestOpaque::opaque_incorrect() at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
 
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     havoc $t1;
     assume $IsValid'bool'($t1);
 
-    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     if ($t1) { goto L4; } else { goto L3; }
 
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
 L4:
 
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
-    assume {:print "$at(2,338,356)"} true;
+    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
+    assume {:print "$at(2,370,388)"} true;
     assume {:print "$track_abort(0,0):", $t2} $t2 == $t2;
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     goto L2;
 
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
 L3:
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     assume $IsValid'u64'($t0);
 
-    // assume Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // assume Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     assume $IsEqual'u64'($t0, 2);
 
-    // $t0 := opaque end: TestOpaque::opaque_incorrect() at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // $t0 := opaque end: TestOpaque::opaque_incorrect() at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
 
-    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:17:9+18
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:9+18
     assume {:print "$track_return(0,0,0):", $t0} $t0 == $t0;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
-    assume {:print "$at(2,361,362)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:19:5+1
+    assume {:print "$at(2,393,394)"} true;
 L1:
 
-    // assert Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:21:9+20
-    assume {:print "$at(2,489,509)"} true;
-    assert {:msg "assert_failed(2,489,509): post-condition does not hold"}
+    // assert Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:22:9+20
+    assume {:print "$at(2,521,541)"} true;
+    assert {:msg "assert_failed(2,521,541): post-condition does not hold"}
       $IsEqual'u64'($t0, 2);
 
-    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:21:9+20
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:22:9+20
     $ret0 := $t0;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
-    assume {:print "$at(2,361,362)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:19:5+1
+    assume {:print "$at(2,393,394)"} true;
 L2:
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:18:5+1
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:19:5+1
     $abort_code := $t2;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestOpaque::opaque_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:8:5+45
+// fun TestOpaque::opaque_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:9:5+45
 procedure {:timeLimit 40} $42_TestOpaque_opaque_incorrect$verify() returns ($ret0: int)
 {
     // declare local variables
@@ -977,24 +982,24 @@ procedure {:timeLimit 40} $42_TestOpaque_opaque_incorrect$verify() returns ($ret
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:9:9+1
-    assume {:print "$at(2,197,198)"} true;
+    // $t0 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:10:9+1
+    assume {:print "$at(2,229,230)"} true;
     $t0 := 1;
     assume $IsValid'u64'($t0);
 
-    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:9:9+1
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:10:9+1
     assume {:print "$track_return(0,1,0):", $t0} $t0 == $t0;
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:10:5+1
-    assume {:print "$at(2,203,204)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:11:5+1
+    assume {:print "$at(2,235,236)"} true;
 L1:
 
-    // assert Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:13:9+20
-    assume {:print "$at(2,271,291)"} true;
-    assert {:msg "assert_failed(2,271,291): post-condition does not hold"}
+    // assert Eq<u64>($t0, 2) at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:14:9+20
+    assume {:print "$at(2,303,323)"} true;
+    assert {:msg "assert_failed(2,303,323): post-condition does not hold"}
       $IsEqual'u64'($t0, 2);
 
-    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:13:9+20
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/opaque.move:14:9+20
     $ret0 := $t0;
     return;
 

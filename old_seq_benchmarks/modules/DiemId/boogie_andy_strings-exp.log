@@ -3,7 +3,7 @@
 -monomorphize
 /env:2
 /proverLog:DiemId.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
 /proverOpt:SOLVER=CVC5
 /trace
@@ -12,9 +12,9 @@
 Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemId/DiemId.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemId_tc_domain_manager_exists$verify ...
-  [1.015 s, 2 proof obligations]  verified
+  [0.205 s, 2 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

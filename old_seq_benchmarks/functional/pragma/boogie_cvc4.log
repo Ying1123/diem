@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl
+/home/ying/diem/old_seq_benchmarks/functional/pragma/pragma.cvc4.bpl
 -monomorphize
 /env:2
 /proverLog:pragma.cvc4.smt2
@@ -8,16 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/pragma/pragma.cvc4.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/cvc4
-
-Verifying $42_TestPragma_always_aborts_with_verify_incorrect$verify ...
-  [0.155 s, 1 proof obligation]  error
-assert_failed(2,243,341): abort not covered by any of the `aborts_if` clauses
-Execution trace:
-    /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl(902,9): anon0
-    /home/ying/diem/seq_benchmarks/pragma/pragma.cvc4.bpl(902,9): anon0$1
-
-Boogie program verifier finished with 0 verified, 1 error
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'

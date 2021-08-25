@@ -2999,3 +2999,13 @@ anon0_correct@@14))))))))))))
 PreconditionGeneratedEntry_correct@@1))))))))))))))))))))))))))))))))))))))))))))))))
 ))
 (check-sat)
+(pop 1)
+; Valid
+(push 1)
+(set-info :boogie-vc-id $1_Genesis_initialize$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 264349) true)
+))
+(check-sat)
+(pop 1)
+; Valid

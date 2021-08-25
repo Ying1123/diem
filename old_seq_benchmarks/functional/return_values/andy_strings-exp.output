@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/return_values/return_values.andy_strings.smt2:40.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/return_values/return_values.andy_strings.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

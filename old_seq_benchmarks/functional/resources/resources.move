@@ -1,6 +1,7 @@
+// separate_baseline: no_opaque
 module 0x42::TestResources {
 
-    use 0x1::Signer;
+    use Std::Signer;
     spec module {
         pragma verify = true;
     }

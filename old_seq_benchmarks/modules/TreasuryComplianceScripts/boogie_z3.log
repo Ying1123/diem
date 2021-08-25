@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.z3.bpl
 -monomorphize
 /env:2
 /proverLog:TreasuryComplianceScripts.z3.smt2
@@ -8,13 +8,16 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/TreasuryComplianceScripts/TreasuryComplianceScripts.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.360 s, 0 proof obligations]  verified
+  [0.324 s, 0 proof obligations]  verified
 
-Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
-  [0.038 s, 0 proof obligations]  verified
+Verifying $1_TreasuryComplianceScripts_preburn$verify ...
+  [3.464 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
+  [12.790 s, 41 proof obligations]  verified

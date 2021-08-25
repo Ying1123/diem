@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -892,6 +897,15 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
+
 // struct TestModule::R at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:3:5+31
 type {:datatype} $42_TestModule_R;
 function {:constructor} $42_TestModule_R($value: int): $42_TestModule_R;
@@ -907,15 +921,15 @@ function {:inline} $IsEqual'$42_TestModule_R'(s1: $42_TestModule_R, s2: $42_Test
 var $42_TestModule_R_$memory: $Memory $42_TestModule_R;
 
 // fun TestModule::store [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) returns ()
+procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: $signer, _$t1: int) returns ()
 {
     // declare local variables
     var $t2: int;
     var $t3: $42_TestModule_R;
     var $t4: int;
-    var $t0: int;
+    var $t0: $signer;
     var $t1: int;
-    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     $t0 := _$t0;
     $t1 := _$t1;
@@ -930,7 +944,7 @@ procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) retu
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
     assume $IsValid'u64'($t1);
@@ -959,10 +973,10 @@ procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) retu
     $t3 := $42_TestModule_R($t1);
 
     // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:8+7
-    if ($ResourceExists($42_TestModule_R_$memory, $t0)) {
+    if ($ResourceExists($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $t0, $t3);
+        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0), $t3);
     }
     if ($abort_flag) {
         assume {:print "$at(2,111,118)"} true;
@@ -1006,15 +1020,15 @@ L2:
 }
 
 // fun TestModule::store_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1: int) returns ()
+procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: $signer, _$t1: int) returns ()
 {
     // declare local variables
     var $t2: int;
     var $t3: $42_TestModule_R;
     var $t4: int;
-    var $t0: int;
+    var $t0: $signer;
     var $t1: int;
-    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     $t0 := _$t0;
     $t1 := _$t1;
@@ -1029,7 +1043,7 @@ procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1:
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
     assume $IsValid'u64'($t1);
@@ -1054,10 +1068,10 @@ procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1:
     $t3 := $42_TestModule_R($t1);
 
     // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:9+7
-    if ($ResourceExists($42_TestModule_R_$memory, $t0)) {
+    if ($ResourceExists($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $t0, $t3);
+        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0), $t3);
     }
     if ($abort_flag) {
         assume {:print "$at(2,200,207)"} true;

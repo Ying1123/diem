@@ -3,7 +3,7 @@
 -monomorphize
 /env:2
 /proverLog:DiemBlock.andy_default.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_debug/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -11,22 +11,22 @@
 Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemBlock/DiemBlock.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_debug/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [1.618 s, 8 proof obligations]  verified
+  [0.229 s, 8 proof obligations]  verified
 
 Verifying $1_DiemBlock_is_initialized$verify ...
-  [0.009 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_DiemBlock_block_prologue$verify ...
-  [5.341 s, 11 proof obligations]  verified
+  [0.308 s, 11 proof obligations]  verified
 
 Verifying $1_DiemBlock_get_current_block_height$verify ...
-  [0.026 s, 0 proof obligations]  verified
+  [0.005 s, 0 proof obligations]  verified
 
 Verifying $1_DiemBlock_initialize_block_metadata$verify ...
-  [0.477 s, 8 proof obligations]  verified
+  [0.039 s, 8 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
   [0.176 s, 0 proof obligations]  verified

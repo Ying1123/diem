@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/DiemId/DiemId.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/DiemId/DiemId.z3.bpl
 -monomorphize
 /env:2
 /proverLog:DiemId.z3.smt2
@@ -8,7 +8,10 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/DiemId/DiemId.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemId/DiemId.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemId_tc_domain_manager_exists$verify ...
+  [0.170 s, 2 proof obligations]  verified

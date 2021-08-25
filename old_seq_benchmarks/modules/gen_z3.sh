@@ -16,7 +16,7 @@ BOOGIE_EXE=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 
 boogie=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 move_dir=~/diem/language/diem-framework/modules
-bm_dir=~/diem/seq_benchmarks/modules
+bm_dir=~/diem/old_seq_benchmarks/modules
 z3=/home/ying/bin/z3
 
 rm z3.t

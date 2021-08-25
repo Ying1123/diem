@@ -1,15 +1,15 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/fixed_point_arithm/fixed_point_arithm.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/fixed_point_arithm/fixed_point_arithm.andy.bpl
 -monomorphize
 /env:2
 /proverLog:fixed_point_arithm.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/fixed_point_arithm/fixed_point_arithm.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/fixed_point_arithm/fixed_point_arithm.andy.bpl
 Coalescing blocks...
 Inlining...
 

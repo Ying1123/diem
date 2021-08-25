@@ -6,9 +6,10 @@
 
 
 (declare-datatypes ((T@$42_TestConst_T 0)) ((($42_TestConst_T (|$x#$42_TestConst_T| Int) (|$b#$42_TestConst_T| Bool) (|$a#$42_TestConst_T| Int) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6829 0)) ((($Mutation_6829 (|l#$Mutation_6829| T@$Location) (|p#$Mutation_6829| (Seq Int)) (|v#$Mutation_6829| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_6908 0)) ((($Mutation_6908 (|l#$Mutation_6908| T@$Location) (|p#$Mutation_6908| (Seq Int)) (|v#$Mutation_6908| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -111,17 +112,17 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |constsandybpl.839:15|
+ :qid |constsandybpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |constsandybpl.842:15|
+ :qid |constsandybpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((s T@$42_TestConst_T) ) (! (= (|$IsValid'$42_TestConst_T'| s)  (and (and (|$IsValid'u64'| (|$x#$42_TestConst_T| s)) true) (|$IsValid'address'| (|$a#$42_TestConst_T| s))))
- :qid |constsandybpl.907:36|
+ :qid |constsandybpl.912:36|
  :skolemid |24|
  :pattern ( (|$IsValid'$42_TestConst_T'| s))
 )))
@@ -146,10 +147,10 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestConst_init$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 9292) (let ((anon0$2_correct  (=> (|$IsValid'address'| 2) (=> (and (= $t4@0 ($42_TestConst_T 43 inline$$Not$0$dst@1 2)) (= $t4@0 $t4@0)) (and (=> (= (ControlFlow 0 9109) (- 0 9386)) (= (|$x#$42_TestConst_T| $t4@0) (+ 42 1))) (=> (= (|$x#$42_TestConst_T| $t4@0) (+ 42 1)) (=> (= (ControlFlow 0 9109) (- 0 9400)) (not (|$b#$42_TestConst_T| $t4@0)))))))))
-(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not true)) (= (ControlFlow 0 9055) 9109)) anon0$2_correct)))
-(let ((anon0$1_correct  (=> (and (|$IsValid'u64'| 43) (= (ControlFlow 0 9061) 9055)) inline$$Not$0$anon0_correct)))
-(let ((anon0_correct  (=> (= (ControlFlow 0 9292) 9061) anon0$1_correct)))
+ (=> (= (ControlFlow 0 0) 9420) (let ((anon0$2_correct  (=> (|$IsValid'address'| 2) (=> (and (= $t4@0 ($42_TestConst_T 43 inline$$Not$0$dst@1 2)) (= $t4@0 $t4@0)) (and (=> (= (ControlFlow 0 9237) (- 0 9514)) (= (|$x#$42_TestConst_T| $t4@0) (+ 42 1))) (=> (= (|$x#$42_TestConst_T| $t4@0) (+ 42 1)) (=> (= (ControlFlow 0 9237) (- 0 9528)) (not (|$b#$42_TestConst_T| $t4@0)))))))))
+(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not true)) (= (ControlFlow 0 9183) 9237)) anon0$2_correct)))
+(let ((anon0$1_correct  (=> (and (|$IsValid'u64'| 43) (= (ControlFlow 0 9189) 9183)) inline$$Not$0$anon0_correct)))
+(let ((anon0_correct  (=> (= (ControlFlow 0 9420) 9189) anon0$1_correct)))
 anon0_correct)))))
 ))
 (check-sat)
@@ -159,16 +160,16 @@ anon0_correct)))))
 (push 1)
 (set-info :boogie-vc-id $42_TestConst_init_incorrect$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 9424) (let ((anon0$1_correct@@0  (=> (and (and (|$IsValid'u64'| 43) (|$IsValid'address'| 1)) (and (= $t3@0 ($42_TestConst_T 43 true 1)) (= $t3@0 $t3@0))) (and (=> (= (ControlFlow 0 9233) (- 0 9496)) (= (|$x#$42_TestConst_T| $t3@0) (+ 42 1))) (=> (= (|$x#$42_TestConst_T| $t3@0) (+ 42 1)) (=> (= (ControlFlow 0 9233) (- 0 9510)) (not (|$b#$42_TestConst_T| $t3@0))))))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 9424) 9233) anon0$1_correct@@0)))
+ (=> (= (ControlFlow 0 0) 9553) (let ((anon0$1_correct@@0  (=> (and (and (|$IsValid'u64'| 43) (|$IsValid'address'| 1)) (and (= $t3@0 ($42_TestConst_T 43 true 1)) (= $t3@0 $t3@0))) (and (=> (= (ControlFlow 0 9361) (- 0 9625)) (= (|$x#$42_TestConst_T| $t3@0) (+ 42 1))) (=> (= (|$x#$42_TestConst_T| $t3@0) (+ 42 1)) (=> (= (ControlFlow 0 9361) (- 0 9639)) (not (|$b#$42_TestConst_T| $t3@0))))))))
+(let ((anon0_correct@@0  (=> (= (ControlFlow 0 9553) 9361) anon0$1_correct@@0)))
 anon0_correct@@0)))
 ))
 (check-sat)
 (get-info :reason-unknown)
 (get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 9424)))
-(get-value ((ControlFlow 0 9233)))
-(assert (not (= (ControlFlow 0 9233) (- 9510))))
+(get-value ((ControlFlow 0 9553)))
+(get-value ((ControlFlow 0 9361)))
+(assert (not (= (ControlFlow 0 9361) (- 9639))))
 (check-sat)
 (pop 1)
 ; Invalid

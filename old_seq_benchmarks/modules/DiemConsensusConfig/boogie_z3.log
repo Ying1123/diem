@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.z3.bpl
 -monomorphize
 /env:2
 /proverLog:DiemConsensusConfig.z3.smt2
@@ -8,18 +8,18 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemConsensusConfig_initialize$verify ...
-  [0.167 s, 15 proof obligations]  verified
+  [0.177 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConsensusConfig_set$verify ...
-  [0.047 s, 12 proof obligations]  verified
+  [0.030 s, 12 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.180 s, 0 proof obligations]  verified
+  [0.222 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 3 verified, 0 errors

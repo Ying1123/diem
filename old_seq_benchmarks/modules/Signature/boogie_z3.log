@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/Signature/Signature.z3.bpl
+/home/ying/diem/old_seq_benchmarks/modules/Signature/Signature.z3.bpl
 -monomorphize
 /env:2
 /proverLog:Signature.z3.smt2
@@ -8,7 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/Signature/Signature.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/Signature/Signature.z3.bpl
 Coalescing blocks...
 Inlining...
 

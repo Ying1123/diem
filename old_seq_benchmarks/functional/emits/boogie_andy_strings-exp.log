@@ -1,17 +1,46 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/emits/emits.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl
 -monomorphize
 /env:2
 /proverLog:emits.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/emits/emits.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/andy_seq/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $42_TestEmits_opaque$verify ...
+  [7.949 s, 5 proof obligations]  verified
+
+Verifying $42_TestEmits_callee$verify ...
+  [0.784 s, 4 proof obligations]  verified
+
+Verifying $42_TestEmits_callee_partial$verify ...
+  [0.257 s, 3 proof obligations]  verified
+
+Verifying $42_TestEmits_conditional$verify ...
+  [0.204 s, 2 proof obligations]  verified
+
+Verifying $42_TestEmits_conditional_bool$verify ...
+  [0.206 s, 2 proof obligations]  verified
+
+Verifying $42_TestEmits_conditional_missing_condition_incorrect$verify ...
+  [0.335 s, 2 proof obligations]  error
+assert_failed(2,4091,4126): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1738,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1738,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1769,34): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1807,1): L3
+
+Verifying $42_TestEmits_conditional_multiple$verify ...
+  [7.858 s, 4 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

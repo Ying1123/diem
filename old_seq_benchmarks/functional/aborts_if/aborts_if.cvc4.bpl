@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -858,21 +878,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 // ==================================================================================
 // Native BCS::serialize
 
-
-// ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
 
 // ==================================================================================
 // Native Event module
@@ -1363,7 +1368,7 @@ L2:
 
     // assert And(true, Eq(1, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:165:5+74
     assert {:msg "assert_failed(2,4059,4133): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (true && $IsEqual'u128'(1, $t0));
+      (true && $IsEqual'num'(1, $t0));
 
     // abort($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:165:5+74
     $abort_code := $t0;
@@ -1999,7 +2004,7 @@ L4:
 L10:
 
     // assume And(true, Eq(1, $t8)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:171:31+9
-    assume (true && $IsEqual'u128'(1, $t8));
+    assume (true && $IsEqual'num'(1, $t8));
 
     // trace_abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:171:31+9
     assume {:print "$at(2,4203,4212)"} true;
@@ -2035,7 +2040,7 @@ L8:
     // assert Or(And(Eq<u64>($t0, 2), Eq(1, $t8)), Eq(1, $t8)) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:173:5+215
     assume {:print "$at(2,4224,4439)"} true;
     assert {:msg "assert_failed(2,4224,4439): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (($IsEqual'u64'($t0, 2) && $IsEqual'u128'(1, $t8)) || $IsEqual'u128'(1, $t8));
+      (($IsEqual'u64'($t0, 2) && $IsEqual'num'(1, $t8)) || $IsEqual'num'(1, $t8));
 
     // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/aborts_if.move:173:5+215
     $abort_code := $t8;

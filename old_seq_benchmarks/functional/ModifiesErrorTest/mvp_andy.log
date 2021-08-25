@@ -1,13 +1,13 @@
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
-06:13:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
+08:39:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
 [INFO] translating module A
 [INFO] translating module B
-06:13:19 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:39:30 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:13:19 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:13:19 [DEBUG] (12) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:39:30 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:39:30 [DEBUG] (17) boogie_backend::prover_task_runner: running Boogie command with seed 1

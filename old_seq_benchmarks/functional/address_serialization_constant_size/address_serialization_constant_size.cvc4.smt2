@@ -4,9 +4,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7163 0)) ((($Mutation_7163 (|l#$Mutation_7163| T@$Location) (|p#$Mutation_7163| (Seq Int)) (|v#$Mutation_7163| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7242 0)) ((($Mutation_7242 (|l#$Mutation_7242| T@$Location) (|p#$Mutation_7242| (Seq Int)) (|v#$Mutation_7242| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -112,40 +113,40 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |addressserializationconstantsizecvc4bpl.839:15|
+ :qid |addressserializationconstantsizecvc4bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |addressserializationconstantsizecvc4bpl.842:15|
+ :qid |addressserializationconstantsizecvc4bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((v1@@1 |T@#0|) (v2@@1 |T@#0|) ) (! (= (= v1@@1 v2@@1) (= (|$1_BCS_serialize'#0'| v1@@1) (|$1_BCS_serialize'#0'| v2@@1)))
- :qid |addressserializationconstantsizecvc4bpl.869:15|
+ :qid |addressserializationconstantsizecvc4bpl.889:15|
  :skolemid |24|
  :pattern ( (|$1_BCS_serialize'#0'| v1@@1) (|$1_BCS_serialize'#0'| v2@@1))
 )))
 (assert (forall ((v@@6 |T@#0|) ) (! (let ((r@@0 (|$1_BCS_serialize'#0'| v@@6)))
  (and (|$IsValid'vec'u8''| r@@0) (> (seq.len r@@0) 0)))
- :qid |addressserializationconstantsizecvc4bpl.874:15|
+ :qid |addressserializationconstantsizecvc4bpl.894:15|
  :skolemid |25|
  :pattern ( (|$1_BCS_serialize'#0'| v@@6))
 )))
 (assert (forall ((v1@@2 Int) (v2@@2 Int) ) (! (= (= v1@@2 v2@@2) (= (|$1_BCS_serialize'address'| v1@@2) (|$1_BCS_serialize'address'| v2@@2)))
- :qid |addressserializationconstantsizecvc4bpl.896:15|
+ :qid |addressserializationconstantsizecvc4bpl.916:15|
  :skolemid |26|
  :pattern ( (|$1_BCS_serialize'address'| v1@@2) (|$1_BCS_serialize'address'| v2@@2))
 )))
 (assert (forall ((v@@7 Int) ) (! (let ((r@@1 (|$1_BCS_serialize'address'| v@@7)))
  (and (|$IsValid'vec'u8''| r@@1) (> (seq.len r@@1) 0)))
- :qid |addressserializationconstantsizecvc4bpl.901:15|
+ :qid |addressserializationconstantsizecvc4bpl.921:15|
  :skolemid |27|
  :pattern ( (|$1_BCS_serialize'address'| v@@7))
 )))
 (assert (forall ((v@@8 Int) ) (! (let ((r@@2 (|$1_BCS_serialize'address'| v@@8)))
 (= (seq.len r@@2) $serialized_address_len))
- :qid |addressserializationconstantsizecvc4bpl.915:15|
+ :qid |addressserializationconstantsizecvc4bpl.935:15|
  :skolemid |28|
  :pattern ( (|$1_BCS_serialize'address'| v@@8))
 )))
@@ -172,12 +173,12 @@
 (push 1)
 (set-info :boogie-vc-id $42_AddressSerialization_serialized_addresses_same_len$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10140) (let ((anon7_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= call1formal@res@0@@0 call1formal@res@0@@0)) (and (=> (= (ControlFlow 0 9824) (- 0 10324)) (= (seq.len (|$1_BCS_serialize'address'| _$t0)) (seq.len (|$1_BCS_serialize'address'| _$t1)))) (=> (= (seq.len (|$1_BCS_serialize'address'| _$t0)) (seq.len (|$1_BCS_serialize'address'| _$t1))) (=> (= (ControlFlow 0 9824) (- 0 10339)) (= (seq.len call1formal@res@0) (seq.len call1formal@res@0@@0)))))))))
+ (=> (= (ControlFlow 0 0) 10268) (let ((anon7_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= call1formal@res@0@@0 call1formal@res@0@@0)) (and (=> (= (ControlFlow 0 9952) (- 0 10452)) (= (seq.len (|$1_BCS_serialize'address'| _$t0)) (seq.len (|$1_BCS_serialize'address'| _$t1)))) (=> (= (seq.len (|$1_BCS_serialize'address'| _$t0)) (seq.len (|$1_BCS_serialize'address'| _$t1))) (=> (= (ControlFlow 0 9952) (- 0 10467)) (= (seq.len call1formal@res@0) (seq.len call1formal@res@0@@0)))))))))
 (let ((anon7_Then_correct true))
-(let ((anon6_Else_correct  (=> (and (not false) (= call1formal@res@0@@0 (|$1_BCS_serialize'address'| _$t1))) (and (=> (= (ControlFlow 0 9772) 9838) anon7_Then_correct) (=> (= (ControlFlow 0 9772) 9824) anon7_Else_correct)))))
+(let ((anon6_Else_correct  (=> (and (not false) (= call1formal@res@0@@0 (|$1_BCS_serialize'address'| _$t1))) (and (=> (= (ControlFlow 0 9900) 9966) anon7_Then_correct) (=> (= (ControlFlow 0 9900) 9952) anon7_Else_correct)))))
 (let ((anon6_Then_correct true))
-(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (and (|$IsValid'address'| _$t1) (= _$t0 _$t0)) (and (= _$t1 _$t1) (= call1formal@res@0 (|$1_BCS_serialize'address'| _$t0)))) (and (=> (= (ControlFlow 0 9766) 9858) anon6_Then_correct) (=> (= (ControlFlow 0 9766) 9772) anon6_Else_correct))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 10140) 9766) anon0$1_correct)))
+(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (and (|$IsValid'address'| _$t1) (= _$t0 _$t0)) (and (= _$t1 _$t1) (= call1formal@res@0 (|$1_BCS_serialize'address'| _$t0)))) (and (=> (= (ControlFlow 0 9894) 9986) anon6_Then_correct) (=> (= (ControlFlow 0 9894) 9900) anon6_Else_correct))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 10268) 9894) anon0$1_correct)))
 anon0_correct)))))))
 ))
 (check-sat)
@@ -190,22 +191,22 @@ anon0_correct)))))))
 (push 1)
 (set-info :boogie-vc-id $42_AddressSerialization_serialized_move_values_diff_len_incorrect$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 10381) (let ((anon7_Else_correct@@0  (=> (not false) (=> (and (= call1formal@res@0@@1 call1formal@res@0@@1) (= call1formal@res@0@@2 call1formal@res@0@@2)) (and (=> (= (ControlFlow 0 10016) (- 0 10565)) (= (seq.len (|$1_BCS_serialize'#0'| _$t0@@0)) (seq.len (|$1_BCS_serialize'#0'| _$t1@@0)))) (=> (= (seq.len (|$1_BCS_serialize'#0'| _$t0@@0)) (seq.len (|$1_BCS_serialize'#0'| _$t1@@0))) (=> (= (ControlFlow 0 10016) (- 0 10580)) (= (seq.len call1formal@res@0@@1) (seq.len call1formal@res@0@@2)))))))))
+ (=> (= (ControlFlow 0 0) 10510) (let ((anon7_Else_correct@@0  (=> (not false) (=> (and (= call1formal@res@0@@1 call1formal@res@0@@1) (= call1formal@res@0@@2 call1formal@res@0@@2)) (and (=> (= (ControlFlow 0 10144) (- 0 10694)) (= (seq.len (|$1_BCS_serialize'#0'| _$t0@@0)) (seq.len (|$1_BCS_serialize'#0'| _$t1@@0)))) (=> (= (seq.len (|$1_BCS_serialize'#0'| _$t0@@0)) (seq.len (|$1_BCS_serialize'#0'| _$t1@@0))) (=> (= (ControlFlow 0 10144) (- 0 10709)) (= (seq.len call1formal@res@0@@1) (seq.len call1formal@res@0@@2)))))))))
 (let ((anon7_Then_correct@@0 true))
-(let ((anon6_Else_correct@@0  (=> (and (not false) (= call1formal@res@0@@2 (|$1_BCS_serialize'#0'| _$t1@@0))) (and (=> (= (ControlFlow 0 9964) 10030) anon7_Then_correct@@0) (=> (= (ControlFlow 0 9964) 10016) anon7_Else_correct@@0)))))
+(let ((anon6_Else_correct@@0  (=> (and (not false) (= call1formal@res@0@@2 (|$1_BCS_serialize'#0'| _$t1@@0))) (and (=> (= (ControlFlow 0 10092) 10158) anon7_Then_correct@@0) (=> (= (ControlFlow 0 10092) 10144) anon7_Else_correct@@0)))))
 (let ((anon6_Then_correct@@0 true))
-(let ((anon0$1_correct@@0  (=> (= _$t0@@0 _$t0@@0) (=> (and (= _$t1@@0 _$t1@@0) (= call1formal@res@0@@1 (|$1_BCS_serialize'#0'| _$t0@@0))) (and (=> (= (ControlFlow 0 9958) 10050) anon6_Then_correct@@0) (=> (= (ControlFlow 0 9958) 9964) anon6_Else_correct@@0))))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 10381) 9958) anon0$1_correct@@0)))
+(let ((anon0$1_correct@@0  (=> (= _$t0@@0 _$t0@@0) (=> (and (= _$t1@@0 _$t1@@0) (= call1formal@res@0@@1 (|$1_BCS_serialize'#0'| _$t0@@0))) (and (=> (= (ControlFlow 0 10086) 10178) anon6_Then_correct@@0) (=> (= (ControlFlow 0 10086) 10092) anon6_Else_correct@@0))))))
+(let ((anon0_correct@@0  (=> (= (ControlFlow 0 10510) 10086) anon0$1_correct@@0)))
 anon0_correct@@0)))))))
 ))
 (check-sat)
 (get-info :reason-unknown)
 (get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 10381)))
-(get-value ((ControlFlow 0 9958)))
-(get-value ((ControlFlow 0 9964)))
-(get-value ((ControlFlow 0 10016)))
-(assert (not (= (ControlFlow 0 10016) (- 10565))))
+(get-value ((ControlFlow 0 10510)))
+(get-value ((ControlFlow 0 10086)))
+(get-value ((ControlFlow 0 10092)))
+(get-value ((ControlFlow 0 10144)))
+(assert (not (= (ControlFlow 0 10144) (- 10694))))
 (check-sat)
 (pop 1)
 ; Invalid

@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl
 -monomorphize
 /env:2
 /proverLog:hash_model_invalid.z3.smt2
@@ -8,27 +8,70 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
-Verifying $42_TestHash_hash_test1$verify ...
-  [0.246 s, 2 proof obligations]  error
-assert_failed(2,606,659): post-condition does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(907,9): anon0
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(907,9): anon0$1
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(931,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(944,5): anon7_Else
+Verifying $42_TestAbortsIfWithCode_aborts_if_with_code_mixed$verify ...
+  [0.115 s, 4 proof obligations]  verified
 
-Verifying $42_TestHash_hash_test2$verify ...
-  [0.118 s, 2 proof obligations]  error
-assert_failed(2,976,1029): post-condition does not hold
+Verifying $42_TestAbortsIfWithCode_aborts_if_with_code_mixed_invalid$verify ...
+  [0.026 s, 4 proof obligations]  error
+assert_failed(2,1786,1891): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1008,9): anon0
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1008,9): anon0$1
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1032,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/hash_model_invalid/hash_model_invalid.z3.bpl(1045,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1053,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1053,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1075,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1113,16): anon11_Then
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1162,1): L7
 
-Boogie program verifier finished with 0 verified, 2 errors
+Verifying $42_TestAbortsIfWithCode_aborts_with$verify ...
+  [0.015 s, 1 proof obligation]  verified
+
+Verifying $42_TestAbortsIfWithCode_aborts_with_invalid$verify ...
+  [0.015 s, 1 proof obligation]  error
+assert_failed(2,2285,2342): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1318,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1318,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1340,34): anon9_Else
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1378,16): anon10_Then
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1416,1): L7
+
+Verifying $42_TestAbortsIfWithCode_aborts_with_mixed$verify ...
+  [0.008 s, 2 proof obligations]  verified
+
+Verifying $42_TestAbortsIfWithCode_aborts_with_mixed_invalid$verify ...
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,2792,2930): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1574,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1574,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1596,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1634,16): anon11_Then
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1678,1): L7
+
+Verifying $42_TestAbortsIfWithCode_conditional_abort$verify ...
+  [0.013 s, 6 proof obligations]  verified
+
+Verifying $42_TestAbortsIfWithCode_conditional_abort_invalid$verify ...
+  [0.015 s, 5 proof obligations]  error
+assert_failed(2,872,1019): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1879,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1879,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(1909,16): anon10_Then
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(2005,1): L7
+
+Verifying $42_TestAbortsIfWithCode_exec_failure_invalid$verify ...
+  [0.011 s, 4 proof obligations]  error
+assert_failed(2,1138,1252): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(2032,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(2032,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(517,9): inline$$Div$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(517,9): inline$$Div$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/hash_model_invalid/hash_model_invalid.z3.bpl(2054,9): anon4_Then
+
+Boogie program verifier finished with 4 verified, 5 errors

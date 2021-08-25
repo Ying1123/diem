@@ -12,5 +12,36 @@
 Parsing /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl
 Coalescing blocks...
 Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Boogie program verifier finished with 0 verified, 0 errors
+Verifying $42_TestHash_hash_test1$verify ...
+  [0.133 s, 5 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test1_incorrect$verify ...
+  [0.023 s, 2 proof obligations]  error
+assert_failed(2,1327,1380): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1028,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1028,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1052,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1065,5): anon7_Else
+
+Verifying $42_TestHash_hash_test2$verify ...
+  [0.010 s, 2 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test2_incorrect$verify ...
+  [0.015 s, 2 proof obligations]  error
+assert_failed(2,2561,2614): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1231,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1231,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1255,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_vars/global_vars.andy.bpl(1268,5): anon7_Else
+
+Verifying $42_TestHash_hash_test3$verify ...
+  [0.019 s, 5 proof obligations]  verified
+
+Verifying $42_TestHash_hash_test4$verify ...
+  [0.011 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 2 errors

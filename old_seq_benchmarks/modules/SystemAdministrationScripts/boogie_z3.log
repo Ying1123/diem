@@ -14,16 +14,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.360 s, 0 proof obligations]  verified
+  [0.369 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_set_gas_constants$verify ...
-  [0.035 s, 0 proof obligations]  verified
+  [0.031 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_initialize_diem_consensus_config$verify ...
-  [0.025 s, 0 proof obligations]  verified
+  [0.035 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_consensus_config$verify ...
-  [0.032 s, 0 proof obligations]  verified
+  [0.039 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_version$verify ...
   [0.033 s, 0 proof obligations]  verified

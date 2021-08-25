@@ -14,56 +14,7 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_TestInvariants_invalid_R_pack$verify ...
-  [0.136 s, 2 proof obligations]  error
-assert_failed(2,248,273): data invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(953,5): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(953,5): anon0$1
+Verifying $42_TestQuantInvariant_vector_of_proper_positives$verify ...
+  [0.223 s, 5 proof obligations]  verified
 
-Verifying $42_TestInvariants_invalid_R_update$verify ...
-  [0.011 s, 4 proof obligations]  verified
-
-Verifying $42_TestInvariants_invalid_R_update_branching$verify ...
-  [0.011 s, 7 proof obligations]  verified
-
-Verifying $42_TestInvariants_invalid_R_update_indirectly$verify ...
-  [0.010 s, 2 proof obligations]  verified
-
-Verifying $42_TestInvariants_invalid_R_update_ref$verify ...
-  [0.008 s, 3 proof obligations]  verified
-
-Verifying $42_TestInvariants_lifetime_invalid_R$verify ...
-  [0.018 s, 3 proof obligations]  error
-assert_failed(2,248,273): data invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1466,5): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1466,5): anon0$1
-
-Verifying $42_TestInvariants_lifetime_invalid_R_2$verify ...
-  [0.011 s, 3 proof obligations]  verified
-
-Verifying $42_TestInvariants_lifetime_invalid_S_branching$verify ...
-  [0.052 s, 8 proof obligations]  error
-assert_failed(2,3033,3049): data invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1761,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1761,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1836,34): anon16_Else
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1892,1): L3
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1900,34): anon17_Else
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1987,36): anon20_Else
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(1996,1): L13
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(2002,17): anon21_Then
-    /home/ying/diem/old_seq_benchmarks/functional/invariants/invariants.andy.bpl(2011,1): L15
-
-Verifying $42_TestInvariants_update_helper$verify ...
-  [0.002 s, 0 proof obligations]  verified
-
-Verifying $42_TestInvariants_valid_R_pack$verify ...
-  [0.003 s, 2 proof obligations]  verified
-
-Verifying $42_TestInvariants_valid_R_update$verify ...
-  [0.012 s, 4 proof obligations]  verified
-
-Boogie program verifier finished with 8 verified, 3 errors
+Boogie program verifier finished with 1 verified, 0 errors

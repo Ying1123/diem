@@ -1,17 +1,17 @@
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_root` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::identity` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_root` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec2` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_identity` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2_incorrect` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2` to be verified
-06:14:36 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec` to be verified
-06:14:36 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_root` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::identity` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_root` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec2` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::return_ref_different_path_vec` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_identity` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2_incorrect` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec2` to be verified
+08:40:49 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMutRef::call_return_ref_different_path_vec` to be verified
+08:40:49 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestMutRef
-06:14:36 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:40:49 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:14:36 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:14:36 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:40:49 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:40:49 [DEBUG] (17) boogie_backend::prover_task_runner: running Boogie command with seed 1

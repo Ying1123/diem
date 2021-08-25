@@ -11,5 +11,21 @@
 Parsing /home/ying/diem/old_seq_benchmarks/functional/aborts_with_check/aborts_with_check.andy.bpl
 Coalescing blocks...
 Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Boogie program verifier finished with 0 verified, 0 errors
+Verifying $42_AddressQuant_f$verify ...
+  [0.143 s, 3 proof obligations]  verified
+
+Verifying $42_AddressQuant_initialize$verify ...
+  [0.020 s, 3 proof obligations]  verified
+
+Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
+  [0.024 s, 2 proof obligations]  error
+assert_failed(2,1555,1577): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/aborts_with_check/aborts_with_check.andy.bpl(1215,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/aborts_with_check/aborts_with_check.andy.bpl(1215,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/aborts_with_check/aborts_with_check.andy.bpl(1253,36): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/aborts_with_check/aborts_with_check.andy.bpl(1255,5): anon8_Else
+
+Boogie program verifier finished with 2 verified, 1 error

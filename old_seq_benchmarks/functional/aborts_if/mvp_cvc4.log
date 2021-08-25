@@ -1,26 +1,26 @@
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::no_aborts_if` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort5_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort4` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort3_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort2_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort1` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3_total_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3_strict_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3_spec_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_1` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort6_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort5_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort4_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort3` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort2_incorrect` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort1` to be verified
-06:41:30 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::aborts_if_with_code` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::no_aborts_if` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort5_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort4` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort3_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort2_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::multi_abort1` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3_total_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3_strict_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3_spec_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_at_2_or_3` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort_1` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort6_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort5_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort4_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort3` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort2_incorrect` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::abort1` to be verified
+09:04:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIf::aborts_if_with_code` to be verified
 [INFO] translating module TestAbortsIf
-06:41:30 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+09:04:27 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:41:30 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:41:30 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
-06:41:30 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-06:41:30 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.005s build, 0.005s trafo, 0.004s gen, 0.447s verify
+09:04:27 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+09:04:27 [DEBUG] (17) boogie_backend::prover_task_runner: running Boogie command with seed 1
+09:04:27 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+09:04:27 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.005s build, 0.006s trafo, 0.004s gen, 0.447s verify

@@ -895,3 +895,394 @@ procedure {:inline 1} $InitEventStore() {
 
 
 // Given Types for Type Parameters
+
+
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:15:9+119
+function {:inline} $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory: $Memory $42_AddressQuant_R): bool {
+    (forall a: int, b: int :: $IsValid'address'(a) ==> $IsValid'address'(b) ==> (($ResourceExists($42_AddressQuant_R_$memory, a) && $ResourceExists($42_AddressQuant_R_$memory, b)))  ==> ($IsEqual'address'(a, b)))
+}
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:18:9+79
+function {:inline} $42_AddressQuant_atLeastOne($42_AddressQuant_R_$memory: $Memory $42_AddressQuant_R): bool {
+    (exists a: int :: $IsValid'address'(a) && ($ResourceExists($42_AddressQuant_R_$memory, a)))
+}
+
+// struct AddressQuant::R at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:5:5+39
+type {:datatype} $42_AddressQuant_R;
+function {:constructor} $42_AddressQuant_R($x: int): $42_AddressQuant_R;
+function {:inline} $Update'$42_AddressQuant_R'_x(s: $42_AddressQuant_R, x: int): $42_AddressQuant_R {
+    $42_AddressQuant_R(x)
+}
+function $IsValid'$42_AddressQuant_R'(s: $42_AddressQuant_R): bool {
+    $IsValid'u64'($x#$42_AddressQuant_R(s))
+}
+function {:inline} $IsEqual'$42_AddressQuant_R'(s1: $42_AddressQuant_R, s2: $42_AddressQuant_R): bool {
+    s1 == s2
+}
+var $42_AddressQuant_R_$memory: $Memory $42_AddressQuant_R;
+
+// fun AddressQuant::f [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:36:5+125
+procedure {:timeLimit 40} $42_AddressQuant_f$verify(_$t0: int) returns ()
+{
+    // declare local variables
+    var $t1: $Mutation ($42_AddressQuant_R);
+    var $t2: $Mutation ($42_AddressQuant_R);
+    var $t3: int;
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $Mutation (int);
+    var $t0: int;
+    var $temp_0'$42_AddressQuant_R': $42_AddressQuant_R;
+    var $temp_0'address': int;
+    var $42_AddressQuant_R_$memory#0: $Memory $42_AddressQuant_R;
+    $t0 := _$t0;
+    assume IsEmptyVec(p#$Mutation($t1));
+    assume IsEmptyVec(p#$Mutation($t2));
+    assume IsEmptyVec(p#$Mutation($t7));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:36:5+125
+    assume {:print "$at(2,969,1094)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume forall $rsc: ResourceDomain<AddressQuant::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:36:5+125
+    assume (forall $a_0: int :: {$ResourceValue($42_AddressQuant_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_AddressQuant_R_$memory, $a_0);
+    ($IsValid'$42_AddressQuant_R'($rsc))));
+
+    // assume AddressQuant::atMostOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:53:10+22
+    assume {:print "$at(2,1555,1577)"} true;
+    assume $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory);
+
+    // assume AddressQuant::atLeastOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    assume {:print "$at(2,1587,1610)"} true;
+    assume $42_AddressQuant_atLeastOne($42_AddressQuant_R_$memory);
+
+    // @0 := save_mem(AddressQuant::R) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    $42_AddressQuant_R_$memory#0 := $42_AddressQuant_R_$memory;
+
+    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:36:5+1
+    assume {:print "$at(2,969,970)"} true;
+    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
+
+    // $t2 := borrow_global<AddressQuant::R>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:37:21+17
+    assume {:print "$at(2,1030,1047)"} true;
+    if (!$ResourceExists($42_AddressQuant_R_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t2 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($42_AddressQuant_R_$memory, $t0));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1030,1047)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t3} $t3 == $t3;
+        goto L2;
+    }
+
+    // trace_local[x_ref]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:37:13+5
+    $temp_0'$42_AddressQuant_R' := $Dereference($t2);
+    assume {:print "$track_local(1,0,1):", $temp_0'$42_AddressQuant_R'} $temp_0'$42_AddressQuant_R' == $temp_0'$42_AddressQuant_R';
+
+    // $t4 := get_field<AddressQuant::R>.x($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:19+7
+    assume {:print "$at(2,1076,1083)"} true;
+    $t4 := $x#$42_AddressQuant_R($Dereference($t2));
+
+    // $t5 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:29+1
+    $t5 := 1;
+    assume $IsValid'u64'($t5);
+
+    // $t6 := +($t4, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:27+1
+    call $t6 := $AddU64($t4, $t5);
+    if ($abort_flag) {
+        assume {:print "$at(2,1084,1085)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t3} $t3 == $t3;
+        goto L2;
+    }
+
+    // $t7 := borrow_field<AddressQuant::R>.x($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:9+7
+    $t7 := $ChildMutation($t2, 0, $x#$42_AddressQuant_R($Dereference($t2)));
+
+    // write_ref($t7, $t6) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:9+21
+    $t7 := $UpdateMutation($t7, $t6);
+
+    // write_back[Reference($t2).x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:9+21
+    $t2 := $UpdateMutation($t2, $Update'$42_AddressQuant_R'_x($Dereference($t2), $Dereference($t7)));
+
+    // write_back[AddressQuant::R@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:38:9+21
+    $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $GlobalLocationAddress($t2),
+        $Dereference($t2));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:39:5+1
+    assume {:print "$at(2,1093,1094)"} true;
+L1:
+
+    // assert Eq<u64>(select AddressQuant::R.x(global<AddressQuant::R>($t0)), Add(select AddressQuant::R.x(global[@0]<AddressQuant::R>($t0)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:41:9+56
+    assume {:print "$at(2,1116,1172)"} true;
+    assert {:msg "assert_failed(2,1116,1172): post-condition does not hold"}
+      $IsEqual'u64'($x#$42_AddressQuant_R($ResourceValue($42_AddressQuant_R_$memory, $t0)), ($x#$42_AddressQuant_R($ResourceValue($42_AddressQuant_R_$memory#0, $t0)) + 1));
+
+    // assert AddressQuant::atMostOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:53:10+22
+    assume {:print "$at(2,1555,1577)"} true;
+    assert {:msg "assert_failed(2,1555,1577): post-condition does not hold"}
+      $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory);
+
+    // assert AddressQuant::atLeastOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    assume {:print "$at(2,1587,1610)"} true;
+    assert {:msg "assert_failed(2,1587,1610): post-condition does not hold"}
+      $42_AddressQuant_atLeastOne($42_AddressQuant_R_$memory);
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:39:5+1
+    assume {:print "$at(2,1093,1094)"} true;
+L2:
+
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:39:5+1
+    $abort_code := $t3;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun AddressQuant::initialize [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
+procedure {:timeLimit 40} $42_AddressQuant_initialize$verify(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: int;
+    var $t5: bool;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: $42_AddressQuant_R;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
+    assume {:print "$at(2,465,627)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
+    assume $IsValid'address'($t1);
+
+    // assume forall $rsc: ResourceDomain<AddressQuant::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+162
+    assume (forall $a_0: int :: {$ResourceValue($42_AddressQuant_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_AddressQuant_R_$memory, $a_0);
+    ($IsValid'$42_AddressQuant_R'($rsc))));
+
+    // assume forall a: TypeDomain<address>(): Not(exists<AddressQuant::R>(a)) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:28:9+43
+    assume {:print "$at(2,658,701)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> (!$ResourceExists($42_AddressQuant_R_$memory, a)));
+
+    // trace_local[sndr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+1
+    assume {:print "$at(2,465,466)"} true;
+    assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[special_addr]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:23:5+1
+    assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
+
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:16+24
+    // >> opaque call: $t4 := Signer::address_of($t0)
+    assume {:print "$at(2,542,566)"} true;
+
+    // $t4 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:16+24
+
+    // assume WellFormed($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:16+24
+    assume $IsValid'address'($t4);
+
+    // assume Eq<address>($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:16+24
+    assume $IsEqual'address'($t4, $1_Signer_spec_address_of($t0));
+
+    // $t4 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:16+24
+
+    // $t5 := ==($t4, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:41+2
+    $t5 := $IsEqual'address'($t4, $t1);
+
+    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+    assume {:print "$track_local(1,1,2):", $t5} $t5 == $t5;
+
+    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+    if ($t5) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+
+    // $t6 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:58+1
+    $t6 := 0;
+    assume $IsValid'u64'($t6);
+
+    // trace_abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+    assume {:print "$at(2,535,586)"} true;
+    assume {:print "$track_abort(1,1):", $t6} $t6 == $t6;
+
+    // $t7 := move($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+    $t7 := $t6;
+
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:24:9+51
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:25:20+4
+    assume {:print "$at(2,607,611)"} true;
+L0:
+
+    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:25:30+1
+    $t8 := 1;
+    assume $IsValid'u64'($t8);
+
+    // $t9 := pack AddressQuant::R($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:25:26+6
+    $t9 := $42_AddressQuant_R($t8);
+
+    // move_to<AddressQuant::R>($t9, $t0) on_abort goto L3 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:25:9+7
+    if ($ResourceExists($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0), $t9);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,596,603)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t7} $t7 == $t7;
+        goto L3;
+    }
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:26:5+1
+    assume {:print "$at(2,626,627)"} true;
+L2:
+
+    // assert forall a: TypeDomain<address>() where exists<AddressQuant::R>(a): Eq<address>(a, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:29:9+65
+    assume {:print "$at(2,710,775)"} true;
+    assert {:msg "assert_failed(2,710,775): post-condition does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_AddressQuant_R_$memory, a))  ==> ($IsEqual'address'(a, $t1)));
+
+    // assert AddressQuant::atMostOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:30:9+20
+    assume {:print "$at(2,784,804)"} true;
+    assert {:msg "assert_failed(2,784,804): post-condition does not hold"}
+      $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory);
+
+    // assert AddressQuant::atLeastOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:31:9+21
+    assume {:print "$at(2,813,834)"} true;
+    assert {:msg "assert_failed(2,813,834): post-condition does not hold"}
+      $42_AddressQuant_atLeastOne($42_AddressQuant_R_$memory);
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:31:9+21
+    return;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:26:5+1
+    assume {:print "$at(2,626,627)"} true;
+L3:
+
+    // abort($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:26:5+1
+    $abort_code := $t7;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun AddressQuant::multiple_copy_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+91
+procedure {:timeLimit 40} $42_AddressQuant_multiple_copy_incorrect$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: $42_AddressQuant_R;
+    var $t3: int;
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+91
+    assume {:print "$at(2,1283,1374)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<AddressQuant::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+91
+    assume (forall $a_0: int :: {$ResourceValue($42_AddressQuant_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_AddressQuant_R_$memory, $a_0);
+    ($IsValid'$42_AddressQuant_R'($rsc))));
+
+    // assume AddressQuant::atMostOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:53:10+22
+    assume {:print "$at(2,1555,1577)"} true;
+    assume $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory);
+
+    // assume AddressQuant::atLeastOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    assume {:print "$at(2,1587,1610)"} true;
+    assume $42_AddressQuant_atLeastOne($42_AddressQuant_R_$memory);
+
+    // trace_local[sndr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:46:5+1
+    assume {:print "$at(2,1283,1284)"} true;
+    assume {:print "$track_local(1,2,0):", $t0} $t0 == $t0;
+
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:47:30+1
+    assume {:print "$at(2,1364,1365)"} true;
+    $t1 := 1;
+    assume $IsValid'u64'($t1);
+
+    // $t2 := pack AddressQuant::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:47:26+6
+    $t2 := $42_AddressQuant_R($t1);
+
+    // move_to<AddressQuant::R>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:47:9+7
+    if ($ResourceExists($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $42_AddressQuant_R_$memory := $ResourceUpdate($42_AddressQuant_R_$memory, $1_Signer_spec_address_of($t0), $t2);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1343,1350)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(1,2):", $t3} $t3 == $t3;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:48:5+1
+    assume {:print "$at(2,1373,1374)"} true;
+L1:
+
+    // assert AddressQuant::atMostOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:53:10+22
+    assume {:print "$at(2,1555,1577)"} true;
+    assert {:msg "assert_failed(2,1555,1577): post-condition does not hold"}
+      $42_AddressQuant_atMostOne($42_AddressQuant_R_$memory);
+
+    // assert AddressQuant::atLeastOne() at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    assume {:print "$at(2,1587,1610)"} true;
+    assert {:msg "assert_failed(2,1587,1610): post-condition does not hold"}
+      $42_AddressQuant_atLeastOne($42_AddressQuant_R_$memory);
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:54:10+23
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:48:5+1
+    assume {:print "$at(2,1373,1374)"} true;
+L2:
+
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/address_quant.move:48:5+1
+    $abort_code := $t3;
+    $abort_flag := true;
+    return;
+
+}

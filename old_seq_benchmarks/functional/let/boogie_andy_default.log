@@ -11,47 +11,5 @@
 Parsing /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_TestLet_local_let_with_memory_access$verify ...
-  [0.135 s, 1 proof obligation]  verified
-
-Verifying $42_TestLet_spec_let$verify ...
-  [0.014 s, 2 proof obligations]  verified
-
-Verifying $42_TestLet_spec_let_with_abort$verify ...
-  [0.072 s, 6 proof obligations]  verified
-
-Verifying $42_TestLet_spec_let_with_abort_incorrect$verify ...
-  [0.034 s, 6 proof obligations]  errors
-assert_failed(2,1867,1886): function does not abort under this condition
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1323,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1323,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1378,5): anon8_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(516,5): inline$$Div$0$anon3_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1387,5): anon9_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(498,5): inline$$MulU64$0$anon3_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1403,5): anon10_Else
-assert_failed(2,1768,2061): abort not covered by any of the `aborts_if` clauses
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1323,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1323,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1378,5): anon8_Else
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(517,9): inline$$Div$0$anon3_Then
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(517,9): inline$$Div$0$anon3_Then$1
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1388,9): anon9_Then
-    /home/ying/diem/old_seq_benchmarks/functional/let/let.andy.bpl(1461,1): L2
-
-Verifying $42_TestLet_spec_let_with_abort_opaque_caller$verify ...
-  [0.012 s, 6 proof obligations]  verified
-
-Verifying $42_TestLet_spec_let_with_old$verify ...
-  [0.011 s, 2 proof obligations]  verified
-
-Verifying $42_TestLet_spec_let_with_schema$verify ...
-  [0.066 s, 6 proof obligations]  verified
-
-Boogie program verifier finished with 6 verified, 2 errors
+Boogie program verifier finished with 0 verified, 0 errors

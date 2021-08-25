@@ -14,7 +14,128 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_TestQuantInvariant_vector_of_proper_positives$verify ...
-  [0.212 s, 5 proof obligations]  verified
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop1$verify ...
+  [0.312 s, 11 proof obligations]  verified
 
-Boogie program verifier finished with 1 verified, 0 errors
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop2$verify ...
+  [1.116 s, 11 proof obligations]  errors
+assert_failed(2,2724,2767): unknown assertion failed
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2136,17): anon40_Then
+assert_failed(2,2035,2059): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2144,5): anon41_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2158,5): anon42_Else
+assert_failed(2,2076,2100): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2144,5): anon41_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2158,5): anon42_Else
+assert_failed(2,2152,2190): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2144,5): anon41_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2158,5): anon42_Else
+assert_failed(2,2789,2839): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(682,9): inline$$1_Vector_borrow_mut'u64'$2$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(682,9): inline$$1_Vector_borrow_mut'u64'$2$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2145,9): anon41_Then
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_with_quant/invariants_with_quant.andy.bpl(2256,1): L14
+
+Boogie program verifier finished with 1 verified, 5 errors

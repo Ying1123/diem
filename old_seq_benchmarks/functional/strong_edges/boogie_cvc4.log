@@ -4,15 +4,41 @@
 /env:2
 /proverLog:strong_edges.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $42_TestStrongEdges_glob_and_field_edges$verify ...
+  [0.156 s, 4 proof obligations]  verified
+
+Verifying $42_TestStrongEdges_glob_and_field_edges_incorrect$verify ...
+  [0.033 s, 4 proof obligations]  error
+assert_failed(2,1208,1239): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1223,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1223,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1260,13): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1262,5): anon8_Else
+
+Verifying $42_TestStrongEdges_loc__edge_incorrect$verify ...
+  [0.013 s, 1 proof obligation]  error
+assert_failed(2,1443,1457): unknown assertion failed
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1334,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1334,5): anon0$1
+
+Verifying $42_TestStrongEdges_loc_edge$verify ...
+  [0.004 s, 1 proof obligation]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $42_TestStrongEdges_vec_edge$verify ...
+  [0.021 s, 4 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/functional/strong_edges/strong_edges.cvc4.bpl(1447,27): Verification inconclusive ($42_TestStrongEdges_vec_edge$verify)
+
+Boogie program verifier finished with 2 verified, 2 errors, 1 inconclusive

@@ -12,10 +12,11 @@
 (declare-datatypes ((T@$42_TestDefines_R 0)) ((($42_TestDefines_R (|$x#$42_TestDefines_R| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$42_TestDefines_R| 0)
-(declare-datatypes ((T@$Memory_9078 0)) ((($Memory_9078 (|domain#$Memory_9078| |T@[Int]Bool|) (|contents#$Memory_9078| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$Memory_9206 0)) ((($Memory_9206 (|domain#$Memory_9206| |T@[Int]Bool|) (|contents#$Memory_9206| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7423 0)) ((($Mutation_7423 (|l#$Mutation_7423| T@$Location) (|p#$Mutation_7423| (Seq Int)) (|v#$Mutation_7423| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7502 0)) ((($Mutation_7502 (|l#$Mutation_7502| T@$Location) (|p#$Mutation_7502| (Seq Int)) (|v#$Mutation_7502| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -117,17 +118,17 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |definesz3bpl.839:15|
+ :qid |definesz3bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |definesz3bpl.842:15|
+ :qid |definesz3bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((s T@$42_TestDefines_R) ) (! (= (|$IsValid'$42_TestDefines_R'| s) (|$IsValid'u64'| (|$x#$42_TestDefines_R| s)))
- :qid |definesz3bpl.926:38|
+ :qid |definesz3bpl.931:38|
  :skolemid |24|
  :pattern ( (|$IsValid'$42_TestDefines_R'| s))
 )))
@@ -160,13 +161,13 @@
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 11478) (let ((anon4_Else_correct  (=> (and (not $abort_flag@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@2)) (and (=> (= (ControlFlow 0 10436) (- 0 11675)) (not (not (and (>= (+ _$t0 _$t1) 0) (<= (+ _$t0 _$t1) 18446744073709551615))))) (=> (not (not (and (>= (+ _$t0 _$t1) 0) (<= (+ _$t0 _$t1) 18446744073709551615)))) (=> (= (ControlFlow 0 10436) (- 0 11692)) (= inline$$AddU64$0$dst@2 (+ _$t0 _$t1))))))))
-(let ((anon4_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 10470) (- 0 11647))) (not (and (>= (+ _$t0 _$t1) 0) (<= (+ _$t0 _$t1) 18446744073709551615)))))))
-(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 10384) 10470) anon4_Then_correct) (=> (= (ControlFlow 0 10384) 10436) anon4_Else_correct))))))
-(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ _$t0 _$t1) $MAX_U64) (= (ControlFlow 0 10382) 10384)) inline$$AddU64$0$anon3_Then$1_correct)))
-(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ _$t0 _$t1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ _$t0 _$t1)) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 10330) 10470) anon4_Then_correct) (=> (= (ControlFlow 0 10330) 10436) anon4_Else_correct))))))
-(let ((anon0$1_correct  (=> (and (and (|$IsValid'u64'| _$t0) (|$IsValid'u64'| _$t1)) (and (= _$t0 _$t0) (= _$t1 _$t1))) (and (=> (= (ControlFlow 0 10390) 10382) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 10390) 10330) inline$$AddU64$0$anon3_Else_correct)))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 11478) 10390) anon0$1_correct)))
+ (=> (= (ControlFlow 0 0) 11606) (let ((anon4_Else_correct  (=> (and (not $abort_flag@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@2)) (and (=> (= (ControlFlow 0 10564) (- 0 11803)) (not (not (and (>= (+ _$t0 _$t1) 0) (<= (+ _$t0 _$t1) 18446744073709551615))))) (=> (not (not (and (>= (+ _$t0 _$t1) 0) (<= (+ _$t0 _$t1) 18446744073709551615)))) (=> (= (ControlFlow 0 10564) (- 0 11820)) (= inline$$AddU64$0$dst@2 (+ _$t0 _$t1))))))))
+(let ((anon4_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 10598) (- 0 11775))) (not (and (>= (+ _$t0 _$t1) 0) (<= (+ _$t0 _$t1) 18446744073709551615)))))))
+(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 10512) 10598) anon4_Then_correct) (=> (= (ControlFlow 0 10512) 10564) anon4_Else_correct))))))
+(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ _$t0 _$t1) $MAX_U64) (= (ControlFlow 0 10510) 10512)) inline$$AddU64$0$anon3_Then$1_correct)))
+(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ _$t0 _$t1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ _$t0 _$t1)) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 10458) 10598) anon4_Then_correct) (=> (= (ControlFlow 0 10458) 10564) anon4_Else_correct))))))
+(let ((anon0$1_correct  (=> (and (and (|$IsValid'u64'| _$t0) (|$IsValid'u64'| _$t1)) (and (= _$t0 _$t0) (= _$t1 _$t1))) (and (=> (= (ControlFlow 0 10518) 10510) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 10518) 10458) inline$$AddU64$0$anon3_Else_correct)))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 11606) 10518) anon0$1_correct)))
 anon0_correct))))))))
 ))
 (check-sat)
@@ -188,10 +189,11 @@ anon0_correct))))))))
 (declare-datatypes ((T@$42_TestDefines_R 0)) ((($42_TestDefines_R (|$x#$42_TestDefines_R| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$42_TestDefines_R| 0)
-(declare-datatypes ((T@$Memory_9078 0)) ((($Memory_9078 (|domain#$Memory_9078| |T@[Int]Bool|) (|contents#$Memory_9078| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$Memory_9206 0)) ((($Memory_9206 (|domain#$Memory_9206| |T@[Int]Bool|) (|contents#$Memory_9206| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7423 0)) ((($Mutation_7423 (|l#$Mutation_7423| T@$Location) (|p#$Mutation_7423| (Seq Int)) (|v#$Mutation_7423| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7502 0)) ((($Mutation_7502 (|l#$Mutation_7502| T@$Location) (|p#$Mutation_7502| (Seq Int)) (|v#$Mutation_7502| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -293,17 +295,17 @@ anon0_correct))))))))
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |definesz3bpl.839:15|
+ :qid |definesz3bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |definesz3bpl.842:15|
+ :qid |definesz3bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((s T@$42_TestDefines_R) ) (! (= (|$IsValid'$42_TestDefines_R'| s) (|$IsValid'u64'| (|$x#$42_TestDefines_R| s)))
- :qid |definesz3bpl.926:38|
+ :qid |definesz3bpl.931:38|
  :skolemid |24|
  :pattern ( (|$IsValid'$42_TestDefines_R'| s))
 )))
@@ -330,7 +332,7 @@ anon0_correct))))))))
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 11725) true)
+ (=> (= (ControlFlow 0 0) 11854) true)
 ))
 (check-sat)
 (pop 1)
@@ -351,10 +353,11 @@ anon0_correct))))))))
 (declare-datatypes ((T@$42_TestDefines_R 0)) ((($42_TestDefines_R (|$x#$42_TestDefines_R| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$42_TestDefines_R| 0)
-(declare-datatypes ((T@$Memory_9078 0)) ((($Memory_9078 (|domain#$Memory_9078| |T@[Int]Bool|) (|contents#$Memory_9078| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$Memory_9206 0)) ((($Memory_9206 (|domain#$Memory_9206| |T@[Int]Bool|) (|contents#$Memory_9206| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7423 0)) ((($Mutation_7423 (|l#$Mutation_7423| T@$Location) (|p#$Mutation_7423| (Seq Int)) (|v#$Mutation_7423| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7502 0)) ((($Mutation_7502 (|l#$Mutation_7502| T@$Location) (|p#$Mutation_7502| (Seq Int)) (|v#$Mutation_7502| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -456,17 +459,17 @@ anon0_correct))))))))
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |definesz3bpl.839:15|
+ :qid |definesz3bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |definesz3bpl.842:15|
+ :qid |definesz3bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((s T@$42_TestDefines_R) ) (! (= (|$IsValid'$42_TestDefines_R'| s) (|$IsValid'u64'| (|$x#$42_TestDefines_R| s)))
- :qid |definesz3bpl.926:38|
+ :qid |definesz3bpl.931:38|
  :skolemid |24|
  :pattern ( (|$IsValid'$42_TestDefines_R'| s))
 )))
@@ -501,13 +504,13 @@ anon0_correct))))))))
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 11913) (let ((anon4_Else_correct  (=> (not $abort_flag@0) (=> (and (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@2) (= (ControlFlow 0 11000) (- 0 12095))) (= inline$$AddU64$0$dst@2 (+ _$t0 _$t1))))))
+ (=> (= (ControlFlow 0 0) 12042) (let ((anon4_Else_correct  (=> (not $abort_flag@0) (=> (and (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@2) (= (ControlFlow 0 11128) (- 0 12224))) (= inline$$AddU64$0$dst@2 (+ _$t0 _$t1))))))
 (let ((anon4_Then_correct true))
-(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 10966) 11018) anon4_Then_correct) (=> (= (ControlFlow 0 10966) 11000) anon4_Else_correct))))))
-(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ _$t0 _$t1) $MAX_U64) (= (ControlFlow 0 10964) 10966)) inline$$AddU64$0$anon3_Then$1_correct)))
-(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ _$t0 _$t1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ _$t0 _$t1)) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 10912) 11018) anon4_Then_correct) (=> (= (ControlFlow 0 10912) 11000) anon4_Else_correct))))))
-(let ((anon0$1_correct  (=> (and (and (|$IsValid'u64'| _$t0) (|$IsValid'u64'| _$t1)) (and (= _$t0 _$t0) (= _$t1 _$t1))) (and (=> (= (ControlFlow 0 10972) 10964) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 10972) 10912) inline$$AddU64$0$anon3_Else_correct)))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 11913) 10972) anon0$1_correct)))
+(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@0)) (and (=> (= (ControlFlow 0 11094) 11146) anon4_Then_correct) (=> (= (ControlFlow 0 11094) 11128) anon4_Else_correct))))))
+(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ _$t0 _$t1) $MAX_U64) (= (ControlFlow 0 11092) 11094)) inline$$AddU64$0$anon3_Then$1_correct)))
+(let ((inline$$AddU64$0$anon3_Else_correct  (=> (>= $MAX_U64 (+ _$t0 _$t1)) (=> (and (and (= inline$$AddU64$0$dst@1 (+ _$t0 _$t1)) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$AddU64$0$dst@2 inline$$AddU64$0$dst@1))) (and (=> (= (ControlFlow 0 11040) 11146) anon4_Then_correct) (=> (= (ControlFlow 0 11040) 11128) anon4_Else_correct))))))
+(let ((anon0$1_correct  (=> (and (and (|$IsValid'u64'| _$t0) (|$IsValid'u64'| _$t1)) (and (= _$t0 _$t0) (= _$t1 _$t1))) (and (=> (= (ControlFlow 0 11100) 11092) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 11100) 11040) inline$$AddU64$0$anon3_Else_correct)))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 12042) 11100) anon0$1_correct)))
 anon0_correct))))))))
 ))
 (check-sat)
@@ -529,10 +532,11 @@ anon0_correct))))))))
 (declare-datatypes ((T@$42_TestDefines_R 0)) ((($42_TestDefines_R (|$x#$42_TestDefines_R| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$42_TestDefines_R| 0)
-(declare-datatypes ((T@$Memory_9078 0)) ((($Memory_9078 (|domain#$Memory_9078| |T@[Int]Bool|) (|contents#$Memory_9078| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$Memory_9206 0)) ((($Memory_9206 (|domain#$Memory_9206| |T@[Int]Bool|) (|contents#$Memory_9206| |T@[Int]$42_TestDefines_R|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7423 0)) ((($Mutation_7423 (|l#$Mutation_7423| T@$Location) (|p#$Mutation_7423| (Seq Int)) (|v#$Mutation_7423| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7502 0)) ((($Mutation_7502 (|l#$Mutation_7502| T@$Location) (|p#$Mutation_7502| (Seq Int)) (|v#$Mutation_7502| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -634,17 +638,17 @@ anon0_correct))))))))
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |definesz3bpl.839:15|
+ :qid |definesz3bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |definesz3bpl.842:15|
+ :qid |definesz3bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((s T@$42_TestDefines_R) ) (! (= (|$IsValid'$42_TestDefines_R'| s) (|$IsValid'u64'| (|$x#$42_TestDefines_R| s)))
- :qid |definesz3bpl.926:38|
+ :qid |definesz3bpl.931:38|
  :skolemid |24|
  :pattern ( (|$IsValid'$42_TestDefines_R'| s))
 )))
@@ -666,7 +670,7 @@ anon0_correct))))))))
 ; Valid
 
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun $42_TestDefines_R_$memory () T@$Memory_9078)
+(declare-fun $42_TestDefines_R_$memory () T@$Memory_9206)
 (declare-fun _$t0 () Int)
 (declare-fun _$t1 () Int)
 (declare-fun $abort_flag@1 () Bool)
@@ -689,24 +693,24 @@ anon0_correct))))))))
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 12114) (let ((L2_correct  (=> (= (ControlFlow 0 11276) (- 0 12468)) (not (and (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t0) (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t1))))))
-(let ((anon15_Then_correct  (=> $abort_flag@1 (=> (and (= $abort_code@2 $abort_code@2) (= (ControlFlow 0 11258) 11276)) L2_correct))))
-(let ((anon13_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 11342) 11276)) L2_correct))))
-(let ((anon15_Else_correct  (=> (and (not $abort_flag@1) (= $t6@1 $t6@1)) (=> (and (and (= $t7@0 (|$x#$42_TestDefines_R| $t4@1)) (= $t8@0 (|$x#$42_TestDefines_R| $t6@1))) (and (= $t9@0 (= $t7@0 $t8@0)) (= $t9@0 $t9@0))) (and (=> (= (ControlFlow 0 11244) (- 0 12436)) (not (not (and (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t0) (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t1))))) (=> (not (not (and (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t0) (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t1)))) (=> (= (ControlFlow 0 11244) (- 0 12448)) (= $t9@0 (= (|$x#$42_TestDefines_R| (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9078| $42_TestDefines_R_$memory) _$t0)) (|$x#$42_TestDefines_R| (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9078| $42_TestDefines_R_$memory) _$t1)))))))))))
-(let ((anon14_Then$1_correct  (=> (= $t6@1 $t6) (=> (and (= $abort_flag@1 true) (= $abort_code@2 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11328) 11258) anon15_Then_correct) (=> (= (ControlFlow 0 11328) 11244) anon15_Else_correct))))))
-(let ((anon14_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t1)) (= (ControlFlow 0 11326) 11328)) anon14_Then$1_correct)))
-(let ((anon14_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t1) (=> (and (and (= $t6@0 (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9078| $42_TestDefines_R_$memory) _$t1)) (= $t6@1 $t6@0)) (and (= $abort_flag@1 $abort_flag@0) (= $abort_code@2 $abort_code@1))) (and (=> (= (ControlFlow 0 11170) 11258) anon15_Then_correct) (=> (= (ControlFlow 0 11170) 11244) anon15_Else_correct))))))
-(let ((anon13_Else_correct  (=> (and (not $abort_flag@0) (= $t4@1 $t4@1)) (and (=> (= (ControlFlow 0 11156) 11326) anon14_Then_correct) (=> (= (ControlFlow 0 11156) 11170) anon14_Else_correct)))))
-(let ((anon12_Then$1_correct  (=> (= $t4@1 $t4) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11394) 11342) anon13_Then_correct) (=> (= (ControlFlow 0 11394) 11156) anon13_Else_correct))))))
-(let ((anon12_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t0)) (= (ControlFlow 0 11392) 11394)) anon12_Then$1_correct)))
-(let ((anon12_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9078| $42_TestDefines_R_$memory) _$t0) (=> (and (and (= $t4@0 (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9078| $42_TestDefines_R_$memory) _$t0)) (= $t4@1 $t4@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 11140) 11342) anon13_Then_correct) (=> (= (ControlFlow 0 11140) 11156) anon13_Else_correct))))))
-(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (and (|$IsValid'address'| _$t1) (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9078| $42_TestDefines_R_$memory) $a_0)))
+ (=> (= (ControlFlow 0 0) 12243) (let ((L2_correct  (=> (= (ControlFlow 0 11404) (- 0 12597)) (not (and (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t0) (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t1))))))
+(let ((anon15_Then_correct  (=> $abort_flag@1 (=> (and (= $abort_code@2 $abort_code@2) (= (ControlFlow 0 11386) 11404)) L2_correct))))
+(let ((anon13_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 11470) 11404)) L2_correct))))
+(let ((anon15_Else_correct  (=> (and (not $abort_flag@1) (= $t6@1 $t6@1)) (=> (and (and (= $t7@0 (|$x#$42_TestDefines_R| $t4@1)) (= $t8@0 (|$x#$42_TestDefines_R| $t6@1))) (and (= $t9@0 (= $t7@0 $t8@0)) (= $t9@0 $t9@0))) (and (=> (= (ControlFlow 0 11372) (- 0 12565)) (not (not (and (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t0) (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t1))))) (=> (not (not (and (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t0) (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t1)))) (=> (= (ControlFlow 0 11372) (- 0 12577)) (= $t9@0 (= (|$x#$42_TestDefines_R| (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9206| $42_TestDefines_R_$memory) _$t0)) (|$x#$42_TestDefines_R| (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9206| $42_TestDefines_R_$memory) _$t1)))))))))))
+(let ((anon14_Then$1_correct  (=> (= $t6@1 $t6) (=> (and (= $abort_flag@1 true) (= $abort_code@2 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11456) 11386) anon15_Then_correct) (=> (= (ControlFlow 0 11456) 11372) anon15_Else_correct))))))
+(let ((anon14_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t1)) (= (ControlFlow 0 11454) 11456)) anon14_Then$1_correct)))
+(let ((anon14_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t1) (=> (and (and (= $t6@0 (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9206| $42_TestDefines_R_$memory) _$t1)) (= $t6@1 $t6@0)) (and (= $abort_flag@1 $abort_flag@0) (= $abort_code@2 $abort_code@1))) (and (=> (= (ControlFlow 0 11298) 11386) anon15_Then_correct) (=> (= (ControlFlow 0 11298) 11372) anon15_Else_correct))))))
+(let ((anon13_Else_correct  (=> (and (not $abort_flag@0) (= $t4@1 $t4@1)) (and (=> (= (ControlFlow 0 11284) 11454) anon14_Then_correct) (=> (= (ControlFlow 0 11284) 11298) anon14_Else_correct)))))
+(let ((anon12_Then$1_correct  (=> (= $t4@1 $t4) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 11522) 11470) anon13_Then_correct) (=> (= (ControlFlow 0 11522) 11284) anon13_Else_correct))))))
+(let ((anon12_Then_correct  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t0)) (= (ControlFlow 0 11520) 11522)) anon12_Then$1_correct)))
+(let ((anon12_Else_correct  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_9206| $42_TestDefines_R_$memory) _$t0) (=> (and (and (= $t4@0 (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9206| $42_TestDefines_R_$memory) _$t0)) (= $t4@1 $t4@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 11268) 11470) anon13_Then_correct) (=> (= (ControlFlow 0 11268) 11284) anon13_Else_correct))))))
+(let ((anon0$1_correct  (=> (|$IsValid'address'| _$t0) (=> (and (and (|$IsValid'address'| _$t1) (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9206| $42_TestDefines_R_$memory) $a_0)))
 (|$IsValid'$42_TestDefines_R'| $rsc))
- :qid |definesz3bpl.1165:20|
+ :qid |definesz3bpl.1170:20|
  :skolemid |25|
- :pattern ( (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9078| $42_TestDefines_R_$memory) $a_0))
-))) (and (= _$t0 _$t0) (= _$t1 _$t1))) (and (=> (= (ControlFlow 0 11126) 11392) anon12_Then_correct) (=> (= (ControlFlow 0 11126) 11140) anon12_Else_correct))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 12114) 11126) anon0$1_correct)))
+ :pattern ( (|Select__T@[Int]$42_TestDefines_R_| (|contents#$Memory_9206| $42_TestDefines_R_$memory) $a_0))
+))) (and (= _$t0 _$t0) (= _$t1 _$t1))) (and (=> (= (ControlFlow 0 11254) 11520) anon12_Then_correct) (=> (= (ControlFlow 0 11254) 11268) anon12_Else_correct))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 12243) 11254) anon0$1_correct)))
 anon0_correct))))))))))))))
 ))
 (check-sat)

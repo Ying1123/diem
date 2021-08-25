@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/script_provider/script_provider.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl
 -monomorphize
 /env:2
 /proverLog:script_provider.z3.smt2
@@ -8,8 +8,59 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/script_provider/script_provider.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl
 Coalescing blocks...
 Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
 
-Boogie program verifier finished with 0 verified, 0 errors
+Verifying $0_A_mutate_at$verify ...
+  [0.132 s, 4 proof obligations]  verified
+
+Verifying $0_A_read_at$verify ...
+  [0.014 s, 3 proof obligations]  verified
+
+Verifying $0_B_move_from_test_incorrect$verify ...
+  [0.015 s, 2 proof obligations]  error
+assert_failed(2,1595,1604): caller does not have permission to modify `B::T` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1154,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1154,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1197,34): anon10_Else
+
+Verifying $0_B_move_to_test_incorrect$verify ...
+  [0.014 s, 2 proof obligations]  error
+assert_failed(2,1222,1229): caller does not have permission to modify `B::T` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1327,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1327,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1370,34): anon10_Else
+
+Verifying $0_B_mutate_S_test1_incorrect$verify ...
+  [0.010 s, 2 proof obligations]  error
+assert_failed(2,1949,1968): caller does not have permission to modify `A::S` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1498,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1498,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1541,34): anon10_Else
+
+Verifying $0_B_mutate_S_test2_incorrect$verify ...
+  [0.014 s, 2 proof obligations]  error
+assert_failed(2,2363,2379): unknown assertion failed
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1686,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1686,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1718,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1758,34): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1776,9): anon12_Then
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1783,5): anon7
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1797,34): anon13_Else
+
+Verifying $0_B_mutate_at_test_incorrect$verify ...
+  [0.015 s, 2 proof obligations]  error
+assert_failed(2,853,870): caller does not have permission to modify `B::T` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1866,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1866,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.z3.bpl(1912,34): anon10_Else
+
+Boogie program verifier finished with 2 verified, 5 errors

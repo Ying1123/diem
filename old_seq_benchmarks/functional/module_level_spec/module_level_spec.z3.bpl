@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -892,209 +897,118 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct TestModule::R at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:3:5+31
-type {:datatype} $42_TestModule_R;
-function {:constructor} $42_TestModule_R($value: int): $42_TestModule_R;
-function {:inline} $Update'$42_TestModule_R'_value(s: $42_TestModule_R, x: int): $42_TestModule_R {
-    $42_TestModule_R(x)
-}
-function $IsValid'$42_TestModule_R'(s: $42_TestModule_R): bool {
-    $IsValid'u64'($value#$42_TestModule_R(s))
-}
-function {:inline} $IsEqual'$42_TestModule_R'(s1: $42_TestModule_R, s2: $42_TestModule_R): bool {
-    s1 == s2
-}
-var $42_TestModule_R_$memory: $Memory $42_TestModule_R;
-
-// fun TestModule::store [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: int, _$t1: int) returns ()
+// fun Inconsistency::always_abort [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:6:5+42
+procedure {:timeLimit 40} $42_Inconsistency_always_abort$verify() returns ()
 {
     // declare local variables
-    var $t2: int;
-    var $t3: $42_TestModule_R;
-    var $t4: int;
     var $t0: int;
-    var $t1: int;
-    var $temp_0'address': int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    assume {:print "$at(2,68,140)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
+    // $t0 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:7:15+1
+    assume {:print "$at(2,260,261)"} true;
+    $t0 := 0;
+    assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-    assume $IsValid'address'($t0);
+    // trace_abort($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:7:9+7
+    assume {:print "$at(2,254,261)"} true;
+    assume {:print "$track_abort(0,0):", $t0} $t0 == $t0;
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-    assume $IsValid'u64'($t1);
-
-    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
-    assume (forall $a_0: int :: {$ResourceValue($42_TestModule_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestModule_R_$memory, $a_0);
-    ($IsValid'$42_TestModule_R'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
-    assume {:print "$at(2,616,654)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // assume Gt($t1, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:20:9+19
-    assume {:print "$at(2,414,433)"} true;
-    assume ($t1 > 0);
-
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
-    assume {:print "$at(2,68,69)"} true;
-    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
-
-    // trace_local[value]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
-    assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
-
-    // $t3 := pack TestModule::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:22+8
-    assume {:print "$at(2,125,133)"} true;
-    $t3 := $42_TestModule_R($t1);
-
-    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:8+7
-    if ($ResourceExists($42_TestModule_R_$memory, $t0)) {
-        call $ExecFailureAbort();
-    } else {
-        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $t0, $t3);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,111,118)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t4} $t4 == $t4;
-        goto L2;
-    }
-
-    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    assume {:print "$at(2,283,363)"} true;
-    assert {:msg "assert_failed(2,283,363): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
-    assume {:print "$at(2,139,140)"} true;
-L1:
-
-    // assert exists<TestModule::R>($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
-    assume {:print "$at(2,663,687)"} true;
-    assert {:msg "assert_failed(2,663,687): post-condition does not hold"}
-      $ResourceExists($42_TestModule_R_$memory, $t2);
-
-    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
-    assume {:print "$at(2,696,735)"} true;
-    assert {:msg "assert_failed(2,696,735): post-condition does not hold"}
-      $IsEqual'u64'($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, $t2)), $t1);
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
-    assume {:print "$at(2,139,140)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:8:5+1
+    assume {:print "$at(2,266,267)"} true;
 L2:
 
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
-    $abort_code := $t4;
+    // abort($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:8:5+1
+    $abort_code := $t0;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestModule::store_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: int, _$t1: int) returns ()
+// fun Inconsistency::always_abort_if_else [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:14:5+139
+procedure {:timeLimit 40} $42_Inconsistency_always_abort_if_else$verify(_$t0: int) returns ($ret0: bool)
 {
     // declare local variables
+    var $t1: bool;
     var $t2: int;
-    var $t3: $42_TestModule_R;
-    var $t4: int;
+    var $t3: bool;
     var $t0: int;
-    var $t1: int;
-    var $temp_0'address': int;
+    var $temp_0'bool': bool;
     var $temp_0'u64': int;
     $t0 := _$t0;
-    $t1 := _$t1;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    assume {:print "$at(2,146,229)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:22:17+6
+    assume {:print "$at(2,590,596)"} true;
+    assume $IsValid'u64'($t0);
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-    assume $IsValid'address'($t0);
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:14:5+1
+    assume {:print "$at(2,402,403)"} true;
+    assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-    assume $IsValid'u64'($t1);
+    // $t1 := ==($t0, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:15:15+2
+    assume {:print "$at(2,457,459)"} true;
+    $t1 := $IsEqual'u64'($t0, $t0);
 
-    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
-    assume (forall $a_0: int :: {$ResourceValue($42_TestModule_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestModule_R_$memory, $a_0);
-    ($IsValid'$42_TestModule_R'($rsc))));
+    // if ($t1) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:15:9+84
+    if ($t1) { goto L0; } else { goto L1; }
 
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
-    assume {:print "$at(2,616,654)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
-    assume {:print "$at(2,146,147)"} true;
-    assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
-
-    // trace_local[value]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
-    assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
-
-    // $t3 := pack TestModule::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:23+8
-    assume {:print "$at(2,214,222)"} true;
-    $t3 := $42_TestModule_R($t1);
-
-    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:9+7
-    if ($ResourceExists($42_TestModule_R_$memory, $t0)) {
-        call $ExecFailureAbort();
-    } else {
-        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $t0, $t3);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(2,200,207)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(1,1):", $t4} $t4 == $t4;
-        goto L2;
-    }
-
-    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
-    assume {:print "$at(2,283,363)"} true;
-    assert {:msg "assert_failed(2,283,363): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
-    assume {:print "$at(2,228,229)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:15:9+84
 L1:
 
-    // assert exists<TestModule::R>($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
-    assume {:print "$at(2,663,687)"} true;
-    assert {:msg "assert_failed(2,663,687): post-condition does not hold"}
-      $ResourceExists($42_TestModule_R_$memory, $t2);
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:15:9+84
+    goto L2;
 
-    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
-    assume {:print "$at(2,696,735)"} true;
-    assert {:msg "assert_failed(2,696,735): post-condition does not hold"}
-      $IsEqual'u64'($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, $t2)), $t1);
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:16:19+1
+    assume {:print "$at(2,483,484)"} true;
+L0:
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
-    return;
+    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:16:19+1
+    $t2 := 0;
+    assume $IsValid'u64'($t2);
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
-    assume {:print "$at(2,228,229)"} true;
+    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:16:13+7
+    assume {:print "$at(2,477,484)"} true;
+    assume {:print "$track_abort(0,1):", $t2} $t2 == $t2;
+
+    // goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:16:13+7
+    goto L4;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:18:20+4
+    assume {:print "$at(2,521,525)"} true;
 L2:
 
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
-    $abort_code := $t4;
+    // $t3 := true at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:18:20+4
+    $t3 := true;
+    assume $IsValid'bool'($t3);
+
+    // trace_return[0]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:18:13+11
+    assume {:print "$track_return(0,1,0):", $t3} $t3 == $t3;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:20:5+1
+    assume {:print "$at(2,540,541)"} true;
+L3:
+
+    // assert Eq<bool>($t3, false) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:22:9+24
+    assume {:print "$at(2,582,606)"} true;
+    assert {:msg "assert_failed(2,582,606): post-condition does not hold"}
+      $IsEqual'bool'($t3, false);
+
+    // return $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:22:9+24
+    $ret0 := $t3;
+    return;
+
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:20:5+1
+    assume {:print "$at(2,540,541)"} true;
+L4:
+
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/inconsistency_always_abort.move:20:5+1
+    $abort_code := $t2;
     $abort_flag := true;
     return;
 

@@ -577,6 +577,186 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 }
 
 // ----------------------------------------------------------------------------------
+// Native Vector implementation for element type `u64`
+
+
+function {:inline} $IsEqual'vec'u64''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
+}
+
+// Not inlined.
+function $IsValid'vec'u64''(v: Vec (int)): bool {
+    $IsValid'u64'(LenVec(v)) &&
+    (forall i: int:: InRangeVec(v, i) ==> $IsValid'u64'(ReadVec(v, i)))
+}
+
+
+function {:inline} $ContainsVec'u64'(v: Vec (int), e: int): bool {
+    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e))
+}
+
+function $IndexOfVec'u64'(v: Vec (int), e: int): int;
+axiom (forall v: Vec (int), e: int:: {$IndexOfVec'u64'(v, e)}
+    (var i := $IndexOfVec'u64'(v, e);
+     if (!$ContainsVec'u64'(v, e)) then i == -1
+     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e) &&
+        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'u64'(ReadVec(v, j), e))));
+
+
+function {:inline} $RangeVec'u64'(v: Vec (int)): $Range {
+    $Range(0, LenVec(v))
+}
+
+
+function {:inline} $EmptyVec'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_empty'u64'() returns (v: Vec (int)) {
+    v := EmptyVec();
+}
+
+function {:inline} $1_Vector_$empty'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_is_empty'u64'(v: Vec (int)) returns (b: bool) {
+    b := IsEmptyVec(v);
+}
+
+procedure {:inline 1} $1_Vector_push_back'u64'(m: $Mutation (Vec (int)), val: int) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
+}
+
+function {:inline} $1_Vector_$push_back'u64'(v: Vec (int), val: int): Vec (int) {
+    ExtendVec(v, val)
+}
+
+procedure {:inline 1} $1_Vector_pop_back'u64'(m: $Mutation (Vec (int))) returns (e: int, m': $Mutation (Vec (int))) {
+    var v: Vec (int);
+    var len: int;
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (len == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, len-1);
+    m' := $UpdateMutation(m, RemoveVec(v));
+}
+
+procedure {:inline 1} $1_Vector_append'u64'(m: $Mutation (Vec (int)), other: Vec (int)) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
+}
+
+procedure {:inline 1} $1_Vector_reverse'u64'(m: $Mutation (Vec (int))) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
+}
+
+procedure {:inline 1} $1_Vector_length'u64'(v: Vec (int)) returns (l: int) {
+    l := LenVec(v);
+}
+
+function {:inline} $1_Vector_$length'u64'(v: Vec (int)): int {
+    LenVec(v)
+}
+
+procedure {:inline 1} $1_Vector_borrow'u64'(v: Vec (int), i: int) returns (dst: int) {
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := ReadVec(v, i);
+}
+
+function {:inline} $1_Vector_$borrow'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_borrow_mut'u64'(m: $Mutation (Vec (int)), index: int)
+returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, index)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
+    m' := m;
+}
+
+function {:inline} $1_Vector_$borrow_mut'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_destroy_empty'u64'(v: Vec (int)) {
+    if (!IsEmptyVec(v)) {
+      call $ExecFailureAbort();
+    }
+}
+
+procedure {:inline 1} $1_Vector_swap'u64'(m: $Mutation (Vec (int)), i: int, j: int) returns (m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    m' := $UpdateMutation(m, SwapVec(v, i, j));
+}
+
+function {:inline} $1_Vector_$swap'u64'(v: Vec (int), i: int, j: int): Vec (int) {
+    SwapVec(v, i, j)
+}
+
+procedure {:inline 1} $1_Vector_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+
+    v := $Dereference(m);
+
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveAtVec(v, i));
+}
+
+procedure {:inline 1} $1_Vector_swap_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var len: int;
+    var v: Vec (int);
+
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
+}
+
+procedure {:inline 1} $1_Vector_contains'u64'(v: Vec (int), e: int) returns (res: bool)  {
+    res := $ContainsVec'u64'(v, e);
+}
+
+procedure {:inline 1}
+$1_Vector_index_of'u64'(v: Vec (int), e: int) returns (res1: bool, res2: int) {
+    res2 := $IndexOfVec'u64'(v, e);
+    if (res2 >= 0) {
+        res1 := true;
+    } else {
+        res1 := false;
+        res2 := 0;
+    }
+}
+
+
+// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
 
@@ -897,380 +1077,191 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun TestCast::aborting_u64_cast [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:51:5+62
-procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast$verify(_$t0: int) returns ($ret0: int)
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:6:9+90
+function {:inline} $42_VectorExists_e_in_v_vec(e: int, v: Vec (int)): bool {
+    (var $range_0 := v; (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var x := ReadVec($range_0, $i_1);
+    ($IsEqual'u64'(x, e)))))
+}
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:9:9+103
+function {:inline} $42_VectorExists_e_in_v_range(e: int, v: Vec (int)): bool {
+    (var $range_2 := $Range(0, LenVec(v)); (exists $i_3: int :: $InRange($range_2, $i_3) && (var i := $i_3;
+    ($IsEqual'u64'(ReadVec(v, i), e)))))
+}
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:12:9+120
+function {:inline} $42_VectorExists_e_in_v_u64(e: int, v: Vec (int)): bool {
+    (exists i: int :: $IsValid'u64'(i) && (((0 <= i) && (i < LenVec(v))))  && ($IsEqual'u64'(ReadVec(v, i), e)))
+}
+
+// fun VectorExists::do_nothing_ref [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+51
+procedure {:timeLimit 40} $42_VectorExists_do_nothing_ref$verify(_$t0: Vec (int)) returns ()
 {
     // declare local variables
-    var $t1: int;
-    var $t2: int;
-    var $t0: int;
-    var $temp_0'u128': int;
-    var $temp_0'u64': int;
+    var $t0: Vec (int);
+    var $temp_0'vec'u64'': Vec (int);
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:51:5+62
-    assume {:print "$at(2,878,940)"} true;
-    assume $IsValid'u128'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+51
+    assume {:print "$at(2,498,549)"} true;
+    assume $IsValid'vec'u64''($t0);
 
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:51:5+1
-    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
+    // trace_local[_v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:17:5+1
+    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:52:9+10
-    assume {:print "$at(2,924,934)"} true;
-    call $t1 := $CastU64($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,924,934)"} true;
-        $t2 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t2} $t2 == $t2;
-        goto L2;
-    }
-
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:52:9+10
-    assume {:print "$track_return(0,0,0):", $t1} $t1 == $t1;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:53:5+1
-    assume {:print "$at(2,939,940)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:18:5+1
+    assume {:print "$at(2,548,549)"} true;
 L1:
 
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:22:9+16
-    assume {:print "$at(2,369,385)"} true;
-    assert {:msg "assert_failed(2,369,385): function does not abort under this condition"}
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:20:9+16
+    assume {:print "$at(2,584,600)"} true;
+    assert {:msg "assert_failed(2,584,600): function does not abort under this condition"}
       !false;
 
-    // assert Not(Gt($t0, 18446744073709551615)) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:55:9+35
-    assume {:print "$at(2,978,1013)"} true;
-    assert {:msg "assert_failed(2,978,1013): function does not abort under this condition"}
-      !($t0 > 18446744073709551615);
+    // assert Eq<vector<u64>>($t0, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:22:9+17
+    assume {:print "$at(2,610,627)"} true;
+    assert {:msg "assert_failed(2,610,627): post-condition does not hold"}
+      $IsEqual'vec'u64''($t0, $t0);
 
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:55:9+35
-    $ret0 := $t1;
-    return;
+    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:23:9+36
+    assume {:print "$at(2,636,672)"} true;
+    assert {:msg "assert_failed(2,636,672): post-condition does not hold"}
+      (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t0))));
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:53:5+1
-    assume {:print "$at(2,939,940)"} true;
-L2:
+    // assert exists l: TypeDomain<u64>() where Eq<u64>(l, Len<u64>($t0)): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:24:9+55
+    assume {:print "$at(2,681,736)"} true;
+    assert {:msg "assert_failed(2,681,736): post-condition does not hold"}
+      (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t0)))  && ($IsEqual'u64'(l, LenVec($t0))));
 
-    // assert Or(false, Gt($t0, 18446744073709551615)) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:54:5+74
-    assume {:print "$at(2,945,1019)"} true;
-    assert {:msg "assert_failed(2,945,1019): abort not covered by any of the `aborts_if` clauses"}
-      (false || ($t0 > 18446744073709551615));
+    // assert Implies(VectorExists::e_in_v_vec(0, $t0), VectorExists::e_in_v_vec(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:26:9+48
+    assume {:print "$at(2,746,794)"} true;
+    assert {:msg "assert_failed(2,746,794): post-condition does not hold"}
+      ($42_VectorExists_e_in_v_vec(0, $t0) ==> $42_VectorExists_e_in_v_vec(0, $t0));
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:54:5+74
-    $abort_code := $t2;
-    $abort_flag := true;
+    // assert Implies(VectorExists::e_in_v_range(0, $t0), VectorExists::e_in_v_range(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:27:9+52
+    assume {:print "$at(2,803,855)"} true;
+    assert {:msg "assert_failed(2,803,855): post-condition does not hold"}
+      ($42_VectorExists_e_in_v_range(0, $t0) ==> $42_VectorExists_e_in_v_range(0, $t0));
+
+    // assert Implies(VectorExists::e_in_v_u64(0, $t0), VectorExists::e_in_v_u64(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:28:9+48
+    assume {:print "$at(2,864,912)"} true;
+    assert {:msg "assert_failed(2,864,912): post-condition does not hold"}
+      ($42_VectorExists_e_in_v_u64(0, $t0) ==> $42_VectorExists_e_in_v_u64(0, $t0));
+
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_vec(e, $t0), VectorExists::e_in_v_vec(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:30:9+65
+    assume {:print "$at(2,922,987)"} true;
+    assert {:msg "assert_failed(2,922,987): post-condition does not hold"}
+      (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_vec(e, $t0) ==> $42_VectorExists_e_in_v_vec(e, $t0))));
+
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_range(e, $t0), VectorExists::e_in_v_range(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:31:9+69
+    assume {:print "$at(2,996,1065)"} true;
+    assert {:msg "assert_failed(2,996,1065): post-condition does not hold"}
+      (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_range(e, $t0) ==> $42_VectorExists_e_in_v_range(e, $t0))));
+
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_u64(e, $t0), VectorExists::e_in_v_u64(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:32:9+65
+    assume {:print "$at(2,1074,1139)"} true;
+    assert {:msg "assert_failed(2,1074,1139): post-condition does not hold"}
+      (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_u64(e, $t0) ==> $42_VectorExists_e_in_v_u64(e, $t0))));
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:32:9+65
     return;
 
 }
 
-// fun TestCast::aborting_u64_cast_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:44:5+72
-procedure {:timeLimit 40} $42_TestCast_aborting_u64_cast_incorrect$verify(_$t0: int) returns ($ret0: int)
+// fun VectorExists::do_nothing_ref_mut [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+59
+procedure {:timeLimit 40} $42_VectorExists_do_nothing_ref_mut$verify(_$t0: $Mutation (Vec (int))) returns ($ret0: $Mutation (Vec (int)))
 {
     // declare local variables
-    var $t1: int;
-    var $t2: int;
-    var $t0: int;
-    var $temp_0'u128': int;
-    var $temp_0'u64': int;
+    var $t1: Vec (int);
+    var $t0: $Mutation (Vec (int));
+    var $temp_0'vec'u64'': Vec (int);
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
+    assume l#$Mutation($t0) == $Param(0);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:44:5+72
-    assume {:print "$at(2,730,802)"} true;
-    assume $IsValid'u128'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+59
+    assume {:print "$at(2,1151,1210)"} true;
+    assume $IsValid'vec'u64''($Dereference($t0));
 
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:44:5+1
-    assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
+    // $t1 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+1
+    $t1 := $Dereference($t0);
 
-    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:45:9+10
-    assume {:print "$at(2,786,796)"} true;
-    call $t1 := $CastU64($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,786,796)"} true;
-        $t2 := $abort_code;
-        assume {:print "$track_abort(0,1):", $t2} $t2 == $t2;
-        goto L2;
-    }
+    // trace_local[_v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:5+1
+    $temp_0'vec'u64'' := $Dereference($t0);
+    assume {:print "$track_local(1,1,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:45:9+10
-    assume {:print "$track_return(0,1,0):", $t1} $t1 == $t1;
+    // trace_local[_v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:35:57+7
+    $temp_0'vec'u64'' := $Dereference($t0);
+    assume {:print "$track_local(1,1,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:46:5+1
-    assume {:print "$at(2,801,802)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:36:5+1
+    assume {:print "$at(2,1209,1210)"} true;
 L1:
 
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:48:9+16
-    assume {:print "$at(2,850,866)"} true;
-    assert {:msg "assert_failed(2,850,866): function does not abort under this condition"}
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:38:9+16
+    assume {:print "$at(2,1249,1265)"} true;
+    assert {:msg "assert_failed(2,1249,1265): function does not abort under this condition"}
       !false;
 
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:48:9+16
-    $ret0 := $t1;
-    return;
+    // assert Eq<vector<u64>>($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:40:9+22
+    assume {:print "$at(2,1275,1297)"} true;
+    assert {:msg "assert_failed(2,1275,1297): post-condition does not hold"}
+      $IsEqual'vec'u64''($t1, $Dereference($t0));
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:46:5+1
-    assume {:print "$at(2,801,802)"} true;
-L2:
+    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:41:9+41
+    assume {:print "$at(2,1306,1347)"} true;
+    assert {:msg "assert_failed(2,1306,1347): post-condition does not hold"}
+      (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t1))));
 
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:47:5+65
-    assume {:print "$at(2,807,872)"} true;
-    assert {:msg "assert_failed(2,807,872): abort not covered by any of the `aborts_if` clauses"}
-      false;
+    // assert exists l: TypeDomain<u64>(): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:42:9+36
+    assume {:print "$at(2,1356,1392)"} true;
+    assert {:msg "assert_failed(2,1356,1392): post-condition does not hold"}
+      (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($Dereference($t0)))));
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:47:5+65
-    $abort_code := $t2;
-    $abort_flag := true;
-    return;
+    // assert exists l: TypeDomain<u64>() where Eq<u64>(l, Len<u64>($t1)): Eq<u64>(l, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:43:9+60
+    assume {:print "$at(2,1401,1461)"} true;
+    assert {:msg "assert_failed(2,1401,1461): post-condition does not hold"}
+      (exists l: int :: $IsValid'u64'(l) && ($IsEqual'u64'(l, LenVec($t1)))  && ($IsEqual'u64'(l, LenVec($Dereference($t0)))));
 
-}
+    // assert Implies(VectorExists::e_in_v_vec[](0, $t1), VectorExists::e_in_v_vec(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:45:9+53
+    assume {:print "$at(2,1471,1524)"} true;
+    assert {:msg "assert_failed(2,1471,1524): post-condition does not hold"}
+      ($42_VectorExists_e_in_v_vec(0, $t1) ==> $42_VectorExists_e_in_v_vec(0, $Dereference($t0)));
 
-// fun TestCast::aborting_u8_cast [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:37:5+58
-procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast$verify(_$t0: int) returns ($ret0: int)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: int;
-    var $t0: int;
-    var $temp_0'u64': int;
-    var $temp_0'u8': int;
-    $t0 := _$t0;
+    // assert Implies(VectorExists::e_in_v_range[](0, $t1), VectorExists::e_in_v_range(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:46:9+57
+    assume {:print "$at(2,1533,1590)"} true;
+    assert {:msg "assert_failed(2,1533,1590): post-condition does not hold"}
+      ($42_VectorExists_e_in_v_range(0, $t1) ==> $42_VectorExists_e_in_v_range(0, $Dereference($t0)));
 
-    // verification entrypoint assumptions
-    call $InitVerification();
+    // assert Implies(VectorExists::e_in_v_u64[](0, $t1), VectorExists::e_in_v_u64(0, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:47:9+53
+    assume {:print "$at(2,1599,1652)"} true;
+    assert {:msg "assert_failed(2,1599,1652): post-condition does not hold"}
+      ($42_VectorExists_e_in_v_u64(0, $t1) ==> $42_VectorExists_e_in_v_u64(0, $Dereference($t0)));
 
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:37:5+58
-    assume {:print "$at(2,605,663)"} true;
-    assume $IsValid'u64'($t0);
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_vec[](e, $t1), VectorExists::e_in_v_vec(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:49:9+70
+    assume {:print "$at(2,1662,1732)"} true;
+    assert {:msg "assert_failed(2,1662,1732): post-condition does not hold"}
+      (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_vec(e, $t1) ==> $42_VectorExists_e_in_v_vec(e, $Dereference($t0)))));
 
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:37:5+1
-    assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_range[](e, $t1), VectorExists::e_in_v_range(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:50:9+74
+    assume {:print "$at(2,1741,1815)"} true;
+    assert {:msg "assert_failed(2,1741,1815): post-condition does not hold"}
+      (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_range(e, $t1) ==> $42_VectorExists_e_in_v_range(e, $Dereference($t0)))));
 
-    // $t1 := (u8)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:38:9+9
-    assume {:print "$at(2,648,657)"} true;
-    call $t1 := $CastU8($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,648,657)"} true;
-        $t2 := $abort_code;
-        assume {:print "$track_abort(0,2):", $t2} $t2 == $t2;
-        goto L2;
-    }
+    // assert forall e: TypeDomain<u64>(): Implies(VectorExists::e_in_v_u64[](e, $t1), VectorExists::e_in_v_u64(e, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:51:9+70
+    assume {:print "$at(2,1824,1894)"} true;
+    assert {:msg "assert_failed(2,1824,1894): post-condition does not hold"}
+      (forall e: int :: $IsValid'u64'(e) ==> (($42_VectorExists_e_in_v_u64(e, $t1) ==> $42_VectorExists_e_in_v_u64(e, $Dereference($t0)))));
 
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:38:9+9
-    assume {:print "$track_return(0,2,0):", $t1} $t1 == $t1;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:39:5+1
-    assume {:print "$at(2,662,663)"} true;
-L1:
-
-    // assert Not(Gt($t0, 255)) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:41:9+18
-    assume {:print "$at(2,700,718)"} true;
-    assert {:msg "assert_failed(2,700,718): function does not abort under this condition"}
-      !($t0 > 255);
-
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:41:9+18
-    $ret0 := $t1;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:39:5+1
-    assume {:print "$at(2,662,663)"} true;
-L2:
-
-    // assert Gt($t0, 255) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:40:5+56
-    assume {:print "$at(2,668,724)"} true;
-    assert {:msg "assert_failed(2,668,724): abort not covered by any of the `aborts_if` clauses"}
-      ($t0 > 255);
-
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:40:5+56
-    $abort_code := $t2;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestCast::aborting_u8_cast_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:30:5+68
-procedure {:timeLimit 40} $42_TestCast_aborting_u8_cast_incorrect$verify(_$t0: int) returns ($ret0: int)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: int;
-    var $t0: int;
-    var $temp_0'u64': int;
-    var $temp_0'u8': int;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:30:5+68
-    assume {:print "$at(2,462,530)"} true;
-    assume $IsValid'u64'($t0);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:30:5+1
-    assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
-
-    // $t1 := (u8)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:31:9+9
-    assume {:print "$at(2,515,524)"} true;
-    call $t1 := $CastU8($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,515,524)"} true;
-        $t2 := $abort_code;
-        assume {:print "$track_abort(0,3):", $t2} $t2 == $t2;
-        goto L2;
-    }
-
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:31:9+9
-    assume {:print "$track_return(0,3,0):", $t1} $t1 == $t1;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:32:5+1
-    assume {:print "$at(2,529,530)"} true;
-L1:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:34:9+16
-    assume {:print "$at(2,577,593)"} true;
-    assert {:msg "assert_failed(2,577,593): function does not abort under this condition"}
-      !false;
-
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:34:9+16
-    $ret0 := $t1;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:32:5+1
-    assume {:print "$at(2,529,530)"} true;
-L2:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:33:5+64
-    assume {:print "$at(2,535,599)"} true;
-    assert {:msg "assert_failed(2,535,599): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:33:5+64
-    $abort_code := $t2;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestCast::u64_cast [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:18:5+54
-procedure {:timeLimit 40} $42_TestCast_u64_cast$verify(_$t0: int) returns ($ret0: int)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: int;
-    var $t0: int;
-    var $temp_0'u128': int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:18:5+54
-    assume {:print "$at(2,277,331)"} true;
-    assume $IsValid'u64'($t0);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:18:5+1
-    assume {:print "$track_local(0,4,0):", $t0} $t0 == $t0;
-
-    // $t1 := (u128)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:19:9+11
-    assume {:print "$at(2,314,325)"} true;
-    call $t1 := $CastU128($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,314,325)"} true;
-        $t2 := $abort_code;
-        assume {:print "$track_abort(0,4):", $t2} $t2 == $t2;
-        goto L2;
-    }
-
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:19:9+11
-    assume {:print "$track_return(0,4,0):", $t1} $t1 == $t1;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
-    assume {:print "$at(2,330,331)"} true;
-L1:
-
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
-    $ret0 := $t1;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
-L2:
-
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:20:5+1
-    $abort_code := $t2;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestCast::u8_cast_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:11:5+60
-procedure {:timeLimit 40} $42_TestCast_u8_cast_incorrect$verify(_$t0: int) returns ($ret0: int)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: int;
-    var $t0: int;
-    var $temp_0'u64': int;
-    var $temp_0'u8': int;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:11:5+60
-    assume {:print "$at(2,151,211)"} true;
-    assume $IsValid'u8'($t0);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:11:5+1
-    assume {:print "$track_local(0,5,0):", $t0} $t0 == $t0;
-
-    // $t1 := (u64)($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:12:9+10
-    assume {:print "$at(2,195,205)"} true;
-    call $t1 := $CastU64($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,195,205)"} true;
-        $t2 := $abort_code;
-        assume {:print "$track_abort(0,5):", $t2} $t2 == $t2;
-        goto L2;
-    }
-
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:12:9+10
-    assume {:print "$track_return(0,5,0):", $t1} $t1 == $t1;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:13:5+1
-    assume {:print "$at(2,210,211)"} true;
-L1:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:15:9+16
-    assume {:print "$at(2,249,265)"} true;
-    assert {:msg "assert_failed(2,249,265): function does not abort under this condition"}
-      !false;
-
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:15:9+16
-    $ret0 := $t1;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:13:5+1
-    assume {:print "$at(2,210,211)"} true;
-L2:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:14:5+55
-    assume {:print "$at(2,216,271)"} true;
-    assert {:msg "assert_failed(2,216,271): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/cast.move:14:5+55
-    $abort_code := $t2;
-    $abort_flag := true;
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/exists_in_vector.move:51:9+70
+    $ret0 := $t0;
     return;
 
 }

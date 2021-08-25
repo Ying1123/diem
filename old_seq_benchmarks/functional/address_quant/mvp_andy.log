@@ -1,9 +1,9 @@
-06:05:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AddressQuant::multiple_copy_incorrect` to be verified
-06:05:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AddressQuant::f` to be verified
-06:05:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AddressQuant::initialize` to be verified
-06:05:27 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+08:33:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AddressQuant::multiple_copy_incorrect` to be verified
+08:33:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AddressQuant::f` to be verified
+08:33:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `AddressQuant::initialize` to be verified
+08:33:06 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
 [INFO] translating module AddressQuant
-06:05:27 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:33:06 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:05:27 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:05:27 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:33:06 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:33:06 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1

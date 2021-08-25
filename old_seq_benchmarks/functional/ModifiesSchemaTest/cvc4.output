@@ -1,6 +1,6 @@
-/home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.smt2:44.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.smt2:45.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/seq_benchmarks/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.smt2:187.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/ModifiesSchemaTest/ModifiesSchemaTest.cvc4.smt2:188.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unknown
 (:reason-unknown incomplete)

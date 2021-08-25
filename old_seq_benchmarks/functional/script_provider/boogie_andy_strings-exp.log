@@ -12,5 +12,18 @@
 Parsing /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.andy.bpl
 Coalescing blocks...
 Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Boogie program verifier finished with 0 verified, 0 errors
+Verifying $42_TestBCS_bcs_test1$verify ...
+  [0.142 s, 4 proof obligations]  verified
+
+Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
+  [0.017 s, 3 proof obligations]  error
+assert_failed(2,879,908): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.andy.bpl(1055,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.andy.bpl(1055,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.andy.bpl(1079,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/script_provider/script_provider.andy.bpl(1092,5): anon7_Else
+
+Boogie program verifier finished with 1 verified, 1 error

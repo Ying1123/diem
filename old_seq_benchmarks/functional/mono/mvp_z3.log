@@ -1,107 +1,23 @@
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_vec` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::pack_R` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::mutate_R` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R_generic` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_int` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_addr` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_int` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_bool` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_addr` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_bcs` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_vec` to be verified
-02:45:28 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_event` to be verified
-02:45:28 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
-02:45:28 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-02:45:28 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
-02:45:28 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
-02:45:28 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_vec` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::pack_R` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::mutate_R` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R_generic` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_int` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_addr` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_int` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_bool` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_addr` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_bcs` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_vec` to be verified
+08:11:44 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_event` to be verified
+08:11:44 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+08:11:44 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+08:11:44 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+08:11:44 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+08:11:44 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
 [INFO] translating module TestMonomorphization
-02:45:28 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:11:44 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:45:28 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-02:45:28 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-02:45:29 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-02:45:29 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.016s build, 0.012s trafo, 0.003s gen, 0.759s verify
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:71:21 ───
-    │
- 71 │     spec vec_addr { ensures result[0] != @0x1; }
-    │                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:71
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:70: vec_addr
-    =         x = vector{}
-    =         result = vector{0x1}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:71
-
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:73:21 ───
-    │
- 73 │     spec vec_bool { ensures result[0] != true; }
-    │                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:73
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:72: vec_bool
-    =         x = vector{}
-    =         result = vector{true}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:73
-
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:69:20 ───
-    │
- 69 │     spec vec_int { ensures result[0] != 1; }
-    │                    ^^^^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:69
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:68: vec_int
-    =         x = vector{}
-    =         result = vector{1}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:69
-
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:77:28 ───
-    │
- 77 │     spec vec_struct_addr { ensures result[0].x != @0x1; }
-    │                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:77
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:76: vec_struct_addr
-    =         x = vector{}
-    =         result = vector{TestMonomorphization.R{x = 0x1, y = 0x2}}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:77
-
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:75:27 ───
-    │
- 75 │     spec vec_struct_int { ensures result[0].x != 1; }
-    │                           ^^^^^^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:75
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:74: vec_struct_int
-    =         x = vector{}
-    =         result = vector{TestMonomorphization.R{x = 1, y = 1}}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:75
-
-error: post-condition does not hold
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:82:20 ───
-    │
- 82 │     spec vec_vec { ensures len(result[0]) != 0; }
-    │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:82
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:79: vec_vec
-    =         x = vector{}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:80: vec_vec
-    =         result = vector{vector{}}
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:81: vec_vec
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:82
-
-exiting with boogie verification errors
+08:11:44 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:11:44 [DEBUG] (12) boogie_backend::prover_task_runner: running Boogie command with seed 1

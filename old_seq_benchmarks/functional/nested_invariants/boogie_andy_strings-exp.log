@@ -15,17 +15,17 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestNestedInvariants_mutate$verify ...
-  [0.153 s, 6 proof obligations]  verified
+  [0.148 s, 6 proof obligations]  verified
 
 Verifying $42_TestNestedInvariants_mutate_inner_data_invariant_invalid$verify ...
-  [0.025 s, 6 proof obligations]  error
+  [0.023 s, 6 proof obligations]  error
 assert_failed(2,287,303): data invariant does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1081,5): anon0
     /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1081,5): anon0$1
 
 Verifying $42_TestNestedInvariants_mutate_outer_data_invariant_invalid$verify ...
-  [0.017 s, 6 proof obligations]  error
+  [0.016 s, 6 proof obligations]  error
 assert_failed(2,689,707): data invariant does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1200,5): anon0
@@ -35,7 +35,7 @@ Verifying $42_TestNestedInvariants_new$verify ...
   [0.003 s, 3 proof obligations]  verified
 
 Verifying $42_TestNestedInvariants_new_inner_data_invariant_invalid$verify ...
-  [0.005 s, 3 proof obligations]  error
+  [0.006 s, 3 proof obligations]  error
 assert_failed(2,287,303): data invariant does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/nested_invariants/nested_invariants.andy.bpl(1372,5): anon0

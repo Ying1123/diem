@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl
 -monomorphize
 /env:2
 /proverLog:serialize_model.z3.smt2
@@ -8,21 +8,26 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
-Verifying $42_TestBCS_bcs_test1$verify ...
-  [0.135 s, 4 proof obligations]  verified
+Verifying $0_A_mutate_at$verify ...
+  [0.123 s, 1 proof obligation]  verified
 
-Verifying $42_TestBCS_bcs_test1_incorrect$verify ...
-  [0.024 s, 3 proof obligations]  error
-assert_failed(2,879,908): post-condition does not hold
+Verifying $0_A_mutate_at_wrapper1$verify ...
+  [0.021 s, 1 proof obligation]  verified
+
+Verifying $0_A_mutate_at_wrapper2$verify ...
+  [0.023 s, 2 proof obligations]  error
+assert_failed(2,683,699): caller does not have permission to modify `A::S` at given address
 Execution trace:
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl(1050,9): anon0
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl(1050,9): anon0$1
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl(1074,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/serialize_model/serialize_model.z3.bpl(1087,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl(1155,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl(1155,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl(927,9): inline$$0_A_mutate_at$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl(942,13): inline$$0_A_mutate_at$0$anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl(944,5): inline$$0_A_mutate_at$0$anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.z3.bpl(1191,5): anon5_Else
 
-Boogie program verifier finished with 1 verified, 1 error
+Boogie program verifier finished with 2 verified, 1 error

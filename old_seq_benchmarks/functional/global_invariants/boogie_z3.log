@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl
 -monomorphize
 /env:2
 /proverLog:global_invariants.z3.smt2
@@ -8,7 +8,7 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
@@ -17,35 +17,35 @@ Verifying $42_TestGlobalInvariants_create_R$verify ...
   [0.140 s, 3 proof obligations]  verified
 
 Verifying $42_TestGlobalInvariants_create_R_invalid$verify ...
-  [0.028 s, 2 proof obligations]  error
-assert_failed(2,316,386): global memory invariant does not hold
+  [0.025 s, 2 proof obligations]  error
+assert_failed(2,348,418): global memory invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1067,9): anon0
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1067,9): anon0$1
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1106,44): anon6_Else
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1108,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1081,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1081,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1120,44): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1122,5): anon7_Else
 
 Verifying $42_TestGlobalInvariants_get_S_x$verify ...
-  [0.016 s, 3 proof obligations]  verified
+  [0.017 s, 3 proof obligations]  verified
 
 Verifying $42_TestGlobalInvariants_remove_R_invalid$verify ...
-  [0.010 s, 2 proof obligations]  error
-assert_failed(2,396,477): global memory invariant does not hold
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,428,509): global memory invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1321,9): anon0
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1321,9): anon0$1
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1363,16): anon9_Then
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1411,13): anon10_Else
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1414,5): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1335,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1335,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1377,16): anon9_Then
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1425,13): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1428,5): anon11_Else
 
 Verifying $42_TestGlobalInvariants_remove_S_invalid$verify ...
   [0.014 s, 3 proof obligations]  error
-assert_failed(2,316,386): global memory invariant does not hold
+assert_failed(2,348,418): global memory invariant does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1473,9): anon0
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1473,9): anon0$1
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1522,16): anon10_Then
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1564,13): anon11_Else
-    /home/ying/diem/seq_benchmarks/global_invariants/global_invariants.z3.bpl(1567,5): anon12_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1487,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1487,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1536,16): anon10_Then
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1578,13): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.z3.bpl(1581,5): anon12_Else
 
 Boogie program verifier finished with 2 verified, 3 errors

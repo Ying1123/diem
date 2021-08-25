@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/references/references.cvc4.smt2:52.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/references/references.cvc4.smt2:53.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

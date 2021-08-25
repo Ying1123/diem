@@ -1,100 +1,13 @@
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
-02:45:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::read_at` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `A::mutate_at` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_at_test_incorrect` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_to_test_incorrect` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::move_from_test_incorrect` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test2_incorrect` to be verified
+08:10:50 [DEBUG] (1) bytecode::verification_analysis_v2: marking `B::mutate_S_test1_incorrect` to be verified
 [INFO] translating module A
 [INFO] translating module B
-02:45:19 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:10:50 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:45:19 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-02:45:19 [DEBUG] (13) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-02:45:20 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-02:45:20 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.009s build, 0.005s trafo, 0.007s gen, 0.672s verify
-error: caller does not have permission to modify `B::T` at given address
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:65:17 ───
-    │
- 65 │         let v = move_from<T>(addr1);
-    │                 ^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:63: move_from_test_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:74
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:63: move_from_test_incorrect
-    =         addr1 = 0x4823
-    =         addr2 = 0x18be
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:64: move_from_test_incorrect
-    =         x0 = 41
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:65: move_from_test_incorrect
-
-error: caller does not have permission to modify `B::T` at given address
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:52:9 ───
-    │
- 52 │         move_to<T>(account, T{x: 2});
-    │         ^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:50: move_to_test_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:60
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:50: move_to_test_incorrect
-    =         account = 0x4823
-    =         addr2 = 0x18be
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:51: move_to_test_incorrect
-    =         x0 = 41
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:52: move_to_test_incorrect
-
-error: caller does not have permission to modify `A::S` at given address
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:79:9 ───
-    │
- 79 │         A::mutate_at(addr1);
-    │         ^^^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:77: mutate_S_test1_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:86
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:87
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:77: mutate_S_test1_incorrect
-    =         addr1 = 0x4823
-    =         addr2 = 0x4824
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:78: mutate_S_test1_incorrect
-    =         x0 = 41
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:79: mutate_S_test1_incorrect
-
-error: unknown assertion failed
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:95:13 ───
-    │
- 95 │             assert x0 == x1;
-    │             ^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:90: mutate_S_test2_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:99
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:90: mutate_S_test2_incorrect
-    =         addr = 0x4823
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:91: mutate_S_test2_incorrect
-    =         x0 = 1
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:92: mutate_S_test2_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:93: mutate_S_test2_incorrect
-    =         x1 = 2
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:95: mutate_S_test2_incorrect
-
-error: caller does not have permission to modify `B::T` at given address
-
-    ┌── /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:38:17 ───
-    │
- 38 │         let t = borrow_global_mut<T>(addr1);
-    │                 ^^^^^^^^^^^^^^^^^
-    │
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:36: mutate_at_test_incorrect
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:47
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:36: mutate_at_test_incorrect
-    =         addr1 = 0x4823
-    =         addr2 = 0x18be
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:37: mutate_at_test_incorrect
-    =         x0 = 41
-    =     at /home/ying/diem/language/move-prover/tests/sources/functional/ModifiesErrorTest.move:38: mutate_at_test_incorrect
-
-exiting with boogie verification errors
+08:10:50 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:10:50 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1

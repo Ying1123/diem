@@ -1,29 +1,29 @@
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_push_back` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_pop_back` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_length` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_empty` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_destroy_empty` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow_mut` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_is_empty` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_singleton` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_reverse` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_index_of` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_contains` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_swap_remove` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_remove` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_reverse` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_remove` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_is_empty` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_index_of` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_contains` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_append` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap_remove` to be verified
-06:17:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_append` to be verified
-06:17:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_push_back` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_pop_back` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_length` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_empty` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_destroy_empty` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow_mut` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_borrow` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_is_empty` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_singleton` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_reverse` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_index_of` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_contains` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_swap_remove` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_remove` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_reverse` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_remove` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_is_empty` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_index_of` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_contains` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_append` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_swap_remove` to be verified
+08:44:57 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyVector::verify_model_append` to be verified
+08:44:57 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module VerifyVector
-06:17:59 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:44:57 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:17:59 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:17:59 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:44:57 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:44:57 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1

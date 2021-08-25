@@ -1,18 +1,18 @@
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_outer_invariant_incorrect` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_inner_invariant_incorrect` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_correct` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_with_two_back_edges_incorrect` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_with_two_back_edges_correct` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_invariant_induction_invalid` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_invariant_base_invalid` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_no_abort_incorrect` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_no_abort` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_missing_inc_spec2` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_missing_inc_spec1` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_abort_incorrect` to be verified
-06:12:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_abort` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_outer_invariant_incorrect` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_inner_invariant_incorrect` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::nested_loop_correct` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_with_two_back_edges_incorrect` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_with_two_back_edges_correct` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_invariant_induction_invalid` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::loop_invariant_base_invalid` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_no_abort_incorrect` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_no_abort` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_missing_inc_spec2` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_missing_inc_spec1` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_abort_incorrect` to be verified
+08:38:27 [DEBUG] (1) bytecode::verification_analysis_v2: marking `VerifyLoops::iter10_abort` to be verified
 [INFO] translating module VerifyLoops
-06:12:10 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:38:27 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:12:10 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:12:10 [DEBUG] (6) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:38:27 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:38:27 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1

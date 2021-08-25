@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/mono/mono.andy_strings.smt2:102.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/mono/mono.andy_strings.smt2:450.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/mono/mono.andy_strings.smt2:104.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/mono/mono.andy_strings.smt2:460.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

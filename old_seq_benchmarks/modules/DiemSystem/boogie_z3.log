@@ -14,28 +14,28 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.174 s, 8 proof obligations]  verified
+  [0.195 s, 8 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.040 s, 17 proof obligations]  verified
+  [0.044 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.035 s, 7 proof obligations]  verified
+  [0.030 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.047 s, 20 proof obligations]  verified
+  [0.046 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.039 s, 18 proof obligations]  verified
+  [0.045 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.049 s, 20 proof obligations]  verified
+  [0.050 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.042 s, 20 proof obligations]  verified
+  [0.046 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.039 s, 20 proof obligations]  verified
+  [0.043 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.037 s, 20 proof obligations]  verified
+  [0.045 s, 20 proof obligations]  verified

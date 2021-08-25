@@ -9,9 +9,10 @@
 
 (declare-fun tickleBool (Bool) Bool)
 (assert (and (tickleBool true) (tickleBool false)))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_11017 0)) ((($Mutation_11017 (|l#$Mutation_11017| T@$Location) (|p#$Mutation_11017| (Seq Int)) (|v#$Mutation_11017| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_8552 0)) ((($Mutation_8552 (|l#$Mutation_8552| T@$Location) (|p#$Mutation_8552| (Seq Int)) (|v#$Mutation_8552| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -135,12 +136,12 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |loopswithmemoryopsz3bpl.1019:15|
+ :qid |loopswithmemoryopsz3bpl.1039:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |loopswithmemoryopsz3bpl.1022:15|
+ :qid |loopswithmemoryopsz3bpl.1042:15|
  :skolemid |28|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -156,170 +157,144 @@
 )))
 (assert (forall ((|l#0| Bool) (i@@7 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7) |l#0|)
  :qid |loopswithmemoryopsz3bpl.245:54|
- :skolemid |37|
+ :skolemid |43|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7))
 )))
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun inline$$Le$1$dst@1 () Bool)
-(declare-fun $t1@1 () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$m'@1| () T@$Mutation_11017)
-(declare-fun $t24@2 () T@$Mutation_3430)
-(declare-fun $t0@1 () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$m'@1| () T@$Mutation_11017)
-(declare-fun $t23@1 () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_length'u64'$0$l@1| () Int)
-(declare-fun $abort_flag@3 () Bool)
-(declare-fun $abort_code@4 () Int)
-(declare-fun $t20@2 () Int)
-(declare-fun inline$$AddU64$1$dst@1 () Int)
-(declare-fun $abort_flag@1 () Bool)
-(declare-fun $abort_code@2 () Int)
-(declare-fun $t17@2 () Int)
-(declare-fun $t18@2 () Int)
-(declare-fun inline$$Le$0$dst@1 () Bool)
-(declare-fun $abort_flag@2 () Bool)
-(declare-fun $abort_code@3 () Int)
-(declare-fun $abort_flag@0 () Bool)
-(declare-fun $abort_code@1 () Int)
-(declare-fun $t14@3 () Int)
-(declare-fun inline$$AddU64$0$dst@1 () Int)
-(declare-fun $t11@3 () Int)
-(declare-fun $t12@3 () Int)
-(declare-fun |$temp_0'u64'@1| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$dst@2| () T@$Mutation_3430)
-(declare-fun $t11@1 () Int)
-(declare-fun $t12@1 () Int)
-(declare-fun $t14@1 () Int)
-(declare-fun $t15@1 () Int)
-(declare-fun $t16@1 () Int)
-(declare-fun $t17@1 () Int)
-(declare-fun $t18@1 () Int)
-(declare-fun $t20@1 () Int)
-(declare-fun $t21@1 () Int)
-(declare-fun $t22@1 () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$dst@2| () T@$Mutation_3430)
-(declare-fun |$temp_0'u64'@2| () Int)
-(declare-fun $t24@1 () T@$Mutation_3430)
-(declare-fun |$temp_0'u64'@3| () Int)
-(declare-fun $t11@2 () Int)
-(declare-fun $t12@2 () Int)
-(declare-fun $t14@2 () Int)
-(declare-fun $t15@2 () Int)
-(declare-fun $t16@2 () Int)
-(declare-fun |$temp_0'u64'@4| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$dst@0| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$m'@0| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$v@1| () (Seq Int))
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$dst@1| () T@$Mutation_3430)
-(declare-fun $t1@0 () T@$Mutation_11017)
-(declare-fun |$temp_0'u64'@0| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$dst@0| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$m'@0| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$v@1| () (Seq Int))
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$dst@1| () T@$Mutation_3430)
-(declare-fun $t0@0 () T@$Mutation_11017)
-(declare-fun $abort_code@0 () Int)
-(declare-fun inline$$Lt$0$dst@1 () Bool)
-(declare-fun |$temp_0'vec'u64''@4| () (Seq Int))
-(declare-fun |$temp_0'vec'u64''@5| () (Seq Int))
-(declare-fun _$t1 () T@$Mutation_11017)
-(declare-fun _$t0 () T@$Mutation_11017)
-(declare-fun $t11@0 () Int)
-(declare-fun $t12@0 () Int)
-(declare-fun $t14@0 () Int)
-(declare-fun $t15@0 () Int)
-(declare-fun $t16@0 () Int)
-(declare-fun $t17@0 () Int)
-(declare-fun $t18@0 () Int)
-(declare-fun $t20@0 () Int)
-(declare-fun $t21@0 () Int)
-(declare-fun $t22@0 () Int)
-(declare-fun |$temp_0'vec'u64''@2| () (Seq Int))
-(declare-fun |$temp_0'vec'u64''@3| () (Seq Int))
-(declare-fun $t23@0 () T@$Mutation_3430)
-(declare-fun $t24@0 () T@$Mutation_3430)
-(declare-fun $t6@0 () (Seq Int))
-(declare-fun |$temp_0'vec'u64''@0| () (Seq Int))
-(declare-fun |$temp_0'vec'u64''@1| () (Seq Int))
-(declare-fun $t4 () T@$Mutation_3430)
-(declare-fun $t5 () T@$Mutation_3430)
-(declare-fun $t23 () T@$Mutation_3430)
-(declare-fun $t24 () T@$Mutation_3430)
+(declare-fun _$t0 () (Seq Int))
 (push 1)
-(set-info :boogie-vc-id $42_VerifyLoopsWithMemoryOps_nested_loop1$verify)
+(set-info :boogie-vc-id $42_VectorExists_do_nothing_ref$verify)
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 22648) (let ((anon33_Else_correct true))
-(let ((anon32_Then_correct  (=> inline$$Le$1$dst@1 (=> (and (= $t1@1 ($Mutation_11017 (|l#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) (seq.++ (seq.extract (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) 0 (- (seq.nth (|p#$Mutation_3430| $t24@2) (seq.len (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|))) 0)) (seq.unit (|v#$Mutation_3430| $t24@2)) (seq.extract (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) (+ (seq.nth (|p#$Mutation_3430| $t24@2) (seq.len (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|))) 1) (- (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|)) (+ (seq.nth (|p#$Mutation_3430| $t24@2) (seq.len (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|))) 1)))))) (= $t0@1 ($Mutation_11017 (|l#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) (seq.++ (seq.extract (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) 0 (- (seq.nth (|p#$Mutation_3430| $t23@1) (seq.len (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|))) 0)) (seq.unit (|v#$Mutation_3430| $t23@1)) (seq.extract (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) (+ (seq.nth (|p#$Mutation_3430| $t23@1) (seq.len (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|))) 1) (- (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|)) (+ (seq.nth (|p#$Mutation_3430| $t23@1) (seq.len (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|))) 1))))))) (and (=> (= (ControlFlow 0 19676) (- 0 24120)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t0@1)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t0@1))) (and (=> (= (ControlFlow 0 19676) (- 0 24131)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t1@1)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t1@1))) (and (=> (= (ControlFlow 0 19676) (- 0 24142)) (<= 0 |inline$$1_Vector_length'u64'$0$l@1|)) (=> (<= 0 |inline$$1_Vector_length'u64'$0$l@1|) (=> (= (ControlFlow 0 19676) (- 0 24149)) (let (($range_0 ($Range 0 0)))
-(forall (($i_1 Int) ) (!  (=> ($InRange $range_0 $i_1) (let ((n $i_1))
-(= (seq.nth (|v#$Mutation_11017| $t0@1) n) (seq.nth (|v#$Mutation_11017| $t1@1) n))))
- :qid |loopswithmemoryopsz3bpl.1589:48|
+ (=> (= (ControlFlow 0 0) 13146) (let ((anon0$1_correct  (=> (and (|$IsValid'vec'u64''| _$t0) (= _$t0 _$t0)) (and (=> (= (ControlFlow 0 12707) (- 0 13187)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 12707) (- 0 13194)) (= _$t0 _$t0)) (=> (= _$t0 _$t0) (and (=> (= (ControlFlow 0 12707) (- 0 13201)) (exists ((l Int) ) (!  (and (|$IsValid'u64'| l) (= l (seq.len _$t0)))
+ :qid |loopswithmemoryopsz3bpl.1133:15|
  :skolemid |32|
-))))))))))))))
-(let ((L15_correct  (=> (= (ControlFlow 0 19282) (- 0 24289)) false)))
-(let ((anon33_Then_correct  (=> $abort_flag@3 (=> (and (= $abort_code@4 $abort_code@4) (= (ControlFlow 0 19541) 19282)) L15_correct))))
-(let ((inline$$AddU64$1$anon3_Then$1_correct  (=> (and (= $abort_flag@3 true) (= $abort_code@4 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 19505) 19541) anon33_Then_correct) (=> (= (ControlFlow 0 19505) 19527) anon33_Else_correct)))))
-(let ((inline$$AddU64$1$anon3_Then_correct  (=> (and (> (+ $t20@2 1) $MAX_U64) (= (ControlFlow 0 19503) 19505)) inline$$AddU64$1$anon3_Then$1_correct)))
-(let ((inline$$AddU64$1$anon3_Else_correct  (=> (and (and (>= $MAX_U64 (+ $t20@2 1)) (= inline$$AddU64$1$dst@1 (+ $t20@2 1))) (and (= $abort_flag@3 $abort_flag@1) (= $abort_code@4 $abort_code@2))) (and (=> (= (ControlFlow 0 19451) 19541) anon33_Then_correct) (=> (= (ControlFlow 0 19451) 19527) anon33_Else_correct)))))
-(let ((anon32_Else_correct  (=> (not inline$$Le$1$dst@1) (=> (and (= $t20@2 (|v#$Mutation_3430| $t23@1)) (|$IsValid'u64'| 1)) (and (=> (= (ControlFlow 0 19511) 19503) inline$$AddU64$1$anon3_Then_correct) (=> (= (ControlFlow 0 19511) 19451) inline$$AddU64$1$anon3_Else_correct))))))
-(let ((inline$$Le$1$anon0_correct  (=> (= inline$$Le$1$dst@1 (<= $t17@2 $t18@2)) (and (=> (= (ControlFlow 0 19334) 19676) anon32_Then_correct) (=> (= (ControlFlow 0 19334) 19511) anon32_Else_correct)))))
-(let ((anon30_Then_correct  (=> (and (and inline$$Le$0$dst@1 (= $t17@2 (|v#$Mutation_3430| $t24@2))) (and (= $t18@2 (|v#$Mutation_3430| $t23@1)) (= (ControlFlow 0 19340) 19334))) inline$$Le$1$anon0_correct)))
-(let ((anon31_Then_correct  (=> $abort_flag@2 (=> (and (= $abort_code@3 $abort_code@3) (= (ControlFlow 0 19272) 19282)) L15_correct))))
-(let ((anon29_Then_correct  (=> $abort_flag@1 (=> (and (= $abort_code@2 $abort_code@2) (= (ControlFlow 0 19690) 19282)) L15_correct))))
-(let ((anon28_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 19704) 19282)) L15_correct))))
-(let ((anon31_Else_correct true))
-(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (and (= $abort_flag@2 true) (= $abort_code@3 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 19236) 19272) anon31_Then_correct) (=> (= (ControlFlow 0 19236) 19258) anon31_Else_correct)))))
-(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ $t14@3 1) $MAX_U64) (= (ControlFlow 0 19234) 19236)) inline$$AddU64$0$anon3_Then$1_correct)))
-(let ((inline$$AddU64$0$anon3_Else_correct  (=> (and (and (>= $MAX_U64 (+ $t14@3 1)) (= inline$$AddU64$0$dst@1 (+ $t14@3 1))) (and (= $abort_flag@2 $abort_flag@1) (= $abort_code@3 $abort_code@2))) (and (=> (= (ControlFlow 0 19182) 19272) anon31_Then_correct) (=> (= (ControlFlow 0 19182) 19258) anon31_Else_correct)))))
-(let ((anon30_Else_correct  (=> (not inline$$Le$0$dst@1) (=> (and (= $t14@3 (|v#$Mutation_3430| $t24@2)) (|$IsValid'u64'| 1)) (and (=> (= (ControlFlow 0 19242) 19234) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 19242) 19182) inline$$AddU64$0$anon3_Else_correct))))))
-(let ((inline$$Le$0$anon0_correct  (=> (= inline$$Le$0$dst@1 (<= $t11@3 $t12@3)) (and (=> (= (ControlFlow 0 19063) 19340) anon30_Then_correct) (=> (= (ControlFlow 0 19063) 19242) anon30_Else_correct)))))
-(let ((anon29_Else_correct  (=> (not $abort_flag@1) (=> (and (and (= |$temp_0'u64'@1| (|v#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$1$dst@2|)) (= |$temp_0'u64'@1| |$temp_0'u64'@1|)) (and (|$IsValid'u64'| $t11@1) (|$IsValid'u64'| $t12@1))) (=> (and (and (and (|$IsValid'u64'| $t14@1) (|$IsValid'u64'| $t15@1)) (and (|$IsValid'u64'| $t16@1) (|$IsValid'u64'| $t17@1))) (and (and (|$IsValid'u64'| $t18@1) (|$IsValid'u64'| $t20@1)) (and (|$IsValid'u64'| $t21@1) (|$IsValid'u64'| $t22@1)))) (=> (and (and (and (and (= $t23@1 ($Mutation_3430 (|l#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$0$dst@2|) (|p#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$0$dst@2|) |$temp_0'u64'@2|)) (|$IsValid'u64'| (|v#$Mutation_3430| $t23@1))) (and (= $t24@1 ($Mutation_3430 (|l#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$1$dst@2|) (|p#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$1$dst@2|) |$temp_0'u64'@3|)) (|$IsValid'u64'| (|v#$Mutation_3430| $t24@1)))) (and (and (not $abort_flag@1) (|$IsValid'u64'| $t11@2)) (and (|$IsValid'u64'| $t12@2) (|$IsValid'u64'| $t14@2)))) (and (and (and (|$IsValid'u64'| $t15@2) (|$IsValid'u64'| $t16@2)) (and (= $t24@2 ($Mutation_3430 (|l#$Mutation_3430| $t24@1) (|p#$Mutation_3430| $t24@1) |$temp_0'u64'@4|)) (|$IsValid'u64'| (|v#$Mutation_3430| $t24@2)))) (and (and (not $abort_flag@1) (= $t11@3 (|v#$Mutation_3430| $t23@1))) (and (= $t12@3 (|v#$Mutation_3430| $t24@2)) (= (ControlFlow 0 19069) 19063))))) inline$$Le$0$anon0_correct))))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon3_Then$1_correct|  (=> (and (and (= $abort_code@2 $EXEC_FAILURE_CODE) (= $abort_flag@1 true)) (and (= |inline$$1_Vector_borrow_mut'u64'$1$dst@2| |inline$$1_Vector_borrow_mut'u64'$1$dst@0|) (= |inline$$1_Vector_borrow_mut'u64'$1$m'@1| |inline$$1_Vector_borrow_mut'u64'$1$m'@0|))) (and (=> (= (ControlFlow 0 18869) 19690) anon29_Then_correct) (=> (= (ControlFlow 0 18869) 19069) anon29_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon3_Then_correct|  (=> (and (not (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$1$v@1|)))) (= (ControlFlow 0 18867) 18869)) |inline$$1_Vector_borrow_mut'u64'$1$anon3_Then$1_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon3_Else_correct|  (=> (and (and (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$1$v@1|))) (= |inline$$1_Vector_borrow_mut'u64'$1$dst@1| ($Mutation_3430 (|l#$Mutation_11017| $t1@0) (seq.++ (|p#$Mutation_11017| $t1@0) (seq.unit 0)) (seq.nth |inline$$1_Vector_borrow_mut'u64'$1$v@1| 0)))) (and (and (= $abort_code@2 $abort_code@1) (= $abort_flag@1 $abort_flag@0)) (and (= |inline$$1_Vector_borrow_mut'u64'$1$dst@2| |inline$$1_Vector_borrow_mut'u64'$1$dst@1|) (= |inline$$1_Vector_borrow_mut'u64'$1$m'@1| $t1@0)))) (and (=> (= (ControlFlow 0 18817) 19690) anon29_Then_correct) (=> (= (ControlFlow 0 18817) 19069) anon29_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon0_correct|  (=> (= |inline$$1_Vector_borrow_mut'u64'$1$v@1| (|v#$Mutation_11017| $t1@0)) (and (=> (= (ControlFlow 0 18787) 18867) |inline$$1_Vector_borrow_mut'u64'$1$anon3_Then_correct|) (=> (= (ControlFlow 0 18787) 18817) |inline$$1_Vector_borrow_mut'u64'$1$anon3_Else_correct|)))))
-(let ((anon28_Else_correct  (=> (and (and (not $abort_flag@0) (= |$temp_0'u64'@0| (|v#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$0$dst@2|))) (and (= |$temp_0'u64'@0| |$temp_0'u64'@0|) (= (ControlFlow 0 18877) 18787))) |inline$$1_Vector_borrow_mut'u64'$1$anon0_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon3_Then$1_correct|  (=> (and (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (= |inline$$1_Vector_borrow_mut'u64'$0$dst@2| |inline$$1_Vector_borrow_mut'u64'$0$dst@0|) (= |inline$$1_Vector_borrow_mut'u64'$0$m'@1| |inline$$1_Vector_borrow_mut'u64'$0$m'@0|))) (and (=> (= (ControlFlow 0 18659) 19704) anon28_Then_correct) (=> (= (ControlFlow 0 18659) 18877) anon28_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon3_Then_correct|  (=> (and (not (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$0$v@1|)))) (= (ControlFlow 0 18657) 18659)) |inline$$1_Vector_borrow_mut'u64'$0$anon3_Then$1_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon3_Else_correct|  (=> (and (and (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$0$v@1|))) (= |inline$$1_Vector_borrow_mut'u64'$0$dst@1| ($Mutation_3430 (|l#$Mutation_11017| $t0@0) (seq.++ (|p#$Mutation_11017| $t0@0) (seq.unit 0)) (seq.nth |inline$$1_Vector_borrow_mut'u64'$0$v@1| 0)))) (and (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0)) (and (= |inline$$1_Vector_borrow_mut'u64'$0$dst@2| |inline$$1_Vector_borrow_mut'u64'$0$dst@1|) (= |inline$$1_Vector_borrow_mut'u64'$0$m'@1| $t0@0)))) (and (=> (= (ControlFlow 0 18607) 19704) anon28_Then_correct) (=> (= (ControlFlow 0 18607) 18877) anon28_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_borrow_mut'u64'$0$v@1| (|v#$Mutation_11017| $t0@0)) (and (=> (= (ControlFlow 0 18577) 18657) |inline$$1_Vector_borrow_mut'u64'$0$anon3_Then_correct|) (=> (= (ControlFlow 0 18577) 18607) |inline$$1_Vector_borrow_mut'u64'$0$anon3_Else_correct|)))))
-(let ((anon27_Then_correct  (=> (and inline$$Lt$0$dst@1 (= (ControlFlow 0 18667) 18577)) |inline$$1_Vector_borrow_mut'u64'$0$anon0_correct|)))
-(let ((anon27_Else_correct  (=> (not inline$$Lt$0$dst@1) (and (=> (= (ControlFlow 0 18473) (- 0 23338)) (let (($range_0@@0 ($Range 0 |inline$$1_Vector_length'u64'$0$l@1|)))
-(forall (($i_1@@0 Int) ) (!  (=> ($InRange $range_0@@0 $i_1@@0) (let ((m $i_1@@0))
-(= (seq.nth (|v#$Mutation_11017| $t0@0) m) (seq.nth (|v#$Mutation_11017| $t1@0) m))))
- :qid |loopswithmemoryopsz3bpl.1535:48|
- :skolemid |31|
-)))) (=> (let (($range_0@@0 ($Range 0 |inline$$1_Vector_length'u64'$0$l@1|)))
-(forall (($i_1@@1 Int) ) (!  (=> ($InRange $range_0@@0 $i_1@@1) (let ((m $i_1@@1))
-(= (seq.nth (|v#$Mutation_11017| $t0@0) m) (seq.nth (|v#$Mutation_11017| $t1@0) m))))
- :qid |loopswithmemoryopsz3bpl.1535:48|
- :skolemid |31|
-))) (=> (= |$temp_0'vec'u64''@4| (|v#$Mutation_11017| $t0@0)) (=> (and (and (= |$temp_0'vec'u64''@4| |$temp_0'vec'u64''@4|) (= |$temp_0'vec'u64''@5| (|v#$Mutation_11017| $t1@0))) (and (= |$temp_0'vec'u64''@5| |$temp_0'vec'u64''@5|) (= (ControlFlow 0 18473) (- 0 23410)))) (not false))))))))
-(let ((anon26_Else$1_correct  (and (=> (= (ControlFlow 0 18392) 18667) anon27_Then_correct) (=> (= (ControlFlow 0 18392) 18473) anon27_Else_correct))))
-(let ((inline$$Lt$0$anon0_correct  (=> (and (= inline$$Lt$0$dst@1 (< 0 |inline$$1_Vector_length'u64'$0$l@1|)) (= (ControlFlow 0 18382) 18392)) anon26_Else$1_correct)))
-(let ((anon26_Else_correct  (=> (and (not false) (= |inline$$1_Vector_length'u64'$0$l@1| |inline$$1_Vector_length'u64'$0$l@1|)) (=> (and (and (> |inline$$1_Vector_length'u64'$0$l@1| 0) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| _$t1)))) (and (|$IsValid'u64'| 0) (= 0 0))) (and (=> (= (ControlFlow 0 18388) (- 0 23036)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| _$t0)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| _$t0))) (and (=> (= (ControlFlow 0 18388) (- 0 23047)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| _$t1)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| _$t1))) (and (=> (= (ControlFlow 0 18388) (- 0 23058)) (<= 0 |inline$$1_Vector_length'u64'$0$l@1|)) (=> (<= 0 |inline$$1_Vector_length'u64'$0$l@1|) (and (=> (= (ControlFlow 0 18388) (- 0 23065)) (let (($range_0@@1 ($Range 0 0)))
-(forall (($i_1@@2 Int) ) (!  (=> ($InRange $range_0@@1 $i_1@@2) (let ((n@@0 $i_1@@2))
-(= (seq.nth (|v#$Mutation_11017| _$t0) n@@0) (seq.nth (|v#$Mutation_11017| _$t1) n@@0))))
- :qid |loopswithmemoryopsz3bpl.1188:48|
+))) (=> (exists ((l@@0 Int) ) (!  (and (|$IsValid'u64'| l@@0) (= l@@0 (seq.len _$t0)))
+ :qid |loopswithmemoryopsz3bpl.1133:15|
+ :skolemid |32|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13220)) (exists ((l@@1 Int) ) (!  (and (and (|$IsValid'u64'| l@@1) (= l@@1 (seq.len _$t0))) (= l@@1 (seq.len _$t0)))
+ :qid |loopswithmemoryopsz3bpl.1138:15|
+ :skolemid |33|
+))) (=> (exists ((l@@2 Int) ) (!  (and (and (|$IsValid'u64'| l@@2) (= l@@2 (seq.len _$t0))) (= l@@2 (seq.len _$t0)))
+ :qid |loopswithmemoryopsz3bpl.1138:15|
+ :skolemid |33|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13248)) (=> (let (($range_0 _$t0))
+(exists (($i_1 Int) ) (!  (and (and (>= $i_1 0) (< $i_1 (seq.len $range_0))) (let ((x (seq.nth $range_0 $i_1)))
+(= x 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
  :skolemid |29|
-)))) (=> (let (($range_0@@1 ($Range 0 0)))
-(forall (($i_1@@3 Int) ) (!  (=> ($InRange $range_0@@1 $i_1@@3) (let ((n@@0 $i_1@@3))
-(= (seq.nth (|v#$Mutation_11017| _$t0) n@@0) (seq.nth (|v#$Mutation_11017| _$t1) n@@0))))
- :qid |loopswithmemoryopsz3bpl.1188:48|
+))) (let (($range_0@@0 _$t0))
+(exists (($i_1@@0 Int) ) (!  (and (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0@@0))) (let ((x@@0 (seq.nth $range_0@@0 $i_1@@0)))
+(= x@@0 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
  :skolemid |29|
-))) (=> (and (|$IsValid'u64'| $t11@0) (|$IsValid'u64'| $t12@0)) (=> (and (and (|$IsValid'u64'| $t14@0) (|$IsValid'u64'| $t15@0)) (and (|$IsValid'u64'| $t16@0) (|$IsValid'u64'| $t17@0))) (=> (and (and (and (and (|$IsValid'u64'| $t18@0) (|$IsValid'u64'| $t20@0)) (and (|$IsValid'u64'| $t21@0) (|$IsValid'u64'| $t22@0))) (and (and (= $t0@0 ($Mutation_11017 (|l#$Mutation_11017| _$t0) (|p#$Mutation_11017| _$t0) |$temp_0'vec'u64''@2|)) (|$IsValid'vec'u64''| (|v#$Mutation_11017| $t0@0))) (and (= $t1@0 ($Mutation_11017 (|l#$Mutation_11017| _$t1) (|p#$Mutation_11017| _$t1) |$temp_0'vec'u64''@3|)) (|$IsValid'vec'u64''| (|v#$Mutation_11017| $t1@0))))) (and (and (and (|$IsValid'u64'| (|v#$Mutation_3430| $t23@0)) (|$IsValid'u64'| (|v#$Mutation_3430| $t24@0))) (and (not false) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t0@0))))) (and (and (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t1@0))) (<= 0 |inline$$1_Vector_length'u64'$0$l@1|)) (and (let (($range_0@@2 ($Range 0 0)))
-(forall (($i_1@@4 Int) ) (!  (=> ($InRange $range_0@@2 $i_1@@4) (let ((n@@1 $i_1@@4))
-(= (seq.nth (|v#$Mutation_11017| $t0@0) n@@1) (seq.nth (|v#$Mutation_11017| $t1@0) n@@1))))
- :qid |loopswithmemoryopsz3bpl.1278:53|
+))))) (=> (=> (let (($range_0@@1 _$t0))
+(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0@@1))) (let ((x@@1 (seq.nth $range_0@@1 $i_1@@1)))
+(= x@@1 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@2 _$t0))
+(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@2))) (let ((x@@2 (seq.nth $range_0@@2 $i_1@@2)))
+(= x@@2 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+)))) (and (=> (= (ControlFlow 0 12707) (- 0 13263)) (=> (let (($range_2 ($Range 0 (seq.len _$t0))))
+(exists (($i_3 Int) ) (!  (and ($InRange $range_2 $i_3) (let ((i@@8 $i_3))
+(= (seq.nth _$t0 i@@8) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
  :skolemid |30|
-))) (= (ControlFlow 0 18388) 18382))))) inline$$Lt$0$anon0_correct)))))))))))))))
-(let ((anon26_Then_correct true))
-(let ((|inline$$1_Vector_length'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len $t6@0)) (and (=> (= (ControlFlow 0 18042) 19718) anon26_Then_correct) (=> (= (ControlFlow 0 18042) 18388) anon26_Else_correct)))))
-(let ((anon0$1_correct  (=> (and (= (|l#$Mutation_11017| _$t0) ($Param 0)) (= (|l#$Mutation_11017| _$t1) ($Param 1))) (=> (and (and (and (|$IsValid'vec'u64''| (|v#$Mutation_11017| _$t0)) (|$IsValid'vec'u64''| (|v#$Mutation_11017| _$t1))) (and (= |$temp_0'vec'u64''@0| (|v#$Mutation_11017| _$t0)) (= |$temp_0'vec'u64''@0| |$temp_0'vec'u64''@0|))) (and (and (= |$temp_0'vec'u64''@1| (|v#$Mutation_11017| _$t1)) (= |$temp_0'vec'u64''@1| |$temp_0'vec'u64''@1|)) (and (= $t6@0 (|v#$Mutation_11017| _$t0)) (= (ControlFlow 0 18048) 18042)))) |inline$$1_Vector_length'u64'$0$anon0_correct|))))
-(let ((anon0_correct  (=> (= (seq.len (|p#$Mutation_3430| $t4)) 0) (=> (and (and (= (seq.len (|p#$Mutation_3430| $t5)) 0) (= (seq.len (|p#$Mutation_3430| $t23)) 0)) (and (= (seq.len (|p#$Mutation_3430| $t24)) 0) (= (ControlFlow 0 17950) 18048))) anon0$1_correct))))
-(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 22648) 17950) anon0_correct)))
-PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))))))))))))
+))) (let (($range_2@@0 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@0 Int) ) (!  (and ($InRange $range_2@@0 $i_3@@0) (let ((i@@9 $i_3@@0))
+(= (seq.nth _$t0 i@@9) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))))) (=> (=> (let (($range_2@@1 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@1 Int) ) (!  (and ($InRange $range_2@@1 $i_3@@1) (let ((i@@10 $i_3@@1))
+(= (seq.nth _$t0 i@@10) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@2 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@2 Int) ) (!  (and ($InRange $range_2@@2 $i_3@@2) (let ((i@@11 $i_3@@2))
+(= (seq.nth _$t0 i@@11) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+)))) (and (=> (= (ControlFlow 0 12707) (- 0 13278)) (=> (exists ((i@@12 Int) ) (!  (and (and (|$IsValid'u64'| i@@12) (and (<= 0 i@@12) (< i@@12 (seq.len _$t0)))) (= (seq.nth _$t0 i@@12) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@13 Int) ) (!  (and (and (|$IsValid'u64'| i@@13) (and (<= 0 i@@13) (< i@@13 (seq.len _$t0)))) (= (seq.nth _$t0 i@@13) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)))) (=> (=> (exists ((i@@14 Int) ) (!  (and (and (|$IsValid'u64'| i@@14) (and (<= 0 i@@14) (< i@@14 (seq.len _$t0)))) (= (seq.nth _$t0 i@@14) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@15 Int) ) (!  (and (and (|$IsValid'u64'| i@@15) (and (<= 0 i@@15) (< i@@15 (seq.len _$t0)))) (= (seq.nth _$t0 i@@15) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+))) (and (=> (= (ControlFlow 0 12707) (- 0 13293)) (forall ((e@@1 Int) ) (!  (=> (|$IsValid'u64'| e@@1) (=> (let (($range_0@@3 _$t0))
+(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@3))) (let ((x@@3 (seq.nth $range_0@@3 $i_1@@3)))
+(= x@@3 e@@1)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@4 _$t0))
+(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@4))) (let ((x@@4 (seq.nth $range_0@@4 $i_1@@4)))
+(= x@@4 e@@1)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1158:15|
+ :skolemid |34|
+))) (=> (forall ((e@@2 Int) ) (!  (=> (|$IsValid'u64'| e@@2) (=> (let (($range_0@@5 _$t0))
+(exists (($i_1@@5 Int) ) (!  (and (and (>= $i_1@@5 0) (< $i_1@@5 (seq.len $range_0@@5))) (let ((x@@5 (seq.nth $range_0@@5 $i_1@@5)))
+(= x@@5 e@@2)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@6 _$t0))
+(exists (($i_1@@6 Int) ) (!  (and (and (>= $i_1@@6 0) (< $i_1@@6 (seq.len $range_0@@6))) (let ((x@@6 (seq.nth $range_0@@6 $i_1@@6)))
+(= x@@6 e@@2)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1158:15|
+ :skolemid |34|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13317)) (forall ((e@@3 Int) ) (!  (=> (|$IsValid'u64'| e@@3) (=> (let (($range_2@@3 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@3 Int) ) (!  (and ($InRange $range_2@@3 $i_3@@3) (let ((i@@16 $i_3@@3))
+(= (seq.nth _$t0 i@@16) e@@3)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@4 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@4 Int) ) (!  (and ($InRange $range_2@@4 $i_3@@4) (let ((i@@17 $i_3@@4))
+(= (seq.nth _$t0 i@@17) e@@3)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1163:15|
+ :skolemid |35|
+))) (=> (forall ((e@@4 Int) ) (!  (=> (|$IsValid'u64'| e@@4) (=> (let (($range_2@@5 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@5 Int) ) (!  (and ($InRange $range_2@@5 $i_3@@5) (let ((i@@18 $i_3@@5))
+(= (seq.nth _$t0 i@@18) e@@4)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@6 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@6 Int) ) (!  (and ($InRange $range_2@@6 $i_3@@6) (let ((i@@19 $i_3@@6))
+(= (seq.nth _$t0 i@@19) e@@4)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1163:15|
+ :skolemid |35|
+)) (=> (= (ControlFlow 0 12707) (- 0 13341)) (forall ((e@@5 Int) ) (!  (=> (|$IsValid'u64'| e@@5) (=> (exists ((i@@20 Int) ) (!  (and (and (|$IsValid'u64'| i@@20) (and (<= 0 i@@20) (< i@@20 (seq.len _$t0)))) (= (seq.nth _$t0 i@@20) e@@5))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@21 Int) ) (!  (and (and (|$IsValid'u64'| i@@21) (and (<= 0 i@@21) (< i@@21 (seq.len _$t0)))) (= (seq.nth _$t0 i@@21) e@@5))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+))))
+ :qid |loopswithmemoryopsz3bpl.1168:15|
+ :skolemid |36|
+))))))))))))))))))))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 13146) 12707) anon0$1_correct)))
+anon0_correct)))
 ))
 (check-sat)
 (pop 1)
@@ -337,9 +312,10 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))))))))))))
 
 (declare-fun tickleBool (Bool) Bool)
 (assert (and (tickleBool true) (tickleBool false)))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_11017 0)) ((($Mutation_11017 (|l#$Mutation_11017| T@$Location) (|p#$Mutation_11017| (Seq Int)) (|v#$Mutation_11017| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_8552 0)) ((($Mutation_8552 (|l#$Mutation_8552| T@$Location) (|p#$Mutation_8552| (Seq Int)) (|v#$Mutation_8552| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -463,12 +439,12 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))))))))))))
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |loopswithmemoryopsz3bpl.1019:15|
+ :qid |loopswithmemoryopsz3bpl.1039:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |loopswithmemoryopsz3bpl.1022:15|
+ :qid |loopswithmemoryopsz3bpl.1042:15|
  :skolemid |28|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -484,352 +460,156 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))))))))))))
 )))
 (assert (forall ((|l#0| Bool) (i@@7 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7) |l#0|)
  :qid |loopswithmemoryopsz3bpl.245:54|
- :skolemid |37|
+ :skolemid |43|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7))
 )))
 ; Valid
 
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun $abort_flag@6 () Bool)
-(declare-fun |$temp_0'u64'@6| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$3$dst@2| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_length'u64'$0$l@1| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$2$m'@1| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$3$m'@1| () T@$Mutation_11017)
-(declare-fun inline$$AddU64$2$dst@2 () Int)
-(declare-fun $t26@1 () Bool)
-(declare-fun $t0@1 () T@$Mutation_11017)
-(declare-fun $t1@1 () T@$Mutation_11017)
-(declare-fun |$temp_0'vec'u64''@4| () (Seq Int))
-(declare-fun |$temp_0'vec'u64''@5| () (Seq Int))
-(declare-fun $abort_code@7 () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$3$dst@0| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$3$m'@0| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$3$v@1| () (Seq Int))
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$3$dst@1| () T@$Mutation_3430)
-(declare-fun $abort_flag@5 () Bool)
-(declare-fun $abort_code@6 () Int)
-(declare-fun |$temp_0'u64'@5| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$2$dst@2| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$2$dst@0| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$2$m'@0| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$2$v@1| () (Seq Int))
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$2$dst@1| () T@$Mutation_3430)
-(declare-fun $abort_code@5 () Int)
-(declare-fun $abort_flag@4 () Bool)
-(declare-fun inline$$AddU64$2$dst@0 () Int)
-(declare-fun $t9@0 () Int)
-(declare-fun inline$$AddU64$2$dst@1 () Int)
-(declare-fun $abort_flag@1 () Bool)
-(declare-fun $abort_code@2 () Int)
-(declare-fun inline$$Le$1$dst@1 () Bool)
-(declare-fun $t1@0 () T@$Mutation_11017)
-(declare-fun $t11@2 () T@$Mutation_3430)
-(declare-fun $t0@0 () T@$Mutation_11017)
-(declare-fun $t10@1 () T@$Mutation_3430)
-(declare-fun $abort_flag@3 () Bool)
-(declare-fun $abort_code@4 () Int)
-(declare-fun $t21@2 () Int)
-(declare-fun inline$$AddU64$1$dst@1 () Int)
-(declare-fun $t18@2 () Int)
-(declare-fun $t19@2 () Int)
-(declare-fun inline$$Le$0$dst@1 () Bool)
-(declare-fun $abort_flag@2 () Bool)
-(declare-fun $abort_code@3 () Int)
-(declare-fun $abort_flag@0 () Bool)
-(declare-fun $abort_code@1 () Int)
-(declare-fun $t15@3 () Int)
-(declare-fun inline$$AddU64$0$dst@1 () Int)
-(declare-fun $t12@3 () Int)
-(declare-fun $t13@3 () Int)
-(declare-fun |$temp_0'u64'@1| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$dst@2| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$m'@1| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$m'@1| () T@$Mutation_11017)
-(declare-fun $t12@0 () Int)
-(declare-fun $t13@0 () Int)
-(declare-fun $t15@0 () Int)
-(declare-fun $t16@0 () Int)
-(declare-fun $t17@0 () Int)
-(declare-fun $t18@0 () Int)
-(declare-fun $t19@0 () Int)
-(declare-fun $t21@0 () Int)
-(declare-fun $t22@0 () Int)
-(declare-fun $t23@0 () Int)
-(declare-fun $t24@0 () Int)
-(declare-fun $t25@0 () Int)
-(declare-fun |$temp_0'vec'u64''@2| () (Seq Int))
-(declare-fun |$temp_0'vec'u64''@3| () (Seq Int))
-(declare-fun $t10@0 () T@$Mutation_3430)
-(declare-fun $t11@0 () T@$Mutation_3430)
-(declare-fun $t27@0 () T@$Mutation_3430)
-(declare-fun $t28@0 () T@$Mutation_3430)
-(declare-fun $t12@1 () Int)
-(declare-fun $t13@1 () Int)
-(declare-fun $t15@1 () Int)
-(declare-fun $t16@1 () Int)
-(declare-fun $t17@1 () Int)
-(declare-fun $t18@1 () Int)
-(declare-fun $t19@1 () Int)
-(declare-fun $t21@1 () Int)
-(declare-fun $t22@1 () Int)
-(declare-fun $t23@1 () Int)
-(declare-fun |$temp_0'u64'@2| () Int)
-(declare-fun $t11@1 () T@$Mutation_3430)
-(declare-fun |$temp_0'u64'@3| () Int)
-(declare-fun $t12@2 () Int)
-(declare-fun $t13@2 () Int)
-(declare-fun $t15@2 () Int)
-(declare-fun $t16@2 () Int)
-(declare-fun $t17@2 () Int)
-(declare-fun |$temp_0'u64'@4| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$dst@0| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$m'@0| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$v@1| () (Seq Int))
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$1$dst@1| () T@$Mutation_3430)
-(declare-fun _$t1 () T@$Mutation_11017)
-(declare-fun |$temp_0'u64'@0| () Int)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$dst@2| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$dst@0| () T@$Mutation_3430)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$m'@0| () T@$Mutation_11017)
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$v@1| () (Seq Int))
-(declare-fun |inline$$1_Vector_borrow_mut'u64'$0$dst@1| () T@$Mutation_3430)
-(declare-fun _$t0 () T@$Mutation_11017)
-(declare-fun $abort_code@0 () Int)
-(declare-fun $t6@0 () (Seq Int))
+(declare-fun _$t0 () T@$Mutation_8552)
+(declare-fun $t1@0 () (Seq Int))
 (declare-fun |$temp_0'vec'u64''@0| () (Seq Int))
 (declare-fun |$temp_0'vec'u64''@1| () (Seq Int))
-(declare-fun $t4 () T@$Mutation_3430)
-(declare-fun $t5 () T@$Mutation_3430)
-(declare-fun $t10 () T@$Mutation_3430)
-(declare-fun $t11 () T@$Mutation_3430)
-(declare-fun $t27 () T@$Mutation_3430)
-(declare-fun $t28 () T@$Mutation_3430)
 (push 1)
-(set-info :boogie-vc-id $42_VerifyLoopsWithMemoryOps_nested_loop2$verify)
+(set-info :boogie-vc-id $42_VectorExists_do_nothing_ref_mut$verify)
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 24343) (let ((anon42_Else_correct  (=> (not $abort_flag@6) (=> (and (= |$temp_0'u64'@6| (|v#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$3$dst@2|)) (= |$temp_0'u64'@6| |$temp_0'u64'@6|)) (and (=> (= (ControlFlow 0 22200) (- 0 26431)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$2$m'@1|)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$2$m'@1|))) (and (=> (= (ControlFlow 0 22200) (- 0 26442)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$3$m'@1|)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$3$m'@1|))) (and (=> (= (ControlFlow 0 22200) (- 0 26453)) (< inline$$AddU64$2$dst@2 |inline$$1_Vector_length'u64'$0$l@1|)) (=> (< inline$$AddU64$2$dst@2 |inline$$1_Vector_length'u64'$0$l@1|) (=> (= (ControlFlow 0 22200) (- 0 26460)) (let (($range_0 ($Range 0 inline$$AddU64$2$dst@2)))
-(forall (($i_1 Int) ) (!  (=> ($InRange $range_0 $i_1) (let ((n $i_1))
-(= (seq.nth (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$2$m'@1|) n) (seq.nth (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$3$m'@1|) n))))
- :qid |loopswithmemoryopsz3bpl.2228:49|
- :skolemid |36|
-))))))))))))))
-(let ((anon40_Then_correct  (=> $t26@1 (and (=> (= (ControlFlow 0 22307) (- 0 26057)) (let (($range_0@@0 ($Range 0 |inline$$1_Vector_length'u64'$0$l@1|)))
-(forall (($i_1@@0 Int) ) (!  (=> ($InRange $range_0@@0 $i_1@@0) (let ((m $i_1@@0))
-(= (seq.nth (|v#$Mutation_11017| $t0@1) m) (seq.nth (|v#$Mutation_11017| $t1@1) m))))
- :qid |loopswithmemoryopsz3bpl.2174:48|
- :skolemid |35|
-)))) (=> (let (($range_0@@0 ($Range 0 |inline$$1_Vector_length'u64'$0$l@1|)))
-(forall (($i_1@@1 Int) ) (!  (=> ($InRange $range_0@@0 $i_1@@1) (let ((m $i_1@@1))
-(= (seq.nth (|v#$Mutation_11017| $t0@1) m) (seq.nth (|v#$Mutation_11017| $t1@1) m))))
- :qid |loopswithmemoryopsz3bpl.2174:48|
- :skolemid |35|
-))) (=> (= |$temp_0'vec'u64''@4| (|v#$Mutation_11017| $t0@1)) (=> (and (and (= |$temp_0'vec'u64''@4| |$temp_0'vec'u64''@4|) (= |$temp_0'vec'u64''@5| (|v#$Mutation_11017| $t1@1))) (and (= |$temp_0'vec'u64''@5| |$temp_0'vec'u64''@5|) (= (ControlFlow 0 22307) (- 0 26129)))) (not false))))))))
-(let ((anon38_Else_correct true))
-(let ((L14_correct  (=> (= (ControlFlow 0 21201) (- 0 26403)) false)))
-(let ((anon42_Then_correct  (=> $abort_flag@6 (=> (and (= $abort_code@7 $abort_code@7) (= (ControlFlow 0 22214) 21201)) L14_correct))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$3$anon3_Then$1_correct|  (=> (and (and (= $abort_flag@6 true) (= $abort_code@7 $EXEC_FAILURE_CODE)) (and (= |inline$$1_Vector_borrow_mut'u64'$3$dst@2| |inline$$1_Vector_borrow_mut'u64'$3$dst@0|) (= |inline$$1_Vector_borrow_mut'u64'$3$m'@1| |inline$$1_Vector_borrow_mut'u64'$3$m'@0|))) (and (=> (= (ControlFlow 0 22097) 22214) anon42_Then_correct) (=> (= (ControlFlow 0 22097) 22200) anon42_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$3$anon3_Then_correct|  (=> (and (not (and (>= inline$$AddU64$2$dst@2 0) (< inline$$AddU64$2$dst@2 (seq.len |inline$$1_Vector_borrow_mut'u64'$3$v@1|)))) (= (ControlFlow 0 22095) 22097)) |inline$$1_Vector_borrow_mut'u64'$3$anon3_Then$1_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$3$anon3_Else_correct|  (=> (and (and (and (>= inline$$AddU64$2$dst@2 0) (< inline$$AddU64$2$dst@2 (seq.len |inline$$1_Vector_borrow_mut'u64'$3$v@1|))) (= |inline$$1_Vector_borrow_mut'u64'$3$dst@1| ($Mutation_3430 (|l#$Mutation_11017| $t1@1) (seq.++ (|p#$Mutation_11017| $t1@1) (seq.unit inline$$AddU64$2$dst@2)) (seq.nth |inline$$1_Vector_borrow_mut'u64'$3$v@1| inline$$AddU64$2$dst@2)))) (and (and (= $abort_flag@6 $abort_flag@5) (= $abort_code@7 $abort_code@6)) (and (= |inline$$1_Vector_borrow_mut'u64'$3$dst@2| |inline$$1_Vector_borrow_mut'u64'$3$dst@1|) (= |inline$$1_Vector_borrow_mut'u64'$3$m'@1| $t1@1)))) (and (=> (= (ControlFlow 0 22045) 22214) anon42_Then_correct) (=> (= (ControlFlow 0 22045) 22200) anon42_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$3$anon0_correct|  (=> (= |inline$$1_Vector_borrow_mut'u64'$3$v@1| (|v#$Mutation_11017| $t1@1)) (and (=> (= (ControlFlow 0 22015) 22095) |inline$$1_Vector_borrow_mut'u64'$3$anon3_Then_correct|) (=> (= (ControlFlow 0 22015) 22045) |inline$$1_Vector_borrow_mut'u64'$3$anon3_Else_correct|)))))
-(let ((anon41_Else_correct  (=> (and (and (not $abort_flag@5) (= |$temp_0'u64'@5| (|v#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$2$dst@2|))) (and (= |$temp_0'u64'@5| |$temp_0'u64'@5|) (= (ControlFlow 0 22105) 22015))) |inline$$1_Vector_borrow_mut'u64'$3$anon0_correct|)))
-(let ((anon41_Then_correct  (=> $abort_flag@5 (=> (and (= $abort_code@6 $abort_code@6) (= (ControlFlow 0 22228) 21201)) L14_correct))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$2$anon3_Then$1_correct|  (=> (and (and (= $abort_code@6 $EXEC_FAILURE_CODE) (= $abort_flag@5 true)) (and (= |inline$$1_Vector_borrow_mut'u64'$2$dst@2| |inline$$1_Vector_borrow_mut'u64'$2$dst@0|) (= |inline$$1_Vector_borrow_mut'u64'$2$m'@1| |inline$$1_Vector_borrow_mut'u64'$2$m'@0|))) (and (=> (= (ControlFlow 0 21887) 22228) anon41_Then_correct) (=> (= (ControlFlow 0 21887) 22105) anon41_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$2$anon3_Then_correct|  (=> (and (not (and (>= inline$$AddU64$2$dst@2 0) (< inline$$AddU64$2$dst@2 (seq.len |inline$$1_Vector_borrow_mut'u64'$2$v@1|)))) (= (ControlFlow 0 21885) 21887)) |inline$$1_Vector_borrow_mut'u64'$2$anon3_Then$1_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$2$anon3_Else_correct|  (=> (and (and (and (>= inline$$AddU64$2$dst@2 0) (< inline$$AddU64$2$dst@2 (seq.len |inline$$1_Vector_borrow_mut'u64'$2$v@1|))) (= |inline$$1_Vector_borrow_mut'u64'$2$dst@1| ($Mutation_3430 (|l#$Mutation_11017| $t0@1) (seq.++ (|p#$Mutation_11017| $t0@1) (seq.unit inline$$AddU64$2$dst@2)) (seq.nth |inline$$1_Vector_borrow_mut'u64'$2$v@1| inline$$AddU64$2$dst@2)))) (and (and (= $abort_code@6 $abort_code@5) (= $abort_flag@5 $abort_flag@4)) (and (= |inline$$1_Vector_borrow_mut'u64'$2$dst@2| |inline$$1_Vector_borrow_mut'u64'$2$dst@1|) (= |inline$$1_Vector_borrow_mut'u64'$2$m'@1| $t0@1)))) (and (=> (= (ControlFlow 0 21835) 22228) anon41_Then_correct) (=> (= (ControlFlow 0 21835) 22105) anon41_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$2$anon0_correct|  (=> (= |inline$$1_Vector_borrow_mut'u64'$2$v@1| (|v#$Mutation_11017| $t0@1)) (and (=> (= (ControlFlow 0 21805) 21885) |inline$$1_Vector_borrow_mut'u64'$2$anon3_Then_correct|) (=> (= (ControlFlow 0 21805) 21835) |inline$$1_Vector_borrow_mut'u64'$2$anon3_Else_correct|)))))
-(let ((anon40_Else_correct  (=> (and (not $t26@1) (= (ControlFlow 0 21895) 21805)) |inline$$1_Vector_borrow_mut'u64'$2$anon0_correct|)))
-(let ((anon39_Else_correct  (=> (not $abort_flag@4) (=> (and (= inline$$AddU64$2$dst@2 inline$$AddU64$2$dst@2) (= $t26@1 (= inline$$AddU64$2$dst@2 |inline$$1_Vector_length'u64'$0$l@1|))) (and (=> (= (ControlFlow 0 21699) 22307) anon40_Then_correct) (=> (= (ControlFlow 0 21699) 21895) anon40_Else_correct))))))
-(let ((anon39_Then_correct  (=> $abort_flag@4 (=> (and (= $abort_code@5 $abort_code@5) (= (ControlFlow 0 22321) 21201)) L14_correct))))
-(let ((inline$$AddU64$2$anon3_Then$1_correct  (=> (= $abort_flag@4 true) (=> (and (= $abort_code@5 $EXEC_FAILURE_CODE) (= inline$$AddU64$2$dst@2 inline$$AddU64$2$dst@0)) (and (=> (= (ControlFlow 0 21671) 22321) anon39_Then_correct) (=> (= (ControlFlow 0 21671) 21699) anon39_Else_correct))))))
-(let ((inline$$AddU64$2$anon3_Then_correct  (=> (and (> (+ $t9@0 1) $MAX_U64) (= (ControlFlow 0 21669) 21671)) inline$$AddU64$2$anon3_Then$1_correct)))
-(let ((inline$$AddU64$2$anon3_Else_correct  (=> (>= $MAX_U64 (+ $t9@0 1)) (=> (and (and (= inline$$AddU64$2$dst@1 (+ $t9@0 1)) (= $abort_flag@4 $abort_flag@1)) (and (= $abort_code@5 $abort_code@2) (= inline$$AddU64$2$dst@2 inline$$AddU64$2$dst@1))) (and (=> (= (ControlFlow 0 21617) 22321) anon39_Then_correct) (=> (= (ControlFlow 0 21617) 21699) anon39_Else_correct))))))
-(let ((anon37_Then_correct  (=> (and (and inline$$Le$1$dst@1 (= $t1@1 ($Mutation_11017 (|l#$Mutation_11017| $t1@0) (|p#$Mutation_11017| $t1@0) (seq.++ (seq.extract (|v#$Mutation_11017| $t1@0) 0 (- (seq.nth (|p#$Mutation_3430| $t11@2) (seq.len (|p#$Mutation_11017| $t1@0))) 0)) (seq.unit (|v#$Mutation_3430| $t11@2)) (seq.extract (|v#$Mutation_11017| $t1@0) (+ (seq.nth (|p#$Mutation_3430| $t11@2) (seq.len (|p#$Mutation_11017| $t1@0))) 1) (- (seq.len (|v#$Mutation_11017| $t1@0)) (+ (seq.nth (|p#$Mutation_3430| $t11@2) (seq.len (|p#$Mutation_11017| $t1@0))) 1))))))) (and (= $t0@1 ($Mutation_11017 (|l#$Mutation_11017| $t0@0) (|p#$Mutation_11017| $t0@0) (seq.++ (seq.extract (|v#$Mutation_11017| $t0@0) 0 (- (seq.nth (|p#$Mutation_3430| $t10@1) (seq.len (|p#$Mutation_11017| $t0@0))) 0)) (seq.unit (|v#$Mutation_3430| $t10@1)) (seq.extract (|v#$Mutation_11017| $t0@0) (+ (seq.nth (|p#$Mutation_3430| $t10@1) (seq.len (|p#$Mutation_11017| $t0@0))) 1) (- (seq.len (|v#$Mutation_11017| $t0@0)) (+ (seq.nth (|p#$Mutation_3430| $t10@1) (seq.len (|p#$Mutation_11017| $t0@0))) 1)))))) (|$IsValid'u64'| 1))) (and (=> (= (ControlFlow 0 21677) 21669) inline$$AddU64$2$anon3_Then_correct) (=> (= (ControlFlow 0 21677) 21617) inline$$AddU64$2$anon3_Else_correct)))))
-(let ((anon38_Then_correct  (=> $abort_flag@3 (=> (and (= $abort_code@4 $abort_code@4) (= (ControlFlow 0 21460) 21201)) L14_correct))))
-(let ((inline$$AddU64$1$anon3_Then$1_correct  (=> (and (= $abort_flag@3 true) (= $abort_code@4 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 21424) 21460) anon38_Then_correct) (=> (= (ControlFlow 0 21424) 21446) anon38_Else_correct)))))
-(let ((inline$$AddU64$1$anon3_Then_correct  (=> (and (> (+ $t21@2 1) $MAX_U64) (= (ControlFlow 0 21422) 21424)) inline$$AddU64$1$anon3_Then$1_correct)))
-(let ((inline$$AddU64$1$anon3_Else_correct  (=> (and (and (>= $MAX_U64 (+ $t21@2 1)) (= inline$$AddU64$1$dst@1 (+ $t21@2 1))) (and (= $abort_flag@3 $abort_flag@1) (= $abort_code@4 $abort_code@2))) (and (=> (= (ControlFlow 0 21370) 21460) anon38_Then_correct) (=> (= (ControlFlow 0 21370) 21446) anon38_Else_correct)))))
-(let ((anon37_Else_correct  (=> (not inline$$Le$1$dst@1) (=> (and (= $t21@2 (|v#$Mutation_3430| $t10@1)) (|$IsValid'u64'| 1)) (and (=> (= (ControlFlow 0 21430) 21422) inline$$AddU64$1$anon3_Then_correct) (=> (= (ControlFlow 0 21430) 21370) inline$$AddU64$1$anon3_Else_correct))))))
-(let ((inline$$Le$1$anon0_correct  (=> (= inline$$Le$1$dst@1 (<= $t18@2 $t19@2)) (and (=> (= (ControlFlow 0 21253) 21677) anon37_Then_correct) (=> (= (ControlFlow 0 21253) 21430) anon37_Else_correct)))))
-(let ((anon35_Then_correct  (=> (and (and inline$$Le$0$dst@1 (= $t18@2 (|v#$Mutation_3430| $t11@2))) (and (= $t19@2 (|v#$Mutation_3430| $t10@1)) (= (ControlFlow 0 21259) 21253))) inline$$Le$1$anon0_correct)))
-(let ((anon36_Then_correct  (=> $abort_flag@2 (=> (and (= $abort_code@3 $abort_code@3) (= (ControlFlow 0 21191) 21201)) L14_correct))))
-(let ((anon34_Then_correct  (=> $abort_flag@1 (=> (and (= $abort_code@2 $abort_code@2) (= (ControlFlow 0 22335) 21201)) L14_correct))))
-(let ((anon33_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 22349) 21201)) L14_correct))))
-(let ((anon36_Else_correct true))
-(let ((inline$$AddU64$0$anon3_Then$1_correct  (=> (and (= $abort_flag@2 true) (= $abort_code@3 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 21155) 21191) anon36_Then_correct) (=> (= (ControlFlow 0 21155) 21177) anon36_Else_correct)))))
-(let ((inline$$AddU64$0$anon3_Then_correct  (=> (and (> (+ $t15@3 1) $MAX_U64) (= (ControlFlow 0 21153) 21155)) inline$$AddU64$0$anon3_Then$1_correct)))
-(let ((inline$$AddU64$0$anon3_Else_correct  (=> (and (and (>= $MAX_U64 (+ $t15@3 1)) (= inline$$AddU64$0$dst@1 (+ $t15@3 1))) (and (= $abort_flag@2 $abort_flag@1) (= $abort_code@3 $abort_code@2))) (and (=> (= (ControlFlow 0 21101) 21191) anon36_Then_correct) (=> (= (ControlFlow 0 21101) 21177) anon36_Else_correct)))))
-(let ((anon35_Else_correct  (=> (not inline$$Le$0$dst@1) (=> (and (= $t15@3 (|v#$Mutation_3430| $t11@2)) (|$IsValid'u64'| 1)) (and (=> (= (ControlFlow 0 21161) 21153) inline$$AddU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 21161) 21101) inline$$AddU64$0$anon3_Else_correct))))))
-(let ((inline$$Le$0$anon0_correct  (=> (= inline$$Le$0$dst@1 (<= $t12@3 $t13@3)) (and (=> (= (ControlFlow 0 20982) 21259) anon35_Then_correct) (=> (= (ControlFlow 0 20982) 21161) anon35_Else_correct)))))
-(let ((anon34_Else_correct  (=> (not $abort_flag@1) (=> (and (= |$temp_0'u64'@1| (|v#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$1$dst@2|)) (= |$temp_0'u64'@1| |$temp_0'u64'@1|)) (and (=> (= (ControlFlow 0 20988) (- 0 25101)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|))) (and (=> (= (ControlFlow 0 20988) (- 0 25112)) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|)))) (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|))) (and (=> (= (ControlFlow 0 20988) (- 0 25123)) (< 0 |inline$$1_Vector_length'u64'$0$l@1|)) (=> (< 0 |inline$$1_Vector_length'u64'$0$l@1|) (and (=> (= (ControlFlow 0 20988) (- 0 25130)) (let (($range_0@@1 ($Range 0 0)))
-(forall (($i_1@@2 Int) ) (!  (=> ($InRange $range_0@@1 $i_1@@2) (let ((n@@0 $i_1@@2))
-(= (seq.nth (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) n@@0) (seq.nth (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) n@@0))))
- :qid |loopswithmemoryopsz3bpl.1798:48|
- :skolemid |33|
-)))) (=> (let (($range_0@@1 ($Range 0 0)))
-(forall (($i_1@@3 Int) ) (!  (=> ($InRange $range_0@@1 $i_1@@3) (let ((n@@0 $i_1@@3))
-(= (seq.nth (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) n@@0) (seq.nth (|v#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) n@@0))))
- :qid |loopswithmemoryopsz3bpl.1798:48|
- :skolemid |33|
-))) (=> (and (and (|$IsValid'u64'| $t9@0) (|$IsValid'u64'| $t12@0)) (and (|$IsValid'u64'| $t13@0) (|$IsValid'u64'| $t15@0))) (=> (and (and (and (and (|$IsValid'u64'| $t16@0) (|$IsValid'u64'| $t17@0)) (and (|$IsValid'u64'| $t18@0) (|$IsValid'u64'| $t19@0))) (and (and (|$IsValid'u64'| $t21@0) (|$IsValid'u64'| $t22@0)) (and (|$IsValid'u64'| $t23@0) (|$IsValid'u64'| $t24@0)))) (and (and (and (|$IsValid'u64'| $t25@0) (= $t0@0 ($Mutation_11017 (|l#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$0$m'@1|) |$temp_0'vec'u64''@2|))) (and (|$IsValid'vec'u64''| (|v#$Mutation_11017| $t0@0)) (= $t1@0 ($Mutation_11017 (|l#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) (|p#$Mutation_11017| |inline$$1_Vector_borrow_mut'u64'$1$m'@1|) |$temp_0'vec'u64''@3|)))) (and (and (|$IsValid'vec'u64''| (|v#$Mutation_11017| $t1@0)) (|$IsValid'u64'| (|v#$Mutation_3430| $t10@0))) (and (|$IsValid'u64'| (|v#$Mutation_3430| $t11@0)) (|$IsValid'u64'| (|v#$Mutation_3430| $t27@0)))))) (=> (and (and (and (and (and (|$IsValid'u64'| (|v#$Mutation_3430| $t28@0)) (not $abort_flag@1)) (and (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t0@0))) (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| $t1@0))))) (and (and (< $t9@0 |inline$$1_Vector_length'u64'$0$l@1|) (let (($range_0@@2 ($Range 0 $t9@0)))
-(forall (($i_1@@4 Int) ) (!  (=> ($InRange $range_0@@2 $i_1@@4) (let ((n@@1 $i_1@@4))
-(= (seq.nth (|v#$Mutation_11017| $t0@0) n@@1) (seq.nth (|v#$Mutation_11017| $t1@0) n@@1))))
- :qid |loopswithmemoryopsz3bpl.1908:53|
- :skolemid |34|
-)))) (and (|$IsValid'u64'| $t12@1) (|$IsValid'u64'| $t13@1)))) (and (and (and (|$IsValid'u64'| $t15@1) (|$IsValid'u64'| $t16@1)) (and (|$IsValid'u64'| $t17@1) (|$IsValid'u64'| $t18@1))) (and (and (|$IsValid'u64'| $t19@1) (|$IsValid'u64'| $t21@1)) (and (|$IsValid'u64'| $t22@1) (|$IsValid'u64'| $t23@1))))) (and (and (and (and (= $t10@1 ($Mutation_3430 (|l#$Mutation_3430| $t10@0) (|p#$Mutation_3430| $t10@0) |$temp_0'u64'@2|)) (|$IsValid'u64'| (|v#$Mutation_3430| $t10@1))) (and (= $t11@1 ($Mutation_3430 (|l#$Mutation_3430| $t11@0) (|p#$Mutation_3430| $t11@0) |$temp_0'u64'@3|)) (|$IsValid'u64'| (|v#$Mutation_3430| $t11@1)))) (and (and (not $abort_flag@1) (|$IsValid'u64'| $t12@2)) (and (|$IsValid'u64'| $t13@2) (|$IsValid'u64'| $t15@2)))) (and (and (and (|$IsValid'u64'| $t16@2) (|$IsValid'u64'| $t17@2)) (and (= $t11@2 ($Mutation_3430 (|l#$Mutation_3430| $t11@1) (|p#$Mutation_3430| $t11@1) |$temp_0'u64'@4|)) (|$IsValid'u64'| (|v#$Mutation_3430| $t11@2)))) (and (and (not $abort_flag@1) (= $t12@3 (|v#$Mutation_3430| $t10@1))) (and (= $t13@3 (|v#$Mutation_3430| $t11@2)) (= (ControlFlow 0 20988) 20982)))))) inline$$Le$0$anon0_correct)))))))))))))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon3_Then$1_correct|  (=> (and (and (= $abort_code@2 $EXEC_FAILURE_CODE) (= $abort_flag@1 true)) (and (= |inline$$1_Vector_borrow_mut'u64'$1$dst@2| |inline$$1_Vector_borrow_mut'u64'$1$dst@0|) (= |inline$$1_Vector_borrow_mut'u64'$1$m'@1| |inline$$1_Vector_borrow_mut'u64'$1$m'@0|))) (and (=> (= (ControlFlow 0 20520) 22335) anon34_Then_correct) (=> (= (ControlFlow 0 20520) 20988) anon34_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon3_Then_correct|  (=> (and (not (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$1$v@1|)))) (= (ControlFlow 0 20518) 20520)) |inline$$1_Vector_borrow_mut'u64'$1$anon3_Then$1_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon3_Else_correct|  (=> (and (and (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$1$v@1|))) (= |inline$$1_Vector_borrow_mut'u64'$1$dst@1| ($Mutation_3430 (|l#$Mutation_11017| _$t1) (seq.++ (|p#$Mutation_11017| _$t1) (seq.unit 0)) (seq.nth |inline$$1_Vector_borrow_mut'u64'$1$v@1| 0)))) (and (and (= $abort_code@2 $abort_code@1) (= $abort_flag@1 $abort_flag@0)) (and (= |inline$$1_Vector_borrow_mut'u64'$1$dst@2| |inline$$1_Vector_borrow_mut'u64'$1$dst@1|) (= |inline$$1_Vector_borrow_mut'u64'$1$m'@1| _$t1)))) (and (=> (= (ControlFlow 0 20468) 22335) anon34_Then_correct) (=> (= (ControlFlow 0 20468) 20988) anon34_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$1$anon0_correct|  (=> (= |inline$$1_Vector_borrow_mut'u64'$1$v@1| (|v#$Mutation_11017| _$t1)) (and (=> (= (ControlFlow 0 20438) 20518) |inline$$1_Vector_borrow_mut'u64'$1$anon3_Then_correct|) (=> (= (ControlFlow 0 20438) 20468) |inline$$1_Vector_borrow_mut'u64'$1$anon3_Else_correct|)))))
-(let ((anon33_Else_correct  (=> (and (and (not $abort_flag@0) (= |$temp_0'u64'@0| (|v#$Mutation_3430| |inline$$1_Vector_borrow_mut'u64'$0$dst@2|))) (and (= |$temp_0'u64'@0| |$temp_0'u64'@0|) (= (ControlFlow 0 20528) 20438))) |inline$$1_Vector_borrow_mut'u64'$1$anon0_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon3_Then$1_correct|  (=> (and (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (= |inline$$1_Vector_borrow_mut'u64'$0$dst@2| |inline$$1_Vector_borrow_mut'u64'$0$dst@0|) (= |inline$$1_Vector_borrow_mut'u64'$0$m'@1| |inline$$1_Vector_borrow_mut'u64'$0$m'@0|))) (and (=> (= (ControlFlow 0 20310) 22349) anon33_Then_correct) (=> (= (ControlFlow 0 20310) 20528) anon33_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon3_Then_correct|  (=> (and (not (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$0$v@1|)))) (= (ControlFlow 0 20308) 20310)) |inline$$1_Vector_borrow_mut'u64'$0$anon3_Then$1_correct|)))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon3_Else_correct|  (=> (and (and (and (>= 0 0) (< 0 (seq.len |inline$$1_Vector_borrow_mut'u64'$0$v@1|))) (= |inline$$1_Vector_borrow_mut'u64'$0$dst@1| ($Mutation_3430 (|l#$Mutation_11017| _$t0) (seq.++ (|p#$Mutation_11017| _$t0) (seq.unit 0)) (seq.nth |inline$$1_Vector_borrow_mut'u64'$0$v@1| 0)))) (and (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0)) (and (= |inline$$1_Vector_borrow_mut'u64'$0$dst@2| |inline$$1_Vector_borrow_mut'u64'$0$dst@1|) (= |inline$$1_Vector_borrow_mut'u64'$0$m'@1| _$t0)))) (and (=> (= (ControlFlow 0 20258) 22349) anon33_Then_correct) (=> (= (ControlFlow 0 20258) 20528) anon33_Else_correct)))))
-(let ((|inline$$1_Vector_borrow_mut'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_borrow_mut'u64'$0$v@1| (|v#$Mutation_11017| _$t0)) (and (=> (= (ControlFlow 0 20228) 20308) |inline$$1_Vector_borrow_mut'u64'$0$anon3_Then_correct|) (=> (= (ControlFlow 0 20228) 20258) |inline$$1_Vector_borrow_mut'u64'$0$anon3_Else_correct|)))))
-(let ((anon32_Else_correct  (=> (not false) (=> (and (= |inline$$1_Vector_length'u64'$0$l@1| |inline$$1_Vector_length'u64'$0$l@1|) (> |inline$$1_Vector_length'u64'$0$l@1| 0)) (=> (and (and (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len (|v#$Mutation_11017| _$t1))) (|$IsValid'u64'| 0)) (and (= 0 0) (= (ControlFlow 0 20318) 20228))) |inline$$1_Vector_borrow_mut'u64'$0$anon0_correct|)))))
-(let ((anon32_Then_correct true))
-(let ((|inline$$1_Vector_length'u64'$0$anon0_correct|  (=> (= |inline$$1_Vector_length'u64'$0$l@1| (seq.len $t6@0)) (and (=> (= (ControlFlow 0 20072) 22363) anon32_Then_correct) (=> (= (ControlFlow 0 20072) 20318) anon32_Else_correct)))))
-(let ((anon0$1_correct  (=> (and (= (|l#$Mutation_11017| _$t0) ($Param 0)) (= (|l#$Mutation_11017| _$t1) ($Param 1))) (=> (and (and (and (|$IsValid'vec'u64''| (|v#$Mutation_11017| _$t0)) (|$IsValid'vec'u64''| (|v#$Mutation_11017| _$t1))) (and (= |$temp_0'vec'u64''@0| (|v#$Mutation_11017| _$t0)) (= |$temp_0'vec'u64''@0| |$temp_0'vec'u64''@0|))) (and (and (= |$temp_0'vec'u64''@1| (|v#$Mutation_11017| _$t1)) (= |$temp_0'vec'u64''@1| |$temp_0'vec'u64''@1|)) (and (= $t6@0 (|v#$Mutation_11017| _$t0)) (= (ControlFlow 0 20078) 20072)))) |inline$$1_Vector_length'u64'$0$anon0_correct|))))
-(let ((anon0_correct  (=> (= (seq.len (|p#$Mutation_3430| $t4)) 0) (=> (and (= (seq.len (|p#$Mutation_3430| $t5)) 0) (= (seq.len (|p#$Mutation_3430| $t10)) 0)) (=> (and (and (= (seq.len (|p#$Mutation_3430| $t11)) 0) (= (seq.len (|p#$Mutation_3430| $t27)) 0)) (and (= (seq.len (|p#$Mutation_3430| $t28)) 0) (= (ControlFlow 0 19980) 20078))) anon0$1_correct)))))
-(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 24343) 19980) anon0_correct)))
-PreconditionGeneratedEntry_correct)))))))))))))))))))))))))))))))))))))))))))))))))))))))
+ (=> (= (ControlFlow 0 0) 13380) (let ((anon0$1_correct  (=> (= (|l#$Mutation_8552| _$t0) ($Param 0)) (=> (and (|$IsValid'vec'u64''| (|v#$Mutation_8552| _$t0)) (= $t1@0 (|v#$Mutation_8552| _$t0))) (=> (and (and (= |$temp_0'vec'u64''@0| (|v#$Mutation_8552| _$t0)) (= |$temp_0'vec'u64''@0| |$temp_0'vec'u64''@0|)) (and (= |$temp_0'vec'u64''@1| (|v#$Mutation_8552| _$t0)) (= |$temp_0'vec'u64''@1| |$temp_0'vec'u64''@1|))) (and (=> (= (ControlFlow 0 13056) (- 0 13472)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 13056) (- 0 13479)) (= $t1@0 (|v#$Mutation_8552| _$t0))) (=> (= $t1@0 (|v#$Mutation_8552| _$t0)) (and (=> (= (ControlFlow 0 13056) (- 0 13488)) (exists ((l Int) ) (!  (and (|$IsValid'u64'| l) (= l (seq.len $t1@0)))
+ :qid |loopswithmemoryopsz3bpl.1221:15|
+ :skolemid |37|
+))) (=> (exists ((l@@0 Int) ) (!  (and (|$IsValid'u64'| l@@0) (= l@@0 (seq.len $t1@0)))
+ :qid |loopswithmemoryopsz3bpl.1221:15|
+ :skolemid |37|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13507)) (exists ((l@@1 Int) ) (!  (and (|$IsValid'u64'| l@@1) (= l@@1 (seq.len (|v#$Mutation_8552| _$t0))))
+ :qid |loopswithmemoryopsz3bpl.1226:15|
+ :skolemid |38|
+))) (=> (exists ((l@@2 Int) ) (!  (and (|$IsValid'u64'| l@@2) (= l@@2 (seq.len (|v#$Mutation_8552| _$t0))))
+ :qid |loopswithmemoryopsz3bpl.1226:15|
+ :skolemid |38|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13528)) (exists ((l@@3 Int) ) (!  (and (and (|$IsValid'u64'| l@@3) (= l@@3 (seq.len $t1@0))) (= l@@3 (seq.len (|v#$Mutation_8552| _$t0))))
+ :qid |loopswithmemoryopsz3bpl.1231:15|
+ :skolemid |39|
+))) (=> (exists ((l@@4 Int) ) (!  (and (and (|$IsValid'u64'| l@@4) (= l@@4 (seq.len $t1@0))) (= l@@4 (seq.len (|v#$Mutation_8552| _$t0))))
+ :qid |loopswithmemoryopsz3bpl.1231:15|
+ :skolemid |39|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13558)) (=> (let (($range_0 $t1@0))
+(exists (($i_1 Int) ) (!  (and (and (>= $i_1 0) (< $i_1 (seq.len $range_0))) (let ((x (seq.nth $range_0 $i_1)))
+(= x 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@0 (|v#$Mutation_8552| _$t0)))
+(exists (($i_1@@0 Int) ) (!  (and (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0@@0))) (let ((x@@0 (seq.nth $range_0@@0 $i_1@@0)))
+(= x@@0 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))))) (=> (=> (let (($range_0@@1 $t1@0))
+(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0@@1))) (let ((x@@1 (seq.nth $range_0@@1 $i_1@@1)))
+(= x@@1 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@2 (|v#$Mutation_8552| _$t0)))
+(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@2))) (let ((x@@2 (seq.nth $range_0@@2 $i_1@@2)))
+(= x@@2 0)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+)))) (and (=> (= (ControlFlow 0 13056) (- 0 13575)) (=> (let (($range_2 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3 Int) ) (!  (and ($InRange $range_2 $i_3) (let ((i@@8 $i_3))
+(= (seq.nth $t1@0 i@@8) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@0 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0)))))
+(exists (($i_3@@0 Int) ) (!  (and ($InRange $range_2@@0 $i_3@@0) (let ((i@@9 $i_3@@0))
+(= (seq.nth (|v#$Mutation_8552| _$t0) i@@9) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))))) (=> (=> (let (($range_2@@1 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@1 Int) ) (!  (and ($InRange $range_2@@1 $i_3@@1) (let ((i@@10 $i_3@@1))
+(= (seq.nth $t1@0 i@@10) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@2 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0)))))
+(exists (($i_3@@2 Int) ) (!  (and ($InRange $range_2@@2 $i_3@@2) (let ((i@@11 $i_3@@2))
+(= (seq.nth (|v#$Mutation_8552| _$t0) i@@11) 0)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+)))) (and (=> (= (ControlFlow 0 13056) (- 0 13592)) (=> (exists ((i@@12 Int) ) (!  (and (and (|$IsValid'u64'| i@@12) (and (<= 0 i@@12) (< i@@12 (seq.len $t1@0)))) (= (seq.nth $t1@0 i@@12) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@13 Int) ) (!  (and (and (|$IsValid'u64'| i@@13) (and (<= 0 i@@13) (< i@@13 (seq.len (|v#$Mutation_8552| _$t0))))) (= (seq.nth (|v#$Mutation_8552| _$t0) i@@13) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)))) (=> (=> (exists ((i@@14 Int) ) (!  (and (and (|$IsValid'u64'| i@@14) (and (<= 0 i@@14) (< i@@14 (seq.len $t1@0)))) (= (seq.nth $t1@0 i@@14) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@15 Int) ) (!  (and (and (|$IsValid'u64'| i@@15) (and (<= 0 i@@15) (< i@@15 (seq.len (|v#$Mutation_8552| _$t0))))) (= (seq.nth (|v#$Mutation_8552| _$t0) i@@15) 0))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+))) (and (=> (= (ControlFlow 0 13056) (- 0 13609)) (forall ((e@@1 Int) ) (!  (=> (|$IsValid'u64'| e@@1) (=> (let (($range_0@@3 $t1@0))
+(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@3))) (let ((x@@3 (seq.nth $range_0@@3 $i_1@@3)))
+(= x@@3 e@@1)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@4 (|v#$Mutation_8552| _$t0)))
+(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@4))) (let ((x@@4 (seq.nth $range_0@@4 $i_1@@4)))
+(= x@@4 e@@1)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1251:15|
+ :skolemid |40|
+))) (=> (forall ((e@@2 Int) ) (!  (=> (|$IsValid'u64'| e@@2) (=> (let (($range_0@@5 $t1@0))
+(exists (($i_1@@5 Int) ) (!  (and (and (>= $i_1@@5 0) (< $i_1@@5 (seq.len $range_0@@5))) (let ((x@@5 (seq.nth $range_0@@5 $i_1@@5)))
+(= x@@5 e@@2)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@6 (|v#$Mutation_8552| _$t0)))
+(exists (($i_1@@6 Int) ) (!  (and (and (>= $i_1@@6 0) (< $i_1@@6 (seq.len $range_0@@6))) (let ((x@@6 (seq.nth $range_0@@6 $i_1@@6)))
+(= x@@6 e@@2)))
+ :qid |loopswithmemoryopsz3bpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1251:15|
+ :skolemid |40|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13635)) (forall ((e@@3 Int) ) (!  (=> (|$IsValid'u64'| e@@3) (=> (let (($range_2@@3 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@3 Int) ) (!  (and ($InRange $range_2@@3 $i_3@@3) (let ((i@@16 $i_3@@3))
+(= (seq.nth $t1@0 i@@16) e@@3)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@4 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0)))))
+(exists (($i_3@@4 Int) ) (!  (and ($InRange $range_2@@4 $i_3@@4) (let ((i@@17 $i_3@@4))
+(= (seq.nth (|v#$Mutation_8552| _$t0) i@@17) e@@3)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1256:15|
+ :skolemid |41|
+))) (=> (forall ((e@@4 Int) ) (!  (=> (|$IsValid'u64'| e@@4) (=> (let (($range_2@@5 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@5 Int) ) (!  (and ($InRange $range_2@@5 $i_3@@5) (let ((i@@18 $i_3@@5))
+(= (seq.nth $t1@0 i@@18) e@@4)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@6 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0)))))
+(exists (($i_3@@6 Int) ) (!  (and ($InRange $range_2@@6 $i_3@@6) (let ((i@@19 $i_3@@6))
+(= (seq.nth (|v#$Mutation_8552| _$t0) i@@19) e@@4)))
+ :qid |loopswithmemoryopsz3bpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |loopswithmemoryopsz3bpl.1256:15|
+ :skolemid |41|
+)) (=> (= (ControlFlow 0 13056) (- 0 13661)) (forall ((e@@5 Int) ) (!  (=> (|$IsValid'u64'| e@@5) (=> (exists ((i@@20 Int) ) (!  (and (and (|$IsValid'u64'| i@@20) (and (<= 0 i@@20) (< i@@20 (seq.len $t1@0)))) (= (seq.nth $t1@0 i@@20) e@@5))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@21 Int) ) (!  (and (and (|$IsValid'u64'| i@@21) (and (<= 0 i@@21) (< i@@21 (seq.len (|v#$Mutation_8552| _$t0))))) (= (seq.nth (|v#$Mutation_8552| _$t0) i@@21) e@@5))
+ :qid |loopswithmemoryopsz3bpl.1094:13|
+ :skolemid |31|
+))))
+ :qid |loopswithmemoryopsz3bpl.1261:15|
+ :skolemid |42|
+))))))))))))))))))))))))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 13380) 13056) anon0$1_correct)))
+anon0_correct)))
 ))
 (check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 24343)))
-(get-value ((ControlFlow 0 19980)))
-(get-value ((ControlFlow 0 20078)))
-(get-value ((ControlFlow 0 20072)))
-(get-value ((ControlFlow 0 20318)))
-(get-value ((ControlFlow 0 20228)))
-(get-value ((ControlFlow 0 20258)))
-(get-value ((ControlFlow 0 20528)))
-(get-value ((ControlFlow 0 20438)))
-(get-value ((ControlFlow 0 20468)))
-(get-value ((ControlFlow 0 20988)))
-(get-value ((ControlFlow 0 20982)))
-(get-value ((ControlFlow 0 21259)))
-(get-value ((ControlFlow 0 21253)))
-(get-value ((ControlFlow 0 21677)))
-(get-value ((ControlFlow 0 21617)))
-(get-value ((ControlFlow 0 21699)))
-(get-value ((ControlFlow 0 22307)))
-(assert (not (= (ControlFlow 0 22307) (- 26057))))
-(check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 24343)))
-(get-value ((ControlFlow 0 19980)))
-(get-value ((ControlFlow 0 20078)))
-(get-value ((ControlFlow 0 20072)))
-(get-value ((ControlFlow 0 20318)))
-(get-value ((ControlFlow 0 20228)))
-(get-value ((ControlFlow 0 20258)))
-(get-value ((ControlFlow 0 20528)))
-(get-value ((ControlFlow 0 20438)))
-(get-value ((ControlFlow 0 20468)))
-(get-value ((ControlFlow 0 20988)))
-(get-value ((ControlFlow 0 20982)))
-(get-value ((ControlFlow 0 21259)))
-(get-value ((ControlFlow 0 21253)))
-(get-value ((ControlFlow 0 21677)))
-(get-value ((ControlFlow 0 21617)))
-(get-value ((ControlFlow 0 21699)))
-(get-value ((ControlFlow 0 21895)))
-(get-value ((ControlFlow 0 21805)))
-(get-value ((ControlFlow 0 21835)))
-(get-value ((ControlFlow 0 22105)))
-(get-value ((ControlFlow 0 22015)))
-(get-value ((ControlFlow 0 22045)))
-(get-value ((ControlFlow 0 22200)))
-(assert (not (= (ControlFlow 0 22200) (- 26431))))
-(check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 24343)))
-(get-value ((ControlFlow 0 19980)))
-(get-value ((ControlFlow 0 20078)))
-(get-value ((ControlFlow 0 20072)))
-(get-value ((ControlFlow 0 20318)))
-(get-value ((ControlFlow 0 20228)))
-(get-value ((ControlFlow 0 20258)))
-(get-value ((ControlFlow 0 20528)))
-(get-value ((ControlFlow 0 20438)))
-(get-value ((ControlFlow 0 20468)))
-(get-value ((ControlFlow 0 20988)))
-(get-value ((ControlFlow 0 20982)))
-(get-value ((ControlFlow 0 21259)))
-(get-value ((ControlFlow 0 21253)))
-(get-value ((ControlFlow 0 21677)))
-(get-value ((ControlFlow 0 21617)))
-(get-value ((ControlFlow 0 21699)))
-(get-value ((ControlFlow 0 21895)))
-(get-value ((ControlFlow 0 21805)))
-(get-value ((ControlFlow 0 21835)))
-(get-value ((ControlFlow 0 22105)))
-(get-value ((ControlFlow 0 22015)))
-(get-value ((ControlFlow 0 22095)))
-(get-value ((ControlFlow 0 22097)))
-(get-value ((ControlFlow 0 22214)))
-(get-value ((ControlFlow 0 21201)))
-(assert (not (= (ControlFlow 0 21201) (- 26403))))
-(check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 24343)))
-(get-value ((ControlFlow 0 19980)))
-(get-value ((ControlFlow 0 20078)))
-(get-value ((ControlFlow 0 20072)))
-(get-value ((ControlFlow 0 20318)))
-(get-value ((ControlFlow 0 20228)))
-(get-value ((ControlFlow 0 20258)))
-(get-value ((ControlFlow 0 20528)))
-(get-value ((ControlFlow 0 20438)))
-(get-value ((ControlFlow 0 20468)))
-(get-value ((ControlFlow 0 20988)))
-(get-value ((ControlFlow 0 20982)))
-(get-value ((ControlFlow 0 21259)))
-(get-value ((ControlFlow 0 21253)))
-(get-value ((ControlFlow 0 21677)))
-(get-value ((ControlFlow 0 21617)))
-(get-value ((ControlFlow 0 21699)))
-(get-value ((ControlFlow 0 21895)))
-(get-value ((ControlFlow 0 21805)))
-(get-value ((ControlFlow 0 21835)))
-(get-value ((ControlFlow 0 22105)))
-(get-value ((ControlFlow 0 22015)))
-(get-value ((ControlFlow 0 22045)))
-(get-value ((ControlFlow 0 22200)))
-(assert (not (= (ControlFlow 0 22200) (- 26442))))
-(check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 24343)))
-(get-value ((ControlFlow 0 19980)))
-(get-value ((ControlFlow 0 20078)))
-(get-value ((ControlFlow 0 20072)))
-(get-value ((ControlFlow 0 20318)))
-(get-value ((ControlFlow 0 20228)))
-(get-value ((ControlFlow 0 20258)))
-(get-value ((ControlFlow 0 20528)))
-(get-value ((ControlFlow 0 20438)))
-(get-value ((ControlFlow 0 20468)))
-(get-value ((ControlFlow 0 20988)))
-(get-value ((ControlFlow 0 20982)))
-(get-value ((ControlFlow 0 21259)))
-(get-value ((ControlFlow 0 21253)))
-(get-value ((ControlFlow 0 21677)))
-(get-value ((ControlFlow 0 21617)))
-(get-value ((ControlFlow 0 21699)))
-(get-value ((ControlFlow 0 21895)))
-(get-value ((ControlFlow 0 21805)))
-(get-value ((ControlFlow 0 21835)))
-(get-value ((ControlFlow 0 22105)))
-(get-value ((ControlFlow 0 22015)))
-(get-value ((ControlFlow 0 22045)))
-(get-value ((ControlFlow 0 22200)))
 (pop 1)
-; Invalid
+; Valid

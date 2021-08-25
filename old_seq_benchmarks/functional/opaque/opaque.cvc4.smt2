@@ -4,9 +4,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6598 0)) ((($Mutation_6598 (|l#$Mutation_6598| T@$Location) (|p#$Mutation_6598| (Seq Int)) (|v#$Mutation_6598| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_6677 0)) ((($Mutation_6677 (|l#$Mutation_6677| T@$Location) (|p#$Mutation_6677| (Seq Int)) (|v#$Mutation_6677| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -108,12 +109,12 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |opaquecvc4bpl.839:15|
+ :qid |opaquecvc4bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |opaquecvc4bpl.842:15|
+ :qid |opaquecvc4bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -138,10 +139,10 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestOpaque_opaque_caller$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 8751) (let ((anon4_Else_correct  (=> (not $t1@0) (=> (and (and (|$IsValid'u64'| $t0) (= $t0 2)) (and (= $t0 $t0) (= (ControlFlow 0 8602) (- 0 8828)))) (= $t0 2)))))
+ (=> (= (ControlFlow 0 0) 8879) (let ((anon4_Else_correct  (=> (not $t1@0) (=> (and (and (|$IsValid'u64'| $t0) (= $t0 2)) (and (= $t0 $t0) (= (ControlFlow 0 8730) (- 0 8956)))) (= $t0 2)))))
 (let ((anon4_Then_correct true))
-(let ((anon0$1_correct  (and (=> (= (ControlFlow 0 8568) 8618) anon4_Then_correct) (=> (= (ControlFlow 0 8568) 8602) anon4_Else_correct))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 8751) 8568) anon0$1_correct)))
+(let ((anon0$1_correct  (and (=> (= (ControlFlow 0 8696) 8746) anon4_Then_correct) (=> (= (ControlFlow 0 8696) 8730) anon4_Else_correct))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 8879) 8696) anon0$1_correct)))
 anon0_correct)))))
 ))
 (check-sat)
@@ -150,16 +151,16 @@ anon0_correct)))))
 (push 1)
 (set-info :boogie-vc-id $42_TestOpaque_opaque_incorrect$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 8853) (let ((anon0$1_correct@@0  (=> (|$IsValid'u64'| 1) (=> (and (= 1 1) (= (ControlFlow 0 8698) (- 0 8896))) (= 1 2)))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 8853) 8698) anon0$1_correct@@0)))
+ (=> (= (ControlFlow 0 0) 8982) (let ((anon0$1_correct@@0  (=> (|$IsValid'u64'| 1) (=> (and (= 1 1) (= (ControlFlow 0 8826) (- 0 9025))) (= 1 2)))))
+(let ((anon0_correct@@0  (=> (= (ControlFlow 0 8982) 8826) anon0$1_correct@@0)))
 anon0_correct@@0)))
 ))
 (check-sat)
 (get-info :reason-unknown)
 (get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 8853)))
-(get-value ((ControlFlow 0 8698)))
-(assert (not (= (ControlFlow 0 8698) (- 8896))))
+(get-value ((ControlFlow 0 8982)))
+(get-value ((ControlFlow 0 8826)))
+(assert (not (= (ControlFlow 0 8826) (- 9025))))
 (check-sat)
 (pop 1)
 ; Invalid

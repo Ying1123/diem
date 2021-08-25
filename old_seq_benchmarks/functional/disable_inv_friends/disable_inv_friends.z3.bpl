@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -892,10 +897,19 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:13:5+77
-function {:inline} $1_Signer_$address_of(s: int): int {
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:12:5+77
+function {:inline} $1_Signer_$address_of(s: $signer): int {
     $1_Signer_$borrow_address(s)
 }
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
 
 // struct M3::R3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:55:5+20
 type {:datatype} $1_M3_R3;
@@ -912,15 +926,15 @@ function {:inline} $IsEqual'$1_M3_R3'(s1: $1_M3_R3, s2: $1_M3_R3): bool {
 var $1_M3_R3_$memory: $Memory $1_M3_R3;
 
 // fun M3::f3 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
-procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
     var $t2: $1_M3_R3;
     var $t3: int;
-    var $t0: int;
+    var $t0: $signer;
     var $1_M3_R3_$modifies: [int]bool;
-    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
@@ -929,7 +943,7 @@ procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: int) returns ()
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
     assume {:print "$at(2,1086,1154)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
     assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
@@ -953,13 +967,13 @@ procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: int) returns ()
 
     // assert CanModify<M3::R3>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
     assert {:msg "assert_failed(2,1130,1137): caller does not have permission to modify `M3::R3` at given address"}
-      $1_M3_R3_$modifies[$t0];
+      $1_M3_R3_$modifies[$1_Signer_spec_address_of($t0)];
 
     // move_to<M3::R3>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
-    if ($ResourceExists($1_M3_R3_$memory, $t0)) {
+    if ($ResourceExists($1_M3_R3_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $1_M3_R3_$memory := $ResourceUpdate($1_M3_R3_$memory, $t0, $t2);
+        $1_M3_R3_$memory := $ResourceUpdate($1_M3_R3_$memory, $1_Signer_spec_address_of($t0), $t2);
     }
     if ($abort_flag) {
         assume {:print "$at(2,1130,1137)"} true;
@@ -1006,15 +1020,15 @@ function {:inline} $IsEqual'$1_M2_R2'(s1: $1_M2_R2, s2: $1_M2_R2): bool {
 var $1_M2_R2_$memory: $Memory $1_M2_R2;
 
 // fun M2::f2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
-procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
     var $t2: $1_M2_R2;
     var $t3: int;
-    var $t0: int;
+    var $t0: $signer;
     var $1_M2_R2_$modifies: [int]bool;
-    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
@@ -1023,7 +1037,7 @@ procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: int) returns ()
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
     assume {:print "$at(2,762,831)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
     assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
@@ -1047,13 +1061,13 @@ procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: int) returns ()
 
     // assert CanModify<M2::R2>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
     assert {:msg "assert_failed(2,807,814): caller does not have permission to modify `M2::R2` at given address"}
-      $1_M2_R2_$modifies[$t0];
+      $1_M2_R2_$modifies[$1_Signer_spec_address_of($t0)];
 
     // move_to<M2::R2>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
-    if ($ResourceExists($1_M2_R2_$memory, $t0)) {
+    if ($ResourceExists($1_M2_R2_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $1_M2_R2_$memory := $ResourceUpdate($1_M2_R2_$memory, $t0, $t2);
+        $1_M2_R2_$memory := $ResourceUpdate($1_M2_R2_$memory, $1_Signer_spec_address_of($t0), $t2);
     }
     if ($abort_flag) {
         assume {:print "$at(2,807,814)"} true;
@@ -1086,19 +1100,19 @@ L2:
 }
 
 // fun M1::f1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-procedure {:timeLimit 40} $1_M1_f1$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_M1_f1$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
     var $t2: int;
     var $t3: bool;
-    var $t0: int;
+    var $t0: $signer;
     var $1_M3_R3_$modifies: [int]bool;
     var $1_M2_R2_$modifies: [int]bool;
     var $temp_0'$1_M2_R2': $1_M2_R2;
     var $temp_0'$1_M3_R3': $1_M3_R3;
-    var $temp_0'address': int;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
@@ -1111,7 +1125,7 @@ procedure {:timeLimit 40} $1_M1_f1$verify(_$t0: int) returns ()
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
 
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
     assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
@@ -1246,19 +1260,19 @@ L2:
 }
 
 // fun M4::f4 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-procedure {:timeLimit 40} $1_M4_f4$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_M4_f4$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
     var $t2: int;
     var $t3: bool;
-    var $t0: int;
+    var $t0: $signer;
     var $1_M3_R3_$modifies: [int]bool;
     var $1_M2_R2_$modifies: [int]bool;
     var $temp_0'$1_M2_R2': $1_M2_R2;
     var $temp_0'$1_M3_R3': $1_M3_R3;
-    var $temp_0'address': int;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
@@ -1271,7 +1285,7 @@ procedure {:timeLimit 40} $1_M4_f4$verify(_$t0: int) returns ()
     assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
 
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
     assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);

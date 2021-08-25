@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/opaque/opaque.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl
 -monomorphize
 /env:2
 /proverLog:opaque.z3.smt2
@@ -8,19 +8,50 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/opaque/opaque.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
-Verifying $42_TestOpaque_opaque_caller$verify ...
-  [0.121 s, 1 proof obligation]  verified
+Verifying $42_TestLet_local_let_with_memory_access$verify ...
+  [0.126 s, 1 proof obligation]  verified
 
-Verifying $42_TestOpaque_opaque_incorrect$verify ...
-  [0.019 s, 1 proof obligation]  error
-assert_failed(2,271,291): post-condition does not hold
+Verifying $42_TestLet_spec_let$verify ...
+  [0.014 s, 2 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_abort$verify ...
+  [0.020 s, 6 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_abort_incorrect$verify ...
+  [0.024 s, 6 proof obligations]  errors
+assert_failed(2,1867,1886): function does not abort under this condition
 Execution trace:
-    /home/ying/diem/seq_benchmarks/opaque/opaque.z3.bpl(977,5): anon0
-    /home/ying/diem/seq_benchmarks/opaque/opaque.z3.bpl(977,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1323,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1323,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1378,5): anon8_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(516,5): inline$$Div$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1387,5): anon9_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(498,5): inline$$MulU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1403,5): anon10_Else
+assert_failed(2,1768,2061): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1323,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1323,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1378,5): anon8_Else
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(517,9): inline$$Div$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(517,9): inline$$Div$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1388,9): anon9_Then
+    /home/ying/diem/old_seq_benchmarks/functional/opaque/opaque.z3.bpl(1461,1): L2
 
-Boogie program verifier finished with 1 verified, 1 error
+Verifying $42_TestLet_spec_let_with_abort_opaque_caller$verify ...
+  [0.018 s, 6 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_old$verify ...
+  [0.017 s, 2 proof obligations]  verified
+
+Verifying $42_TestLet_spec_let_with_schema$verify ...
+  [0.030 s, 6 proof obligations]  verified
+
+Boogie program verifier finished with 6 verified, 2 errors

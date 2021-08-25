@@ -577,6 +577,186 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 }
 
 // ----------------------------------------------------------------------------------
+// Native Vector implementation for element type `u64`
+
+
+function {:inline} $IsEqual'vec'u64''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
+}
+
+// Not inlined.
+function $IsValid'vec'u64''(v: Vec (int)): bool {
+    $IsValid'u64'(LenVec(v)) &&
+    (forall i: int:: InRangeVec(v, i) ==> $IsValid'u64'(ReadVec(v, i)))
+}
+
+
+function {:inline} $ContainsVec'u64'(v: Vec (int), e: int): bool {
+    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e))
+}
+
+function $IndexOfVec'u64'(v: Vec (int), e: int): int;
+axiom (forall v: Vec (int), e: int:: {$IndexOfVec'u64'(v, e)}
+    (var i := $IndexOfVec'u64'(v, e);
+     if (!$ContainsVec'u64'(v, e)) then i == -1
+     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e) &&
+        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'u64'(ReadVec(v, j), e))));
+
+
+function {:inline} $RangeVec'u64'(v: Vec (int)): $Range {
+    $Range(0, LenVec(v))
+}
+
+
+function {:inline} $EmptyVec'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_empty'u64'() returns (v: Vec (int)) {
+    v := EmptyVec();
+}
+
+function {:inline} $1_Vector_$empty'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_is_empty'u64'(v: Vec (int)) returns (b: bool) {
+    b := IsEmptyVec(v);
+}
+
+procedure {:inline 1} $1_Vector_push_back'u64'(m: $Mutation (Vec (int)), val: int) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
+}
+
+function {:inline} $1_Vector_$push_back'u64'(v: Vec (int), val: int): Vec (int) {
+    ExtendVec(v, val)
+}
+
+procedure {:inline 1} $1_Vector_pop_back'u64'(m: $Mutation (Vec (int))) returns (e: int, m': $Mutation (Vec (int))) {
+    var v: Vec (int);
+    var len: int;
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (len == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, len-1);
+    m' := $UpdateMutation(m, RemoveVec(v));
+}
+
+procedure {:inline 1} $1_Vector_append'u64'(m: $Mutation (Vec (int)), other: Vec (int)) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
+}
+
+procedure {:inline 1} $1_Vector_reverse'u64'(m: $Mutation (Vec (int))) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
+}
+
+procedure {:inline 1} $1_Vector_length'u64'(v: Vec (int)) returns (l: int) {
+    l := LenVec(v);
+}
+
+function {:inline} $1_Vector_$length'u64'(v: Vec (int)): int {
+    LenVec(v)
+}
+
+procedure {:inline 1} $1_Vector_borrow'u64'(v: Vec (int), i: int) returns (dst: int) {
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := ReadVec(v, i);
+}
+
+function {:inline} $1_Vector_$borrow'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_borrow_mut'u64'(m: $Mutation (Vec (int)), index: int)
+returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, index)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
+    m' := m;
+}
+
+function {:inline} $1_Vector_$borrow_mut'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_destroy_empty'u64'(v: Vec (int)) {
+    if (!IsEmptyVec(v)) {
+      call $ExecFailureAbort();
+    }
+}
+
+procedure {:inline 1} $1_Vector_swap'u64'(m: $Mutation (Vec (int)), i: int, j: int) returns (m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    m' := $UpdateMutation(m, SwapVec(v, i, j));
+}
+
+function {:inline} $1_Vector_$swap'u64'(v: Vec (int), i: int, j: int): Vec (int) {
+    SwapVec(v, i, j)
+}
+
+procedure {:inline 1} $1_Vector_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+
+    v := $Dereference(m);
+
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveAtVec(v, i));
+}
+
+procedure {:inline 1} $1_Vector_swap_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var len: int;
+    var v: Vec (int);
+
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
+}
+
+procedure {:inline 1} $1_Vector_contains'u64'(v: Vec (int), e: int) returns (res: bool)  {
+    res := $ContainsVec'u64'(v, e);
+}
+
+procedure {:inline 1}
+$1_Vector_index_of'u64'(v: Vec (int), e: int) returns (res1: bool, res2: int) {
+    res2 := $IndexOfVec'u64'(v, e);
+    if (res2 >= 0) {
+        res1 := true;
+    } else {
+        res1 := false;
+        res2 := 0;
+    }
+}
+
+
+// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
 
@@ -884,128 +1064,8 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 
-
-// Publishing a generator does nothing. Currently we just ignore this function and do not represent generators
-// at all because they are not publicly exposed by the Event module.
-// TODO: we should check (and abort with the right code) if a generator already exists for
-// the signer.
-
-procedure {:inline 1} $1_Event_publish_generator(signer: $signer) {
-}
-
-// Generic code for dealing with mutations (havoc) still requires type and memory declarations.
-type $1_Event_EventHandleGenerator;
-var $1_Event_EventHandleGenerator_$memory: $Memory $1_Event_EventHandleGenerator;
-
-// Abstract type of event handles.
-type $1_Event_EventHandle;
-
-// Global state to implement uniqueness of event handles.
-var $1_Event_EventHandles: [$1_Event_EventHandle]bool;
-
-// Universal representation of an an event. For each concrete event type, we generate a constructor.
-type {:datatype} $EventRep;
-
-// Representation of EventStore that consists of event streams.
-type {:datatype} $EventStore;
-function {:constructor} $EventStore(
-    counter: int, streams: [$1_Event_EventHandle]Multiset $EventRep): $EventStore;
-
-// Global state holding EventStore.
-var $es: $EventStore;
-
 procedure {:inline 1} $InitEventStore() {
-    assume $EventStore__is_empty($es);
 }
-
-function {:inline} $EventStore__is_empty(es: $EventStore): bool {
-    (counter#$EventStore(es) == 0) &&
-    (forall handle: $1_Event_EventHandle ::
-        (var stream := streams#$EventStore(es)[handle];
-        IsEmptyMultiset(stream)))
-}
-
-// This function returns (es1 - es2). This function assumes that es2 is a subset of es1.
-function {:inline} $EventStore__subtract(es1: $EventStore, es2: $EventStore): $EventStore {
-    $EventStore(counter#$EventStore(es1)-counter#$EventStore(es2),
-        (lambda handle: $1_Event_EventHandle ::
-        SubtractMultiset(
-            streams#$EventStore(es1)[handle],
-            streams#$EventStore(es2)[handle])))
-}
-
-function {:inline} $EventStore__is_subset(es1: $EventStore, es2: $EventStore): bool {
-    (counter#$EventStore(es1) <= counter#$EventStore(es2)) &&
-    (forall handle: $1_Event_EventHandle ::
-        IsSubsetMultiset(
-            streams#$EventStore(es1)[handle],
-            streams#$EventStore(es2)[handle]
-        )
-    )
-}
-
-procedure {:inline 1} $EventStore__diverge(es: $EventStore) returns (es': $EventStore) {
-    assume $EventStore__is_subset(es, es');
-}
-
-const $EmptyEventStore: $EventStore;
-axiom $EventStore__is_empty($EmptyEventStore);
-
-// ----------------------------------------------------------------------------------
-// Native Event implementation for element type `$42_TestEmits_DummyEvent`
-
-// Map type specific handle to universal one.
-type $1_Event_EventHandle'$42_TestEmits_DummyEvent' = $1_Event_EventHandle;
-
-function {:inline} $IsEqual'$1_Event_EventHandle'$42_TestEmits_DummyEvent''(a: $1_Event_EventHandle'$42_TestEmits_DummyEvent', b: $1_Event_EventHandle'$42_TestEmits_DummyEvent'): bool {
-    a == b
-}
-
-function $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''(h: $1_Event_EventHandle'$42_TestEmits_DummyEvent'): bool {
-    true
-}
-
-// Embed event `$42_TestEmits_DummyEvent` into universal $EventRep
-function {:constructor} $ToEventRep'$42_TestEmits_DummyEvent'(e: $42_TestEmits_DummyEvent): $EventRep;
-axiom (forall v1, v2: $42_TestEmits_DummyEvent :: {$ToEventRep'$42_TestEmits_DummyEvent'(v1), $ToEventRep'$42_TestEmits_DummyEvent'(v2)}
-    $IsEqual'$42_TestEmits_DummyEvent'(v1, v2) <==> $ToEventRep'$42_TestEmits_DummyEvent'(v1) == $ToEventRep'$42_TestEmits_DummyEvent'(v2));
-
-// Creates a new event handle. This ensures each time it is called that a unique new abstract event handler is
-// returned.
-// TODO: we should check (and abort with the right code) if no generator exists for the signer.
-procedure {:inline 1} $1_Event_new_event_handle'$42_TestEmits_DummyEvent'(signer: $signer) returns (res: $1_Event_EventHandle'$42_TestEmits_DummyEvent') {
-    assume $1_Event_EventHandles[res] == false;
-    $1_Event_EventHandles := $1_Event_EventHandles[res := true];
-}
-
-// This boogie procedure is the model of `emit_event`. This model abstracts away the `counter` behavior, thus not
-// mutating (or increasing) `counter`.
-procedure {:inline 1} $1_Event_emit_event'$42_TestEmits_DummyEvent'(handle_mut: $Mutation $1_Event_EventHandle'$42_TestEmits_DummyEvent', msg: $42_TestEmits_DummyEvent)
-returns (res: $Mutation $1_Event_EventHandle'$42_TestEmits_DummyEvent') {
-    var handle: $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    handle := $Dereference(handle_mut);
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, handle, msg);
-    res := handle_mut;
-}
-
-procedure {:inline 1} $1_Event_destroy_handle'$42_TestEmits_DummyEvent'(handle: $1_Event_EventHandle'$42_TestEmits_DummyEvent') {
-}
-
-function {:inline} $ExtendEventStore'$42_TestEmits_DummyEvent'(
-        es: $EventStore, handle: $1_Event_EventHandle'$42_TestEmits_DummyEvent', msg: $42_TestEmits_DummyEvent): $EventStore {
-    (var stream := streams#$EventStore(es)[handle];
-    (var stream_new := ExtendMultiset(stream, $ToEventRep'$42_TestEmits_DummyEvent'(msg));
-    $EventStore(counter#$EventStore(es)+1, streams#$EventStore(es)[handle := stream_new])))
-}
-
-function {:inline} $CondExtendEventStore'$42_TestEmits_DummyEvent'(
-        es: $EventStore, handle: $1_Event_EventHandle'$42_TestEmits_DummyEvent', msg: $42_TestEmits_DummyEvent, cond: bool): $EventStore {
-    if cond then
-        $ExtendEventStore'$42_TestEmits_DummyEvent'(es, handle, msg)
-    else
-        es
-}
-
 
 
 
@@ -1017,2024 +1077,43 @@ function {:inline} $CondExtendEventStore'$42_TestEmits_DummyEvent'(
 // Given Types for Type Parameters
 
 
-// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
-axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
-
-// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
-function {:inline} $1_Signer_is_signer(addr: int): bool;
-axiom (forall addr: int ::
-(var $$res := $1_Signer_is_signer(addr);
-$IsValid'bool'($$res)));
-
-// struct TestEmits::DummyEvent at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:7:5+52
-type {:datatype} $42_TestEmits_DummyEvent;
-function {:constructor} $42_TestEmits_DummyEvent($msg: int): $42_TestEmits_DummyEvent;
-function {:inline} $Update'$42_TestEmits_DummyEvent'_msg(s: $42_TestEmits_DummyEvent, x: int): $42_TestEmits_DummyEvent {
-    $42_TestEmits_DummyEvent(x)
-}
-function $IsValid'$42_TestEmits_DummyEvent'(s: $42_TestEmits_DummyEvent): bool {
-    $IsValid'u64'($msg#$42_TestEmits_DummyEvent(s))
-}
-function {:inline} $IsEqual'$42_TestEmits_DummyEvent'(s1: $42_TestEmits_DummyEvent, s2: $42_TestEmits_DummyEvent): bool {
-    s1 == s2
-}
-
-// fun TestEmits::opaque [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:275:5+197
-procedure {:inline 1} $42_TestEmits_opaque(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
+// fun VerifyLoopsWithMemoryOps::nested_loop1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:8:5+977
+procedure {:timeLimit 40} $42_VerifyLoopsWithMemoryOps_nested_loop1$verify(_$t0: $Mutation (Vec (int)), _$t1: $Mutation (Vec (int))) returns ($ret0: $Mutation (Vec (int)), $ret1: $Mutation (Vec (int)))
 {
     // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
+    var $t2: int;
     var $t3: int;
-    var $t4: $42_TestEmits_DummyEvent;
-    var $t5: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
+    var $t4: $Mutation (int);
+    var $t5: $Mutation (int);
+    var $t6: Vec (int);
+    var $t7: int;
     var $t8: int;
-    var $t9: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t5));
-    assume IsEmptyVec(p#$Mutation($t7));
-
-    // bytecode translation starts here
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:275:5+1
-    assume {:print "$at(2,8848,8849)"} true;
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,17,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:276:51+1
-    assume {:print "$at(2,8956,8957)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:276:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:276:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,8914,8959)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,17):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    // >> opaque call: TestEmits::callee($t0)
-    assume {:print "$at(2,8969,8983)"} true;
-
-    // opaque begin: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-
-    // assume Identical($t4, pack TestEmits::DummyEvent(7)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume ($t4 == $42_TestEmits_DummyEvent(7));
-
-    // assume Identical($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume $t5 == $t0;
-
-    // emit_event($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t5), $t4);
-
-    // assume Identical($t6, pack TestEmits::DummyEvent(77)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume ($t6 == $42_TestEmits_DummyEvent(77));
-
-    // assume Identical($t7, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume $t7 == $t0;
-
-    // emit_event($t6, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t7), $t6);
-
-    // opaque end: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-
-    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:51+1
-    assume {:print "$at(2,9035,9036)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // $t9 := pack TestEmits::DummyEvent($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:35+18
-    $t9 := $42_TestEmits_DummyEvent($t8);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t9) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(2,8993,9038)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,17):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,17,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-    assume {:print "$at(2,9044,9045)"} true;
-L1:
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::opaque [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:275:5+197
-procedure {:timeLimit 40} $42_TestEmits_opaque$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: $42_TestEmits_DummyEvent;
-    var $t5: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t8: int;
-    var $t9: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t5));
-    assume IsEmptyVec(p#$Mutation($t7));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:275:5+197
-    assume {:print "$at(2,8848,9045)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:275:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,17,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:276:51+1
-    assume {:print "$at(2,8956,8957)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:276:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:276:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,8914,8959)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,17):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    // >> opaque call: TestEmits::callee($t0)
-    assume {:print "$at(2,8969,8983)"} true;
-
-    // opaque begin: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-
-    // assume Identical($t4, pack TestEmits::DummyEvent(7)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume ($t4 == $42_TestEmits_DummyEvent(7));
-
-    // assume Identical($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume $t5 == $t0;
-
-    // emit_event($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t5), $t4);
-
-    // assume Identical($t6, pack TestEmits::DummyEvent(77)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume ($t6 == $42_TestEmits_DummyEvent(77));
-
-    // assume Identical($t7, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    assume $t7 == $t0;
-
-    // emit_event($t6, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t7), $t6);
-
-    // opaque end: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:277:9+14
-
-    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:51+1
-    assume {:print "$at(2,9035,9036)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // $t9 := pack TestEmits::DummyEvent($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:35+18
-    $t9 := $42_TestEmits_DummyEvent($t8);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t9) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(2,8993,9038)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,17):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:278:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,17,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-    assume {:print "$at(2,9044,9045)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:281:9+35
-    assume {:print "$at(2,9072,9107)"} true;
-    assert {:msg "assert_failed(2,9072,9107): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:282:9+35
-    assume {:print "$at(2,9116,9151)"} true;
-    assert {:msg "assert_failed(2,9116,9151): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:283:9+36
-    assume {:print "$at(2,9160,9196)"} true;
-    assert {:msg "assert_failed(2,9160,9196): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:284:9+35
-    assume {:print "$at(2,9205,9240)"} true;
-    assert {:msg "assert_failed(2,9205,9240): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:280:5+196
-    assume {:print "$at(2,9050,9246)"} true;
-    assert {:msg "assert_failed(2,9050,9246): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:280:5+196
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-    assume {:print "$at(2,9044,9045)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:279:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::callee [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:264:5+174
-procedure {:timeLimit 40} $42_TestEmits_callee$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:264:5+174
-    assume {:print "$at(2,8507,8681)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:264:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,0,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:265:51+1
-    assume {:print "$at(2,8615,8616)"} true;
-    $t1 := 7;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:265:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:265:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,8573,8618)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,0):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 77 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:266:51+2
-    assume {:print "$at(2,8670,8672)"} true;
-    $t4 := 77;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:266:35+19
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:266:9+46
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,8628,8674)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,0):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:266:55+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,0,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:267:5+1
-    assume {:print "$at(2,8680,8681)"} true;
-L1:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:270:9+16
-    assume {:print "$at(2,8731,8747)"} true;
-    assert {:msg "assert_failed(2,8731,8747): function does not abort under this condition"}
-      !false;
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:271:9+35
-    assume {:print "$at(2,8756,8791)"} true;
-    assert {:msg "assert_failed(2,8756,8791): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:272:9+36
-    assume {:print "$at(2,8800,8836)"} true;
-    assert {:msg "assert_failed(2,8800,8836): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:268:5+156
-    assume {:print "$at(2,8686,8842)"} true;
-    assert {:msg "assert_failed(2,8686,8842): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:268:5+156
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:267:5+1
-    assume {:print "$at(2,8680,8681)"} true;
-L2:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:268:5+156
-    assume {:print "$at(2,8686,8842)"} true;
-    assert {:msg "assert_failed(2,8686,8842): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:268:5+156
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::callee_partial [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:326:5+182
-procedure {:timeLimit 40} $42_TestEmits_callee_partial$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:326:5+182
-    assume {:print "$at(2,10620,10802)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:326:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,1,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:327:51+1
-    assume {:print "$at(2,10736,10737)"} true;
-    $t1 := 7;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:327:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:327:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,10694,10739)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,1):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 77 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:328:51+2
-    assume {:print "$at(2,10791,10793)"} true;
-    $t4 := 77;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:328:35+19
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:328:9+46
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,10749,10795)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,1):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:328:55+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,1,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:329:5+1
-    assume {:print "$at(2,10801,10802)"} true;
-L1:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:332:9+16
-    assume {:print "$at(2,10860,10876)"} true;
-    assert {:msg "assert_failed(2,10860,10876): function does not abort under this condition"}
-      !false;
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:333:9+35
-    assume {:print "$at(2,10885,10920)"} true;
-    assert {:msg "assert_failed(2,10885,10920): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:334:9+36
-    assume {:print "$at(2,10929,10965)"} true;
-    assert {:msg "assert_failed(2,10929,10965): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:334:9+36
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:329:5+1
-    assume {:print "$at(2,10801,10802)"} true;
-L2:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:330:5+197
-    assume {:print "$at(2,10807,11004)"} true;
-    assert {:msg "assert_failed(2,10807,11004): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:330:5+197
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:97:5+166
-procedure {:timeLimit 40} $42_TestEmits_conditional$verify(_$t0: int, _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t6: int;
-    var $t0: int;
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t1) == $Param(1);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:97:5+166
-    assume {:print "$at(2,3277,3443)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:97:5+166
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:97:5+1
-    assume {:print "$track_local(5,2,0):", $t0} $t0 == $t0;
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:97:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,2,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t2 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:17+1
-    assume {:print "$at(2,3364,3365)"} true;
-    $t2 := 7;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := >($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:15+1
-    call $t3 := $Gt($t0, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:99:31+6
-    assume {:print "$at(2,3399,3405)"} true;
-L0:
-
-    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:99:55+1
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:99:39+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t5) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:99:13+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,3381,3426)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,2):", $t6} $t6 == $t6;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-    assume {:print "$at(2,3356,3437)"} true;
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-L2:
-
-    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-L3:
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:98:9+81
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,2,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:101:5+1
-    assume {:print "$at(2,3442,3443)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1, Gt($t0, 7))) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:103:9+44
-    assume {:print "$at(2,3475,3519)"} true;
-    assert {:msg "assert_failed(2,3475,3519): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0), ($t0 > 7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1, Gt($t0, 7))) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:102:5+77
-    assume {:print "$at(2,3448,3525)"} true;
-    assert {:msg "assert_failed(2,3448,3525): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0), ($t0 > 7)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:102:5+77
-    $ret0 := $t1;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:101:5+1
-    assume {:print "$at(2,3442,3443)"} true;
-L5:
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:101:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_bool [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:124:5+168
-procedure {:timeLimit 40} $42_TestEmits_conditional_bool$verify(_$t0: bool, _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: $42_TestEmits_DummyEvent;
-    var $t4: int;
-    var $t0: bool;
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'bool': bool;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t1) == $Param(1);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:124:5+168
-    assume {:print "$at(2,4138,4306)"} true;
-    assume $IsValid'bool'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:124:5+168
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
-
-    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:124:5+1
-    assume {:print "$track_local(5,3,0):", $t0} $t0 == $t0;
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:124:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,3,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-    assume {:print "$at(2,4223,4300)"} true;
-    if ($t0) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:126:31+6
-    assume {:print "$at(2,4262,4268)"} true;
-L0:
-
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:126:55+1
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := pack TestEmits::DummyEvent($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:126:39+18
-    $t3 := $42_TestEmits_DummyEvent($t2);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t3) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:126:13+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,4244,4289)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,3):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-    assume {:print "$at(2,4223,4300)"} true;
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-L2:
-
-    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-L3:
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:125:9+77
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,3,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:128:5+1
-    assume {:print "$at(2,4305,4306)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:130:9+40
-    assume {:print "$at(2,4343,4383)"} true;
-    assert {:msg "assert_failed(2,4343,4383): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0), $t0); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:129:5+78
-    assume {:print "$at(2,4311,4389)"} true;
-    assert {:msg "assert_failed(2,4311,4389): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0), $t0); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:129:5+78
-    $ret0 := $t1;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:128:5+1
-    assume {:print "$at(2,4305,4306)"} true;
-L5:
-
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:128:5+1
-    $abort_code := $t4;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_missing_condition_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:115:5+194
-procedure {:timeLimit 40} $42_TestEmits_conditional_missing_condition_incorrect$verify(_$t0: int, _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t6: int;
-    var $t0: int;
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t1) == $Param(1);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:115:5+194
-    assume {:print "$at(2,3837,4031)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:115:5+194
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:115:5+1
-    assume {:print "$track_local(5,4,0):", $t0} $t0 == $t0;
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:115:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,4,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t2 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:17+1
-    assume {:print "$at(2,3952,3953)"} true;
-    $t2 := 7;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := >($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:15+1
-    call $t3 := $Gt($t0, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:117:31+6
-    assume {:print "$at(2,3987,3993)"} true;
-L0:
-
-    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:117:55+1
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:117:39+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t5) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:117:13+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,3969,4014)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,4):", $t6} $t6 == $t6;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-    assume {:print "$at(2,3944,4025)"} true;
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-L2:
-
-    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-L3:
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:116:9+81
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,4,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:119:5+1
-    assume {:print "$at(2,4030,4031)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:121:9+35
-    assume {:print "$at(2,4091,4126)"} true;
-    assert {:msg "assert_failed(2,4091,4126): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:120:5+96
-    assume {:print "$at(2,4036,4132)"} true;
-    assert {:msg "assert_failed(2,4036,4132): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:120:5+96
-    $ret0 := $t1;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:119:5+1
-    assume {:print "$at(2,4030,4031)"} true;
-L5:
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:119:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_multiple [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+370
-procedure {:timeLimit 40} $42_TestEmits_conditional_multiple$verify(_$t0: bool, _$t1: bool, _$t2: bool, _$t3: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t6: int;
-    var $t7: int;
-    var $t8: $42_TestEmits_DummyEvent;
     var $t9: int;
-    var $t10: $42_TestEmits_DummyEvent;
-    var $t0: bool;
-    var $t1: bool;
-    var $t2: bool;
-    var $t3: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'bool': bool;
-    $t0 := _$t0;
-    $t1 := _$t1;
-    $t2 := _$t2;
-    $t3 := _$t3;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t3) == $Param(3);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+370
-    assume {:print "$at(2,4395,4765)"} true;
-    assume $IsValid'bool'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+370
-    assume $IsValid'bool'($t1);
-
-    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+370
-    assume $IsValid'bool'($t2);
-
-    // assume WellFormed($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+370
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t3));
-
-    // trace_local[b0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+1
-    assume {:print "$track_local(5,5,0):", $t0} $t0 == $t0;
-
-    // trace_local[b1]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+1
-    assume {:print "$track_local(5,5,1):", $t1} $t1 == $t1;
-
-    // trace_local[b2]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+1
-    assume {:print "$track_local(5,5,2):", $t2} $t2 == $t2;
-
-    // trace_local[handle]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:133:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t3);
-    assume {:print "$track_local(5,5,3):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:134:9+78
-    assume {:print "$at(2,4505,4583)"} true;
-    if ($t0) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:134:9+78
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:134:9+78
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:135:31+6
-    assume {:print "$at(2,4545,4551)"} true;
-L0:
-
-    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:135:55+1
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:135:39+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t3, $t5) on_abort goto L11 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:135:13+45
-    call $t3 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t3, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,4527,4572)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,5):", $t6} $t6 == $t6;
-        goto L11;
-    }
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:137:13+2
-    assume {:print "$at(2,4597,4599)"} true;
-L2:
-
-    // if ($t1) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:137:9+78
-    if ($t1) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:137:9+78
-L4:
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:137:9+78
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:138:31+6
-    assume {:print "$at(2,4633,4639)"} true;
-L3:
-
-    // $t7 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:138:55+1
-    $t7 := 1;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := pack TestEmits::DummyEvent($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:138:39+18
-    $t8 := $42_TestEmits_DummyEvent($t7);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t3, $t8) on_abort goto L11 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:138:13+45
-    call $t3 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t3, $t8);
-    if ($abort_flag) {
-        assume {:print "$at(2,4615,4660)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,5):", $t6} $t6 == $t6;
-        goto L11;
-    }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:13+2
-    assume {:print "$at(2,4685,4687)"} true;
-L5:
-
-    // if ($t2) goto L6 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-    if ($t2) { goto L6; } else { goto L7; }
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-L7:
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-    goto L8;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:141:31+6
-    assume {:print "$at(2,4721,4727)"} true;
-L6:
-
-    // $t9 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:141:55+1
-    $t9 := 2;
-    assume $IsValid'u64'($t9);
-
-    // $t10 := pack TestEmits::DummyEvent($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:141:39+18
-    $t10 := $42_TestEmits_DummyEvent($t9);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t3, $t10) on_abort goto L11 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:141:13+45
-    call $t3 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t3, $t10);
-    if ($abort_flag) {
-        assume {:print "$at(2,4703,4748)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,5):", $t6} $t6 == $t6;
-        goto L11;
-    }
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-    assume {:print "$at(2,4681,4759)"} true;
-    goto L9;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-L8:
-
-    // destroy($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-L9:
-
-    // trace_local[handle]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:140:9+78
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t3);
-    assume {:print "$track_local(5,5,3):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:143:5+1
-    assume {:print "$at(2,4764,4765)"} true;
-L10:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:145:9+41
-    assume {:print "$at(2,4806,4847)"} true;
-    assert {:msg "assert_failed(2,4806,4847): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0), pack TestEmits::DummyEvent(1), $t3, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:146:9+41
-    assume {:print "$at(2,4856,4897)"} true;
-    assert {:msg "assert_failed(2,4856,4897): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0), $Dereference($t3), $42_TestEmits_DummyEvent(1), $t1); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0), pack TestEmits::DummyEvent(1), $t3, $t1), pack TestEmits::DummyEvent(2), $t3, $t2)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:147:9+41
-    assume {:print "$at(2,4906,4947)"} true;
-    assert {:msg "assert_failed(2,4906,4947): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0), $Dereference($t3), $42_TestEmits_DummyEvent(1), $t1), $Dereference($t3), $42_TestEmits_DummyEvent(2), $t2); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0), pack TestEmits::DummyEvent(1), $t3, $t1), pack TestEmits::DummyEvent(2), $t3, $t2)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:144:5+183
-    assume {:print "$at(2,4770,4953)"} true;
-    assert {:msg "assert_failed(2,4770,4953): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0), $Dereference($t3), $42_TestEmits_DummyEvent(1), $t1), $Dereference($t3), $42_TestEmits_DummyEvent(2), $t2); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:144:5+183
-    $ret0 := $t3;
-    return;
-
-    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:143:5+1
-    assume {:print "$at(2,4764,4765)"} true;
-L11:
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:143:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_multiple_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:150:5+292
-procedure {:timeLimit 40} $42_TestEmits_conditional_multiple_incorrect$verify(_$t0: bool, _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: $42_TestEmits_DummyEvent;
-    var $t4: int;
-    var $t5: int;
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: int;
-    var $t8: $42_TestEmits_DummyEvent;
-    var $t0: bool;
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'bool': bool;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t1) == $Param(1);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:150:5+292
-    assume {:print "$at(2,4959,5251)"} true;
-    assume $IsValid'bool'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:150:5+292
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
-
-    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:150:5+1
-    assume {:print "$track_local(5,6,0):", $t0} $t0 == $t0;
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:150:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,6,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:151:51+1
-    assume {:print "$at(2,5100,5101)"} true;
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := pack TestEmits::DummyEvent($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:151:35+18
-    $t3 := $42_TestEmits_DummyEvent($t2);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t3) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:151:9+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,5058,5103)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,6):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // $t5 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:152:51+1
-    assume {:print "$at(2,5155,5156)"} true;
-    $t5 := 1;
-    assume $IsValid'u64'($t5);
-
-    // $t6 := pack TestEmits::DummyEvent($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:152:35+18
-    $t6 := $42_TestEmits_DummyEvent($t5);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t6) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:152:9+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,5113,5158)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,6):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-    assume {:print "$at(2,5168,5245)"} true;
-    if ($t0) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:154:31+6
-    assume {:print "$at(2,5207,5213)"} true;
-L0:
-
-    // $t7 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:154:55+1
-    $t7 := 2;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := pack TestEmits::DummyEvent($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:154:39+18
-    $t8 := $42_TestEmits_DummyEvent($t7);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t8) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:154:13+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t8);
-    if ($abort_flag) {
-        assume {:print "$at(2,5189,5234)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,6):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-    assume {:print "$at(2,5168,5245)"} true;
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-L2:
-
-    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-L3:
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:153:9+77
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,6,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:156:5+1
-    assume {:print "$at(2,5250,5251)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:158:9+35
-    assume {:print "$at(2,5302,5337)"} true;
-    assert {:msg "assert_failed(2,5302,5337): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(1), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:159:9+35
-    assume {:print "$at(2,5346,5381)"} true;
-    assert {:msg "assert_failed(2,5346,5381): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(1), $t1), pack TestEmits::DummyEvent(2), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:160:9+35
-    assume {:print "$at(2,5390,5425)"} true;
-    assert {:msg "assert_failed(2,5390,5425): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(1)), $Dereference($t1), $42_TestEmits_DummyEvent(2)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(1), $t1), pack TestEmits::DummyEvent(2), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:157:5+175
-    assume {:print "$at(2,5256,5431)"} true;
-    assert {:msg "assert_failed(2,5256,5431): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(1)), $Dereference($t1), $42_TestEmits_DummyEvent(2)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:157:5+175
-    $ret0 := $t1;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:156:5+1
-    assume {:print "$at(2,5250,5251)"} true;
-L5:
-
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:156:5+1
-    $abort_code := $t4;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_multiple_same [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+375
-procedure {:timeLimit 40} $42_TestEmits_conditional_multiple_same$verify(_$t0: bool, _$t1: bool, _$t2: bool, _$t3: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t6: int;
-    var $t7: int;
-    var $t8: $42_TestEmits_DummyEvent;
-    var $t9: int;
-    var $t10: $42_TestEmits_DummyEvent;
-    var $t0: bool;
-    var $t1: bool;
-    var $t2: bool;
-    var $t3: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'bool': bool;
-    $t0 := _$t0;
-    $t1 := _$t1;
-    $t2 := _$t2;
-    $t3 := _$t3;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t3) == $Param(3);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+375
-    assume {:print "$at(2,5437,5812)"} true;
-    assume $IsValid'bool'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+375
-    assume $IsValid'bool'($t1);
-
-    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+375
-    assume $IsValid'bool'($t2);
-
-    // assume WellFormed($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+375
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t3));
-
-    // trace_local[b0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+1
-    assume {:print "$track_local(5,7,0):", $t0} $t0 == $t0;
-
-    // trace_local[b1]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+1
-    assume {:print "$track_local(5,7,1):", $t1} $t1 == $t1;
-
-    // trace_local[b2]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+1
-    assume {:print "$track_local(5,7,2):", $t2} $t2 == $t2;
-
-    // trace_local[handle]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:163:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t3);
-    assume {:print "$track_local(5,7,3):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:164:9+78
-    assume {:print "$at(2,5552,5630)"} true;
-    if ($t0) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:164:9+78
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:164:9+78
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:165:31+6
-    assume {:print "$at(2,5592,5598)"} true;
-L0:
-
-    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:165:55+1
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:165:39+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t3, $t5) on_abort goto L11 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:165:13+45
-    call $t3 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t3, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,5574,5619)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,7):", $t6} $t6 == $t6;
-        goto L11;
-    }
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:167:13+2
-    assume {:print "$at(2,5644,5646)"} true;
-L2:
-
-    // if ($t1) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:167:9+78
-    if ($t1) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:167:9+78
-L4:
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:167:9+78
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:168:31+6
-    assume {:print "$at(2,5680,5686)"} true;
-L3:
-
-    // $t7 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:168:55+1
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := pack TestEmits::DummyEvent($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:168:39+18
-    $t8 := $42_TestEmits_DummyEvent($t7);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t3, $t8) on_abort goto L11 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:168:13+45
-    call $t3 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t3, $t8);
-    if ($abort_flag) {
-        assume {:print "$at(2,5662,5707)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,7):", $t6} $t6 == $t6;
-        goto L11;
-    }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:13+2
-    assume {:print "$at(2,5732,5734)"} true;
-L5:
-
-    // if ($t2) goto L6 else goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-    if ($t2) { goto L6; } else { goto L7; }
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-L7:
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-    goto L8;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:171:31+6
-    assume {:print "$at(2,5768,5774)"} true;
-L6:
-
-    // $t9 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:171:55+1
-    $t9 := 0;
-    assume $IsValid'u64'($t9);
-
-    // $t10 := pack TestEmits::DummyEvent($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:171:39+18
-    $t10 := $42_TestEmits_DummyEvent($t9);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t3, $t10) on_abort goto L11 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:171:13+45
-    call $t3 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t3, $t10);
-    if ($abort_flag) {
-        assume {:print "$at(2,5750,5795)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,7):", $t6} $t6 == $t6;
-        goto L11;
-    }
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-    assume {:print "$at(2,5728,5806)"} true;
-    goto L9;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-L8:
-
-    // destroy($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-L9:
-
-    // trace_local[handle]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:170:9+78
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t3);
-    assume {:print "$track_local(5,7,3):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:173:5+1
-    assume {:print "$at(2,5811,5812)"} true;
-L10:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:175:9+41
-    assume {:print "$at(2,5858,5899)"} true;
-    assert {:msg "assert_failed(2,5858,5899): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0), pack TestEmits::DummyEvent(0), $t3, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:176:9+41
-    assume {:print "$at(2,5908,5949)"} true;
-    assert {:msg "assert_failed(2,5908,5949): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0), $Dereference($t3), $42_TestEmits_DummyEvent(0), $t1); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0), pack TestEmits::DummyEvent(0), $t3, $t1), pack TestEmits::DummyEvent(0), $t3, $t2)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:177:9+41
-    assume {:print "$at(2,5958,5999)"} true;
-    assert {:msg "assert_failed(2,5958,5999): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0), $Dereference($t3), $42_TestEmits_DummyEvent(0), $t1), $Dereference($t3), $42_TestEmits_DummyEvent(0), $t2); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t3, $t0), pack TestEmits::DummyEvent(0), $t3, $t1), pack TestEmits::DummyEvent(0), $t3, $t2)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:174:5+188
-    assume {:print "$at(2,5817,6005)"} true;
-    assert {:msg "assert_failed(2,5817,6005): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t3), $42_TestEmits_DummyEvent(0), $t0), $Dereference($t3), $42_TestEmits_DummyEvent(0), $t1), $Dereference($t3), $42_TestEmits_DummyEvent(0), $t2); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:174:5+188
-    $ret0 := $t3;
-    return;
-
-    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:173:5+1
-    assume {:print "$at(2,5811,5812)"} true;
-L11:
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:173:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_multiple_same_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:180:5+297
-procedure {:timeLimit 40} $42_TestEmits_conditional_multiple_same_incorrect$verify(_$t0: bool, _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: $42_TestEmits_DummyEvent;
-    var $t4: int;
-    var $t5: int;
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: int;
-    var $t8: $42_TestEmits_DummyEvent;
-    var $t0: bool;
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'bool': bool;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t1) == $Param(1);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:180:5+297
-    assume {:print "$at(2,6011,6308)"} true;
-    assume $IsValid'bool'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:180:5+297
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
-
-    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:180:5+1
-    assume {:print "$track_local(5,8,0):", $t0} $t0 == $t0;
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:180:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,8,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:181:51+1
-    assume {:print "$at(2,6157,6158)"} true;
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := pack TestEmits::DummyEvent($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:181:35+18
-    $t3 := $42_TestEmits_DummyEvent($t2);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t3) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:181:9+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,6115,6160)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,8):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // $t5 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:182:51+1
-    assume {:print "$at(2,6212,6213)"} true;
-    $t5 := 0;
-    assume $IsValid'u64'($t5);
-
-    // $t6 := pack TestEmits::DummyEvent($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:182:35+18
-    $t6 := $42_TestEmits_DummyEvent($t5);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t6) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:182:9+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,6170,6215)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,8):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-    assume {:print "$at(2,6225,6302)"} true;
-    if ($t0) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:184:31+6
-    assume {:print "$at(2,6264,6270)"} true;
-L0:
-
-    // $t7 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:184:55+1
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := pack TestEmits::DummyEvent($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:184:39+18
-    $t8 := $42_TestEmits_DummyEvent($t7);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t8) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:184:13+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t8);
-    if ($abort_flag) {
-        assume {:print "$at(2,6246,6291)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,8):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-    assume {:print "$at(2,6225,6302)"} true;
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-L2:
-
-    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-L3:
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:183:9+77
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,8,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:186:5+1
-    assume {:print "$at(2,6307,6308)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:188:9+35
-    assume {:print "$at(2,6364,6399)"} true;
-    assert {:msg "assert_failed(2,6364,6399): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:189:9+35
-    assume {:print "$at(2,6408,6443)"} true;
-    assert {:msg "assert_failed(2,6408,6443): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:190:9+35
-    assume {:print "$at(2,6452,6487)"} true;
-    assert {:msg "assert_failed(2,6452,6487): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:187:5+180
-    assume {:print "$at(2,6313,6493)"} true;
-    assert {:msg "assert_failed(2,6313,6493): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:187:5+180
-    $ret0 := $t1;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:186:5+1
-    assume {:print "$at(2,6307,6308)"} true;
-L5:
-
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:186:5+1
-    $abort_code := $t4;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::conditional_wrong_condition_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:106:5+192
-procedure {:timeLimit 40} $42_TestEmits_conditional_wrong_condition_incorrect$verify(_$t0: int, _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t6: int;
-    var $t0: int;
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t1) == $Param(1);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:106:5+192
-    assume {:print "$at(2,3531,3723)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:106:5+192
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:106:5+1
-    assume {:print "$track_local(5,9,0):", $t0} $t0 == $t0;
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:106:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,9,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t2 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:17+1
-    assume {:print "$at(2,3644,3645)"} true;
-    $t2 := 7;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := >($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:15+1
-    call $t3 := $Gt($t0, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:108:31+6
-    assume {:print "$at(2,3679,3685)"} true;
-L0:
-
-    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:108:55+1
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:108:39+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t5) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:108:13+45
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,3661,3706)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(5,9):", $t6} $t6 == $t6;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-    assume {:print "$at(2,3636,3717)"} true;
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-L2:
-
-    // destroy($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-L3:
-
-    // trace_local[handle]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:107:9+81
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,9,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:110:5+1
-    assume {:print "$at(2,3722,3723)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1, Gt($t0, 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:112:9+44
-    assume {:print "$at(2,3781,3825)"} true;
-    assert {:msg "assert_failed(2,3781,3825): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0), ($t0 > 0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1, Gt($t0, 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:111:5+103
-    assume {:print "$at(2,3728,3831)"} true;
-    assert {:msg "assert_failed(2,3728,3831): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0), ($t0 > 0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:111:5+103
-    $ret0 := $t1;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:110:5+1
-    assume {:print "$at(2,3722,3723)"} true;
-L5:
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:110:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::emits_in_schema [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:198:5+127
-procedure {:inline 1} $42_TestEmits_emits_in_schema(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // bytecode translation starts here
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:198:5+1
-    assume {:print "$at(2,6609,6610)"} true;
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,10,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:51+1
-    assume {:print "$at(2,6726,6727)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,6684,6729)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,10):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,10,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-    assume {:print "$at(2,6735,6736)"} true;
-L1:
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::emits_in_schema [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:198:5+127
-procedure {:timeLimit 40} $42_TestEmits_emits_in_schema$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:198:5+127
-    assume {:print "$at(2,6609,6736)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:198:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,10,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:51+1
-    assume {:print "$at(2,6726,6727)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,6684,6729)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,10):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:199:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,10,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-    assume {:print "$at(2,6735,6736)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:206:9+35
-    assume {:print "$at(2,6892,6927)"} true;
-    assert {:msg "assert_failed(2,6892,6927): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:201:5+64
-    assume {:print "$at(2,6741,6805)"} true;
-    assert {:msg "assert_failed(2,6741,6805): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:201:5+64
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-    assume {:print "$at(2,6735,6736)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:200:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::emits_in_schema_condition [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:209:5+158
-procedure {:timeLimit 40} $42_TestEmits_emits_in_schema_condition$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'), _$t1: int) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t1: int;
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:209:5+158
-    assume {:print "$at(2,6939,7097)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:209:5+158
-    assume $IsValid'u64'($t1);
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:209:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,11,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:209:5+1
-    assume {:print "$track_local(5,11,1):", $t1} $t1 == $t1;
-
-    // $t2 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:17+1
-    assume {:print "$at(2,7040,7041)"} true;
-    $t2 := 7;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := >($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:15+1
-    call $t3 := $Gt($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:9+58
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:9+58
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:9+58
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:211:29+6
-    assume {:print "$at(2,7073,7079)"} true;
-L0:
-
-    // TestEmits::emits_in_schema($t0) on_abort goto L5 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:211:13+23
-    call $t0 := $42_TestEmits_emits_in_schema($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,7057,7080)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,11):", $t4} $t4 == $t4;
-        goto L5;
-    }
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:211:13+23
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:9+58
-    assume {:print "$at(2,7032,7090)"} true;
-L2:
-
-    // destroy($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:210:9+58
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:212:10+1
-    assume {:print "$at(2,7090,7091)"} true;
-L3:
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:212:10+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,11,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:213:5+1
-    assume {:print "$at(2,7096,7097)"} true;
-L4:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0, Gt($t1, 7))) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:206:9+35
-    assume {:print "$at(2,6892,6927)"} true;
-    assert {:msg "assert_failed(2,6892,6927): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0), ($t1 > 7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0, Gt($t1, 7))) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:214:5+84
-    assume {:print "$at(2,7102,7186)"} true;
-    assert {:msg "assert_failed(2,7102,7186): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0), ($t1 > 7)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:214:5+84
-    $ret0 := $t0;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:213:5+1
-    assume {:print "$at(2,7096,7097)"} true;
-L5:
-
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:213:5+1
-    $abort_code := $t4;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::multiple [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:39:5+175
-procedure {:timeLimit 40} $42_TestEmits_multiple$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:39:5+175
-    assume {:print "$at(2,1162,1337)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:39:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,12,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:40:51+1
-    assume {:print "$at(2,1272,1273)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:40:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:40:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,1230,1275)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,12):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:41:51+1
-    assume {:print "$at(2,1327,1328)"} true;
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:41:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:41:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,1285,1330)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,12):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:41:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,12,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:42:5+1
-    assume {:print "$at(2,1336,1337)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:44:9+35
-    assume {:print "$at(2,1366,1401)"} true;
-    assert {:msg "assert_failed(2,1366,1401): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:45:9+35
-    assume {:print "$at(2,1410,1445)"} true;
-    assert {:msg "assert_failed(2,1410,1445): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:43:5+109
-    assume {:print "$at(2,1342,1451)"} true;
-    assert {:msg "assert_failed(2,1342,1451): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:43:5+109
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:42:5+1
-    assume {:print "$at(2,1336,1337)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:42:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::multiple_different_handle [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:75:5+454
-procedure {:timeLimit 40} $42_TestEmits_multiple_different_handle$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'), _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'), $ret1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: $42_TestEmits_DummyEvent;
-    var $t4: int;
-    var $t5: int;
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: int;
-    var $t8: $42_TestEmits_DummyEvent;
-    var $t9: int;
-    var $t10: $42_TestEmits_DummyEvent;
+    var $t10: bool;
     var $t11: int;
-    var $t12: $42_TestEmits_DummyEvent;
-    var $t13: int;
-    var $t14: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
+    var $t12: int;
+    var $t13: bool;
+    var $t14: int;
+    var $t15: int;
+    var $t16: int;
+    var $t17: int;
+    var $t18: int;
+    var $t19: bool;
+    var $t20: int;
+    var $t21: int;
+    var $t22: int;
+    var $t23: $Mutation (int);
+    var $t24: $Mutation (int);
+    var $t0: $Mutation (Vec (int));
+    var $t1: $Mutation (Vec (int));
+    var $temp_0'u64': int;
+    var $temp_0'vec'u64'': Vec (int);
     $t0 := _$t0;
     $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t4));
+    assume IsEmptyVec(p#$Mutation($t5));
+    assume IsEmptyVec(p#$Mutation($t23));
+    assume IsEmptyVec(p#$Mutation($t24));
 
     // verification entrypoint assumptions
     call $InitVerification();
@@ -3042,1374 +1121,581 @@ procedure {:timeLimit 40} $42_TestEmits_multiple_different_handle$verify(_$t0: $
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:75:5+454
-    assume {:print "$at(2,2391,2845)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:8:5+977
+    assume {:print "$at(2,119,1096)"} true;
+    assume $IsValid'vec'u64''($Dereference($t0));
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:75:5+454
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:8:5+977
+    assume $IsValid'vec'u64''($Dereference($t1));
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:75:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,13,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:8:5+1
+    $temp_0'vec'u64'' := $Dereference($t0);
+    assume {:print "$track_local(1,0,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // trace_local[handle2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:75:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,13,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // trace_local[b]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:8:5+1
+    $temp_0'vec'u64'' := $Dereference($t1);
+    assume {:print "$track_local(1,0,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:76:51+1
-    assume {:print "$at(2,2557,2558)"} true;
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
+    // $t6 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:9:37+1
+    assume {:print "$at(2,223,224)"} true;
+    $t6 := $Dereference($t0);
 
-    // $t3 := pack TestEmits::DummyEvent($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:76:35+18
-    $t3 := $42_TestEmits_DummyEvent($t2);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t3) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:76:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t3);
+    // $t7 := Vector::length<u64>($t6) on_abort goto L15 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:9:22+17
+    call $t7 := $1_Vector_length'u64'($t6);
     if ($abort_flag) {
-        assume {:print "$at(2,2515,2560)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,13):", $t4} $t4 == $t4;
-        goto L2;
+        assume {:print "$at(2,208,225)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        goto L15;
     }
 
-    // $t5 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:77:51+1
-    assume {:print "$at(2,2612,2613)"} true;
-    $t5 := 0;
-    assume $IsValid'u64'($t5);
+    // trace_local[length]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:9:13+6
+    assume {:print "$track_local(1,0,3):", $t7} $t7 == $t7;
 
-    // $t6 := pack TestEmits::DummyEvent($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:77:35+18
-    $t6 := $42_TestEmits_DummyEvent($t5);
+    // assume Gt($t7, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:11:13+18
+    assume {:print "$at(2,254,272)"} true;
+    assume ($t7 > 0);
 
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t6) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:77:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,2570,2615)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,13):", $t4} $t4 == $t4;
-        goto L2;
-    }
+    // assume Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:12:13+24
+    assume {:print "$at(2,285,309)"} true;
+    assume $IsEqual'u64'($t7, LenVec($Dereference($t1)));
 
-    // $t7 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:78:51+1
-    assume {:print "$at(2,2667,2668)"} true;
-    $t7 := 1;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := pack TestEmits::DummyEvent($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:78:35+18
-    $t8 := $42_TestEmits_DummyEvent($t7);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t8) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:78:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t8);
-    if ($abort_flag) {
-        assume {:print "$at(2,2625,2670)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,13):", $t4} $t4 == $t4;
-        goto L2;
-    }
-
-    // $t9 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:79:52+1
-    assume {:print "$at(2,2723,2724)"} true;
+    // $t9 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:14:17+1
+    assume {:print "$at(2,337,338)"} true;
     $t9 := 0;
     assume $IsValid'u64'($t9);
 
-    // $t10 := pack TestEmits::DummyEvent($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:79:36+18
-    $t10 := $42_TestEmits_DummyEvent($t9);
+    // trace_local[i]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:14:13+1
+    assume {:print "$track_local(1,0,2):", $t9} $t9 == $t9;
 
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t10) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:79:9+46
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t10);
-    if ($abort_flag) {
-        assume {:print "$at(2,2680,2726)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,13):", $t4} $t4 == $t4;
-        goto L2;
-    }
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:16:13+193
+    assume {:print "$at(2,369,562)"} true;
+L10:
 
-    // $t11 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:80:52+1
-    assume {:print "$at(2,2779,2780)"} true;
-    $t11 := 0;
+    // assert Eq<u64>($t7, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:17:17+24
+    assume {:print "$at(2,392,416)"} true;
+    assert {:msg "assert_failed(2,392,416): base case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t0)));
+
+    // assert Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:18:17+24
+    assume {:print "$at(2,433,457)"} true;
+    assert {:msg "assert_failed(2,433,457): base case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // assert Le($t9, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:19:17+19
+    assume {:print "$at(2,474,493)"} true;
+    assert {:msg "assert_failed(2,474,493): base case of the loop invariant does not hold"}
+      ($t9 <= $t7);
+
+    // assert forall n: Range(0, $t9): Eq<u64>(Index($t0, n), Index($t1, n)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    assume {:print "$at(2,510,548)"} true;
+    assert {:msg "assert_failed(2,510,548): base case of the loop invariant does not hold"}
+      (var $range_0 := $Range(0, $t9); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var n := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), n), ReadVec($Dereference($t1), n))))));
+
+    // havoc[val]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t10;
+    assume $IsValid'bool'($t10);
+
+    // havoc[val]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t11;
     assume $IsValid'u64'($t11);
 
-    // $t12 := pack TestEmits::DummyEvent($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:80:36+18
-    $t12 := $42_TestEmits_DummyEvent($t11);
+    // havoc[val]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t12;
+    assume $IsValid'u64'($t12);
 
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t12) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:80:9+46
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t12);
-    if ($abort_flag) {
-        assume {:print "$at(2,2736,2782)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,13):", $t4} $t4 == $t4;
-        goto L2;
-    }
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t13;
+    assume $IsValid'bool'($t13);
 
-    // $t13 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:81:52+1
-    assume {:print "$at(2,2835,2836)"} true;
-    $t13 := 1;
-    assume $IsValid'u64'($t13);
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t14;
+    assume $IsValid'u64'($t14);
 
-    // $t14 := pack TestEmits::DummyEvent($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:81:36+18
-    $t14 := $42_TestEmits_DummyEvent($t13);
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t15;
+    assume $IsValid'u64'($t15);
 
-    // Event::emit_event<TestEmits::DummyEvent>($t1, $t14) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:81:9+46
-    call $t1 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t1, $t14);
-    if ($abort_flag) {
-        assume {:print "$at(2,2792,2838)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,13):", $t4} $t4 == $t4;
-        goto L2;
-    }
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t16;
+    assume $IsValid'u64'($t16);
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:81:55+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,13,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // havoc[val]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t17;
+    assume $IsValid'u64'($t17);
 
-    // trace_local[handle2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:81:55+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,13,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // havoc[val]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t18;
+    assume $IsValid'u64'($t18);
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:82:5+1
-    assume {:print "$at(2,2844,2845)"} true;
+    // havoc[val]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t19;
+    assume $IsValid'bool'($t19);
+
+    // havoc[val]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t20;
+    assume $IsValid'u64'($t20);
+
+    // havoc[val]($t21) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t21;
+    assume $IsValid'u64'($t21);
+
+    // havoc[val]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t22;
+    assume $IsValid'u64'($t22);
+
+    // havoc[mut]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $temp_0'vec'u64'';
+    $t0 := $UpdateMutation($t0, $temp_0'vec'u64'');
+    assume $IsValid'vec'u64''($Dereference($t0));
+
+    // havoc[mut]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $temp_0'vec'u64'';
+    $t1 := $UpdateMutation($t1, $temp_0'vec'u64'');
+    assume $IsValid'vec'u64''($Dereference($t1));
+
+    // havoc[mut_all]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t23;
+    assume $IsValid'u64'($Dereference($t23));
+
+    // havoc[mut_all]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    havoc $t24;
+    assume $IsValid'u64'($Dereference($t24));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    assume !$abort_flag;
+
+    // assume Eq<u64>($t7, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:17:17+24
+    assume {:print "$at(2,392,416)"} true;
+    assume $IsEqual'u64'($t7, LenVec($Dereference($t0)));
+
+    // assume Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:18:17+24
+    assume {:print "$at(2,433,457)"} true;
+    assume $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // assume Le($t9, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:19:17+19
+    assume {:print "$at(2,474,493)"} true;
+    assume ($t9 <= $t7);
+
+    // assume forall n: Range(0, $t9): Eq<u64>(Index($t0, n), Index($t1, n)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    assume {:print "$at(2,510,548)"} true;
+    assume (var $range_0 := $Range(0, $t9); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var n := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), n), ReadVec($Dereference($t1), n))))));
+
+    // $t10 := <($t9, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:22:16+1
+    assume {:print "$at(2,579,580)"} true;
+    call $t10 := $Lt($t9, $t7);
+
+    // if ($t10) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:15:9+659
+    assume {:print "$at(2,348,1007)"} true;
+    if ($t10) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:15:9+659
 L1:
 
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:84:9+35
-    assume {:print "$at(2,2891,2926)"} true;
-    assert {:msg "assert_failed(2,2891,2926): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:15:9+659
+    goto L2;
 
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:85:9+35
-    assume {:print "$at(2,2935,2970)"} true;
-    assert {:msg "assert_failed(2,2935,2970): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:24:40+1
+    assume {:print "$at(2,641,642)"} true;
+L0:
 
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:86:9+35
-    assume {:print "$at(2,2979,3014)"} true;
-    assert {:msg "assert_failed(2,2979,3014): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
+    // $t23 := Vector::borrow_mut<u64>($t0, $t9) on_abort goto L15 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:24:21+24
+    call $t23,$t0 := $1_Vector_borrow_mut'u64'($t0, $t9);
+    if ($abort_flag) {
+        assume {:print "$at(2,622,646)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        goto L15;
+    }
 
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:87:9+36
-    assume {:print "$at(2,3023,3059)"} true;
-    assert {:msg "assert_failed(2,3023,3059): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
+    // trace_local[x]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:24:17+1
+    $temp_0'u64' := $Dereference($t23);
+    assume {:print "$track_local(1,0,4):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:88:9+36
-    assume {:print "$at(2,3068,3104)"} true;
-    assert {:msg "assert_failed(2,3068,3104): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
+    // $t24 := Vector::borrow_mut<u64>($t1, $t9) on_abort goto L15 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:25:21+24
+    assume {:print "$at(2,668,692)"} true;
+    call $t24,$t1 := $1_Vector_borrow_mut'u64'($t1, $t9);
+    if ($abort_flag) {
+        assume {:print "$at(2,668,692)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        goto L15;
+    }
 
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(1), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:89:9+36
-    assume {:print "$at(2,3113,3149)"} true;
-    assert {:msg "assert_failed(2,3113,3149): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
+    // trace_local[y]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:25:17+1
+    $temp_0'u64' := $Dereference($t24);
+    assume {:print "$track_local(1,0,5):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
 
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(0), $t1), pack TestEmits::DummyEvent(1), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:83:5+305
-    assume {:print "$at(2,2850,3155)"} true;
-    assert {:msg "assert_failed(2,2850,3155): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(0)), $Dereference($t1), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    assume {:print "$at(2,729,875)"} true;
+L9:
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:83:5+305
+    // havoc[val]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t11;
+    assume $IsValid'u64'($t11);
+
+    // havoc[val]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t12;
+    assume $IsValid'u64'($t12);
+
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t13;
+    assume $IsValid'bool'($t13);
+
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t14;
+    assume $IsValid'u64'($t14);
+
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t15;
+    assume $IsValid'u64'($t15);
+
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t16;
+    assume $IsValid'u64'($t16);
+
+    // havoc[val]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t17;
+    assume $IsValid'u64'($t17);
+
+    // havoc[val]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t18;
+    assume $IsValid'u64'($t18);
+
+    // havoc[val]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t19;
+    assume $IsValid'bool'($t19);
+
+    // havoc[val]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t20;
+    assume $IsValid'u64'($t20);
+
+    // havoc[val]($t21) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t21;
+    assume $IsValid'u64'($t21);
+
+    // havoc[val]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $t22;
+    assume $IsValid'u64'($t22);
+
+    // havoc[mut]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $temp_0'u64';
+    $t23 := $UpdateMutation($t23, $temp_0'u64');
+    assume $IsValid'u64'($Dereference($t23));
+
+    // havoc[mut]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    havoc $temp_0'u64';
+    $t24 := $UpdateMutation($t24, $temp_0'u64');
+    assume $IsValid'u64'($Dereference($t24));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:27:17+146
+    assume !$abort_flag;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    assume {:print "$at(2,761,762)"} true;
+L3:
+
+    // havoc[val]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $t11;
+    assume $IsValid'u64'($t11);
+
+    // havoc[val]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $t12;
+    assume $IsValid'u64'($t12);
+
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $t13;
+    assume $IsValid'bool'($t13);
+
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $t14;
+    assume $IsValid'u64'($t14);
+
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $t15;
+    assume $IsValid'u64'($t15);
+
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $t16;
+    assume $IsValid'u64'($t16);
+
+    // havoc[mut]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    havoc $temp_0'u64';
+    $t24 := $UpdateMutation($t24, $temp_0'u64');
+    assume $IsValid'u64'($Dereference($t24));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:26+1
+    assume !$abort_flag;
+
+    // $t11 := read_ref($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:25+2
+    $t11 := $Dereference($t23);
+
+    // $t12 := read_ref($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:31+2
+    $t12 := $Dereference($t24);
+
+    // $t13 := <=($t11, $t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:28+2
+    call $t13 := $Le($t11, $t12);
+
+    // if ($t13) goto L4 else goto L16 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:21+67
+    if ($t13) { goto L4; } else { goto L16; }
+
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:28:21+67
+L5:
+
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:31:27+1
+    assume {:print "$at(2,851,852)"} true;
+L6:
+
+    // $t14 := read_ref($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:31:26+2
+    $t14 := $Dereference($t24);
+
+    // $t15 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:31:31+1
+    $t15 := 1;
+    assume $IsValid'u64'($t15);
+
+    // $t16 := +($t14, $t15) on_abort goto L15 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:31:29+1
+    call $t16 := $AddU64($t14, $t15);
+    if ($abort_flag) {
+        assume {:print "$at(2,853,854)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        goto L15;
+    }
+
+    // write_ref($t24, $t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:31:21+11
+    $t24 := $UpdateMutation($t24, $t16);
+
+    // goto L11 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:31:32+1
+    goto L11;
+
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:33:22+1
+    assume {:print "$at(2,898,899)"} true;
+L4:
+
+    // $t17 := read_ref($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:33:21+2
+    $t17 := $Dereference($t24);
+
+    // $t18 := read_ref($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:33:27+2
+    $t18 := $Dereference($t23);
+
+    // $t19 := <=($t17, $t18) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:33:24+2
+    call $t19 := $Le($t17, $t18);
+
+    // if ($t19) goto L7 else goto L17 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:33:17+59
+    if ($t19) { goto L7; } else { goto L17; }
+
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:36:23+1
+    assume {:print "$at(2,976,977)"} true;
+L8:
+
+    // $t20 := read_ref($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:36:22+2
+    $t20 := $Dereference($t23);
+
+    // $t21 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:36:27+1
+    $t21 := 1;
+    assume $IsValid'u64'($t21);
+
+    // $t22 := +($t20, $t21) on_abort goto L15 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:36:25+1
+    call $t22 := $AddU64($t20, $t21);
+    if ($abort_flag) {
+        assume {:print "$at(2,978,979)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t8} $t8 == $t8;
+        goto L15;
+    }
+
+    // write_ref($t23, $t22) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:36:17+11
+    $t23 := $UpdateMutation($t23, $t22);
+
+    // goto L12 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:36:28+1
+    goto L12;
+
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:34:21+5
+    assume {:print "$at(2,929,934)"} true;
+L7:
+
+    // write_back[Reference($t1)[]]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:34:21+5
+    $t1 := $UpdateMutation($t1, UpdateVec($Dereference($t1), ReadVec(p#$Mutation($t24), LenVec(p#$Mutation($t1))), $Dereference($t24)));
+
+    // destroy($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:34:21+5
+
+    // write_back[Reference($t0)[]]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:34:21+5
+    $t0 := $UpdateMutation($t0, UpdateVec($Dereference($t0), ReadVec(p#$Mutation($t23), LenVec(p#$Mutation($t0))), $Dereference($t23)));
+
+    // destroy($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:34:21+5
+
+    // goto L13 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:37:14+1
+    assume {:print "$at(2,996,997)"} true;
+    goto L13;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:39:9+72
+    assume {:print "$at(2,1017,1089)"} true;
+L2:
+
+    // assert forall m: Range(0, $t7): Eq<u64>(Index($t0, m), Index($t1, m)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:40:13+43
+    assume {:print "$at(2,1036,1079)"} true;
+    assert {:msg "assert_failed(2,1036,1079): unknown assertion failed"}
+      (var $range_0 := $Range(0, $t7); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var m := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), m), ReadVec($Dereference($t1), m))))));
+
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:41:10+1
+    assume {:print "$at(2,1089,1090)"} true;
+    $temp_0'vec'u64'' := $Dereference($t0);
+    assume {:print "$track_local(1,0,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
+
+    // trace_local[b]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:41:10+1
+    $temp_0'vec'u64'' := $Dereference($t1);
+    assume {:print "$track_local(1,0,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
+
+    // goto L14 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:41:10+1
+    goto L14;
+
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:39:9+72
+    // Loop invariant checking block for the loop started with header: L3
+    assume {:print "$at(2,1017,1089)"} true;
+L11:
+
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:39:9+72
+    assume false;
+    return;
+
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:39:9+72
+    // Loop invariant checking block for the loop started with header: L9
+L12:
+
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:39:9+72
+    assume false;
+    return;
+
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:39:9+72
+    // Loop invariant checking block for the loop started with header: L10
+L13:
+
+    // assert Eq<u64>($t7, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:17:17+24
+    assume {:print "$at(2,392,416)"} true;
+    assert {:msg "assert_failed(2,392,416): induction case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t0)));
+
+    // assert Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:18:17+24
+    assume {:print "$at(2,433,457)"} true;
+    assert {:msg "assert_failed(2,433,457): induction case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // assert Le($t9, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:19:17+19
+    assume {:print "$at(2,474,493)"} true;
+    assert {:msg "assert_failed(2,474,493): induction case of the loop invariant does not hold"}
+      ($t9 <= $t7);
+
+    // assert forall n: Range(0, $t9): Eq<u64>(Index($t0, n), Index($t1, n)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    assume {:print "$at(2,510,548)"} true;
+    assert {:msg "assert_failed(2,510,548): induction case of the loop invariant does not hold"}
+      (var $range_0 := $Range(0, $t9); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var n := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), n), ReadVec($Dereference($t1), n))))));
+
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:20:17+38
+    assume false;
+    return;
+
+    // label L14 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:42:5+1
+    assume {:print "$at(2,1095,1096)"} true;
+L14:
+
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:44:9+16
+    assume {:print "$at(2,1129,1145)"} true;
+    assert {:msg "assert_failed(2,1129,1145): function does not abort under this condition"}
+      !false;
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:44:9+16
     $ret0 := $t0;
     $ret1 := $t1;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:82:5+1
-    assume {:print "$at(2,2844,2845)"} true;
-L2:
+    // label L15 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:42:5+1
+    assume {:print "$at(2,1095,1096)"} true;
+L15:
 
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:82:5+1
-    $abort_code := $t4;
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:43:5+50
+    assume {:print "$at(2,1101,1151)"} true;
+    assert {:msg "assert_failed(2,1101,1151): abort not covered by any of the `aborts_if` clauses"}
+      false;
+
+    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:43:5+50
+    $abort_code := $t8;
     $abort_flag := true;
     return;
 
-}
+    // label L16 at <internal>:1:1+10
+    assume {:print "$at(1,0,10)"} true;
+L16:
 
-// fun TestEmits::multiple_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:48:5+185
-procedure {:timeLimit 40} $42_TestEmits_multiple_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
+    // destroy($t0) at <internal>:1:1+10
 
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
+    // destroy($t1) at <internal>:1:1+10
 
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:48:5+185
-    assume {:print "$at(2,1457,1642)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
+    // destroy($t23) at <internal>:1:1+10
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:48:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,14,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // goto L5 at <internal>:1:1+10
+    goto L5;
 
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:49:51+1
-    assume {:print "$at(2,1577,1578)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // label L17 at <internal>:1:1+10
+L17:
 
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:49:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
+    // destroy($t0) at <internal>:1:1+10
 
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:49:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,1535,1580)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,14):", $t3} $t3 == $t3;
-        goto L2;
-    }
+    // destroy($t1) at <internal>:1:1+10
 
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:50:51+1
-    assume {:print "$at(2,1632,1633)"} true;
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
+    // destroy($t24) at <internal>:1:1+10
 
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:50:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:50:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,1590,1635)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,14):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:50:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,14,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:51:5+1
-    assume {:print "$at(2,1641,1642)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:53:9+35
-    assume {:print "$at(2,1681,1716)"} true;
-    assert {:msg "assert_failed(2,1681,1716): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:54:9+35
-    assume {:print "$at(2,1725,1760)"} true;
-    assert {:msg "assert_failed(2,1725,1760): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(2), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:55:9+35
-    assume {:print "$at(2,1769,1804)"} true;
-    assert {:msg "assert_failed(2,1769,1804): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t0), $42_TestEmits_DummyEvent(2)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(2), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:52:5+163
-    assume {:print "$at(2,1647,1810)"} true;
-    assert {:msg "assert_failed(2,1647,1810): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t0), $42_TestEmits_DummyEvent(2)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:52:5+163
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:51:5+1
-    assume {:print "$at(2,1641,1642)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:51:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
+    // goto L8 at <internal>:1:1+10
+    goto L8;
 
 }
 
-// fun TestEmits::multiple_same [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:58:5+180
-procedure {:timeLimit 40} $42_TestEmits_multiple_same$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:58:5+180
-    assume {:print "$at(2,1816,1996)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:58:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,15,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:59:51+1
-    assume {:print "$at(2,1931,1932)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:59:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:59:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,1889,1934)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,15):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:60:51+1
-    assume {:print "$at(2,1986,1987)"} true;
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:60:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:60:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,1944,1989)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,15):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:60:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,15,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:61:5+1
-    assume {:print "$at(2,1995,1996)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:63:9+35
-    assume {:print "$at(2,2030,2065)"} true;
-    assert {:msg "assert_failed(2,2030,2065): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:64:9+35
-    assume {:print "$at(2,2074,2109)"} true;
-    assert {:msg "assert_failed(2,2074,2109): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:62:5+114
-    assume {:print "$at(2,2001,2115)"} true;
-    assert {:msg "assert_failed(2,2001,2115): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:62:5+114
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:61:5+1
-    assume {:print "$at(2,1995,1996)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:61:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::multiple_same_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:67:5+135
-procedure {:timeLimit 40} $42_TestEmits_multiple_same_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:67:5+135
-    assume {:print "$at(2,2121,2256)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:67:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,16,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:68:51+1
-    assume {:print "$at(2,2246,2247)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:68:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:68:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,2204,2249)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,16):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:68:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,16,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:69:5+1
-    assume {:print "$at(2,2255,2256)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:71:9+35
-    assume {:print "$at(2,2300,2335)"} true;
-    assert {:msg "assert_failed(2,2300,2335): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:72:9+35
-    assume {:print "$at(2,2344,2379)"} true;
-    assert {:msg "assert_failed(2,2344,2379): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:70:5+124
-    assume {:print "$at(2,2261,2385)"} true;
-    assert {:msg "assert_failed(2,2261,2385): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:70:5+124
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:69:5+1
-    assume {:print "$at(2,2255,2256)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:69:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::opaque_completeness_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:310:5+220
-procedure {:timeLimit 40} $42_TestEmits_opaque_completeness_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: $42_TestEmits_DummyEvent;
-    var $t5: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t8: int;
-    var $t9: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t5));
-    assume IsEmptyVec(p#$Mutation($t7));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:310:5+220
-    assume {:print "$at(2,10042,10262)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:310:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,18,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:311:51+1
-    assume {:print "$at(2,10173,10174)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:311:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:311:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,10131,10176)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,18):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    // >> opaque call: TestEmits::callee($t0)
-    assume {:print "$at(2,10186,10200)"} true;
-
-    // opaque begin: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-
-    // assume Identical($t4, pack TestEmits::DummyEvent(7)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    assume ($t4 == $42_TestEmits_DummyEvent(7));
-
-    // assume Identical($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    assume $t5 == $t0;
-
-    // emit_event($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t5), $t4);
-
-    // assume Identical($t6, pack TestEmits::DummyEvent(77)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    assume ($t6 == $42_TestEmits_DummyEvent(77));
-
-    // assume Identical($t7, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    assume $t7 == $t0;
-
-    // emit_event($t6, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t7), $t6);
-
-    // opaque end: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:312:9+14
-
-    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:313:51+1
-    assume {:print "$at(2,10252,10253)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // $t9 := pack TestEmits::DummyEvent($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:313:35+18
-    $t9 := $42_TestEmits_DummyEvent($t8);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t9) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:313:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(2,10210,10255)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,18):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:313:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,18,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:314:5+1
-    assume {:print "$at(2,10261,10262)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:316:9+35
-    assume {:print "$at(2,10312,10347)"} true;
-    assert {:msg "assert_failed(2,10312,10347): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:317:9+35
-    assume {:print "$at(2,10356,10391)"} true;
-    assert {:msg "assert_failed(2,10356,10391): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:318:9+35
-    assume {:print "$at(2,10400,10435)"} true;
-    assert {:msg "assert_failed(2,10400,10435): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:315:5+174
-    assume {:print "$at(2,10267,10441)"} true;
-    assert {:msg "assert_failed(2,10267,10441): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:315:5+174
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:314:5+1
-    assume {:print "$at(2,10261,10262)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:314:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::opaque_in_call_chain [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:300:5+101
-procedure {:timeLimit 40} $42_TestEmits_opaque_in_call_chain$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:300:5+101
-    assume {:print "$at(2,9720,9821)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:300:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,19,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // TestEmits::opaque($t0) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:301:9+14
-    assume {:print "$at(2,9800,9814)"} true;
-    call $t0 := $42_TestEmits_opaque($t0);
-    if ($abort_flag) {
-        assume {:print "$at(2,9800,9814)"} true;
-        $t1 := $abort_code;
-        assume {:print "$track_abort(5,19):", $t1} $t1 == $t1;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:301:23+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,19,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:302:5+1
-    assume {:print "$at(2,9820,9821)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:304:9+35
-    assume {:print "$at(2,9862,9897)"} true;
-    assert {:msg "assert_failed(2,9862,9897): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:305:9+35
-    assume {:print "$at(2,9906,9941)"} true;
-    assert {:msg "assert_failed(2,9906,9941): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:306:9+36
-    assume {:print "$at(2,9950,9986)"} true;
-    assert {:msg "assert_failed(2,9950,9986): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:307:9+35
-    assume {:print "$at(2,9995,10030)"} true;
-    assert {:msg "assert_failed(2,9995,10030): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:303:5+210
-    assume {:print "$at(2,9826,10036)"} true;
-    assert {:msg "assert_failed(2,9826,10036): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:303:5+210
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:302:5+1
-    assume {:print "$at(2,9820,9821)"} true;
-L2:
-
-    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:302:5+1
-    $abort_code := $t1;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::opaque_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:287:5+207
-procedure {:timeLimit 40} $42_TestEmits_opaque_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: $42_TestEmits_DummyEvent;
-    var $t5: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t8: int;
-    var $t9: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t5));
-    assume IsEmptyVec(p#$Mutation($t7));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:287:5+207
-    assume {:print "$at(2,9252,9459)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:287:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,20,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:288:51+1
-    assume {:print "$at(2,9370,9371)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:288:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:288:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,9328,9373)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,20):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    // >> opaque call: TestEmits::callee($t0)
-    assume {:print "$at(2,9383,9397)"} true;
-
-    // opaque begin: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-
-    // assume Identical($t4, pack TestEmits::DummyEvent(7)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    assume ($t4 == $42_TestEmits_DummyEvent(7));
-
-    // assume Identical($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    assume $t5 == $t0;
-
-    // emit_event($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t5), $t4);
-
-    // assume Identical($t6, pack TestEmits::DummyEvent(77)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    assume ($t6 == $42_TestEmits_DummyEvent(77));
-
-    // assume Identical($t7, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    assume $t7 == $t0;
-
-    // emit_event($t6, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t7), $t6);
-
-    // opaque end: TestEmits::callee($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:289:9+14
-
-    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:290:51+1
-    assume {:print "$at(2,9449,9450)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // $t9 := pack TestEmits::DummyEvent($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:290:35+18
-    $t9 := $42_TestEmits_DummyEvent($t8);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t9) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:290:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(2,9407,9452)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,20):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:290:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,20,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:291:5+1
-    assume {:print "$at(2,9458,9459)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:293:9+35
-    assume {:print "$at(2,9496,9531)"} true;
-    assert {:msg "assert_failed(2,9496,9531): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:294:9+35
-    assume {:print "$at(2,9540,9575)"} true;
-    assert {:msg "assert_failed(2,9540,9575): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:295:9+36
-    assume {:print "$at(2,9584,9620)"} true;
-    assert {:msg "assert_failed(2,9584,9620): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:296:9+35
-    assume {:print "$at(2,9629,9664)"} true;
-    assert {:msg "assert_failed(2,9629,9664): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(2), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:297:9+35
-    assume {:print "$at(2,9673,9708)"} true;
-    assert {:msg "assert_failed(2,9673,9708): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t0), $42_TestEmits_DummyEvent(2)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0), pack TestEmits::DummyEvent(2), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:292:5+250
-    assume {:print "$at(2,9464,9714)"} true;
-    assert {:msg "assert_failed(2,9464,9714): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)), $Dereference($t0), $42_TestEmits_DummyEvent(2)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:292:5+250
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:291:5+1
-    assume {:print "$at(2,9458,9459)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:291:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::opaque_partial [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:338:5+213
-procedure {:timeLimit 40} $42_TestEmits_opaque_partial$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: $42_TestEmits_DummyEvent;
-    var $t5: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t8: int;
-    var $t9: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t5));
-    assume IsEmptyVec(p#$Mutation($t7));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:338:5+213
-    assume {:print "$at(2,11010,11223)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:338:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,21,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:339:51+1
-    assume {:print "$at(2,11126,11127)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:339:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:339:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,11084,11129)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,21):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    // >> opaque call: TestEmits::callee_partial($t0)
-    assume {:print "$at(2,11139,11161)"} true;
-
-    // opaque begin: TestEmits::callee_partial($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-
-    // assume Identical($t4, pack TestEmits::DummyEvent(7)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    assume ($t4 == $42_TestEmits_DummyEvent(7));
-
-    // assume Identical($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    assume $t5 == $t0;
-
-    // emit_event($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t5), $t4);
-
-    // assume Identical($t6, pack TestEmits::DummyEvent(77)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    assume ($t6 == $42_TestEmits_DummyEvent(77));
-
-    // assume Identical($t7, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    assume $t7 == $t0;
-
-    // emit_event($t6, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t7), $t6);
-
-    // event_store_diverge() at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-    call $es := $EventStore__diverge($es);
-
-    // opaque end: TestEmits::callee_partial($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:340:9+22
-
-    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:341:51+1
-    assume {:print "$at(2,11213,11214)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // $t9 := pack TestEmits::DummyEvent($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:341:35+18
-    $t9 := $42_TestEmits_DummyEvent($t8);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t9) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:341:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(2,11171,11216)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,21):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:341:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,21,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:342:5+1
-    assume {:print "$at(2,11222,11223)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:344:9+35
-    assume {:print "$at(2,11258,11293)"} true;
-    assert {:msg "assert_failed(2,11258,11293): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:345:9+35
-    assume {:print "$at(2,11302,11337)"} true;
-    assert {:msg "assert_failed(2,11302,11337): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:346:9+36
-    assume {:print "$at(2,11346,11382)"} true;
-    assert {:msg "assert_failed(2,11346,11382): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:347:9+35
-    assume {:print "$at(2,11391,11426)"} true;
-    assert {:msg "assert_failed(2,11391,11426): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:347:9+35
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:342:5+1
-    assume {:print "$at(2,11222,11223)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:342:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::opaque_partial_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:351:5+223
-procedure {:timeLimit 40} $42_TestEmits_opaque_partial_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: $42_TestEmits_DummyEvent;
-    var $t5: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t6: $42_TestEmits_DummyEvent;
-    var $t7: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t8: int;
-    var $t9: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t5));
-    assume IsEmptyVec(p#$Mutation($t7));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:351:5+223
-    assume {:print "$at(2,11471,11694)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:351:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,22,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:352:51+1
-    assume {:print "$at(2,11597,11598)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:352:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:352:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,11555,11600)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,22):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    // >> opaque call: TestEmits::callee_partial($t0)
-    assume {:print "$at(2,11610,11632)"} true;
-
-    // opaque begin: TestEmits::callee_partial($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-
-    // assume Identical($t4, pack TestEmits::DummyEvent(7)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    assume ($t4 == $42_TestEmits_DummyEvent(7));
-
-    // assume Identical($t5, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    assume $t5 == $t0;
-
-    // emit_event($t4, $t5) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t5), $t4);
-
-    // assume Identical($t6, pack TestEmits::DummyEvent(77)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    assume ($t6 == $42_TestEmits_DummyEvent(77));
-
-    // assume Identical($t7, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    assume $t7 == $t0;
-
-    // emit_event($t6, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    $es := $ExtendEventStore'$42_TestEmits_DummyEvent'($es, $Dereference($t7), $t6);
-
-    // event_store_diverge() at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-    call $es := $EventStore__diverge($es);
-
-    // opaque end: TestEmits::callee_partial($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:353:9+22
-
-    // $t8 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:354:51+1
-    assume {:print "$at(2,11684,11685)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // $t9 := pack TestEmits::DummyEvent($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:354:35+18
-    $t9 := $42_TestEmits_DummyEvent($t8);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t9) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:354:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t9);
-    if ($abort_flag) {
-        assume {:print "$at(2,11642,11687)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,22):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:354:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,22,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:355:5+1
-    assume {:print "$at(2,11693,11694)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:357:9+35
-    assume {:print "$at(2,11739,11774)"} true;
-    assert {:msg "assert_failed(2,11739,11774): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:358:9+35
-    assume {:print "$at(2,11783,11818)"} true;
-    assert {:msg "assert_failed(2,11783,11818): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:359:9+36
-    assume {:print "$at(2,11827,11863)"} true;
-    assert {:msg "assert_failed(2,11827,11863): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludes(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:360:9+35
-    assume {:print "$at(2,11872,11907)"} true;
-    assert {:msg "assert_failed(2,11872,11907): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(ExtendEventStore(ExtendEventStore(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0), pack TestEmits::DummyEvent(7), $t0), pack TestEmits::DummyEvent(77), $t0), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:356:5+298
-    assume {:print "$at(2,11699,11997)"} true;
-    assert {:msg "assert_failed(2,11699,11997): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)), $Dereference($t0), $42_TestEmits_DummyEvent(7)), $Dereference($t0), $42_TestEmits_DummyEvent(77)), $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:356:5+298
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:355:5+1
-    assume {:print "$at(2,11693,11694)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:355:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::partial [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:223:5+174
-procedure {:timeLimit 40} $42_TestEmits_partial$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:223:5+174
-    assume {:print "$at(2,7297,7471)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:223:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,23,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:224:51+1
-    assume {:print "$at(2,7406,7407)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:224:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:224:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,7364,7409)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,23):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:225:51+1
-    assume {:print "$at(2,7461,7462)"} true;
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:225:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:225:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,7419,7464)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,23):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:225:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,23,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:226:5+1
-    assume {:print "$at(2,7470,7471)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:229:9+35
-    assume {:print "$at(2,7532,7567)"} true;
-    assert {:msg "assert_failed(2,7532,7567): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:229:9+35
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:226:5+1
-    assume {:print "$at(2,7470,7471)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:226:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::partial_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:232:5+184
-procedure {:timeLimit 40} $42_TestEmits_partial_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:232:5+184
-    assume {:print "$at(2,7579,7763)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:232:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,24,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:233:51+1
-    assume {:print "$at(2,7698,7699)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:233:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:233:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,7656,7701)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,24):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:234:51+1
-    assume {:print "$at(2,7753,7754)"} true;
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:234:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:234:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,7711,7756)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,24):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:234:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,24,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:235:5+1
-    assume {:print "$at(2,7762,7763)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:237:9+35
-    assume {:print "$at(2,7801,7836)"} true;
-    assert {:msg "assert_failed(2,7801,7836): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:236:5+74
-    assume {:print "$at(2,7768,7842)"} true;
-    assert {:msg "assert_failed(2,7768,7842): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:236:5+74
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:235:5+1
-    assume {:print "$at(2,7762,7763)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:235:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::simple [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:13:5+118
-procedure {:timeLimit 40} $42_TestEmits_simple$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:13:5+118
-    assume {:print "$at(2,387,505)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:13:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,25,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:14:51+1
-    assume {:print "$at(2,495,496)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:14:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:14:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,453,498)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,25):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:14:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,25,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:15:5+1
-    assume {:print "$at(2,504,505)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:17:9+35
-    assume {:print "$at(2,532,567)"} true;
-    assert {:msg "assert_failed(2,532,567): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:16:5+63
-    assume {:print "$at(2,510,573)"} true;
-    assert {:msg "assert_failed(2,510,573): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:16:5+63
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:15:5+1
-    assume {:print "$at(2,504,505)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:15:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::simple_wrong_handle_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:27:5+181
-procedure {:timeLimit 40} $42_TestEmits_simple_wrong_handle_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'), _$t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'), $ret1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
+// fun VerifyLoopsWithMemoryOps::nested_loop2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56:5+1104
+procedure {:timeLimit 40} $42_VerifyLoopsWithMemoryOps_nested_loop2$verify(_$t0: $Mutation (Vec (int)), _$t1: $Mutation (Vec (int))) returns ($ret0: $Mutation (Vec (int)), $ret1: $Mutation (Vec (int)))
 {
     // declare local variables
     var $t2: int;
-    var $t3: $42_TestEmits_DummyEvent;
-    var $t4: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $t1: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
+    var $t3: int;
+    var $t4: $Mutation (int);
+    var $t5: $Mutation (int);
+    var $t6: Vec (int);
+    var $t7: int;
+    var $t8: int;
+    var $t9: int;
+    var $t10: $Mutation (int);
+    var $t11: $Mutation (int);
+    var $t12: int;
+    var $t13: int;
+    var $t14: bool;
+    var $t15: int;
+    var $t16: int;
+    var $t17: int;
+    var $t18: int;
+    var $t19: int;
+    var $t20: bool;
+    var $t21: int;
+    var $t22: int;
+    var $t23: int;
+    var $t24: int;
+    var $t25: int;
+    var $t26: bool;
+    var $t27: $Mutation (int);
+    var $t28: $Mutation (int);
+    var $t0: $Mutation (Vec (int));
+    var $t1: $Mutation (Vec (int));
+    var $temp_0'u64': int;
+    var $temp_0'vec'u64'': Vec (int);
     $t0 := _$t0;
     $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t4));
+    assume IsEmptyVec(p#$Mutation($t5));
+    assume IsEmptyVec(p#$Mutation($t10));
+    assume IsEmptyVec(p#$Mutation($t11));
+    assume IsEmptyVec(p#$Mutation($t27));
+    assume IsEmptyVec(p#$Mutation($t28));
 
     // verification entrypoint assumptions
     call $InitVerification();
@@ -4417,316 +1703,591 @@ procedure {:timeLimit 40} $42_TestEmits_simple_wrong_handle_incorrect$verify(_$t
     assume l#$Mutation($t1) == $Param(1);
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:27:5+181
-    assume {:print "$at(2,811,992)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56:5+1104
+    assume {:print "$at(2,1680,2784)"} true;
+    assume $IsValid'vec'u64''($Dereference($t0));
 
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:27:5+181
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t1));
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56:5+1104
+    assume $IsValid'vec'u64''($Dereference($t1));
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:27:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,26,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56:5+1
+    $temp_0'vec'u64'' := $Dereference($t0);
+    assume {:print "$track_local(1,1,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // trace_local[_handle2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:27:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,26,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // trace_local[b]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:56:5+1
+    $temp_0'vec'u64'' := $Dereference($t1);
+    assume {:print "$track_local(1,1,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
 
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:28:51+1
-    assume {:print "$at(2,982,983)"} true;
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
+    // $t6 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57:37+1
+    assume {:print "$at(2,1784,1785)"} true;
+    $t6 := $Dereference($t0);
 
-    // $t3 := pack TestEmits::DummyEvent($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:28:35+18
-    $t3 := $42_TestEmits_DummyEvent($t2);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t3) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:28:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t3);
+    // $t7 := Vector::length<u64>($t6) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57:22+17
+    call $t7 := $1_Vector_length'u64'($t6);
     if ($abort_flag) {
-        assume {:print "$at(2,940,985)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(5,26):", $t4} $t4 == $t4;
-        goto L2;
+        assume {:print "$at(2,1769,1786)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
     }
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:28:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,26,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // trace_local[length]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:57:13+6
+    assume {:print "$track_local(1,1,3):", $t7} $t7 == $t7;
 
-    // trace_local[_handle2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:28:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t1);
-    assume {:print "$track_local(5,26,1):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // assume Gt($t7, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:59:13+18
+    assume {:print "$at(2,1815,1833)"} true;
+    assume ($t7 > 0);
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:29:5+1
-    assume {:print "$at(2,991,992)"} true;
+    // assume Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:60:13+24
+    assume {:print "$at(2,1846,1870)"} true;
+    assume $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // $t9 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62:17+1
+    assume {:print "$at(2,1898,1899)"} true;
+    $t9 := 0;
+    assume $IsValid'u64'($t9);
+
+    // trace_local[i]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:62:13+1
+    assume {:print "$track_local(1,1,2):", $t9} $t9 == $t9;
+
+    // $t10 := Vector::borrow_mut<u64>($t0, $t9) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63:17+24
+    assume {:print "$at(2,1917,1941)"} true;
+    call $t10,$t0 := $1_Vector_borrow_mut'u64'($t0, $t9);
+    if ($abort_flag) {
+        assume {:print "$at(2,1917,1941)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // trace_local[x]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:63:13+1
+    $temp_0'u64' := $Dereference($t10);
+    assume {:print "$track_local(1,1,4):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t11 := Vector::borrow_mut<u64>($t1, $t9) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64:17+24
+    assume {:print "$at(2,1959,1983)"} true;
+    call $t11,$t1 := $1_Vector_borrow_mut'u64'($t1, $t9);
+    if ($abort_flag) {
+        assume {:print "$at(2,1959,1983)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // trace_local[y]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:64:13+1
+    $temp_0'u64' := $Dereference($t11);
+    assume {:print "$track_local(1,1,5):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:66:13+192
+    assume {:print "$at(2,2012,2204)"} true;
+L9:
+
+    // assert Eq<u64>($t7, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67:17+24
+    assume {:print "$at(2,2035,2059)"} true;
+    assert {:msg "assert_failed(2,2035,2059): base case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t0)));
+
+    // assert Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68:17+24
+    assume {:print "$at(2,2076,2100)"} true;
+    assert {:msg "assert_failed(2,2076,2100): base case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // assert Lt($t9, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69:17+18
+    assume {:print "$at(2,2117,2135)"} true;
+    assert {:msg "assert_failed(2,2117,2135): base case of the loop invariant does not hold"}
+      ($t9 < $t7);
+
+    // assert forall n: Range(0, $t9): Eq<u64>(Index($t0, n), Index($t1, n)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    assume {:print "$at(2,2152,2190)"} true;
+    assert {:msg "assert_failed(2,2152,2190): base case of the loop invariant does not hold"}
+      (var $range_0 := $Range(0, $t9); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var n := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), n), ReadVec($Dereference($t1), n))))));
+
+    // havoc[val]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t9;
+    assume $IsValid'u64'($t9);
+
+    // havoc[val]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t12;
+    assume $IsValid'u64'($t12);
+
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t13;
+    assume $IsValid'u64'($t13);
+
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t14;
+    assume $IsValid'bool'($t14);
+
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t15;
+    assume $IsValid'u64'($t15);
+
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t16;
+    assume $IsValid'u64'($t16);
+
+    // havoc[val]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t17;
+    assume $IsValid'u64'($t17);
+
+    // havoc[val]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t18;
+    assume $IsValid'u64'($t18);
+
+    // havoc[val]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t19;
+    assume $IsValid'u64'($t19);
+
+    // havoc[val]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t20;
+    assume $IsValid'bool'($t20);
+
+    // havoc[val]($t21) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t21;
+    assume $IsValid'u64'($t21);
+
+    // havoc[val]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t22;
+    assume $IsValid'u64'($t22);
+
+    // havoc[val]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t23;
+    assume $IsValid'u64'($t23);
+
+    // havoc[val]($t24) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t24;
+    assume $IsValid'u64'($t24);
+
+    // havoc[val]($t25) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t25;
+    assume $IsValid'u64'($t25);
+
+    // havoc[val]($t26) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t26;
+    assume $IsValid'bool'($t26);
+
+    // havoc[mut]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $temp_0'vec'u64'';
+    $t0 := $UpdateMutation($t0, $temp_0'vec'u64'');
+    assume $IsValid'vec'u64''($Dereference($t0));
+
+    // havoc[mut]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $temp_0'vec'u64'';
+    $t1 := $UpdateMutation($t1, $temp_0'vec'u64'');
+    assume $IsValid'vec'u64''($Dereference($t1));
+
+    // havoc[mut_all]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t10;
+    assume $IsValid'u64'($Dereference($t10));
+
+    // havoc[mut_all]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t11;
+    assume $IsValid'u64'($Dereference($t11));
+
+    // havoc[mut_all]($t27) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t27;
+    assume $IsValid'u64'($Dereference($t27));
+
+    // havoc[mut_all]($t28) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    havoc $t28;
+    assume $IsValid'u64'($Dereference($t28));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    assume !$abort_flag;
+
+    // assume Eq<u64>($t7, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67:17+24
+    assume {:print "$at(2,2035,2059)"} true;
+    assume $IsEqual'u64'($t7, LenVec($Dereference($t0)));
+
+    // assume Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68:17+24
+    assume {:print "$at(2,2076,2100)"} true;
+    assume $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // assume Lt($t9, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69:17+18
+    assume {:print "$at(2,2117,2135)"} true;
+    assume ($t9 < $t7);
+
+    // assume forall n: Range(0, $t9): Eq<u64>(Index($t0, n), Index($t1, n)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    assume {:print "$at(2,2152,2190)"} true;
+    assume (var $range_0 := $Range(0, $t9); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var n := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), n), ReadVec($Dereference($t1), n))))));
+
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    assume {:print "$at(2,2241,2387)"} true;
+L0:
+
+    // havoc[val]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t12;
+    assume $IsValid'u64'($t12);
+
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t13;
+    assume $IsValid'u64'($t13);
+
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t14;
+    assume $IsValid'bool'($t14);
+
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t15;
+    assume $IsValid'u64'($t15);
+
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t16;
+    assume $IsValid'u64'($t16);
+
+    // havoc[val]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t17;
+    assume $IsValid'u64'($t17);
+
+    // havoc[val]($t18) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t18;
+    assume $IsValid'u64'($t18);
+
+    // havoc[val]($t19) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t19;
+    assume $IsValid'u64'($t19);
+
+    // havoc[val]($t20) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t20;
+    assume $IsValid'bool'($t20);
+
+    // havoc[val]($t21) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t21;
+    assume $IsValid'u64'($t21);
+
+    // havoc[val]($t22) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t22;
+    assume $IsValid'u64'($t22);
+
+    // havoc[val]($t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $t23;
+    assume $IsValid'u64'($t23);
+
+    // havoc[mut]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $temp_0'u64';
+    $t10 := $UpdateMutation($t10, $temp_0'u64');
+    assume $IsValid'u64'($Dereference($t10));
+
+    // havoc[mut]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    havoc $temp_0'u64';
+    $t11 := $UpdateMutation($t11, $temp_0'u64');
+    assume $IsValid'u64'($Dereference($t11));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:73:17+146
+    assume !$abort_flag;
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    assume {:print "$at(2,2273,2274)"} true;
 L1:
 
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:31:9+37
-    assume {:print "$at(2,1042,1079)"} true;
-    assert {:msg "assert_failed(2,1042,1079): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(expected, actual)));
+    // havoc[val]($t12) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $t12;
+    assume $IsValid'u64'($t12);
 
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(0), $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:30:5+88
-    assume {:print "$at(2,997,1085)"} true;
-    assert {:msg "assert_failed(2,997,1085): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t1), $42_TestEmits_DummyEvent(0)); $EventStore__is_subset(actual, expected)));
+    // havoc[val]($t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $t13;
+    assume $IsValid'u64'($t13);
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:30:5+88
+    // havoc[val]($t14) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $t14;
+    assume $IsValid'bool'($t14);
+
+    // havoc[val]($t15) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $t15;
+    assume $IsValid'u64'($t15);
+
+    // havoc[val]($t16) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $t16;
+    assume $IsValid'u64'($t16);
+
+    // havoc[val]($t17) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $t17;
+    assume $IsValid'u64'($t17);
+
+    // havoc[mut]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    havoc $temp_0'u64';
+    $t11 := $UpdateMutation($t11, $temp_0'u64');
+    assume $IsValid'u64'($Dereference($t11));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:26+1
+    assume !$abort_flag;
+
+    // $t12 := read_ref($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:25+2
+    $t12 := $Dereference($t10);
+
+    // $t13 := read_ref($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:31+2
+    $t13 := $Dereference($t11);
+
+    // $t14 := <=($t12, $t13) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:28+2
+    call $t14 := $Le($t12, $t13);
+
+    // if ($t14) goto L2 else goto L15 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:21+67
+    if ($t14) { goto L2; } else { goto L15; }
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:74:21+67
+L3:
+
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:77:27+1
+    assume {:print "$at(2,2363,2364)"} true;
+L4:
+
+    // $t15 := read_ref($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:77:26+2
+    $t15 := $Dereference($t11);
+
+    // $t16 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:77:31+1
+    $t16 := 1;
+    assume $IsValid'u64'($t16);
+
+    // $t17 := +($t15, $t16) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:77:29+1
+    call $t17 := $AddU64($t15, $t16);
+    if ($abort_flag) {
+        assume {:print "$at(2,2365,2366)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // write_ref($t11, $t17) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:77:21+11
+    $t11 := $UpdateMutation($t11, $t17);
+
+    // goto L11 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:77:32+1
+    goto L11;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:80:22+1
+    assume {:print "$at(2,2411,2412)"} true;
+L2:
+
+    // $t18 := read_ref($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:80:21+2
+    $t18 := $Dereference($t11);
+
+    // $t19 := read_ref($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:80:27+2
+    $t19 := $Dereference($t10);
+
+    // $t20 := <=($t18, $t19) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:80:24+2
+    call $t20 := $Le($t18, $t19);
+
+    // if ($t20) goto L5 else goto L16 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:80:17+59
+    if ($t20) { goto L5; } else { goto L16; }
+
+    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:83:23+1
+    assume {:print "$at(2,2489,2490)"} true;
+L6:
+
+    // $t21 := read_ref($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:83:22+2
+    $t21 := $Dereference($t10);
+
+    // $t22 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:83:27+1
+    $t22 := 1;
+    assume $IsValid'u64'($t22);
+
+    // $t23 := +($t21, $t22) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:83:25+1
+    call $t23 := $AddU64($t21, $t22);
+    if ($abort_flag) {
+        assume {:print "$at(2,2491,2492)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // write_ref($t10, $t23) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:83:17+11
+    $t10 := $UpdateMutation($t10, $t23);
+
+    // goto L10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:83:28+1
+    goto L10;
+
+    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:81:21+5
+    assume {:print "$at(2,2442,2447)"} true;
+L5:
+
+    // write_back[Reference($t1)[]]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:81:21+5
+    $t1 := $UpdateMutation($t1, UpdateVec($Dereference($t1), ReadVec(p#$Mutation($t11), LenVec(p#$Mutation($t1))), $Dereference($t11)));
+
+    // destroy($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:81:21+5
+
+    // write_back[Reference($t0)[]]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:81:21+5
+    $t0 := $UpdateMutation($t0, UpdateVec($Dereference($t0), ReadVec(p#$Mutation($t10), LenVec(p#$Mutation($t0))), $Dereference($t10)));
+
+    // destroy($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:81:21+5
+
+    // $t24 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85:21+1
+    assume {:print "$at(2,2531,2532)"} true;
+    $t24 := 1;
+    assume $IsValid'u64'($t24);
+
+    // $t25 := +($t9, $t24) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85:19+1
+    call $t25 := $AddU64($t9, $t24);
+    if ($abort_flag) {
+        assume {:print "$at(2,2529,2530)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // trace_local[i]($t25) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:85:13+1
+    assume {:print "$track_local(1,1,2):", $t25} $t25 == $t25;
+
+    // $t26 := ==($t25, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86:19+2
+    assume {:print "$at(2,2552,2554)"} true;
+    $t26 := $IsEqual'u64'($t25, $t7);
+
+    // if ($t26) goto L7 else goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:86:13+54
+    if ($t26) { goto L7; } else { goto L8; }
+
+    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:89:36+1
+    assume {:print "$at(2,2637,2638)"} true;
+L8:
+
+    // $t27 := Vector::borrow_mut<u64>($t0, $t25) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:89:17+24
+    call $t27,$t0 := $1_Vector_borrow_mut'u64'($t0, $t25);
+    if ($abort_flag) {
+        assume {:print "$at(2,2618,2642)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // trace_local[x]($t27) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:89:13+1
+    $temp_0'u64' := $Dereference($t27);
+    assume {:print "$track_local(1,1,4):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // $t28 := Vector::borrow_mut<u64>($t1, $t25) on_abort goto L14 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:90:17+24
+    assume {:print "$at(2,2660,2684)"} true;
+    call $t28,$t1 := $1_Vector_borrow_mut'u64'($t1, $t25);
+    if ($abort_flag) {
+        assume {:print "$at(2,2660,2684)"} true;
+        $t8 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t8} $t8 == $t8;
+        goto L14;
+    }
+
+    // trace_local[y]($t28) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:90:13+1
+    $temp_0'u64' := $Dereference($t28);
+    assume {:print "$track_local(1,1,5):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
+
+    // goto L12 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:90:41+1
+    goto L12;
+
+    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:92:9+72
+    assume {:print "$at(2,2705,2777)"} true;
+L7:
+
+    // assert forall m: Range(0, $t7): Eq<u64>(Index($t0, m), Index($t1, m)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:93:13+43
+    assume {:print "$at(2,2724,2767)"} true;
+    assert {:msg "assert_failed(2,2724,2767): unknown assertion failed"}
+      (var $range_0 := $Range(0, $t7); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var m := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), m), ReadVec($Dereference($t1), m))))));
+
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:94:10+1
+    assume {:print "$at(2,2777,2778)"} true;
+    $temp_0'vec'u64'' := $Dereference($t0);
+    assume {:print "$track_local(1,1,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
+
+    // trace_local[b]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:94:10+1
+    $temp_0'vec'u64'' := $Dereference($t1);
+    assume {:print "$track_local(1,1,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
+
+    // goto L13 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:94:10+1
+    goto L13;
+
+    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:92:9+72
+    // Loop invariant checking block for the loop started with header: L0
+    assume {:print "$at(2,2705,2777)"} true;
+L10:
+
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:92:9+72
+    assume false;
+    return;
+
+    // label L11 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:92:9+72
+    // Loop invariant checking block for the loop started with header: L1
+L11:
+
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:92:9+72
+    assume false;
+    return;
+
+    // label L12 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:92:9+72
+    // Loop invariant checking block for the loop started with header: L9
+L12:
+
+    // assert Eq<u64>($t7, Len<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:67:17+24
+    assume {:print "$at(2,2035,2059)"} true;
+    assert {:msg "assert_failed(2,2035,2059): induction case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t0)));
+
+    // assert Eq<u64>($t7, Len<u64>($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:68:17+24
+    assume {:print "$at(2,2076,2100)"} true;
+    assert {:msg "assert_failed(2,2076,2100): induction case of the loop invariant does not hold"}
+      $IsEqual'u64'($t7, LenVec($Dereference($t1)));
+
+    // assert Lt($t25, $t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:69:17+18
+    assume {:print "$at(2,2117,2135)"} true;
+    assert {:msg "assert_failed(2,2117,2135): induction case of the loop invariant does not hold"}
+      ($t25 < $t7);
+
+    // assert forall n: Range(0, $t25): Eq<u64>(Index($t0, n), Index($t1, n)) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    assume {:print "$at(2,2152,2190)"} true;
+    assert {:msg "assert_failed(2,2152,2190): induction case of the loop invariant does not hold"}
+      (var $range_0 := $Range(0, $t25); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var n := $i_1;
+    ($IsEqual'u64'(ReadVec($Dereference($t0), n), ReadVec($Dereference($t1), n))))));
+
+    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:70:17+38
+    assume false;
+    return;
+
+    // label L13 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:95:5+1
+    assume {:print "$at(2,2783,2784)"} true;
+L13:
+
+    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:97:9+16
+    assume {:print "$at(2,2817,2833)"} true;
+    assert {:msg "assert_failed(2,2817,2833): function does not abort under this condition"}
+      !false;
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:97:9+16
     $ret0 := $t0;
     $ret1 := $t1;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:29:5+1
-    assume {:print "$at(2,991,992)"} true;
-L2:
+    // label L14 at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:95:5+1
+    assume {:print "$at(2,2783,2784)"} true;
+L14:
 
-    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:29:5+1
-    $abort_code := $t4;
+    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:96:5+50
+    assume {:print "$at(2,2789,2839)"} true;
+    assert {:msg "assert_failed(2,2789,2839): abort not covered by any of the `aborts_if` clauses"}
+      false;
+
+    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops_with_memory_ops.move:96:5+50
+    $abort_code := $t8;
     $abort_flag := true;
     return;
 
-}
+    // label L15 at <internal>:1:1+10
+    assume {:print "$at(1,0,10)"} true;
+L15:
 
-// fun TestEmits::simple_wrong_msg_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:20:5+138
-procedure {:timeLimit 40} $42_TestEmits_simple_wrong_msg_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
+    // destroy($t0) at <internal>:1:1+10
 
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
+    // destroy($t1) at <internal>:1:1+10
 
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:20:5+138
-    assume {:print "$at(2,579,717)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
+    // destroy($t10) at <internal>:1:1+10
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:20:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,27,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // goto L3 at <internal>:1:1+10
+    goto L3;
 
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:21:51+1
-    assume {:print "$at(2,707,708)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // label L16 at <internal>:1:1+10
+L16:
 
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:21:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
+    // destroy($t0) at <internal>:1:1+10
 
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:21:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,665,710)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,27):", $t3} $t3 == $t3;
-        goto L2;
-    }
+    // destroy($t1) at <internal>:1:1+10
 
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:21:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,27,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
+    // destroy($t11) at <internal>:1:1+10
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:22:5+1
-    assume {:print "$at(2,716,717)"} true;
-L1:
-
-    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:24:9+35
-    assume {:print "$at(2,764,799)"} true;
-    assert {:msg "assert_failed(2,764,799): function does not emit the expected event"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(expected, actual)));
-
-    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), pack TestEmits::DummyEvent(1), $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:23:5+83
-    assume {:print "$at(2,722,805)"} true;
-    assert {:msg "assert_failed(2,722,805): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$42_TestEmits_DummyEvent'($EmptyEventStore, $Dereference($t0), $42_TestEmits_DummyEvent(1)); $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:23:5+83
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:22:5+1
-    assume {:print "$at(2,716,717)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:22:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::strict [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:245:5+173
-procedure {:timeLimit 40} $42_TestEmits_strict$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:245:5+173
-    assume {:print "$at(2,7952,8125)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:245:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,28,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:246:51+1
-    assume {:print "$at(2,8060,8061)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:246:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:246:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,8018,8063)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,28):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:247:51+1
-    assume {:print "$at(2,8115,8116)"} true;
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:247:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:247:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,8073,8118)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,28):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:247:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,28,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:248:5+1
-    assume {:print "$at(2,8124,8125)"} true;
-L1:
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:248:5+1
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:248:5+1
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:248:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestEmits::strict_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:252:5+183
-procedure {:timeLimit 40} $42_TestEmits_strict_incorrect$verify(_$t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent')) returns ($ret0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent'))
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: $42_TestEmits_DummyEvent;
-    var $t3: int;
-    var $t4: int;
-    var $t5: $42_TestEmits_DummyEvent;
-    var $t0: $Mutation ($1_Event_EventHandle'$42_TestEmits_DummyEvent');
-    var $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'': $1_Event_EventHandle'$42_TestEmits_DummyEvent';
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:252:5+183
-    assume {:print "$at(2,8155,8338)"} true;
-    assume $IsValid'$1_Event_EventHandle'$42_TestEmits_DummyEvent''($Dereference($t0));
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:252:5+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,29,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:253:51+1
-    assume {:print "$at(2,8273,8274)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := pack TestEmits::DummyEvent($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:253:35+18
-    $t2 := $42_TestEmits_DummyEvent($t1);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t2) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:253:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t2);
-    if ($abort_flag) {
-        assume {:print "$at(2,8231,8276)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,29):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:254:51+1
-    assume {:print "$at(2,8328,8329)"} true;
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := pack TestEmits::DummyEvent($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:254:35+18
-    $t5 := $42_TestEmits_DummyEvent($t4);
-
-    // Event::emit_event<TestEmits::DummyEvent>($t0, $t5) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:254:9+45
-    call $t0 := $1_Event_emit_event'$42_TestEmits_DummyEvent'($t0, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,8286,8331)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(5,29):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_local[handle]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:254:54+1
-    $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' := $Dereference($t0);
-    assume {:print "$track_local(5,29,0):", $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent''} $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'' == $temp_0'$1_Event_EventHandle'$42_TestEmits_DummyEvent'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:255:5+1
-    assume {:print "$at(2,8337,8338)"} true;
-L1:
-
-    // assert EventStoreIncludedIn(EmptyEventStore()) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:256:5+61
-    assume {:print "$at(2,8343,8404)"} true;
-    assert {:msg "assert_failed(2,8343,8404): emitted event not covered by any of the `emits` clauses"}
-      (var actual := $EventStore__subtract($es, old($es)); (var expected := $EmptyEventStore; $EventStore__is_subset(actual, expected)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:256:5+61
-    $ret0 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:255:5+1
-    assume {:print "$at(2,8337,8338)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/emits.move:255:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
+    // goto L6 at <internal>:1:1+10
+    goto L6;
 
 }

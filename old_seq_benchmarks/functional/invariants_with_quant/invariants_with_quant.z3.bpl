@@ -577,186 +577,6 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 }
 
 // ----------------------------------------------------------------------------------
-// Native Vector implementation for element type `u64`
-
-
-function {:inline} $IsEqual'vec'u64''(v1: Vec (int), v2: Vec (int)): bool {
-    v1 == v2
-}
-
-// Not inlined.
-function $IsValid'vec'u64''(v: Vec (int)): bool {
-    $IsValid'u64'(LenVec(v)) &&
-    (forall i: int:: InRangeVec(v, i) ==> $IsValid'u64'(ReadVec(v, i)))
-}
-
-
-function {:inline} $ContainsVec'u64'(v: Vec (int), e: int): bool {
-    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e))
-}
-
-function $IndexOfVec'u64'(v: Vec (int), e: int): int;
-axiom (forall v: Vec (int), e: int:: {$IndexOfVec'u64'(v, e)}
-    (var i := $IndexOfVec'u64'(v, e);
-     if (!$ContainsVec'u64'(v, e)) then i == -1
-     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e) &&
-        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'u64'(ReadVec(v, j), e))));
-
-
-function {:inline} $RangeVec'u64'(v: Vec (int)): $Range {
-    $Range(0, LenVec(v))
-}
-
-
-function {:inline} $EmptyVec'u64'(): Vec (int) {
-    EmptyVec()
-}
-
-procedure {:inline 1} $1_Vector_empty'u64'() returns (v: Vec (int)) {
-    v := EmptyVec();
-}
-
-function {:inline} $1_Vector_$empty'u64'(): Vec (int) {
-    EmptyVec()
-}
-
-procedure {:inline 1} $1_Vector_is_empty'u64'(v: Vec (int)) returns (b: bool) {
-    b := IsEmptyVec(v);
-}
-
-procedure {:inline 1} $1_Vector_push_back'u64'(m: $Mutation (Vec (int)), val: int) returns (m': $Mutation (Vec (int))) {
-    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
-}
-
-function {:inline} $1_Vector_$push_back'u64'(v: Vec (int), val: int): Vec (int) {
-    ExtendVec(v, val)
-}
-
-procedure {:inline 1} $1_Vector_pop_back'u64'(m: $Mutation (Vec (int))) returns (e: int, m': $Mutation (Vec (int))) {
-    var v: Vec (int);
-    var len: int;
-    v := $Dereference(m);
-    len := LenVec(v);
-    if (len == 0) {
-        call $ExecFailureAbort();
-        return;
-    }
-    e := ReadVec(v, len-1);
-    m' := $UpdateMutation(m, RemoveVec(v));
-}
-
-procedure {:inline 1} $1_Vector_append'u64'(m: $Mutation (Vec (int)), other: Vec (int)) returns (m': $Mutation (Vec (int))) {
-    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
-}
-
-procedure {:inline 1} $1_Vector_reverse'u64'(m: $Mutation (Vec (int))) returns (m': $Mutation (Vec (int))) {
-    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
-}
-
-procedure {:inline 1} $1_Vector_length'u64'(v: Vec (int)) returns (l: int) {
-    l := LenVec(v);
-}
-
-function {:inline} $1_Vector_$length'u64'(v: Vec (int)): int {
-    LenVec(v)
-}
-
-procedure {:inline 1} $1_Vector_borrow'u64'(v: Vec (int), i: int) returns (dst: int) {
-    if (!InRangeVec(v, i)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := ReadVec(v, i);
-}
-
-function {:inline} $1_Vector_$borrow'u64'(v: Vec (int), i: int): int {
-    ReadVec(v, i)
-}
-
-procedure {:inline 1} $1_Vector_borrow_mut'u64'(m: $Mutation (Vec (int)), index: int)
-returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
-{
-    var v: Vec (int);
-    v := $Dereference(m);
-    if (!InRangeVec(v, index)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
-    m' := m;
-}
-
-function {:inline} $1_Vector_$borrow_mut'u64'(v: Vec (int), i: int): int {
-    ReadVec(v, i)
-}
-
-procedure {:inline 1} $1_Vector_destroy_empty'u64'(v: Vec (int)) {
-    if (!IsEmptyVec(v)) {
-      call $ExecFailureAbort();
-    }
-}
-
-procedure {:inline 1} $1_Vector_swap'u64'(m: $Mutation (Vec (int)), i: int, j: int) returns (m': $Mutation (Vec (int)))
-{
-    var v: Vec (int);
-    v := $Dereference(m);
-    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    m' := $UpdateMutation(m, SwapVec(v, i, j));
-}
-
-function {:inline} $1_Vector_$swap'u64'(v: Vec (int), i: int, j: int): Vec (int) {
-    SwapVec(v, i, j)
-}
-
-procedure {:inline 1} $1_Vector_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
-{
-    var v: Vec (int);
-
-    v := $Dereference(m);
-
-    if (!InRangeVec(v, i)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    e := ReadVec(v, i);
-    m' := $UpdateMutation(m, RemoveAtVec(v, i));
-}
-
-procedure {:inline 1} $1_Vector_swap_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
-{
-    var len: int;
-    var v: Vec (int);
-
-    v := $Dereference(m);
-    len := LenVec(v);
-    if (!InRangeVec(v, i)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    e := ReadVec(v, i);
-    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
-}
-
-procedure {:inline 1} $1_Vector_contains'u64'(v: Vec (int), e: int) returns (res: bool)  {
-    res := $ContainsVec'u64'(v, e);
-}
-
-procedure {:inline 1}
-$1_Vector_index_of'u64'(v: Vec (int), e: int) returns (res1: bool, res2: int) {
-    res2 := $IndexOfVec'u64'(v, e);
-    if (res2 >= 0) {
-        res1 := true;
-    } else {
-        res1 := false;
-        res2 := 0;
-    }
-}
-
-
-// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
 
@@ -987,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -1001,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -1040,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -1071,158 +896,171 @@ procedure {:inline 1} $InitEventStore() {
 
 // Given Types for Type Parameters
 
+type #0;
+function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
+function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// fun TestQuantInvariant::vector_of_proper_positives [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:7:5+210
-procedure {:timeLimit 40} $42_TestQuantInvariant_vector_of_proper_positives$verify() returns ($ret0: Vec (int))
+// axiom at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:9:9+43
+axiom (forall x: int :: $IsValid'num'(x) ==> ($IsEqual'num'($42_TestAxioms_spec_incr(x), (x + 1))));
+
+// axiom at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:22:9+44
+axiom ((forall x: int :: $IsValid'u64'(x) ==> ($IsEqual'u64'($42_TestAxioms_spec_id'u64'(x), x))) && (forall x: #0 :: $IsValid'#0'(x) ==> ($IsEqual'#0'($42_TestAxioms_spec_id'#0'(x), x))));
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:8:9+27
+function {:inline} $42_TestAxioms_spec_incr(x: int): int;
+axiom (forall x: int ::
+(var $$res := $42_TestAxioms_spec_incr(x);
+$IsValid'num'($$res)));
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:21:9+24
+function {:inline} $42_TestAxioms_spec_id'u64'(x: int): int;
+axiom (forall x: int ::
+(var $$res := $42_TestAxioms_spec_id'u64'(x);
+$IsValid'u64'($$res)));
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:21:9+24
+function {:inline} $42_TestAxioms_spec_id'#0'(x: #0): #0;
+axiom (forall x: #0 ::
+(var $$res := $42_TestAxioms_spec_id'#0'(x);
+$IsValid'#0'($$res)));
+
+// fun TestAxioms::id_T [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:25:5+38
+procedure {:timeLimit 40} $42_TestAxioms_id_T$verify(_$t0: #0) returns ($ret0: #0)
 {
     // declare local variables
-    var $t0: Vec (int);
-    var $t1: int;
-    var $t2: $Mutation (Vec (int));
-    var $t3: int;
-    var $t4: $Mutation (Vec (int));
-    var $t5: int;
-    var $t6: $Mutation (Vec (int));
-    var $t7: int;
-    var $t8: Vec (int);
-    var $temp_0'vec'u64'': Vec (int);
-    assume IsEmptyVec(p#$Mutation($t2));
-    assume IsEmptyVec(p#$Mutation($t4));
-    assume IsEmptyVec(p#$Mutation($t6));
+    var $t0: #0;
+    var $temp_0'#0': #0;
+    $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t0 := Vector::empty<u64>() on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:8:17+15
-    assume {:print "$at(2,178,193)"} true;
-    call $t0 := $1_Vector_empty'u64'();
-    if ($abort_flag) {
-        assume {:print "$at(2,178,193)"} true;
-        $t1 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t1} $t1 == $t1;
-        goto L2;
-    }
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:29:17+6
+    assume {:print "$at(2,590,596)"} true;
+    assume $IsValid'#0'($t0);
 
-    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:8:13+1
-    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:25:5+1
+    assume {:print "$at(2,519,520)"} true;
+    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
 
-    // $t2 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:27+6
-    assume {:print "$at(2,221,227)"} true;
-    $t2 := $Mutation($Local(0), EmptyVec(), $t0);
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:26:9+1
+    assume {:print "$at(2,550,551)"} true;
+    assume {:print "$track_return(0,0,0):", $t0} $t0 == $t0;
 
-    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:35+1
-    $t3 := 1;
-    assume $IsValid'u64'($t3);
-
-    // Vector::push_back<u64>($t2, $t3) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:9+28
-    call $t2 := $1_Vector_push_back'u64'($t2, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,203,231)"} true;
-        $t1 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t1} $t1 == $t1;
-        goto L2;
-    }
-
-    // write_back[LocalRoot($t0)@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:9:9+28
-    $t0 := $Dereference($t2);
-
-    // $t4 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:27+6
-    assume {:print "$at(2,259,265)"} true;
-    $t4 := $Mutation($Local(0), EmptyVec(), $t0);
-
-    // $t5 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:35+1
-    $t5 := 2;
-    assume $IsValid'u64'($t5);
-
-    // Vector::push_back<u64>($t4, $t5) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:9+28
-    call $t4 := $1_Vector_push_back'u64'($t4, $t5);
-    if ($abort_flag) {
-        assume {:print "$at(2,241,269)"} true;
-        $t1 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t1} $t1 == $t1;
-        goto L2;
-    }
-
-    // write_back[LocalRoot($t0)@]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:10:9+28
-    $t0 := $Dereference($t4);
-
-    // $t6 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:27+6
-    assume {:print "$at(2,297,303)"} true;
-    $t6 := $Mutation($Local(0), EmptyVec(), $t0);
-
-    // $t7 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:35+1
-    $t7 := 3;
-    assume $IsValid'u64'($t7);
-
-    // Vector::push_back<u64>($t6, $t7) on_abort goto L2 with $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:9+28
-    call $t6 := $1_Vector_push_back'u64'($t6, $t7);
-    if ($abort_flag) {
-        assume {:print "$at(2,279,307)"} true;
-        $t1 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t1} $t1 == $t1;
-        goto L2;
-    }
-
-    // write_back[LocalRoot($t0)@]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:11:9+28
-    $t0 := $Dereference($t6);
-
-    // $t8 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:12:9+1
-    assume {:print "$at(2,317,318)"} true;
-    $t8 := $t0;
-
-    // trace_return[0]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:12:9+1
-    assume {:print "$track_return(1,0,0):", $t8} $t8 == $t8;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:13:5+1
-    assume {:print "$at(2,323,324)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:27:5+1
+    assume {:print "$at(2,556,557)"} true;
 L1:
 
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:15:9+16
-    assume {:print "$at(2,371,387)"} true;
-    assert {:msg "assert_failed(2,371,387): function does not abort under this condition"}
-      !false;
+    // assert Eq<#0>($t0, TestAxioms::spec_id<#0>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:29:9+29
+    assume {:print "$at(2,582,611)"} true;
+    assert {:msg "assert_failed(2,582,611): post-condition does not hold"}
+      $IsEqual'#0'($t0, $42_TestAxioms_spec_id'#0'($t0));
 
-    // assert forall n: $t8: Gt(n, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:16:9+34
-    assume {:print "$at(2,396,430)"} true;
-    assert {:msg "assert_failed(2,396,430): post-condition does not hold"}
-      (var $range_0 := $t8; (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var n := ReadVec($range_0, $i_1);
-    ((n > 0)))));
-
-    // assert forall i: Range(0, Len<u64>($t8)), j: Range(0, Len<u64>($t8)) where Eq<u64>(Index($t8, i), Index($t8, j)): Eq<num>(i, j) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:17:9+94
-    assume {:print "$at(2,439,533)"} true;
-    assert {:msg "assert_failed(2,439,533): post-condition does not hold"}
-      (var $range_0 := $Range(0, LenVec($t8)); (var $range_1 := $Range(0, LenVec($t8)); (forall $i_2: int, $i_3: int :: $InRange($range_0, $i_2) ==> $InRange($range_1, $i_3) ==> (var i := $i_2;
-    (var j := $i_3;
-    ($IsEqual'u64'(ReadVec($t8, i), ReadVec($t8, j)))  ==> ($IsEqual'num'(i, j)))))));
-
-    // assert forall i: TypeDomain<u64>(), j: TypeDomain<u64>(){Index($t8, i), Index($t8, j)} where And(And(And(And(Eq<u64>(Index($t8, i), Index($t8, j)), Ge(i, 0)), Lt(i, Len<u64>($t8))), Ge(j, 0)), Lt(j, Len<u64>($t8))): Eq<u64>(i, j) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:18:9+165
-    assume {:print "$at(2,542,707)"} true;
-    assert {:msg "assert_failed(2,542,707): post-condition does not hold"}
-      (forall i: int, j: int :: {ReadVec($t8, i),ReadVec($t8, j)}$IsValid'u64'(i) ==> $IsValid'u64'(j) ==> ((((($IsEqual'u64'(ReadVec($t8, i), ReadVec($t8, j)) && (i >= 0)) && (i < LenVec($t8))) && (j >= 0)) && (j < LenVec($t8))))  ==> ($IsEqual'u64'(i, j)));
-
-    // assert forall i: Range(0, Len<u64>($t8)){Index($t8, i)}: {let i = Index($t8, i); Gt(i, 0)} at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:20:9+77
-    assume {:print "$at(2,716,793)"} true;
-    assert {:msg "assert_failed(2,716,793): post-condition does not hold"}
-      (var $range_0 := $Range(0, LenVec($t8)); (forall $i_1: int :: {(var i := $i_1;
-    ReadVec($t8, i))}$InRange($range_0, $i_1) ==> (var i := $i_1;
-    ((var i := ReadVec($t8, i); (i > 0))))));
-
-    // return $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:20:9+77
-    $ret0 := $t8;
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:29:9+29
+    $ret0 := $t0;
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:13:5+1
-    assume {:print "$at(2,323,324)"} true;
+}
+
+// fun TestAxioms::id_u64 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:32:5+44
+procedure {:timeLimit 40} $42_TestAxioms_id_u64$verify(_$t0: int) returns ($ret0: int)
+{
+    // declare local variables
+    var $t0: int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:36:17+6
+    assume {:print "$at(2,702,708)"} true;
+    assume $IsValid'u64'($t0);
+
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:32:5+1
+    assume {:print "$at(2,623,624)"} true;
+    assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
+
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:33:9+1
+    assume {:print "$at(2,660,661)"} true;
+    assume {:print "$track_return(0,1,0):", $t0} $t0 == $t0;
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:34:5+1
+    assume {:print "$at(2,666,667)"} true;
+L1:
+
+    // assert Eq<u64>($t0, TestAxioms::spec_id<u64>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:36:9+29
+    assume {:print "$at(2,694,723)"} true;
+    assert {:msg "assert_failed(2,694,723): post-condition does not hold"}
+      $IsEqual'u64'($t0, $42_TestAxioms_spec_id'u64'($t0));
+
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:36:9+29
+    $ret0 := $t0;
+    return;
+
+}
+
+// fun TestAxioms::incr [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:12:5+43
+procedure {:timeLimit 40} $42_TestAxioms_incr$verify(_$t0: int) returns ($ret0: int)
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: int;
+    var $t3: int;
+    var $t0: int;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:16:17+6
+    assume {:print "$at(2,275,281)"} true;
+    assume $IsValid'u64'($t0);
+
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:12:5+1
+    assume {:print "$at(2,199,200)"} true;
+    assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
+
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:13:13+1
+    assume {:print "$at(2,235,236)"} true;
+    $t1 := 1;
+    assume $IsValid'u64'($t1);
+
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:13:11+1
+    call $t2 := $AddU64($t0, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,233,234)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(0,2):", $t3} $t3 == $t3;
+        goto L2;
+    }
+
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:13:9+5
+    assume {:print "$track_return(0,2,0):", $t2} $t2 == $t2;
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
+    assume {:print "$at(2,241,242)"} true;
+L1:
+
+    // assert Eq<u64>($t2, TestAxioms::spec_incr($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:16:9+31
+    assume {:print "$at(2,267,298)"} true;
+    assert {:msg "assert_failed(2,267,298): post-condition does not hold"}
+      $IsEqual'u64'($t2, $42_TestAxioms_spec_incr($t0));
+
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:16:9+31
+    $ret0 := $t2;
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
+    assume {:print "$at(2,241,242)"} true;
 L2:
 
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:14:5+470
-    assume {:print "$at(2,329,799)"} true;
-    assert {:msg "assert_failed(2,329,799): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_quant.move:14:5+470
-    $abort_code := $t1;
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/axioms.move:14:5+1
+    $abort_code := $t3;
     $abort_flag := true;
     return;
 

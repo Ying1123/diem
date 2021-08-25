@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/emits/emits.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl
 -monomorphize
 /env:2
 /proverLog:emits.z3.smt2
@@ -8,16 +8,16 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_TestEmits_opaque$verify ...
-  [0.214 s, 5 proof obligations]  verified
+  [0.207 s, 5 proof obligations]  verified
 
 Verifying $42_TestEmits_callee$verify ...
-  [0.031 s, 4 proof obligations]  verified
+  [0.033 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_callee_partial$verify ...
   [0.019 s, 3 proof obligations]  verified
@@ -26,196 +26,196 @@ Verifying $42_TestEmits_conditional$verify ...
   [0.021 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_bool$verify ...
-  [0.018 s, 2 proof obligations]  verified
+  [0.040 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_missing_condition_incorrect$verify ...
-  [0.039 s, 2 proof obligations]  error
-assert_failed(2,4059,4094): function does not emit the expected event
+  [0.026 s, 2 proof obligations]  error
+assert_failed(2,4091,4126): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(1724,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(1724,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(541,9): inline$$Gt$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(1755,34): anon7_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(1793,1): L3
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(1738,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(1738,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(1769,34): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(1807,1): L3
 
 Verifying $42_TestEmits_conditional_multiple$verify ...
-  [0.177 s, 4 proof obligations]  verified
+  [0.147 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_multiple_incorrect$verify ...
-  [0.064 s, 4 proof obligations]  error
-assert_failed(2,5358,5393): function does not emit the expected event
+  [0.063 s, 4 proof obligations]  error
+assert_failed(2,5390,5425): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2047,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2047,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2079,5): anon11_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2096,5): anon12_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2105,34): anon13_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2143,1): L3
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2061,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2061,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2093,5): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2110,5): anon12_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2119,34): anon13_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2157,1): L3
 
 Verifying $42_TestEmits_conditional_multiple_same$verify ...
-  [0.161 s, 4 proof obligations]  verified
+  [0.156 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_conditional_multiple_same_incorrect$verify ...
-  [0.049 s, 4 proof obligations]  error
-assert_failed(2,6420,6455): function does not emit the expected event
+  [0.056 s, 4 proof obligations]  error
+assert_failed(2,6452,6487): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2407,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2407,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2439,5): anon11_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2456,5): anon12_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2465,34): anon13_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2503,1): L3
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2421,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2421,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2453,5): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2470,5): anon12_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2479,34): anon13_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2517,1): L3
 
 Verifying $42_TestEmits_conditional_wrong_condition_incorrect$verify ...
-  [0.024 s, 2 proof obligations]  error
-assert_failed(2,3749,3793): function does not emit the expected event
+  [0.026 s, 2 proof obligations]  error
+assert_failed(2,3781,3825): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2561,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2561,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(541,9): inline$$Gt$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2592,34): anon7_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(2630,1): L3
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2575,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2575,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2606,34): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(2644,1): L3
 
 Verifying $42_TestEmits_emits_in_schema$verify ...
-  [0.015 s, 2 proof obligations]  verified
+  [0.019 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_emits_in_schema_condition$verify ...
-  [0.026 s, 2 proof obligations]  verified
+  [0.019 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple$verify ...
-  [0.027 s, 3 proof obligations]  verified
+  [0.023 s, 3 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple_different_handle$verify ...
-  [0.500 s, 7 proof obligations]  verified
+  [0.510 s, 7 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple_incorrect$verify ...
-  [0.040 s, 4 proof obligations]  error
-assert_failed(2,1737,1772): function does not emit the expected event
+  [0.035 s, 4 proof obligations]  error
+assert_failed(2,1769,1804): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3222,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3222,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3247,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3264,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3236,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3236,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3261,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3278,5): anon7_Else
 
 Verifying $42_TestEmits_multiple_same$verify ...
-  [0.028 s, 3 proof obligations]  verified
+  [0.023 s, 3 proof obligations]  verified
 
 Verifying $42_TestEmits_multiple_same_incorrect$verify ...
-  [0.020 s, 3 proof obligations]  error
-assert_failed(2,2312,2347): function does not emit the expected event
+  [0.024 s, 3 proof obligations]  error
+assert_failed(2,2344,2379): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3421,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3421,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3446,5): anon4_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3435,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3435,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3460,5): anon4_Else
 
 Verifying $42_TestEmits_opaque_completeness_incorrect$verify ...
-  [0.049 s, 4 proof obligations]  error
-assert_failed(2,10235,10409): emitted event not covered by any of the `emits` clauses
+  [0.038 s, 4 proof obligations]  error
+assert_failed(2,10267,10441): emitted event not covered by any of the `emits` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3506,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3506,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3533,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3576,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3520,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3520,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3547,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3590,5): anon7_Else
 
 Verifying $42_TestEmits_opaque_in_call_chain$verify ...
-  [0.089 s, 5 proof obligations]  verified
+  [0.086 s, 5 proof obligations]  verified
 
 Verifying $42_TestEmits_opaque_incorrect$verify ...
   [0.162 s, 6 proof obligations]  error
-assert_failed(2,9641,9676): function does not emit the expected event
+assert_failed(2,9673,9708): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3721,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3721,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3748,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(3791,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3735,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3735,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3762,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(3805,5): anon7_Else
 
 Verifying $42_TestEmits_opaque_partial$verify ...
-  [0.058 s, 4 proof obligations]  verified
+  [0.051 s, 4 proof obligations]  verified
 
 Verifying $42_TestEmits_opaque_partial_incorrect$verify ...
-  [0.089 s, 5 proof obligations]  error
-assert_failed(2,11667,11965): emitted event not covered by any of the `emits` clauses
+  [0.095 s, 5 proof obligations]  error
+assert_failed(2,11699,11997): emitted event not covered by any of the `emits` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4004,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4004,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4031,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(943,5): inline$$EventStore__diverge$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4031,5): anon6_Else$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4077,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4018,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4018,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4045,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(948,5): inline$$EventStore__diverge$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4045,5): anon6_Else$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4091,5): anon7_Else
 
 Verifying $42_TestEmits_partial$verify ...
-  [0.013 s, 1 proof obligation]  verified
+  [0.015 s, 1 proof obligation]  verified
 
 Verifying $42_TestEmits_partial_incorrect$verify ...
-  [0.018 s, 2 proof obligations]  error
-assert_failed(2,7736,7810): emitted event not covered by any of the `emits` clauses
+  [0.017 s, 2 proof obligations]  error
+assert_failed(2,7768,7842): emitted event not covered by any of the `emits` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4231,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4231,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4256,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4273,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4245,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4245,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4270,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4287,5): anon7_Else
 
 Verifying $42_TestEmits_simple$verify ...
-  [0.017 s, 2 proof obligations]  verified
+  [0.016 s, 2 proof obligations]  verified
 
 Verifying $42_TestEmits_simple_wrong_handle_incorrect$verify ...
   [0.019 s, 2 proof obligations]  error
-assert_failed(2,1010,1047): function does not emit the expected event
+assert_failed(2,1042,1079): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4397,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4397,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4431,5): anon4_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4411,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4411,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4445,5): anon4_Else
 
 Verifying $42_TestEmits_simple_wrong_msg_incorrect$verify ...
-  [0.014 s, 2 proof obligations]  error
-assert_failed(2,732,767): function does not emit the expected event
+  [0.015 s, 2 proof obligations]  error
+assert_failed(2,764,799): function does not emit the expected event
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4485,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4485,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4510,5): anon4_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4499,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4499,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4524,5): anon4_Else
 
 Verifying $42_TestEmits_strict$verify ...
-  [0.010 s, 0 proof obligations]  verified
+  [0.012 s, 0 proof obligations]  verified
 
 Verifying $42_TestEmits_strict_incorrect$verify ...
-  [0.015 s, 1 proof obligation]  error
-assert_failed(2,8311,8372): emitted event not covered by any of the `emits` clauses
+  [0.011 s, 1 proof obligation]  error
+assert_failed(2,8343,8404): emitted event not covered by any of the `emits` clauses
 Execution trace:
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4643,9): anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(913,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4643,9): anon0$1
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4668,5): anon6_Else
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(981,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
-    /home/ying/diem/seq_benchmarks/emits/emits.z3.bpl(4685,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4657,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(918,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4657,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4682,5): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(986,12): inline$$1_Event_emit_event'$42_TestEmits_DummyEvent'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.z3.bpl(4699,5): anon7_Else
 
 Boogie program verifier finished with 17 verified, 13 errors

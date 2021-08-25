@@ -1,2 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy_default.smt2:42.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")
+(error "Parse Error: /home/ying/diem/old_seq_benchmarks/functional/serialize_model/serialize_model.andy_default.smt2:7.114: Symbol 'T@#0' not declared as a type
+
+  ...T'#0'| (|$v#$42_TestVector_T'#0'| (Seq |T@#0|)) ) ) ))
+                                                ^
+")

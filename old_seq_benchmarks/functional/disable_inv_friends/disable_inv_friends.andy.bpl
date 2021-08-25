@@ -900,520 +900,726 @@ procedure {:inline 1} $InitEventStore() {
 // axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
 axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
 
-// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:12:5+77
-function {:inline} $1_Signer_$address_of(s: $signer): int {
-    $1_Signer_$borrow_address(s)
-}
-
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
 function {:inline} $1_Signer_is_signer(addr: int): bool;
 axiom (forall addr: int ::
 (var $$res := $1_Signer_is_signer(addr);
 $IsValid'bool'($$res)));
 
-// struct M3::R3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:55:5+20
-type {:datatype} $1_M3_R3;
-function {:constructor} $1_M3_R3($dummy_field: bool): $1_M3_R3;
-function {:inline} $Update'$1_M3_R3'_dummy_field(s: $1_M3_R3, x: bool): $1_M3_R3 {
-    $1_M3_R3(x)
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:24:9+73
+function {:inline} $42_TestGlobalInvariants_exists_R($42_TestGlobalInvariants_R_$memory: $Memory $42_TestGlobalInvariants_R, addr: int): bool {
+    $ResourceExists($42_TestGlobalInvariants_R_$memory, addr)
 }
-function $IsValid'$1_M3_R3'(s: $1_M3_R3): bool {
-    $IsValid'bool'($dummy_field#$1_M3_R3(s))
+
+// struct TestGlobalInvariants::R at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:9:5+39
+type {:datatype} $42_TestGlobalInvariants_R;
+function {:constructor} $42_TestGlobalInvariants_R($x: int): $42_TestGlobalInvariants_R;
+function {:inline} $Update'$42_TestGlobalInvariants_R'_x(s: $42_TestGlobalInvariants_R, x: int): $42_TestGlobalInvariants_R {
+    $42_TestGlobalInvariants_R(x)
 }
-function {:inline} $IsEqual'$1_M3_R3'(s1: $1_M3_R3, s2: $1_M3_R3): bool {
+function $IsValid'$42_TestGlobalInvariants_R'(s: $42_TestGlobalInvariants_R): bool {
+    $IsValid'u64'($x#$42_TestGlobalInvariants_R(s))
+}
+function {:inline} $IsEqual'$42_TestGlobalInvariants_R'(s1: $42_TestGlobalInvariants_R, s2: $42_TestGlobalInvariants_R): bool {
     s1 == s2
 }
-var $1_M3_R3_$memory: $Memory $1_M3_R3;
+var $42_TestGlobalInvariants_R_$memory: $Memory $42_TestGlobalInvariants_R;
 
-// fun M3::f3 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
-procedure {:timeLimit 40} $1_M3_f3$verify(_$t0: $signer) returns ()
+// struct TestGlobalInvariants::S at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:13:5+39
+type {:datatype} $42_TestGlobalInvariants_S;
+function {:constructor} $42_TestGlobalInvariants_S($x: int): $42_TestGlobalInvariants_S;
+function {:inline} $Update'$42_TestGlobalInvariants_S'_x(s: $42_TestGlobalInvariants_S, x: int): $42_TestGlobalInvariants_S {
+    $42_TestGlobalInvariants_S(x)
+}
+function $IsValid'$42_TestGlobalInvariants_S'(s: $42_TestGlobalInvariants_S): bool {
+    $IsValid'u64'($x#$42_TestGlobalInvariants_S(s))
+}
+function {:inline} $IsEqual'$42_TestGlobalInvariants_S'(s1: $42_TestGlobalInvariants_S, s2: $42_TestGlobalInvariants_S): bool {
+    s1 == s2
+}
+var $42_TestGlobalInvariants_S_$memory: $Memory $42_TestGlobalInvariants_S;
+
+// fun TestGlobalInvariants::create_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:30:5+121
+procedure {:timeLimit 40} $42_TestGlobalInvariants_create_R$verify(_$t0: $signer) returns ()
 {
     // declare local variables
-    var $t1: bool;
-    var $t2: $1_M3_R3;
+    var $t1: int;
+    var $t2: $42_TestGlobalInvariants_S;
     var $t3: int;
+    var $t4: int;
+    var $t5: $42_TestGlobalInvariants_R;
     var $t0: $signer;
-    var $1_M3_R3_$modifies: [int]bool;
     var $temp_0'signer': $signer;
+    var $42_TestGlobalInvariants_R_$memory#5: $Memory $42_TestGlobalInvariants_R;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
-    assume {:print "$at(2,1086,1154)"} true;
+    // assume forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:30:5+121
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,678,799)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:30:5+121
     assume $IsValid'signer'($t0);
 
-    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+68
-    assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
-    ($IsValid'$1_M3_R3'($rsc))));
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:30:5+121
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_R'($rsc))));
 
-    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:63:9+43
-    assume {:print "$at(2,1201,1244)"} true;
-    assume $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:30:5+121
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_S_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_S_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_S'($rsc))));
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:57:5+1
-    assume {:print "$at(2,1086,1087)"} true;
+    // assume Not(exists<TestGlobalInvariants::R>(Signer::spec_address_of($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:35:9+54
+    assume {:print "$at(2,828,882)"} true;
+    assume !$ResourceExists($42_TestGlobalInvariants_R_$memory, $1_Signer_spec_address_of($t0));
+
+    // assume Not(exists<TestGlobalInvariants::S>(Signer::spec_address_of($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:36:9+54
+    assume {:print "$at(2,891,945)"} true;
+    assume !$ResourceExists($42_TestGlobalInvariants_S_$memory, $1_Signer_spec_address_of($t0));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:30:5+1
+    assume {:print "$at(2,678,679)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // $t1 := false at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:20+5
-    assume {:print "$at(2,1141,1146)"} true;
-    $t1 := false;
-    assume $IsValid'bool'($t1);
+    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:31:34+1
+    assume {:print "$at(2,751,752)"} true;
+    $t1 := 0;
+    assume $IsValid'u64'($t1);
 
-    // $t2 := pack M3::R3($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:20+5
-    $t2 := $1_M3_R3($t1);
+    // $t2 := pack TestGlobalInvariants::S($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:31:29+7
+    $t2 := $42_TestGlobalInvariants_S($t1);
 
-    // assert CanModify<M3::R3>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
-    assert {:msg "assert_failed(2,1130,1137): caller does not have permission to modify `M3::R3` at given address"}
-      $1_M3_R3_$modifies[$1_Signer_spec_address_of($t0)];
-
-    // move_to<M3::R3>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:58:9+7
-    if ($ResourceExists($1_M3_R3_$memory, $1_Signer_spec_address_of($t0))) {
+    // move_to<TestGlobalInvariants::S>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:31:9+7
+    if ($ResourceExists($42_TestGlobalInvariants_S_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $1_M3_R3_$memory := $ResourceUpdate($1_M3_R3_$memory, $1_Signer_spec_address_of($t0), $t2);
+        $42_TestGlobalInvariants_S_$memory := $ResourceUpdate($42_TestGlobalInvariants_S_$memory, $1_Signer_spec_address_of($t0), $t2);
     }
     if ($abort_flag) {
-        assume {:print "$at(2,1130,1137)"} true;
+        assume {:print "$at(2,726,733)"} true;
         $t3 := $abort_code;
         assume {:print "$track_abort(1,0):", $t3} $t3 == $t3;
         goto L2;
     }
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
-    assume {:print "$at(2,1153,1154)"} true;
-L1:
+    // assert forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,348,418)"} true;
+    assert {:msg "assert_failed(2,348,418): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
 
-    // assert exists<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:64:9+42
-    assume {:print "$at(2,1253,1295)"} true;
-    assert {:msg "assert_failed(2,1253,1295): post-condition does not hold"}
-      $ResourceExists($1_M3_R3_$memory, $1_Signer_$address_of($t0));
+    // $t4 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:32:34+1
+    assume {:print "$at(2,789,790)"} true;
+    $t4 := 0;
+    assume $IsValid'u64'($t4);
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:64:9+42
-    return;
+    // $t5 := pack TestGlobalInvariants::R($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:32:29+7
+    $t5 := $42_TestGlobalInvariants_R($t4);
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
-    assume {:print "$at(2,1153,1154)"} true;
-L2:
+    // @5 := save_mem(TestGlobalInvariants::R) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    // state save for global update invariants
+    assume {:print "$at(2,348,418)"} true;
+    $42_TestGlobalInvariants_R_$memory#5 := $42_TestGlobalInvariants_R_$memory;
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:59:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// struct M2::R2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:37:5+20
-type {:datatype} $1_M2_R2;
-function {:constructor} $1_M2_R2($dummy_field: bool): $1_M2_R2;
-function {:inline} $Update'$1_M2_R2'_dummy_field(s: $1_M2_R2, x: bool): $1_M2_R2 {
-    $1_M2_R2(x)
-}
-function $IsValid'$1_M2_R2'(s: $1_M2_R2): bool {
-    $IsValid'bool'($dummy_field#$1_M2_R2(s))
-}
-function {:inline} $IsEqual'$1_M2_R2'(s1: $1_M2_R2, s2: $1_M2_R2): bool {
-    s1 == s2
-}
-var $1_M2_R2_$memory: $Memory $1_M2_R2;
-
-// fun M2::f2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
-procedure {:timeLimit 40} $1_M2_f2$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: $1_M2_R2;
-    var $t3: int;
-    var $t0: $signer;
-    var $1_M2_R2_$modifies: [int]bool;
-    var $temp_0'signer': $signer;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
-    assume {:print "$at(2,762,831)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+69
-    assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
-    ($IsValid'$1_M2_R2'($rsc))));
-
-    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:45:9+43
-    assume {:print "$at(2,878,921)"} true;
-    assume $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
-
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:39:5+1
-    assume {:print "$at(2,762,763)"} true;
-    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
-
-    // $t1 := false at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:20+5
-    assume {:print "$at(2,818,823)"} true;
-    $t1 := false;
-    assume $IsValid'bool'($t1);
-
-    // $t2 := pack M2::R2($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:20+5
-    $t2 := $1_M2_R2($t1);
-
-    // assert CanModify<M2::R2>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
-    assert {:msg "assert_failed(2,807,814): caller does not have permission to modify `M2::R2` at given address"}
-      $1_M2_R2_$modifies[$1_Signer_spec_address_of($t0)];
-
-    // move_to<M2::R2>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:40:9+7
-    if ($ResourceExists($1_M2_R2_$memory, $1_Signer_spec_address_of($t0))) {
+    // move_to<TestGlobalInvariants::R>($t5, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:32:9+7
+    assume {:print "$at(2,764,771)"} true;
+    if ($ResourceExists($42_TestGlobalInvariants_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $1_M2_R2_$memory := $ResourceUpdate($1_M2_R2_$memory, $1_Signer_spec_address_of($t0), $t2);
+        $42_TestGlobalInvariants_R_$memory := $ResourceUpdate($42_TestGlobalInvariants_R_$memory, $1_Signer_spec_address_of($t0), $t5);
     }
     if ($abort_flag) {
-        assume {:print "$at(2,807,814)"} true;
+        assume {:print "$at(2,764,771)"} true;
         $t3 := $abort_code;
-        assume {:print "$track_abort(2,0):", $t3} $t3 == $t3;
+        assume {:print "$track_abort(1,0):", $t3} $t3 == $t3;
         goto L2;
     }
 
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
-    assume {:print "$at(2,830,831)"} true;
+    // assert forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,348,418)"} true;
+    assert {:msg "assert_failed(2,348,418): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
+
+    // assert forall a: TypeDomain<address>() where TestGlobalInvariants::exists_R[@5](a): exists<TestGlobalInvariants::R>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:21:9+81
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:21:9+81
+    assume {:print "$at(2,428,509)"} true;
+    assert {:msg "assert_failed(2,428,509): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($42_TestGlobalInvariants_exists_R($42_TestGlobalInvariants_R_$memory#5, a))  ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a)));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:33:5+1
+    assume {:print "$at(2,798,799)"} true;
 L1:
 
-    // assert exists<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:46:9+42
-    assume {:print "$at(2,930,972)"} true;
-    assert {:msg "assert_failed(2,930,972): post-condition does not hold"}
-      $ResourceExists($1_M2_R2_$memory, $1_Signer_$address_of($t0));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:46:9+42
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:33:5+1
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
-    assume {:print "$at(2,830,831)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:33:5+1
 L2:
 
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:41:5+1
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:33:5+1
     $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun M1::f1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-procedure {:timeLimit 40} $1_M1_f1$verify(_$t0: $signer) returns ()
+// fun TestGlobalInvariants::create_R_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:39:5+145
+procedure {:timeLimit 40} $42_TestGlobalInvariants_create_R_invalid$verify(_$t0: $signer) returns ()
 {
     // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
+    var $t1: int;
+    var $t2: $42_TestGlobalInvariants_R;
+    var $t3: int;
     var $t0: $signer;
-    var $1_M3_R3_$modifies: [int]bool;
-    var $1_M2_R2_$modifies: [int]bool;
-    var $temp_0'$1_M2_R2': $1_M2_R2;
-    var $temp_0'$1_M3_R3': $1_M3_R3;
-    var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
+    var $42_TestGlobalInvariants_R_$memory#4: $Memory $42_TestGlobalInvariants_R;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    assume {:print "$at(2,238,309)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
+    // assume forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:39:5+145
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,957,1102)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:39:5+145
     assume $IsValid'signer'($t0);
 
-    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-    assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
-    ($IsValid'$1_M3_R3'($rsc))));
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:39:5+145
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_R'($rsc))));
 
-    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+71
-    assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
-    ($IsValid'$1_M2_R2'($rsc))));
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:39:5+1
+    assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:18:9+47
-    assume {:print "$at(2,356,403)"} true;
-    assume $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
+    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:41:34+1
+    assume {:print "$at(2,1092,1093)"} true;
+    $t1 := 0;
+    assume $IsValid'u64'($t1);
 
-    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:19:9+47
-    assume {:print "$at(2,412,459)"} true;
-    assume $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
+    // $t2 := pack TestGlobalInvariants::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:41:29+7
+    $t2 := $42_TestGlobalInvariants_R($t1);
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:11:5+1
-    assume {:print "$at(2,238,239)"} true;
-    assume {:print "$track_local(3,0,0):", $t0} $t0 == $t0;
+    // @4 := save_mem(TestGlobalInvariants::R) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:39:5+145
+    // state save for global update invariants
+    assume {:print "$at(2,957,1102)"} true;
+    $42_TestGlobalInvariants_R_$memory#4 := $42_TestGlobalInvariants_R_$memory;
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    // >> opaque call: M2::f2($t0)
-    assume {:print "$at(2,274,283)"} true;
-
-    // assert CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    assert {:msg "assert_failed(2,274,283): caller does not have permission to modify `M2::R2` at given address"}
-      $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
-
-    // opaque begin: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    havoc $t1;
-    assume $IsValid'bool'($t1);
-
-    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    if ($t1) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-L4:
-
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    assume {:print "$at(2,274,283)"} true;
-    assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-L3:
-
-    // modifies global<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_M2_R2';
-        $1_M2_R2_$memory := $ResourceUpdate($1_M2_R2_$memory, $1_Signer_$address_of($t0), $temp_0'$1_M2_R2');
+    // move_to<TestGlobalInvariants::R>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:41:9+7
+    assume {:print "$at(2,1067,1074)"} true;
+    if ($ResourceExists($42_TestGlobalInvariants_R_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
     } else {
-        $1_M2_R2_$memory := $ResourceRemove($1_M2_R2_$memory, $1_Signer_$address_of($t0));
+        $42_TestGlobalInvariants_R_$memory := $ResourceUpdate($42_TestGlobalInvariants_R_$memory, $1_Signer_spec_address_of($t0), $t2);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1067,1074)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t3} $t3 == $t3;
+        goto L2;
     }
 
-    // assume exists<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
-    assume $ResourceExists($1_M2_R2_$memory, $1_Signer_$address_of($t0));
+    // assert forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,348,418)"} true;
+    assert {:msg "assert_failed(2,348,418): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
 
-    // opaque end: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:12:9+9
+    // assert forall a: TypeDomain<address>() where TestGlobalInvariants::exists_R[@4](a): exists<TestGlobalInvariants::R>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:21:9+81
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:21:9+81
+    assume {:print "$at(2,428,509)"} true;
+    assert {:msg "assert_failed(2,428,509): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($42_TestGlobalInvariants_exists_R($42_TestGlobalInvariants_R_$memory#4, a))  ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a)));
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    // >> opaque call: M3::f3($t0)
-    assume {:print "$at(2,293,302)"} true;
-
-    // assert CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    assert {:msg "assert_failed(2,293,302): caller does not have permission to modify `M3::R3` at given address"}
-      $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
-
-    // opaque begin: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // if ($t3) goto L6 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    if ($t3) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-L6:
-
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    assume {:print "$at(2,293,302)"} true;
-    assume {:print "$track_abort(3,0):", $t2} $t2 == $t2;
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-L5:
-
-    // modifies global<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_M3_R3';
-        $1_M3_R3_$memory := $ResourceUpdate($1_M3_R3_$memory, $1_Signer_$address_of($t0), $temp_0'$1_M3_R3');
-    } else {
-        $1_M3_R3_$memory := $ResourceRemove($1_M3_R3_$memory, $1_Signer_$address_of($t0));
-    }
-
-    // assume exists<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-    assume $ResourceExists($1_M3_R3_$memory, $1_Signer_$address_of($t0));
-
-    // opaque end: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:13:9+9
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
-    assume {:print "$at(2,308,309)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:42:5+1
+    assume {:print "$at(2,1101,1102)"} true;
 L1:
 
-    // assert forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    assume {:print "$at(2,558,647)"} true;
-    assert {:msg "assert_failed(2,558,647): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
-    assume {:print "$at(2,308,309)"} true;
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:42:5+1
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:42:5+1
 L2:
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:14:5+1
-    $abort_code := $t2;
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:42:5+1
+    $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun M4::f4 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-procedure {:timeLimit 40} $1_M4_f4$verify(_$t0: $signer) returns ()
+// fun TestGlobalInvariants::get_S_x [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:44:5+175
+procedure {:timeLimit 40} $42_TestGlobalInvariants_get_S_x$verify(_$t0: $signer) returns ($ret0: int)
 {
     // declare local variables
     var $t1: bool;
     var $t2: int;
-    var $t3: bool;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: $42_TestGlobalInvariants_S;
+    var $t9: int;
     var $t0: $signer;
-    var $1_M3_R3_$modifies: [int]bool;
-    var $1_M2_R2_$modifies: [int]bool;
-    var $temp_0'$1_M2_R2': $1_M2_R2;
-    var $temp_0'$1_M3_R3': $1_M3_R3;
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $42_TestGlobalInvariants_R_$memory#3: $Memory $42_TestGlobalInvariants_R;
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    assume {:print "$at(2,1377,1448)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
+    // assume forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:44:5+175
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,1108,1283)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:51:17+6
+    assume {:print "$at(2,1466,1472)"} true;
     assume $IsValid'signer'($t0);
 
-    // assume forall $rsc: ResourceDomain<M3::R3>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-    assume (forall $a_0: int :: {$ResourceValue($1_M3_R3_$memory, $a_0)}(var $rsc := $ResourceValue($1_M3_R3_$memory, $a_0);
-    ($IsValid'$1_M3_R3'($rsc))));
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:51:17+6
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_R'($rsc))));
 
-    // assume forall $rsc: ResourceDomain<M2::R2>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+71
-    assume (forall $a_0: int :: {$ResourceValue($1_M2_R2_$memory, $a_0)}(var $rsc := $ResourceValue($1_M2_R2_$memory, $a_0);
-    ($IsValid'$1_M2_R2'($rsc))));
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:51:17+6
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_S_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_S_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_S'($rsc))));
 
-    // assume CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:80:9+47
-    assume {:print "$at(2,1495,1542)"} true;
-    assume $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
+    // @3 := save_mem(TestGlobalInvariants::R) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:44:5+1
+    assume {:print "$at(2,1108,1109)"} true;
+    $42_TestGlobalInvariants_R_$memory#3 := $42_TestGlobalInvariants_R_$memory;
 
-    // assume CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:81:9+47
-    assume {:print "$at(2,1551,1598)"} true;
-    assume $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:44:5+1
+    assume {:print "$track_local(1,2,0):", $t0} $t0 == $t0;
 
-    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:73:5+1
-    assume {:print "$at(2,1377,1378)"} true;
-    assume {:print "$track_local(4,0,0):", $t0} $t0 == $t0;
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:26+27
+    // >> opaque call: $t3 := Signer::address_of($t0)
+    assume {:print "$at(2,1188,1215)"} true;
 
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    // >> opaque call: M3::f3($t0)
-    assume {:print "$at(2,1413,1422)"} true;
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:26+27
 
-    // assert CanModify<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    assert {:msg "assert_failed(2,1413,1422): caller does not have permission to modify `M3::R3` at given address"}
-      $1_M3_R3_$modifies[$1_Signer_$address_of($t0)];
+    // assume WellFormed($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:26+27
+    assume $IsValid'address'($t3);
 
-    // opaque begin: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:26+27
+    assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
 
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    havoc $t1;
-    assume $IsValid'bool'($t1);
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:26+27
 
-    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    if ($t1) { goto L4; } else { goto L3; }
+    // $t4 := exists<TestGlobalInvariants::R>($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:16+6
+    $t4 := $ResourceExists($42_TestGlobalInvariants_R_$memory, $t3);
 
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-L4:
+    // trace_local[tmp#$1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
+    assume {:print "$track_local(1,2,1):", $t4} $t4 == $t4;
 
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    assume {:print "$at(2,1413,1422)"} true;
-    assume {:print "$track_abort(4,0):", $t2} $t2 == $t2;
+    // if ($t4) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
+    if ($t4) { goto L0; } else { goto L1; }
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-L3:
-
-    // modifies global<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_M3_R3';
-        $1_M3_R3_$memory := $ResourceUpdate($1_M3_R3_$memory, $1_Signer_$address_of($t0), $temp_0'$1_M3_R3');
-    } else {
-        $1_M3_R3_$memory := $ResourceRemove($1_M3_R3_$memory, $1_Signer_$address_of($t0));
-    }
-
-    // assume exists<M3::R3>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-    assume $ResourceExists($1_M3_R3_$memory, $1_Signer_$address_of($t0));
-
-    // opaque end: M3::f3($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:74:9+9
-
-    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    // >> opaque call: M2::f2($t0)
-    assume {:print "$at(2,1432,1441)"} true;
-
-    // assert CanModify<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    assert {:msg "assert_failed(2,1432,1441): caller does not have permission to modify `M2::R2` at given address"}
-      $1_M2_R2_$modifies[$1_Signer_$address_of($t0)];
-
-    // opaque begin: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // if ($t3) goto L6 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    if ($t3) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-L6:
-
-    // trace_abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    assume {:print "$at(2,1432,1441)"} true;
-    assume {:print "$track_abort(4,0):", $t2} $t2 == $t2;
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-L5:
-
-    // modifies global<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_M2_R2';
-        $1_M2_R2_$memory := $ResourceUpdate($1_M2_R2_$memory, $1_Signer_$address_of($t0), $temp_0'$1_M2_R2');
-    } else {
-        $1_M2_R2_$memory := $ResourceRemove($1_M2_R2_$memory, $1_Signer_$address_of($t0));
-    }
-
-    // assume exists<M2::R2>(Signer::$address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-    assume $ResourceExists($1_M2_R2_$memory, $1_Signer_$address_of($t0));
-
-    // opaque end: M2::f2($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:75:9+9
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
-    assume {:print "$at(2,1447,1448)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
 L1:
 
-    // assert forall addr: TypeDomain<address>() where exists<M3::R3>(addr): exists<M2::R2>(addr) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:27:10+89
-    assume {:print "$at(2,558,647)"} true;
-    assert {:msg "assert_failed(2,558,647): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_M3_R3_$memory, addr))  ==> ($ResourceExists($1_M2_R2_$memory, addr)));
+    // destroy($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
-    assume {:print "$at(2,1447,1448)"} true;
-    return;
+    // $t5 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:56+1
+    $t5 := 0;
+    assume $IsValid'u64'($t5);
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
+    // trace_abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
+    assume {:print "$at(2,1171,1220)"} true;
+    assume {:print "$track_abort(1,2):", $t5} $t5 == $t5;
+
+    // $t6 := move($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
+    $t6 := $t5;
+
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:45:9+49
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:45+7
+    assume {:print "$at(2,1266,1273)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:26+27
+    // >> opaque call: $t6 := Signer::address_of($t0)
+
+    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:26+27
+
+    // assume WellFormed($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:26+27
+    assume $IsValid'address'($t7);
+
+    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:26+27
+    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
+
+    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:26+27
+
+    // $t8 := get_global<TestGlobalInvariants::S>($t7) on_abort goto L3 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:9+13
+    if (!$ResourceExists($42_TestGlobalInvariants_S_$memory, $t7)) {
+        call $ExecFailureAbort();
+    } else {
+        $t8 := $ResourceValue($42_TestGlobalInvariants_S_$memory, $t7);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1230,1243)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(1,2):", $t6} $t6 == $t6;
+        goto L3;
+    }
+
+    // $t9 := get_field<TestGlobalInvariants::S>.x($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:9+47
+    $t9 := $x#$42_TestGlobalInvariants_S($t8);
+
+    // trace_return[0]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:46:9+47
+    assume {:print "$track_return(1,2,0):", $t9} $t9 == $t9;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:47:5+1
+    assume {:print "$at(2,1282,1283)"} true;
 L2:
 
-    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/disable_inv_friends.move:76:5+1
-    $abort_code := $t2;
+    // assert Not(Not(exists[@3]<TestGlobalInvariants::R>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:50:9+55
+    assume {:print "$at(2,1394,1449)"} true;
+    assert {:msg "assert_failed(2,1394,1449): function does not abort under this condition"}
+      !!$ResourceExists($42_TestGlobalInvariants_R_$memory#3, $1_Signer_spec_address_of($t0));
+
+    // assert Eq<u64>($t9, select TestGlobalInvariants::S.x(global<TestGlobalInvariants::S>(Signer::spec_address_of($t0)))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:51:9+64
+    assume {:print "$at(2,1458,1522)"} true;
+    assert {:msg "assert_failed(2,1458,1522): post-condition does not hold"}
+      $IsEqual'u64'($t9, $x#$42_TestGlobalInvariants_S($ResourceValue($42_TestGlobalInvariants_S_$memory, $1_Signer_spec_address_of($t0))));
+
+    // return $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:51:9+64
+    $ret0 := $t9;
+    return;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:47:5+1
+    assume {:print "$at(2,1282,1283)"} true;
+L3:
+
+    // assert Not(exists[@3]<TestGlobalInvariants::R>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:48:5+240
+    assume {:print "$at(2,1288,1528)"} true;
+    assert {:msg "assert_failed(2,1288,1528): abort not covered by any of the `aborts_if` clauses"}
+      !$ResourceExists($42_TestGlobalInvariants_R_$memory#3, $1_Signer_spec_address_of($t0));
+
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:48:5+240
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun TestGlobalInvariants::remove_R_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:63:5+253
+procedure {:timeLimit 40} $42_TestGlobalInvariants_remove_R_invalid$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: $42_TestGlobalInvariants_R;
+    var $t9: int;
+    var $t0: $signer;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $42_TestGlobalInvariants_R_$memory#6: $Memory $42_TestGlobalInvariants_R;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:63:5+253
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,1876,2129)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:63:5+253
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:63:5+253
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_R'($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:63:5+1
+    assume {:print "$track_local(1,3,0):", $t0} $t0 == $t0;
+
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:26+27
+    // >> opaque call: $t3 := Signer::address_of($t0)
+    assume {:print "$at(2,2026,2053)"} true;
+
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:26+27
+
+    // assume WellFormed($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:26+27
+    assume $IsValid'address'($t3);
+
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:26+27
+    assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
+
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:26+27
+
+    // $t4 := exists<TestGlobalInvariants::R>($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:16+6
+    $t4 := $ResourceExists($42_TestGlobalInvariants_R_$memory, $t3);
+
+    // trace_local[tmp#$1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+    assume {:print "$track_local(1,3,1):", $t4} $t4 == $t4;
+
+    // if ($t4) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+    if ($t4) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+
+    // $t5 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:56+1
+    $t5 := 0;
+    assume $IsValid'u64'($t5);
+
+    // trace_abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+    assume {:print "$at(2,2009,2058)"} true;
+    assume {:print "$track_abort(1,3):", $t5} $t5 == $t5;
+
+    // $t6 := move($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+    $t6 := $t5;
+
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:65:9+49
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:54+7
+    assume {:print "$at(2,2113,2120)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:35+27
+    // >> opaque call: $t6 := Signer::address_of($t0)
+
+    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:35+27
+
+    // assume WellFormed($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:35+27
+    assume $IsValid'address'($t7);
+
+    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:35+27
+    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
+
+    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:35+27
+
+    // @6 := save_mem(TestGlobalInvariants::R) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:63:5+253
+    // state save for global update invariants
+    assume {:print "$at(2,1876,2129)"} true;
+    $42_TestGlobalInvariants_R_$memory#6 := $42_TestGlobalInvariants_R_$memory;
+
+    // $t8 := move_from<TestGlobalInvariants::R>($t7) on_abort goto L3 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:22+9
+    assume {:print "$at(2,2081,2090)"} true;
+    if (!$ResourceExists($42_TestGlobalInvariants_R_$memory, $t7)) {
+        call $ExecFailureAbort();
+    } else {
+        $t8 := $ResourceValue($42_TestGlobalInvariants_R_$memory, $t7);
+        $42_TestGlobalInvariants_R_$memory := $ResourceRemove($42_TestGlobalInvariants_R_$memory, $t7);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,2081,2090)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(1,3):", $t6} $t6 == $t6;
+        goto L3;
+    }
+
+    // assert forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,348,418)"} true;
+    assert {:msg "assert_failed(2,348,418): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
+
+    // assert forall a: TypeDomain<address>() where TestGlobalInvariants::exists_R[@6](a): exists<TestGlobalInvariants::R>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:21:9+81
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:21:9+81
+    assume {:print "$at(2,428,509)"} true;
+    assert {:msg "assert_failed(2,428,509): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($42_TestGlobalInvariants_exists_R($42_TestGlobalInvariants_R_$memory#6, a))  ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a)));
+
+    // $t9 := unpack TestGlobalInvariants::R($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:13+6
+    assume {:print "$at(2,2072,2078)"} true;
+    $t9 := $x#$42_TestGlobalInvariants_R($t8);
+
+    // destroy($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:66:17+1
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:67:5+1
+    assume {:print "$at(2,2128,2129)"} true;
+L2:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:67:5+1
+    return;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:67:5+1
+L3:
+
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:67:5+1
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun TestGlobalInvariants::remove_S_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+238
+procedure {:timeLimit 40} $42_TestGlobalInvariants_remove_S_invalid$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: $42_TestGlobalInvariants_S;
+    var $t9: int;
+    var $t0: $signer;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $42_TestGlobalInvariants_R_$memory#2: $Memory $42_TestGlobalInvariants_R;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+238
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,1534,1772)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+238
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+238
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_R_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_R'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<TestGlobalInvariants::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+238
+    assume (forall $a_0: int :: {$ResourceValue($42_TestGlobalInvariants_S_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestGlobalInvariants_S_$memory, $a_0);
+    ($IsValid'$42_TestGlobalInvariants_S'($rsc))));
+
+    // @2 := save_mem(TestGlobalInvariants::R) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+1
+    $42_TestGlobalInvariants_R_$memory#2 := $42_TestGlobalInvariants_R_$memory;
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:54:5+1
+    assume {:print "$track_local(1,4,0):", $t0} $t0 == $t0;
+
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:26+27
+    // >> opaque call: $t3 := Signer::address_of($t0)
+    assume {:print "$at(2,1669,1696)"} true;
+
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:26+27
+
+    // assume WellFormed($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:26+27
+    assume $IsValid'address'($t3);
+
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:26+27
+    assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
+
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:26+27
+
+    // $t4 := exists<TestGlobalInvariants::R>($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:16+6
+    $t4 := $ResourceExists($42_TestGlobalInvariants_R_$memory, $t3);
+
+    // trace_local[tmp#$1]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+    assume {:print "$track_local(1,4,1):", $t4} $t4 == $t4;
+
+    // if ($t4) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+    if ($t4) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+
+    // $t5 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:56+1
+    $t5 := 0;
+    assume $IsValid'u64'($t5);
+
+    // trace_abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+    assume {:print "$at(2,1652,1701)"} true;
+    assume {:print "$track_abort(1,4):", $t5} $t5 == $t5;
+
+    // $t6 := move($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+    $t6 := $t5;
+
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:56:9+49
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:54+7
+    assume {:print "$at(2,1756,1763)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:35+27
+    // >> opaque call: $t6 := Signer::address_of($t0)
+
+    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:35+27
+
+    // assume WellFormed($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:35+27
+    assume $IsValid'address'($t7);
+
+    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:35+27
+    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
+
+    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:35+27
+
+    // $t8 := move_from<TestGlobalInvariants::S>($t7) on_abort goto L3 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:22+9
+    if (!$ResourceExists($42_TestGlobalInvariants_S_$memory, $t7)) {
+        call $ExecFailureAbort();
+    } else {
+        $t8 := $ResourceValue($42_TestGlobalInvariants_S_$memory, $t7);
+        $42_TestGlobalInvariants_S_$memory := $ResourceRemove($42_TestGlobalInvariants_S_$memory, $t7);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,1724,1733)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(1,4):", $t6} $t6 == $t6;
+        goto L3;
+    }
+
+    // assert forall a: TypeDomain<address>() where exists<TestGlobalInvariants::R>(a): exists<TestGlobalInvariants::S>(a) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:19:9+70
+    assume {:print "$at(2,348,418)"} true;
+    assert {:msg "assert_failed(2,348,418): global memory invariant does not hold"}
+      (forall a: int :: $IsValid'address'(a) ==> ($ResourceExists($42_TestGlobalInvariants_R_$memory, a))  ==> ($ResourceExists($42_TestGlobalInvariants_S_$memory, a)));
+
+    // $t9 := unpack TestGlobalInvariants::S($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:13+6
+    assume {:print "$at(2,1715,1721)"} true;
+    $t9 := $x#$42_TestGlobalInvariants_S($t8);
+
+    // destroy($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:57:17+1
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:58:5+1
+    assume {:print "$at(2,1771,1772)"} true;
+L2:
+
+    // assert Not(Not(exists[@2]<TestGlobalInvariants::R>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:60:9+55
+    assume {:print "$at(2,1809,1864)"} true;
+    assert {:msg "assert_failed(2,1809,1864): function does not abort under this condition"}
+      !!$ResourceExists($42_TestGlobalInvariants_R_$memory#2, $1_Signer_spec_address_of($t0));
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:60:9+55
+    return;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:58:5+1
+    assume {:print "$at(2,1771,1772)"} true;
+L3:
+
+    // assert Not(exists[@2]<TestGlobalInvariants::R>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:59:5+93
+    assume {:print "$at(2,1777,1870)"} true;
+    assert {:msg "assert_failed(2,1777,1870): abort not covered by any of the `aborts_if` clauses"}
+      !$ResourceExists($42_TestGlobalInvariants_R_$memory#2, $1_Signer_spec_address_of($t0));
+
+    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/global_invariants.move:59:5+93
+    $abort_code := $t6;
     $abort_flag := true;
     return;
 

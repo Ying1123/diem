@@ -13,16 +13,39 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $1_M3_f3$verify ...
-  [0.137 s, 2 proof obligations]  verified
+Verifying $42_TestGlobalInvariants_create_R$verify ...
+  [0.150 s, 3 proof obligations]  verified
 
-Verifying $1_M2_f2$verify ...
-  [0.015 s, 2 proof obligations]  verified
+Verifying $42_TestGlobalInvariants_create_R_invalid$verify ...
+  [0.020 s, 2 proof obligations]  error
+assert_failed(2,348,418): global memory invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1081,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1081,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1120,44): anon6_Else
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1122,5): anon7_Else
 
-Verifying $1_M1_f1$verify ...
-  [0.016 s, 3 proof obligations]  verified
+Verifying $42_TestGlobalInvariants_get_S_x$verify ...
+  [0.014 s, 3 proof obligations]  verified
 
-Verifying $1_M4_f4$verify ...
-  [0.015 s, 3 proof obligations]  verified
+Verifying $42_TestGlobalInvariants_remove_R_invalid$verify ...
+  [0.016 s, 2 proof obligations]  error
+assert_failed(2,428,509): global memory invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1335,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1335,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1377,16): anon9_Then
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1425,13): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1428,5): anon11_Else
 
-Boogie program verifier finished with 4 verified, 0 errors
+Verifying $42_TestGlobalInvariants_remove_S_invalid$verify ...
+  [0.016 s, 3 proof obligations]  error
+assert_failed(2,348,418): global memory invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1487,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1487,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1536,16): anon10_Then
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1578,13): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/disable_inv_friends/disable_inv_friends.andy.bpl(1581,5): anon12_Else
+
+Boogie program verifier finished with 2 verified, 3 errors

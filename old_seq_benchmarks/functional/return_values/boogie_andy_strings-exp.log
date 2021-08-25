@@ -15,16 +15,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestReturnValue_one_two$verify ...
-  [0.134 s, 3 proof obligations]  verified
+  [0.128 s, 3 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_incorrect$verify ...
-  [0.001 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_wrapper$verify ...
-  [0.003 s, 4 proof obligations]  verified
+  [0.005 s, 4 proof obligations]  verified
 
 Verifying $42_TestReturnValue_one_two_wrapper_incorrect$verify ...
-  [0.015 s, 7 proof obligations]  error
+  [0.019 s, 7 proof obligations]  error
 assert_failed(2,345,367): post-condition does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/return_values/return_values.andy.bpl(1105,5): anon0
@@ -33,13 +33,13 @@ Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/return_values/return_values.andy.bpl(1111,5): anon4_Else
 
 Verifying $42_TestReturnValue_true_one$verify ...
-  [0.019 s, 3 proof obligations]  verified
+  [0.011 s, 3 proof obligations]  verified
 
 Verifying $42_TestReturnValue_true_one_wrapper$verify ...
   [0.002 s, 2 proof obligations]  verified
 
 Verifying $42_TestReturnValue_true_one_wrapper_incorrect$verify ...
-  [0.005 s, 5 proof obligations]  error
+  [0.007 s, 5 proof obligations]  error
 assert_failed(2,1296,1310): post-condition does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/return_values/return_values.andy.bpl(1340,5): anon0

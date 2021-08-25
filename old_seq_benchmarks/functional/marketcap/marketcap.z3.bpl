@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -890,3 +895,180 @@ procedure {:inline 1} $InitEventStore() {
 
 
 // Given Types for Type Parameters
+
+
+// struct TestFriend::R at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:3:5+40
+type {:datatype} $42_TestFriend_R;
+function {:constructor} $42_TestFriend_R($x: int): $42_TestFriend_R;
+function {:inline} $Update'$42_TestFriend_R'_x(s: $42_TestFriend_R, x: int): $42_TestFriend_R {
+    $42_TestFriend_R(x)
+}
+function $IsValid'$42_TestFriend_R'(s: $42_TestFriend_R): bool {
+    $IsValid'u64'($x#$42_TestFriend_R(s))
+}
+function {:inline} $IsEqual'$42_TestFriend_R'(s1: $42_TestFriend_R, s2: $42_TestFriend_R): bool {
+    s1 == s2
+}
+var $42_TestFriend_R_$memory: $Memory $42_TestFriend_R;
+
+// fun TestFriend::f [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:8:5+85
+procedure {:inline 1} $42_TestFriend_f(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: $42_TestFriend_R;
+    var $t3: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:8:5+1
+    assume {:print "$at(2,78,79)"} true;
+    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:8:5+1
+    assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
+
+    // $t2 := pack TestFriend::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:9:26+9
+    assume {:print "$at(2,146,155)"} true;
+    $t2 := $42_TestFriend_R($t1);
+
+    // move_to<TestFriend::R>($t2, $t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:9:9+7
+    if ($ResourceExists($42_TestFriend_R_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $42_TestFriend_R_$memory := $ResourceUpdate($42_TestFriend_R_$memory, $1_Signer_spec_address_of($t0), $t2);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,129,136)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(0,0):", $t3} $t3 == $t3;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:10:5+1
+    assume {:print "$at(2,162,163)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:10:5+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:10:5+1
+L2:
+
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:10:5+1
+    $abort_code := $t3;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun TestFriend::g [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:20:5+73
+procedure {:inline 1} $42_TestFriend_g(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:20:5+1
+    assume {:print "$at(2,328,329)"} true;
+    assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:20:5+1
+    assume {:print "$track_local(0,1,1):", $t1} $t1 == $t1;
+
+    // TestFriend::f($t0, $t1) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:21:9+15
+    assume {:print "$at(2,379,394)"} true;
+    call $42_TestFriend_f($t0, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,379,394)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(0,1):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:22:5+1
+    assume {:print "$at(2,400,401)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:22:5+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:22:5+1
+L2:
+
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:22:5+1
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun TestFriend::h [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:28:5+62
+procedure {:timeLimit 40} $42_TestFriend_h$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: int;
+    var $t2: int;
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume forall addr: TypeDomain<address>() where exists<TestFriend::R>(addr): Eq<u64>(select TestFriend::R.x(global<TestFriend::R>(addr)), 42) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:28:5+62
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:36:9+87
+    assume {:print "$at(2,454,516)"} true;
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestFriend_R_$memory, addr))  ==> ($IsEqual'u64'($x#$42_TestFriend_R($ResourceValue($42_TestFriend_R_$memory, addr)), 42)));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:28:5+62
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<TestFriend::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:28:5+62
+    assume (forall $a_0: int :: {$ResourceValue($42_TestFriend_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestFriend_R_$memory, $a_0);
+    ($IsValid'$42_TestFriend_R'($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:28:5+1
+    assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
+
+    // $t1 := 42 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:29:20+2
+    assume {:print "$at(2,506,508)"} true;
+    $t1 := 42;
+    assume $IsValid'u64'($t1);
+
+    // TestFriend::g($t0, $t1) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:29:9+14
+    call $42_TestFriend_g($t0, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(2,495,509)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(0,2):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:30:5+1
+    assume {:print "$at(2,515,516)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:30:5+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:30:5+1
+L2:
+
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/friend.move:30:5+1
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}

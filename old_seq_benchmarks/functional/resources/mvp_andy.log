@@ -1,27 +1,27 @@
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_C` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_B` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_A` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_R` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::ref_A` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_C` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_B` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_A` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr_to_sender` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr_and_return` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::identity` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource_at_signer` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_empty` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::borrow_global_mut_correct` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_B` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_A` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_sender_to_sender` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_sender_and_return` to be verified
-06:15:53 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource_incorrect` to be verified
-06:15:53 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_C` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_B` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::unpack_A` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_R` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::ref_A` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_C` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_B` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::pack_A` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr_to_sender` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr_and_return` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_addr` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::identity` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource_at_signer` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_empty` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::borrow_global_mut_correct` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_B` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::spec_pack_A` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_sender_to_sender` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::move_from_sender_and_return` to be verified
+08:42:10 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestResources::create_resource_incorrect` to be verified
+08:42:10 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
 [INFO] translating module TestResources
-06:15:53 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:42:10 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:15:53 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:15:53 [DEBUG] (11) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:42:10 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:42:10 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1

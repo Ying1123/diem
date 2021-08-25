@@ -14,19 +14,125 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_AddressQuant_f$verify ...
-  [0.142 s, 3 proof obligations]  verified
+Verifying $42_TestArithmetic_add_two_number$verify ...
+  [0.124 s, 4 proof obligations]  verified
 
-Verifying $42_AddressQuant_initialize$verify ...
-  [0.018 s, 3 proof obligations]  verified
+Verifying $42_TestArithmetic_arithmetic_ops$verify ...
+  [0.005 s, 2 proof obligations]  verified
 
-Verifying $42_AddressQuant_multiple_copy_incorrect$verify ...
-  [0.023 s, 2 proof obligations]  error
-assert_failed(2,1555,1577): post-condition does not hold
+Verifying $42_TestArithmetic_bool_ops$verify ...
+  [0.010 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div$verify ...
+  [0.012 s, 4 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div_by_zero$verify ...
+  [0.003 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div_by_zero_u64$verify ...
+  [0.007 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_div_by_zero_u64_incorrect$verify ...
+  [0.017 s, 2 proof obligations]  error
+assert_failed(2,2478,2541): abort not covered by any of the `aborts_if` clauses
 Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1215,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1215,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1253,36): anon7_Else
-    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1255,5): anon8_Else
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1551,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1551,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(517,9): inline$$Div$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(517,9): inline$$Div$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(1575,9): anon4_Then
 
-Boogie program verifier finished with 2 verified, 1 error
+Verifying $42_TestArithmetic_f$verify ...
+  [0.010 s, 3 proof obligations]  verified
+
+Verifying $42_TestArithmetic_g$verify ...
+  [0.021 s, 3 proof obligations]  verified
+
+Verifying $42_TestArithmetic_h$verify ...
+  [0.016 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_multiple_ops$verify ...
+  [0.010 s, 1 proof obligation]  verified
+
+Verifying $42_TestArithmetic_overflow_u128_add$verify ...
+  [0.006 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u128_add_incorrect$verify ...
+  [0.009 s, 2 proof obligations]  error
+assert_failed(2,3483,3548): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2309,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2309,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(430,9): inline$$AddU128$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(430,9): inline$$AddU128$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2333,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u128_mul$verify ...
+  [0.006 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u128_mul_incorrect$verify ...
+  [0.016 s, 2 proof obligations]  error
+assert_failed(2,4527,4592): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2451,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2451,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(508,9): inline$$MulU128$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(508,9): inline$$MulU128$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2475,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u64_add$verify ...
+  [0.006 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u64_add_incorrect$verify ...
+  [0.008 s, 2 proof obligations]  error
+assert_failed(2,3160,3224): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2593,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2593,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(416,9): inline$$AddU64$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(416,9): inline$$AddU64$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2617,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u64_mul$verify ...
+  [0.006 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u64_mul_incorrect$verify ...
+  [0.018 s, 2 proof obligations]  error
+assert_failed(2,4221,4285): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2735,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2735,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(499,9): inline$$MulU64$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(499,9): inline$$MulU64$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2759,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u8_add$verify ...
+  [0.009 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u8_add_incorrect$verify ...
+  [0.012 s, 2 proof obligations]  error
+assert_failed(2,2848,2911): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2877,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2877,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(407,9): inline$$AddU8$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(407,9): inline$$AddU8$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(2901,9): anon4_Then
+
+Verifying $42_TestArithmetic_overflow_u8_mul$verify ...
+  [0.007 s, 2 proof obligations]  verified
+
+Verifying $42_TestArithmetic_overflow_u8_mul_incorrect$verify ...
+  [0.020 s, 2 proof obligations]  error
+assert_failed(2,3909,3972): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(3019,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(3019,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(490,9): inline$$MulU8$0$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(490,9): inline$$MulU8$0$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/address_quant/address_quant.andy.bpl(3043,9): anon4_Then
+
+Verifying $42_TestArithmetic_underflow$verify ...
+  [0.004 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 17 verified, 7 errors

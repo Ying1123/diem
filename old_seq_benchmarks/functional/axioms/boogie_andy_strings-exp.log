@@ -14,13 +14,42 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_TestAxioms_id_T$verify ...
-  [0.127 s, 1 proof obligation]  verified
+Verifying $42_TestSome_populate_R$verify ...
+  [0.180 s, 1 proof obligation]  error
+assert_failed(2,1601,1647): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1123,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1123,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1176,32): anon12_Else
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1178,5): anon13_Else
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1197,32): anon14_Else
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1199,5): anon15_Else
 
-Verifying $42_TestAxioms_id_u64$verify ...
-  [0.003 s, 1 proof obligation]  verified
+Verifying $42_TestSome_simple$verify ...
+  [0.006 s, 1 proof obligation]  verified
 
-Verifying $42_TestAxioms_incr$verify ...
-  [0.012 s, 1 proof obligation]  verified
+Verifying $42_TestSome_simple_incorrect$verify ...
+  [0.009 s, 1 proof obligation]  error
+assert_failed(2,615,677): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1273,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1273,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1289,16): anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1327,1): L3
 
-Boogie program verifier finished with 3 verified, 0 errors
+Verifying $42_TestSome_test_choice_dup_expected_fail$verify ...
+  [0.013 s, 1 proof obligation]  error
+assert_failed(2,2933,2984): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1363,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1363,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/axioms/axioms.andy.bpl(1384,5): anon4_Else
+
+Verifying $42_TestSome_test_choice_use1$verify ...
+  [0.001 s, 0 proof obligations]  verified
+
+Verifying $42_TestSome_test_choice_use2$verify ...
+  [0.001 s, 0 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

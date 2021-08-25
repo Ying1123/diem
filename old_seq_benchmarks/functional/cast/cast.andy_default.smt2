@@ -7,7 +7,7 @@
 (declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7261 0)) ((($Mutation_7261 (|l#$Mutation_7261| T@$Location) (|p#$Mutation_7261| (Seq Int)) (|v#$Mutation_7261| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_8552 0)) ((($Mutation_8552 (|l#$Mutation_8552| T@$Location) (|p#$Mutation_8552| (Seq Int)) (|v#$Mutation_8552| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -24,6 +24,8 @@
 (declare-fun $EXEC_FAILURE_CODE () Int)
 (declare-fun $shl (Int Int) Int)
 (declare-fun $shr (Int Int) Int)
+(declare-fun |$IsValid'vec'u64''| ((Seq Int)) Bool)
+(declare-fun |$IndexOfVec'u64'| ((Seq Int) Int) Int)
 (declare-fun |$IsValid'vec'u8''| ((Seq Int)) Bool)
 (declare-fun |$IndexOfVec'u8'| ((Seq Int) Int) Int)
 (declare-fun $1_Hash_sha2 ((Seq Int)) (Seq Int))
@@ -78,15 +80,15 @@
  :skolemid |14|
  :pattern ( ($shr src1@@0 p@@0))
 )))
-(assert (forall ((v@@4 (Seq Int)) ) (! (= (|$IsValid'vec'u8''| v@@4)  (and (|$IsValid'u64'| (seq.len v@@4)) (forall ((i@@0 Int) ) (!  (=> (and (>= i@@0 0) (< i@@0 (seq.len v@@4))) (|$IsValid'u8'| (seq.nth v@@4 i@@0)))
+(assert (forall ((v@@4 (Seq Int)) ) (! (= (|$IsValid'vec'u64''| v@@4)  (and (|$IsValid'u64'| (seq.len v@@4)) (forall ((i@@0 Int) ) (!  (=> (and (>= i@@0 0) (< i@@0 (seq.len v@@4))) (|$IsValid'u64'| (seq.nth v@@4 i@@0)))
  :qid |castandybpl.590:13|
  :skolemid |15|
 ))))
- :qid |castandybpl.588:28|
+ :qid |castandybpl.588:29|
  :skolemid |16|
- :pattern ( (|$IsValid'vec'u8''| v@@4))
+ :pattern ( (|$IsValid'vec'u64''| v@@4))
 )))
-(assert (forall ((v@@5 (Seq Int)) (e Int) ) (! (let ((i@@1 (|$IndexOfVec'u8'| v@@5 e)))
+(assert (forall ((v@@5 (Seq Int)) (e Int) ) (! (let ((i@@1 (|$IndexOfVec'u64'| v@@5 e)))
 (ite  (not (exists ((i@@2 Int) ) (!  (and (and (|$IsValid'u64'| i@@2) (and (>= i@@2 0) (< i@@2 (seq.len v@@5)))) (= (seq.nth v@@5 i@@2) e))
  :qid |castandybpl.595:13|
  :skolemid |17|
@@ -96,171 +98,341 @@
 )))))
  :qid |castandybpl.599:15|
  :skolemid |19|
- :pattern ( (|$IndexOfVec'u8'| v@@5 e))
+ :pattern ( (|$IndexOfVec'u64'| v@@5 e))
+)))
+(assert (forall ((v@@6 (Seq Int)) ) (! (= (|$IsValid'vec'u8''| v@@6)  (and (|$IsValid'u64'| (seq.len v@@6)) (forall ((i@@3 Int) ) (!  (=> (and (>= i@@3 0) (< i@@3 (seq.len v@@6))) (|$IsValid'u8'| (seq.nth v@@6 i@@3)))
+ :qid |castandybpl.770:13|
+ :skolemid |20|
+))))
+ :qid |castandybpl.768:28|
+ :skolemid |21|
+ :pattern ( (|$IsValid'vec'u8''| v@@6))
+)))
+(assert (forall ((v@@7 (Seq Int)) (e@@0 Int) ) (! (let ((i@@4 (|$IndexOfVec'u8'| v@@7 e@@0)))
+(ite  (not (exists ((i@@5 Int) ) (!  (and (and (|$IsValid'u64'| i@@5) (and (>= i@@5 0) (< i@@5 (seq.len v@@7)))) (= (seq.nth v@@7 i@@5) e@@0))
+ :qid |castandybpl.775:13|
+ :skolemid |22|
+))) (= i@@4 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@4) (and (>= i@@4 0) (< i@@4 (seq.len v@@7)))) (= (seq.nth v@@7 i@@4) e@@0)) (forall ((j@@0 Int) ) (!  (=> (and (and (|$IsValid'u64'| j@@0) (>= j@@0 0)) (< j@@0 i@@4)) (not (= (seq.nth v@@7 j@@0) e@@0)))
+ :qid |castandybpl.783:17|
+ :skolemid |23|
+)))))
+ :qid |castandybpl.779:15|
+ :skolemid |24|
+ :pattern ( (|$IndexOfVec'u8'| v@@7 e@@0))
 )))
 (assert (forall ((v1 (Seq Int)) (v2 (Seq Int)) ) (! (= (= v1 v2) (= ($1_Hash_sha2 v1) ($1_Hash_sha2 v2)))
- :qid |castandybpl.776:15|
- :skolemid |20|
+ :qid |castandybpl.956:15|
+ :skolemid |25|
  :pattern ( ($1_Hash_sha2 v1) ($1_Hash_sha2 v2))
 )))
 (assert (forall ((v1@@0 (Seq Int)) (v2@@0 (Seq Int)) ) (! (= (= v1@@0 v2@@0) (= ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0)))
- :qid |castandybpl.792:15|
- :skolemid |21|
+ :qid |castandybpl.972:15|
+ :skolemid |26|
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |castandybpl.859:15|
- :skolemid |22|
+ :qid |castandybpl.1039:15|
+ :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |castandybpl.862:15|
- :skolemid |23|
+ :qid |castandybpl.1042:15|
+ :skolemid |28|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
-(assert (forall ((v@@6 (Seq Int)) ) (! (let ((r@@0 (ReverseVec_3283 v@@6)))
- (and (= (seq.len r@@0) (seq.len v@@6)) (forall ((i@@3 Int) ) (!  (=> (and (>= i@@3 0) (< i@@3 (seq.len r@@0))) (= (seq.nth r@@0 i@@3) (seq.nth v@@6 (- (- (seq.len v@@6) i@@3) 1))))
+(assert (forall ((v@@8 (Seq Int)) ) (! (let ((r@@0 (ReverseVec_3283 v@@8)))
+ (and (= (seq.len r@@0) (seq.len v@@8)) (forall ((i@@6 Int) ) (!  (=> (and (>= i@@6 0) (< i@@6 (seq.len r@@0))) (= (seq.nth r@@0 i@@6) (seq.nth v@@8 (- (- (seq.len v@@8) i@@6) 1))))
  :qid |castandybpl.67:18|
  :skolemid |0|
- :pattern ( (seq.nth r@@0 i@@3))
+ :pattern ( (seq.nth r@@0 i@@6))
 ))))
  :qid |castandybpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_3283 v@@6))
+ :pattern ( (ReverseVec_3283 v@@8))
 )))
-(assert (forall ((|l#0| Bool) (i@@4 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4) |l#0|)
+(assert (forall ((|l#0| Bool) (i@@7 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7) |l#0|)
  :qid |castandybpl.245:54|
- :skolemid |24|
- :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4))
+ :skolemid |43|
+ :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7))
 )))
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun $abort_flag@0 () Bool)
-(declare-fun inline$$CastU64$0$dst@1 () Int)
-(declare-fun _$t0 () Int)
-(declare-fun $abort_code@1 () Int)
-(declare-fun inline$$CastU64$0$dst@0 () Int)
-(declare-fun $abort_code@0 () Int)
+(declare-fun _$t0 () (Seq Int))
 (push 1)
-(set-info :boogie-vc-id $42_TestCast_aborting_u64_cast$verify)
+(set-info :boogie-vc-id $42_VectorExists_do_nothing_ref$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 11158) (let ((anon4_Else_correct  (=> (and (not $abort_flag@0) (= inline$$CastU64$0$dst@1 inline$$CastU64$0$dst@1)) (and (=> (= (ControlFlow 0 9871) (- 0 11324)) (not false)) (=> (not false) (=> (= (ControlFlow 0 9871) (- 0 11331)) (not (> _$t0 18446744073709551615))))))))
-(let ((anon4_Then_correct  (=> $abort_flag@0 (=> (and (= $abort_code@1 $abort_code@1) (= (ControlFlow 0 9901) (- 0 11296))) (or false (> _$t0 18446744073709551615))))))
-(let ((inline$$CastU64$0$anon3_Then$1_correct  (=> (= $abort_flag@0 true) (=> (and (= $abort_code@1 $EXEC_FAILURE_CODE) (= inline$$CastU64$0$dst@1 inline$$CastU64$0$dst@0)) (and (=> (= (ControlFlow 0 9831) 9901) anon4_Then_correct) (=> (= (ControlFlow 0 9831) 9871) anon4_Else_correct))))))
-(let ((inline$$CastU64$0$anon3_Then_correct  (=> (and (> _$t0 $MAX_U64) (= (ControlFlow 0 9829) 9831)) inline$$CastU64$0$anon3_Then$1_correct)))
-(let ((inline$$CastU64$0$anon3_Else_correct  (=> (and (and (>= $MAX_U64 _$t0) (= $abort_flag@0 false)) (and (= $abort_code@1 $abort_code@0) (= inline$$CastU64$0$dst@1 _$t0))) (and (=> (= (ControlFlow 0 9781) 9901) anon4_Then_correct) (=> (= (ControlFlow 0 9781) 9871) anon4_Else_correct)))))
-(let ((anon0$1_correct  (=> (and (|$IsValid'u128'| _$t0) (= _$t0 _$t0)) (and (=> (= (ControlFlow 0 9837) 9829) inline$$CastU64$0$anon3_Then_correct) (=> (= (ControlFlow 0 9837) 9781) inline$$CastU64$0$anon3_Else_correct)))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 11158) 9837) anon0$1_correct)))
-anon0_correct))))))))
+ (=> (= (ControlFlow 0 0) 13146) (let ((anon0$1_correct  (=> (and (|$IsValid'vec'u64''| _$t0) (= _$t0 _$t0)) (and (=> (= (ControlFlow 0 12707) (- 0 13187)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 12707) (- 0 13194)) (= _$t0 _$t0)) (=> (= _$t0 _$t0) (and (=> (= (ControlFlow 0 12707) (- 0 13201)) (exists ((l Int) ) (!  (and (|$IsValid'u64'| l) (= l (seq.len _$t0)))
+ :qid |castandybpl.1133:15|
+ :skolemid |32|
+))) (=> (exists ((l@@0 Int) ) (!  (and (|$IsValid'u64'| l@@0) (= l@@0 (seq.len _$t0)))
+ :qid |castandybpl.1133:15|
+ :skolemid |32|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13220)) (exists ((l@@1 Int) ) (!  (and (and (|$IsValid'u64'| l@@1) (= l@@1 (seq.len _$t0))) (= l@@1 (seq.len _$t0)))
+ :qid |castandybpl.1138:15|
+ :skolemid |33|
+))) (=> (exists ((l@@2 Int) ) (!  (and (and (|$IsValid'u64'| l@@2) (= l@@2 (seq.len _$t0))) (= l@@2 (seq.len _$t0)))
+ :qid |castandybpl.1138:15|
+ :skolemid |33|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13248)) (=> (let (($range_0 _$t0))
+(exists (($i_1 Int) ) (!  (and (and (>= $i_1 0) (< $i_1 (seq.len $range_0))) (let ((x (seq.nth $range_0 $i_1)))
+(= x 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@0 _$t0))
+(exists (($i_1@@0 Int) ) (!  (and (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0@@0))) (let ((x@@0 (seq.nth $range_0@@0 $i_1@@0)))
+(= x@@0 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))))) (=> (=> (let (($range_0@@1 _$t0))
+(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0@@1))) (let ((x@@1 (seq.nth $range_0@@1 $i_1@@1)))
+(= x@@1 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@2 _$t0))
+(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@2))) (let ((x@@2 (seq.nth $range_0@@2 $i_1@@2)))
+(= x@@2 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+)))) (and (=> (= (ControlFlow 0 12707) (- 0 13263)) (=> (let (($range_2 ($Range 0 (seq.len _$t0))))
+(exists (($i_3 Int) ) (!  (and ($InRange $range_2 $i_3) (let ((i@@8 $i_3))
+(= (seq.nth _$t0 i@@8) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@0 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@0 Int) ) (!  (and ($InRange $range_2@@0 $i_3@@0) (let ((i@@9 $i_3@@0))
+(= (seq.nth _$t0 i@@9) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))))) (=> (=> (let (($range_2@@1 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@1 Int) ) (!  (and ($InRange $range_2@@1 $i_3@@1) (let ((i@@10 $i_3@@1))
+(= (seq.nth _$t0 i@@10) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@2 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@2 Int) ) (!  (and ($InRange $range_2@@2 $i_3@@2) (let ((i@@11 $i_3@@2))
+(= (seq.nth _$t0 i@@11) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+)))) (and (=> (= (ControlFlow 0 12707) (- 0 13278)) (=> (exists ((i@@12 Int) ) (!  (and (and (|$IsValid'u64'| i@@12) (and (<= 0 i@@12) (< i@@12 (seq.len _$t0)))) (= (seq.nth _$t0 i@@12) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@13 Int) ) (!  (and (and (|$IsValid'u64'| i@@13) (and (<= 0 i@@13) (< i@@13 (seq.len _$t0)))) (= (seq.nth _$t0 i@@13) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)))) (=> (=> (exists ((i@@14 Int) ) (!  (and (and (|$IsValid'u64'| i@@14) (and (<= 0 i@@14) (< i@@14 (seq.len _$t0)))) (= (seq.nth _$t0 i@@14) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@15 Int) ) (!  (and (and (|$IsValid'u64'| i@@15) (and (<= 0 i@@15) (< i@@15 (seq.len _$t0)))) (= (seq.nth _$t0 i@@15) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+))) (and (=> (= (ControlFlow 0 12707) (- 0 13293)) (forall ((e@@1 Int) ) (!  (=> (|$IsValid'u64'| e@@1) (=> (let (($range_0@@3 _$t0))
+(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@3))) (let ((x@@3 (seq.nth $range_0@@3 $i_1@@3)))
+(= x@@3 e@@1)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@4 _$t0))
+(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@4))) (let ((x@@4 (seq.nth $range_0@@4 $i_1@@4)))
+(= x@@4 e@@1)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |castandybpl.1158:15|
+ :skolemid |34|
+))) (=> (forall ((e@@2 Int) ) (!  (=> (|$IsValid'u64'| e@@2) (=> (let (($range_0@@5 _$t0))
+(exists (($i_1@@5 Int) ) (!  (and (and (>= $i_1@@5 0) (< $i_1@@5 (seq.len $range_0@@5))) (let ((x@@5 (seq.nth $range_0@@5 $i_1@@5)))
+(= x@@5 e@@2)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@6 _$t0))
+(exists (($i_1@@6 Int) ) (!  (and (and (>= $i_1@@6 0) (< $i_1@@6 (seq.len $range_0@@6))) (let ((x@@6 (seq.nth $range_0@@6 $i_1@@6)))
+(= x@@6 e@@2)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |castandybpl.1158:15|
+ :skolemid |34|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13317)) (forall ((e@@3 Int) ) (!  (=> (|$IsValid'u64'| e@@3) (=> (let (($range_2@@3 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@3 Int) ) (!  (and ($InRange $range_2@@3 $i_3@@3) (let ((i@@16 $i_3@@3))
+(= (seq.nth _$t0 i@@16) e@@3)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@4 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@4 Int) ) (!  (and ($InRange $range_2@@4 $i_3@@4) (let ((i@@17 $i_3@@4))
+(= (seq.nth _$t0 i@@17) e@@3)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |castandybpl.1163:15|
+ :skolemid |35|
+))) (=> (forall ((e@@4 Int) ) (!  (=> (|$IsValid'u64'| e@@4) (=> (let (($range_2@@5 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@5 Int) ) (!  (and ($InRange $range_2@@5 $i_3@@5) (let ((i@@18 $i_3@@5))
+(= (seq.nth _$t0 i@@18) e@@4)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@6 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@6 Int) ) (!  (and ($InRange $range_2@@6 $i_3@@6) (let ((i@@19 $i_3@@6))
+(= (seq.nth _$t0 i@@19) e@@4)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |castandybpl.1163:15|
+ :skolemid |35|
+)) (=> (= (ControlFlow 0 12707) (- 0 13341)) (forall ((e@@5 Int) ) (!  (=> (|$IsValid'u64'| e@@5) (=> (exists ((i@@20 Int) ) (!  (and (and (|$IsValid'u64'| i@@20) (and (<= 0 i@@20) (< i@@20 (seq.len _$t0)))) (= (seq.nth _$t0 i@@20) e@@5))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@21 Int) ) (!  (and (and (|$IsValid'u64'| i@@21) (and (<= 0 i@@21) (< i@@21 (seq.len _$t0)))) (= (seq.nth _$t0 i@@21) e@@5))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+))))
+ :qid |castandybpl.1168:15|
+ :skolemid |36|
+))))))))))))))))))))))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 13146) 12707) anon0$1_correct)))
+anon0_correct)))
 ))
 (check-sat)
 (pop 1)
 ; Valid
-(declare-fun $abort_flag@0@@0 () Bool)
-(declare-fun inline$$CastU64$0$dst@1@@0 () Int)
-(declare-fun $abort_code@1@@0 () Int)
-(declare-fun inline$$CastU64$0$dst@0@@0 () Int)
-(declare-fun _$t0@@0 () Int)
-(declare-fun $abort_code@0@@0 () Int)
+(declare-fun _$t0@@0 () T@$Mutation_8552)
+(declare-fun $t1@0 () (Seq Int))
+(declare-fun |$temp_0'vec'u64''@0| () (Seq Int))
+(declare-fun |$temp_0'vec'u64''@1| () (Seq Int))
 (push 1)
-(set-info :boogie-vc-id $42_TestCast_aborting_u64_cast_incorrect$verify)
+(set-info :boogie-vc-id $42_VectorExists_do_nothing_ref_mut$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 11362) (let ((anon4_Else_correct@@0  (=> (not $abort_flag@0@@0) (=> (and (= inline$$CastU64$0$dst@1@@0 inline$$CastU64$0$dst@1@@0) (= (ControlFlow 0 10120) (- 0 11521))) (not false)))))
-(let ((anon4_Then_correct@@0  (=> $abort_flag@0@@0 (=> (and (= $abort_code@1@@0 $abort_code@1@@0) (= (ControlFlow 0 10142) (- 0 11500))) false))))
-(let ((inline$$CastU64$0$anon3_Then$1_correct@@0  (=> (= $abort_flag@0@@0 true) (=> (and (= $abort_code@1@@0 $EXEC_FAILURE_CODE) (= inline$$CastU64$0$dst@1@@0 inline$$CastU64$0$dst@0@@0)) (and (=> (= (ControlFlow 0 10090) 10142) anon4_Then_correct@@0) (=> (= (ControlFlow 0 10090) 10120) anon4_Else_correct@@0))))))
-(let ((inline$$CastU64$0$anon3_Then_correct@@0  (=> (and (> _$t0@@0 $MAX_U64) (= (ControlFlow 0 10088) 10090)) inline$$CastU64$0$anon3_Then$1_correct@@0)))
-(let ((inline$$CastU64$0$anon3_Else_correct@@0  (=> (and (and (>= $MAX_U64 _$t0@@0) (= $abort_flag@0@@0 false)) (and (= $abort_code@1@@0 $abort_code@0@@0) (= inline$$CastU64$0$dst@1@@0 _$t0@@0))) (and (=> (= (ControlFlow 0 10040) 10142) anon4_Then_correct@@0) (=> (= (ControlFlow 0 10040) 10120) anon4_Else_correct@@0)))))
-(let ((anon0$1_correct@@0  (=> (and (|$IsValid'u128'| _$t0@@0) (= _$t0@@0 _$t0@@0)) (and (=> (= (ControlFlow 0 10096) 10088) inline$$CastU64$0$anon3_Then_correct@@0) (=> (= (ControlFlow 0 10096) 10040) inline$$CastU64$0$anon3_Else_correct@@0)))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 11362) 10096) anon0$1_correct@@0)))
-anon0_correct@@0))))))))
-))
-(check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 11362)))
-(get-value ((ControlFlow 0 10096)))
-(get-value ((ControlFlow 0 10088)))
-(get-value ((ControlFlow 0 10090)))
-(get-value ((ControlFlow 0 10142)))
-(assert (not (= (ControlFlow 0 10142) (- 11500))))
-(check-sat)
-(pop 1)
-; Invalid
-(declare-fun $abort_flag@0@@1 () Bool)
-(declare-fun inline$$CastU8$0$dst@1 () Int)
-(declare-fun _$t0@@1 () Int)
-(declare-fun $abort_code@1@@1 () Int)
-(declare-fun inline$$CastU8$0$dst@0 () Int)
-(declare-fun $abort_code@0@@1 () Int)
-(push 1)
-(set-info :boogie-vc-id $42_TestCast_aborting_u8_cast$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 11537) (let ((anon4_Else_correct@@1  (=> (not $abort_flag@0@@1) (=> (and (= inline$$CastU8$0$dst@1 inline$$CastU8$0$dst@1) (= (ControlFlow 0 10365) (- 0 11699))) (not (> _$t0@@1 255))))))
-(let ((anon4_Then_correct@@1  (=> $abort_flag@0@@1 (=> (and (= $abort_code@1@@1 $abort_code@1@@1) (= (ControlFlow 0 10391) (- 0 11675))) (> _$t0@@1 255)))))
-(let ((inline$$CastU8$0$anon3_Then$1_correct  (=> (= $abort_flag@0@@1 true) (=> (and (= $abort_code@1@@1 $EXEC_FAILURE_CODE) (= inline$$CastU8$0$dst@1 inline$$CastU8$0$dst@0)) (and (=> (= (ControlFlow 0 10331) 10391) anon4_Then_correct@@1) (=> (= (ControlFlow 0 10331) 10365) anon4_Else_correct@@1))))))
-(let ((inline$$CastU8$0$anon3_Then_correct  (=> (and (> _$t0@@1 $MAX_U8) (= (ControlFlow 0 10329) 10331)) inline$$CastU8$0$anon3_Then$1_correct)))
-(let ((inline$$CastU8$0$anon3_Else_correct  (=> (and (and (>= $MAX_U8 _$t0@@1) (= $abort_flag@0@@1 false)) (and (= $abort_code@1@@1 $abort_code@0@@1) (= inline$$CastU8$0$dst@1 _$t0@@1))) (and (=> (= (ControlFlow 0 10281) 10391) anon4_Then_correct@@1) (=> (= (ControlFlow 0 10281) 10365) anon4_Else_correct@@1)))))
-(let ((anon0$1_correct@@1  (=> (and (|$IsValid'u64'| _$t0@@1) (= _$t0@@1 _$t0@@1)) (and (=> (= (ControlFlow 0 10337) 10329) inline$$CastU8$0$anon3_Then_correct) (=> (= (ControlFlow 0 10337) 10281) inline$$CastU8$0$anon3_Else_correct)))))
-(let ((anon0_correct@@1  (=> (= (ControlFlow 0 11537) 10337) anon0$1_correct@@1)))
-anon0_correct@@1))))))))
-))
-(check-sat)
-(pop 1)
-; Valid
-(declare-fun $abort_flag@0@@2 () Bool)
-(declare-fun inline$$CastU8$0$dst@1@@0 () Int)
-(declare-fun $abort_code@1@@2 () Int)
-(declare-fun inline$$CastU8$0$dst@0@@0 () Int)
-(declare-fun _$t0@@2 () Int)
-(declare-fun $abort_code@0@@2 () Int)
-(push 1)
-(set-info :boogie-vc-id $42_TestCast_aborting_u8_cast_incorrect$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 11717) (let ((anon4_Else_correct@@2  (=> (not $abort_flag@0@@2) (=> (and (= inline$$CastU8$0$dst@1@@0 inline$$CastU8$0$dst@1@@0) (= (ControlFlow 0 10610) (- 0 11876))) (not false)))))
-(let ((anon4_Then_correct@@2  (=> $abort_flag@0@@2 (=> (and (= $abort_code@1@@2 $abort_code@1@@2) (= (ControlFlow 0 10632) (- 0 11855))) false))))
-(let ((inline$$CastU8$0$anon3_Then$1_correct@@0  (=> (= $abort_flag@0@@2 true) (=> (and (= $abort_code@1@@2 $EXEC_FAILURE_CODE) (= inline$$CastU8$0$dst@1@@0 inline$$CastU8$0$dst@0@@0)) (and (=> (= (ControlFlow 0 10580) 10632) anon4_Then_correct@@2) (=> (= (ControlFlow 0 10580) 10610) anon4_Else_correct@@2))))))
-(let ((inline$$CastU8$0$anon3_Then_correct@@0  (=> (and (> _$t0@@2 $MAX_U8) (= (ControlFlow 0 10578) 10580)) inline$$CastU8$0$anon3_Then$1_correct@@0)))
-(let ((inline$$CastU8$0$anon3_Else_correct@@0  (=> (and (and (>= $MAX_U8 _$t0@@2) (= $abort_flag@0@@2 false)) (and (= $abort_code@1@@2 $abort_code@0@@2) (= inline$$CastU8$0$dst@1@@0 _$t0@@2))) (and (=> (= (ControlFlow 0 10530) 10632) anon4_Then_correct@@2) (=> (= (ControlFlow 0 10530) 10610) anon4_Else_correct@@2)))))
-(let ((anon0$1_correct@@2  (=> (and (|$IsValid'u64'| _$t0@@2) (= _$t0@@2 _$t0@@2)) (and (=> (= (ControlFlow 0 10586) 10578) inline$$CastU8$0$anon3_Then_correct@@0) (=> (= (ControlFlow 0 10586) 10530) inline$$CastU8$0$anon3_Else_correct@@0)))))
-(let ((anon0_correct@@2  (=> (= (ControlFlow 0 11717) 10586) anon0$1_correct@@2)))
-anon0_correct@@2))))))))
-))
-(check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 11717)))
-(get-value ((ControlFlow 0 10586)))
-(get-value ((ControlFlow 0 10578)))
-(get-value ((ControlFlow 0 10580)))
-(get-value ((ControlFlow 0 10632)))
-(assert (not (= (ControlFlow 0 10632) (- 11855))))
-(check-sat)
-(pop 1)
-; Invalid
-(push 1)
-(set-info :boogie-vc-id $42_TestCast_u64_cast$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 11892) true)
-))
-(check-sat)
-(pop 1)
-; Valid
-(declare-fun $abort_flag@0@@3 () Bool)
-(declare-fun inline$$CastU64$0$dst@1@@1 () Int)
-(declare-fun $abort_code@1@@3 () Int)
-(declare-fun inline$$CastU64$0$dst@0@@1 () Int)
-(declare-fun _$t0@@3 () Int)
-(declare-fun $abort_code@0@@3 () Int)
-(push 1)
-(set-info :boogie-vc-id $42_TestCast_u8_cast_incorrect$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 12054) (let ((anon4_Else_correct@@3  (=> (not $abort_flag@0@@3) (=> (and (= inline$$CastU64$0$dst@1@@1 inline$$CastU64$0$dst@1@@1) (= (ControlFlow 0 11082) (- 0 12213))) (not false)))))
-(let ((anon4_Then_correct@@3  (=> $abort_flag@0@@3 (=> (and (= $abort_code@1@@3 $abort_code@1@@3) (= (ControlFlow 0 11104) (- 0 12192))) false))))
-(let ((inline$$CastU64$0$anon3_Then$1_correct@@1  (=> (= $abort_flag@0@@3 true) (=> (and (= $abort_code@1@@3 $EXEC_FAILURE_CODE) (= inline$$CastU64$0$dst@1@@1 inline$$CastU64$0$dst@0@@1)) (and (=> (= (ControlFlow 0 11052) 11104) anon4_Then_correct@@3) (=> (= (ControlFlow 0 11052) 11082) anon4_Else_correct@@3))))))
-(let ((inline$$CastU64$0$anon3_Then_correct@@1  (=> (and (> _$t0@@3 $MAX_U64) (= (ControlFlow 0 11050) 11052)) inline$$CastU64$0$anon3_Then$1_correct@@1)))
-(let ((inline$$CastU64$0$anon3_Else_correct@@1  (=> (and (and (>= $MAX_U64 _$t0@@3) (= $abort_flag@0@@3 false)) (and (= $abort_code@1@@3 $abort_code@0@@3) (= inline$$CastU64$0$dst@1@@1 _$t0@@3))) (and (=> (= (ControlFlow 0 11002) 11104) anon4_Then_correct@@3) (=> (= (ControlFlow 0 11002) 11082) anon4_Else_correct@@3)))))
-(let ((anon0$1_correct@@3  (=> (and (|$IsValid'u8'| _$t0@@3) (= _$t0@@3 _$t0@@3)) (and (=> (= (ControlFlow 0 11058) 11050) inline$$CastU64$0$anon3_Then_correct@@1) (=> (= (ControlFlow 0 11058) 11002) inline$$CastU64$0$anon3_Else_correct@@1)))))
-(let ((anon0_correct@@3  (=> (= (ControlFlow 0 12054) 11058) anon0$1_correct@@3)))
-anon0_correct@@3))))))))
+ (=> (= (ControlFlow 0 0) 13380) (let ((anon0$1_correct@@0  (=> (= (|l#$Mutation_8552| _$t0@@0) ($Param 0)) (=> (and (|$IsValid'vec'u64''| (|v#$Mutation_8552| _$t0@@0)) (= $t1@0 (|v#$Mutation_8552| _$t0@@0))) (=> (and (and (= |$temp_0'vec'u64''@0| (|v#$Mutation_8552| _$t0@@0)) (= |$temp_0'vec'u64''@0| |$temp_0'vec'u64''@0|)) (and (= |$temp_0'vec'u64''@1| (|v#$Mutation_8552| _$t0@@0)) (= |$temp_0'vec'u64''@1| |$temp_0'vec'u64''@1|))) (and (=> (= (ControlFlow 0 13056) (- 0 13472)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 13056) (- 0 13479)) (= $t1@0 (|v#$Mutation_8552| _$t0@@0))) (=> (= $t1@0 (|v#$Mutation_8552| _$t0@@0)) (and (=> (= (ControlFlow 0 13056) (- 0 13488)) (exists ((l@@3 Int) ) (!  (and (|$IsValid'u64'| l@@3) (= l@@3 (seq.len $t1@0)))
+ :qid |castandybpl.1221:15|
+ :skolemid |37|
+))) (=> (exists ((l@@4 Int) ) (!  (and (|$IsValid'u64'| l@@4) (= l@@4 (seq.len $t1@0)))
+ :qid |castandybpl.1221:15|
+ :skolemid |37|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13507)) (exists ((l@@5 Int) ) (!  (and (|$IsValid'u64'| l@@5) (= l@@5 (seq.len (|v#$Mutation_8552| _$t0@@0))))
+ :qid |castandybpl.1226:15|
+ :skolemid |38|
+))) (=> (exists ((l@@6 Int) ) (!  (and (|$IsValid'u64'| l@@6) (= l@@6 (seq.len (|v#$Mutation_8552| _$t0@@0))))
+ :qid |castandybpl.1226:15|
+ :skolemid |38|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13528)) (exists ((l@@7 Int) ) (!  (and (and (|$IsValid'u64'| l@@7) (= l@@7 (seq.len $t1@0))) (= l@@7 (seq.len (|v#$Mutation_8552| _$t0@@0))))
+ :qid |castandybpl.1231:15|
+ :skolemid |39|
+))) (=> (exists ((l@@8 Int) ) (!  (and (and (|$IsValid'u64'| l@@8) (= l@@8 (seq.len $t1@0))) (= l@@8 (seq.len (|v#$Mutation_8552| _$t0@@0))))
+ :qid |castandybpl.1231:15|
+ :skolemid |39|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13558)) (=> (let (($range_0@@7 $t1@0))
+(exists (($i_1@@7 Int) ) (!  (and (and (>= $i_1@@7 0) (< $i_1@@7 (seq.len $range_0@@7))) (let ((x@@7 (seq.nth $range_0@@7 $i_1@@7)))
+(= x@@7 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@8 (|v#$Mutation_8552| _$t0@@0)))
+(exists (($i_1@@8 Int) ) (!  (and (and (>= $i_1@@8 0) (< $i_1@@8 (seq.len $range_0@@8))) (let ((x@@8 (seq.nth $range_0@@8 $i_1@@8)))
+(= x@@8 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))))) (=> (=> (let (($range_0@@9 $t1@0))
+(exists (($i_1@@9 Int) ) (!  (and (and (>= $i_1@@9 0) (< $i_1@@9 (seq.len $range_0@@9))) (let ((x@@9 (seq.nth $range_0@@9 $i_1@@9)))
+(= x@@9 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@10 (|v#$Mutation_8552| _$t0@@0)))
+(exists (($i_1@@10 Int) ) (!  (and (and (>= $i_1@@10 0) (< $i_1@@10 (seq.len $range_0@@10))) (let ((x@@10 (seq.nth $range_0@@10 $i_1@@10)))
+(= x@@10 0)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+)))) (and (=> (= (ControlFlow 0 13056) (- 0 13575)) (=> (let (($range_2@@7 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@7 Int) ) (!  (and ($InRange $range_2@@7 $i_3@@7) (let ((i@@22 $i_3@@7))
+(= (seq.nth $t1@0 i@@22) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@8 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0@@0)))))
+(exists (($i_3@@8 Int) ) (!  (and ($InRange $range_2@@8 $i_3@@8) (let ((i@@23 $i_3@@8))
+(= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@23) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))))) (=> (=> (let (($range_2@@9 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@9 Int) ) (!  (and ($InRange $range_2@@9 $i_3@@9) (let ((i@@24 $i_3@@9))
+(= (seq.nth $t1@0 i@@24) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@10 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0@@0)))))
+(exists (($i_3@@10 Int) ) (!  (and ($InRange $range_2@@10 $i_3@@10) (let ((i@@25 $i_3@@10))
+(= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@25) 0)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+)))) (and (=> (= (ControlFlow 0 13056) (- 0 13592)) (=> (exists ((i@@26 Int) ) (!  (and (and (|$IsValid'u64'| i@@26) (and (<= 0 i@@26) (< i@@26 (seq.len $t1@0)))) (= (seq.nth $t1@0 i@@26) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@27 Int) ) (!  (and (and (|$IsValid'u64'| i@@27) (and (<= 0 i@@27) (< i@@27 (seq.len (|v#$Mutation_8552| _$t0@@0))))) (= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@27) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)))) (=> (=> (exists ((i@@28 Int) ) (!  (and (and (|$IsValid'u64'| i@@28) (and (<= 0 i@@28) (< i@@28 (seq.len $t1@0)))) (= (seq.nth $t1@0 i@@28) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@29 Int) ) (!  (and (and (|$IsValid'u64'| i@@29) (and (<= 0 i@@29) (< i@@29 (seq.len (|v#$Mutation_8552| _$t0@@0))))) (= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@29) 0))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+))) (and (=> (= (ControlFlow 0 13056) (- 0 13609)) (forall ((e@@6 Int) ) (!  (=> (|$IsValid'u64'| e@@6) (=> (let (($range_0@@11 $t1@0))
+(exists (($i_1@@11 Int) ) (!  (and (and (>= $i_1@@11 0) (< $i_1@@11 (seq.len $range_0@@11))) (let ((x@@11 (seq.nth $range_0@@11 $i_1@@11)))
+(= x@@11 e@@6)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@12 (|v#$Mutation_8552| _$t0@@0)))
+(exists (($i_1@@12 Int) ) (!  (and (and (>= $i_1@@12 0) (< $i_1@@12 (seq.len $range_0@@12))) (let ((x@@12 (seq.nth $range_0@@12 $i_1@@12)))
+(= x@@12 e@@6)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |castandybpl.1251:15|
+ :skolemid |40|
+))) (=> (forall ((e@@7 Int) ) (!  (=> (|$IsValid'u64'| e@@7) (=> (let (($range_0@@13 $t1@0))
+(exists (($i_1@@13 Int) ) (!  (and (and (>= $i_1@@13 0) (< $i_1@@13 (seq.len $range_0@@13))) (let ((x@@13 (seq.nth $range_0@@13 $i_1@@13)))
+(= x@@13 e@@7)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@14 (|v#$Mutation_8552| _$t0@@0)))
+(exists (($i_1@@14 Int) ) (!  (and (and (>= $i_1@@14 0) (< $i_1@@14 (seq.len $range_0@@14))) (let ((x@@14 (seq.nth $range_0@@14 $i_1@@14)))
+(= x@@14 e@@7)))
+ :qid |castandybpl.1082:33|
+ :skolemid |29|
+)))))
+ :qid |castandybpl.1251:15|
+ :skolemid |40|
+)) (and (=> (= (ControlFlow 0 13056) (- 0 13635)) (forall ((e@@8 Int) ) (!  (=> (|$IsValid'u64'| e@@8) (=> (let (($range_2@@11 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@11 Int) ) (!  (and ($InRange $range_2@@11 $i_3@@11) (let ((i@@30 $i_3@@11))
+(= (seq.nth $t1@0 i@@30) e@@8)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@12 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0@@0)))))
+(exists (($i_3@@12 Int) ) (!  (and ($InRange $range_2@@12 $i_3@@12) (let ((i@@31 $i_3@@12))
+(= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@31) e@@8)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |castandybpl.1256:15|
+ :skolemid |41|
+))) (=> (forall ((e@@9 Int) ) (!  (=> (|$IsValid'u64'| e@@9) (=> (let (($range_2@@13 ($Range 0 (seq.len $t1@0))))
+(exists (($i_3@@13 Int) ) (!  (and ($InRange $range_2@@13 $i_3@@13) (let ((i@@32 $i_3@@13))
+(= (seq.nth $t1@0 i@@32) e@@9)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@14 ($Range 0 (seq.len (|v#$Mutation_8552| _$t0@@0)))))
+(exists (($i_3@@14 Int) ) (!  (and ($InRange $range_2@@14 $i_3@@14) (let ((i@@33 $i_3@@14))
+(= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@33) e@@9)))
+ :qid |castandybpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |castandybpl.1256:15|
+ :skolemid |41|
+)) (=> (= (ControlFlow 0 13056) (- 0 13661)) (forall ((e@@10 Int) ) (!  (=> (|$IsValid'u64'| e@@10) (=> (exists ((i@@34 Int) ) (!  (and (and (|$IsValid'u64'| i@@34) (and (<= 0 i@@34) (< i@@34 (seq.len $t1@0)))) (= (seq.nth $t1@0 i@@34) e@@10))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@35 Int) ) (!  (and (and (|$IsValid'u64'| i@@35) (and (<= 0 i@@35) (< i@@35 (seq.len (|v#$Mutation_8552| _$t0@@0))))) (= (seq.nth (|v#$Mutation_8552| _$t0@@0) i@@35) e@@10))
+ :qid |castandybpl.1094:13|
+ :skolemid |31|
+))))
+ :qid |castandybpl.1261:15|
+ :skolemid |42|
+))))))))))))))))))))))))))))
+(let ((anon0_correct@@0  (=> (= (ControlFlow 0 13380) 13056) anon0$1_correct@@0)))
+anon0_correct@@0)))
 ))
 (check-sat)
 (pop 1)

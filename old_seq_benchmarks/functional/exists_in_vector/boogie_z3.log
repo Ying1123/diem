@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/exists_in_vector/exists_in_vector.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/exists_in_vector/exists_in_vector.z3.bpl
 -monomorphize
 /env:2
 /proverLog:exists_in_vector.z3.smt2
@@ -8,15 +8,15 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/exists_in_vector/exists_in_vector.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/exists_in_vector/exists_in_vector.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $42_VectorExists_do_nothing_ref$verify ...
-  [0.135 s, 10 proof obligations]  verified
+  [0.149 s, 10 proof obligations]  verified
 
 Verifying $42_VectorExists_do_nothing_ref_mut$verify ...
-  [0.028 s, 11 proof obligations]  verified
+  [0.026 s, 11 proof obligations]  verified
 
 Boogie program verifier finished with 2 verified, 0 errors

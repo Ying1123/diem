@@ -1,11 +1,11 @@
-06:06:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u8_cast_incorrect` to be verified
-06:06:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u64_cast` to be verified
-06:06:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast_incorrect` to be verified
-06:06:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast` to be verified
-06:06:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast_incorrect` to be verified
-06:06:13 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast` to be verified
+08:34:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u8_cast_incorrect` to be verified
+08:34:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::u64_cast` to be verified
+08:34:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast_incorrect` to be verified
+08:34:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u8_cast` to be verified
+08:34:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast_incorrect` to be verified
+08:34:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestCast::aborting_u64_cast` to be verified
 [INFO] translating module TestCast
-06:06:13 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:34:31 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:06:13 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:06:13 [DEBUG] (13) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:34:31 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:34:31 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1

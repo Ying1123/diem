@@ -895,3 +895,13 @@ procedure {:inline 1} $InitEventStore() {
 
 
 // Given Types for Type Parameters
+
+
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));

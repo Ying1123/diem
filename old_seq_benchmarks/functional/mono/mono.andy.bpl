@@ -1887,13 +1887,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -1901,9 +1901,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -1999,21 +2019,6 @@ axiom (forall v: int :: {$1_BCS_serialize'address'(v)}
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -2024,7 +2029,7 @@ function {:inline} $1_Signer_$borrow_address(signer: int): int
 // TODO: we should check (and abort with the right code) if a generator already exists for
 // the signer.
 
-procedure {:inline 1} $1_Event_publish_generator(signer: int) {
+procedure {:inline 1} $1_Event_publish_generator(signer: $signer) {
 }
 
 // Generic code for dealing with mutations (havoc) still requires type and memory declarations.
@@ -2107,7 +2112,7 @@ axiom (forall v1, v2: $42_TestMonomorphization_E :: {$ToEventRep'$42_TestMonomor
 // Creates a new event handle. This ensures each time it is called that a unique new abstract event handler is
 // returned.
 // TODO: we should check (and abort with the right code) if no generator exists for the signer.
-procedure {:inline 1} $1_Event_new_event_handle'$42_TestMonomorphization_E'(signer: int) returns (res: $1_Event_EventHandle'$42_TestMonomorphization_E') {
+procedure {:inline 1} $1_Event_new_event_handle'$42_TestMonomorphization_E'(signer: $signer) returns (res: $1_Event_EventHandle'$42_TestMonomorphization_E') {
     assume $1_Event_EventHandles[res] == false;
     $1_Event_EventHandles := $1_Event_EventHandles[res := true];
 }
@@ -2153,6 +2158,15 @@ function {:inline} $CondExtendEventStore'$42_TestMonomorphization_E'(
 type #0;
 function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
 function {:inline} $IsValid'#0'(x: #0): bool { true }
+
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
 
 // spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:18:10+45
 function {:inline} $42_TestMonomorphization_spec_pack_R(): $42_TestMonomorphization_R'u64' {
@@ -2245,15 +2259,15 @@ function {:inline} $IsEqual'$42_TestMonomorphization_R'#0''(s1: $42_TestMonomorp
 var $42_TestMonomorphization_R'#0'_$memory: $Memory $42_TestMonomorphization_R'#0';
 
 // fun TestMonomorphization::create_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
-procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: int;
     var $t2: int;
     var $t3: $42_TestMonomorphization_R'u64';
     var $t4: int;
-    var $t0: int;
-    var $temp_0'address': int;
+    var $t0: $signer;
+    var $temp_0'signer': $signer;
     var $42_TestMonomorphization_R'u64'_$memory#2: $Memory $42_TestMonomorphization_R'u64';
     $t0 := _$t0;
 
@@ -2263,7 +2277,7 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: int) re
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
     assume {:print "$at(2,480,573)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume forall $rsc: ResourceDomain<TestMonomorphization::R<u64>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:20:5+93
     assume (forall $a_0: int :: {$ResourceValue($42_TestMonomorphization_R'u64'_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestMonomorphization_R'u64'_$memory, $a_0);
@@ -2288,10 +2302,10 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R$verify(_$t0: int) re
     $t3 := $42_TestMonomorphization_R'u64'($t1, $t2);
 
     // move_to<TestMonomorphization::R<u64>>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:21:9+7
-    if ($ResourceExists($42_TestMonomorphization_R'u64'_$memory, $t0)) {
+    if ($ResourceExists($42_TestMonomorphization_R'u64'_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $42_TestMonomorphization_R'u64'_$memory := $ResourceUpdate($42_TestMonomorphization_R'u64'_$memory, $t0, $t3);
+        $42_TestMonomorphization_R'u64'_$memory := $ResourceUpdate($42_TestMonomorphization_R'u64'_$memory, $1_Signer_spec_address_of($t0), $t3);
     }
     if ($abort_flag) {
         assume {:print "$at(2,528,535)"} true;
@@ -2334,16 +2348,16 @@ L2:
 }
 
 // fun TestMonomorphization::create_R_generic [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
-procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0: int, _$t1: #0, _$t2: #0) returns ()
+procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0: $signer, _$t1: #0, _$t2: #0) returns ()
 {
     // declare local variables
     var $t3: $42_TestMonomorphization_R'#0';
     var $t4: int;
-    var $t0: int;
+    var $t0: $signer;
     var $t1: #0;
     var $t2: #0;
     var $temp_0'#0': #0;
-    var $temp_0'address': int;
+    var $temp_0'signer': $signer;
     var $42_TestMonomorphization_R'#0'_$memory#1: $Memory $42_TestMonomorphization_R'#0';
     $t0 := _$t0;
     $t1 := _$t1;
@@ -2355,7 +2369,7 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0:
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
     assume {:print "$at(2,969,1085)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:35:5+116
     assume $IsValid'#0'($t1);
@@ -2384,10 +2398,10 @@ procedure {:timeLimit 40} $42_TestMonomorphization_create_R_generic$verify(_$t0:
     $t3 := $42_TestMonomorphization_R'#0'($t1, $t2);
 
     // move_to<TestMonomorphization::R<#0>>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/mono.move:36:9+7
-    if ($ResourceExists($42_TestMonomorphization_R'#0'_$memory, $t0)) {
+    if ($ResourceExists($42_TestMonomorphization_R'#0'_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $42_TestMonomorphization_R'#0'_$memory := $ResourceUpdate($42_TestMonomorphization_R'#0'_$memory, $t0, $t3);
+        $42_TestMonomorphization_R'#0'_$memory := $ResourceUpdate($42_TestMonomorphization_R'#0'_$memory, $1_Signer_spec_address_of($t0), $t3);
     }
     if ($abort_flag) {
         assume {:print "$at(2,1047,1054)"} true;

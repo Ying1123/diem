@@ -1,2 +1,2 @@
-/home/ying/diem/seq_benchmarks/unused_schema/unused_schema.cvc4.smt2:39.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/unused_schema/unused_schema.cvc4.smt2:40.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat

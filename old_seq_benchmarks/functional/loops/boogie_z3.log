@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/loops/loops.z3.bpl
+/home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl
 -monomorphize
 /env:2
 /proverLog:loops.z3.smt2
@@ -8,108 +8,45 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl
 Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
-Verifying $42_VerifyLoops_iter10_abort$verify ...
-  [0.132 s, 4 proof obligations]  verified
-
-Verifying $42_VerifyLoops_iter10_abort_incorrect$verify ...
-  [0.020 s, 4 proof obligations]  error
-assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses
+Verifying $42_TestSome_populate_R$verify ...
+  [0.140 s, 1 proof obligation]  error
+assert_failed(2,1601,1647): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1108,5): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1108,5): anon0$1
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(546,9): inline$$Le$0$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1108,5): anon0$2
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1171,16): anon12_Then
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1191,16): anon13_Then
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1273,1): L9
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1123,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1123,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1176,32): anon12_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1178,5): anon13_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1197,32): anon14_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1199,5): anon15_Else
 
-Verifying $42_VerifyLoops_iter10_missing_inc_spec1$verify ...
-  [0.013 s, 3 proof obligations]  verified
+Verifying $42_TestSome_simple$verify ...
+  [0.020 s, 1 proof obligation]  verified
 
-Verifying $42_VerifyLoops_iter10_missing_inc_spec2$verify ...
-  [0.008 s, 3 proof obligations]  verified
-
-Verifying $42_VerifyLoops_iter10_no_abort$verify ...
-  [0.013 s, 4 proof obligations]  verified
-
-Verifying $42_VerifyLoops_iter10_no_abort_incorrect$verify ...
-  [0.012 s, 4 proof obligations]  error
-assert_failed(2,1634,1649): function does not abort under this condition
+Verifying $42_TestSome_simple_incorrect$verify ...
+  [0.010 s, 1 proof obligation]  error
+assert_failed(2,615,677): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1804,5): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1804,5): anon0$1
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(546,9): inline$$Le$0$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1804,5): anon0$2
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1867,34): anon12_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1273,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1273,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1289,16): anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1327,1): L3
 
-Verifying $42_VerifyLoops_loop_invariant_base_invalid$verify ...
-  [0.009 s, 2 proof obligations]  error
-assert_failed(2,4881,4895): base case of the loop invariant does not hold
+Verifying $42_TestSome_test_choice_dup_expected_fail$verify ...
+  [0.016 s, 1 proof obligation]  error
+assert_failed(2,2933,2984): post-condition does not hold
 Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1995,9): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(1995,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1363,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1363,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.z3.bpl(1384,5): anon4_Else
 
-Verifying $42_VerifyLoops_loop_invariant_induction_invalid$verify ...
-  [0.013 s, 2 proof obligations]  error
-assert_failed(2,5129,5143): induction case of the loop invariant does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2137,9): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2137,9): anon0$1
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(536,9): inline$$Lt$0$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2137,9): anon0$2
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2195,16): anon8_Then
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2213,5): anon9_Else
+Verifying $42_TestSome_test_choice_use1$verify ...
+  [0.009 s, 0 proof obligations]  verified
 
-Verifying $42_VerifyLoops_loop_with_two_back_edges_correct$verify ...
-  [0.027 s, 3 proof obligations]  verified
-
-Verifying $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify ...
-  [0.013 s, 4 proof obligations]  error
-assert_failed(2,4425,4439): induction case of the loop invariant does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2480,9): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2480,9): anon0$1
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(541,9): inline$$Gt$0$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2556,16): anon15_Then
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(415,5): inline$$AddU64$1$anon3_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2574,5): anon16_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2643,1): L7
-
-Verifying $42_VerifyLoops_nested_loop_correct$verify ...
-  [0.014 s, 3 proof obligations]  verified
-
-Verifying $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify ...
-  [0.015 s, 4 proof obligations]  errors
-assert_failed(2,3489,3503): base case of the loop invariant does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2915,9): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2915,9): anon0$1
-assert_failed(2,3489,3503): induction case of the loop invariant does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2915,9): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(2915,9): anon0$1
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(546,9): inline$$Le$0$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3014,34): anon14_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(415,5): inline$$AddU64$0$anon3_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3029,5): anon15_Else
-
-Verifying $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify ...
-  [0.014 s, 4 proof obligations]  error
-assert_failed(2,2937,2951): induction case of the loop invariant does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3145,9): anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3145,9): anon0$1
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(546,9): inline$$Le$0$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3243,16): anon14_Then
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(546,9): inline$$Le$1$anon0
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3279,34): anon16_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(415,5): inline$$AddU64$1$anon3_Else
-    /home/ying/diem/seq_benchmarks/loops/loops.z3.bpl(3291,5): anon17_Else
-
-Boogie program verifier finished with 6 verified, 8 errors
+Verifying $42_TestSome_test_choice_use2$verify ...
+  [0.012 s, 0 proof obligations]  verified

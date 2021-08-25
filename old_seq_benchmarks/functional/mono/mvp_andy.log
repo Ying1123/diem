@@ -1,23 +1,23 @@
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_vec` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::pack_R` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::mutate_R` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R_generic` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_int` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_addr` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_int` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_bool` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_addr` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_bcs` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_vec` to be verified
-06:14:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_event` to be verified
-06:14:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
-06:14:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-06:14:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
-06:14:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
-06:14:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_vec` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::pack_R` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::mutate_R` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R_generic` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::create_R` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_int` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_struct_addr` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_int` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_bool` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_addr` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_bcs` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::vec_vec` to be verified
+08:40:26 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestMonomorphization::use_event` to be verified
+08:40:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+08:40:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+08:40:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+08:40:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+08:40:26 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
 [INFO] translating module TestMonomorphization
-06:14:16 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:40:26 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:14:16 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:14:16 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1
+08:40:26 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:40:26 [DEBUG] (12) boogie_backend::prover_task_runner: running Boogie command with seed 1

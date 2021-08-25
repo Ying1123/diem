@@ -1,11 +1,11 @@
-06:41:40 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAxioms::incr` to be verified
-06:41:40 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAxioms::id_u64` to be verified
-06:41:40 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAxioms::id_T` to be verified
+09:04:38 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAxioms::incr` to be verified
+09:04:38 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAxioms::id_u64` to be verified
+09:04:38 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAxioms::id_T` to be verified
 [INFO] translating module TestAxioms
-06:41:40 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+09:04:38 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:41:40 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:41:40 [DEBUG] (14) boogie_backend::prover_task_runner: running Boogie command with seed 1
-06:41:40 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-06:41:40 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.003s build, 0.001s trafo, 0.005s gen, 0.431s verify
+09:04:38 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+09:04:38 [DEBUG] (13) boogie_backend::prover_task_runner: running Boogie command with seed 1
+09:04:39 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+09:04:39 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.003s build, 0.001s trafo, 0.005s gen, 0.435s verify

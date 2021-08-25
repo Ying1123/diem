@@ -15,16 +15,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestReferences_increment$verify ...
-  [0.136 s, 1 proof obligation]  verified
+  [0.140 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_mut_b$verify ...
-  [0.004 s, 1 proof obligation]  verified
+  [0.005 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_mut_ref$verify ...
   [0.006 s, 2 proof obligations]  verified
 
 Verifying $42_TestReferences_mut_ref_incorrect$verify ...
-  [0.019 s, 2 proof obligations]  error
+  [0.017 s, 2 proof obligations]  error
 assert_failed(2,1406,1421): function does not abort under this condition
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/references/references.andy.bpl(1592,5): anon0
@@ -34,19 +34,19 @@ Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/references/references.andy.bpl(1650,34): anon7_Else
 
 Verifying $42_TestReferences_mutate_vector$verify ...
-  [0.022 s, 1 proof obligation]  verified
+  [0.021 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_mutate_vector_param$verify ...
-  [0.040 s, 1 proof obligation]  verified
+  [0.044 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_ref_param$verify ...
   [0.002 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_ref_param_vec$verify ...
-  [0.002 s, 1 proof obligation]  verified
+  [0.003 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_ref_return$verify ...
-  [0.006 s, 1 proof obligation]  verified
+  [0.007 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_withdrawal_capability_address$verify ...
   [0.013 s, 1 proof obligation]  verified

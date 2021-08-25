@@ -7,10 +7,11 @@
 (declare-datatypes ((T@$42_TestFriend_R 0)) ((($42_TestFriend_R (|$x#$42_TestFriend_R| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$42_TestFriend_R| 0)
-(declare-datatypes ((T@$Memory_8600 0)) ((($Memory_8600 (|domain#$Memory_8600| |T@[Int]Bool|) (|contents#$Memory_8600| |T@[Int]$42_TestFriend_R|) ) ) ))
+(declare-datatypes ((T@$Memory_8747 0)) ((($Memory_8747 (|domain#$Memory_8747| |T@[Int]Bool|) (|contents#$Memory_8747| |T@[Int]$42_TestFriend_R|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6918 0)) ((($Mutation_6918 (|l#$Mutation_6918| T@$Location) (|p#$Mutation_6918| (Seq Int)) (|v#$Mutation_6918| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7016 0)) ((($Mutation_7016 (|l#$Mutation_7016| T@$Location) (|p#$Mutation_7016| (Seq Int)) (|v#$Mutation_7016| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -112,17 +113,17 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |friendcvc4bpl.839:15|
+ :qid |friendcvc4bpl.859:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |friendcvc4bpl.842:15|
+ :qid |friendcvc4bpl.862:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((s T@$42_TestFriend_R) ) (! (= (|$IsValid'$42_TestFriend_R'| s) (|$IsValid'u64'| (|$x#$42_TestFriend_R| s)))
- :qid |friendcvc4bpl.901:37|
+ :qid |friendcvc4bpl.906:37|
  :skolemid |24|
  :pattern ( (|$IsValid'$42_TestFriend_R'| s))
 )))
@@ -145,7 +146,7 @@
 (push 1)
 (set-info :boogie-vc-id $42_TestFriend_h$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 9962) true)
+ (=> (= (ControlFlow 0 0) 10200) true)
 ))
 (check-sat)
 (pop 1)

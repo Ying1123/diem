@@ -1,4 +1,4 @@
-06:42:45 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M::use_them` to be verified
+09:06:02 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M::use_them` to be verified
 [INFO] translating module M
 error: [boogie translator] function or tuple result type not yet supported
   ┌─ /home/ying/diem/language/move-prover/tests/sources/functional/restrictions.move:8:9

@@ -878,6 +878,33 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 // ==================================================================================
 // Native BCS::serialize
 
+// ----------------------------------------------------------------------------------
+// Native BCS implementation for element type `#0`
+
+// Serialize is modeled as an uninterpreted function, with an additional
+// axiom to say it's an injection.
+
+function {:inline} $1_BCS_serialize'#0'(v: #0): Vec int;
+
+axiom (forall v1, v2: #0 :: {$1_BCS_serialize'#0'(v1), $1_BCS_serialize'#0'(v2)}
+   $IsEqual'#0'(v1, v2) <==> $IsEqual'vec'u8''($1_BCS_serialize'#0'(v1), $1_BCS_serialize'#0'(v2)));
+
+// This says that serialize returns a non-empty vec<u8>
+
+axiom (forall v: #0 :: {$1_BCS_serialize'#0'(v)}
+     ( var r := $1_BCS_serialize'#0'(v); $IsValid'vec'u8''(r) && LenVec(r) > 0 ));
+
+
+procedure $1_BCS_to_bytes'#0'(v: #0) returns (res: Vec int);
+ensures res == $1_BCS_serialize'#0'(v);
+
+function {:inline} $1_BCS_$to_bytes'#0'(v: #0): Vec int {
+    $1_BCS_serialize'#0'(v)
+}
+
+
+
+
 
 // ==================================================================================
 // Native Event module
@@ -896,129 +923,65 @@ procedure {:inline 1} $InitEventStore() {
 
 // Given Types for Type Parameters
 
+type #0;
+function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
+function {:inline} $IsValid'#0'(x: #0): bool { true }
 
-// fun TestUnusedSchema::foo [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:34:5+73
-procedure {:timeLimit 40} $42_TestUnusedSchema_foo$verify(_$t0: int) returns ($ret0: int)
+// fun VerifyBCS::verify_to_bytes [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:6:5+101
+procedure {:timeLimit 40} $42_VerifyBCS_verify_to_bytes$verify(_$t0: #0) returns ($ret0: Vec (int))
 {
     // declare local variables
-    var $t1: int;
+    var $t1: Vec (int);
     var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t0: int;
-    var $temp_0'u64': int;
+    var $t0: #0;
+    var $temp_0'#0': #0;
+    var $temp_0'vec'u8'': Vec (int);
     $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:39:28+7
-    assume {:print "$at(2,724,731)"} true;
-    assume $IsValid'u64'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:17+6
+    assume {:print "$at(2,276,282)"} true;
+    assume $IsValid'#0'($t0);
 
-    // trace_local[i]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:34:5+1
-    assume {:print "$at(2,607,608)"} true;
-    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:6:5+1
+    assume {:print "$at(2,131,132)"} true;
+    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:17+2
-    assume {:print "$at(2,646,648)"} true;
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
+    // $t1 := BCS::to_bytes<#0>($t0) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:8:9+16
+    assume {:print "$at(2,210,226)"} true;
+    call $t1 := $1_BCS_to_bytes'#0'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(2,210,226)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t2} $t2 == $t2;
+        goto L2;
+    }
 
-    // $t3 := >($t0, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:15+1
-    call $t3 := $Gt($t0, $t2);
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:8:9+16
+    assume {:print "$track_return(1,0,0):", $t1} $t1 == $t1;
 
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
+    assume {:print "$at(2,231,232)"} true;
 L1:
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    goto L2;
+    // assert Eq<vector<u8>>($t1, BCS::serialize<#0>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:9+36
+    assume {:print "$at(2,268,304)"} true;
+    assert {:msg "assert_failed(2,268,304): post-condition does not hold"}
+      $IsEqual'vec'u8''($t1, $1_BCS_serialize'#0'($t0));
 
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:23+1
-L0:
-
-    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:27+1
-    $t4 := 2;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := +($t0, $t4) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:25+1
-    call $t5 := $AddU64($t0, $t4);
-    if ($abort_flag) {
-        assume {:print "$at(2,654,655)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L5;
-    }
-
-    // $t1 := $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    $t1 := $t5;
-
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    assume {:print "$track_local(0,0,1):", $t5} $t5 == $t5;
-
-    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:38+1
-L2:
-
-    // $t7 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:42+1
-    $t7 := 1;
-    assume $IsValid'u64'($t7);
-
-    // $t8 := +($t0, $t7) on_abort goto L5 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:40+1
-    call $t8 := $AddU64($t0, $t7);
-    if ($abort_flag) {
-        assume {:print "$at(2,669,670)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t6} $t6 == $t6;
-        goto L5;
-    }
-
-    // $t1 := $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    $t1 := $t8;
-
-    // trace_local[tmp#$1]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    assume {:print "$track_local(0,0,1):", $t8} $t8 == $t8;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-L3:
-
-    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:35:9+36
-    assume {:print "$track_return(0,0,0):", $t1} $t1 == $t1;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
-    assume {:print "$at(2,679,680)"} true;
-L4:
-
-    // assert Implies(Gt($t0, 10), Eq<num>($t1, Add($t0, 2))) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:17:9+24
-    assume {:print "$at(2,287,311)"} true;
-    assert {:msg "assert_failed(2,287,311): post-condition does not hold"}
-      (($t0 > 10) ==> $IsEqual'u64'($t1, ($t0 + 2)));
-
-    // assert Implies(Gt($t0, 10), Ge($t1, Add($t0, 1))) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:11:9+24
-    assume {:print "$at(2,184,208)"} true;
-    assert {:msg "assert_failed(2,184,208): post-condition does not hold"}
-      (($t0 > 10) ==> ($t1 >= ($t0 + 1)));
-
-    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:11:9+24
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:11:9+36
     $ret0 := $t1;
     return;
 
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
-    assume {:print "$at(2,679,680)"} true;
-L5:
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
+    assume {:print "$at(2,231,232)"} true;
+L2:
 
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/unused_schema.move:36:5+1
-    $abort_code := $t6;
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/verify_bcs.move:9:5+1
+    $abort_code := $t2;
     $abort_flag := true;
     return;
 

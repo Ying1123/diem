@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestReferences_increment$verify ...
-  [0.141 s, 1 proof obligation]  verified
+  [0.144 s, 1 proof obligation]  verified
 
 Verifying $42_TestReferences_mut_b$verify ...
   [0.004 s, 1 proof obligation]  verified
@@ -23,7 +23,7 @@ Verifying $42_TestReferences_mut_ref$verify ...
   [0.008 s, 2 proof obligations]  verified
 
 Verifying $42_TestReferences_mut_ref_incorrect$verify ...
-  [0.022 s, 2 proof obligations]  error
+  [0.015 s, 2 proof obligations]  error
 assert_failed(2,1406,1421): function does not abort under this condition
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/references/references.andy.bpl(1592,5): anon0
@@ -35,7 +35,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $42_TestReferences_mutate_vector$verify ...
-  [0.011 s, 1 proof obligation]  inconclusive
+  [0.016 s, 1 proof obligation]  inconclusive
 /home/ying/diem/old_seq_benchmarks/functional/references/references.andy.bpl(1707,27): Verification inconclusive ($42_TestReferences_mutate_vector$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe

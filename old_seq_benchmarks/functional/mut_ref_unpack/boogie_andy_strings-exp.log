@@ -1,15 +1,15 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/mut_ref_unpack/mut_ref_unpack.andy.bpl
+/home/ying/diem/old_seq_benchmarks/functional/mut_ref_unpack/mut_ref_unpack.andy.bpl
 -monomorphize
 /env:2
 /proverLog:mut_ref_unpack.andy_strings.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/andy_seq/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/mut_ref_unpack/mut_ref_unpack.andy.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/functional/mut_ref_unpack/mut_ref_unpack.andy.bpl
 Coalescing blocks...
 Inlining...
 

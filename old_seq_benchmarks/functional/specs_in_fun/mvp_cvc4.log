@@ -1,16 +1,16 @@
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple4_incorrect` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple4` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple3_incorrect` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple3` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple2_incorrect` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple2` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple1_incorrect` to be verified
-06:42:54 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple1` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple4_incorrect` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple4` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple3_incorrect` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple3` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple2_incorrect` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple2` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple1_incorrect` to be verified
+09:06:12 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAssertAndAssume::simple1` to be verified
 [INFO] translating module TestAssertAndAssume
-06:42:54 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+09:06:12 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:42:54 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:42:54 [DEBUG] (14) boogie_backend::prover_task_runner: running Boogie command with seed 1
-06:42:54 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-06:42:54 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.004s build, 0.002s trafo, 0.005s gen, 0.482s verify
+09:06:12 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+09:06:12 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1
+09:06:12 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+09:06:12 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.004s build, 0.002s trafo, 0.004s gen, 0.459s verify

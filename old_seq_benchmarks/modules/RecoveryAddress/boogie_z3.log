@@ -14,25 +14,25 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.180 s, 14 proof obligations]  verified
+  [0.171 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.052 s, 14 proof obligations]  verified
+  [0.047 s, 14 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [1.020 s, 34 proof obligations]  verified
+  [1.045 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [0.547 s, 34 proof obligations]  verified
+  [0.551 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [0.630 s, 34 proof obligations]  verified
+  [0.639 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [0.461 s, 34 proof obligations]  verified
+  [0.449 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [0.508 s, 34 proof obligations]  verified
+  [0.503 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [0.793 s, 34 proof obligations]  verified
+  [0.794 s, 34 proof obligations]  verified

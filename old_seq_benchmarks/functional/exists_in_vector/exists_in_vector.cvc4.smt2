@@ -4,9 +4,10 @@
 ; done setting options
 
 
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_8473 0)) ((($Mutation_8473 (|l#$Mutation_8473| T@$Location) (|p#$Mutation_8473| (Seq Int)) (|v#$Mutation_8473| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_8552 0)) ((($Mutation_8552 (|l#$Mutation_8552| T@$Location) (|p#$Mutation_8552| (Seq Int)) (|v#$Mutation_8552| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -130,12 +131,12 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |existsinvectorcvc4bpl.1019:15|
+ :qid |existsinvectorcvc4bpl.1039:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |existsinvectorcvc4bpl.1022:15|
+ :qid |existsinvectorcvc4bpl.1042:15|
  :skolemid |28|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
@@ -159,133 +160,133 @@
 (push 1)
 (set-info :boogie-vc-id $42_VectorExists_do_nothing_ref$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 13018) (let ((anon0$1_correct  (=> (and (|$IsValid'vec'u64''| _$t0) (= _$t0 _$t0)) (and (=> (= (ControlFlow 0 12579) (- 0 13059)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 12579) (- 0 13066)) (= _$t0 _$t0)) (=> (= _$t0 _$t0) (and (=> (= (ControlFlow 0 12579) (- 0 13073)) (exists ((l Int) ) (!  (and (|$IsValid'u64'| l) (= l (seq.len _$t0)))
- :qid |existsinvectorcvc4bpl.1128:15|
+ (=> (= (ControlFlow 0 0) 13146) (let ((anon0$1_correct  (=> (and (|$IsValid'vec'u64''| _$t0) (= _$t0 _$t0)) (and (=> (= (ControlFlow 0 12707) (- 0 13187)) (not false)) (=> (not false) (and (=> (= (ControlFlow 0 12707) (- 0 13194)) (= _$t0 _$t0)) (=> (= _$t0 _$t0) (and (=> (= (ControlFlow 0 12707) (- 0 13201)) (exists ((l Int) ) (!  (and (|$IsValid'u64'| l) (= l (seq.len _$t0)))
+ :qid |existsinvectorcvc4bpl.1133:15|
  :skolemid |32|
 ))) (=> (exists ((l@@0 Int) ) (!  (and (|$IsValid'u64'| l@@0) (= l@@0 (seq.len _$t0)))
- :qid |existsinvectorcvc4bpl.1128:15|
- :skolemid |32|
-)) (and (=> (= (ControlFlow 0 12579) (- 0 13092)) (exists ((l@@1 Int) ) (!  (and (and (|$IsValid'u64'| l@@1) (= l@@1 (seq.len _$t0))) (= l@@1 (seq.len _$t0)))
  :qid |existsinvectorcvc4bpl.1133:15|
+ :skolemid |32|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13220)) (exists ((l@@1 Int) ) (!  (and (and (|$IsValid'u64'| l@@1) (= l@@1 (seq.len _$t0))) (= l@@1 (seq.len _$t0)))
+ :qid |existsinvectorcvc4bpl.1138:15|
  :skolemid |33|
 ))) (=> (exists ((l@@2 Int) ) (!  (and (and (|$IsValid'u64'| l@@2) (= l@@2 (seq.len _$t0))) (= l@@2 (seq.len _$t0)))
- :qid |existsinvectorcvc4bpl.1133:15|
+ :qid |existsinvectorcvc4bpl.1138:15|
  :skolemid |33|
-)) (and (=> (= (ControlFlow 0 12579) (- 0 13120)) (=> (let (($range_0 _$t0))
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13248)) (=> (let (($range_0 _$t0))
 (exists (($i_1 Int) ) (!  (and (and (>= $i_1 0) (< $i_1 (seq.len $range_0))) (let ((x (seq.nth $range_0 $i_1)))
 (= x 0)))
- :qid |existsinvectorcvc4bpl.1077:33|
+ :qid |existsinvectorcvc4bpl.1082:33|
  :skolemid |29|
 ))) (let (($range_0@@0 _$t0))
 (exists (($i_1@@0 Int) ) (!  (and (and (>= $i_1@@0 0) (< $i_1@@0 (seq.len $range_0@@0))) (let ((x@@0 (seq.nth $range_0@@0 $i_1@@0)))
 (= x@@0 0)))
- :qid |existsinvectorcvc4bpl.1077:33|
+ :qid |existsinvectorcvc4bpl.1082:33|
  :skolemid |29|
-))))) (=> (=> (let (($range_0 _$t0))
-(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0))) (let ((x (seq.nth $range_0 $i_1@@1)))
-(= x 0)))
- :qid |existsinvectorcvc4bpl.1077:33|
+))))) (=> (=> (let (($range_0@@1 _$t0))
+(exists (($i_1@@1 Int) ) (!  (and (and (>= $i_1@@1 0) (< $i_1@@1 (seq.len $range_0@@1))) (let ((x@@1 (seq.nth $range_0@@1 $i_1@@1)))
+(= x@@1 0)))
+ :qid |existsinvectorcvc4bpl.1082:33|
  :skolemid |29|
-))) (let (($range_0@@0 _$t0))
-(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@0))) (let ((x@@0 (seq.nth $range_0@@0 $i_1@@2)))
-(= x@@0 0)))
- :qid |existsinvectorcvc4bpl.1077:33|
+))) (let (($range_0@@2 _$t0))
+(exists (($i_1@@2 Int) ) (!  (and (and (>= $i_1@@2 0) (< $i_1@@2 (seq.len $range_0@@2))) (let ((x@@2 (seq.nth $range_0@@2 $i_1@@2)))
+(= x@@2 0)))
+ :qid |existsinvectorcvc4bpl.1082:33|
  :skolemid |29|
-)))) (and (=> (= (ControlFlow 0 12579) (- 0 13135)) (=> (let (($range_2 ($Range 0 (seq.len _$t0))))
+)))) (and (=> (= (ControlFlow 0 12707) (- 0 13263)) (=> (let (($range_2 ($Range 0 (seq.len _$t0))))
 (exists (($i_3 Int) ) (!  (and ($InRange $range_2 $i_3) (let ((i@@8 $i_3))
 (= (seq.nth _$t0 i@@8) 0)))
- :qid |existsinvectorcvc4bpl.1083:52|
+ :qid |existsinvectorcvc4bpl.1088:52|
  :skolemid |30|
 ))) (let (($range_2@@0 ($Range 0 (seq.len _$t0))))
 (exists (($i_3@@0 Int) ) (!  (and ($InRange $range_2@@0 $i_3@@0) (let ((i@@9 $i_3@@0))
 (= (seq.nth _$t0 i@@9) 0)))
- :qid |existsinvectorcvc4bpl.1083:52|
+ :qid |existsinvectorcvc4bpl.1088:52|
  :skolemid |30|
-))))) (=> (=> (let (($range_2 ($Range 0 (seq.len _$t0))))
-(exists (($i_3@@1 Int) ) (!  (and ($InRange $range_2 $i_3@@1) (let ((i@@8 $i_3@@1))
-(= (seq.nth _$t0 i@@8) 0)))
- :qid |existsinvectorcvc4bpl.1083:52|
+))))) (=> (=> (let (($range_2@@1 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@1 Int) ) (!  (and ($InRange $range_2@@1 $i_3@@1) (let ((i@@10 $i_3@@1))
+(= (seq.nth _$t0 i@@10) 0)))
+ :qid |existsinvectorcvc4bpl.1088:52|
  :skolemid |30|
-))) (let (($range_2@@0 ($Range 0 (seq.len _$t0))))
-(exists (($i_3@@2 Int) ) (!  (and ($InRange $range_2@@0 $i_3@@2) (let ((i@@9 $i_3@@2))
-(= (seq.nth _$t0 i@@9) 0)))
- :qid |existsinvectorcvc4bpl.1083:52|
+))) (let (($range_2@@2 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@2 Int) ) (!  (and ($InRange $range_2@@2 $i_3@@2) (let ((i@@11 $i_3@@2))
+(= (seq.nth _$t0 i@@11) 0)))
+ :qid |existsinvectorcvc4bpl.1088:52|
  :skolemid |30|
-)))) (and (=> (= (ControlFlow 0 12579) (- 0 13150)) (=> (exists ((i@@10 Int) ) (!  (and (and (|$IsValid'u64'| i@@10) (and (<= 0 i@@10) (< i@@10 (seq.len _$t0)))) (= (seq.nth _$t0 i@@10) 0))
- :qid |existsinvectorcvc4bpl.1089:13|
- :skolemid |31|
-)) (exists ((i@@11 Int) ) (!  (and (and (|$IsValid'u64'| i@@11) (and (<= 0 i@@11) (< i@@11 (seq.len _$t0)))) (= (seq.nth _$t0 i@@11) 0))
- :qid |existsinvectorcvc4bpl.1089:13|
- :skolemid |31|
-)))) (=> (=> (exists ((i@@12 Int) ) (!  (and (and (|$IsValid'u64'| i@@12) (and (<= 0 i@@12) (< i@@12 (seq.len _$t0)))) (= (seq.nth _$t0 i@@12) 0))
- :qid |existsinvectorcvc4bpl.1089:13|
+)))) (and (=> (= (ControlFlow 0 12707) (- 0 13278)) (=> (exists ((i@@12 Int) ) (!  (and (and (|$IsValid'u64'| i@@12) (and (<= 0 i@@12) (< i@@12 (seq.len _$t0)))) (= (seq.nth _$t0 i@@12) 0))
+ :qid |existsinvectorcvc4bpl.1094:13|
  :skolemid |31|
 )) (exists ((i@@13 Int) ) (!  (and (and (|$IsValid'u64'| i@@13) (and (<= 0 i@@13) (< i@@13 (seq.len _$t0)))) (= (seq.nth _$t0 i@@13) 0))
- :qid |existsinvectorcvc4bpl.1089:13|
+ :qid |existsinvectorcvc4bpl.1094:13|
  :skolemid |31|
-))) (and (=> (= (ControlFlow 0 12579) (- 0 13165)) (forall ((e@@1 Int) ) (!  (=> (|$IsValid'u64'| e@@1) (=> (let (($range_0@@1 _$t0))
-(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@1))) (let ((x@@1 (seq.nth $range_0@@1 $i_1@@3)))
-(= x@@1 e@@1)))
- :qid |existsinvectorcvc4bpl.1077:33|
+)))) (=> (=> (exists ((i@@14 Int) ) (!  (and (and (|$IsValid'u64'| i@@14) (and (<= 0 i@@14) (< i@@14 (seq.len _$t0)))) (= (seq.nth _$t0 i@@14) 0))
+ :qid |existsinvectorcvc4bpl.1094:13|
+ :skolemid |31|
+)) (exists ((i@@15 Int) ) (!  (and (and (|$IsValid'u64'| i@@15) (and (<= 0 i@@15) (< i@@15 (seq.len _$t0)))) (= (seq.nth _$t0 i@@15) 0))
+ :qid |existsinvectorcvc4bpl.1094:13|
+ :skolemid |31|
+))) (and (=> (= (ControlFlow 0 12707) (- 0 13293)) (forall ((e@@1 Int) ) (!  (=> (|$IsValid'u64'| e@@1) (=> (let (($range_0@@3 _$t0))
+(exists (($i_1@@3 Int) ) (!  (and (and (>= $i_1@@3 0) (< $i_1@@3 (seq.len $range_0@@3))) (let ((x@@3 (seq.nth $range_0@@3 $i_1@@3)))
+(= x@@3 e@@1)))
+ :qid |existsinvectorcvc4bpl.1082:33|
  :skolemid |29|
-))) (let (($range_0@@2 _$t0))
-(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@2))) (let ((x@@2 (seq.nth $range_0@@2 $i_1@@4)))
-(= x@@2 e@@1)))
- :qid |existsinvectorcvc4bpl.1077:33|
+))) (let (($range_0@@4 _$t0))
+(exists (($i_1@@4 Int) ) (!  (and (and (>= $i_1@@4 0) (< $i_1@@4 (seq.len $range_0@@4))) (let ((x@@4 (seq.nth $range_0@@4 $i_1@@4)))
+(= x@@4 e@@1)))
+ :qid |existsinvectorcvc4bpl.1082:33|
  :skolemid |29|
-)))))
- :qid |existsinvectorcvc4bpl.1153:15|
- :skolemid |34|
-))) (=> (forall ((e@@2 Int) ) (!  (=> (|$IsValid'u64'| e@@2) (=> (let (($range_0@@1 _$t0))
-(exists (($i_1@@5 Int) ) (!  (and (and (>= $i_1@@5 0) (< $i_1@@5 (seq.len $range_0@@1))) (let ((x@@1 (seq.nth $range_0@@1 $i_1@@5)))
-(= x@@1 e@@2)))
- :qid |existsinvectorcvc4bpl.1077:33|
- :skolemid |29|
-))) (let (($range_0@@2 _$t0))
-(exists (($i_1@@6 Int) ) (!  (and (and (>= $i_1@@6 0) (< $i_1@@6 (seq.len $range_0@@2))) (let ((x@@2 (seq.nth $range_0@@2 $i_1@@6)))
-(= x@@2 e@@2)))
- :qid |existsinvectorcvc4bpl.1077:33|
- :skolemid |29|
-)))))
- :qid |existsinvectorcvc4bpl.1153:15|
- :skolemid |34|
-)) (and (=> (= (ControlFlow 0 12579) (- 0 13189)) (forall ((e@@3 Int) ) (!  (=> (|$IsValid'u64'| e@@3) (=> (let (($range_2@@1 ($Range 0 (seq.len _$t0))))
-(exists (($i_3@@3 Int) ) (!  (and ($InRange $range_2@@1 $i_3@@3) (let ((i@@14 $i_3@@3))
-(= (seq.nth _$t0 i@@14) e@@3)))
- :qid |existsinvectorcvc4bpl.1083:52|
- :skolemid |30|
-))) (let (($range_2@@2 ($Range 0 (seq.len _$t0))))
-(exists (($i_3@@4 Int) ) (!  (and ($InRange $range_2@@2 $i_3@@4) (let ((i@@15 $i_3@@4))
-(= (seq.nth _$t0 i@@15) e@@3)))
- :qid |existsinvectorcvc4bpl.1083:52|
- :skolemid |30|
 )))))
  :qid |existsinvectorcvc4bpl.1158:15|
- :skolemid |35|
-))) (=> (forall ((e@@4 Int) ) (!  (=> (|$IsValid'u64'| e@@4) (=> (let (($range_2@@1 ($Range 0 (seq.len _$t0))))
-(exists (($i_3@@5 Int) ) (!  (and ($InRange $range_2@@1 $i_3@@5) (let ((i@@14 $i_3@@5))
-(= (seq.nth _$t0 i@@14) e@@4)))
- :qid |existsinvectorcvc4bpl.1083:52|
- :skolemid |30|
-))) (let (($range_2@@2 ($Range 0 (seq.len _$t0))))
-(exists (($i_3@@6 Int) ) (!  (and ($InRange $range_2@@2 $i_3@@6) (let ((i@@15 $i_3@@6))
-(= (seq.nth _$t0 i@@15) e@@4)))
- :qid |existsinvectorcvc4bpl.1083:52|
- :skolemid |30|
+ :skolemid |34|
+))) (=> (forall ((e@@2 Int) ) (!  (=> (|$IsValid'u64'| e@@2) (=> (let (($range_0@@5 _$t0))
+(exists (($i_1@@5 Int) ) (!  (and (and (>= $i_1@@5 0) (< $i_1@@5 (seq.len $range_0@@5))) (let ((x@@5 (seq.nth $range_0@@5 $i_1@@5)))
+(= x@@5 e@@2)))
+ :qid |existsinvectorcvc4bpl.1082:33|
+ :skolemid |29|
+))) (let (($range_0@@6 _$t0))
+(exists (($i_1@@6 Int) ) (!  (and (and (>= $i_1@@6 0) (< $i_1@@6 (seq.len $range_0@@6))) (let ((x@@6 (seq.nth $range_0@@6 $i_1@@6)))
+(= x@@6 e@@2)))
+ :qid |existsinvectorcvc4bpl.1082:33|
+ :skolemid |29|
 )))))
  :qid |existsinvectorcvc4bpl.1158:15|
+ :skolemid |34|
+)) (and (=> (= (ControlFlow 0 12707) (- 0 13317)) (forall ((e@@3 Int) ) (!  (=> (|$IsValid'u64'| e@@3) (=> (let (($range_2@@3 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@3 Int) ) (!  (and ($InRange $range_2@@3 $i_3@@3) (let ((i@@16 $i_3@@3))
+(= (seq.nth _$t0 i@@16) e@@3)))
+ :qid |existsinvectorcvc4bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@4 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@4 Int) ) (!  (and ($InRange $range_2@@4 $i_3@@4) (let ((i@@17 $i_3@@4))
+(= (seq.nth _$t0 i@@17) e@@3)))
+ :qid |existsinvectorcvc4bpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |existsinvectorcvc4bpl.1163:15|
  :skolemid |35|
-)) (=> (= (ControlFlow 0 12579) (- 0 13213)) (forall ((e@@5 Int) ) (!  (=> (|$IsValid'u64'| e@@5) (=> (exists ((i@@16 Int) ) (!  (and (and (|$IsValid'u64'| i@@16) (and (<= 0 i@@16) (< i@@16 (seq.len _$t0)))) (= (seq.nth _$t0 i@@16) e@@5))
- :qid |existsinvectorcvc4bpl.1089:13|
+))) (=> (forall ((e@@4 Int) ) (!  (=> (|$IsValid'u64'| e@@4) (=> (let (($range_2@@5 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@5 Int) ) (!  (and ($InRange $range_2@@5 $i_3@@5) (let ((i@@18 $i_3@@5))
+(= (seq.nth _$t0 i@@18) e@@4)))
+ :qid |existsinvectorcvc4bpl.1088:52|
+ :skolemid |30|
+))) (let (($range_2@@6 ($Range 0 (seq.len _$t0))))
+(exists (($i_3@@6 Int) ) (!  (and ($InRange $range_2@@6 $i_3@@6) (let ((i@@19 $i_3@@6))
+(= (seq.nth _$t0 i@@19) e@@4)))
+ :qid |existsinvectorcvc4bpl.1088:52|
+ :skolemid |30|
+)))))
+ :qid |existsinvectorcvc4bpl.1163:15|
+ :skolemid |35|
+)) (=> (= (ControlFlow 0 12707) (- 0 13341)) (forall ((e@@5 Int) ) (!  (=> (|$IsValid'u64'| e@@5) (=> (exists ((i@@20 Int) ) (!  (and (and (|$IsValid'u64'| i@@20) (and (<= 0 i@@20) (< i@@20 (seq.len _$t0)))) (= (seq.nth _$t0 i@@20) e@@5))
+ :qid |existsinvectorcvc4bpl.1094:13|
  :skolemid |31|
-)) (exists ((i@@17 Int) ) (!  (and (and (|$IsValid'u64'| i@@17) (and (<= 0 i@@17) (< i@@17 (seq.len _$t0)))) (= (seq.nth _$t0 i@@17) e@@5))
- :qid |existsinvectorcvc4bpl.1089:13|
+)) (exists ((i@@21 Int) ) (!  (and (and (|$IsValid'u64'| i@@21) (and (<= 0 i@@21) (< i@@21 (seq.len _$t0)))) (= (seq.nth _$t0 i@@21) e@@5))
+ :qid |existsinvectorcvc4bpl.1094:13|
  :skolemid |31|
 ))))
- :qid |existsinvectorcvc4bpl.1163:15|
+ :qid |existsinvectorcvc4bpl.1168:15|
  :skolemid |36|
 ))))))))))))))))))))))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 13018) 12579) anon0$1_correct)))
+(let ((anon0_correct  (=> (= (ControlFlow 0 13146) 12707) anon0$1_correct)))
 anon0_correct)))
 ))
 (check-sat)

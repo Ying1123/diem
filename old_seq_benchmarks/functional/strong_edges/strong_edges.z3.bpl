@@ -577,186 +577,6 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 }
 
 // ----------------------------------------------------------------------------------
-// Native Vector implementation for element type `u64`
-
-
-function {:inline} $IsEqual'vec'u64''(v1: Vec (int), v2: Vec (int)): bool {
-    v1 == v2
-}
-
-// Not inlined.
-function $IsValid'vec'u64''(v: Vec (int)): bool {
-    $IsValid'u64'(LenVec(v)) &&
-    (forall i: int:: InRangeVec(v, i) ==> $IsValid'u64'(ReadVec(v, i)))
-}
-
-
-function {:inline} $ContainsVec'u64'(v: Vec (int), e: int): bool {
-    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e))
-}
-
-function $IndexOfVec'u64'(v: Vec (int), e: int): int;
-axiom (forall v: Vec (int), e: int:: {$IndexOfVec'u64'(v, e)}
-    (var i := $IndexOfVec'u64'(v, e);
-     if (!$ContainsVec'u64'(v, e)) then i == -1
-     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e) &&
-        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'u64'(ReadVec(v, j), e))));
-
-
-function {:inline} $RangeVec'u64'(v: Vec (int)): $Range {
-    $Range(0, LenVec(v))
-}
-
-
-function {:inline} $EmptyVec'u64'(): Vec (int) {
-    EmptyVec()
-}
-
-procedure {:inline 1} $1_Vector_empty'u64'() returns (v: Vec (int)) {
-    v := EmptyVec();
-}
-
-function {:inline} $1_Vector_$empty'u64'(): Vec (int) {
-    EmptyVec()
-}
-
-procedure {:inline 1} $1_Vector_is_empty'u64'(v: Vec (int)) returns (b: bool) {
-    b := IsEmptyVec(v);
-}
-
-procedure {:inline 1} $1_Vector_push_back'u64'(m: $Mutation (Vec (int)), val: int) returns (m': $Mutation (Vec (int))) {
-    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
-}
-
-function {:inline} $1_Vector_$push_back'u64'(v: Vec (int), val: int): Vec (int) {
-    ExtendVec(v, val)
-}
-
-procedure {:inline 1} $1_Vector_pop_back'u64'(m: $Mutation (Vec (int))) returns (e: int, m': $Mutation (Vec (int))) {
-    var v: Vec (int);
-    var len: int;
-    v := $Dereference(m);
-    len := LenVec(v);
-    if (len == 0) {
-        call $ExecFailureAbort();
-        return;
-    }
-    e := ReadVec(v, len-1);
-    m' := $UpdateMutation(m, RemoveVec(v));
-}
-
-procedure {:inline 1} $1_Vector_append'u64'(m: $Mutation (Vec (int)), other: Vec (int)) returns (m': $Mutation (Vec (int))) {
-    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
-}
-
-procedure {:inline 1} $1_Vector_reverse'u64'(m: $Mutation (Vec (int))) returns (m': $Mutation (Vec (int))) {
-    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
-}
-
-procedure {:inline 1} $1_Vector_length'u64'(v: Vec (int)) returns (l: int) {
-    l := LenVec(v);
-}
-
-function {:inline} $1_Vector_$length'u64'(v: Vec (int)): int {
-    LenVec(v)
-}
-
-procedure {:inline 1} $1_Vector_borrow'u64'(v: Vec (int), i: int) returns (dst: int) {
-    if (!InRangeVec(v, i)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := ReadVec(v, i);
-}
-
-function {:inline} $1_Vector_$borrow'u64'(v: Vec (int), i: int): int {
-    ReadVec(v, i)
-}
-
-procedure {:inline 1} $1_Vector_borrow_mut'u64'(m: $Mutation (Vec (int)), index: int)
-returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
-{
-    var v: Vec (int);
-    v := $Dereference(m);
-    if (!InRangeVec(v, index)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
-    m' := m;
-}
-
-function {:inline} $1_Vector_$borrow_mut'u64'(v: Vec (int), i: int): int {
-    ReadVec(v, i)
-}
-
-procedure {:inline 1} $1_Vector_destroy_empty'u64'(v: Vec (int)) {
-    if (!IsEmptyVec(v)) {
-      call $ExecFailureAbort();
-    }
-}
-
-procedure {:inline 1} $1_Vector_swap'u64'(m: $Mutation (Vec (int)), i: int, j: int) returns (m': $Mutation (Vec (int)))
-{
-    var v: Vec (int);
-    v := $Dereference(m);
-    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    m' := $UpdateMutation(m, SwapVec(v, i, j));
-}
-
-function {:inline} $1_Vector_$swap'u64'(v: Vec (int), i: int, j: int): Vec (int) {
-    SwapVec(v, i, j)
-}
-
-procedure {:inline 1} $1_Vector_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
-{
-    var v: Vec (int);
-
-    v := $Dereference(m);
-
-    if (!InRangeVec(v, i)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    e := ReadVec(v, i);
-    m' := $UpdateMutation(m, RemoveAtVec(v, i));
-}
-
-procedure {:inline 1} $1_Vector_swap_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
-{
-    var len: int;
-    var v: Vec (int);
-
-    v := $Dereference(m);
-    len := LenVec(v);
-    if (!InRangeVec(v, i)) {
-        call $ExecFailureAbort();
-        return;
-    }
-    e := ReadVec(v, i);
-    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
-}
-
-procedure {:inline 1} $1_Vector_contains'u64'(v: Vec (int), e: int) returns (res: bool)  {
-    res := $ContainsVec'u64'(v, e);
-}
-
-procedure {:inline 1}
-$1_Vector_index_of'u64'(v: Vec (int), e: int) returns (res1: bool, res2: int) {
-    res2 := $IndexOfVec'u64'(v, e);
-    if (res2 >= 0) {
-        res1 := true;
-    } else {
-        res1 := false;
-        res2 := 0;
-    }
-}
-
-
-// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
 
@@ -987,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -1001,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -1040,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -1072,501 +897,218 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// struct TestStrongEdges::S at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:10:5+39
-type {:datatype} $42_TestStrongEdges_S;
-function {:constructor} $42_TestStrongEdges_S($x: int): $42_TestStrongEdges_S;
-function {:inline} $Update'$42_TestStrongEdges_S'_x(s: $42_TestStrongEdges_S, x: int): $42_TestStrongEdges_S {
-    $42_TestStrongEdges_S(x)
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
+
+// struct TestModule::R at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:3:5+31
+type {:datatype} $42_TestModule_R;
+function {:constructor} $42_TestModule_R($value: int): $42_TestModule_R;
+function {:inline} $Update'$42_TestModule_R'_value(s: $42_TestModule_R, x: int): $42_TestModule_R {
+    $42_TestModule_R(x)
 }
-function $IsValid'$42_TestStrongEdges_S'(s: $42_TestStrongEdges_S): bool {
-    $IsValid'u64'($x#$42_TestStrongEdges_S(s))
+function $IsValid'$42_TestModule_R'(s: $42_TestModule_R): bool {
+    $IsValid'u64'($value#$42_TestModule_R(s))
 }
-function {:inline} $IsEqual'$42_TestStrongEdges_S'(s1: $42_TestStrongEdges_S, s2: $42_TestStrongEdges_S): bool {
+function {:inline} $IsEqual'$42_TestModule_R'(s1: $42_TestModule_R, s2: $42_TestModule_R): bool {
     s1 == s2
 }
-var $42_TestStrongEdges_S_$memory: $Memory $42_TestStrongEdges_S;
+var $42_TestModule_R_$memory: $Memory $42_TestModule_R;
 
-// fun TestStrongEdges::glob_and_field_edges [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:14:5+126
-procedure {:timeLimit 40} $42_TestStrongEdges_glob_and_field_edges$verify(_$t0: int) returns ()
+// fun TestModule::store [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+procedure {:timeLimit 40} $42_TestModule_store$verify(_$t0: $signer, _$t1: int) returns ()
 {
     // declare local variables
-    var $t1: $Mutation ($42_TestStrongEdges_S);
-    var $t2: $Mutation ($42_TestStrongEdges_S);
-    var $t3: int;
+    var $t2: int;
+    var $t3: $42_TestModule_R;
     var $t4: int;
-    var $t5: $Mutation (int);
-    var $t0: int;
-    var $42_TestStrongEdges_S_$modifies: [int]bool;
-    var $temp_0'$42_TestStrongEdges_S': $42_TestStrongEdges_S;
-    var $temp_0'address': int;
-    var $42_TestStrongEdges_S_$memory#1: $Memory $42_TestStrongEdges_S;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
     $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t1));
-    assume IsEmptyVec(p#$Mutation($t2));
-    assume IsEmptyVec(p#$Mutation($t5));
+    $t1 := _$t1;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:14:5+126
-    assume {:print "$at(2,269,395)"} true;
-    assume $IsValid'address'($t0);
+    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    assume {:print "$at(2,68,140)"} true;
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // assume forall $rsc: ResourceDomain<TestStrongEdges::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:14:5+126
-    assume (forall $a_0: int :: {$ResourceValue($42_TestStrongEdges_S_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestStrongEdges_S_$memory, $a_0);
-    ($IsValid'$42_TestStrongEdges_S'($rsc))));
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    assume $IsValid'signer'($t0);
 
-    // assume CanModify<TestStrongEdges::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:23:9+25
-    assume {:print "$at(2,542,567)"} true;
-    assume $42_TestStrongEdges_S_$modifies[$t0];
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    assume $IsValid'u64'($t1);
 
-    // @1 := save_mem(TestStrongEdges::S) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:23:9+25
-    $42_TestStrongEdges_S_$memory#1 := $42_TestStrongEdges_S_$memory;
+    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+72
+    assume (forall $a_0: int :: {$ResourceValue($42_TestModule_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestModule_R_$memory, $a_0);
+    ($IsValid'$42_TestModule_R'($rsc))));
 
-    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:14:5+1
-    assume {:print "$at(2,269,270)"} true;
+    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
+    assume {:print "$at(2,616,654)"} true;
+    assume ($t2 == $1_Signer_spec_address_of($t0));
+
+    // assume Gt($t1, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:20:9+19
+    assume {:print "$at(2,414,433)"} true;
+    assume ($t1 > 0);
+
+    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
+    assume {:print "$at(2,68,69)"} true;
     assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
 
-    // assert CanModify<TestStrongEdges::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:15:17+17
-    assume {:print "$at(2,345,362)"} true;
-    assert {:msg "assert_failed(2,345,362): caller does not have permission to modify `TestStrongEdges::S` at given address"}
-      $42_TestStrongEdges_S_$modifies[$t0];
+    // trace_local[value]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:5:5+1
+    assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
 
-    // $t2 := borrow_global<TestStrongEdges::S>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:15:17+17
-    if (!$ResourceExists($42_TestStrongEdges_S_$memory, $t0)) {
+    // $t3 := pack TestModule::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:22+8
+    assume {:print "$at(2,125,133)"} true;
+    $t3 := $42_TestModule_R($t1);
+
+    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:6:8+7
+    if ($ResourceExists($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $t2 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($42_TestStrongEdges_S_$memory, $t0));
+        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0), $t3);
     }
     if ($abort_flag) {
-        assume {:print "$at(2,345,362)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(1,0):", $t3} $t3 == $t3;
+        assume {:print "$at(2,111,118)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t4} $t4 == $t4;
         goto L2;
     }
 
-    // trace_local[s]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:15:13+1
-    $temp_0'$42_TestStrongEdges_S' := $Dereference($t2);
-    assume {:print "$track_local(1,0,1):", $temp_0'$42_TestStrongEdges_S'} $temp_0'$42_TestStrongEdges_S' == $temp_0'$42_TestStrongEdges_S';
+    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    assume {:print "$at(2,283,363)"} true;
+    assert {:msg "assert_failed(2,283,363): global memory invariant does not hold"}
+      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:16:15+1
-    assume {:print "$at(2,387,388)"} true;
-    $t4 := 2;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := borrow_field<TestStrongEdges::S>.x($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:16:9+3
-    $t5 := $ChildMutation($t2, 0, $x#$42_TestStrongEdges_S($Dereference($t2)));
-
-    // write_ref($t5, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:16:9+7
-    $t5 := $UpdateMutation($t5, $t4);
-
-    // write_back[Reference($t2).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:16:9+7
-    $t2 := $UpdateMutation($t2, $Update'$42_TestStrongEdges_S'_x($Dereference($t2), $Dereference($t5)));
-
-    // write_back[TestStrongEdges::S@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:16:9+7
-    $42_TestStrongEdges_S_$memory := $ResourceUpdate($42_TestStrongEdges_S_$memory, $GlobalLocationAddress($t2),
-        $Dereference($t2));
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:17:5+1
-    assume {:print "$at(2,394,395)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
+    assume {:print "$at(2,139,140)"} true;
 L1:
 
-    // assert Not(Not(exists[@1]<TestStrongEdges::S>($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:22:9+27
-    assume {:print "$at(2,506,533)"} true;
-    assert {:msg "assert_failed(2,506,533): function does not abort under this condition"}
-      !!$ResourceExists($42_TestStrongEdges_S_$memory#1, $t0);
+    // assert exists<TestModule::R>($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
+    assume {:print "$at(2,663,687)"} true;
+    assert {:msg "assert_failed(2,663,687): post-condition does not hold"}
+      $ResourceExists($42_TestModule_R_$memory, $t2);
 
-    // assert Eq<u64>(select TestStrongEdges::S.x(global<TestStrongEdges::S>($t0)), 2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:21:9+31
-    assume {:print "$at(2,466,497)"} true;
-    assert {:msg "assert_failed(2,466,497): post-condition does not hold"}
-      $IsEqual'u64'($x#$42_TestStrongEdges_S($ResourceValue($42_TestStrongEdges_S_$memory, $t0)), 2);
+    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
+    assume {:print "$at(2,696,735)"} true;
+    assert {:msg "assert_failed(2,696,735): post-condition does not hold"}
+      $IsEqual'u64'($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, $t2)), $t1);
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:21:9+31
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:17:5+1
-    assume {:print "$at(2,394,395)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
+    assume {:print "$at(2,139,140)"} true;
 L2:
 
-    // assert Not(exists[@1]<TestStrongEdges::S>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:19:5+172
-    assume {:print "$at(2,401,573)"} true;
-    assert {:msg "assert_failed(2,401,573): abort not covered by any of the `aborts_if` clauses"}
-      !$ResourceExists($42_TestStrongEdges_S_$memory#1, $t0);
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:19:5+172
-    $abort_code := $t3;
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:7:5+1
+    $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun TestStrongEdges::glob_and_field_edges_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:47:5+136
-procedure {:timeLimit 40} $42_TestStrongEdges_glob_and_field_edges_incorrect$verify(_$t0: int) returns ()
+// fun TestModule::store_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+procedure {:timeLimit 40} $42_TestModule_store_incorrect$verify(_$t0: $signer, _$t1: int) returns ()
 {
     // declare local variables
-    var $t1: $Mutation ($42_TestStrongEdges_S);
-    var $t2: $Mutation ($42_TestStrongEdges_S);
-    var $t3: int;
+    var $t2: int;
+    var $t3: $42_TestModule_R;
     var $t4: int;
-    var $t5: $Mutation (int);
-    var $t0: int;
-    var $42_TestStrongEdges_S_$modifies: [int]bool;
-    var $temp_0'$42_TestStrongEdges_S': $42_TestStrongEdges_S;
-    var $temp_0'address': int;
-    var $42_TestStrongEdges_S_$memory#0: $Memory $42_TestStrongEdges_S;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
     $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t1));
-    assume IsEmptyVec(p#$Mutation($t2));
-    assume IsEmptyVec(p#$Mutation($t5));
+    $t1 := _$t1;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:47:5+136
-    assume {:print "$at(2,991,1127)"} true;
-    assume $IsValid'address'($t0);
+    // assume forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    assume {:print "$at(2,146,229)"} true;
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // assume forall $rsc: ResourceDomain<TestStrongEdges::S>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:47:5+136
-    assume (forall $a_0: int :: {$ResourceValue($42_TestStrongEdges_S_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestStrongEdges_S_$memory, $a_0);
-    ($IsValid'$42_TestStrongEdges_S'($rsc))));
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    assume $IsValid'signer'($t0);
 
-    // assume CanModify<TestStrongEdges::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:56:9+25
-    assume {:print "$at(2,1284,1309)"} true;
-    assume $42_TestStrongEdges_S_$modifies[$t0];
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    assume $IsValid'u64'($t1);
 
-    // @0 := save_mem(TestStrongEdges::S) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:56:9+25
-    $42_TestStrongEdges_S_$memory#0 := $42_TestStrongEdges_S_$memory;
+    // assume forall $rsc: ResourceDomain<TestModule::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+83
+    assume (forall $a_0: int :: {$ResourceValue($42_TestModule_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestModule_R_$memory, $a_0);
+    ($IsValid'$42_TestModule_R'($rsc))));
 
-    // trace_local[addr]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:47:5+1
-    assume {:print "$at(2,991,992)"} true;
+    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:31:9+38
+    assume {:print "$at(2,616,654)"} true;
+    assume ($t2 == $1_Signer_spec_address_of($t0));
+
+    // trace_local[s]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
+    assume {:print "$at(2,146,147)"} true;
     assume {:print "$track_local(1,1,0):", $t0} $t0 == $t0;
 
-    // assert CanModify<TestStrongEdges::S>($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:48:17+17
-    assume {:print "$at(2,1077,1094)"} true;
-    assert {:msg "assert_failed(2,1077,1094): caller does not have permission to modify `TestStrongEdges::S` at given address"}
-      $42_TestStrongEdges_S_$modifies[$t0];
+    // trace_local[value]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:9:5+1
+    assume {:print "$track_local(1,1,1):", $t1} $t1 == $t1;
 
-    // $t2 := borrow_global<TestStrongEdges::S>($t0) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:48:17+17
-    if (!$ResourceExists($42_TestStrongEdges_S_$memory, $t0)) {
+    // $t3 := pack TestModule::R($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:23+8
+    assume {:print "$at(2,214,222)"} true;
+    $t3 := $42_TestModule_R($t1);
+
+    // move_to<TestModule::R>($t3, $t0) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:10:9+7
+    if ($ResourceExists($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0))) {
         call $ExecFailureAbort();
     } else {
-        $t2 := $Mutation($Global($t0), EmptyVec(), $ResourceValue($42_TestStrongEdges_S_$memory, $t0));
+        $42_TestModule_R_$memory := $ResourceUpdate($42_TestModule_R_$memory, $1_Signer_spec_address_of($t0), $t3);
     }
     if ($abort_flag) {
-        assume {:print "$at(2,1077,1094)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(1,1):", $t3} $t3 == $t3;
+        assume {:print "$at(2,200,207)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(1,1):", $t4} $t4 == $t4;
         goto L2;
     }
 
-    // trace_local[s]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:48:13+1
-    $temp_0'$42_TestStrongEdges_S' := $Dereference($t2);
-    assume {:print "$track_local(1,1,1):", $temp_0'$42_TestStrongEdges_S'} $temp_0'$42_TestStrongEdges_S' == $temp_0'$42_TestStrongEdges_S';
+    // assert forall addr: TypeDomain<address>() where exists<TestModule::R>(addr): Gt(select TestModule::R.value(global<TestModule::R>(addr)), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:17:5+80
+    assume {:print "$at(2,283,363)"} true;
+    assert {:msg "assert_failed(2,283,363): global memory invariant does not hold"}
+      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($42_TestModule_R_$memory, addr))  ==> (($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, addr)) > 0)));
 
-    // $t4 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:49:15+1
-    assume {:print "$at(2,1119,1120)"} true;
-    $t4 := 2;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := borrow_field<TestStrongEdges::S>.x($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:49:9+3
-    $t5 := $ChildMutation($t2, 0, $x#$42_TestStrongEdges_S($Dereference($t2)));
-
-    // write_ref($t5, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:49:9+7
-    $t5 := $UpdateMutation($t5, $t4);
-
-    // write_back[Reference($t2).x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:49:9+7
-    $t2 := $UpdateMutation($t2, $Update'$42_TestStrongEdges_S'_x($Dereference($t2), $Dereference($t5)));
-
-    // write_back[TestStrongEdges::S@]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:49:9+7
-    $42_TestStrongEdges_S_$memory := $ResourceUpdate($42_TestStrongEdges_S_$memory, $GlobalLocationAddress($t2),
-        $Dereference($t2));
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:50:5+1
-    assume {:print "$at(2,1126,1127)"} true;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
+    assume {:print "$at(2,228,229)"} true;
 L1:
 
-    // assert Not(Not(exists[@0]<TestStrongEdges::S>($t0))) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:55:9+27
-    assume {:print "$at(2,1248,1275)"} true;
-    assert {:msg "assert_failed(2,1248,1275): function does not abort under this condition"}
-      !!$ResourceExists($42_TestStrongEdges_S_$memory#0, $t0);
+    // assert exists<TestModule::R>($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:32:9+24
+    assume {:print "$at(2,663,687)"} true;
+    assert {:msg "assert_failed(2,663,687): post-condition does not hold"}
+      $ResourceExists($42_TestModule_R_$memory, $t2);
 
-    // assert Eq<u64>(select TestStrongEdges::S.x(global<TestStrongEdges::S>($t0)), 3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:54:9+31
-    assume {:print "$at(2,1208,1239)"} true;
-    assert {:msg "assert_failed(2,1208,1239): post-condition does not hold"}
-      $IsEqual'u64'($x#$42_TestStrongEdges_S($ResourceValue($42_TestStrongEdges_S_$memory, $t0)), 3);
+    // assert Eq<u64>(select TestModule::R.value(global<TestModule::R>($t2)), $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
+    assume {:print "$at(2,696,735)"} true;
+    assert {:msg "assert_failed(2,696,735): post-condition does not hold"}
+      $IsEqual'u64'($value#$42_TestModule_R($ResourceValue($42_TestModule_R_$memory, $t2)), $t1);
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:54:9+31
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:33:9+39
     return;
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:50:5+1
-    assume {:print "$at(2,1126,1127)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
+    assume {:print "$at(2,228,229)"} true;
 L2:
 
-    // assert Not(exists[@0]<TestStrongEdges::S>($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:52:5+182
-    assume {:print "$at(2,1133,1315)"} true;
-    assert {:msg "assert_failed(2,1133,1315): abort not covered by any of the `aborts_if` clauses"}
-      !$ResourceExists($42_TestStrongEdges_S_$memory#0, $t0);
-
-    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:52:5+182
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun TestStrongEdges::loc__edge_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:59:5+153
-procedure {:timeLimit 40} $42_TestStrongEdges_loc__edge_incorrect$verify() returns ()
-{
-    // declare local variables
-    var $t0: int;
-    var $t1: $Mutation (int);
-    var $t2: int;
-    var $t3: $Mutation (int);
-    var $t4: int;
-    var $temp_0'u64': int;
-    assume IsEmptyVec(p#$Mutation($t1));
-    assume IsEmptyVec(p#$Mutation($t3));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // $t2 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:60:17+1
-    assume {:print "$at(2,1365,1366)"} true;
-    $t2 := 5;
-    assume $IsValid'u64'($t2);
-
-    // $t0 := $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:60:13+1
-    $t0 := $t2;
-
-    // trace_local[r]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:60:13+1
-    assume {:print "$track_local(1,2,0):", $t0} $t0 == $t0;
-
-    // $t3 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:61:21+6
-    assume {:print "$at(2,1388,1394)"} true;
-    $t3 := $Mutation($Local(0), EmptyVec(), $t0);
-
-    // trace_local[r_ref]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:61:13+5
-    $temp_0'u64' := $Dereference($t3);
-    assume {:print "$track_local(1,2,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t4 := 6 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:62:18+1
-    assume {:print "$at(2,1413,1414)"} true;
-    $t4 := 6;
-    assume $IsValid'u64'($t4);
-
-    // write_ref($t3, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:62:9+10
-    $t3 := $UpdateMutation($t3, $t4);
-
-    // write_back[LocalRoot($t0)@]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:62:9+10
-    $t0 := $Dereference($t3);
-
-    // assert Eq<u64>($t0, 5) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:64:13+14
-    assume {:print "$at(2,1443,1457)"} true;
-    assert {:msg "assert_failed(2,1443,1457): unknown assertion failed"}
-      $IsEqual'u64'($t0, 5);
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:66:5+1
-    assume {:print "$at(2,1473,1474)"} true;
-L1:
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:66:5+1
-    return;
-
-}
-
-// fun TestStrongEdges::loc_edge [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:26:5+142
-procedure {:timeLimit 40} $42_TestStrongEdges_loc_edge$verify() returns ()
-{
-    // declare local variables
-    var $t0: int;
-    var $t1: $Mutation (int);
-    var $t2: int;
-    var $t3: $Mutation (int);
-    var $t4: int;
-    var $temp_0'u64': int;
-    assume IsEmptyVec(p#$Mutation($t1));
-    assume IsEmptyVec(p#$Mutation($t3));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // $t2 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:27:17+1
-    assume {:print "$at(2,612,613)"} true;
-    $t2 := 5;
-    assume $IsValid'u64'($t2);
-
-    // $t0 := $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:27:13+1
-    $t0 := $t2;
-
-    // trace_local[r]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:27:13+1
-    assume {:print "$track_local(1,3,0):", $t0} $t0 == $t0;
-
-    // $t3 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:28:21+6
-    assume {:print "$at(2,635,641)"} true;
-    $t3 := $Mutation($Local(0), EmptyVec(), $t0);
-
-    // trace_local[r_ref]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:28:13+5
-    $temp_0'u64' := $Dereference($t3);
-    assume {:print "$track_local(1,3,1):", $temp_0'u64'} $temp_0'u64' == $temp_0'u64';
-
-    // $t4 := 6 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:29:18+1
-    assume {:print "$at(2,660,661)"} true;
-    $t4 := 6;
-    assume $IsValid'u64'($t4);
-
-    // write_ref($t3, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:29:9+10
-    $t3 := $UpdateMutation($t3, $t4);
-
-    // write_back[LocalRoot($t0)@]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:29:9+10
-    $t0 := $Dereference($t3);
-
-    // assert Eq<u64>($t0, 6) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:31:13+14
-    assume {:print "$at(2,690,704)"} true;
-    assert {:msg "assert_failed(2,690,704): unknown assertion failed"}
-      $IsEqual'u64'($t0, 6);
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:33:5+1
-    assume {:print "$at(2,720,721)"} true;
-L1:
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:33:5+1
-    return;
-
-}
-
-// fun TestStrongEdges::vec_edge [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:35:5+139
-procedure {:timeLimit 40} $42_TestStrongEdges_vec_edge$verify(_$t0: $Mutation (Vec (int))) returns ($ret0: int, $ret1: $Mutation (Vec (int)))
-{
-    // declare local variables
-    var $t1: $Mutation (Vec (int));
-    var $t2: int;
-    var $t3: int;
-    var $t4: Vec (int);
-    var $t5: Vec (int);
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: $Mutation (int);
-    var $t0: $Mutation (Vec (int));
-    var $temp_0'u64': int;
-    var $temp_0'vec'u64'': Vec (int);
-    $t0 := _$t0;
-    assume IsEmptyVec(p#$Mutation($t1));
-    assume IsEmptyVec(p#$Mutation($t11));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:35:5+139
-    assume {:print "$at(2,727,866)"} true;
-    assume $IsValid'vec'u64''($Dereference($t0));
-
-    // $t4 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:35:5+1
-    $t4 := $Dereference($t0);
-
-    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:35:5+1
-    $temp_0'vec'u64'' := $Dereference($t0);
-    assume {:print "$track_local(1,4,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
-
-    // trace_local[tmp#$1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:37:32+6
-    assume {:print "$at(2,804,810)"} true;
-    $temp_0'vec'u64'' := $Dereference($t0);
-    assume {:print "$track_local(1,4,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
-
-    // $t5 := read_ref($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:37:32+6
-    $t5 := $Dereference($t0);
-
-    // $t6 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:37:36+1
-    $t6 := 0;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := Vector::borrow<u64>($t5, $t6) on_abort goto L2 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:37:18+20
-    call $t7 := $1_Vector_borrow'u64'($t5, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,790,810)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(1,4):", $t8} $t8 == $t8;
-        goto L2;
-    }
-
-    // trace_local[x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:37:13+1
-    assume {:print "$track_local(1,4,3):", $t7} $t7 == $t7;
-
-    // $t9 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:38:37+1
-    assume {:print "$at(2,848,849)"} true;
-    $t9 := 7;
-    assume $IsValid'u64'($t9);
-
-    // $t10 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:38:32+1
-    $t10 := 0;
-    assume $IsValid'u64'($t10);
-
-    // $t11 := Vector::borrow_mut<u64>($t0, $t10) on_abort goto L2 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:38:10+24
-    call $t11,$t0 := $1_Vector_borrow_mut'u64'($t0, $t10);
-    if ($abort_flag) {
-        assume {:print "$at(2,821,845)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(1,4):", $t8} $t8 == $t8;
-        goto L2;
-    }
-
-    // write_ref($t11, $t9) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:38:9+29
-    $t11 := $UpdateMutation($t11, $t9);
-
-    // write_back[Reference($t0)[]]($t11) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:38:9+29
-    $t0 := $UpdateMutation($t0, UpdateVec($Dereference($t0), ReadVec(p#$Mutation($t11), LenVec(p#$Mutation($t0))), $Dereference($t11)));
-
-    // trace_return[0]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:39:9+1
-    assume {:print "$at(2,859,860)"} true;
-    assume {:print "$track_return(1,4,0):", $t7} $t7 == $t7;
-
-    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:39:9+1
-    $temp_0'vec'u64'' := $Dereference($t0);
-    assume {:print "$track_local(1,4,0):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:40:5+1
-    assume {:print "$at(2,865,866)"} true;
-L1:
-
-    // assert Not(Eq<num>(Len<u64>($t4), 0)) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:42:9+22
-    assume {:print "$at(2,895,917)"} true;
-    assert {:msg "assert_failed(2,895,917): function does not abort under this condition"}
-      !$IsEqual'num'(LenVec($t4), 0);
-
-    // assert Eq<u64>(Index($t0, 0), 7) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:43:9+18
-    assume {:print "$at(2,926,944)"} true;
-    assert {:msg "assert_failed(2,926,944): post-condition does not hold"}
-      $IsEqual'u64'(ReadVec($Dereference($t0), 0), 7);
-
-    // assert Eq<u64>(Index($t0, 1), Index($t4, 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:44:9+26
-    assume {:print "$at(2,953,979)"} true;
-    assert {:msg "assert_failed(2,953,979): post-condition does not hold"}
-      $IsEqual'u64'(ReadVec($Dereference($t0), 1), ReadVec($t4, 1));
-
-    // return $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:44:9+26
-    $ret0 := $t7;
-    $ret1 := $t0;
-    return;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:40:5+1
-    assume {:print "$at(2,865,866)"} true;
-L2:
-
-    // assert Eq<num>(Len<u64>($t4), 0) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:41:5+114
-    assume {:print "$at(2,871,985)"} true;
-    assert {:msg "assert_failed(2,871,985): abort not covered by any of the `aborts_if` clauses"}
-      $IsEqual'num'(LenVec($t4), 0);
-
-    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/strong_edges.move:41:5+114
-    $abort_code := $t8;
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/module_level_spec.move:11:5+1
+    $abort_code := $t4;
     $abort_flag := true;
     return;
 

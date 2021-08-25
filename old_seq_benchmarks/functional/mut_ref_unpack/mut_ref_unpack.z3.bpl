@@ -807,13 +807,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +821,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +880,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -890,3 +895,1329 @@ procedure {:inline 1} $InitEventStore() {
 
 
 // Given Types for Type Parameters
+
+type #0;
+function {:inline} $IsEqual'#0'(x1: #0, x2: #0): bool { x1 == x2 }
+function {:inline} $IsValid'#0'(x: #0): bool { true }
+type #1;
+function {:inline} $IsEqual'#1'(x1: #1, x2: #1): bool { x1 == x2 }
+function {:inline} $IsValid'#1'(x: #1): bool { true }
+
+// struct S::Storage<u64, bool> at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:3:5+93
+type {:datatype} $2_S_Storage'u64_bool';
+function {:constructor} $2_S_Storage'u64_bool'($x: int, $y: bool, $v: int): $2_S_Storage'u64_bool';
+function {:inline} $Update'$2_S_Storage'u64_bool''_x(s: $2_S_Storage'u64_bool', x: int): $2_S_Storage'u64_bool' {
+    $2_S_Storage'u64_bool'(x, $y#$2_S_Storage'u64_bool'(s), $v#$2_S_Storage'u64_bool'(s))
+}
+function {:inline} $Update'$2_S_Storage'u64_bool''_y(s: $2_S_Storage'u64_bool', x: bool): $2_S_Storage'u64_bool' {
+    $2_S_Storage'u64_bool'($x#$2_S_Storage'u64_bool'(s), x, $v#$2_S_Storage'u64_bool'(s))
+}
+function {:inline} $Update'$2_S_Storage'u64_bool''_v(s: $2_S_Storage'u64_bool', x: int): $2_S_Storage'u64_bool' {
+    $2_S_Storage'u64_bool'($x#$2_S_Storage'u64_bool'(s), $y#$2_S_Storage'u64_bool'(s), x)
+}
+function $IsValid'$2_S_Storage'u64_bool''(s: $2_S_Storage'u64_bool'): bool {
+    $IsValid'u64'($x#$2_S_Storage'u64_bool'(s))
+      && $IsValid'bool'($y#$2_S_Storage'u64_bool'(s))
+      && $IsValid'u8'($v#$2_S_Storage'u64_bool'(s))
+}
+function {:inline} $IsEqual'$2_S_Storage'u64_bool''(s1: $2_S_Storage'u64_bool', s2: $2_S_Storage'u64_bool'): bool {
+    s1 == s2
+}
+var $2_S_Storage'u64_bool'_$memory: $Memory $2_S_Storage'u64_bool';
+
+// struct S::Storage<u64, #0> at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:3:5+93
+type {:datatype} $2_S_Storage'u64_#0';
+function {:constructor} $2_S_Storage'u64_#0'($x: int, $y: #0, $v: int): $2_S_Storage'u64_#0';
+function {:inline} $Update'$2_S_Storage'u64_#0''_x(s: $2_S_Storage'u64_#0', x: int): $2_S_Storage'u64_#0' {
+    $2_S_Storage'u64_#0'(x, $y#$2_S_Storage'u64_#0'(s), $v#$2_S_Storage'u64_#0'(s))
+}
+function {:inline} $Update'$2_S_Storage'u64_#0''_y(s: $2_S_Storage'u64_#0', x: #0): $2_S_Storage'u64_#0' {
+    $2_S_Storage'u64_#0'($x#$2_S_Storage'u64_#0'(s), x, $v#$2_S_Storage'u64_#0'(s))
+}
+function {:inline} $Update'$2_S_Storage'u64_#0''_v(s: $2_S_Storage'u64_#0', x: int): $2_S_Storage'u64_#0' {
+    $2_S_Storage'u64_#0'($x#$2_S_Storage'u64_#0'(s), $y#$2_S_Storage'u64_#0'(s), x)
+}
+function $IsValid'$2_S_Storage'u64_#0''(s: $2_S_Storage'u64_#0'): bool {
+    $IsValid'u64'($x#$2_S_Storage'u64_#0'(s))
+      && $IsValid'#0'($y#$2_S_Storage'u64_#0'(s))
+      && $IsValid'u8'($v#$2_S_Storage'u64_#0'(s))
+}
+function {:inline} $IsEqual'$2_S_Storage'u64_#0''(s1: $2_S_Storage'u64_#0', s2: $2_S_Storage'u64_#0'): bool {
+    s1 == s2
+}
+var $2_S_Storage'u64_#0'_$memory: $Memory $2_S_Storage'u64_#0';
+
+// struct S::Storage<u64, #1> at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:3:5+93
+type {:datatype} $2_S_Storage'u64_#1';
+function {:constructor} $2_S_Storage'u64_#1'($x: int, $y: #1, $v: int): $2_S_Storage'u64_#1';
+function {:inline} $Update'$2_S_Storage'u64_#1''_x(s: $2_S_Storage'u64_#1', x: int): $2_S_Storage'u64_#1' {
+    $2_S_Storage'u64_#1'(x, $y#$2_S_Storage'u64_#1'(s), $v#$2_S_Storage'u64_#1'(s))
+}
+function {:inline} $Update'$2_S_Storage'u64_#1''_y(s: $2_S_Storage'u64_#1', x: #1): $2_S_Storage'u64_#1' {
+    $2_S_Storage'u64_#1'($x#$2_S_Storage'u64_#1'(s), x, $v#$2_S_Storage'u64_#1'(s))
+}
+function {:inline} $Update'$2_S_Storage'u64_#1''_v(s: $2_S_Storage'u64_#1', x: int): $2_S_Storage'u64_#1' {
+    $2_S_Storage'u64_#1'($x#$2_S_Storage'u64_#1'(s), $y#$2_S_Storage'u64_#1'(s), x)
+}
+function $IsValid'$2_S_Storage'u64_#1''(s: $2_S_Storage'u64_#1'): bool {
+    $IsValid'u64'($x#$2_S_Storage'u64_#1'(s))
+      && $IsValid'#1'($y#$2_S_Storage'u64_#1'(s))
+      && $IsValid'u8'($v#$2_S_Storage'u64_#1'(s))
+}
+function {:inline} $IsEqual'$2_S_Storage'u64_#1''(s1: $2_S_Storage'u64_#1', s2: $2_S_Storage'u64_#1'): bool {
+    s1 == s2
+}
+var $2_S_Storage'u64_#1'_$memory: $Memory $2_S_Storage'u64_#1';
+
+// struct S::Storage<#0, bool> at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:3:5+93
+type {:datatype} $2_S_Storage'#0_bool';
+function {:constructor} $2_S_Storage'#0_bool'($x: #0, $y: bool, $v: int): $2_S_Storage'#0_bool';
+function {:inline} $Update'$2_S_Storage'#0_bool''_x(s: $2_S_Storage'#0_bool', x: #0): $2_S_Storage'#0_bool' {
+    $2_S_Storage'#0_bool'(x, $y#$2_S_Storage'#0_bool'(s), $v#$2_S_Storage'#0_bool'(s))
+}
+function {:inline} $Update'$2_S_Storage'#0_bool''_y(s: $2_S_Storage'#0_bool', x: bool): $2_S_Storage'#0_bool' {
+    $2_S_Storage'#0_bool'($x#$2_S_Storage'#0_bool'(s), x, $v#$2_S_Storage'#0_bool'(s))
+}
+function {:inline} $Update'$2_S_Storage'#0_bool''_v(s: $2_S_Storage'#0_bool', x: int): $2_S_Storage'#0_bool' {
+    $2_S_Storage'#0_bool'($x#$2_S_Storage'#0_bool'(s), $y#$2_S_Storage'#0_bool'(s), x)
+}
+function $IsValid'$2_S_Storage'#0_bool''(s: $2_S_Storage'#0_bool'): bool {
+    $IsValid'#0'($x#$2_S_Storage'#0_bool'(s))
+      && $IsValid'bool'($y#$2_S_Storage'#0_bool'(s))
+      && $IsValid'u8'($v#$2_S_Storage'#0_bool'(s))
+}
+function {:inline} $IsEqual'$2_S_Storage'#0_bool''(s1: $2_S_Storage'#0_bool', s2: $2_S_Storage'#0_bool'): bool {
+    s1 == s2
+}
+var $2_S_Storage'#0_bool'_$memory: $Memory $2_S_Storage'#0_bool';
+
+// struct S::Storage<#0, #1> at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:3:5+93
+type {:datatype} $2_S_Storage'#0_#1';
+function {:constructor} $2_S_Storage'#0_#1'($x: #0, $y: #1, $v: int): $2_S_Storage'#0_#1';
+function {:inline} $Update'$2_S_Storage'#0_#1''_x(s: $2_S_Storage'#0_#1', x: #0): $2_S_Storage'#0_#1' {
+    $2_S_Storage'#0_#1'(x, $y#$2_S_Storage'#0_#1'(s), $v#$2_S_Storage'#0_#1'(s))
+}
+function {:inline} $Update'$2_S_Storage'#0_#1''_y(s: $2_S_Storage'#0_#1', x: #1): $2_S_Storage'#0_#1' {
+    $2_S_Storage'#0_#1'($x#$2_S_Storage'#0_#1'(s), x, $v#$2_S_Storage'#0_#1'(s))
+}
+function {:inline} $Update'$2_S_Storage'#0_#1''_v(s: $2_S_Storage'#0_#1', x: int): $2_S_Storage'#0_#1' {
+    $2_S_Storage'#0_#1'($x#$2_S_Storage'#0_#1'(s), $y#$2_S_Storage'#0_#1'(s), x)
+}
+function $IsValid'$2_S_Storage'#0_#1''(s: $2_S_Storage'#0_#1'): bool {
+    $IsValid'#0'($x#$2_S_Storage'#0_#1'(s))
+      && $IsValid'#1'($y#$2_S_Storage'#0_#1'(s))
+      && $IsValid'u8'($v#$2_S_Storage'#0_#1'(s))
+}
+function {:inline} $IsEqual'$2_S_Storage'#0_#1''(s1: $2_S_Storage'#0_#1', s2: $2_S_Storage'#0_#1'): bool {
+    s1 == s2
+}
+var $2_S_Storage'#0_#1'_$memory: $Memory $2_S_Storage'#0_#1';
+
+// fun S::publish_u64_bool [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+procedure {:timeLimit 40} $2_S_publish_u64_bool$verify(_$t0: $signer, _$t1: int, _$t2: bool) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: bool;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    assume {:print "$at(2,157,270)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    assume $IsValid'bool'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_bool''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+1
+    assume {:print "$track_local(0,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+1
+    assume {:print "$track_local(0,0,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+1
+    assume {:print "$track_local(0,0,2):", $t2} $t2 == $t2;
+
+    // $t3 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:11:43+1
+    assume {:print "$at(2,263,264)"} true;
+    $t3 := 0;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<u64, bool>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:11:24+22
+    $t4 := $2_S_Storage'u64_bool'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,157,270)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:10:2+113
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<u64, bool>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:11:6+7
+    assume {:print "$at(2,226,233)"} true;
+    if ($ResourceExists($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_bool'_$memory := $ResourceUpdate($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,226,233)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,0):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:12:2+1
+    assume {:print "$at(2,269,270)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:12:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:12:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:12:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_u64_y [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+procedure {:timeLimit 40} $2_S_publish_u64_y$verify(_$t0: $signer, _$t1: int, _$t2: #0) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_#0';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: #0;
+    var $temp_0'#0': #0;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume {:print "$at(2,304,421)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume $IsValid'#0'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, #0>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_#0'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_#0'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_#0''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+1
+    assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+1
+    assume {:print "$track_local(0,1,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+1
+    assume {:print "$track_local(0,1,2):", $t2} $t2 == $t2;
+
+    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:16:43+1
+    assume {:print "$at(2,414,415)"} true;
+    $t3 := 1;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<u64, #0>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:16:24+22
+    $t4 := $2_S_Storage'u64_#0'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,304,421)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<u64, #0>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:16:6+7
+    assume {:print "$at(2,377,384)"} true;
+    if ($ResourceExists($2_S_Storage'u64_#0'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_#0'_$memory := $ResourceUpdate($2_S_Storage'u64_#0'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,377,384)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,1):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+    assume {:print "$at(2,420,421)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_u64_y [verification[instantiated_0]] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+procedure {:timeLimit 40} $2_S_publish_u64_y$verify_instantiated_0(_$t0: $signer, _$t1: int, _$t2: bool) returns ()
+{
+    // function instantiation
+    // #0 := bool;
+
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: bool;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume {:print "$at(2,304,421)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume $IsValid'bool'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_bool''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+1
+    assume {:print "$track_local(0,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+1
+    assume {:print "$track_local(0,1,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+1
+    assume {:print "$track_local(0,1,2):", $t2} $t2 == $t2;
+
+    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:16:43+1
+    assume {:print "$at(2,414,415)"} true;
+    $t3 := 1;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<u64, bool>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:16:24+22
+    $t4 := $2_S_Storage'u64_bool'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,304,421)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:15:2+117
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<u64, bool>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:16:6+7
+    assume {:print "$at(2,377,384)"} true;
+    if ($ResourceExists($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_bool'_$memory := $ResourceUpdate($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,377,384)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,1):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+    assume {:print "$at(2,420,421)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:17:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_bool [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+procedure {:timeLimit 40} $2_S_publish_x_bool$verify(_$t0: $signer, _$t1: #0, _$t2: bool) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'#0_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: #0;
+    var $t2: bool;
+    var $temp_0'#0': #0;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume {:print "$at(2,455,574)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume $IsValid'#0'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume $IsValid'bool'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<#0, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'#0_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'#0_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'#0_bool''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+1
+    assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+1
+    assume {:print "$track_local(0,2,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+1
+    assume {:print "$track_local(0,2,2):", $t2} $t2 == $t2;
+
+    // $t3 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:21:43+1
+    assume {:print "$at(2,567,568)"} true;
+    $t3 := 2;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<#0, bool>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:21:24+22
+    $t4 := $2_S_Storage'#0_bool'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,455,574)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<#0, bool>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:21:6+7
+    assume {:print "$at(2,530,537)"} true;
+    if ($ResourceExists($2_S_Storage'#0_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'#0_bool'_$memory := $ResourceUpdate($2_S_Storage'#0_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,530,537)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,2):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+    assume {:print "$at(2,573,574)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_bool [verification[instantiated_0]] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+procedure {:timeLimit 40} $2_S_publish_x_bool$verify_instantiated_0(_$t0: $signer, _$t1: int, _$t2: bool) returns ()
+{
+    // function instantiation
+    // #0 := u64;
+
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: bool;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume {:print "$at(2,455,574)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume $IsValid'bool'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_bool''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+1
+    assume {:print "$track_local(0,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+1
+    assume {:print "$track_local(0,2,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+1
+    assume {:print "$track_local(0,2,2):", $t2} $t2 == $t2;
+
+    // $t3 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:21:43+1
+    assume {:print "$at(2,567,568)"} true;
+    $t3 := 2;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<u64, bool>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:21:24+22
+    $t4 := $2_S_Storage'u64_bool'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,455,574)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:20:2+119
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<u64, bool>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:21:6+7
+    assume {:print "$at(2,530,537)"} true;
+    if ($ResourceExists($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_bool'_$memory := $ResourceUpdate($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,530,537)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,2):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+    assume {:print "$at(2,573,574)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:22:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_y<u64, bool> [baseline] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+procedure {:inline 1} $2_S_publish_x_y'u64_bool'(_$t0: $signer, _$t1: int, _$t2: bool) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: bool;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // bytecode translation starts here
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$at(2,607,608)"} true;
+    assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,2):", $t2} $t2 == $t2;
+
+    // $t3 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:43+1
+    assume {:print "$at(2,723,724)"} true;
+    $t3 := 3;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<#0, #1>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:24+22
+    $t4 := $2_S_Storage'u64_bool'($t1, $t2, $t3);
+
+    // move_to<S::Storage<#0, #1>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:6+7
+    if ($ResourceExists($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_bool'_$memory := $ResourceUpdate($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,686,693)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    assume {:print "$at(2,729,730)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_y [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+procedure {:timeLimit 40} $2_S_publish_x_y$verify(_$t0: $signer, _$t1: #0, _$t2: #1) returns ()
+{
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'#0_#1';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: #0;
+    var $t2: #1;
+    var $temp_0'#0': #0;
+    var $temp_0'#1': #1;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume {:print "$at(2,607,730)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'#0'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'#1'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<#0, #1>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'#0_#1'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'#0_#1'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'#0_#1''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,2):", $t2} $t2 == $t2;
+
+    // $t3 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:43+1
+    assume {:print "$at(2,723,724)"} true;
+    $t3 := 3;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<#0, #1>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:24+22
+    $t4 := $2_S_Storage'#0_#1'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,607,730)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<#0, #1>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:6+7
+    assume {:print "$at(2,686,693)"} true;
+    if ($ResourceExists($2_S_Storage'#0_#1'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'#0_#1'_$memory := $ResourceUpdate($2_S_Storage'#0_#1'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,686,693)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    assume {:print "$at(2,729,730)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_y [verification[instantiated_0]] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+procedure {:timeLimit 40} $2_S_publish_x_y$verify_instantiated_0(_$t0: $signer, _$t1: int, _$t2: #1) returns ()
+{
+    // function instantiation
+    // #0 := u64;
+
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_#1';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: #1;
+    var $temp_0'#1': #1;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume {:print "$at(2,607,730)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'#1'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, #1>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_#1'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_#1'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_#1''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,2):", $t2} $t2 == $t2;
+
+    // $t3 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:43+1
+    assume {:print "$at(2,723,724)"} true;
+    $t3 := 3;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<u64, #1>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:24+22
+    $t4 := $2_S_Storage'u64_#1'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,607,730)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<u64, #1>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:6+7
+    assume {:print "$at(2,686,693)"} true;
+    if ($ResourceExists($2_S_Storage'u64_#1'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_#1'_$memory := $ResourceUpdate($2_S_Storage'u64_#1'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,686,693)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    assume {:print "$at(2,729,730)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_y [verification[instantiated_1]] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+procedure {:timeLimit 40} $2_S_publish_x_y$verify_instantiated_1(_$t0: $signer, _$t1: int, _$t2: bool) returns ()
+{
+    // function instantiation
+    // #0 := u64;
+    // #1 := bool;
+
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'u64_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: bool;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume {:print "$at(2,607,730)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'bool'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_bool''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,2):", $t2} $t2 == $t2;
+
+    // $t3 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:43+1
+    assume {:print "$at(2,723,724)"} true;
+    $t3 := 3;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<u64, bool>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:24+22
+    $t4 := $2_S_Storage'u64_bool'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,607,730)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<u64, bool>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:6+7
+    assume {:print "$at(2,686,693)"} true;
+    if ($ResourceExists($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'u64_bool'_$memory := $ResourceUpdate($2_S_Storage'u64_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,686,693)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    assume {:print "$at(2,729,730)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun S::publish_x_y [verification[instantiated_2]] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+procedure {:timeLimit 40} $2_S_publish_x_y$verify_instantiated_2(_$t0: $signer, _$t1: #0, _$t2: bool) returns ()
+{
+    // function instantiation
+    // #1 := bool;
+
+    // declare local variables
+    var $t3: int;
+    var $t4: $2_S_Storage'#0_bool';
+    var $t5: int;
+    var $t0: $signer;
+    var $t1: #0;
+    var $t2: bool;
+    var $temp_0'#0': #0;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume {:print "$at(2,607,730)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'#0'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume $IsValid'bool'($t2);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<#0, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'#0_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'#0_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'#0_bool''($rsc))));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,0):", $t0} $t0 == $t0;
+
+    // trace_local[x]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,1):", $t1} $t1 == $t1;
+
+    // trace_local[y]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+1
+    assume {:print "$track_local(0,3,2):", $t2} $t2 == $t2;
+
+    // $t3 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:43+1
+    assume {:print "$at(2,723,724)"} true;
+    $t3 := 3;
+    assume $IsValid'u8'($t3);
+
+    // $t4 := pack S::Storage<#0, bool>($t1, $t2, $t3) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:24+22
+    $t4 := $2_S_Storage'#0_bool'($t1, $t2, $t3);
+
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,607,730)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:25:2+123
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // move_to<S::Storage<#0, bool>>($t4, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:26:6+7
+    assume {:print "$at(2,686,693)"} true;
+    if ($ResourceExists($2_S_Storage'#0_bool'_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $2_S_Storage'#0_bool'_$memory := $ResourceUpdate($2_S_Storage'#0_bool'_$memory, $1_Signer_spec_address_of($t0), $t4);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(2,686,693)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(0,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // assert Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,798,913)"} true;
+    assert {:msg "assert_failed(2,798,913): global memory invariant does not hold"}
+      ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assert And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume {:print "$at(2,950,1090)"} true;
+    assert {:msg "assert_failed(2,950,1090): global memory invariant does not hold"}
+      ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assert And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume {:print "$at(2,1127,1265)"} true;
+    assert {:msg "assert_failed(2,1127,1265): global memory invariant does not hold"}
+      (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    assume {:print "$at(2,729,730)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:27:2+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun A::good [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+procedure {:timeLimit 40} $2_A_good$verify(_$t0: $signer, _$t1: $signer) returns ()
+{
+    // declare local variables
+    var $t2: int;
+    var $t3: bool;
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t0: $signer;
+    var $t1: $signer;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume Implies(exists<S::Storage<u64, bool>>(22), Eq<u64>(select S::Storage.x(global<S::Storage<u64, bool>>(22)), 1)) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:34:5+115
+    assume {:print "$at(2,1613,1780)"} true;
+    assume ($ResourceExists($2_S_Storage'u64_bool'_$memory, 34) ==> $IsEqual'u64'($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 34)), 1));
+
+    // assume And(And(Implies(exists<S::Storage<u64, bool>>(23), Gt(select S::Storage.x(global<S::Storage<u64, bool>>(23)), 0)), Implies(exists<S::Storage<u64, #0>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #0>>(23)), 0))), Implies(exists<S::Storage<u64, #1>>(23), Gt(select S::Storage.x(global<S::Storage<u64, #1>>(23)), 0))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:39:5+140
+    assume ((($ResourceExists($2_S_Storage'u64_bool'_$memory, 35) ==> ($x#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 35)) > 0)) && ($ResourceExists($2_S_Storage'u64_#0'_$memory, 35) ==> ($x#$2_S_Storage'u64_#0'($ResourceValue($2_S_Storage'u64_#0'_$memory, 35)) > 0))) && ($ResourceExists($2_S_Storage'u64_#1'_$memory, 35) ==> ($x#$2_S_Storage'u64_#1'($ResourceValue($2_S_Storage'u64_#1'_$memory, 35)) > 0)));
+
+    // assume And(Implies(exists<S::Storage<u64, bool>>(24), select S::Storage.y(global<S::Storage<u64, bool>>(24))), Implies(exists<S::Storage<#0, bool>>(24), select S::Storage.y(global<S::Storage<#0, bool>>(24)))) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+    // global invariant at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:45:5+138
+    assume (($ResourceExists($2_S_Storage'u64_bool'_$memory, 36) ==> $y#$2_S_Storage'u64_bool'($ResourceValue($2_S_Storage'u64_bool'_$memory, 36))) && ($ResourceExists($2_S_Storage'#0_bool'_$memory, 36) ==> $y#$2_S_Storage'#0_bool'($ResourceValue($2_S_Storage'#0_bool'_$memory, 36))));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+    assume $IsValid'signer'($t1);
+
+    // assume forall $rsc: ResourceDomain<S::Storage<u64, bool>>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+167
+    assume (forall $a_0: int :: {$ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0)}(var $rsc := $ResourceValue($2_S_Storage'u64_bool'_$memory, $a_0);
+    ($IsValid'$2_S_Storage'u64_bool''($rsc))));
+
+    // trace_local[account1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+1
+    assume {:print "$track_local(1,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[account2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:57:5+1
+    assume {:print "$track_local(1,0,1):", $t1} $t1 == $t1;
+
+    // $t2 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:58:45+1
+    assume {:print "$at(2,1711,1712)"} true;
+    $t2 := 1;
+    assume $IsValid'u64'($t2);
+
+    // $t3 := true at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:58:48+4
+    $t3 := true;
+    assume $IsValid'bool'($t3);
+
+    // S::publish_x_y<u64, bool>($t0, $t2, $t3) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:58:9+44
+    call $2_S_publish_x_y'u64_bool'($t0, $t2, $t3);
+    if ($abort_flag) {
+        assume {:print "$at(2,1675,1719)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t4} $t4 == $t4;
+        goto L2;
+    }
+
+    // $t5 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:59:45+1
+    assume {:print "$at(2,1765,1766)"} true;
+    $t5 := 1;
+    assume $IsValid'u64'($t5);
+
+    // $t6 := true at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:59:48+4
+    $t6 := true;
+    assume $IsValid'bool'($t6);
+
+    // S::publish_x_y<u64, bool>($t1, $t5, $t6) on_abort goto L2 with $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:59:9+44
+    call $2_S_publish_x_y'u64_bool'($t1, $t5, $t6);
+    if ($abort_flag) {
+        assume {:print "$at(2,1729,1773)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(1,0):", $t4} $t4 == $t4;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:60:5+1
+    assume {:print "$at(2,1779,1780)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:60:5+1
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:60:5+1
+L2:
+
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/invariants_with_generics.move:60:5+1
+    $abort_code := $t4;
+    $abort_flag := true;
+    return;
+
+}

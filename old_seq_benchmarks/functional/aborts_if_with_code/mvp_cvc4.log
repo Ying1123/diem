@@ -1,17 +1,17 @@
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::exec_failure_invalid` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::conditional_abort_invalid` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::conditional_abort` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_mixed_invalid` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_mixed` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_invalid` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_if_with_code_mixed_invalid` to be verified
-06:41:31 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_if_with_code_mixed` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::exec_failure_invalid` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::conditional_abort_invalid` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::conditional_abort` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_mixed_invalid` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_mixed` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with_invalid` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_with` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_if_with_code_mixed_invalid` to be verified
+09:04:29 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestAbortsIfWithCode::aborts_if_with_code_mixed` to be verified
 [INFO] translating module TestAbortsIfWithCode
-06:41:31 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+09:04:29 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:41:31 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-06:41:31 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
-06:41:32 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-06:41:32 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.005s build, 0.005s trafo, 0.006s gen, 0.448s verify
+09:04:29 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+09:04:29 [DEBUG] (16) boogie_backend::prover_task_runner: running Boogie command with seed 1
+09:04:29 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
+09:04:29 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
+[INFO] 0.005s build, 0.005s trafo, 0.006s gen, 0.464s verify

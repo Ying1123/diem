@@ -1,16 +1,13 @@
-02:44:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M2::f2` to be verified
-02:44:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M3::f3` to be verified
-02:44:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M4::f4` to be verified
-02:44:32 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M1::f1` to be verified
-02:44:32 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+08:06:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M2::f2` to be verified
+08:06:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M3::f3` to be verified
+08:06:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M4::f4` to be verified
+08:06:06 [DEBUG] (1) bytecode::verification_analysis_v2: marking `M1::f1` to be verified
+08:06:06 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
 [INFO] translating module M3
 [INFO] translating module M2
 [INFO] translating module M1
 [INFO] translating module M4
-02:44:32 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:06:06 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:44:32 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-02:44:32 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-02:44:33 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-02:44:33 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.008s build, 0.002s trafo, 0.005s gen, 0.578s verify
+08:06:06 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:06:06 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1

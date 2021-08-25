@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.162 s, 8 proof obligations]  verified
+  [0.157 s, 8 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.045 s, 16 proof obligations]  verified
+  [0.034 s, 16 proof obligations]  verified

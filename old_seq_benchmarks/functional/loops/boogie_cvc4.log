@@ -4,23 +4,114 @@
 /env:2
 /proverLog:loops.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $42_VerifyLoops_iter10_abort$verify ...
+  [0.149 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_abort_incorrect$verify ...
+  [0.024 s, 4 proof obligations]  error
+assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1113,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1113,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1113,5): anon0$2
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1176,16): anon12_Then
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1196,16): anon13_Then
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1278,1): L9
+
+Verifying $42_VerifyLoops_iter10_missing_inc_spec1$verify ...
+  [0.009 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_missing_inc_spec2$verify ...
+  [0.008 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_no_abort$verify ...
+  [0.016 s, 4 proof obligations]  verified
+
+Verifying $42_VerifyLoops_iter10_no_abort_incorrect$verify ...
+  [0.016 s, 4 proof obligations]  error
+assert_failed(2,1634,1649): function does not abort under this condition
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1809,5): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1809,5): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1809,5): anon0$2
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(1872,34): anon12_Else
+
+Verifying $42_VerifyLoops_loop_invariant_base_invalid$verify ...
+  [0.013 s, 2 proof obligations]  error
+assert_failed(2,4881,4895): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2000,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2000,9): anon0$1
+
+Verifying $42_VerifyLoops_loop_invariant_induction_invalid$verify ...
+  [0.016 s, 2 proof obligations]  error
+assert_failed(2,5129,5143): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2142,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2142,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(536,9): inline$$Lt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2142,9): anon0$2
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2200,16): anon8_Then
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2218,5): anon9_Else
+
+Verifying $42_VerifyLoops_loop_with_two_back_edges_correct$verify ...
+  [0.036 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify ...
+  [0.026 s, 4 proof obligations]  error
+assert_failed(2,4425,4439): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2485,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2485,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(541,9): inline$$Gt$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2561,34): anon15_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(541,9): inline$$Gt$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2604,16): anon17_Then
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2622,5): anon18_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2648,1): L7
+
+Verifying $42_VerifyLoops_nested_loop_correct$verify ...
+  [0.020 s, 3 proof obligations]  verified
+
+Verifying $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify ...
+  [0.027 s, 4 proof obligations]  errors
+assert_failed(2,3489,3503): base case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2920,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2920,9): anon0$1
+assert_failed(2,3489,3503): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2920,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(2920,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3019,34): anon14_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(415,5): inline$$AddU64$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3034,5): anon15_Else
+
+Verifying $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify ...
+  [0.023 s, 4 proof obligations]  error
+assert_failed(2,2937,2951): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3150,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3150,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3248,16): anon14_Then
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3284,34): anon16_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(415,5): inline$$AddU64$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/loops/loops.cvc4.bpl(3296,5): anon17_Else
+
+Boogie program verifier finished with 6 verified, 8 errors

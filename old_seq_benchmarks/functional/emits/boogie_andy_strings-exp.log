@@ -14,33 +14,128 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_TestEmits_opaque$verify ...
-  [7.949 s, 5 proof obligations]  verified
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop1$verify ...
+  [0.311 s, 11 proof obligations]  verified
 
-Verifying $42_TestEmits_callee$verify ...
-  [0.784 s, 4 proof obligations]  verified
-
-Verifying $42_TestEmits_callee_partial$verify ...
-  [0.257 s, 3 proof obligations]  verified
-
-Verifying $42_TestEmits_conditional$verify ...
-  [0.204 s, 2 proof obligations]  verified
-
-Verifying $42_TestEmits_conditional_bool$verify ...
-  [0.206 s, 2 proof obligations]  verified
-
-Verifying $42_TestEmits_conditional_missing_condition_incorrect$verify ...
-  [0.335 s, 2 proof obligations]  error
-assert_failed(2,4091,4126): function does not emit the expected event
+Verifying $42_VerifyLoopsWithMemoryOps_nested_loop2$verify ...
+  [1.089 s, 11 proof obligations]  errors
+assert_failed(2,2724,2767): unknown assertion failed
 Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1738,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(918,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1738,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(541,9): inline$$Gt$0$anon0
-    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1769,34): anon7_Else
-    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1807,1): L3
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2136,17): anon40_Then
+assert_failed(2,2035,2059): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2144,5): anon41_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2158,5): anon42_Else
+assert_failed(2,2076,2100): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2144,5): anon41_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2158,5): anon42_Else
+assert_failed(2,2152,2190): induction case of the loop invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2144,5): anon41_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$3$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$3$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2158,5): anon42_Else
+assert_failed(2,2789,2839): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1691,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(657,7): inline$$1_Vector_length'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1727,5): anon32_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1756,5): anon33_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(681,5): inline$$1_Vector_borrow_mut'u64'$1$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(1770,5): anon34_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$0$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2027,17): anon35_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(546,9): inline$$Le$1$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2072,17): anon37_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(415,5): inline$$AddU64$2$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2121,5): anon39_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2136,35): anon40_Else
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(680,7): inline$$1_Vector_borrow_mut'u64'$2$anon0
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(682,9): inline$$1_Vector_borrow_mut'u64'$2$anon3_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(682,9): inline$$1_Vector_borrow_mut'u64'$2$anon3_Then$1
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2145,9): anon41_Then
+    /home/ying/diem/old_seq_benchmarks/functional/emits/emits.andy.bpl(2256,1): L14
 
-Verifying $42_TestEmits_conditional_multiple$verify ...
-  [7.858 s, 4 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
-
+Boogie program verifier finished with 1 verified, 5 errors

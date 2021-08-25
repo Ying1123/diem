@@ -15,19 +15,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $42_TestResources_borrow_global_mut_correct$verify ...
-  [0.142 s, 2 proof obligations]  verified
+  [0.138 s, 2 proof obligations]  verified
 
 Verifying $42_TestResources_create_empty$verify ...
   [0.002 s, 1 proof obligation]  verified
 
 Verifying $42_TestResources_create_resource$verify ...
-  [0.011 s, 3 proof obligations]  verified
+  [0.013 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_create_resource_at_signer$verify ...
-  [0.007 s, 3 proof obligations]  verified
+  [0.009 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_create_resource_incorrect$verify ...
-  [0.015 s, 3 proof obligations]  error
+  [0.017 s, 3 proof obligations]  error
 assert_failed(2,1030,1082): post-condition does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/resources/resources.andy.bpl(1310,9): anon0
@@ -35,25 +35,25 @@ Execution trace:
     /home/ying/diem/old_seq_benchmarks/functional/resources/resources.andy.bpl(1348,34): anon6_Else
 
 Verifying $42_TestResources_identity$verify ...
-  [0.002 s, 4 proof obligations]  verified
+  [0.003 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_addr$verify ...
-  [0.009 s, 2 proof obligations]  verified
+  [0.007 s, 2 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_addr_and_return$verify ...
-  [0.008 s, 5 proof obligations]  verified
+  [0.010 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_addr_to_sender$verify ...
-  [0.033 s, 7 proof obligations]  verified
+  [0.032 s, 7 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_sender_and_return$verify ...
-  [0.009 s, 4 proof obligations]  verified
+  [0.006 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_move_from_sender_to_sender$verify ...
-  [0.015 s, 5 proof obligations]  verified
+  [0.013 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_pack_A$verify ...
-  [0.003 s, 3 proof obligations]  verified
+  [0.002 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_pack_B$verify ...
   [0.003 s, 4 proof obligations]  verified
@@ -62,24 +62,24 @@ Verifying $42_TestResources_pack_C$verify ...
   [0.004 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_ref_A$verify ...
-  [0.007 s, 3 proof obligations]  verified
+  [0.006 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_spec_pack_A$verify ...
-  [0.004 s, 5 proof obligations]  verified
+  [0.003 s, 5 proof obligations]  verified
 
 Verifying $42_TestResources_spec_pack_B$verify ...
-  [0.005 s, 8 proof obligations]  verified
+  [0.006 s, 8 proof obligations]  verified
 
 Verifying $42_TestResources_spec_pack_R$verify ...
-  [0.002 s, 3 proof obligations]  verified
+  [0.003 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_unpack_A$verify ...
-  [0.002 s, 3 proof obligations]  verified
+  [0.003 s, 3 proof obligations]  verified
 
 Verifying $42_TestResources_unpack_B$verify ...
-  [0.004 s, 4 proof obligations]  verified
+  [0.003 s, 4 proof obligations]  verified
 
 Verifying $42_TestResources_unpack_C$verify ...
-  [0.006 s, 5 proof obligations]  verified
+  [0.004 s, 5 proof obligations]  verified
 
 Boogie program verifier finished with 20 verified, 1 error

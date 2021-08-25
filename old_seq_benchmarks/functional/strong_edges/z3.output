@@ -1,30 +1,9 @@
 unsat
 unknown
 (:reason-unknown "(incomplete quantifiers)")
-(((ControlFlow 0 0) 16595))
-(((ControlFlow 0 16595) 14897))
-(((ControlFlow 0 14897) 14953))
-(((ControlFlow 0 14953) 14975))
-(((ControlFlow 0 14975) 15073))
-(((ControlFlow 0 15073) (- 16917)))
-unsat
-unknown
-(:reason-unknown "(incomplete quantifiers)")
-(((ControlFlow 0 0) 16930))
-(((ControlFlow 0 16930) 15259))
-(((ControlFlow 0 15259) 15327))
-(((ControlFlow 0 15327) (- 17054)))
-unsat
-unsat
-unknown
-(:reason-unknown "(incomplete quantifiers)")
-(((ControlFlow 0 0) 17207))
-(((ControlFlow 0 17207) 15543))
-(((ControlFlow 0 15543) 15740))
-(((ControlFlow 0 15740) 15682))
-(((ControlFlow 0 15682) 15958))
-(((ControlFlow 0 15958) 15868))
-(((ControlFlow 0 15868) 15898))
-(((ControlFlow 0 15898) 16066))
-(((ControlFlow 0 16066) (- 17711)))
+(((ControlFlow 0 0) 11038))
+(((ControlFlow 0 11038) 10485))
+(((ControlFlow 0 10485) 10507))
+(((ControlFlow 0 10507) 10570))
+(((ControlFlow 0 10570) (- 11270)))
 unsat

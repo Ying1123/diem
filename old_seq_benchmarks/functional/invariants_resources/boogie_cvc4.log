@@ -4,12 +4,31 @@
 /env:2
 /proverLog:invariants_resources.cvc4.smt2
 /proverOpt:PROVER_PATH=/home/ying/bin/cvc4
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $42_TestInvariants_get$verify ...
+  [0.158 s, 1 proof obligation]  error
+assert_failed(2,511,530): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(936,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(936,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(959,13): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(961,5): anon8_Else
+
+Verifying $42_TestInvariants_get_invalid$verify ...
+  [0.015 s, 1 proof obligation]  error
+assert_failed(2,710,729): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(1008,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(1008,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(1031,13): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/invariants_resources/invariants_resources.cvc4.bpl(1033,5): anon8_Else
+
+Boogie program verifier finished with 0 verified, 2 errors

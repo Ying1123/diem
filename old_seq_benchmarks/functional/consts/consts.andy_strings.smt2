@@ -5,11 +5,10 @@
 ; done setting options
 
 
-(declare-datatypes ((T@$42_TestConst_T 0)) ((($42_TestConst_T (|$x#$42_TestConst_T| Int) (|$b#$42_TestConst_T| Bool) (|$a#$42_TestConst_T| Int) ) ) ))
 (declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3430 0)) ((($Mutation_3430 (|l#$Mutation_3430| T@$Location) (|p#$Mutation_3430| (Seq Int)) (|v#$Mutation_3430| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_6908 0)) ((($Mutation_6908 (|l#$Mutation_6908| T@$Location) (|p#$Mutation_6908| (Seq Int)) (|v#$Mutation_6908| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_6592 0)) ((($Mutation_6592 (|l#$Mutation_6592| T@$Location) (|p#$Mutation_6592| (Seq Int)) (|v#$Mutation_6592| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -32,7 +31,6 @@
 (declare-fun $1_Hash_sha3 ((Seq Int)) (Seq Int))
 (declare-fun $1_Signature_$ed25519_validate_pubkey ((Seq Int)) Bool)
 (declare-fun $1_Signature_$ed25519_verify ((Seq Int) (Seq Int) (Seq Int)) Bool)
-(declare-fun |$IsValid'$42_TestConst_T'| (T@$42_TestConst_T) Bool)
 (declare-fun ReverseVec_3283 ((Seq Int)) (Seq Int))
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
 (assert (= $MAX_U8 255))
@@ -121,11 +119,6 @@
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
-(assert (forall ((s T@$42_TestConst_T) ) (! (= (|$IsValid'$42_TestConst_T'| s)  (and (and (|$IsValid'u64'| (|$x#$42_TestConst_T| s)) true) (|$IsValid'address'| (|$a#$42_TestConst_T| s))))
- :qid |constsandybpl.912:36|
- :skolemid |24|
- :pattern ( (|$IsValid'$42_TestConst_T'| s))
-)))
 (assert (forall ((v@@6 (Seq Int)) ) (! (let ((r@@0 (ReverseVec_3283 v@@6)))
  (and (= (seq.len r@@0) (seq.len v@@6)) (forall ((i@@3 Int) ) (!  (=> (and (>= i@@3 0) (< i@@3 (seq.len r@@0))) (= (seq.nth r@@0 i@@3) (seq.nth v@@6 (- (- (seq.len v@@6) i@@3) 1))))
  :qid |constsandybpl.67:18|
@@ -138,38 +131,23 @@
 )))
 (assert (forall ((|l#0| Bool) (i@@4 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4) |l#0|)
  :qid |constsandybpl.245:54|
- :skolemid |25|
+ :skolemid |24|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4))
 )))
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun $t4@0 () T@$42_TestConst_T)
-(declare-fun inline$$Not$0$dst@1 () Bool)
 (push 1)
-(set-info :boogie-vc-id $42_TestConst_init$verify)
+(set-info :boogie-vc-id $42_TestFriendError_f$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 9420) (let ((anon0$2_correct  (=> (|$IsValid'address'| 2) (=> (and (= $t4@0 ($42_TestConst_T 43 inline$$Not$0$dst@1 2)) (= $t4@0 $t4@0)) (and (=> (= (ControlFlow 0 9237) (- 0 9514)) (= (|$x#$42_TestConst_T| $t4@0) (+ 42 1))) (=> (= (|$x#$42_TestConst_T| $t4@0) (+ 42 1)) (=> (= (ControlFlow 0 9237) (- 0 9528)) (not (|$b#$42_TestConst_T| $t4@0)))))))))
-(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not true)) (= (ControlFlow 0 9183) 9237)) anon0$2_correct)))
-(let ((anon0$1_correct  (=> (and (|$IsValid'u64'| 43) (= (ControlFlow 0 9189) 9183)) inline$$Not$0$anon0_correct)))
-(let ((anon0_correct  (=> (= (ControlFlow 0 9420) 9189) anon0$1_correct)))
-anon0_correct)))))
+ (=> (= (ControlFlow 0 0) 8668) true)
 ))
 (check-sat)
 (pop 1)
 ; Valid
-(declare-fun $t3@0 () T@$42_TestConst_T)
 (push 1)
-(set-info :boogie-vc-id $42_TestConst_init_incorrect$verify)
+(set-info :boogie-vc-id $42_TestFriendError_i$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 9553) (let ((anon0$1_correct@@0  (=> (and (and (|$IsValid'u64'| 43) (|$IsValid'address'| 1)) (and (= $t3@0 ($42_TestConst_T 43 true 1)) (= $t3@0 $t3@0))) (and (=> (= (ControlFlow 0 9361) (- 0 9625)) (= (|$x#$42_TestConst_T| $t3@0) (+ 42 1))) (=> (= (|$x#$42_TestConst_T| $t3@0) (+ 42 1)) (=> (= (ControlFlow 0 9361) (- 0 9639)) (not (|$b#$42_TestConst_T| $t3@0))))))))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 9553) 9361) anon0$1_correct@@0)))
-anon0_correct@@0)))
+ (=> (= (ControlFlow 0 0) 8710) true)
 ))
 (check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 9553)))
-(get-value ((ControlFlow 0 9361)))
-(assert (not (= (ControlFlow 0 9361) (- 9639))))
-(check-sat)
 (pop 1)
-; Invalid
+; Valid

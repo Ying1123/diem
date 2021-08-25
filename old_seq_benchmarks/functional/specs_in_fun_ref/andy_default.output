@@ -1,8 +1,21 @@
-/home/ying/diem/old_seq_benchmarks/functional/specs_in_fun_ref/specs_in_fun_ref.andy_default.smt2:40.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/specs_in_fun_ref/specs_in_fun_ref.andy_default.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/functional/specs_in_fun_ref/specs_in_fun_ref.andy_default.smt2:177.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
 unsat
 unsat
-unsat
-unsat
-unsat
-unsat
-unsat
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

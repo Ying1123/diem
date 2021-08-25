@@ -1,10 +1,7 @@
-02:45:00 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestQuantInvariant::vector_of_proper_positives` to be verified
-02:45:00 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+08:08:47 [DEBUG] (1) bytecode::verification_analysis_v2: marking `TestQuantInvariant::vector_of_proper_positives` to be verified
+08:08:47 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
 [INFO] translating module TestQuantInvariant
-02:45:00 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+08:08:47 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:45:00 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
-02:45:00 [DEBUG] (16) boogie_backend::prover_task_runner: runing Boogie command with seed 1
-02:45:01 [DEBUG] (1) boogie_backend::boogie_wrapper: analyzing boogie output
-02:45:01 [DEBUG] (1) boogie_backend::boogie_wrapper: writing boogie log to output.bpl.log
-[INFO] 0.010s build, 0.007s trafo, 0.004s gen, 0.653s verify
+08:08:47 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:PROVER_PATH=/home/ying/bin/z3 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 -proverLog:@PROC@.smt output.bpl
+08:08:47 [DEBUG] (14) boogie_backend::prover_task_runner: running Boogie command with seed 1

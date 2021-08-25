@@ -577,6 +577,186 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 }
 
 // ----------------------------------------------------------------------------------
+// Native Vector implementation for element type `u64`
+
+
+function {:inline} $IsEqual'vec'u64''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
+}
+
+// Not inlined.
+function $IsValid'vec'u64''(v: Vec (int)): bool {
+    $IsValid'u64'(LenVec(v)) &&
+    (forall i: int:: InRangeVec(v, i) ==> $IsValid'u64'(ReadVec(v, i)))
+}
+
+
+function {:inline} $ContainsVec'u64'(v: Vec (int), e: int): bool {
+    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e))
+}
+
+function $IndexOfVec'u64'(v: Vec (int), e: int): int;
+axiom (forall v: Vec (int), e: int:: {$IndexOfVec'u64'(v, e)}
+    (var i := $IndexOfVec'u64'(v, e);
+     if (!$ContainsVec'u64'(v, e)) then i == -1
+     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e) &&
+        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'u64'(ReadVec(v, j), e))));
+
+
+function {:inline} $RangeVec'u64'(v: Vec (int)): $Range {
+    $Range(0, LenVec(v))
+}
+
+
+function {:inline} $EmptyVec'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_empty'u64'() returns (v: Vec (int)) {
+    v := EmptyVec();
+}
+
+function {:inline} $1_Vector_$empty'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_is_empty'u64'(v: Vec (int)) returns (b: bool) {
+    b := IsEmptyVec(v);
+}
+
+procedure {:inline 1} $1_Vector_push_back'u64'(m: $Mutation (Vec (int)), val: int) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
+}
+
+function {:inline} $1_Vector_$push_back'u64'(v: Vec (int), val: int): Vec (int) {
+    ExtendVec(v, val)
+}
+
+procedure {:inline 1} $1_Vector_pop_back'u64'(m: $Mutation (Vec (int))) returns (e: int, m': $Mutation (Vec (int))) {
+    var v: Vec (int);
+    var len: int;
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (len == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, len-1);
+    m' := $UpdateMutation(m, RemoveVec(v));
+}
+
+procedure {:inline 1} $1_Vector_append'u64'(m: $Mutation (Vec (int)), other: Vec (int)) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
+}
+
+procedure {:inline 1} $1_Vector_reverse'u64'(m: $Mutation (Vec (int))) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
+}
+
+procedure {:inline 1} $1_Vector_length'u64'(v: Vec (int)) returns (l: int) {
+    l := LenVec(v);
+}
+
+function {:inline} $1_Vector_$length'u64'(v: Vec (int)): int {
+    LenVec(v)
+}
+
+procedure {:inline 1} $1_Vector_borrow'u64'(v: Vec (int), i: int) returns (dst: int) {
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := ReadVec(v, i);
+}
+
+function {:inline} $1_Vector_$borrow'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_borrow_mut'u64'(m: $Mutation (Vec (int)), index: int)
+returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, index)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
+    m' := m;
+}
+
+function {:inline} $1_Vector_$borrow_mut'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_destroy_empty'u64'(v: Vec (int)) {
+    if (!IsEmptyVec(v)) {
+      call $ExecFailureAbort();
+    }
+}
+
+procedure {:inline 1} $1_Vector_swap'u64'(m: $Mutation (Vec (int)), i: int, j: int) returns (m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    m' := $UpdateMutation(m, SwapVec(v, i, j));
+}
+
+function {:inline} $1_Vector_$swap'u64'(v: Vec (int), i: int, j: int): Vec (int) {
+    SwapVec(v, i, j)
+}
+
+procedure {:inline 1} $1_Vector_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+
+    v := $Dereference(m);
+
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveAtVec(v, i));
+}
+
+procedure {:inline 1} $1_Vector_swap_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var len: int;
+    var v: Vec (int);
+
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
+}
+
+procedure {:inline 1} $1_Vector_contains'u64'(v: Vec (int), e: int) returns (res: bool)  {
+    res := $ContainsVec'u64'(v, e);
+}
+
+procedure {:inline 1}
+$1_Vector_index_of'u64'(v: Vec (int), e: int) returns (res1: bool, res2: int) {
+    res2 := $IndexOfVec'u64'(v, e);
+    if (res2 >= 0) {
+        res1 := true;
+    } else {
+        res1 := false;
+        res2 := 0;
+    }
+}
+
+
+// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
 
@@ -807,13 +987,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -821,9 +1001,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -860,21 +1060,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -892,1246 +1077,826 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// fun VerifyLoops::iter10_abort [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:61:5+207
-procedure {:timeLimit 40} $42_VerifyLoops_iter10_abort$verify() returns ()
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
+
+// spec fun at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:27:10+75
+function {:inline} $42_TestSome_spec_fun_choice(x: int): int {
+    $choice_0(x)
+}
+
+// struct TestSome::R at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:40:5+39
+type {:datatype} $42_TestSome_R;
+function {:constructor} $42_TestSome_R($x: int): $42_TestSome_R;
+function {:inline} $Update'$42_TestSome_R'_x(s: $42_TestSome_R, x: int): $42_TestSome_R {
+    $42_TestSome_R(x)
+}
+function $IsValid'$42_TestSome_R'(s: $42_TestSome_R): bool {
+    $IsValid'u64'($x#$42_TestSome_R(s))
+}
+function {:inline} $IsEqual'$42_TestSome_R'(s1: $42_TestSome_R, s2: $42_TestSome_R): bool {
+    s1 == s2
+}
+var $42_TestSome_R_$memory: $Memory $42_TestSome_R;
+
+// fun TestSome::populate_R [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44:5+114
+procedure {:timeLimit 40} $42_TestSome_populate_R$verify(_$t0: $signer, _$t1: $signer) returns ()
 {
     // declare local variables
-    var $t0: int;
-    var $t1: int;
     var $t2: int;
-    var $t3: bool;
+    var $t3: int;
     var $t4: int;
-    var $t5: bool;
-    var $t6: int;
+    var $t5: int;
+    var $t6: $42_TestSome_R;
     var $t7: int;
     var $t8: int;
-    var $t9: int;
-    var $temp_0'u64': int;
+    var $t9: $42_TestSome_R;
+    var $t0: $signer;
+    var $t1: $signer;
+    var $temp_0'signer': $signer;
+    $t0 := _$t0;
+    $t1 := _$t1;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:62:17+1
-    assume {:print "$at(2,1705,1706)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44:5+114
+    assume {:print "$at(2,1128,1242)"} true;
+    assume $IsValid'signer'($t0);
 
-    // trace_local[i]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:62:13+1
-    assume {:print "$track_local(0,0,0):", $t1} $t1 == $t1;
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44:5+114
+    assume $IsValid'signer'($t1);
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:13+23
-    assume {:print "$at(2,1737,1760)"} true;
-L6:
+    // assume forall $rsc: ResourceDomain<TestSome::R>(): WellFormed($rsc) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44:5+114
+    assume (forall $a_0: int :: {$ResourceValue($42_TestSome_R_$memory, $a_0)}(var $rsc := $ResourceValue($42_TestSome_R_$memory, $a_0);
+    ($IsValid'$42_TestSome_R'($rsc))));
 
-    // assert Le($t1, 7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    assert {:msg "assert_failed(2,1744,1758): base case of the loop invariant does not hold"}
-      ($t1 <= 7);
+    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:49:9+37
+    assume {:print "$at(2,1273,1310)"} true;
+    assume ($t2 == $1_Signer_spec_address_of($t0));
 
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t1;
-    assume $IsValid'u64'($t1);
+    // assume Identical($t3, Signer::spec_address_of($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:50:9+37
+    assume {:print "$at(2,1319,1356)"} true;
+    assume ($t3 == $1_Signer_spec_address_of($t1));
 
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t2;
-    assume $IsValid'u64'($t2);
+    // assume Identical($t4, choose a: TypeDomain<address>(): And(exists<TestSome::R>(a), Eq<u64>(select TestSome::R.x(global<TestSome::R>(a)), 2))) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:53:9+73
+    assume {:print "$at(2,1519,1592)"} true;
+    assume ($t4 == $choice_1($42_TestSome_R_$memory));
 
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t3;
-    assume $IsValid'bool'($t3);
+    // assume forall a: TypeDomain<address>(): Not(exists<TestSome::R>(a)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:52:9+42
+    assume {:print "$at(2,1468,1510)"} true;
+    assume (forall a: int :: $IsValid'address'(a) ==> (!$ResourceExists($42_TestSome_R_$memory, a)));
 
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
+    // trace_local[s1]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44:5+1
+    assume {:print "$at(2,1128,1129)"} true;
+    assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
 
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t5;
-    assume $IsValid'bool'($t5);
+    // trace_local[s2]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:44:5+1
+    assume {:print "$track_local(2,0,1):", $t1} $t1 == $t1;
 
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t6;
-    assume $IsValid'u64'($t6);
+    // $t5 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:45:29+1
+    assume {:print "$at(2,1199,1200)"} true;
+    $t5 := 1;
+    assume $IsValid'u64'($t5);
 
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    havoc $t7;
-    assume $IsValid'u64'($t7);
+    // $t6 := pack TestSome::R($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:45:24+7
+    $t6 := $42_TestSome_R($t5);
 
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    assume !$abort_flag;
-
-    // assume Le($t1, 7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    assume ($t1 <= 7);
-
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:65:19+2
-    assume {:print "$at(2,1780,1782)"} true;
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := <=($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:65:16+2
-    call $t3 := $Le($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:63:9+146
-    assume {:print "$at(2,1716,1862)"} true;
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:63:9+146
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:63:9+146
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:17+1
-    assume {:print "$at(2,1813,1814)"} true;
-L0:
-
-    // $t4 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:22+1
-    $t4 := 7;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := ==($t1, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:19+2
-    $t5 := $IsEqual'u64'($t1, $t4);
-
-    // if ($t5) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:13+19
-    if ($t5) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:13+19
-L4:
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:13+19
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:31+1
-L3:
-
-    // $t8 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:31+1
-    $t8 := 7;
-    assume $IsValid'u64'($t8);
-
-    // trace_abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:25+7
-    assume {:print "$at(2,1821,1828)"} true;
-    assume {:print "$track_abort(0,0):", $t8} $t8 == $t8;
-
-    // $t9 := move($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:25+7
-    $t9 := $t8;
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:67:25+7
-    goto L9;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:68:17+1
-    assume {:print "$at(2,1846,1847)"} true;
-L5:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:68:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t1, $t6) on_abort goto L9 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:68:19+1
-    call $t7 := $AddU64($t1, $t6);
+    // move_to<TestSome::R>($t6, $t0) on_abort goto L2 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:45:9+7
+    if ($ResourceExists($42_TestSome_R_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $42_TestSome_R_$memory := $ResourceUpdate($42_TestSome_R_$memory, $1_Signer_spec_address_of($t0), $t6);
+    }
     if ($abort_flag) {
-        assume {:print "$at(2,1848,1849)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(0,0):", $t9} $t9 == $t9;
-        goto L9;
+        assume {:print "$at(2,1179,1186)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t7} $t7 == $t7;
+        goto L2;
     }
 
-    // trace_local[i]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:68:13+1
-    assume {:print "$track_local(0,0,0):", $t7} $t7 == $t7;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:68:22+1
-    goto L7;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:63:9+146
-    assume {:print "$at(2,1716,1862)"} true;
-L2:
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:63:9+146
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:63:9+146
-    // Loop invariant checking block for the loop started with header: L6
-L7:
-
-    // assert Le($t7, 7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    assume {:print "$at(2,1744,1758)"} true;
-    assert {:msg "assert_failed(2,1744,1758): induction case of the loop invariant does not hold"}
-      ($t7 <= 7);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:64:20+14
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:70:5+1
-    assume {:print "$at(2,1867,1868)"} true;
-L8:
-
-    // assert Not(true) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:73:9+15
-    assume {:print "$at(2,1964,1979)"} true;
-    assert {:msg "assert_failed(2,1964,1979): function does not abort under this condition"}
-      !true;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:73:9+15
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:70:5+1
-    assume {:print "$at(2,1867,1868)"} true;
-L9:
-
-    // assert true at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:71:5+112
-    assume {:print "$at(2,1873,1985)"} true;
-    assert {:msg "assert_failed(2,1873,1985): abort not covered by any of the `aborts_if` clauses"}
-      true;
-
-    // abort($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:71:5+112
-    $abort_code := $t9;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun VerifyLoops::iter10_abort_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:76:5+217
-procedure {:timeLimit 40} $42_VerifyLoops_iter10_abort_incorrect$verify() returns ()
-{
-    // declare local variables
-    var $t0: int;
-    var $t1: int;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
-    var $temp_0'u64': int;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:77:17+1
-    assume {:print "$at(2,2045,2046)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // trace_local[i]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:77:13+1
-    assume {:print "$track_local(0,1,0):", $t1} $t1 == $t1;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:13+23
-    assume {:print "$at(2,2077,2100)"} true;
-L6:
-
-    // assert Le($t1, 7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    assert {:msg "assert_failed(2,2084,2098): base case of the loop invariant does not hold"}
-      ($t1 <= 7);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t2;
-    assume $IsValid'u64'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    assume !$abort_flag;
-
-    // assume Le($t1, 7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    assume ($t1 <= 7);
-
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:80:19+2
-    assume {:print "$at(2,2120,2122)"} true;
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := <=($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:80:16+2
-    call $t3 := $Le($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78:9+146
-    assume {:print "$at(2,2056,2202)"} true;
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78:9+146
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78:9+146
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:17+1
-    assume {:print "$at(2,2153,2154)"} true;
-L0:
-
-    // $t4 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:22+1
-    $t4 := 7;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := ==($t1, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:19+2
-    $t5 := $IsEqual'u64'($t1, $t4);
-
-    // if ($t5) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:13+19
-    if ($t5) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:13+19
-L4:
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:13+19
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:31+1
-L3:
-
-    // $t8 := 7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:31+1
-    $t8 := 7;
+    // $t8 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:46:29+1
+    assume {:print "$at(2,1232,1233)"} true;
+    $t8 := 2;
     assume $IsValid'u64'($t8);
 
-    // trace_abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:25+7
-    assume {:print "$at(2,2161,2168)"} true;
-    assume {:print "$track_abort(0,1):", $t8} $t8 == $t8;
+    // $t9 := pack TestSome::R($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:46:24+7
+    $t9 := $42_TestSome_R($t8);
 
-    // $t9 := move($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:25+7
-    $t9 := $t8;
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:82:25+7
-    goto L9;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:83:17+1
-    assume {:print "$at(2,2186,2187)"} true;
-L5:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:83:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t1, $t6) on_abort goto L9 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:83:19+1
-    call $t7 := $AddU64($t1, $t6);
+    // move_to<TestSome::R>($t9, $t1) on_abort goto L2 with $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:46:9+7
+    if ($ResourceExists($42_TestSome_R_$memory, $1_Signer_spec_address_of($t1))) {
+        call $ExecFailureAbort();
+    } else {
+        $42_TestSome_R_$memory := $ResourceUpdate($42_TestSome_R_$memory, $1_Signer_spec_address_of($t1), $t9);
+    }
     if ($abort_flag) {
-        assume {:print "$at(2,2188,2189)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(0,1):", $t9} $t9 == $t9;
-        goto L9;
+        assume {:print "$at(2,1212,1219)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(2,0):", $t7} $t7 == $t7;
+        goto L2;
     }
 
-    // trace_local[i]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:83:13+1
-    assume {:print "$track_local(0,1,0):", $t7} $t7 == $t7;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:47:5+1
+    assume {:print "$at(2,1241,1242)"} true;
+L1:
 
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:83:22+1
-    goto L7;
+    // assert Eq<address>($t4, Signer::spec_address_of($t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:54:9+46
+    assume {:print "$at(2,1601,1647)"} true;
+    assert {:msg "assert_failed(2,1601,1647): post-condition does not hold"}
+      $IsEqual'address'($t4, $1_Signer_spec_address_of($t1));
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78:9+146
-    assume {:print "$at(2,2056,2202)"} true;
+    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:54:9+46
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:47:5+1
+    assume {:print "$at(2,1241,1242)"} true;
 L2:
 
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78:9+146
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:78:9+146
-    // Loop invariant checking block for the loop started with header: L6
-L7:
-
-    // assert Le($t7, 7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    assume {:print "$at(2,2084,2098)"} true;
-    assert {:msg "assert_failed(2,2084,2098): induction case of the loop invariant does not hold"}
-      ($t7 <= 7);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:79:20+14
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:85:5+1
-    assume {:print "$at(2,2207,2208)"} true;
-L8:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:88:9+16
-    assume {:print "$at(2,2315,2331)"} true;
-    assert {:msg "assert_failed(2,2315,2331): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:88:9+16
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:85:5+1
-    assume {:print "$at(2,2207,2208)"} true;
-L9:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:86:5+124
-    assume {:print "$at(2,2213,2337)"} true;
-    assert {:msg "assert_failed(2,2213,2337): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:86:5+124
-    $abort_code := $t9;
+    // abort($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:47:5+1
+    $abort_code := $t7;
     $abort_flag := true;
     return;
 
 }
 
-// fun VerifyLoops::iter10_missing_inc_spec1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:10:5+154
-procedure {:timeLimit 40} $42_VerifyLoops_iter10_missing_inc_spec1$verify() returns ()
+// fun TestSome::simple [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:10:5+23
+procedure {:timeLimit 40} $42_TestSome_simple$verify() returns ($ret0: int)
 {
     // declare local variables
     var $t0: int;
-    var $t1: int;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
     var $temp_0'u64': int;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:11:17+1
-    assume {:print "$at(2,298,299)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // $t0 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:10:25+1
+    assume {:print "$at(2,269,270)"} true;
+    $t0 := 4;
+    assume $IsValid'u64'($t0);
 
-    // trace_local[i]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:11:13+1
-    assume {:print "$track_local(0,2,0):", $t1} $t1 == $t1;
+    // trace_return[0]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:10:25+1
+    assume {:print "$track_return(2,1,0):", $t0} $t0 == $t0;
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:16+1
-    assume {:print "$at(2,316,317)"} true;
-L6:
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:16+1
-    havoc $t2;
-    assume $IsValid'u64'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:16+1
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:16+1
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:16+1
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:16+1
-    assume !$abort_flag;
-
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:21+2
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := <=($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:18+2
-    call $t3 := $Le($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:10:27+1
 L1:
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
-    goto L2;
+    // assert Le($t0, choose x: TypeDomain<u64>(): Ge(x, 4)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:12:9+47
+    assume {:print "$at(2,299,346)"} true;
+    assert {:msg "assert_failed(2,299,346): post-condition does not hold"}
+      ($t0 <= $choice_2());
 
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:17+1
-    assume {:print "$at(2,363,364)"} true;
-L0:
-
-    // $t4 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:21+2
-    $t4 := 10;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := >($t1, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:19+1
-    call $t5 := $Gt($t1, $t4);
-
-    // if ($t5) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:13+20
-    if ($t5) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:13+20
-L4:
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:13+20
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:31+2
-L3:
-
-    // $t6 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:31+2
-    $t6 := 10;
-    assume $IsValid'u64'($t6);
-
-    // trace_abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:25+8
-    assume {:print "$at(2,371,379)"} true;
-    assume {:print "$track_abort(0,2):", $t6} $t6 == $t6;
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:25+8
-    goto L9;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:33+1
-L5:
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:13:33+1
-    goto L7;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
-    assume {:print "$at(2,309,390)"} true;
-L2:
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
-    // Loop invariant checking block for the loop started with header: L6
-L7:
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:12:9+81
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:15:5+1
-    assume {:print "$at(2,395,396)"} true;
-L8:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:17:9+16
-    assume {:print "$at(2,567,583)"} true;
-    assert {:msg "assert_failed(2,567,583): function does not abort under this condition"}
-      !false;
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:18:9+14
-    assume {:print "$at(2,592,606)"} true;
-    assert {:msg "assert_failed(2,592,606): post-condition does not hold"}
-      false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:18:9+14
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:15:5+1
-    assume {:print "$at(2,395,396)"} true;
-L9:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:16:5+211
-    assume {:print "$at(2,401,612)"} true;
-    assert {:msg "assert_failed(2,401,612): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:16:5+211
-    $abort_code := $t6;
-    $abort_flag := true;
+    // return $t0 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:12:9+47
+    $ret0 := $t0;
     return;
 
 }
 
-// fun VerifyLoops::iter10_missing_inc_spec2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:21:5+154
-procedure {:timeLimit 40} $42_VerifyLoops_iter10_missing_inc_spec2$verify() returns ()
+// fun TestSome::simple_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:15:5+66
+procedure {:timeLimit 40} $42_TestSome_simple_incorrect$verify(_$t0: bool) returns ($ret0: int)
 {
     // declare local variables
-    var $t0: int;
     var $t1: int;
     var $t2: int;
-    var $t3: bool;
+    var $t3: int;
     var $t4: int;
-    var $t5: bool;
-    var $t6: int;
+    var $t0: bool;
+    var $temp_0'bool': bool;
     var $temp_0'u64': int;
+    $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:22:17+1
-    assume {:print "$at(2,674,675)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:17+6
+    assume {:print "$at(2,623,629)"} true;
+    assume $IsValid'bool'($t0);
 
-    // trace_local[i]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:22:13+1
-    assume {:print "$track_local(0,3,0):", $t1} $t1 == $t1;
+    // trace_local[b]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:15:5+1
+    assume {:print "$at(2,358,359)"} true;
+    assume {:print "$track_local(2,2,0):", $t0} $t0 == $t0;
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:16+1
-    assume {:print "$at(2,692,693)"} true;
-L6:
+    // if ($t0) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    assume {:print "$at(2,403,418)"} true;
+    if ($t0) { goto L0; } else { goto L1; }
 
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:16+1
-    havoc $t2;
-    assume $IsValid'u64'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:16+1
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:16+1
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:16+1
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:16+1
-    assume !$abort_flag;
-
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:21+2
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := <=($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:18+2
-    call $t3 := $Le($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
 L1:
 
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
     goto L2;
 
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:17+1
-    assume {:print "$at(2,739,740)"} true;
+    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:16+1
 L0:
 
-    // $t4 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:21+2
-    $t4 := 10;
-    assume $IsValid'u64'($t4);
+    // $t2 := 4 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:16+1
+    $t2 := 4;
+    assume $IsValid'u64'($t2);
 
-    // $t5 := >($t1, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:19+1
-    call $t5 := $Gt($t1, $t4);
+    // $t1 := $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    $t1 := $t2;
 
-    // if ($t5) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:13+20
-    if ($t5) { goto L3; } else { goto L4; }
+    // trace_local[tmp#$1]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    assume {:print "$track_local(2,2,1):", $t2} $t2 == $t2;
 
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:13+20
-L4:
+    // goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    goto L3;
 
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:13+20
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:31+2
-L3:
-
-    // $t6 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:31+2
-    $t6 := 10;
-    assume $IsValid'u64'($t6);
-
-    // trace_abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:25+8
-    assume {:print "$at(2,747,755)"} true;
-    assume {:print "$track_abort(0,3):", $t6} $t6 == $t6;
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:25+8
-    goto L9;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:33+1
-L5:
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:24:33+1
-    goto L7;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
-    assume {:print "$at(2,685,766)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:23+1
 L2:
 
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
-    goto L8;
+    // $t3 := 5 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:23+1
+    $t3 := 5;
+    assume $IsValid'u64'($t3);
 
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
-    // Loop invariant checking block for the loop started with header: L6
-L7:
+    // $t1 := $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    $t1 := $t3;
 
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:23:9+81
-    assume false;
-    return;
+    // trace_local[tmp#$1]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    assume {:print "$track_local(2,2,1):", $t3} $t3 == $t3;
 
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:26:5+1
-    assume {:print "$at(2,771,772)"} true;
-L8:
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+L3:
 
-    // assert Not(true) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:28:9+15
-    assume {:print "$at(2,943,958)"} true;
-    assert {:msg "assert_failed(2,943,958): function does not abort under this condition"}
-      !true;
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:16:9+15
+    assume {:print "$track_return(2,2,0):", $t1} $t1 == $t1;
 
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:29:9+14
-    assume {:print "$at(2,967,981)"} true;
-    assert {:msg "assert_failed(2,967,981): post-condition does not hold"}
-      false;
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:17:5+1
+    assume {:print "$at(2,423,424)"} true;
+L4:
 
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:29:9+14
-    return;
+    // assume Identical($t4, choose x: TypeDomain<u64>(): And(Ge(x, 4), Le(x, 5))) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:27+43
+    assume {:print "$at(2,633,676)"} true;
+    assume ($t4 == $choice_3());
 
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:26:5+1
-    assume {:print "$at(2,771,772)"} true;
-L9:
+    // trace_exp[at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:27+43]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:27+43
+    assume {:print "$track_exp(414):", $t4} true;
 
-    // assert true at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:27:5+210
-    assume {:print "$at(2,777,987)"} true;
-    assert {:msg "assert_failed(2,777,987): abort not covered by any of the `aborts_if` clauses"}
-      true;
+    // assert Eq<u64>($t1, choose x: TypeDomain<u64>(): And(Ge(x, 4), Le(x, 5))) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:9+62
+    assert {:msg "assert_failed(2,615,677): post-condition does not hold"}
+      $IsEqual'u64'($t1, $choice_3());
 
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:27:5+210
-    $abort_code := $t6;
-    $abort_flag := true;
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:9+62
+    $ret0 := $t1;
     return;
 
 }
 
-// fun VerifyLoops::iter10_no_abort [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:32:5+212
-procedure {:timeLimit 40} $42_VerifyLoops_iter10_no_abort$verify() returns ()
+// fun TestSome::test_choice_dup_expected_fail [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:93:5+68
+procedure {:timeLimit 40} $42_TestSome_test_choice_dup_expected_fail$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $t0: int;
     var $t1: int;
     var $t2: int;
-    var $t3: bool;
+    var $t3: int;
     var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
+    var $t0: int;
     var $temp_0'u64': int;
+    $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:33:17+1
-    assume {:print "$at(2,1040,1041)"} true;
-    $t1 := 0;
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:17+6
+    assume {:print "$at(2,2941,2947)"} true;
+    assume $IsValid'u64'($t0);
+
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:93:5+1
+    assume {:print "$at(2,2729,2730)"} true;
+    assume {:print "$track_local(2,3,0):", $t0} $t0 == $t0;
+
+    // $t1 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:94:13+1
+    assume {:print "$at(2,2790,2791)"} true;
+    $t1 := 1;
     assume $IsValid'u64'($t1);
 
-    // trace_local[i]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:33:13+1
-    assume {:print "$track_local(0,4,0):", $t1} $t1 == $t1;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:13+24
-    assume {:print "$at(2,1072,1096)"} true;
-L6:
-
-    // assert Le($t1, 11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    assert {:msg "assert_failed(2,1079,1094): base case of the loop invariant does not hold"}
-      ($t1 <= 11);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t2;
-    assume $IsValid'u64'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    assume !$abort_flag;
-
-    // assume Le($t1, 11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    assume ($t1 <= 11);
-
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:36:19+2
-    assume {:print "$at(2,1116,1118)"} true;
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := <=($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:36:16+2
-    call $t3 := $Le($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:34:9+148
-    assume {:print "$at(2,1051,1199)"} true;
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:34:9+148
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:34:9+148
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:17+1
-    assume {:print "$at(2,1149,1150)"} true;
-L0:
-
-    // $t4 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:21+2
-    $t4 := 10;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := >($t1, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:19+1
-    call $t5 := $Gt($t1, $t4);
-
-    // if ($t5) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:13+20
-    if ($t5) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:13+20
-L4:
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:13+20
-    goto L5;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:31+2
-L3:
-
-    // $t8 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:31+2
-    $t8 := 10;
-    assume $IsValid'u64'($t8);
-
-    // trace_abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:25+8
-    assume {:print "$at(2,1157,1165)"} true;
-    assume {:print "$track_abort(0,4):", $t8} $t8 == $t8;
-
-    // $t9 := move($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:25+8
-    $t9 := $t8;
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:38:25+8
-    goto L9;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:39:17+1
-    assume {:print "$at(2,1183,1184)"} true;
-L5:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:39:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t1, $t6) on_abort goto L9 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:39:19+1
-    call $t7 := $AddU64($t1, $t6);
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:94:11+1
+    call $t2 := $AddU64($t0, $t1);
     if ($abort_flag) {
-        assume {:print "$at(2,1185,1186)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(0,4):", $t9} $t9 == $t9;
-        goto L9;
+        assume {:print "$at(2,2788,2789)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(2,3):", $t3} $t3 == $t3;
+        goto L2;
     }
 
-    // trace_local[i]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:39:13+1
-    assume {:print "$track_local(0,4,0):", $t7} $t7 == $t7;
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:94:9+5
+    assume {:print "$track_return(2,3,0):", $t2} $t2 == $t2;
 
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:39:22+1
-    goto L7;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:95:5+1
+    assume {:print "$at(2,2796,2797)"} true;
+L1:
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:34:9+148
-    assume {:print "$at(2,1051,1199)"} true;
+    // assume Identical($t4, choose y: TypeDomain<u64>(): Gt(y, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume {:print "$at(2,2951,2983)"} true;
+    assume ($t4 == $choice_4($t0));
+
+    // trace_exp[at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume {:print "$track_exp(408):", $t4} true;
+
+    // assert Eq<u64>($t2, choose y: TypeDomain<u64>(): Gt(y, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:9+51
+    assert {:msg "assert_failed(2,2933,2984): post-condition does not hold"}
+      $IsEqual'u64'($t2, $choice_4($t0));
+
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:9+51
+    $ret0 := $t2;
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:95:5+1
+    assume {:print "$at(2,2796,2797)"} true;
 L2:
 
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:34:9+148
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:34:9+148
-    // Loop invariant checking block for the loop started with header: L6
-L7:
-
-    // assert Le($t7, 11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    assume {:print "$at(2,1079,1094)"} true;
-    assert {:msg "assert_failed(2,1079,1094): induction case of the loop invariant does not hold"}
-      ($t7 <= 11);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:35:20+15
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:41:5+1
-    assume {:print "$at(2,1204,1205)"} true;
-L8:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:44:9+16
-    assume {:print "$at(2,1303,1319)"} true;
-    assert {:msg "assert_failed(2,1303,1319): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:44:9+16
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:41:5+1
-    assume {:print "$at(2,1204,1205)"} true;
-L9:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:42:5+115
-    assume {:print "$at(2,1210,1325)"} true;
-    assert {:msg "assert_failed(2,1210,1325): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:42:5+115
-    $abort_code := $t9;
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:95:5+1
+    $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun VerifyLoops::iter10_no_abort_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:47:5+222
-procedure {:timeLimit 40} $42_VerifyLoops_iter10_no_abort_incorrect$verify() returns ()
+// fun TestSome::test_choice_use1 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:101:5+82
+procedure {:timeLimit 40} $42_TestSome_test_choice_use1$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
-    var $t0: int;
     var $t1: int;
-    var $t2: int;
-    var $t3: bool;
+    var $t2: bool;
+    var $t3: int;
     var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
+    var $t0: int;
     var $temp_0'u64': int;
+    $t0 := _$t0;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // $t1 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:48:17+1
-    assume {:print "$at(2,1388,1389)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:101:5+82
+    assume {:print "$at(2,2996,3078)"} true;
+    assume $IsValid'u64'($t0);
 
-    // trace_local[i]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:48:13+1
-    assume {:print "$track_local(0,5,0):", $t1} $t1 == $t1;
+    // trace_local[a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:101:5+1
+    assume {:print "$track_local(2,4,0):", $t0} $t0 == $t0;
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:13+24
-    assume {:print "$at(2,1420,1444)"} true;
-L6:
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
+    // >> opaque call: $t1 := TestSome::test_choice_dup_expected_fail($t0)
+    assume {:print "$at(2,3040,3072)"} true;
 
-    // assert Le($t1, 11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    assert {:msg "assert_failed(2,1427,1442): base case of the loop invariant does not hold"}
-      ($t1 <= 11);
+    // $t1 := opaque begin: TestSome::test_choice_dup_expected_fail($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
 
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
+    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
     havoc $t2;
-    assume $IsValid'u64'($t2);
+    assume $IsValid'bool'($t2);
 
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    havoc $t3;
-    assume $IsValid'bool'($t3);
+    // if ($t2) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
+    if ($t2) { goto L4; } else { goto L3; }
 
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    assume !$abort_flag;
-
-    // assume Le($t1, 11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    assume ($t1 <= 11);
-
-    // $t2 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:51:19+2
-    assume {:print "$at(2,1464,1466)"} true;
-    $t2 := 10;
-    assume $IsValid'u64'($t2);
-
-    // $t3 := <=($t1, $t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:51:16+2
-    call $t3 := $Le($t1, $t2);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49:9+148
-    assume {:print "$at(2,1399,1547)"} true;
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49:9+148
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49:9+148
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:17+1
-    assume {:print "$at(2,1497,1498)"} true;
-L0:
-
-    // $t4 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:21+2
-    $t4 := 10;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := >($t1, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:19+1
-    call $t5 := $Gt($t1, $t4);
-
-    // if ($t5) goto L3 else goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:13+20
-    if ($t5) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:13+20
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
 L4:
 
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:13+20
-    goto L5;
+    // trace_abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
+    assume {:print "$at(2,3040,3072)"} true;
+    assume {:print "$track_abort(2,4):", $t3} $t3 == $t3;
 
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:31+2
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
+    goto L2;
+
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
 L3:
 
-    // $t8 := 10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:31+2
-    $t8 := 10;
-    assume $IsValid'u64'($t8);
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
+    assume $IsValid'u64'($t1);
 
-    // trace_abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:25+8
-    assume {:print "$at(2,1505,1513)"} true;
-    assume {:print "$track_abort(0,5):", $t8} $t8 == $t8;
+    // assume Identical($t4, choose y: TypeDomain<u64>(): Gt(y, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume {:print "$at(2,2951,2983)"} true;
+    assume ($t4 == $choice_4($t0));
 
-    // $t9 := move($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:25+8
-    $t9 := $t8;
+    // trace_exp[at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume {:print "$track_exp(455):", $t4} true;
 
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:53:25+8
-    goto L9;
+    // assume Eq<u64>($t1, choose y: TypeDomain<u64>(): Gt(y, $t0)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume $IsEqual'u64'($t1, $choice_4($t0));
 
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:54:17+1
-    assume {:print "$at(2,1531,1532)"} true;
-L5:
+    // $t1 := opaque end: TestSome::test_choice_dup_expected_fail($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
 
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:54:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
+    // trace_return[0]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:102:9+32
+    assume {:print "$at(2,3040,3072)"} true;
+    assume {:print "$track_return(2,4,0):", $t1} $t1 == $t1;
 
-    // $t7 := +($t1, $t6) on_abort goto L9 with $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:54:19+1
-    call $t7 := $AddU64($t1, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,1533,1534)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(0,5):", $t9} $t9 == $t9;
-        goto L9;
-    }
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:103:5+1
+    assume {:print "$at(2,3077,3078)"} true;
+L1:
 
-    // trace_local[i]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:54:13+1
-    assume {:print "$track_local(0,5,0):", $t7} $t7 == $t7;
+    // return $t1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:103:5+1
+    $ret0 := $t1;
+    return;
 
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:54:22+1
-    goto L7;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49:9+148
-    assume {:print "$at(2,1399,1547)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:103:5+1
 L2:
 
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49:9+148
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:49:9+148
-    // Loop invariant checking block for the loop started with header: L6
-L7:
-
-    // assert Le($t7, 11) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    assume {:print "$at(2,1427,1442)"} true;
-    assert {:msg "assert_failed(2,1427,1442): induction case of the loop invariant does not hold"}
-      ($t7 <= 11);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:50:20+15
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:56:5+1
-    assume {:print "$at(2,1552,1553)"} true;
-L8:
-
-    // assert Not(true) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:58:9+15
-    assume {:print "$at(2,1634,1649)"} true;
-    assert {:msg "assert_failed(2,1634,1649): function does not abort under this condition"}
-      !true;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:58:9+15
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:56:5+1
-    assume {:print "$at(2,1552,1553)"} true;
-L9:
-
-    // assert true at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:57:5+97
-    assume {:print "$at(2,1558,1655)"} true;
-    assert {:msg "assert_failed(2,1558,1655): abort not covered by any of the `aborts_if` clauses"}
-      true;
-
-    // abort($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:57:5+97
-    $abort_code := $t9;
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:103:5+1
+    $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun VerifyLoops::loop_invariant_base_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:206:5+237
-procedure {:timeLimit 40} $42_VerifyLoops_loop_invariant_base_invalid$verify(_$t0: int) returns ($ret0: int)
+// fun TestSome::test_choice_use2 [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:105:5+252
+procedure {:timeLimit 40} $42_TestSome_test_choice_use2$verify(_$t0: Vec (int), _$t1: int) returns ($ret0: int)
 {
     // declare local variables
-    var $t1: int;
     var $t2: int;
     var $t3: bool;
     var $t4: int;
     var $t5: int;
-    var $t6: int;
-    var $t0: int;
+    var $t0: Vec (int);
+    var $t1: int;
     var $temp_0'u64': int;
+    var $temp_0'vec'u64'': Vec (int);
     $t0 := _$t0;
+    $t1 := _$t1;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:206:5+237
-    assume {:print "$at(2,4756,4993)"} true;
-    assume $IsValid'u64'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:105:5+252
+    assume {:print "$at(2,3084,3336)"} true;
+    assume $IsValid'vec'u64''($t0);
 
-    // trace_local[n]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:206:5+1
-    assume {:print "$track_local(0,6,0):", $t0} $t0 == $t0;
+    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:105:5+252
+    assume $IsValid'u64'($t1);
 
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:207:17+1
-    assume {:print "$at(2,4826,4827)"} true;
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
+    // trace_local[_a]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:105:5+1
+    assume {:print "$track_local(2,5,0):", $t0} $t0 == $t0;
 
-    // trace_local[x]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:207:13+1
-    assume {:print "$track_local(0,6,1):", $t2} $t2 == $t2;
+    // trace_local[b]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:105:5+1
+    assume {:print "$track_local(2,5,1):", $t1} $t1 == $t1;
 
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:209:13+51
-    assume {:print "$at(2,4858,4909)"} true;
-L3:
+    // nop at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+    // >> opaque call: $t2 := TestSome::test_choice_dup_expected_fail($t1)
+    assume {:print "$at(2,3298,3330)"} true;
 
-    // assert Neq<u64>($t2, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    assume {:print "$at(2,4881,4895)"} true;
-    assert {:msg "assert_failed(2,4881,4895): base case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t2, 0);
+    // $t2 := opaque begin: TestSome::test_choice_dup_expected_fail($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
 
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    havoc $t2;
-    assume $IsValid'u64'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
+    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
     havoc $t3;
     assume $IsValid'bool'($t3);
 
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
+    // if ($t3) goto L4 else goto L3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+    if ($t3) { goto L4; } else { goto L3; }
 
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    havoc $t5;
-    assume $IsValid'u64'($t5);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    assume !$abort_flag;
-
-    // assume Neq<u64>($t2, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    assume !$IsEqual'u64'($t2, 0);
-
-    // $t3 := <($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:212:16+1
-    assume {:print "$at(2,4926,4927)"} true;
-    call $t3 := $Lt($t2, $t0);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:208:9+139
-    assume {:print "$at(2,4837,4976)"} true;
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:208:9+139
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:208:9+139
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:214:17+1
-    assume {:print "$at(2,4960,4961)"} true;
-L0:
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:214:21+1
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := +($t2, $t4) on_abort goto L6 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:214:19+1
-    call $t5 := $AddU64($t2, $t4);
-    if ($abort_flag) {
-        assume {:print "$at(2,4962,4963)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,6):", $t6} $t6 == $t6;
-        goto L6;
-    }
-
-    // trace_local[x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:214:13+1
-    assume {:print "$track_local(0,6,1):", $t5} $t5 == $t5;
-
-    // goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:214:22+1
-    goto L4;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:216:9+1
-    assume {:print "$at(2,4986,4987)"} true;
-L2:
-
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:216:9+1
-    assume {:print "$track_return(0,6,0):", $t2} $t2 == $t2;
-
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:216:9+1
-    goto L5;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:216:9+1
-    // Loop invariant checking block for the loop started with header: L3
+    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
 L4:
 
-    // assert Neq<u64>($t5, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    assume {:print "$at(2,4881,4895)"} true;
-    assert {:msg "assert_failed(2,4881,4895): induction case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t5, 0);
+    // trace_abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+    assume {:print "$at(2,3298,3330)"} true;
+    assume {:print "$track_abort(2,5):", $t4} $t4 == $t4;
 
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:210:17+14
-    assume false;
-    return;
+    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+    goto L2;
 
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:217:5+1
-    assume {:print "$at(2,4992,4993)"} true;
-L5:
+    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+L3:
 
-    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:217:5+1
+    // assume WellFormed($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+    assume $IsValid'u64'($t2);
+
+    // assume Identical($t5, choose y: TypeDomain<u64>(): Gt(y, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume {:print "$at(2,2951,2983)"} true;
+    assume ($t5 == $choice_4($t1));
+
+    // trace_exp[at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume {:print "$track_exp(445):", $t5} true;
+
+    // assume Eq<u64>($t2, choose y: TypeDomain<u64>(): Gt(y, $t1)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+    assume $IsEqual'u64'($t2, $choice_4($t1));
+
+    // $t2 := opaque end: TestSome::test_choice_dup_expected_fail($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:27+32
+
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:108:9+32
+    assume {:print "$at(2,3298,3330)"} true;
+    assume {:print "$track_return(2,5,0):", $t2} $t2 == $t2;
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:109:5+1
+    assume {:print "$at(2,3335,3336)"} true;
+L1:
+
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:109:5+1
     $ret0 := $t2;
     return;
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:217:5+1
-L6:
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:109:5+1
+L2:
 
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:217:5+1
-    $abort_code := $t6;
+    // abort($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:109:5+1
+    $abort_code := $t4;
     $abort_flag := true;
     return;
 
 }
 
-// fun VerifyLoops::loop_invariant_induction_invalid [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:219:5+242
-procedure {:timeLimit 40} $42_VerifyLoops_loop_invariant_induction_invalid$verify(_$t0: int) returns ($ret0: int)
+// fun TestSome::test_min [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:60:5+259
+procedure {:timeLimit 40} $42_TestSome_test_min$verify() returns ($ret0: Vec (int))
+{
+    // declare local variables
+    var $t0: Vec (int);
+    var $t1: $Mutation (Vec (int));
+    var $t2: int;
+    var $t3: $Mutation (Vec (int));
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: Vec (int);
+    var $temp_0'vec'u64'': Vec (int);
+    assume IsEmptyVec(p#$Mutation($t1));
+    assume IsEmptyVec(p#$Mutation($t3));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // $t0 := Vector::empty<u64>() on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:61:17+20
+    assume {:print "$at(2,1758,1778)"} true;
+    call $t0 := $1_Vector_empty'u64'();
+    if ($abort_flag) {
+        assume {:print "$at(2,1758,1778)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,6):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:61:13+1
+    assume {:print "$track_local(2,6,0):", $t0} $t0 == $t0;
+
+    // $t3 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:62:21+6
+    assume {:print "$at(2,1800,1806)"} true;
+    $t3 := $Mutation($Local(0), EmptyVec(), $t0);
+
+    // trace_local[v_ref]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:62:13+5
+    $temp_0'vec'u64'' := $Dereference($t3);
+    assume {:print "$track_local(2,6,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
+
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:63:34+1
+    assume {:print "$at(2,1841,1842)"} true;
+    $t4 := 1;
+    assume $IsValid'u64'($t4);
+
+    // Vector::push_back<u64>($t3, $t4) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:63:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t4);
+    if ($abort_flag) {
+        assume {:print "$at(2,1816,1843)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,6):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t5 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:64:34+1
+    assume {:print "$at(2,1878,1879)"} true;
+    $t5 := 2;
+    assume $IsValid'u64'($t5);
+
+    // Vector::push_back<u64>($t3, $t5) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:64:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t5);
+    if ($abort_flag) {
+        assume {:print "$at(2,1853,1880)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,6):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t6 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:65:34+1
+    assume {:print "$at(2,1915,1916)"} true;
+    $t6 := 3;
+    assume $IsValid'u64'($t6);
+
+    // Vector::push_back<u64>($t3, $t6) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:65:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t6);
+    if ($abort_flag) {
+        assume {:print "$at(2,1890,1917)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,6):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t7 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:66:34+1
+    assume {:print "$at(2,1952,1953)"} true;
+    $t7 := 2;
+    assume $IsValid'u64'($t7);
+
+    // Vector::push_back<u64>($t3, $t7) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:66:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t7);
+    if ($abort_flag) {
+        assume {:print "$at(2,1927,1954)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,6):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // write_back[LocalRoot($t0)@]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:66:9+27
+    $t0 := $Dereference($t3);
+
+    // $t8 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:67:9+1
+    assume {:print "$at(2,1964,1965)"} true;
+    $t8 := $t0;
+
+    // trace_return[0]($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:67:9+1
+    assume {:print "$track_return(2,6,0):", $t8} $t8 == $t8;
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:68:5+1
+    assume {:print "$at(2,1970,1971)"} true;
+L1:
+
+    // assert Eq<num>(choose min i: Range(0, Len<u64>($t8)): Eq<u64>(Index($t8, i), 2), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:70:9+67
+    assume {:print "$at(2,2000,2067)"} true;
+    assert {:msg "assert_failed(2,2000,2067): post-condition does not hold"}
+      $IsEqual'num'($choice_5($t8), 1);
+
+    // return $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:70:9+67
+    $ret0 := $t8;
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:68:5+1
+    assume {:print "$at(2,1970,1971)"} true;
+L2:
+
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:68:5+1
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun TestSome::test_not_using_min_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:73:5+316
+procedure {:timeLimit 40} $42_TestSome_test_not_using_min_incorrect$verify() returns ($ret0: Vec (int))
+{
+    // declare local variables
+    var $t0: Vec (int);
+    var $t1: $Mutation (Vec (int));
+    var $t2: int;
+    var $t3: $Mutation (Vec (int));
+    var $t4: int;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: Vec (int);
+    var $t10: int;
+    var $temp_0'num': int;
+    var $temp_0'vec'u64'': Vec (int);
+    assume IsEmptyVec(p#$Mutation($t1));
+    assume IsEmptyVec(p#$Mutation($t3));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // $t0 := Vector::empty<u64>() on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:74:17+20
+    assume {:print "$at(2,2145,2165)"} true;
+    call $t0 := $1_Vector_empty'u64'();
+    if ($abort_flag) {
+        assume {:print "$at(2,2145,2165)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,7):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // trace_local[v]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:74:13+1
+    assume {:print "$track_local(2,7,0):", $t0} $t0 == $t0;
+
+    // $t3 := borrow_local($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:75:21+6
+    assume {:print "$at(2,2187,2193)"} true;
+    $t3 := $Mutation($Local(0), EmptyVec(), $t0);
+
+    // trace_local[v_ref]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:75:13+5
+    $temp_0'vec'u64'' := $Dereference($t3);
+    assume {:print "$track_local(2,7,1):", $temp_0'vec'u64''} $temp_0'vec'u64'' == $temp_0'vec'u64'';
+
+    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:76:34+1
+    assume {:print "$at(2,2228,2229)"} true;
+    $t4 := 1;
+    assume $IsValid'u64'($t4);
+
+    // Vector::push_back<u64>($t3, $t4) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:76:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t4);
+    if ($abort_flag) {
+        assume {:print "$at(2,2203,2230)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,7):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t5 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:77:34+1
+    assume {:print "$at(2,2265,2266)"} true;
+    $t5 := 2;
+    assume $IsValid'u64'($t5);
+
+    // Vector::push_back<u64>($t3, $t5) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:77:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t5);
+    if ($abort_flag) {
+        assume {:print "$at(2,2240,2267)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,7):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t6 := 3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:78:34+1
+    assume {:print "$at(2,2302,2303)"} true;
+    $t6 := 3;
+    assume $IsValid'u64'($t6);
+
+    // Vector::push_back<u64>($t3, $t6) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:78:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t6);
+    if ($abort_flag) {
+        assume {:print "$at(2,2277,2304)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,7):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t7 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:79:34+1
+    assume {:print "$at(2,2339,2340)"} true;
+    $t7 := 2;
+    assume $IsValid'u64'($t7);
+
+    // Vector::push_back<u64>($t3, $t7) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:79:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t7);
+    if ($abort_flag) {
+        assume {:print "$at(2,2314,2341)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,7):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // $t8 := 2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:80:34+1
+    assume {:print "$at(2,2376,2377)"} true;
+    $t8 := 2;
+    assume $IsValid'u64'($t8);
+
+    // Vector::push_back<u64>($t3, $t8) on_abort goto L2 with $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:80:9+27
+    call $t3 := $1_Vector_push_back'u64'($t3, $t8);
+    if ($abort_flag) {
+        assume {:print "$at(2,2351,2378)"} true;
+        $t2 := $abort_code;
+        assume {:print "$track_abort(2,7):", $t2} $t2 == $t2;
+        goto L2;
+    }
+
+    // write_back[LocalRoot($t0)@]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:80:9+27
+    $t0 := $Dereference($t3);
+
+    // $t9 := move($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:81:9+1
+    assume {:print "$at(2,2388,2389)"} true;
+    $t9 := $t0;
+
+    // trace_return[0]($t9) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:81:9+1
+    assume {:print "$track_return(2,7,0):", $t9} $t9 == $t9;
+
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:82:5+1
+    assume {:print "$at(2,2394,2395)"} true;
+L1:
+
+    // assume Identical($t10, choose i: Range(0, Len<u64>($t9)): Eq<u64>(Index($t9, i), 2)) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:17+54
+    assume {:print "$at(2,2524,2578)"} true;
+    assume ($t10 == $choice_6($t9));
+
+    // trace_exp[at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:17+54]($t10) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:17+54
+    assume {:print "$track_exp(463):", $t10} true;
+
+    // assert Eq<num>(choose i: Range(0, Len<u64>($t9)): Eq<u64>(Index($t9, i), 2), 1) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:9+68
+    assert {:msg "assert_failed(2,2516,2584): post-condition does not hold"}
+      $IsEqual'num'($choice_6($t9), 1);
+
+    // return $t9 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:9+68
+    $ret0 := $t9;
+    return;
+
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:82:5+1
+    assume {:print "$at(2,2394,2395)"} true;
+L2:
+
+    // abort($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:82:5+1
+    $abort_code := $t2;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun TestSome::with_spec_fun_choice [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:30:5+60
+procedure {:timeLimit 40} $42_TestSome_with_spec_fun_choice$verify(_$t0: int) returns ($ret0: int)
 {
     // declare local variables
     var $t1: int;
     var $t2: int;
-    var $t3: bool;
+    var $t3: int;
     var $t4: int;
-    var $t5: int;
-    var $t6: int;
     var $t0: int;
     var $temp_0'u64': int;
     $t0 := _$t0;
@@ -2140,1219 +1905,133 @@ procedure {:timeLimit 40} $42_VerifyLoops_loop_invariant_induction_invalid$verif
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:219:5+242
-    assume {:print "$at(2,4999,5241)"} true;
+    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:34:17+6
+    assume {:print "$at(2,957,963)"} true;
     assume $IsValid'u64'($t0);
 
-    // trace_local[n]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:219:5+1
-    assume {:print "$track_local(0,7,0):", $t0} $t0 == $t0;
+    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:30:5+1
+    assume {:print "$at(2,848,849)"} true;
+    assume {:print "$track_local(2,8,0):", $t0} $t0 == $t0;
 
-    // $t2 := 0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:220:17+1
-    assume {:print "$at(2,5074,5075)"} true;
-    $t2 := 0;
-    assume $IsValid'u64'($t2);
+    // $t1 := 42 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:31:13+2
+    assume {:print "$at(2,900,902)"} true;
+    $t1 := 42;
+    assume $IsValid'u64'($t1);
 
-    // trace_local[x]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:220:13+1
-    assume {:print "$track_local(0,7,1):", $t2} $t2 == $t2;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:222:13+51
-    assume {:print "$at(2,5106,5157)"} true;
-L3:
-
-    // assert Eq<u64>($t2, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    assume {:print "$at(2,5129,5143)"} true;
-    assert {:msg "assert_failed(2,5129,5143): base case of the loop invariant does not hold"}
-      $IsEqual'u64'($t2, 0);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    havoc $t2;
-    assume $IsValid'u64'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    havoc $t3;
-    assume $IsValid'bool'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    havoc $t5;
-    assume $IsValid'u64'($t5);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    assume !$abort_flag;
-
-    // assume Eq<u64>($t2, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    assume $IsEqual'u64'($t2, 0);
-
-    // $t3 := <($t2, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:225:16+1
-    assume {:print "$at(2,5174,5175)"} true;
-    call $t3 := $Lt($t2, $t0);
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:221:9+139
-    assume {:print "$at(2,5085,5224)"} true;
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:221:9+139
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:221:9+139
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:227:17+1
-    assume {:print "$at(2,5208,5209)"} true;
-L0:
-
-    // $t4 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:227:21+1
-    $t4 := 1;
-    assume $IsValid'u64'($t4);
-
-    // $t5 := +($t2, $t4) on_abort goto L6 with $t6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:227:19+1
-    call $t5 := $AddU64($t2, $t4);
+    // $t2 := +($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:31:11+1
+    call $t2 := $AddU64($t0, $t1);
     if ($abort_flag) {
-        assume {:print "$at(2,5210,5211)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(0,7):", $t6} $t6 == $t6;
-        goto L6;
+        assume {:print "$at(2,898,899)"} true;
+        $t3 := $abort_code;
+        assume {:print "$track_abort(2,8):", $t3} $t3 == $t3;
+        goto L2;
     }
 
-    // trace_local[x]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:227:13+1
-    assume {:print "$track_local(0,7,1):", $t5} $t5 == $t5;
+    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:31:9+6
+    assume {:print "$track_return(2,8,0):", $t2} $t2 == $t2;
 
-    // goto L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:227:22+1
-    goto L4;
+    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:32:5+1
+    assume {:print "$at(2,907,908)"} true;
+L1:
 
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:229:9+1
-    assume {:print "$at(2,5234,5235)"} true;
-L2:
+    // assume Identical($t4, TestSome::spec_fun_choice(Add($t0, 42))) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:34:27+30
+    assume {:print "$at(2,967,997)"} true;
+    assume ($t4 == $42_TestSome_spec_fun_choice(($t0 + 42)));
 
-    // trace_return[0]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:229:9+1
-    assume {:print "$track_return(0,7,0):", $t2} $t2 == $t2;
+    // trace_exp[at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:34:27+30]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:34:27+30
+    assume {:print "$track_exp(401):", $t4} true;
 
-    // goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:229:9+1
-    goto L5;
+    // assert Le($t2, TestSome::spec_fun_choice(Add($t0, 42))) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:34:9+49
+    assert {:msg "assert_failed(2,949,998): post-condition does not hold"}
+      ($t2 <= $42_TestSome_spec_fun_choice(($t0 + 42)));
 
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:229:9+1
-    // Loop invariant checking block for the loop started with header: L3
-L4:
-
-    // assert Eq<u64>($t5, 0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    assume {:print "$at(2,5129,5143)"} true;
-    assert {:msg "assert_failed(2,5129,5143): induction case of the loop invariant does not hold"}
-      $IsEqual'u64'($t5, 0);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:223:17+14
-    assume false;
-    return;
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:230:5+1
-    assume {:print "$at(2,5240,5241)"} true;
-L5:
-
-    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:230:5+1
+    // return $t2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:34:9+49
     $ret0 := $t2;
     return;
 
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:230:5+1
-L6:
-
-    // abort($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:230:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun VerifyLoops::loop_with_two_back_edges_correct [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:163:5+348
-procedure {:timeLimit 40} $42_VerifyLoops_loop_with_two_back_edges_correct$verify(_$t0: int, _$t1: int) returns ()
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t0: int;
-    var $t1: int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:163:5+348
-    assume {:print "$at(2,3829,4177)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:163:5+348
-    assume $IsValid'u64'($t1);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:163:5+1
-    assume {:print "$track_local(0,8,0):", $t0} $t0 == $t0;
-
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:163:5+1
-    assume {:print "$track_local(0,8,1):", $t1} $t1 == $t1;
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    assume {:print "$at(2,3922,3923)"} true;
-L3:
-
-    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t0;
-    assume $IsValid'u64'($t0);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:17+1
-    assume !$abort_flag;
-
-    // $t2 := >($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:19+1
-    call $t2 := $Gt($t0, $t1);
-
-    // if ($t2) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:13+78
-    if ($t2) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:13+78
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:165:13+78
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:166:21+1
-    assume {:print "$at(2,3951,3952)"} true;
-L0:
-
-    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:166:25+1
-    $t3 := 1;
-    assume $IsValid'u64'($t3);
-
-    // $t4 := +($t1, $t3) on_abort goto L9 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:166:23+1
-    call $t4 := $AddU64($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,3953,3954)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,8):", $t8} $t8 == $t8;
-        goto L9;
-    }
-
-    // trace_local[y]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:166:17+1
-    assume {:print "$track_local(0,8,1):", $t4} $t4 == $t4;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:167:17+8
-    assume {:print "$at(2,3974,3982)"} true;
-    goto L7;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:169:17+1
-    assume {:print "$at(2,4014,4015)"} true;
+    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:32:5+1
+    assume {:print "$at(2,907,908)"} true;
 L2:
 
-    // $t5 := >($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:169:19+1
-    call $t5 := $Gt($t1, $t0);
-
-    // if ($t5) goto L4 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:169:13+78
-    if ($t5) { goto L4; } else { goto L5; }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:169:13+78
-L5:
-
-    // goto L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:169:13+78
-    goto L6;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:170:21+1
-    assume {:print "$at(2,4043,4044)"} true;
-L4:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:170:25+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t0, $t6) on_abort goto L9 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:170:23+1
-    call $t7 := $AddU64($t0, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,4045,4046)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,8):", $t8} $t8 == $t8;
-        goto L9;
-    }
-
-    // trace_local[x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:170:17+1
-    assume {:print "$track_local(0,8,0):", $t7} $t7 == $t7;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:171:17+8
-    assume {:print "$at(2,4066,4074)"} true;
-    goto L7;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:175:9+43
-    assume {:print "$at(2,4127,4170)"} true;
-L6:
-
-    // assert Eq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:176:13+14
-    assume {:print "$at(2,4146,4160)"} true;
-    assert {:msg "assert_failed(2,4146,4160): unknown assertion failed"}
-      $IsEqual'u64'($t0, $t1);
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:177:10+1
-    assume {:print "$at(2,4170,4171)"} true;
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:175:9+43
-    // Loop invariant checking block for the loop started with header: L3
-    assume {:print "$at(2,4127,4170)"} true;
-L7:
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:175:9+43
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:178:5+1
-    assume {:print "$at(2,4176,4177)"} true;
-L8:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:180:9+16
-    assume {:print "$at(2,4230,4246)"} true;
-    assert {:msg "assert_failed(2,4230,4246): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:180:9+16
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:178:5+1
-    assume {:print "$at(2,4176,4177)"} true;
-L9:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:179:5+70
-    assume {:print "$at(2,4182,4252)"} true;
-    assert {:msg "assert_failed(2,4182,4252): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:179:5+70
-    $abort_code := $t8;
+    // abort($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:32:5+1
+    $abort_code := $t3;
     $abort_flag := true;
     return;
 
 }
 
-// fun VerifyLoops::loop_with_two_back_edges_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:183:5+415
-procedure {:timeLimit 40} $42_VerifyLoops_loop_with_two_back_edges_incorrect$verify(_$t0: int, _$t1: int) returns ()
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t0: int;
-    var $t1: int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:183:5+415
-    assume {:print "$at(2,4258,4673)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:183:5+415
-    assume $IsValid'u64'($t1);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:183:5+1
-    assume {:print "$track_local(0,9,0):", $t0} $t0 == $t0;
-
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:183:5+1
-    assume {:print "$track_local(0,9,1):", $t1} $t1 == $t1;
-
-    // assume Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:185:13+14
-    assume {:print "$at(2,4349,4363)"} true;
-    assume !$IsEqual'u64'($t0, $t1);
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:188:13+51
-    assume {:print "$at(2,4402,4453)"} true;
-L3:
-
-    // assert Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    assume {:print "$at(2,4425,4439)"} true;
-    assert {:msg "assert_failed(2,4425,4439): base case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t0, $t1);
-
-    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t0;
-    assume $IsValid'u64'($t0);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    assume !$abort_flag;
-
-    // assume Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    assume !$IsEqual'u64'($t0, $t1);
-
-    // $t2 := >($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:191:19+1
-    assume {:print "$at(2,4473,4474)"} true;
-    call $t2 := $Gt($t0, $t1);
-
-    // if ($t2) goto L0 else goto L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:191:13+78
-    if ($t2) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:191:13+78
-L1:
-
-    // goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:191:13+78
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:192:21+1
-    assume {:print "$at(2,4500,4501)"} true;
-L0:
-
-    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:192:25+1
-    $t3 := 1;
-    assume $IsValid'u64'($t3);
-
-    // $t4 := +($t1, $t3) on_abort goto L9 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:192:23+1
-    call $t4 := $AddU64($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,4502,4503)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,9):", $t8} $t8 == $t8;
-        goto L9;
-    }
-
-    // $t1 := $t4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:192:17+1
-    $t1 := $t4;
-
-    // trace_local[y]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:192:17+1
-    assume {:print "$track_local(0,9,1):", $t4} $t4 == $t4;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:193:17+8
-    assume {:print "$at(2,4523,4531)"} true;
-    goto L7;
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:195:17+1
-    assume {:print "$at(2,4563,4564)"} true;
-L2:
-
-    // $t5 := >($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:195:19+1
-    call $t5 := $Gt($t1, $t0);
-
-    // if ($t5) goto L4 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:195:13+78
-    if ($t5) { goto L4; } else { goto L5; }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:195:13+78
-L5:
-
-    // goto L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:195:13+78
-    goto L6;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:196:21+1
-    assume {:print "$at(2,4592,4593)"} true;
-L4:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:196:25+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t0, $t6) on_abort goto L9 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:196:23+1
-    call $t7 := $AddU64($t0, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,4594,4595)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,9):", $t8} $t8 == $t8;
-        goto L9;
-    }
-
-    // $t0 := $t7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:196:17+1
-    $t0 := $t7;
-
-    // trace_local[x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:196:17+1
-    assume {:print "$track_local(0,9,0):", $t7} $t7 == $t7;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:197:17+8
-    assume {:print "$at(2,4615,4623)"} true;
-    goto L7;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:200:10+1
-    assume {:print "$at(2,4666,4667)"} true;
-L6:
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:200:10+1
-    goto L8;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:200:10+1
-    // Loop invariant checking block for the loop started with header: L3
-L7:
-
-    // assert Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    assume {:print "$at(2,4425,4439)"} true;
-    assert {:msg "assert_failed(2,4425,4439): induction case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t0, $t1);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:189:17+14
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:201:5+1
-    assume {:print "$at(2,4672,4673)"} true;
-L8:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:203:9+16
-    assume {:print "$at(2,4728,4744)"} true;
-    assert {:msg "assert_failed(2,4728,4744): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:203:9+16
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:201:5+1
-    assume {:print "$at(2,4672,4673)"} true;
-L9:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:202:5+72
-    assume {:print "$at(2,4678,4750)"} true;
-    assert {:msg "assert_failed(2,4678,4750): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:202:5+72
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:12:27+28
+function {:inline} $choice_2_pred(x: int): bool {
+    $IsValid'u64'(x) &&
+    (x >= 4)
 }
+function $choice_2(): int;
+axiom
+    (exists x: int:: $choice_2_pred(x)) ==>
+    (var x := $choice_2(); $choice_2_pred(x)
+);
 
-// fun VerifyLoops::nested_loop_correct [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:91:5+356
-procedure {:timeLimit 40} $42_VerifyLoops_nested_loop_correct$verify(_$t0: int, _$t1: int) returns ()
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t0: int;
-    var $t1: int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:91:5+356
-    assume {:print "$at(2,2343,2699)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:91:5+356
-    assume $IsValid'u64'($t1);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:91:5+1
-    assume {:print "$track_local(0,10,0):", $t0} $t0 == $t0;
-
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:91:5+1
-    assume {:print "$track_local(0,10,1):", $t1} $t1 == $t1;
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    assume {:print "$at(2,2419,2541)"} true;
-L6:
-
-    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t0;
-    assume $IsValid'u64'($t0);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:93:13+122
-    assume !$abort_flag;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:21+1
-    assume {:print "$at(2,2446,2447)"} true;
-L0:
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:21+1
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:21+1
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:21+1
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:21+1
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:21+1
-    assume !$abort_flag;
-
-    // $t2 := <=($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:23+2
-    call $t2 := $Le($t0, $t1);
-
-    // if ($t2) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:17+57
-    if ($t2) { goto L1; } else { goto L2; }
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:94:17+57
-L2:
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:97:21+1
-    assume {:print "$at(2,2521,2522)"} true;
-L3:
-
-    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:97:25+1
-    $t3 := 1;
-    assume $IsValid'u64'($t3);
-
-    // $t4 := +($t1, $t3) on_abort goto L10 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:97:23+1
-    call $t4 := $AddU64($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,2523,2524)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,10):", $t8} $t8 == $t8;
-        goto L10;
-    }
-
-    // trace_local[y]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:97:17+1
-    assume {:print "$track_local(0,10,1):", $t4} $t4 == $t4;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:97:26+1
-    goto L7;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:100:17+1
-    assume {:print "$at(2,2560,2561)"} true;
-L1:
-
-    // $t5 := <=($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:100:19+2
-    call $t5 := $Le($t1, $t0);
-
-    // if ($t5) goto L4 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:100:13+49
-    if ($t5) { goto L4; } else { goto L5; }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:103:17+1
-    assume {:print "$at(2,2623,2624)"} true;
-L5:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:103:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t0, $t6) on_abort goto L10 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:103:19+1
-    call $t7 := $AddU64($t0, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,2625,2626)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,10):", $t8} $t8 == $t8;
-        goto L10;
-    }
-
-    // trace_local[x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:103:13+1
-    assume {:print "$track_local(0,10,0):", $t7} $t7 == $t7;
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:103:22+1
-    goto L8;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:105:9+43
-    assume {:print "$at(2,2649,2692)"} true;
-L4:
-
-    // assert Eq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:106:13+14
-    assume {:print "$at(2,2668,2682)"} true;
-    assert {:msg "assert_failed(2,2668,2682): unknown assertion failed"}
-      $IsEqual'u64'($t0, $t1);
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:107:10+1
-    assume {:print "$at(2,2692,2693)"} true;
-    goto L9;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:105:9+43
-    // Loop invariant checking block for the loop started with header: L0
-    assume {:print "$at(2,2649,2692)"} true;
-L7:
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:105:9+43
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:105:9+43
-    // Loop invariant checking block for the loop started with header: L6
-L8:
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:105:9+43
-    assume false;
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:108:5+1
-    assume {:print "$at(2,2698,2699)"} true;
-L9:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:110:9+16
-    assume {:print "$at(2,2739,2755)"} true;
-    assert {:msg "assert_failed(2,2739,2755): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:110:9+16
-    return;
-
-    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:108:5+1
-    assume {:print "$at(2,2698,2699)"} true;
-L10:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:109:5+57
-    assume {:print "$at(2,2704,2761)"} true;
-    assert {:msg "assert_failed(2,2704,2761): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:109:5+57
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:21:33+36
+function {:inline} $choice_3_pred(x: int): bool {
+    $IsValid'u64'(x) &&
+    ((x >= 4) && (x <= 5))
 }
+function $choice_3(): int;
+axiom
+    (exists x: int:: $choice_3_pred(x)) ==>
+    (var x := $choice_3(); $choice_3_pred(x)
+);
 
-// fun VerifyLoops::nested_loop_inner_invariant_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138:5+451
-procedure {:timeLimit 40} $42_VerifyLoops_nested_loop_inner_invariant_incorrect$verify(_$t0: int, _$t1: int) returns ()
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t0: int;
-    var $t1: int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138:5+451
-    assume {:print "$at(2,3292,3743)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138:5+451
-    assume $IsValid'u64'($t1);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138:5+1
-    assume {:print "$track_local(0,11,0):", $t0} $t0 == $t0;
-
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:138:5+1
-    assume {:print "$track_local(0,11,1):", $t1} $t1 == $t1;
-
-    // assume Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:140:13+14
-    assume {:print "$at(2,3386,3400)"} true;
-    assume !$IsEqual'u64'($t0, $t1);
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    assume {:print "$at(2,3439,3638)"} true;
-L6:
-
-    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t0;
-    assume $IsValid'u64'($t0);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:143:13+199
-    assume !$abort_flag;
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:144:17+59
-    assume {:print "$at(2,3462,3521)"} true;
-L0:
-
-    // assert Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    assume {:print "$at(2,3489,3503)"} true;
-    assert {:msg "assert_failed(2,3489,3503): base case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t0, $t1);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    assume !$abort_flag;
-
-    // assume Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    assume !$IsEqual'u64'($t0, $t1);
-
-    // $t2 := <=($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:147:23+2
-    assume {:print "$at(2,3545,3547)"} true;
-    call $t2 := $Le($t0, $t1);
-
-    // if ($t2) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:147:17+57
-    if ($t2) { goto L1; } else { goto L2; }
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:147:17+57
-L2:
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:150:21+1
-    assume {:print "$at(2,3618,3619)"} true;
-L3:
-
-    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:150:25+1
-    $t3 := 1;
-    assume $IsValid'u64'($t3);
-
-    // $t4 := +($t1, $t3) on_abort goto L10 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:150:23+1
-    call $t4 := $AddU64($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,3620,3621)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,11):", $t8} $t8 == $t8;
-        goto L10;
-    }
-
-    // trace_local[y]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:150:17+1
-    assume {:print "$track_local(0,11,1):", $t4} $t4 == $t4;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:150:26+1
-    goto L7;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:153:17+1
-    assume {:print "$at(2,3657,3658)"} true;
-L1:
-
-    // $t5 := <=($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:153:19+2
-    call $t5 := $Le($t1, $t0);
-
-    // if ($t5) goto L4 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:153:13+49
-    if ($t5) { goto L4; } else { goto L5; }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:156:17+1
-    assume {:print "$at(2,3720,3721)"} true;
-L5:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:156:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t0, $t6) on_abort goto L10 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:156:19+1
-    call $t7 := $AddU64($t0, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,3722,3723)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,11):", $t8} $t8 == $t8;
-        goto L10;
-    }
-
-    // trace_local[x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:156:13+1
-    assume {:print "$track_local(0,11,0):", $t7} $t7 == $t7;
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:156:22+1
-    goto L8;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:157:10+1
-    assume {:print "$at(2,3736,3737)"} true;
-L4:
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:157:10+1
-    goto L9;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:157:10+1
-    // Loop invariant checking block for the loop started with header: L0
-L7:
-
-    // assert Neq<u64>($t0, $t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    assume {:print "$at(2,3489,3503)"} true;
-    assert {:msg "assert_failed(2,3489,3503): induction case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t0, $t4);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    // Loop invariant checking block for the loop started with header: L6
-L8:
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:145:21+14
-    assume false;
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:158:5+1
-    assume {:print "$at(2,3742,3743)"} true;
-L9:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:160:9+16
-    assume {:print "$at(2,3801,3817)"} true;
-    assert {:msg "assert_failed(2,3801,3817): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:160:9+16
-    return;
-
-    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:158:5+1
-    assume {:print "$at(2,3742,3743)"} true;
-L10:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:159:5+75
-    assume {:print "$at(2,3748,3823)"} true;
-    assert {:msg "assert_failed(2,3748,3823): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:159:5+75
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:28:9+26
+function {:inline} $choice_0_pred(y: int, x: int): bool {
+    $IsValid'u64'(y) &&
+    (y >= x)
 }
+function $choice_0(x: int): int;
+axiom (forall x: int:: $IsValid'u64'(x) ==>
+    (exists y: int:: $choice_0_pred(y, x)) ==>
+    (var y := $choice_0(x); $choice_0_pred(y, x)
+));
 
-// fun VerifyLoops::nested_loop_outer_invariant_incorrect [verification] at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:113:5+439
-procedure {:timeLimit 40} $42_VerifyLoops_nested_loop_outer_invariant_incorrect$verify(_$t0: int, _$t1: int) returns ()
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t0: int;
-    var $t1: int;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:113:5+439
-    assume {:print "$at(2,2767,3206)"} true;
-    assume $IsValid'u64'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:113:5+439
-    assume $IsValid'u64'($t1);
-
-    // trace_local[x]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:113:5+1
-    assume {:print "$track_local(0,12,0):", $t0} $t0 == $t0;
-
-    // trace_local[y]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:113:5+1
-    assume {:print "$track_local(0,12,1):", $t1} $t1 == $t1;
-
-    // assume Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:115:13+14
-    assume {:print "$at(2,2861,2875)"} true;
-    assume !$IsEqual'u64'($t0, $t1);
-
-    // label L6 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:118:13+51
-    assume {:print "$at(2,2914,2965)"} true;
-L6:
-
-    // assert Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    assume {:print "$at(2,2937,2951)"} true;
-    assert {:msg "assert_failed(2,2937,2951): base case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t0, $t1);
-
-    // havoc[val]($t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t0;
-    assume $IsValid'u64'($t0);
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // havoc[val]($t5) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t5;
-    assume $IsValid'bool'($t5);
-
-    // havoc[val]($t6) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t6;
-    assume $IsValid'u64'($t6);
-
-    // havoc[val]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    havoc $t7;
-    assume $IsValid'u64'($t7);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    assume !$abort_flag;
-
-    // assume Neq<u64>($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    assume !$IsEqual'u64'($t0, $t1);
-
-    // label L0 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:21+1
-    assume {:print "$at(2,3006,3007)"} true;
-L0:
-
-    // havoc[val]($t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:21+1
-    havoc $t1;
-    assume $IsValid'u64'($t1);
-
-    // havoc[val]($t2) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:21+1
-    havoc $t2;
-    assume $IsValid'bool'($t2);
-
-    // havoc[val]($t3) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:21+1
-    havoc $t3;
-    assume $IsValid'u64'($t3);
-
-    // havoc[val]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:21+1
-    havoc $t4;
-    assume $IsValid'u64'($t4);
-
-    // assume Not(AbortFlag()) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:21+1
-    assume !$abort_flag;
-
-    // $t2 := <=($t0, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:23+2
-    call $t2 := $Le($t0, $t1);
-
-    // if ($t2) goto L1 else goto L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:17+57
-    if ($t2) { goto L1; } else { goto L2; }
-
-    // label L2 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:122:17+57
-L2:
-
-    // label L3 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:125:21+1
-    assume {:print "$at(2,3081,3082)"} true;
-L3:
-
-    // $t3 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:125:25+1
-    $t3 := 1;
-    assume $IsValid'u64'($t3);
-
-    // $t4 := +($t1, $t3) on_abort goto L10 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:125:23+1
-    call $t4 := $AddU64($t1, $t3);
-    if ($abort_flag) {
-        assume {:print "$at(2,3083,3084)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,12):", $t8} $t8 == $t8;
-        goto L10;
-    }
-
-    // trace_local[y]($t4) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:125:17+1
-    assume {:print "$track_local(0,12,1):", $t4} $t4 == $t4;
-
-    // goto L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:125:26+1
-    goto L7;
-
-    // label L1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:128:17+1
-    assume {:print "$at(2,3120,3121)"} true;
-L1:
-
-    // $t5 := <=($t1, $t0) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:128:19+2
-    call $t5 := $Le($t1, $t0);
-
-    // if ($t5) goto L4 else goto L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:128:13+49
-    if ($t5) { goto L4; } else { goto L5; }
-
-    // label L5 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:131:17+1
-    assume {:print "$at(2,3183,3184)"} true;
-L5:
-
-    // $t6 := 1 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:131:21+1
-    $t6 := 1;
-    assume $IsValid'u64'($t6);
-
-    // $t7 := +($t0, $t6) on_abort goto L10 with $t8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:131:19+1
-    call $t7 := $AddU64($t0, $t6);
-    if ($abort_flag) {
-        assume {:print "$at(2,3185,3186)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(0,12):", $t8} $t8 == $t8;
-        goto L10;
-    }
-
-    // trace_local[x]($t7) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:131:13+1
-    assume {:print "$track_local(0,12,0):", $t7} $t7 == $t7;
-
-    // goto L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:131:22+1
-    goto L8;
-
-    // label L4 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:132:10+1
-    assume {:print "$at(2,3199,3200)"} true;
-L4:
-
-    // goto L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:132:10+1
-    goto L9;
-
-    // label L7 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:132:10+1
-    // Loop invariant checking block for the loop started with header: L0
-L7:
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:132:10+1
-    assume false;
-    return;
-
-    // label L8 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:132:10+1
-    // Loop invariant checking block for the loop started with header: L6
-L8:
-
-    // assert Neq<u64>($t7, $t1) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    assume {:print "$at(2,2937,2951)"} true;
-    assert {:msg "assert_failed(2,2937,2951): induction case of the loop invariant does not hold"}
-      !$IsEqual'u64'($t7, $t1);
-
-    // stop() at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:119:17+14
-    assume false;
-    return;
-
-    // label L9 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:133:5+1
-    assume {:print "$at(2,3205,3206)"} true;
-L9:
-
-    // assert Not(false) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:135:9+16
-    assume {:print "$at(2,3264,3280)"} true;
-    assert {:msg "assert_failed(2,3264,3280): function does not abort under this condition"}
-      !false;
-
-    // return () at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:135:9+16
-    return;
-
-    // label L10 at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:133:5+1
-    assume {:print "$at(2,3205,3206)"} true;
-L10:
-
-    // assert false at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:134:5+75
-    assume {:print "$at(2,3211,3286)"} true;
-    assert {:msg "assert_failed(2,3211,3286): abort not covered by any of the `aborts_if` clauses"}
-      false;
-
-    // abort($t8) at /home/ying/diem/language/move-prover/tests/sources/functional/loops.move:134:5+75
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:53:22+59
+function {:inline} $choice_1_pred(a: int, $42_TestSome_R_$memory: $Memory $42_TestSome_R): bool {
+    $IsValid'address'(a) &&
+    ($ResourceExists($42_TestSome_R_$memory, a) && $IsEqual'u64'($x#$42_TestSome_R($ResourceValue($42_TestSome_R_$memory, a)), 2))
 }
+function $choice_1($42_TestSome_R_$memory: $Memory $42_TestSome_R): int;
+axiom (forall $42_TestSome_R_$memory: $Memory $42_TestSome_R:: (exists a: int:: $choice_1_pred(a, $42_TestSome_R_$memory)) ==>
+    (var a := $choice_1($42_TestSome_R_$memory); $choice_1_pred(a, $42_TestSome_R_$memory)
+));
+
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:70:17+53
+function {:inline} $choice_5_pred(i: int, $t8: Vec (int)): bool {
+    $IsValid'num'(i) && $InRange($Range(0, LenVec($t8)), i) &&
+    $IsEqual'u64'(ReadVec($t8, i), 2)
+}
+function $choice_5($t8: Vec (int)): int;
+axiom (forall $t8: Vec (int):: $IsValid'vec'u64''($t8) ==>
+    (exists i: int:: $choice_5_pred(i, $t8)) ==>
+    (var i := $choice_5($t8); $choice_5_pred(i, $t8)
+     && (var $$c := i; (forall i: int:: i < $$c ==> !$choice_5_pred(i, $t8)))));
+
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:85:23+47
+function {:inline} $choice_6_pred(i: int, $t9: Vec (int)): bool {
+    $IsValid'num'(i) && $InRange($Range(0, LenVec($t9)), i) &&
+    $IsEqual'u64'(ReadVec($t9, i), 2)
+}
+function $choice_6($t9: Vec (int)): int;
+axiom (forall $t9: Vec (int):: $IsValid'vec'u64''($t9) ==>
+    (exists i: int:: $choice_6_pred(i, $t9)) ==>
+    (var i := $choice_6($t9); $choice_6_pred(i, $t9)
+));
+
+// choice expression at /home/ying/diem/language/move-prover/tests/sources/functional/choice.move:98:33+25
+function {:inline} $choice_4_pred(y: int, $t0: int): bool {
+    $IsValid'u64'(y) &&
+    (y > $t0)
+}
+function $choice_4($t0: int): int;
+axiom (forall $t0: int:: $IsValid'u64'($t0) ==>
+    (exists y: int:: $choice_4_pred(y, $t0)) ==>
+    (var y := $choice_4($t0); $choice_4_pred(y, $t0)
+));

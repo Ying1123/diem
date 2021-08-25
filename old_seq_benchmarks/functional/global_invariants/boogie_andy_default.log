@@ -13,39 +13,54 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $42_TestGlobalInvariants_create_R$verify ...
-  [0.155 s, 3 proof obligations]  verified
+Verifying $0_A_mutate_at$verify ...
+  [0.154 s, 4 proof obligations]  verified
 
-Verifying $42_TestGlobalInvariants_create_R_invalid$verify ...
+Verifying $0_A_read_at$verify ...
+  [0.013 s, 3 proof obligations]  verified
+
+Verifying $0_B_move_from_test_incorrect$verify ...
+  [0.021 s, 2 proof obligations]  error
+assert_failed(2,1595,1604): caller does not have permission to modify `B::T` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1154,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1154,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1197,34): anon10_Else
+
+Verifying $0_B_move_to_test_incorrect$verify ...
+  [0.025 s, 2 proof obligations]  error
+assert_failed(2,1222,1229): caller does not have permission to modify `B::T` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1327,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1327,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1370,34): anon10_Else
+
+Verifying $0_B_mutate_S_test1_incorrect$verify ...
+  [0.018 s, 2 proof obligations]  error
+assert_failed(2,1949,1968): caller does not have permission to modify `A::S` at given address
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1498,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1498,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1541,34): anon10_Else
+
+Verifying $0_B_mutate_S_test2_incorrect$verify ...
+  [0.015 s, 2 proof obligations]  error
+assert_failed(2,2363,2379): unknown assertion failed
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1686,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1686,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1718,34): anon10_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1758,34): anon11_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1776,9): anon12_Then
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1783,5): anon7
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1797,34): anon13_Else
+
+Verifying $0_B_mutate_at_test_incorrect$verify ...
   [0.022 s, 2 proof obligations]  error
-assert_failed(2,348,418): global memory invariant does not hold
+assert_failed(2,853,870): caller does not have permission to modify `B::T` at given address
 Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1081,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1081,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1120,44): anon6_Else
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1122,5): anon7_Else
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1866,9): anon0
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1866,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1912,34): anon10_Else
 
-Verifying $42_TestGlobalInvariants_get_S_x$verify ...
-  [0.016 s, 3 proof obligations]  verified
-
-Verifying $42_TestGlobalInvariants_remove_R_invalid$verify ...
-  [0.017 s, 2 proof obligations]  error
-assert_failed(2,428,509): global memory invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1335,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1335,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1377,16): anon9_Then
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1425,13): anon10_Else
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1428,5): anon11_Else
-
-Verifying $42_TestGlobalInvariants_remove_S_invalid$verify ...
-  [0.017 s, 3 proof obligations]  error
-assert_failed(2,348,418): global memory invariant does not hold
-Execution trace:
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1487,9): anon0
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1487,9): anon0$1
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1536,16): anon10_Then
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1578,13): anon11_Else
-    /home/ying/diem/old_seq_benchmarks/functional/global_invariants/global_invariants.andy.bpl(1581,5): anon12_Else
-
-Boogie program verifier finished with 2 verified, 3 errors
+Boogie program verifier finished with 2 verified, 5 errors

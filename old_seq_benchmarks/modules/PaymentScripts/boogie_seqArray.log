@@ -16,21 +16,18 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.423 s, 0 proof obligations]  verified
+  [0.447 s, 0 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify ...
-  [2.606 s, 39 proof obligations]  verified
+  [3.670 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_0 ...
-  [2.907 s, 39 proof obligations]  verified
+  [3.755 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_1 ...
-  [3.015 s, 39 proof obligations]  verified
+  [4.476 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify ...
-  [3.340 s, 46 proof obligations]  verified
-
-Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_0 ...
-  [3.583 s, 46 proof obligations]  verified
+  [4.339 s, 46 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

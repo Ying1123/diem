@@ -14,15 +14,15 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.206 s, 8 proof obligations]  verified
+  [0.193 s, 8 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.056 s, 16 proof obligations]  verified
+  [0.040 s, 16 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
-  [0.096 s, 10 proof obligations]  verified
+  [0.078 s, 10 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.238 s, 0 proof obligations]  verified
+  [0.234 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

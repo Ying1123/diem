@@ -16,13 +16,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.245 s, 9 proof obligations]  verified
+  [0.237 s, 9 proof obligations]  verified
 
 Verifying $1_DiemConfig_initialize$verify ...
-  [0.029 s, 10 proof obligations]  verified
+  [0.027 s, 10 proof obligations]  verified
 
 Verifying $1_DiemConfig_disable_reconfiguration$verify ...
-  [0.005 s, 0 proof obligations]  verified
+  [0.017 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_emit_genesis_reconfiguration_event$verify ...
   [0.195 s, 3 proof obligations]  verified
@@ -31,51 +31,51 @@ Verifying $1_DiemConfig_enable_reconfiguration$verify ...
   [0.006 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify ...
-  [0.017 s, 4 proof obligations]  verified
+  [0.019 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_0 ...
-  [0.017 s, 4 proof obligations]  verified
+  [0.016 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_1 ...
-  [0.011 s, 4 proof obligations]  verified
+  [0.015 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_2 ...
   [0.015 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_3 ...
-  [0.010 s, 4 proof obligations]  verified
+  [0.012 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_4 ...
-  [0.028 s, 4 proof obligations]  verified
+  [0.027 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.051 s, 14 proof obligations]  verified
+  [0.057 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
-  [0.049 s, 14 proof obligations]  verified
+  [0.054 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
   [0.062 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
-  [0.051 s, 14 proof obligations]  verified
+  [0.059 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
-  [0.050 s, 14 proof obligations]  verified
+  [0.048 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_4 ...
-  [0.064 s, 14 proof obligations]  verified
+  [0.061 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfiguration_enabled$verify ...
   [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfigure$verify ...
-  [0.179 s, 9 proof obligations]  verified
+  [0.201 s, 9 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfigure_$verify ...
-  [0.288 s, 12 proof obligations]  verified
+  [0.306 s, 12 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.179 s, 0 proof obligations]  verified
+  [0.151 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 21 verified, 0 errors

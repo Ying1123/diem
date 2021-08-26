@@ -14,13 +14,14 @@
 (declare-datatypes ((T@$1_SlidingNonce_SlidingNonce 0)) ((($1_SlidingNonce_SlidingNonce (|$min_nonce#$1_SlidingNonce_SlidingNonce| Int) (|$nonce_mask#$1_SlidingNonce_SlidingNonce| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$1_SlidingNonce_SlidingNonce| 0)
-(declare-datatypes ((T@$Memory_10302 0)) ((($Memory_10302 (|domain#$Memory_10302| |T@[Int]Bool|) (|contents#$Memory_10302| |T@[Int]$1_SlidingNonce_SlidingNonce|) ) ) ))
+(declare-datatypes ((T@$Memory_10531 0)) ((($Memory_10531 (|domain#$Memory_10531| |T@[Int]Bool|) (|contents#$Memory_10531| |T@[Int]$1_SlidingNonce_SlidingNonce|) ) ) ))
 (declare-datatypes ((T@$1_DiemTimestamp_CurrentTimeMicroseconds 0)) ((($1_DiemTimestamp_CurrentTimeMicroseconds (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| Int) ) ) ))
 (declare-sort |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds| 0)
-(declare-datatypes ((T@$Memory_10071 0)) ((($Memory_10071 (|domain#$Memory_10071| |T@[Int]Bool|) (|contents#$Memory_10071| |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds|) ) ) ))
+(declare-datatypes ((T@$Memory_10297 0)) ((($Memory_10297 (|domain#$Memory_10297| |T@[Int]Bool|) (|contents#$Memory_10297| |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3601 0)) ((($Mutation_3601 (|l#$Mutation_3601| T@$Location) (|p#$Mutation_3601| T@Vec_2977) (|v#$Mutation_3601| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_8031 0)) ((($Mutation_8031 (|l#$Mutation_8031| T@$Location) (|p#$Mutation_8031| T@Vec_2977) (|v#$Mutation_8031| T@Vec_2977) ) ) ))
+(declare-datatypes ((T@$Mutation_8166 0)) ((($Mutation_8166 (|l#$Mutation_8166| T@$Location) (|p#$Mutation_8166| T@Vec_2977) (|v#$Mutation_8166| T@Vec_2977) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -45,8 +46,9 @@
 (declare-fun $1_Hash_sha3 (T@Vec_2977) T@Vec_2977)
 (declare-fun $1_Signature_$ed25519_validate_pubkey (T@Vec_2977) Bool)
 (declare-fun $1_Signature_$ed25519_verify (T@Vec_2977 T@Vec_2977 T@Vec_2977) Bool)
+(declare-fun $1_Signer_is_signer (Int) Bool)
 (declare-fun |$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| (T@$1_DiemTimestamp_CurrentTimeMicroseconds) Bool)
-(declare-fun $1_SlidingNonce_spec_try_record_nonce (Int Int) Int)
+(declare-fun $1_SlidingNonce_spec_try_record_nonce (T@$signer Int) Int)
 (declare-fun |$IsValid'$1_SlidingNonce_SlidingNonce'| (T@$1_SlidingNonce_SlidingNonce) Bool)
 (declare-fun IndexOfVec_2977 (T@Vec_2977 Int) Int)
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
@@ -138,29 +140,37 @@
  :pattern ( ($1_Hash_sha3 v1@@1) ($1_Hash_sha3 v2@@1))
 )))
 (assert (forall ((k1 T@Vec_2977) (k2 T@Vec_2977) ) (!  (=> (|$IsEqual'vec'u8''| k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |SlidingNoncebaselinebpl.870:15|
+ :qid |SlidingNoncebaselinebpl.890:15|
  :skolemid |26|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 T@Vec_2977) (s2 T@Vec_2977) (k1@@0 T@Vec_2977) (k2@@0 T@Vec_2977) (m1 T@Vec_2977) (m2 T@Vec_2977) ) (!  (=> (and (and (|$IsEqual'vec'u8''| s1 s2) (|$IsEqual'vec'u8''| k1@@0 k2@@0)) (|$IsEqual'vec'u8''| m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |SlidingNoncebaselinebpl.873:15|
+ :qid |SlidingNoncebaselinebpl.893:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
-(assert (forall ((s T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) (! (= (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s) (|$IsValid'u64'| (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| s)))
- :qid |SlidingNoncebaselinebpl.937:61|
+(assert (forall ((s T@$signer) ) (!  (=> (|$IsValid'address'| (|$addr#$signer| s)) ($1_Signer_is_signer (|$addr#$signer| s)))
+ :qid |SlidingNoncebaselinebpl.932:15|
  :skolemid |28|
- :pattern ( (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s))
 )))
-(assert (forall ((account Int) (seq_nonce Int) ) (! (let (($$res ($1_SlidingNonce_spec_try_record_nonce account seq_nonce)))
-(|$IsValid'u64'| $$res))
- :qid |SlidingNoncebaselinebpl.947:15|
+(assert (forall ((addr Int) ) (! true
+ :qid |SlidingNoncebaselinebpl.936:15|
  :skolemid |29|
 )))
-(assert (forall ((s@@0 T@$1_SlidingNonce_SlidingNonce) ) (! (= (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@0)  (and (|$IsValid'u64'| (|$min_nonce#$1_SlidingNonce_SlidingNonce| s@@0)) (|$IsValid'u128'| (|$nonce_mask#$1_SlidingNonce_SlidingNonce| s@@0))))
- :qid |SlidingNoncebaselinebpl.960:49|
+(assert (forall ((s@@0 T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) (! (= (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s@@0) (|$IsValid'u64'| (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| s@@0)))
+ :qid |SlidingNoncebaselinebpl.951:61|
  :skolemid |30|
- :pattern ( (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@0))
+ :pattern ( (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s@@0))
+)))
+(assert (forall ((account T@$signer) (seq_nonce Int) ) (! (let (($$res ($1_SlidingNonce_spec_try_record_nonce account seq_nonce)))
+(|$IsValid'u64'| $$res))
+ :qid |SlidingNoncebaselinebpl.961:15|
+ :skolemid |31|
+)))
+(assert (forall ((s@@1 T@$1_SlidingNonce_SlidingNonce) ) (! (= (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@1)  (and (|$IsValid'u64'| (|$min_nonce#$1_SlidingNonce_SlidingNonce| s@@1)) (|$IsValid'u128'| (|$nonce_mask#$1_SlidingNonce_SlidingNonce| s@@1))))
+ :qid |SlidingNoncebaselinebpl.974:49|
+ :skolemid |32|
+ :pattern ( (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@1))
 )))
 (assert (forall ((v@@6 T@Vec_2977) (i@@4 Int) ) (! (= (InRangeVec_2977 v@@6 i@@4)  (and (>= i@@4 0) (< i@@4 (|l#Vec_2977| v@@6))))
  :qid |SlidingNoncebaselinebpl.122:24|
@@ -181,33 +191,33 @@
 )))
 (assert (forall ((|l#0| Bool) (i@@7 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7) |l#0|)
  :qid |SlidingNoncebaselinebpl.275:54|
- :skolemid |33|
+ :skolemid |35|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7))
 )))
 (assert (forall ((|l#0@@0| Int) (|l#1| Int) (|l#2| Int) (|l#3| |T@[Int]Int|) (|l#4| |T@[Int]Int|) (|l#5| Int) (|l#6| Int) (i@@8 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@8) (ite  (and (>= i@@8 |l#0@@0|) (< i@@8 |l#1|)) (ite (< i@@8 |l#2|) (|Select__T@[Int]Int_| |l#3| i@@8) (|Select__T@[Int]Int_| |l#4| (- i@@8 |l#5|))) |l#6|))
  :qid |SlidingNoncebaselinebpl.73:19|
- :skolemid |34|
+ :skolemid |36|
  :pattern ( (|Select__T@[Int]Int_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@8))
 )))
 (assert (forall ((|l#0@@1| Int) (|l#1@@0| Int) (|l#2@@0| |T@[Int]Int|) (|l#3@@0| Int) (|l#4@@0| Int) (|l#5@@0| Int) (i@@9 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@9) (ite  (and (<= |l#0@@1| i@@9) (< i@@9 |l#1@@0|)) (|Select__T@[Int]Int_| |l#2@@0| (- (- |l#3@@0| i@@9) |l#4@@0|)) |l#5@@0|))
  :qid |SlidingNoncebaselinebpl.82:30|
- :skolemid |35|
+ :skolemid |37|
  :pattern ( (|Select__T@[Int]Int_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@9))
 )))
 (assert (forall ((|l#0@@2| Int) (|l#1@@1| Int) (|l#2@@1| Int) (|l#3@@1| |T@[Int]Int|) (|l#4@@1| |T@[Int]Int|) (|l#5@@1| Int) (|l#6@@0| Int) (j@@1 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@1) (ite  (and (>= j@@1 |l#0@@2|) (< j@@1 |l#1@@1|)) (ite (< j@@1 |l#2@@1|) (|Select__T@[Int]Int_| |l#3@@1| j@@1) (|Select__T@[Int]Int_| |l#4@@1| (+ j@@1 |l#5@@1|))) |l#6@@0|))
  :qid |SlidingNoncebaselinebpl.63:20|
- :skolemid |36|
+ :skolemid |38|
  :pattern ( (|Select__T@[Int]Int_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@1))
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (declare-fun $abort_flag@0 () Bool)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory () T@$Memory_10071)
-(declare-fun $1_SlidingNonce_SlidingNonce_$memory@1 () T@$Memory_10302)
-(declare-fun $1_SlidingNonce_SlidingNonce_$memory () T@$Memory_10302)
-(declare-fun _$t0 () Int)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory () T@$Memory_10297)
+(declare-fun $1_SlidingNonce_SlidingNonce_$memory@1 () T@$Memory_10531)
+(declare-fun $1_SlidingNonce_SlidingNonce_$memory () T@$Memory_10531)
+(declare-fun _$t0 () T@$signer)
 (declare-fun $t8@0 () Int)
 (declare-fun $abort_code@1 () Int)
-(declare-fun $1_SlidingNonce_SlidingNonce_$memory@0 () T@$Memory_10302)
+(declare-fun $1_SlidingNonce_SlidingNonce_$memory@0 () T@$Memory_10531)
 (declare-fun |Store__T@[Int]Bool_| (|T@[Int]Bool| Int Bool) |T@[Int]Bool|)
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?x2 Bool)) (! (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?y1 Int) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]Bool_| ?x0 ?y1))) :weight 0)))
@@ -227,23 +237,23 @@
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 13153) (let ((anon12_Else_correct  (=> (not $abort_flag@0) (and (=> (= (ControlFlow 0 12058) (- 0 13515)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory@1) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory@1) 173345816)) (and (=> (= (ControlFlow 0 12058) (- 0 13529)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory@1) 186537453))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory@1) 186537453)) (and (=> (= (ControlFlow 0 12058) (- 0 13546)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (=> (= (ControlFlow 0 12058) (- 0 13557)) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory@1) _$t0)))))))))))
-(let ((L3_correct  (and (=> (= (ControlFlow 0 11952) (- 0 13485)) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0) (=> (= (ControlFlow 0 11952) (- 0 13491)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0) (= 6 $t8@0)))))))
-(let ((anon12_Then_correct  (=> (and (and $abort_flag@0 (= $abort_code@1 $abort_code@1)) (and (= $t8@0 $abort_code@1) (= (ControlFlow 0 12072) 11952))) L3_correct)))
-(let ((anon11_Then$1_correct  (=> (= $1_SlidingNonce_SlidingNonce_$memory@1 $1_SlidingNonce_SlidingNonce_$memory) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 12122) 12072) anon12_Then_correct) (=> (= (ControlFlow 0 12122) 12058) anon12_Else_correct))))))
-(let ((anon11_Then_correct  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0) (= (ControlFlow 0 12120) 12122)) anon11_Then$1_correct)))
-(let ((anon11_Else_correct  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (=> (and (and (= $1_SlidingNonce_SlidingNonce_$memory@0 ($Memory_10302 (|Store__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0 true) (|Store__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0 $t11@0))) (= $1_SlidingNonce_SlidingNonce_$memory@1 $1_SlidingNonce_SlidingNonce_$memory@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 11998) 12072) anon12_Then_correct) (=> (= (ControlFlow 0 11998) 12058) anon12_Else_correct))))))
-(let ((anon10_Then_correct  (=> (and (and inline$$Not$0$dst@1 (|$IsValid'u64'| 0)) (and (|$IsValid'u128'| 0) (= $t11@0 ($1_SlidingNonce_SlidingNonce 0 0)))) (and (=> (= (ControlFlow 0 11980) (- 0 13379)) (|Select__T@[Int]Bool_| $1_SlidingNonce_SlidingNonce_$modifies _$t0)) (=> (|Select__T@[Int]Bool_| $1_SlidingNonce_SlidingNonce_$modifies _$t0) (and (=> (= (ControlFlow 0 11980) 12120) anon11_Then_correct) (=> (= (ControlFlow 0 11980) 11998) anon11_Else_correct)))))))
-(let ((anon10_Else_correct  (=> (and (and (not inline$$Not$0$dst@1) (= $t7 $t7)) (and (= $t8@0 $t7) (= (ControlFlow 0 11920) 11952))) L3_correct)))
-(let ((anon0$2_correct  (=> (|$IsValid'u64'| 4) (=> (and (and (|$IsValid'u64'| $t7) (= $t7 6)) (and (= $t7 $t7) (= inline$$Not$0$dst@1 inline$$Not$0$dst@1))) (and (=> (= (ControlFlow 0 11904) 11980) anon10_Then_correct) (=> (= (ControlFlow 0 11904) 11920) anon10_Else_correct))))))
-(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not $t4@0)) (= (ControlFlow 0 11868) 11904)) anon0$2_correct)))
-(let ((anon0$1_correct  (=> (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) 186537453))) (=> (and (and (and (|$IsValid'address'| _$t0) (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) $a_0)))
+ (=> (= (ControlFlow 0 0) 13484) (let ((anon12_Else_correct  (=> (not $abort_flag@0) (and (=> (= (ControlFlow 0 12350) (- 0 13854)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory@1) 173345816))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory@1) 173345816)) (and (=> (= (ControlFlow 0 12350) (- 0 13868)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory@1) 186537453))) (=> (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory@1) 186537453)) (and (=> (= (ControlFlow 0 12350) (- 0 13885)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0)))) (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (=> (= (ControlFlow 0 12350) (- 0 13896)) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory@1) (|$addr#$signer| _$t0))))))))))))
+(let ((L3_correct  (and (=> (= (ControlFlow 0 12238) (- 0 13824)) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0)) (=> (= (ControlFlow 0 12238) (- 0 13830)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0)) (= 6 $t8@0)))))))
+(let ((anon12_Then_correct  (=> (and (and $abort_flag@0 (= $abort_code@1 $abort_code@1)) (and (= $t8@0 $abort_code@1) (= (ControlFlow 0 12364) 12238))) L3_correct)))
+(let ((anon11_Then$1_correct  (=> (= $1_SlidingNonce_SlidingNonce_$memory@1 $1_SlidingNonce_SlidingNonce_$memory) (=> (and (= $abort_flag@0 true) (= $abort_code@1 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 12416) 12364) anon12_Then_correct) (=> (= (ControlFlow 0 12416) 12350) anon12_Else_correct))))))
+(let ((anon11_Then_correct  (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0)) (= (ControlFlow 0 12414) 12416)) anon11_Then$1_correct)))
+(let ((anon11_Else_correct  (=> (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (=> (and (and (= $1_SlidingNonce_SlidingNonce_$memory@0 ($Memory_10531 (|Store__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0) true) (|Store__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0) $t11@0))) (= $1_SlidingNonce_SlidingNonce_$memory@1 $1_SlidingNonce_SlidingNonce_$memory@0)) (and (= $abort_flag@0 false) (= $abort_code@1 $abort_code@0))) (and (=> (= (ControlFlow 0 12290) 12364) anon12_Then_correct) (=> (= (ControlFlow 0 12290) 12350) anon12_Else_correct))))))
+(let ((anon10_Then_correct  (=> (and (and inline$$Not$0$dst@1 (|$IsValid'u64'| 0)) (and (|$IsValid'u128'| 0) (= $t11@0 ($1_SlidingNonce_SlidingNonce 0 0)))) (and (=> (= (ControlFlow 0 12268) (- 0 13710)) (|Select__T@[Int]Bool_| $1_SlidingNonce_SlidingNonce_$modifies (|$addr#$signer| _$t0))) (=> (|Select__T@[Int]Bool_| $1_SlidingNonce_SlidingNonce_$modifies (|$addr#$signer| _$t0)) (and (=> (= (ControlFlow 0 12268) 12414) anon11_Then_correct) (=> (= (ControlFlow 0 12268) 12290) anon11_Else_correct)))))))
+(let ((anon10_Else_correct  (=> (and (and (not inline$$Not$0$dst@1) (= $t7 $t7)) (and (= $t8@0 $t7) (= (ControlFlow 0 12206) 12238))) L3_correct)))
+(let ((anon0$2_correct  (=> (|$IsValid'u64'| 4) (=> (and (and (|$IsValid'u64'| $t7) (= $t7 6)) (and (= $t7 $t7) (= inline$$Not$0$dst@1 inline$$Not$0$dst@1))) (and (=> (= (ControlFlow 0 12190) 12268) anon10_Then_correct) (=> (= (ControlFlow 0 12190) 12206) anon10_Else_correct))))))
+(let ((inline$$Not$0$anon0_correct  (=> (and (= inline$$Not$0$dst@1  (not $t4@0)) (= (ControlFlow 0 12154) 12190)) anon0$2_correct)))
+(let ((anon0$1_correct  (=> (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) 186537453))) (=> (and (and (and (|$IsValid'address'| (|$addr#$signer| _$t0)) (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) $a_0)))
 (|$IsValid'$1_SlidingNonce_SlidingNonce'| $rsc))
- :qid |SlidingNoncebaselinebpl.1009:20|
- :skolemid |31|
- :pattern ( (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) $a_0))
-))) (and (|Select__T@[Int]Bool_| $1_SlidingNonce_SlidingNonce_$modifies _$t0) (= _$t0 _$t0))) (and (and (|$IsValid'address'| $t3) (= $t3 _$t0)) (and (= $t4@0 (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) $t3)) (= (ControlFlow 0 11874) 11868)))) inline$$Not$0$anon0_correct))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 13153) 11874) anon0$1_correct)))
+ :qid |SlidingNoncebaselinebpl.1023:20|
+ :skolemid |33|
+ :pattern ( (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) $a_0))
+))) (and (|Select__T@[Int]Bool_| $1_SlidingNonce_SlidingNonce_$modifies (|$addr#$signer| _$t0)) (= _$t0 _$t0))) (and (and (|$IsValid'address'| $t3) (= $t3 (|$addr#$signer| _$t0))) (and (= $t4@0 (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) $t3)) (= (ControlFlow 0 12160) 12154)))) inline$$Not$0$anon0_correct))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 13484) 12160) anon0$1_correct)))
 anon0_correct)))))))))))))
 ))
 (check-sat)
@@ -267,13 +277,14 @@ anon0_correct)))))))))))))
 (declare-datatypes ((T@$1_SlidingNonce_SlidingNonce 0)) ((($1_SlidingNonce_SlidingNonce (|$min_nonce#$1_SlidingNonce_SlidingNonce| Int) (|$nonce_mask#$1_SlidingNonce_SlidingNonce| Int) ) ) ))
 (declare-sort |T@[Int]Bool| 0)
 (declare-sort |T@[Int]$1_SlidingNonce_SlidingNonce| 0)
-(declare-datatypes ((T@$Memory_10302 0)) ((($Memory_10302 (|domain#$Memory_10302| |T@[Int]Bool|) (|contents#$Memory_10302| |T@[Int]$1_SlidingNonce_SlidingNonce|) ) ) ))
+(declare-datatypes ((T@$Memory_10531 0)) ((($Memory_10531 (|domain#$Memory_10531| |T@[Int]Bool|) (|contents#$Memory_10531| |T@[Int]$1_SlidingNonce_SlidingNonce|) ) ) ))
 (declare-datatypes ((T@$1_DiemTimestamp_CurrentTimeMicroseconds 0)) ((($1_DiemTimestamp_CurrentTimeMicroseconds (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| Int) ) ) ))
 (declare-sort |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds| 0)
-(declare-datatypes ((T@$Memory_10071 0)) ((($Memory_10071 (|domain#$Memory_10071| |T@[Int]Bool|) (|contents#$Memory_10071| |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds|) ) ) ))
+(declare-datatypes ((T@$Memory_10297 0)) ((($Memory_10297 (|domain#$Memory_10297| |T@[Int]Bool|) (|contents#$Memory_10297| |T@[Int]$1_DiemTimestamp_CurrentTimeMicroseconds|) ) ) ))
+(declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3601 0)) ((($Mutation_3601 (|l#$Mutation_3601| T@$Location) (|p#$Mutation_3601| T@Vec_2977) (|v#$Mutation_3601| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_8031 0)) ((($Mutation_8031 (|l#$Mutation_8031| T@$Location) (|p#$Mutation_8031| T@Vec_2977) (|v#$Mutation_8031| T@Vec_2977) ) ) ))
+(declare-datatypes ((T@$Mutation_8166 0)) ((($Mutation_8166 (|l#$Mutation_8166| T@$Location) (|p#$Mutation_8166| T@Vec_2977) (|v#$Mutation_8166| T@Vec_2977) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -298,8 +309,9 @@ anon0_correct)))))))))))))
 (declare-fun $1_Hash_sha3 (T@Vec_2977) T@Vec_2977)
 (declare-fun $1_Signature_$ed25519_validate_pubkey (T@Vec_2977) Bool)
 (declare-fun $1_Signature_$ed25519_verify (T@Vec_2977 T@Vec_2977 T@Vec_2977) Bool)
+(declare-fun $1_Signer_is_signer (Int) Bool)
 (declare-fun |$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| (T@$1_DiemTimestamp_CurrentTimeMicroseconds) Bool)
-(declare-fun $1_SlidingNonce_spec_try_record_nonce (Int Int) Int)
+(declare-fun $1_SlidingNonce_spec_try_record_nonce (T@$signer Int) Int)
 (declare-fun |$IsValid'$1_SlidingNonce_SlidingNonce'| (T@$1_SlidingNonce_SlidingNonce) Bool)
 (declare-fun IndexOfVec_2977 (T@Vec_2977 Int) Int)
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
@@ -391,29 +403,37 @@ anon0_correct)))))))))))))
  :pattern ( ($1_Hash_sha3 v1@@1) ($1_Hash_sha3 v2@@1))
 )))
 (assert (forall ((k1 T@Vec_2977) (k2 T@Vec_2977) ) (!  (=> (|$IsEqual'vec'u8''| k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |SlidingNoncebaselinebpl.870:15|
+ :qid |SlidingNoncebaselinebpl.890:15|
  :skolemid |26|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 T@Vec_2977) (s2 T@Vec_2977) (k1@@0 T@Vec_2977) (k2@@0 T@Vec_2977) (m1 T@Vec_2977) (m2 T@Vec_2977) ) (!  (=> (and (and (|$IsEqual'vec'u8''| s1 s2) (|$IsEqual'vec'u8''| k1@@0 k2@@0)) (|$IsEqual'vec'u8''| m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |SlidingNoncebaselinebpl.873:15|
+ :qid |SlidingNoncebaselinebpl.893:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
-(assert (forall ((s T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) (! (= (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s) (|$IsValid'u64'| (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| s)))
- :qid |SlidingNoncebaselinebpl.937:61|
+(assert (forall ((s T@$signer) ) (!  (=> (|$IsValid'address'| (|$addr#$signer| s)) ($1_Signer_is_signer (|$addr#$signer| s)))
+ :qid |SlidingNoncebaselinebpl.932:15|
  :skolemid |28|
- :pattern ( (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s))
 )))
-(assert (forall ((account Int) (seq_nonce Int) ) (! (let (($$res ($1_SlidingNonce_spec_try_record_nonce account seq_nonce)))
-(|$IsValid'u64'| $$res))
- :qid |SlidingNoncebaselinebpl.947:15|
+(assert (forall ((addr Int) ) (! true
+ :qid |SlidingNoncebaselinebpl.936:15|
  :skolemid |29|
 )))
-(assert (forall ((s@@0 T@$1_SlidingNonce_SlidingNonce) ) (! (= (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@0)  (and (|$IsValid'u64'| (|$min_nonce#$1_SlidingNonce_SlidingNonce| s@@0)) (|$IsValid'u128'| (|$nonce_mask#$1_SlidingNonce_SlidingNonce| s@@0))))
- :qid |SlidingNoncebaselinebpl.960:49|
+(assert (forall ((s@@0 T@$1_DiemTimestamp_CurrentTimeMicroseconds) ) (! (= (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s@@0) (|$IsValid'u64'| (|$microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds| s@@0)))
+ :qid |SlidingNoncebaselinebpl.951:61|
  :skolemid |30|
- :pattern ( (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@0))
+ :pattern ( (|$IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'| s@@0))
+)))
+(assert (forall ((account T@$signer) (seq_nonce Int) ) (! (let (($$res ($1_SlidingNonce_spec_try_record_nonce account seq_nonce)))
+(|$IsValid'u64'| $$res))
+ :qid |SlidingNoncebaselinebpl.961:15|
+ :skolemid |31|
+)))
+(assert (forall ((s@@1 T@$1_SlidingNonce_SlidingNonce) ) (! (= (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@1)  (and (|$IsValid'u64'| (|$min_nonce#$1_SlidingNonce_SlidingNonce| s@@1)) (|$IsValid'u128'| (|$nonce_mask#$1_SlidingNonce_SlidingNonce| s@@1))))
+ :qid |SlidingNoncebaselinebpl.974:49|
+ :skolemid |32|
+ :pattern ( (|$IsValid'$1_SlidingNonce_SlidingNonce'| s@@1))
 )))
 (assert (forall ((v@@6 T@Vec_2977) (i@@4 Int) ) (! (= (InRangeVec_2977 v@@6 i@@4)  (and (>= i@@4 0) (< i@@4 (|l#Vec_2977| v@@6))))
  :qid |SlidingNoncebaselinebpl.122:24|
@@ -434,29 +454,29 @@ anon0_correct)))))))))))))
 )))
 (assert (forall ((|l#0| Bool) (i@@7 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7) |l#0|)
  :qid |SlidingNoncebaselinebpl.275:54|
- :skolemid |33|
+ :skolemid |35|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@7))
 )))
 (assert (forall ((|l#0@@0| Int) (|l#1| Int) (|l#2| Int) (|l#3| |T@[Int]Int|) (|l#4| |T@[Int]Int|) (|l#5| Int) (|l#6| Int) (i@@8 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@8) (ite  (and (>= i@@8 |l#0@@0|) (< i@@8 |l#1|)) (ite (< i@@8 |l#2|) (|Select__T@[Int]Int_| |l#3| i@@8) (|Select__T@[Int]Int_| |l#4| (- i@@8 |l#5|))) |l#6|))
  :qid |SlidingNoncebaselinebpl.73:19|
- :skolemid |34|
+ :skolemid |36|
  :pattern ( (|Select__T@[Int]Int_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@8))
 )))
 (assert (forall ((|l#0@@1| Int) (|l#1@@0| Int) (|l#2@@0| |T@[Int]Int|) (|l#3@@0| Int) (|l#4@@0| Int) (|l#5@@0| Int) (i@@9 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@9) (ite  (and (<= |l#0@@1| i@@9) (< i@@9 |l#1@@0|)) (|Select__T@[Int]Int_| |l#2@@0| (- (- |l#3@@0| i@@9) |l#4@@0|)) |l#5@@0|))
  :qid |SlidingNoncebaselinebpl.82:30|
- :skolemid |35|
+ :skolemid |37|
  :pattern ( (|Select__T@[Int]Int_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@9))
 )))
 (assert (forall ((|l#0@@2| Int) (|l#1@@1| Int) (|l#2@@1| Int) (|l#3@@1| |T@[Int]Int|) (|l#4@@1| |T@[Int]Int|) (|l#5@@1| Int) (|l#6@@0| Int) (j@@1 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@1) (ite  (and (>= j@@1 |l#0@@2|) (< j@@1 |l#1@@1|)) (ite (< j@@1 |l#2@@1|) (|Select__T@[Int]Int_| |l#3@@1| j@@1) (|Select__T@[Int]Int_| |l#4@@1| (+ j@@1 |l#5@@1|))) |l#6@@0|))
  :qid |SlidingNoncebaselinebpl.63:20|
- :skolemid |36|
+ :skolemid |38|
  :pattern ( (|Select__T@[Int]Int_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@1))
 )))
 ; Valid
 
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun $1_SlidingNonce_SlidingNonce_$memory () T@$Memory_10302)
-(declare-fun _$t0 () Int)
+(declare-fun $1_SlidingNonce_SlidingNonce_$memory () T@$Memory_10531)
+(declare-fun _$t0 () T@$signer)
 (declare-fun _$t1 () Int)
 (declare-fun $t7@0 () Int)
 (declare-fun $t9@0 () Bool)
@@ -465,37 +485,37 @@ anon0_correct)))))))))))))
 (declare-fun $t7 () Int)
 (declare-fun $t5 () Int)
 (declare-fun |$temp_0'bool'@0| () Bool)
-(declare-fun $1_SlidingNonce_SlidingNonce_$memory@1 () T@$Memory_10302)
+(declare-fun $1_SlidingNonce_SlidingNonce_$memory@1 () T@$Memory_10531)
 (declare-fun |Store__T@[Int]Bool_| (|T@[Int]Bool| Int Bool) |T@[Int]Bool|)
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?x2 Bool)) (! (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]Bool|) ( ?x1 Int) ( ?y1 Int) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]Bool_| (|Store__T@[Int]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]Bool_| ?x0 ?y1))) :weight 0)))
-(declare-fun $1_SlidingNonce_SlidingNonce_$memory@0 () T@$Memory_10302)
+(declare-fun $1_SlidingNonce_SlidingNonce_$memory@0 () T@$Memory_10531)
 (declare-fun |Store__T@[Int]$1_SlidingNonce_SlidingNonce_| (|T@[Int]$1_SlidingNonce_SlidingNonce| Int T@$1_SlidingNonce_SlidingNonce) |T@[Int]$1_SlidingNonce_SlidingNonce|)
 (declare-fun |Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|T@[Int]$1_SlidingNonce_SlidingNonce| Int) T@$1_SlidingNonce_SlidingNonce)
 (assert (forall ( ( ?x0 |T@[Int]$1_SlidingNonce_SlidingNonce|) ( ?x1 Int) ( ?x2 T@$1_SlidingNonce_SlidingNonce)) (! (= (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|Store__T@[Int]$1_SlidingNonce_SlidingNonce_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]$1_SlidingNonce_SlidingNonce|) ( ?x1 Int) ( ?y1 Int) ( ?x2 T@$1_SlidingNonce_SlidingNonce)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|Store__T@[Int]$1_SlidingNonce_SlidingNonce_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| ?x0 ?y1))) :weight 0)))
 (declare-fun |$temp_0'$1_SlidingNonce_SlidingNonce'@0| () T@$1_SlidingNonce_SlidingNonce)
-(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory () T@$Memory_10071)
+(declare-fun $1_DiemTimestamp_CurrentTimeMicroseconds_$memory () T@$Memory_10297)
 (push 1)
 (set-info :boogie-vc-id $1_SlidingNonce_record_nonce_or_abort$verify)
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 13589) (let ((L3_correct  (and (=> (= (ControlFlow 0 12462) (- 0 13910)) (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0)))) (=> (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0))) (=> (= (ControlFlow 0 12462) (- 0 13930)) (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (= 5 $t7@0)) (and (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0)) (= 7 $t7@0))))))))
-(let ((anon11_Else_correct  (=> (and (and (not $t9@0) (= $t10 $t10)) (and (= $t7@0 $t10) (= (ControlFlow 0 12390) 12462))) L3_correct)))
-(let ((anon9_Then_correct  (=> $t6 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)) (= 5 $t7)) (= $t7 $t7)) (and (= $t7@0 $t7) (= (ControlFlow 0 12542) 12462))) L3_correct))))
-(let ((anon11_Then_correct  (=> $t9@0 (and (=> (= (ControlFlow 0 12498) (- 0 13856)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0))) (=> (= (ControlFlow 0 12498) (- 0 13869)) (not (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0)))))))))
-(let ((anon5_correct  (=> (|$IsValid'u64'| $t5) (=> (and (and (and (= $t5 ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1)) (= $t5 $t5)) (and (|$IsValid'u64'| 0) (= $t9@0 (= $t5 0)))) (and (and (|$IsValid'u64'| $t10) (= $t10 7)) (and (= $t10 $t10) (= $t9@0 $t9@0)))) (and (=> (= (ControlFlow 0 12374) 12498) anon11_Then_correct) (=> (= (ControlFlow 0 12374) 12390) anon11_Else_correct))))))
-(let ((anon10_Else_correct  (=> (not |$temp_0'bool'@0|) (=> (and (= $1_SlidingNonce_SlidingNonce_$memory@1 ($Memory_10302 (|Store__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0 false) (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory))) (= (ControlFlow 0 12316) 12374)) anon5_correct))))
-(let ((anon10_Then_correct  (=> |$temp_0'bool'@0| (=> (and (= $1_SlidingNonce_SlidingNonce_$memory@0 ($Memory_10302 (|Store__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0 true) (|Store__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0 |$temp_0'$1_SlidingNonce_SlidingNonce'@0|))) (= (ControlFlow 0 12512) 12374)) anon5_correct))))
-(let ((anon9_Else_correct  (=> (not $t6) (and (=> (= (ControlFlow 0 12302) 12512) anon10_Then_correct) (=> (= (ControlFlow 0 12302) 12316) anon10_Else_correct)))))
-(let ((anon0$1_correct  (=> (and (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) 186537453))) (and (|$IsValid'address'| _$t0) (|$IsValid'u64'| _$t1))) (and (and (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) $a_0)))
+ (=> (= (ControlFlow 0 0) 13929) (let ((L3_correct  (and (=> (= (ControlFlow 0 12774) (- 0 14250)) (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0)))) (=> (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0))) (=> (= (ControlFlow 0 12774) (- 0 14270)) (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (= 5 $t7@0)) (and (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0)) (= 7 $t7@0))))))))
+(let ((anon11_Else_correct  (=> (and (and (not $t9@0) (= $t10 $t10)) (and (= $t7@0 $t10) (= (ControlFlow 0 12702) 12774))) L3_correct)))
+(let ((anon9_Then_correct  (=> $t6 (=> (and (and (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))) (= 5 $t7)) (= $t7 $t7)) (and (= $t7@0 $t7) (= (ControlFlow 0 12854) 12774))) L3_correct))))
+(let ((anon11_Then_correct  (=> $t9@0 (and (=> (= (ControlFlow 0 12810) (- 0 14196)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0)))) (=> (= (ControlFlow 0 12810) (- 0 14209)) (not (not (= ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1) 0)))))))))
+(let ((anon5_correct  (=> (|$IsValid'u64'| $t5) (=> (and (and (and (= $t5 ($1_SlidingNonce_spec_try_record_nonce _$t0 _$t1)) (= $t5 $t5)) (and (|$IsValid'u64'| 0) (= $t9@0 (= $t5 0)))) (and (and (|$IsValid'u64'| $t10) (= $t10 7)) (and (= $t10 $t10) (= $t9@0 $t9@0)))) (and (=> (= (ControlFlow 0 12686) 12810) anon11_Then_correct) (=> (= (ControlFlow 0 12686) 12702) anon11_Else_correct))))))
+(let ((anon10_Else_correct  (=> (not |$temp_0'bool'@0|) (=> (and (= $1_SlidingNonce_SlidingNonce_$memory@1 ($Memory_10531 (|Store__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0) false) (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory))) (= (ControlFlow 0 12628) 12686)) anon5_correct))))
+(let ((anon10_Then_correct  (=> |$temp_0'bool'@0| (=> (and (= $1_SlidingNonce_SlidingNonce_$memory@0 ($Memory_10531 (|Store__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0) true) (|Store__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0) |$temp_0'$1_SlidingNonce_SlidingNonce'@0|))) (= (ControlFlow 0 12824) 12686)) anon5_correct))))
+(let ((anon9_Else_correct  (=> (not $t6) (and (=> (= (ControlFlow 0 12614) 12824) anon10_Then_correct) (=> (= (ControlFlow 0 12614) 12628) anon10_Else_correct)))))
+(let ((anon0$1_correct  (=> (and (and (and (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) 173345816)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_10297| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) 186537453))) (and (|$IsValid'address'| (|$addr#$signer| _$t0)) (|$IsValid'u64'| _$t1))) (and (and (forall (($a_0 Int) ) (! (let (($rsc (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) $a_0)))
 (|$IsValid'$1_SlidingNonce_SlidingNonce'| $rsc))
- :qid |SlidingNoncebaselinebpl.1208:20|
- :skolemid |32|
- :pattern ( (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) $a_0))
-)) (= _$t0 _$t0)) (and (= _$t1 _$t1) (= $t6  (not (|Select__T@[Int]Bool_| (|domain#$Memory_10302| $1_SlidingNonce_SlidingNonce_$memory) _$t0)))))) (and (=> (= (ControlFlow 0 12296) 12542) anon9_Then_correct) (=> (= (ControlFlow 0 12296) 12302) anon9_Else_correct)))))
-(let ((anon0_correct  (=> (= (ControlFlow 0 13589) 12296) anon0$1_correct)))
+ :qid |SlidingNoncebaselinebpl.1222:20|
+ :skolemid |34|
+ :pattern ( (|Select__T@[Int]$1_SlidingNonce_SlidingNonce_| (|contents#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) $a_0))
+)) (= _$t0 _$t0)) (and (= _$t1 _$t1) (= $t6  (not (|Select__T@[Int]Bool_| (|domain#$Memory_10531| $1_SlidingNonce_SlidingNonce_$memory) (|$addr#$signer| _$t0))))))) (and (=> (= (ControlFlow 0 12608) 12854) anon9_Then_correct) (=> (= (ControlFlow 0 12608) 12614) anon9_Else_correct)))))
+(let ((anon0_correct  (=> (= (ControlFlow 0 13929) 12608) anon0$1_correct)))
 anon0_correct)))))))))))
 ))
 (check-sat)

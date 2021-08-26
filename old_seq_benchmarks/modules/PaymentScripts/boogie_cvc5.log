@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc5.bpl
+/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc5.bpl
 -monomorphize
 /env:2
 /proverLog:PaymentScripts.cvc5.smt2
@@ -8,12 +8,13 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc5.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc5.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.376 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 1 verified, 0 errors
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'

@@ -17,7 +17,7 @@ CVC4_EXE=/home/ying/bin/cvc4
 
 boogie=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 move_dir=~/diem/language/diem-framework/modules
-bm_dir=~/diem/seq_benchmarks/modules
+bm_dir=~/diem/old_seq_benchmarks/modules
 cvc4=/home/ying/bin/cvc4
 
 rm cvc4.t

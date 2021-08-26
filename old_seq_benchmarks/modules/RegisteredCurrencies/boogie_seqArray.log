@@ -19,12 +19,29 @@ Verifying $1_DiemTimestamp_update_global_time$verify ...
   [0.223 s, 8 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.041 s, 16 proof obligations]  verified
+  [0.037 s, 16 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
-  [0.186 s, 10 proof obligations]  verified
+  [0.179 s, 10 proof obligations]  error
+assert_failed(26,3010,3103): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(5806,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(2538,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(5806,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(5898,34): anon19_Else
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(2004,9): inline$$1_Vector_contains'vec'u8''$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(5936,5): anon20_Else
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(566,9): inline$$Not$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(5936,5): anon20_Else$1
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(5972,17): anon21_Then
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(1888,8): inline$$1_Vector_push_back'vec'u8''$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(6001,5): anon22_Else
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(6036,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(6060,9): anon24_Then
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(6069,9): anon25_Then
+    /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.bpl(6076,5): anon17
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.224 s, 0 proof obligations]  verified
+  [0.210 s, 0 proof obligations]  verified
 
-Boogie program verifier finished with 4 verified, 0 errors
+Boogie program verifier finished with 3 verified, 1 error

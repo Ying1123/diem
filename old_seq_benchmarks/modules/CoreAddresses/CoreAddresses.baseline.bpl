@@ -838,13 +838,13 @@ function {:inline} $1_Hash_$sha3_256(val: Vec int): Vec int {
 
 procedure {:inline 1} $1_DiemAccount_create_signer(
   addr: int
-) returns (signer: int) {
+) returns (signer: $signer) {
     // A signer is currently identical to an address.
-    signer := addr;
+    signer := $signer(addr);
 }
 
 procedure {:inline 1} $1_DiemAccount_destroy_signer(
-  signer: int
+  signer: $signer
 ) {
   return;
 }
@@ -852,9 +852,29 @@ procedure {:inline 1} $1_DiemAccount_destroy_signer(
 // ==================================================================================
 // Native Signer
 
-procedure {:inline 1} $1_Signer_borrow_address(signer: int) returns (res: int) {
-    res := signer;
+type {:datatype} $signer;
+function {:constructor} $signer($addr: int): $signer;
+function {:inline} $IsValid'signer'(s: $signer): bool {
+    $IsValid'address'($addr#$signer(s))
 }
+function {:inline} $IsEqual'signer'(s1: $signer, s2: $signer): bool {
+    s1 == s2
+}
+
+procedure {:inline 1} $1_Signer_borrow_address(signer: $signer) returns (res: int) {
+    res := $addr#$signer(signer);
+}
+
+function {:inline} $1_Signer_$borrow_address(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
+function {:inline} $1_Signer_spec_address_of(signer: $signer): int
+{
+    $addr#$signer(signer)
+}
+
 
 // ==================================================================================
 // Native signature
@@ -891,21 +911,6 @@ procedure {:inline 1} $1_Signature_ed25519_verify(
 
 
 // ==================================================================================
-// Native Signer::spec_address_of
-
-function {:inline} $1_Signer_spec_address_of(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-function {:inline} $1_Signer_$borrow_address(signer: int): int
-{
-    // A signer is currently identical to an address.
-    signer
-}
-
-// ==================================================================================
 // Native Event module
 
 
@@ -923,8 +928,17 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
+// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
+axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
+function {:inline} $1_Signer_is_signer(addr: int): bool;
+axiom (forall addr: int ::
+(var $$res := $1_Signer_is_signer(addr);
+$IsValid'bool'($$res)));
+
 // fun CoreAddresses::assert_currency_info [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:79:5+160
-procedure {:timeLimit 40} $1_CoreAddresses_assert_currency_info$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_CoreAddresses_assert_currency_info$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
@@ -934,9 +948,9 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_currency_info$verify(_$t0: int
     var $t5: bool;
     var $t6: int;
     var $t7: int;
-    var $t0: int;
-    var $temp_0'address': int;
+    var $t0: $signer;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     $t0 := _$t0;
 
@@ -946,7 +960,7 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_currency_info$verify(_$t0: int
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:79:5+160
     assume {:print "$at(8,2960,3120)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:79:5+1
     assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
@@ -1044,7 +1058,7 @@ L3:
 }
 
 // fun CoreAddresses::assert_diem_root [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:30:5+148
-procedure {:timeLimit 40} $1_CoreAddresses_assert_diem_root$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_CoreAddresses_assert_diem_root$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
@@ -1054,9 +1068,9 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_diem_root$verify(_$t0: int) re
     var $t5: bool;
     var $t6: int;
     var $t7: int;
-    var $t0: int;
-    var $temp_0'address': int;
+    var $t0: $signer;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     $t0 := _$t0;
 
@@ -1066,7 +1080,7 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_diem_root$verify(_$t0: int) re
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:30:5+148
     assume {:print "$at(8,1153,1301)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:30:5+1
     assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
@@ -1164,7 +1178,7 @@ L3:
 }
 
 // fun CoreAddresses::assert_treasury_compliance [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:45:5+212
-procedure {:timeLimit 40} $1_CoreAddresses_assert_treasury_compliance$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_CoreAddresses_assert_treasury_compliance$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
@@ -1174,9 +1188,9 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_treasury_compliance$verify(_$t
     var $t5: bool;
     var $t6: int;
     var $t7: int;
-    var $t0: int;
-    var $temp_0'address': int;
+    var $t0: $signer;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     $t0 := _$t0;
 
@@ -1186,7 +1200,7 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_treasury_compliance$verify(_$t
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:45:5+212
     assume {:print "$at(8,1727,1939)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:45:5+1
     assume {:print "$track_local(2,2,0):", $t0} $t0 == $t0;
@@ -1286,7 +1300,7 @@ L3:
 }
 
 // fun CoreAddresses::assert_vm [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:64:5+136
-procedure {:timeLimit 40} $1_CoreAddresses_assert_vm$verify(_$t0: int) returns ()
+procedure {:timeLimit 40} $1_CoreAddresses_assert_vm$verify(_$t0: $signer) returns ()
 {
     // declare local variables
     var $t1: bool;
@@ -1296,9 +1310,9 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_vm$verify(_$t0: int) returns (
     var $t5: bool;
     var $t6: int;
     var $t7: int;
-    var $t0: int;
-    var $temp_0'address': int;
+    var $t0: $signer;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     $t0 := _$t0;
 
@@ -1308,7 +1322,7 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_vm$verify(_$t0: int) returns (
     // bytecode translation starts here
     // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:64:5+136
     assume {:print "$at(8,2419,2555)"} true;
-    assume $IsValid'address'($t0);
+    assume $IsValid'signer'($t0);
 
     // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:64:5+1
     assume {:print "$track_local(2,3,0):", $t0} $t0 == $t0;

@@ -16,45 +16,45 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.254 s, 9 proof obligations]  verified
+  [0.251 s, 9 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.097 s, 17 proof obligations]  verified
+  [0.102 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.180 s, 15 proof obligations]  verified
+  [0.204 s, 15 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.120 s, 20 proof obligations]  verified
+  [0.129 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
   [0.102 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.101 s, 20 proof obligations]  verified
+  [0.103 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.107 s, 20 proof obligations]  verified
+  [0.109 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.101 s, 20 proof obligations]  verified
+  [0.103 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.120 s, 20 proof obligations]  verified
+  [0.123 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorOperatorConfig_publish$verify ...
-  [0.069 s, 16 proof obligations]  verified
+  [0.073 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.089 s, 12 proof obligations]  verified
+  [0.093 s, 12 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.112 s, 10 proof obligations]  verified
+  [0.119 s, 10 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.136 s, 13 proof obligations]  verified
+  [0.134 s, 13 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.141 s, 15 proof obligations]  verified
+  [0.118 s, 15 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

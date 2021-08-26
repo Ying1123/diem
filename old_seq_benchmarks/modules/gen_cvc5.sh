@@ -18,7 +18,7 @@ CVC4_EXE=/home/ying/bin/cvc4
 boogie=/home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver
 cvc5=~/CVC4/prod/bin/cvc5
 move_dir=~/diem/language/diem-framework/modules
-bm_dir=~/diem/seq_benchmarks/modules
+bm_dir=~/diem/old_seq_benchmarks/modules
 
 rm cvc5.t
 cargo run --release --quiet --package move-prover --
@@ -46,7 +46,7 @@ do
             fi
             cp $move_dir/$filename.move $bm_dir_single/
 			
-            timeout 10 cargo run --release --quiet --package move-prover -- -d $move_dir -d ~/diem/language/move-stdlib/modules $move_dir/$filename.move --use-cvc4 --vector-theory SmtSeq -v debug -k > $bm_dir_single/mvp_cvc4.log 2>&1
+            timeout 10 cargo run --release --quiet --package move-prover -- -d $move_dir -d ~/diem/language/move-stdlib/modules $move_dir/$filename.move --use-cvc4 --vector-theory SmtSeq -v debug -k > $bm_dir_single/mvp_cvc5.log 2>&1
             rm *.smt
             rm *.bpl.log
             output_bpl=./output.bpl

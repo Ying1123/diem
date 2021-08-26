@@ -16,79 +16,79 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.271 s, 17 proof obligations]  verified
+  [0.261 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.081 s, 7 proof obligations]  verified
+  [0.086 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
   [0.091 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.092 s, 18 proof obligations]  verified
+  [0.094 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.106 s, 20 proof obligations]  verified
+  [0.102 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.110 s, 20 proof obligations]  verified
+  [0.109 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.095 s, 20 proof obligations]  verified
+  [0.098 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.081 s, 20 proof obligations]  verified
+  [0.077 s, 20 proof obligations]  verified
 
 Verifying $1_AccountLimits_current_time$verify ...
-  [0.018 s, 0 proof obligations]  verified
+  [0.019 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify ...
-  [0.176 s, 9 proof obligations]  verified
+  [0.175 s, 9 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_0 ...
-  [0.181 s, 9 proof obligations]  verified
+  [0.187 s, 9 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_1 ...
-  [0.180 s, 9 proof obligations]  verified
+  [0.179 s, 9 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_withdraw_and_update_window$verify ...
-  [0.201 s, 8 proof obligations]  verified
+  [0.209 s, 8 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_withdraw_and_update_window$verify_instantiated_0 ...
-  [0.204 s, 8 proof obligations]  verified
+  [0.206 s, 8 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_withdraw_and_update_window$verify_instantiated_1 ...
-  [0.216 s, 8 proof obligations]  verified
+  [0.212 s, 8 proof obligations]  verified
 
 Verifying $1_AccountLimits_grant_mutation_capability$verify ...
-  [0.030 s, 6 proof obligations]  verified
+  [0.035 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_limits_published$verify ...
   [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_limits_published$verify_instantiated_0 ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_limits_published$verify_instantiated_1 ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_window_published$verify ...
-  [0.009 s, 1 proof obligation]  verified
+  [0.010 s, 1 proof obligation]  verified
 
 Verifying $1_AccountLimits_is_unrestricted$verify ...
-  [0.011 s, 2 proof obligations]  verified
+  [0.010 s, 2 proof obligations]  verified
 
 Verifying $1_AccountLimits_limits_definition_address$verify ...
   [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_publish_window$verify ...
-  [0.103 s, 12 proof obligations]  verified
+  [0.104 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_publish_window$verify_instantiated_0 ...
-  [0.125 s, 12 proof obligations]  verified
+  [0.108 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_publish_window$verify_instantiated_1 ...
-  [0.106 s, 12 proof obligations]  verified
+  [0.107 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_reset_window$verify ...
   [0.085 s, 5 proof obligations]  verified
@@ -97,39 +97,39 @@ Verifying $1_AccountLimits_update_deposit_limits$verify ...
   [0.236 s, 14 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_deposit_limits$verify_instantiated_0 ...
-  [0.247 s, 14 proof obligations]  verified
+  [0.239 s, 14 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_deposit_limits$verify_instantiated_1 ...
-  [0.247 s, 14 proof obligations]  verified
+  [0.252 s, 14 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify ...
-  [0.202 s, 12 proof obligations]  verified
+  [0.204 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
-  [0.197 s, 12 proof obligations]  verified
+  [0.211 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
-  [0.205 s, 12 proof obligations]  verified
+  [0.220 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_window_info$verify ...
-  [0.186 s, 6 proof obligations]  verified
+  [0.183 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_window_info$verify_instantiated_0 ...
-  [0.188 s, 6 proof obligations]  verified
+  [0.181 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_window_info$verify_instantiated_1 ...
-  [0.186 s, 6 proof obligations]  verified
+  [0.188 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_withdrawal_limits$verify ...
-  [0.224 s, 13 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_0 ...
-  [0.254 s, 13 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_1 ...
   [0.223 s, 13 proof obligations]  verified
 
+Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_0 ...
+  [0.256 s, 13 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_1 ...
+  [0.226 s, 13 proof obligations]  verified
+
 Verifying $1_Genesis_initialize$verify ...
-  [0.152 s, 0 proof obligations]  verified
+  [0.156 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 39 verified, 0 errors

@@ -2,5 +2,24 @@
 /home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.seqArray.smt2:1416.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
 unsat
 unsat

@@ -1,5 +1,5 @@
 ---Command arguments
-/home/ying/diem/seq_benchmarks/modules/AccountLimits/AccountLimits.cvc5.bpl
+/home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.cvc5.bpl
 -monomorphize
 /env:2
 /proverLog:AccountLimits.cvc5.smt2
@@ -8,57 +8,45 @@
 /trace
 -doModSetAnalysis
 --------------------
-Parsing /home/ying/diem/seq_benchmarks/modules/AccountLimits/AccountLimits.cvc5.bpl
+Parsing /home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.cvc5.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
-
-Verifying $1_Roles_grant_role$verify ...
-  [0.201 s, 7 proof obligations]  verified
-
-Verifying $1_AccountLimits_current_time$verify ...
-  [0.005 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_can_receive_and_update_window$verify ...
-  [0.134 s, 9 proof obligations]  verified
-
-Verifying $1_AccountLimits_can_withdraw_and_update_window$verify ...
-  [0.126 s, 8 proof obligations]  verified
-
-Verifying $1_AccountLimits_grant_mutation_capability$verify ...
-  [0.016 s, 6 proof obligations]  verified
-
-Verifying $1_AccountLimits_has_limits_published$verify ...
-  [0.002 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_has_window_published$verify ...
-  [0.003 s, 1 proof obligation]  verified
-
-Verifying $1_AccountLimits_is_unrestricted$verify ...
-  [0.014 s, 2 proof obligations]  verified
-
-Verifying $1_AccountLimits_limits_definition_address$verify ...
-  [0.003 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_publish_window$verify ...
-  [0.037 s, 9 proof obligations]  verified
-
-Verifying $1_AccountLimits_reset_window$verify ...
-  [0.056 s, 5 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_deposit_limits$verify ...
-  [0.100 s, 11 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_limits_definition$verify ...
-  [0.072 s, 8 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_window_info$verify ...
-  [0.005 s, 0 proof obligations]  verified
-
-Verifying $1_AccountLimits_update_withdrawal_limits$verify ...
-  [0.107 s, 10 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.178 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 16 verified, 0 errors
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'

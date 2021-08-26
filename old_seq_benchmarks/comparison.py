@@ -76,7 +76,7 @@ with open('comparison_result.csv', mode='w') as result_file:
 					with open(dirName + "/" + fname, "r") as f:
 						lines = f.readlines()
 						last_line = lines[-1]
-						if exists("SIGTERM", lines) or exists("timeout", last_line):
+						if exists("SIGTERM", lines) or exists("timeout", lines):
 							results["timeout"] += 1
 							result_map[belong] = "timeout"
 						else:

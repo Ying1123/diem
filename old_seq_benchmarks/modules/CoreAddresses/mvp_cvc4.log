@@ -1,11 +1,11 @@
-02:11:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_vm` to be verified
-02:11:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_treasury_compliance` to be verified
-02:11:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_diem_root` to be verified
-02:11:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_currency_info` to be verified
-02:11:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-02:11:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+02:35:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_vm` to be verified
+02:35:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_treasury_compliance` to be verified
+02:35:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_diem_root` to be verified
+02:35:19 [DEBUG] (1) bytecode::verification_analysis_v2: marking `CoreAddresses::assert_currency_info` to be verified
+02:35:19 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+02:35:19 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
 [INFO] translating module CoreAddresses
-02:11:16 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+02:35:19 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-02:11:16 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
-02:11:16 [DEBUG] (12) boogie_backend::prover_task_runner: running Boogie command with seed 1
+02:35:19 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
+02:35:19 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1

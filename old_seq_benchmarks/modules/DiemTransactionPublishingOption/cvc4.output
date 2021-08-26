@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:378.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:1360.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:404.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:1424.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

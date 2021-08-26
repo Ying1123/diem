@@ -1,5 +1,12 @@
-/home/ying/diem/seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:372.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:1351.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:398.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:1416.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
 unsat
 unsat
 unsat

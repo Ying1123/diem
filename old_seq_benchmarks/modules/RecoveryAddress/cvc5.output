@@ -1,5 +1,5 @@
-/home/ying/diem/seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.cvc5.smt2:386.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.cvc5.smt2:1388.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.cvc5.smt2:448.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RecoveryAddress/RecoveryAddress.cvc5.smt2:1633.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

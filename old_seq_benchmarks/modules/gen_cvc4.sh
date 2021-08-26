@@ -62,7 +62,7 @@ do
             # generate smt2
             bm_smt2=$filename.cvc4.smt2
             start=$(date +%s)
-            timeout 20 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC4 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
+            timeout 20 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$cvc4 /proverOpt:SOLVER=CVC5 /trace -doModSetAnalysis > $bm_dir_single/boogie_cvc4.log 2>&1
             end=$(date +%s)
             take=$(( end - start ))
             echo $filename >> cvc4.t

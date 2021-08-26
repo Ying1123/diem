@@ -1,3 +1,4 @@
-/home/ying/diem/seq_benchmarks/modules/DiemId/DiemId.cvc5.smt2:383.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/DiemId/DiemId.cvc5.smt2:1404.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemId/DiemId.cvc5.smt2:418.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+/home/ying/diem/old_seq_benchmarks/modules/DiemId/DiemId.cvc5.smt2:1527.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

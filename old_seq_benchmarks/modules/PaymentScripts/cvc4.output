@@ -1,2 +1,4 @@
-/home/ying/diem/seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc4.smt2:372.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc4.smt2:442.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
+/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.cvc4.smt2:1629.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

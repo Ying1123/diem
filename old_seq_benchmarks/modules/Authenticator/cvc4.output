@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/modules/Authenticator/Authenticator.cvc4.smt2:46.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.cvc4.smt2:47.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

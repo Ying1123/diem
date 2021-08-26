@@ -1,3 +1,3 @@
-/home/ying/diem/seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.cvc4.smt2:412.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.cvc4.smt2:1484.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.cvc4.smt2:455.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.cvc4.smt2:1660.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

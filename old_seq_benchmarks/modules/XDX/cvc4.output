@@ -1,4 +1,4 @@
-/home/ying/diem/seq_benchmarks/modules/XDX/XDX.cvc4.smt2:377.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules/XDX/XDX.cvc4.smt2:1361.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/XDX/XDX.cvc4.smt2:420.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/XDX/XDX.cvc4.smt2:1492.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

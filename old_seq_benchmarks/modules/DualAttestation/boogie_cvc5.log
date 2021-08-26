@@ -4,39 +4,100 @@
 /env:2
 /proverLog:DualAttestation.cvc5.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
-/proverOpt:SOLVER=CVC4
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.cvc5.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
-Fatal Error: ProverException: Invalid SOLVER value; must be 'Z3' or 'CVC5' or 'Yices2'
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.220 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [0.061 s, 17 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.024 s, 7 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [0.075 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [0.060 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [0.080 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [0.059 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [0.076 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [0.065 s, 20 proof obligations]  verified
+
+Verifying $1_DualAttestation_initialize$verify ...
+  [0.051 s, 13 proof obligations]  verified
+
+Verifying $1_DualAttestation_human_name$verify ...
+  [0.030 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify ...
+  [0.060 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_0 ...
+  [0.057 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_1 ...
+  [0.051 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_signature_is_valid$verify ...
+  [0.040 s, 11 proof obligations]  verified
+
+Verifying $1_DualAttestation_base_url$verify ...
+  [0.033 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_compliance_public_key$verify ...
+  [0.018 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_credential_address$verify ...
+  [0.010 s, 8 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_message$verify ...
+  [0.023 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify ...
+  [0.033 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_0 ...
+  [0.037 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_1 ...
+  [0.037 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_expiration_date$verify ...
+  [0.019 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_get_cur_microdiem_limit$verify ...
+  [0.029 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_publish_credential$verify ...
+  [0.073 s, 15 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_base_url$verify ...
+  [0.225 s, 13 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
+  [0.263 s, 14 proof obligations]  verified
+
+Verifying $1_DualAttestation_set_microdiem_limit$verify ...
+  [0.034 s, 12 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.163 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 29 verified, 0 errors

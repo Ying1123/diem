@@ -16,39 +16,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.268 s, 17 proof obligations]  verified
+  [0.263 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
   [0.048 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.088 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.090 s, 18 proof obligations]  verified
-
-Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.107 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_parent_vasp_role$verify ...
   [0.087 s, 20 proof obligations]  verified
 
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [0.100 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [0.103 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [0.086 s, 20 proof obligations]  verified
+
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.081 s, 20 proof obligations]  verified
+  [0.082 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.096 s, 20 proof obligations]  verified
+  [0.087 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorOperatorConfig_get_human_name$verify ...
   [0.014 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorOperatorConfig_has_validator_operator_config$verify ...
-  [0.003 s, 1 proof obligation]  verified
+  [0.005 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorOperatorConfig_publish$verify ...
-  [0.084 s, 17 proof obligations]  verified
+  [0.090 s, 17 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.171 s, 0 proof obligations]  verified
+  [0.177 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

@@ -16,30 +16,30 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.220 s, 8 proof obligations]  verified
+  [0.221 s, 8 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.095 s, 17 proof obligations]  verified
+  [0.097 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
   [0.062 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.112 s, 20 proof obligations]  verified
+  [0.103 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.089 s, 18 proof obligations]  verified
+  [0.082 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.081 s, 20 proof obligations]  verified
+  [0.086 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.104 s, 20 proof obligations]  verified
+  [0.096 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.101 s, 20 proof obligations]  verified
+  [0.096 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.103 s, 20 proof obligations]  verified
+  [0.094 s, 20 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

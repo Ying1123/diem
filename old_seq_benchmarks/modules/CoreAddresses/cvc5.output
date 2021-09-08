@@ -1,7 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.cvc5.smt2:63.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.cvc5.smt2:41.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
-unsat
-/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.cvc5.smt2:295.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat

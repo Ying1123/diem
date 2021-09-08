@@ -1,55 +1,55 @@
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `ValidatorOperatorConfig::has_validator_operator_config` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `ValidatorOperatorConfig::get_human_name` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_child_vasp_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_diem_root_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_operator_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_parent_vasp_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_designated_dealer_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `ValidatorOperatorConfig::publish` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_treasury_compliance_role` to be verified
-06:35:16 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Genesis::initialize` to be verified
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module CoreAddresses
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTimestamp
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Roles
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `ValidatorOperatorConfig::has_validator_operator_config` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `ValidatorOperatorConfig::get_human_name` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_child_vasp_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_diem_root_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_validator_operator_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_parent_vasp_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::new_designated_dealer_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `ValidatorOperatorConfig::publish` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Roles::grant_treasury_compliance_role` to be verified
+17:02:59 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Genesis::initialize` to be verified
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signer
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Errors
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module CoreAddresses
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTimestamp
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Roles
 [INFO] translating module ValidatorOperatorConfig
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Option
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signature
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorConfig
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SlidingNonce
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemConfig
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemSystem
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module FixedPoint32
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RegisteredCurrencies
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Diem
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountLimits
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XUS
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XDX
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASPDomain
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASP
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module TransactionFee
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DualAttestation
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTransactionPublishingOption
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DesignatedDealer
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ChainId
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountFreezing
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemAccount
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Authenticator
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SharedEd25519PublicKey
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RecoveryAddress
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountAdministrationScripts
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemBlock
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVMConfig
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVersion
-06:35:16 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Genesis
-06:35:16 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Vector
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Option
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Signature
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ValidatorConfig
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SlidingNonce
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module BCS
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Event
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemConfig
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemSystem
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Hash
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module FixedPoint32
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RegisteredCurrencies
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Diem
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountLimits
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XUS
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module XDX
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASPDomain
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module VASP
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module TransactionFee
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DualAttestation
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemTransactionPublishingOption
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DesignatedDealer
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module ChainId
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountFreezing
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemAccount
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Authenticator
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module SharedEd25519PublicKey
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module RecoveryAddress
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module AccountAdministrationScripts
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemBlock
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVMConfig
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module DiemVersion
+17:02:59 [DEBUG] (1) boogie_backend::bytecode_translator: translating module Genesis
+17:02:59 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:35:16 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
-06:35:16 [DEBUG] (15) boogie_backend::prover_task_runner: running Boogie command with seed 1
+17:02:59 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
+17:02:59 [DEBUG] (12) boogie_backend::prover_task_runner: running Boogie command with seed 1

@@ -1,16 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.cvc4.smt2:437.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.cvc4.smt2:1520.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.cvc4.smt2:399.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.cvc4.smt2:1414.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 (error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")

@@ -1,5 +1,12 @@
-/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.cvc5.smt2:399.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.cvc5.smt2:1414.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.cvc5.smt2:407.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
-(error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")
+unsat
+unsat
+unsat
+unsat
+unsat
+/home/ying/diem/old_seq_benchmarks/modules/VASP/VASP.cvc5.smt2:1818.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat

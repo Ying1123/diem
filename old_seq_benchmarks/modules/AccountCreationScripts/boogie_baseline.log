@@ -14,39 +14,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify ...
-  [0.649 s, 51 proof obligations]  verified
+  [0.635 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_0 ...
-  [0.419 s, 51 proof obligations]  verified
+  [0.451 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_1 ...
-  [0.459 s, 51 proof obligations]  verified
+  [0.486 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify ...
-  [0.274 s, 39 proof obligations]  verified
+  [0.276 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_0 ...
-  [0.282 s, 39 proof obligations]  verified
+  [0.299 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_1 ...
-  [0.236 s, 39 proof obligations]  verified
+  [0.251 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify ...
-  [0.269 s, 36 proof obligations]  verified
-
-Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_0 ...
   [0.272 s, 36 proof obligations]  verified
 
+Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_0 ...
+  [0.286 s, 36 proof obligations]  verified
+
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_1 ...
-  [0.245 s, 36 proof obligations]  verified
+  [0.266 s, 36 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_validator_account$verify ...
-  [0.118 s, 25 proof obligations]  verified
+  [0.122 s, 25 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_validator_operator_account$verify ...
-  [0.109 s, 25 proof obligations]  verified
+  [0.114 s, 25 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.185 s, 0 proof obligations]  verified
+  [0.198 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

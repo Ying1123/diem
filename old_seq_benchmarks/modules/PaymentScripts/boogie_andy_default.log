@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.427 s, 0 proof obligations]  verified
+  [0.413 s, 0 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify ...
-  [0.421 s, 39 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl(14687,27): Verification inconclusive ($1_PaymentScripts_peer_to_peer_by_signers$verify)
+  [0.433 s, 39 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/PaymentScripts/PaymentScripts.andy.bpl(14692,27): Verification inconclusive ($1_PaymentScripts_peer_to_peer_by_signers$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

@@ -61,10 +61,10 @@ do
             mv ./output.bpl $bm_bpl
             # generate smt2
             bm_smt2=$filename.baseline.smt2
-            start=$(date +%s)
+            start=$(date +%s%N)
             timeout 20 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$z3 /proverOpt:SOLVER=Z3 /trace -doModSetAnalysis > $bm_dir_single/boogie_baseline.log 2>&1
-            end=$(date +%s)
-            take=$(( end - start ))
+            end=$(date +%s%N)
+            take=$((($end - $start)/1000000))
             echo $filename >> baseline.t
             echo ${take} >> baseline.t
 

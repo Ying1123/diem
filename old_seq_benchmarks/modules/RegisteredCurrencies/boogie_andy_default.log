@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.221 s, 8 proof obligations]  verified
+  [0.227 s, 8 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
   [0.035 s, 16 proof obligations]  verified
@@ -22,8 +22,8 @@ Prover error: Term of kind STRING_SUBSTR not supported in default mode, try --st
 
 
 Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
-  [0.039 s, 10 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy.bpl(5769,27): Verification inconclusive ($1_RegisteredCurrencies_add_currency_code$verify)
+  [0.047 s, 10 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy.bpl(5774,27): Verification inconclusive ($1_RegisteredCurrencies_add_currency_code$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

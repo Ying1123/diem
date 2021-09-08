@@ -16,8 +16,8 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [0.236 s, 18 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/VASPDomain/VASPDomain.andy.bpl(9126,27): Verification inconclusive ($1_VASPDomain_add_vasp_domain$verify)
+  [0.232 s, 18 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/VASPDomain/VASPDomain.andy.bpl(9131,27): Verification inconclusive ($1_VASPDomain_add_vasp_domain$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

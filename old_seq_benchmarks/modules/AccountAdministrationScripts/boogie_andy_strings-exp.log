@@ -15,33 +15,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
-  [0.412 s, 8 proof obligations]  verified
+  [0.413 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
-  [0.102 s, 8 proof obligations]  verified
+  [0.101 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_0 ...
-  [0.099 s, 8 proof obligations]  verified
+  [0.089 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_1 ...
   [0.104 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
-  [0.234 s, 9 proof obligations]  verified
+  [0.250 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
   [0.144 s, 11 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
-  [0.063 s, 7 proof obligations]  verified
+  [0.081 s, 7 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
-  [0.158 s, 10 proof obligations]  verified
+  [0.147 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
-  [0.267 s, 10 proof obligations]  verified
+  [0.262 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
-  [0.217 s, 10 proof obligations]  verified
+  [0.204 s, 10 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

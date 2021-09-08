@@ -14,33 +14,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.173 s, 8 proof obligations]  verified
+  [0.167 s, 8 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_initialize$verify ...
-  [0.048 s, 16 proof obligations]  verified
+  [0.039 s, 16 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_halt_all_transactions$verify ...
-  [0.030 s, 1 proof obligation]  verified
+  [0.028 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_module_allowed$verify ...
-  [0.033 s, 4 proof obligations]  verified
+  [0.029 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_script_allowed$verify ...
-  [0.053 s, 4 proof obligations]  verified
+  [0.046 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_resume_transactions$verify ...
-  [0.029 s, 1 proof obligation]  verified
+  [0.027 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_module$verify ...
-  [0.043 s, 9 proof obligations]  verified
+  [0.047 s, 9 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_script$verify ...
   [0.042 s, 9 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_transactions_halted$verify ...
-  [0.025 s, 1 proof obligation]  verified
+  [0.024 s, 1 proof obligation]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.211 s, 0 proof obligations]  verified
+  [0.193 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 10 verified, 0 errors

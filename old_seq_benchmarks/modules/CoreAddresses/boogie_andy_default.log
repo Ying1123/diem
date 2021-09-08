@@ -14,15 +14,15 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_CoreAddresses_assert_currency_info$verify ...
-  [0.137 s, 3 proof obligations]  verified
+  [0.133 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_diem_root$verify ...
   [0.006 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_treasury_compliance$verify ...
-  [0.005 s, 3 proof obligations]  verified
+  [0.006 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_vm$verify ...
-  [0.004 s, 3 proof obligations]  verified
+  [0.006 s, 3 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

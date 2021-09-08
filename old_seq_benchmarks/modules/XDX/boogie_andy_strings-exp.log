@@ -15,22 +15,22 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.224 s, 10 proof obligations]  verified
+  [0.234 s, 10 proof obligations]  verified
 
 Verifying $1_XDX_initialize$verify ...
-  [0.381 s, 29 proof obligations]  verified
+  [0.382 s, 29 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify ...
-  [0.033 s, 4 proof obligations]  verified
+  [0.032 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify_instantiated_0 ...
-  [0.019 s, 4 proof obligations]  verified
+  [0.022 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify_instantiated_1 ...
-  [0.019 s, 4 proof obligations]  verified
+  [0.021 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_reserve_address$verify ...
-  [0.001 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
   [0.187 s, 0 proof obligations]  verified

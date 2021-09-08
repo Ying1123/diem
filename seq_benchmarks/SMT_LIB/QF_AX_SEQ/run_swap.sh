@@ -28,6 +28,7 @@ find $seq_dir -type f -print0 | while read -d $'\0' file; do
         filename=$(basename $file .move)
 		echo $filename >> $time_new
 		echo ${take} >> $time_new
+		echo ${take}
 
 #		start=$(date +%s)
 #		timeout 10 $cvc $file --incremental --strings-exp

@@ -14,31 +14,31 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
 
 Verifying $1_VASP_has_account_limits$verify ...
-  [0.198 s, 1 proof obligation]  verified
+  [0.200 s, 1 proof obligation]  verified
 
 Verifying $1_VASP_is_child$verify ...
-  [0.008 s, 4 proof obligations]  verified
+  [0.005 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_is_parent$verify ...
-  [0.006 s, 4 proof obligations]  verified
+  [0.004 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_is_same_vasp$verify ...
-  [0.032 s, 5 proof obligations]  verified
+  [0.012 s, 5 proof obligations]  verified
 
 Verifying $1_VASP_is_vasp$verify ...
-  [0.011 s, 4 proof obligations]  verified
+  [0.008 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_num_children$verify ...
-  [0.022 s, 5 proof obligations]  verified
+  [0.018 s, 5 proof obligations]  verified
 
 Verifying $1_VASP_parent_address$verify ...
-  [0.016 s, 6 proof obligations]  verified
+  [0.015 s, 6 proof obligations]  verified
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.104 s, 18 proof obligations]  verified
+  [0.100 s, 18 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.052 s, 16 proof obligations]  verified
+  [0.059 s, 16 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
   [0.184 s, 0 proof obligations]  verified

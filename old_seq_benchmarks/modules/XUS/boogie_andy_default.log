@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.215 s, 9 proof obligations]  verified
+  [0.223 s, 9 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_XUS_initialize$verify ...
   [0.203 s, 30 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/XUS/XUS.andy.bpl(8828,27): Verification inconclusive ($1_XUS_initialize$verify)
+/home/ying/diem/old_seq_benchmarks/modules/XUS/XUS.andy.bpl(8833,27): Verification inconclusive ($1_XUS_initialize$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

@@ -14,13 +14,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Authenticator_create_multi_ed25519$verify ...
-  [0.123 s, 0 proof obligations]  verified
+  [0.124 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_public_keys$verify ...
-  [0.017 s, 0 proof obligations]  verified
+  [0.014 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_threshold$verify ...
-  [0.007 s, 0 proof obligations]  verified
+  [0.009 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_ed25519_authentication_key$verify ...
-  [0.023 s, 1 proof obligation]  verified
+  [0.025 s, 1 proof obligation]  verified

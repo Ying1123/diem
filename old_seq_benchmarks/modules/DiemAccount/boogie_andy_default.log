@@ -14,46 +14,47 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.254 s, 9 proof obligations]  verified
+  [0.245 s, 9 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.098 s, 17 proof obligations]  verified
+  [0.108 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.175 s, 15 proof obligations]  verified
+  [0.195 s, 15 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.122 s, 20 proof obligations]  verified
+  [0.123 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.103 s, 18 proof obligations]  verified
+  [0.102 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.105 s, 20 proof obligations]  verified
+  [0.096 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
   [0.108 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.119 s, 20 proof obligations]  verified
+  [0.118 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.121 s, 20 proof obligations]  verified
+  [0.116 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorOperatorConfig_publish$verify ...
-  [0.074 s, 16 proof obligations]  verified
+  [0.070 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.090 s, 12 proof obligations]  verified
+  [0.092 s, 12 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.114 s, 10 proof obligations]  verified
+  [0.117 s, 10 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
+Advisory: $1_ValidatorConfig_set_config$verify SKIPPED because of internal error: unexpected prover output: Broken pipe
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.035 s, 13 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.andy.bpl(10872,27): Verification inconclusive ($1_ValidatorConfig_set_config$verify)
+  [0.043 s, 13 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.andy.bpl(10877,27): Verification inconclusive ($1_ValidatorConfig_set_config$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
@@ -553,6 +554,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.Tasks.Task.InnerInvoke()
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
@@ -577,6 +579,7 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
    at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
    at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
    at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.Tasks.Task.InnerInvoke()
    at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
 --- End of stack trace from previous location ---
    at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
@@ -2576,7 +2579,8 @@ Unhandled exception. System.AggregateException: One or more errors occurred. (Br
  ---> (Inner Exception #104) System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
    at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.FileStream.WriteSpan(ReadOnlySpan`1 source)
+   at System.IO.FileStream.Write(Byte[] array, Int32 offset, Int32 count)
    at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
    at System.IO.StreamWriter.WriteLine(String value)
    at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111

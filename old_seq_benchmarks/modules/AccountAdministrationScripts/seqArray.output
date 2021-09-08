@@ -1,5 +1,15 @@
-/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.smt2:1416.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.smt2:457.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountAdministrationScripts/AccountAdministrationScripts.seqArray.smt2:1662.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
+unsat
 unsat
 unsat
 unsat

@@ -1,5 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy_strings.smt2:456.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy_strings.smt2:1661.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy_strings.smt2:454.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy_strings.smt2:1707.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -9,5 +9,3 @@ unsat
 unsat
 unsat
 unsat
-unsat
-cvc5 interrupted by SIGTERM.

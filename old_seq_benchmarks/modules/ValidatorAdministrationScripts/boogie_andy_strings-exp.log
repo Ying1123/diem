@@ -15,13 +15,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.256 s, 23 proof obligations]  verified
+  [1.260 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.026 s, 8 proof obligations]  verified
+  [0.027 s, 8 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify ...
-  [2.204 s, 19 proof obligations]  errors
+  [2.180 s, 19 proof obligations]  errors
 assert_failed(16,12177,12267): post-condition does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl(14063,9): anon0
@@ -78,15 +78,15 @@ Execution trace:
     /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl(14339,5): anon14_Else
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify ...
-  [2.993 s, 23 proof obligations]  verified
+  [2.876 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_operator$verify ...
-  [0.180 s, 14 proof obligations]  verified
+  [0.178 s, 14 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify ...
-  [0.141 s, 16 proof obligations]  verified
+  [0.145 s, 16 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.197 s, 0 proof obligations]  verified
+  [0.190 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 6 verified, 2 errors

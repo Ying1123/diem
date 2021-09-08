@@ -3473,6 +3473,62 @@ function {:inline} $CondExtendEventStore'$1_DualAttestation_ComplianceKeyRotatio
 
 
 // ----------------------------------------------------------------------------------
+// Native Event implementation for element type `$1_NetworkIdentity_NetworkIdentityChangeNotification`
+
+// Map type specific handle to universal one.
+type $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification' = $1_Event_EventHandle;
+
+function {:inline} $IsEqual'$1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification''(a: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification', b: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification'): bool {
+    a == b
+}
+
+function $IsValid'$1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification''(h: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification'): bool {
+    true
+}
+
+// Embed event `$1_NetworkIdentity_NetworkIdentityChangeNotification` into universal $EventRep
+function {:constructor} $ToEventRep'$1_NetworkIdentity_NetworkIdentityChangeNotification'(e: $1_NetworkIdentity_NetworkIdentityChangeNotification): $EventRep;
+axiom (forall v1, v2: $1_NetworkIdentity_NetworkIdentityChangeNotification :: {$ToEventRep'$1_NetworkIdentity_NetworkIdentityChangeNotification'(v1), $ToEventRep'$1_NetworkIdentity_NetworkIdentityChangeNotification'(v2)}
+    $IsEqual'$1_NetworkIdentity_NetworkIdentityChangeNotification'(v1, v2) <==> $ToEventRep'$1_NetworkIdentity_NetworkIdentityChangeNotification'(v1) == $ToEventRep'$1_NetworkIdentity_NetworkIdentityChangeNotification'(v2));
+
+// Creates a new event handle. This ensures each time it is called that a unique new abstract event handler is
+// returned.
+// TODO: we should check (and abort with the right code) if no generator exists for the signer.
+procedure {:inline 1} $1_Event_new_event_handle'$1_NetworkIdentity_NetworkIdentityChangeNotification'(signer: $signer) returns (res: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification') {
+    assume $1_Event_EventHandles[res] == false;
+    $1_Event_EventHandles := $1_Event_EventHandles[res := true];
+}
+
+// This boogie procedure is the model of `emit_event`. This model abstracts away the `counter` behavior, thus not
+// mutating (or increasing) `counter`.
+procedure {:inline 1} $1_Event_emit_event'$1_NetworkIdentity_NetworkIdentityChangeNotification'(handle_mut: $Mutation $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification', msg: $1_NetworkIdentity_NetworkIdentityChangeNotification)
+returns (res: $Mutation $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification') {
+    var handle: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    handle := $Dereference(handle_mut);
+    $es := $ExtendEventStore'$1_NetworkIdentity_NetworkIdentityChangeNotification'($es, handle, msg);
+    res := handle_mut;
+}
+
+procedure {:inline 1} $1_Event_destroy_handle'$1_NetworkIdentity_NetworkIdentityChangeNotification'(handle: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification') {
+}
+
+function {:inline} $ExtendEventStore'$1_NetworkIdentity_NetworkIdentityChangeNotification'(
+        es: $EventStore, handle: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification', msg: $1_NetworkIdentity_NetworkIdentityChangeNotification): $EventStore {
+    (var stream := streams#$EventStore(es)[handle];
+    (var stream_new := ExtendMultiset(stream, $ToEventRep'$1_NetworkIdentity_NetworkIdentityChangeNotification'(msg));
+    $EventStore(counter#$EventStore(es)+1, streams#$EventStore(es)[handle := stream_new])))
+}
+
+function {:inline} $CondExtendEventStore'$1_NetworkIdentity_NetworkIdentityChangeNotification'(
+        es: $EventStore, handle: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification', msg: $1_NetworkIdentity_NetworkIdentityChangeNotification, cond: bool): $EventStore {
+    if cond then
+        $ExtendEventStore'$1_NetworkIdentity_NetworkIdentityChangeNotification'(es, handle, msg)
+    else
+        es
+}
+
+
+// ----------------------------------------------------------------------------------
 // Native Event implementation for element type `$1_VASPDomain_VASPDomainEvent`
 
 // Map type specific handle to universal one.
@@ -3702,395 +3758,6 @@ L2:
 
 }
 
-// fun DiemTimestamp::update_global_time [verification] at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-procedure {:timeLimit 40} $1_DiemTimestamp_update_global_time$verify(_$t0: $signer, _$t1: int, _$t2: int) returns ()
-{
-    // declare local variables
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: $Mutation ($1_DiemTimestamp_CurrentTimeMicroseconds);
-    var $t8: int;
-    var $t9: int;
-    var $t10: bool;
-    var $t11: int;
-    var $t12: bool;
-    var $t13: int;
-    var $t14: $Mutation ($1_DiemTimestamp_CurrentTimeMicroseconds);
-    var $t15: int;
-    var $t16: int;
-    var $t17: bool;
-    var $t18: bool;
-    var $t19: int;
-    var $t20: int;
-    var $t21: bool;
-    var $t22: int;
-    var $t23: int;
-    var $t24: $Mutation (int);
-    var $t25: int;
-    var $t0: $signer;
-    var $t1: int;
-    var $t2: int;
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies: [int]bool;
-    var $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds': $1_DiemTimestamp_CurrentTimeMicroseconds;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#142: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
-    $t0 := _$t0;
-    $t1 := _$t1;
-    $t2 := _$t2;
-    assume IsEmptyVec(p#$Mutation($t7));
-    assume IsEmptyVec(p#$Mutation($t14));
-    assume IsEmptyVec(p#$Mutation($t24));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
-    assume {:print "$at(17,2579,3373)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
-
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume $IsValid'address'($t1);
-
-    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume $IsValid'u64'($t2);
-
-    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
-    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
-
-    // assume Identical($t9, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:78:9+34
-    assume {:print "$at(17,3497,3531)"} true;
-    assume ($t9 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // assume CanModify<DiemTimestamp::CurrentTimeMicroseconds>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:76:9+52
-    assume {:print "$at(17,3435,3487)"} true;
-    assume $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies[173345816];
-
-    // @142 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:76:9+52
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#142 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+1
-    assume {:print "$at(17,2579,2580)"} true;
-    assume {:print "$track_local(3,7,0):", $t0} $t0 == $t0;
-
-    // trace_local[proposer]($t1) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+1
-    assume {:print "$track_local(3,7,1):", $t1} $t1 == $t1;
-
-    // trace_local[timestamp]($t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+1
-    assume {:print "$track_local(3,7,2):", $t2} $t2 == $t2;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    // >> opaque call: DiemTimestamp::assert_operating()
-    assume {:print "$at(17,2735,2753)"} true;
-
-    // opaque begin: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-
-    // assume Identical($t10, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    assume ($t10 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // if ($t10) goto L10 else goto L9 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    if ($t10) { goto L10; } else { goto L9; }
-
-    // label L10 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-L10:
-
-    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t11)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t11));
-
-    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    assume {:print "$at(17,2735,2753)"} true;
-    assume {:print "$track_abort(3,7):", $t11} $t11 == $t11;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    goto L8;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-L9:
-
-    // opaque end: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    // >> opaque call: CoreAddresses::assert_vm($t0)
-    assume {:print "$at(17,2812,2845)"} true;
-
-    // opaque begin: CoreAddresses::assert_vm($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-
-    // assume Identical($t12, Neq<address>(Signer::spec_address_of($t0), 0)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    assume ($t12 == !$IsEqual'address'($1_Signer_spec_address_of($t0), 0));
-
-    // if ($t12) goto L12 else goto L11 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    if ($t12) { goto L12; } else { goto L11; }
-
-    // label L12 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-L12:
-
-    // assume And(Neq<address>(Signer::spec_address_of($t0), 0), Eq(2, $t11)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    assume (!$IsEqual'address'($1_Signer_spec_address_of($t0), 0) && $IsEqual'num'(2, $t11));
-
-    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    assume {:print "$at(17,2812,2845)"} true;
-    assume {:print "$track_abort(3,7):", $t11} $t11 == $t11;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    goto L8;
-
-    // label L11 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-L11:
-
-    // opaque end: CoreAddresses::assert_vm($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-
-    // $t13 := 0xa550c18 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:71+9
-    assume {:print "$at(17,2918,2927)"} true;
-    $t13 := 173345816;
-    assume $IsValid'address'($t13);
-
-    // assert CanModify<DiemTimestamp::CurrentTimeMicroseconds>($t13) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:28+17
-    assert {:msg "assert_failed(17,2875,2892): caller does not have permission to modify `DiemTimestamp::CurrentTimeMicroseconds` at given address"}
-      $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies[$t13];
-
-    // $t14 := borrow_global<DiemTimestamp::CurrentTimeMicroseconds>($t13) on_abort goto L8 with $t11 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:28+17
-    if (!$ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $t13)) {
-        call $ExecFailureAbort();
-    } else {
-        $t14 := $Mutation($Global($t13), EmptyVec(), $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $t13));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(17,2875,2892)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(3,7):", $t11} $t11 == $t11;
-        goto L8;
-    }
-
-    // trace_local[global_timer]($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:13+12
-    $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds' := $Dereference($t14);
-    assume {:print "$track_local(3,7,7):", $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'} $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds' == $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds';
-
-    // $t15 := get_field<DiemTimestamp::CurrentTimeMicroseconds>.microseconds($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:64:19+25
-    assume {:print "$at(17,2948,2973)"} true;
-    $t15 := $microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds($Dereference($t14));
-
-    // trace_local[now]($t15) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:64:13+3
-    assume {:print "$track_local(3,7,8):", $t15} $t15 == $t15;
-
-    // $t16 := 0x0 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:25+11
-    assume {:print "$at(17,2999,3010)"} true;
-    $t16 := 0;
-    assume $IsValid'address'($t16);
-
-    // $t17 := ==($t1, $t16) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:22+2
-    $t17 := $IsEqual'address'($t1, $t16);
-
-    // if ($t17) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:9+336
-    if ($t17) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:9+336
-L1:
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:9+336
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:20+3
-    assume {:print "$at(17,3114,3117)"} true;
-L0:
-
-    // $t18 := ==($t15, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:24+2
-    $t18 := $IsEqual'u64'($t15, $t2);
-
-    // $t19 := 2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:63+10
-    $t19 := 2;
-    assume $IsValid'u64'($t19);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-    // >> opaque call: $t16 := Errors::invalid_argument($t15)
-
-    // $t20 := opaque begin: Errors::invalid_argument($t19) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-
-    // assume WellFormed($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-    assume $IsValid'u64'($t20);
-
-    // assume Eq<u64>($t20, 7) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-    assume $IsEqual'u64'($t20, 7);
-
-    // $t20 := opaque end: Errors::invalid_argument($t19) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-
-    // trace_local[tmp#$4]($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    assume {:print "$track_local(3,7,4):", $t20} $t20 == $t20;
-
-    // trace_local[tmp#$3]($t18) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    assume {:print "$track_local(3,7,3):", $t18} $t18 == $t18;
-
-    // if ($t18) goto L3 else goto L4 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    if ($t18) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-L4:
-
-    // destroy($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-
-    // trace_abort($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    assume {:print "$at(17,3107,3169)"} true;
-    assume {:print "$track_abort(3,7):", $t20} $t20 == $t20;
-
-    // $t11 := move($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    $t11 := $t20;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    goto L8;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:75+1
-L3:
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:75+1
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:20+3
-    assume {:print "$at(17,3254,3257)"} true;
-L2:
-
-    // $t21 := <($t15, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:24+1
-    call $t21 := $Lt($t15, $t2);
-
-    // $t22 := 2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:62+10
-    $t22 := 2;
-    assume $IsValid'u64'($t22);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-    // >> opaque call: $t19 := Errors::invalid_argument($t18)
-
-    // $t23 := opaque begin: Errors::invalid_argument($t22) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-
-    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-    assume $IsValid'u64'($t23);
-
-    // assume Eq<u64>($t23, 7) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-    assume $IsEqual'u64'($t23, 7);
-
-    // $t23 := opaque end: Errors::invalid_argument($t22) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-
-    // trace_local[tmp#$6]($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    assume {:print "$track_local(3,7,6):", $t23} $t23 == $t23;
-
-    // trace_local[tmp#$5]($t21) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    assume {:print "$track_local(3,7,5):", $t21} $t21 == $t21;
-
-    // if ($t21) goto L5 else goto L6 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    if ($t21) { goto L5; } else { goto L6; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-L6:
-
-    // destroy($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-
-    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    assume {:print "$at(17,3247,3308)"} true;
-    assume {:print "$track_abort(3,7):", $t23} $t23 == $t23;
-
-    // $t11 := move($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    $t11 := $t23;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    goto L8;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:37+9
-    assume {:print "$at(17,3357,3366)"} true;
-L5:
-
-    // $t24 := borrow_field<DiemTimestamp::CurrentTimeMicroseconds>.microseconds($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+25
-    $t24 := $ChildMutation($t14, 0, $microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds($Dereference($t14)));
-
-    // write_ref($t24, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+37
-    $t24 := $UpdateMutation($t24, $t2);
-
-    // write_back[Reference($t14).microseconds]($t24) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+37
-    $t14 := $UpdateMutation($t14, $Update'$1_DiemTimestamp_CurrentTimeMicroseconds'_microseconds($Dereference($t14), $Dereference($t24)));
-
-    // assume Implies(DiemTimestamp::$is_operating(), Roles::spec_has_diem_root_role_addr(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:431:9+115
-    assume {:print "$at(17,2579,3373)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, 173345816));
-
-    // assume Implies(DiemTimestamp::$is_operating(), Roles::spec_has_treasury_compliance_role_addr(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:438:9+151
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, 186537453));
-
-    // write_back[DiemTimestamp::CurrentTimeMicroseconds@]($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+37
-    assume {:print "$at(17,3329,3366)"} true;
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory := $ResourceUpdate($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $GlobalLocationAddress($t14),
-        $Dereference($t14));
-
-    // assert Implies(DiemTimestamp::$is_operating(), Roles::spec_has_diem_root_role_addr(a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:431:9+115
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:431:9+115
-    assume {:print "$at(27,19457,19572)"} true;
-    assert {:msg "assert_failed(27,19457,19572): global memory invariant does not hold"}
-      ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, 173345816));
-
-    // assert Implies(DiemTimestamp::$is_operating(), Roles::spec_has_treasury_compliance_role_addr(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:438:9+151
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:438:9+151
-    assume {:print "$at(27,19990,20141)"} true;
-    assert {:msg "assert_failed(27,19990,20141): global memory invariant does not hold"}
-      ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, 186537453));
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:73:5+1
-    assume {:print "$at(17,3372,3373)"} true;
-L7:
-
-    // assume Identical($t25, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:79:9+44
-    assume {:print "$at(17,3540,3584)"} true;
-    assume ($t25 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // assert Not(Not(DiemTimestamp::$is_operating[@142]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:160:9+53
-    assume {:print "$at(17,6375,6428)"} true;
-    assert {:msg "assert_failed(17,6375,6428): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#142);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), 0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:75:9+88
-    assume {:print "$at(8,2798,2886)"} true;
-    assert {:msg "assert_failed(8,2798,2886): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 0);
-
-    // assert Not((if Eq<address>($t1, 0) {{let ; Neq<u64>($t9, $t2)}} else {{let ; Ge($t9, $t2)}})) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:87:9+225
-    assume {:print "$at(17,3892,4117)"} true;
-    assert {:msg "assert_failed(17,3892,4117): function does not abort under this condition"}
-      !if ($IsEqual'address'($t1, 0)) then (!$IsEqual'u64'($t9, $t2)) else (($t9 >= $t2));
-
-    // assert Eq<u64>($t25, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:84:9+30
-    assume {:print "$at(17,3760,3790)"} true;
-    assert {:msg "assert_failed(17,3760,3790): post-condition does not hold"}
-      $IsEqual'u64'($t25, $t2);
-
-    // return () at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:84:9+30
-    return;
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:73:5+1
-    assume {:print "$at(17,3372,3373)"} true;
-L8:
-
-    // assert Or(Or(Not(DiemTimestamp::$is_operating[@142]()), Neq<address>(Signer::spec_address_of[]($t0), 0)), (if Eq<address>($t1, 0) {{let ; Neq<u64>($t9, $t2)}} else {{let ; Ge($t9, $t2)}})) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:74:5+745
-    assume {:print "$at(17,3378,4123)"} true;
-    assert {:msg "assert_failed(17,3378,4123): abort not covered by any of the `aborts_if` clauses"}
-      ((!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#142) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 0)) || if ($IsEqual'address'($t1, 0)) then (!$IsEqual'u64'($t9, $t2)) else (($t9 >= $t2)));
-
-    // assert Or(Or(And(Not(DiemTimestamp::$is_operating[@142]()), Eq(1, $t11)), And(Neq<address>(Signer::spec_address_of[]($t0), 0), Eq(2, $t11))), And((if Eq<address>($t1, 0) {{let ; Neq<u64>($t9, $t2)}} else {{let ; Ge($t9, $t2)}}), Eq(7, $t11))) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:74:5+745
-    assert {:msg "assert_failed(17,3378,4123): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#142) && $IsEqual'num'(1, $t11)) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 0) && $IsEqual'num'(2, $t11))) || (if ($IsEqual'address'($t1, 0)) then (!$IsEqual'u64'($t9, $t2)) else (($t9 >= $t2)) && $IsEqual'num'(7, $t11)));
-
-    // abort($t11) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:74:5+745
-    $abort_code := $t11;
-    $abort_flag := true;
-    return;
-
-}
-
 // spec fun at /home/ying/diem/language/diem-framework/modules/Roles.move:480:9+148
 function {:inline} $1_Roles_spec_has_role_id_addr($1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId, addr: int, role_id: int): bool {
     ($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), role_id))
@@ -4149,6089 +3816,6 @@ function {:inline} $IsEqual'$1_Roles_RoleId'(s1: $1_Roles_RoleId, s2: $1_Roles_R
     s1 == s2
 }
 var $1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId;
-
-// fun Roles::assert_diem_root [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:240:5+347
-procedure {:timeLimit 40} $1_Roles_assert_diem_root$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: bool;
-    var $t11: int;
-    var $t12: int;
-    var $t13: $1_Roles_RoleId;
-    var $t14: int;
-    var $t15: int;
-    var $t16: bool;
-    var $t17: int;
-    var $t18: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#139: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:240:5+347
-    assume {:print "$at(27,9719,10066)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:240:5+347
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t0));
-
-    // @139 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:240:5+1
-    assume {:print "$at(27,9719,9720)"} true;
-    $1_Roles_RoleId_$memory#139 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:240:5+1
-    assume {:print "$track_local(4,2,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-    // >> opaque call: CoreAddresses::assert_diem_root($t0)
-    assume {:print "$at(27,9791,9831)"} true;
-
-    // opaque begin: CoreAddresses::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-
-    // assume Identical($t7, Neq<address>(Signer::spec_address_of($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-    assume ($t7 == !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
-
-    // if ($t7) goto L7 else goto L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-    if ($t7) { goto L7; } else { goto L6; }
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-L7:
-
-    // assume And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t8)) at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-    assume (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t8));
-
-    // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-    assume {:print "$at(27,9791,9831)"} true;
-    assume {:print "$track_abort(4,2):", $t8} $t8 == $t8;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-    goto L5;
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-L6:
-
-    // opaque end: CoreAddresses::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:241:9+40
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:242:20+27
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,9852,9879)"} true;
-
-    // $t9 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:242:20+27
-
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:242:20+27
-    assume $IsValid'address'($t9);
-
-    // assume Eq<address>($t9, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:242:20+27
-    assume $IsEqual'address'($t9, $1_Signer_spec_address_of($t0));
-
-    // $t9 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:242:20+27
-
-    // trace_local[addr]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:242:13+4
-    assume {:print "$track_local(4,2,5):", $t9} $t9 == $t9;
-
-    // $t10 := exists<Roles::RoleId>($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:16+6
-    assume {:print "$at(27,9896,9902)"} true;
-    $t10 := $ResourceExists($1_Roles_RoleId_$memory, $t9);
-
-    // $t11 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:243:60+8
-    $t11 := 0;
-    assume $IsValid'u64'($t11);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:243:38+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t12 := opaque begin: Errors::not_published($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:38+31
-
-    // assume WellFormed($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:38+31
-    assume $IsValid'u64'($t12);
-
-    // assume Eq<u64>($t12, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:38+31
-    assume $IsEqual'u64'($t12, 5);
-
-    // $t12 := opaque end: Errors::not_published($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:38+31
-
-    // trace_local[tmp#$2]($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-    assume {:print "$track_local(4,2,2):", $t12} $t12 == $t12;
-
-    // trace_local[tmp#$1]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-    assume {:print "$track_local(4,2,1):", $t10} $t10 == $t10;
-
-    // if ($t10) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-    if ($t10) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-L1:
-
-    // trace_abort($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-    assume {:print "$at(27,9889,9950)"} true;
-    assume {:print "$track_abort(4,2):", $t12} $t12 == $t12;
-
-    // $t8 := move($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-    $t8 := $t12;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:243:9+61
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:38+4
-    assume {:print "$at(27,9989,9993)"} true;
-L0:
-
-    // $t13 := get_global<Roles::RoleId>($t9) on_abort goto L5 with $t8 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:16+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t9)) {
-        call $ExecFailureAbort();
-    } else {
-        $t13 := $ResourceValue($1_Roles_RoleId_$memory, $t9);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,9967,9980)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(4,2):", $t8} $t8 == $t8;
-        goto L5;
-    }
-
-    // $t14 := get_field<Roles::RoleId>.role_id($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:16+35
-    $t14 := $role_id#$1_Roles_RoleId($t13);
-
-    // $t15 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:55+17
-    $t15 := 0;
-    assume $IsValid'u64'($t15);
-
-    // $t16 := ==($t14, $t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:52+2
-    $t16 := $IsEqual'u64'($t14, $t15);
-
-    // $t17 := 1 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:96+10
-    $t17 := 1;
-    assume $IsValid'u64'($t17);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:244:74+33
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t18 := opaque begin: Errors::requires_role($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:74+33
-
-    // assume WellFormed($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:74+33
-    assume $IsValid'u64'($t18);
-
-    // assume Eq<u64>($t18, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:74+33
-    assume $IsEqual'u64'($t18, 3);
-
-    // $t18 := opaque end: Errors::requires_role($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:74+33
-
-    // trace_local[tmp#$4]($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-    assume {:print "$track_local(4,2,4):", $t18} $t18 == $t18;
-
-    // trace_local[tmp#$3]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-    assume {:print "$track_local(4,2,3):", $t16} $t16 == $t16;
-
-    // if ($t16) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-    if ($t16) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-L3:
-
-    // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-    assume {:print "$at(27,9960,10059)"} true;
-    assume {:print "$track_abort(4,2):", $t18} $t18 == $t18;
-
-    // $t8 := move($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-    $t8 := $t18;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:9+99
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:244:108+1
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:245:5+1
-    assume {:print "$at(27,10065,10066)"} true;
-L4:
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(Not(exists[@139]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#139, $t6);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>($t6)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, $t6)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@139]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#139, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:245:5+1
-    assume {:print "$at(27,10065,10066)"} true;
-L5:
-
-    // assert Or(Or(Or(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Not(exists[@139]<Roles::RoleId>($t6))), Neq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>($t6)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:246:5+141
-    assume {:print "$at(27,10071,10212)"} true;
-    assert {:msg "assert_failed(27,10071,10212): abort not covered by any of the `aborts_if` clauses"}
-      (((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory#139, $t6)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, $t6)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
-
-    // assert Or(Or(Or(And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t8)), And(Not(exists[@139]<Roles::RoleId>($t6)), Eq(5, $t8))), And(Neq<u64>(select Roles::RoleId.role_id(global[@139]<Roles::RoleId>($t6)), 0), Eq(3, $t8))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:246:5+141
-    assert {:msg "assert_failed(27,10071,10212): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t8)) || (!$ResourceExists($1_Roles_RoleId_$memory#139, $t6) && $IsEqual'num'(5, $t8))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#139, $t6)), 0) && $IsEqual'num'(3, $t8))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t8)));
-
-    // abort($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:246:5+141
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_treasury_compliance [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:253:5+420
-procedure {:timeLimit 40} $1_Roles_assert_treasury_compliance$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: bool;
-    var $t11: int;
-    var $t12: int;
-    var $t13: $1_Roles_RoleId;
-    var $t14: int;
-    var $t15: int;
-    var $t16: bool;
-    var $t17: int;
-    var $t18: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#138: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:253:5+420
-    assume {:print "$at(27,10274,10694)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:253:5+420
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t0));
-
-    // @138 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:253:5+1
-    assume {:print "$at(27,10274,10275)"} true;
-    $1_Roles_RoleId_$memory#138 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:253:5+1
-    assume {:print "$track_local(4,6,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-    // >> opaque call: CoreAddresses::assert_treasury_compliance($t0)
-    assume {:print "$at(27,10356,10406)"} true;
-
-    // opaque begin: CoreAddresses::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-
-    // assume Identical($t7, Neq<address>(Signer::spec_address_of($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-    assume ($t7 == !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453));
-
-    // if ($t7) goto L7 else goto L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-    if ($t7) { goto L7; } else { goto L6; }
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-L7:
-
-    // assume And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t8)) at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-    assume (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t8));
-
-    // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-    assume {:print "$at(27,10356,10406)"} true;
-    assume {:print "$track_abort(4,6):", $t8} $t8 == $t8;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-    goto L5;
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-L6:
-
-    // opaque end: CoreAddresses::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:254:9+50
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:255:20+27
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,10427,10454)"} true;
-
-    // $t9 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:255:20+27
-
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:255:20+27
-    assume $IsValid'address'($t9);
-
-    // assume Eq<address>($t9, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:255:20+27
-    assume $IsEqual'address'($t9, $1_Signer_spec_address_of($t0));
-
-    // $t9 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:255:20+27
-
-    // trace_local[addr]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:255:13+4
-    assume {:print "$track_local(4,6,5):", $t9} $t9 == $t9;
-
-    // $t10 := exists<Roles::RoleId>($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:16+6
-    assume {:print "$at(27,10471,10477)"} true;
-    $t10 := $ResourceExists($1_Roles_RoleId_$memory, $t9);
-
-    // $t11 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:256:60+8
-    $t11 := 0;
-    assume $IsValid'u64'($t11);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:256:38+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t12 := opaque begin: Errors::not_published($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:38+31
-
-    // assume WellFormed($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:38+31
-    assume $IsValid'u64'($t12);
-
-    // assume Eq<u64>($t12, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:38+31
-    assume $IsEqual'u64'($t12, 5);
-
-    // $t12 := opaque end: Errors::not_published($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:38+31
-
-    // trace_local[tmp#$2]($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-    assume {:print "$track_local(4,6,2):", $t12} $t12 == $t12;
-
-    // trace_local[tmp#$1]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-    assume {:print "$track_local(4,6,1):", $t10} $t10 == $t10;
-
-    // if ($t10) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-    if ($t10) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-L1:
-
-    // trace_abort($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-    assume {:print "$at(27,10464,10525)"} true;
-    assume {:print "$track_abort(4,6):", $t12} $t12 == $t12;
-
-    // $t8 := move($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-    $t8 := $t12;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:256:9+61
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:258:35+4
-    assume {:print "$at(27,10577,10581)"} true;
-L0:
-
-    // $t13 := get_global<Roles::RoleId>($t9) on_abort goto L5 with $t8 at /home/ying/diem/language/diem-framework/modules/Roles.move:258:13+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t9)) {
-        call $ExecFailureAbort();
-    } else {
-        $t13 := $ResourceValue($1_Roles_RoleId_$memory, $t9);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,10555,10568)"} true;
-        $t8 := $abort_code;
-        assume {:print "$track_abort(4,6):", $t8} $t8 == $t8;
-        goto L5;
-    }
-
-    // $t14 := get_field<Roles::RoleId>.role_id($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:258:13+35
-    $t14 := $role_id#$1_Roles_RoleId($t13);
-
-    // $t15 := 1 at /home/ying/diem/language/diem-framework/modules/Roles.move:258:52+27
-    $t15 := 1;
-    assume $IsValid'u64'($t15);
-
-    // $t16 := ==($t14, $t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:258:49+2
-    $t16 := $IsEqual'u64'($t14, $t15);
-
-    // $t17 := 2 at /home/ying/diem/language/diem-framework/modules/Roles.move:259:35+20
-    assume {:print "$at(27,10657,10677)"} true;
-    $t17 := 2;
-    assume $IsValid'u64'($t17);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:259:13+43
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t18 := opaque begin: Errors::requires_role($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:259:13+43
-
-    // assume WellFormed($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:259:13+43
-    assume $IsValid'u64'($t18);
-
-    // assume Eq<u64>($t18, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:259:13+43
-    assume $IsEqual'u64'($t18, 3);
-
-    // $t18 := opaque end: Errors::requires_role($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:259:13+43
-
-    // trace_local[tmp#$4]($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-    assume {:print "$at(27,10535,10688)"} true;
-    assume {:print "$track_local(4,6,4):", $t18} $t18 == $t18;
-
-    // trace_local[tmp#$3]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-    assume {:print "$track_local(4,6,3):", $t16} $t16 == $t16;
-
-    // if ($t16) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-    if ($t16) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-L3:
-
-    // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-    assume {:print "$at(27,10535,10688)"} true;
-    assume {:print "$track_abort(4,6):", $t18} $t18 == $t18;
-
-    // $t8 := move($t18) at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-    $t8 := $t18;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:257:9+153
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:261:5+1
-    assume {:print "$at(27,10693,10694)"} true;
-L4:
-
-    // assert Not(Not(exists[@138]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#138, $t6);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>($t6)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, $t6)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@138]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#138, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:261:5+1
-    assume {:print "$at(27,10693,10694)"} true;
-L5:
-
-    // assert Or(Or(Not(exists[@138]<Roles::RoleId>($t6)), Neq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>($t6)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:262:5+109
-    assume {:print "$at(27,10699,10808)"} true;
-    assert {:msg "assert_failed(27,10699,10808): abort not covered by any of the `aborts_if` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#138, $t6) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, $t6)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453));
-
-    // assert Or(Or(And(Not(exists[@138]<Roles::RoleId>($t6)), Eq(5, $t8)), And(Neq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>($t6)), 1), Eq(3, $t8))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:262:5+109
-    assert {:msg "assert_failed(27,10699,10808): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((!$ResourceExists($1_Roles_RoleId_$memory#138, $t6) && $IsEqual'num'(5, $t8)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, $t6)), 1) && $IsEqual'num'(3, $t8))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t8)));
-
-    // abort($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:262:5+109
-    $abort_code := $t8;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_child_vasp_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:282:5+338
-procedure {:timeLimit 40} $1_Roles_assert_child_vasp_role$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: $1_Roles_RoleId;
-    var $t12: int;
-    var $t13: int;
-    var $t14: bool;
-    var $t15: int;
-    var $t16: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#115: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:282:5+338
-    assume {:print "$at(27,11379,11717)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:282:5+338
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @115 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:282:5+1
-    $1_Roles_RoleId_$memory#115 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:282:5+1
-    assume {:print "$track_local(4,0,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:283:20+27
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,11468,11495)"} true;
-
-    // $t6 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:283:20+27
-
-    // assume WellFormed($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:283:20+27
-    assume $IsValid'address'($t6);
-
-    // assume Eq<address>($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:283:20+27
-    assume $IsEqual'address'($t6, $1_Signer_spec_address_of($t0));
-
-    // $t6 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:283:20+27
-
-    // trace_local[addr]($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:283:13+4
-    assume {:print "$track_local(4,0,5):", $t6} $t6 == $t6;
-
-    // $t7 := exists<Roles::RoleId>($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:16+6
-    assume {:print "$at(27,11512,11518)"} true;
-    $t7 := $ResourceExists($1_Roles_RoleId_$memory, $t6);
-
-    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:284:60+8
-    $t8 := 0;
-    assume $IsValid'u64'($t8);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:284:38+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t9 := opaque begin: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:38+31
-
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:38+31
-    assume $IsValid'u64'($t9);
-
-    // assume Eq<u64>($t9, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:38+31
-    assume $IsEqual'u64'($t9, 5);
-
-    // $t9 := opaque end: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:38+31
-
-    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-    assume {:print "$track_local(4,0,2):", $t9} $t9 == $t9;
-
-    // trace_local[tmp#$1]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-    assume {:print "$track_local(4,0,1):", $t7} $t7 == $t7;
-
-    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-    if ($t7) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-L1:
-
-    // trace_abort($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-    assume {:print "$at(27,11505,11566)"} true;
-    assume {:print "$track_abort(4,0):", $t9} $t9 == $t9;
-
-    // $t10 := move($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-    $t10 := $t9;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:284:9+61
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:286:35+4
-    assume {:print "$at(27,11618,11622)"} true;
-L0:
-
-    // $t11 := get_global<Roles::RoleId>($t6) on_abort goto L5 with $t10 at /home/ying/diem/language/diem-framework/modules/Roles.move:286:13+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t6)) {
-        call $ExecFailureAbort();
-    } else {
-        $t11 := $ResourceValue($1_Roles_RoleId_$memory, $t6);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,11596,11609)"} true;
-        $t10 := $abort_code;
-        assume {:print "$track_abort(4,0):", $t10} $t10 == $t10;
-        goto L5;
-    }
-
-    // $t12 := get_field<Roles::RoleId>.role_id($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:286:13+35
-    $t12 := $role_id#$1_Roles_RoleId($t11);
-
-    // $t13 := 6 at /home/ying/diem/language/diem-framework/modules/Roles.move:286:52+18
-    $t13 := 6;
-    assume $IsValid'u64'($t13);
-
-    // $t14 := ==($t12, $t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:286:49+2
-    $t14 := $IsEqual'u64'($t12, $t13);
-
-    // $t15 := 9 at /home/ying/diem/language/diem-framework/modules/Roles.move:287:35+11
-    assume {:print "$at(27,11689,11700)"} true;
-    $t15 := 9;
-    assume $IsValid'u64'($t15);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:287:13+34
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t16 := opaque begin: Errors::requires_role($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:287:13+34
-
-    // assume WellFormed($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:287:13+34
-    assume $IsValid'u64'($t16);
-
-    // assume Eq<u64>($t16, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:287:13+34
-    assume $IsEqual'u64'($t16, 3);
-
-    // $t16 := opaque end: Errors::requires_role($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:287:13+34
-
-    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-    assume {:print "$at(27,11576,11711)"} true;
-    assume {:print "$track_local(4,0,4):", $t16} $t16 == $t16;
-
-    // trace_local[tmp#$3]($t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-    assume {:print "$track_local(4,0,3):", $t14} $t14 == $t14;
-
-    // if ($t14) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-    if ($t14) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-L3:
-
-    // trace_abort($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-    assume {:print "$at(27,11576,11711)"} true;
-    assume {:print "$track_abort(4,0):", $t16} $t16 == $t16;
-
-    // $t10 := move($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-    $t10 := $t16;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:285:9+135
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:289:5+1
-    assume {:print "$at(27,11716,11717)"} true;
-L4:
-
-    // assert Not(Not(exists[@115]<Roles::RoleId>(Signer::$address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/Roles.move:550:9+62
-    assume {:print "$at(27,24689,24751)"} true;
-    assert {:msg "assert_failed(27,24689,24751): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#115, $1_Signer_$address_of($t0));
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(Signer::$address_of[]($t0))), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:551:9+91
-    assume {:print "$at(27,24760,24851)"} true;
-    assert {:msg "assert_failed(27,24760,24851): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, $1_Signer_$address_of($t0))), 6);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@115]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#115, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:289:5+1
-    assume {:print "$at(27,11716,11717)"} true;
-L5:
-
-    // assert Or(Not(exists[@115]<Roles::RoleId>(Signer::$address_of[]($t0))), Neq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(Signer::$address_of[]($t0))), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:290:5+134
-    assume {:print "$at(27,11722,11856)"} true;
-    assert {:msg "assert_failed(27,11722,11856): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#115, $1_Signer_$address_of($t0)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, $1_Signer_$address_of($t0))), 6));
-
-    // assert Or(And(Not(exists[@115]<Roles::RoleId>(Signer::$address_of[]($t0))), Eq(5, $t10)), And(Neq<u64>(select Roles::RoleId.role_id(global[@115]<Roles::RoleId>(Signer::$address_of[]($t0))), 6), Eq(3, $t10))) at /home/ying/diem/language/diem-framework/modules/Roles.move:290:5+134
-    assert {:msg "assert_failed(27,11722,11856): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#115, $1_Signer_$address_of($t0)) && $IsEqual'num'(5, $t10)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#115, $1_Signer_$address_of($t0))), 6) && $IsEqual'num'(3, $t10)));
-
-    // abort($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:290:5+134
-    $abort_code := $t10;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_designated_dealer [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:297:5+354
-procedure {:timeLimit 40} $1_Roles_assert_designated_dealer$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: int;
-    var $t8: bool;
-    var $t9: int;
-    var $t10: int;
-    var $t11: int;
-    var $t12: $1_Roles_RoleId;
-    var $t13: int;
-    var $t14: int;
-    var $t15: bool;
-    var $t16: int;
-    var $t17: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#114: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:297:5+354
-    assume {:print "$at(27,11927,12281)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:297:5+354
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:556:9+44
-    assume {:print "$at(27,24938,24982)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t0));
-
-    // @114 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:297:5+1
-    assume {:print "$at(27,11927,11928)"} true;
-    $1_Roles_RoleId_$memory#114 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:297:5+1
-    assume {:print "$track_local(4,1,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:298:20+27
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,12018,12045)"} true;
-
-    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:298:20+27
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:298:20+27
-    assume $IsValid'address'($t7);
-
-    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:298:20+27
-    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
-
-    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:298:20+27
-
-    // trace_local[addr]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:298:13+4
-    assume {:print "$track_local(4,1,5):", $t7} $t7 == $t7;
-
-    // $t8 := exists<Roles::RoleId>($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:16+6
-    assume {:print "$at(27,12062,12068)"} true;
-    $t8 := $ResourceExists($1_Roles_RoleId_$memory, $t7);
-
-    // $t9 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:299:60+8
-    $t9 := 0;
-    assume $IsValid'u64'($t9);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:299:38+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t10 := opaque begin: Errors::not_published($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:38+31
-
-    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:38+31
-    assume $IsValid'u64'($t10);
-
-    // assume Eq<u64>($t10, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:38+31
-    assume $IsEqual'u64'($t10, 5);
-
-    // $t10 := opaque end: Errors::not_published($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:38+31
-
-    // trace_local[tmp#$2]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-    assume {:print "$track_local(4,1,2):", $t10} $t10 == $t10;
-
-    // trace_local[tmp#$1]($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-    assume {:print "$track_local(4,1,1):", $t8} $t8 == $t8;
-
-    // if ($t8) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-    if ($t8) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-L1:
-
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-    assume {:print "$at(27,12055,12116)"} true;
-    assume {:print "$track_abort(4,1):", $t10} $t10 == $t10;
-
-    // $t11 := move($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-    $t11 := $t10;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:299:9+61
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:301:35+4
-    assume {:print "$at(27,12168,12172)"} true;
-L0:
-
-    // $t12 := get_global<Roles::RoleId>($t7) on_abort goto L5 with $t11 at /home/ying/diem/language/diem-framework/modules/Roles.move:301:13+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t7)) {
-        call $ExecFailureAbort();
-    } else {
-        $t12 := $ResourceValue($1_Roles_RoleId_$memory, $t7);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,12146,12159)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(4,1):", $t11} $t11 == $t11;
-        goto L5;
-    }
-
-    // $t13 := get_field<Roles::RoleId>.role_id($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:301:13+35
-    $t13 := $role_id#$1_Roles_RoleId($t12);
-
-    // $t14 := 2 at /home/ying/diem/language/diem-framework/modules/Roles.move:301:52+25
-    $t14 := 2;
-    assume $IsValid'u64'($t14);
-
-    // $t15 := ==($t13, $t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:301:49+2
-    $t15 := $IsEqual'u64'($t13, $t14);
-
-    // $t16 := 6 at /home/ying/diem/language/diem-framework/modules/Roles.move:302:35+18
-    assume {:print "$at(27,12246,12264)"} true;
-    $t16 := 6;
-    assume $IsValid'u64'($t16);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:302:13+41
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t17 := opaque begin: Errors::requires_role($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:302:13+41
-
-    // assume WellFormed($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:302:13+41
-    assume $IsValid'u64'($t17);
-
-    // assume Eq<u64>($t17, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:302:13+41
-    assume $IsEqual'u64'($t17, 3);
-
-    // $t17 := opaque end: Errors::requires_role($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:302:13+41
-
-    // trace_local[tmp#$4]($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-    assume {:print "$at(27,12126,12275)"} true;
-    assume {:print "$track_local(4,1,4):", $t17} $t17 == $t17;
-
-    // trace_local[tmp#$3]($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-    assume {:print "$track_local(4,1,3):", $t15} $t15 == $t15;
-
-    // if ($t15) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-    if ($t15) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-L3:
-
-    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-    assume {:print "$at(27,12126,12275)"} true;
-    assume {:print "$track_abort(4,1):", $t17} $t17 == $t17;
-
-    // $t11 := move($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-    $t11 := $t17;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:300:9+149
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:304:5+1
-    assume {:print "$at(27,12280,12281)"} true;
-L4:
-
-    // assert Not(Not(exists[@114]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:557:9+59
-    assume {:print "$at(27,24991,25050)"} true;
-    assert {:msg "assert_failed(27,24991,25050): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#114, $t6);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>($t6)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:558:9+95
-    assume {:print "$at(27,25059,25154)"} true;
-    assert {:msg "assert_failed(27,25059,25154): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, $t6)), 2);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@114]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#114, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:304:5+1
-    assume {:print "$at(27,12280,12281)"} true;
-L5:
-
-    // assert Or(Not(exists[@114]<Roles::RoleId>($t6)), Neq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>($t6)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:305:5+105
-    assume {:print "$at(27,12286,12391)"} true;
-    assert {:msg "assert_failed(27,12286,12391): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#114, $t6) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, $t6)), 2));
-
-    // assert Or(And(Not(exists[@114]<Roles::RoleId>($t6)), Eq(5, $t11)), And(Neq<u64>(select Roles::RoleId.role_id(global[@114]<Roles::RoleId>($t6)), 2), Eq(3, $t11))) at /home/ying/diem/language/diem-framework/modules/Roles.move:305:5+105
-    assert {:msg "assert_failed(27,12286,12391): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#114, $t6) && $IsEqual'num'(5, $t11)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#114, $t6)), 2) && $IsEqual'num'(3, $t11)));
-
-    // abort($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:305:5+105
-    $abort_code := $t11;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_parent_vasp_or_child_vasp [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:353:5+429
-procedure {:timeLimit 40} $1_Roles_assert_parent_vasp_or_child_vasp$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: bool;
-    var $t12: int;
-    var $t13: int;
-    var $t14: int;
-    var $t15: $1_Roles_RoleId;
-    var $t16: int;
-    var $t17: int;
-    var $t18: bool;
-    var $t19: bool;
-    var $t20: int;
-    var $t21: bool;
-    var $t22: int;
-    var $t23: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#113: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:353:5+429
-    assume {:print "$at(27,14381,14810)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:353:5+429
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t8, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:572:9+44
-    assume {:print "$at(27,25638,25682)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t9, select Roles::RoleId.role_id(global<Roles::RoleId>($t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:574:9+43
-    assume {:print "$at(27,25759,25802)"} true;
-    assume ($t9 == $role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t8)));
-
-    // @113 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:353:5+1
-    assume {:print "$at(27,14381,14382)"} true;
-    $1_Roles_RoleId_$memory#113 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:353:5+1
-    assume {:print "$track_local(4,3,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:354:20+27
-    // >> opaque call: $t8 := Signer::address_of($t0)
-    assume {:print "$at(27,14480,14507)"} true;
-
-    // $t10 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:354:20+27
-
-    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:354:20+27
-    assume $IsValid'address'($t10);
-
-    // assume Eq<address>($t10, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:354:20+27
-    assume $IsEqual'address'($t10, $1_Signer_spec_address_of($t0));
-
-    // $t10 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:354:20+27
-
-    // trace_local[addr]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:354:13+4
-    assume {:print "$track_local(4,3,6):", $t10} $t10 == $t10;
-
-    // $t11 := exists<Roles::RoleId>($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:16+6
-    assume {:print "$at(27,14524,14530)"} true;
-    $t11 := $ResourceExists($1_Roles_RoleId_$memory, $t10);
-
-    // $t12 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:355:60+8
-    $t12 := 0;
-    assume $IsValid'u64'($t12);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:355:38+31
-    // >> opaque call: $t11 := Errors::not_published($t10)
-
-    // $t13 := opaque begin: Errors::not_published($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:38+31
-
-    // assume WellFormed($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:38+31
-    assume $IsValid'u64'($t13);
-
-    // assume Eq<u64>($t13, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:38+31
-    assume $IsEqual'u64'($t13, 5);
-
-    // $t13 := opaque end: Errors::not_published($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:38+31
-
-    // trace_local[tmp#$2]($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-    assume {:print "$track_local(4,3,2):", $t13} $t13 == $t13;
-
-    // trace_local[tmp#$1]($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-    assume {:print "$track_local(4,3,1):", $t11} $t11 == $t11;
-
-    // if ($t11) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-    if ($t11) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-L1:
-
-    // trace_abort($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-    assume {:print "$at(27,14517,14578)"} true;
-    assume {:print "$track_abort(4,3):", $t13} $t13 == $t13;
-
-    // $t14 := move($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-    $t14 := $t13;
-
-    // goto L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:355:9+61
-    goto L9;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:356:45+4
-    assume {:print "$at(27,14624,14628)"} true;
-L0:
-
-    // $t15 := get_global<Roles::RoleId>($t10) on_abort goto L9 with $t14 at /home/ying/diem/language/diem-framework/modules/Roles.move:356:23+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t10)) {
-        call $ExecFailureAbort();
-    } else {
-        $t15 := $ResourceValue($1_Roles_RoleId_$memory, $t10);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,14602,14615)"} true;
-        $t14 := $abort_code;
-        assume {:print "$track_abort(4,3):", $t14} $t14 == $t14;
-        goto L9;
-    }
-
-    // $t16 := get_field<Roles::RoleId>.role_id($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:356:23+35
-    $t16 := $role_id#$1_Roles_RoleId($t15);
-
-    // trace_local[role_id]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:356:13+7
-    assume {:print "$track_local(4,3,7):", $t16} $t16 == $t16;
-
-    // $t17 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:24+19
-    assume {:print "$at(27,14678,14697)"} true;
-    $t17 := 5;
-    assume $IsValid'u64'($t17);
-
-    // $t18 := ==($t16, $t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:358:21+2
-    $t18 := $IsEqual'u64'($t16, $t17);
-
-    // if ($t18) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    if ($t18) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-L3:
-
-    // goto L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    goto L4;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-L2:
-
-    // $t19 := true at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    $t19 := true;
-    assume $IsValid'bool'($t19);
-
-    // $t5 := $t19 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    $t5 := $t19;
-
-    // trace_local[tmp#$5]($t19) at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    assume {:print "$track_local(4,3,5):", $t19} $t19 == $t19;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    goto L5;
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:47+7
-L4:
-
-    // $t20 := 6 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:58+18
-    $t20 := 6;
-    assume $IsValid'u64'($t20);
-
-    // $t21 := ==($t16, $t20) at /home/ying/diem/language/diem-framework/modules/Roles.move:358:55+2
-    $t21 := $IsEqual'u64'($t16, $t20);
-
-    // $t5 := $t21 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    $t5 := $t21;
-
-    // trace_local[tmp#$5]($t21) at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-    assume {:print "$track_local(4,3,5):", $t21} $t21 == $t21;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:358:13+63
-L5:
-
-    // $t22 := 4 at /home/ying/diem/language/diem-framework/modules/Roles.move:359:35+26
-    assume {:print "$at(27,14766,14792)"} true;
-    $t22 := 4;
-    assume $IsValid'u64'($t22);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:359:13+49
-    // >> opaque call: $t20 := Errors::requires_role($t19)
-
-    // $t23 := opaque begin: Errors::requires_role($t22) at /home/ying/diem/language/diem-framework/modules/Roles.move:359:13+49
-
-    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:359:13+49
-    assume $IsValid'u64'($t23);
-
-    // assume Eq<u64>($t23, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:359:13+49
-    assume $IsEqual'u64'($t23, 3);
-
-    // $t23 := opaque end: Errors::requires_role($t22) at /home/ying/diem/language/diem-framework/modules/Roles.move:359:13+49
-
-    // trace_local[tmp#$4]($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-    assume {:print "$at(27,14647,14803)"} true;
-    assume {:print "$track_local(4,3,4):", $t23} $t23 == $t23;
-
-    // trace_local[tmp#$3]($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-    assume {:print "$track_local(4,3,3):", $t5} $t5 == $t5;
-
-    // if ($t5) goto L6 else goto L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-    if ($t5) { goto L6; } else { goto L7; }
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-L7:
-
-    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-    assume {:print "$at(27,14647,14803)"} true;
-    assume {:print "$track_abort(4,3):", $t23} $t23 == $t23;
-
-    // $t14 := move($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-    $t14 := $t23;
-
-    // goto L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:357:9+156
-    goto L9;
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:360:10+1
-    assume {:print "$at(27,14803,14804)"} true;
-L6:
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/Roles.move:361:5+1
-    assume {:print "$at(27,14809,14810)"} true;
-L8:
-
-    // assert Not(Not(exists[@113]<Roles::RoleId>($t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:573:9+59
-    assume {:print "$at(27,25691,25750)"} true;
-    assert {:msg "assert_failed(27,25691,25750): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#113, $t8);
-
-    // assert Not(And(Neq<u64>($t9, 5), Neq<u64>($t9, 6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:575:9+113
-    assume {:print "$at(27,25811,25924)"} true;
-    assert {:msg "assert_failed(27,25811,25924): function does not abort under this condition"}
-      !(!$IsEqual'u64'($t9, 5) && !$IsEqual'u64'($t9, 6));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@113]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@113]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#113, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#113, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:361:5+1
-    assume {:print "$at(27,14809,14810)"} true;
-L9:
-
-    // assert Or(Not(exists[@113]<Roles::RoleId>($t8)), And(Neq<u64>($t9, 5), Neq<u64>($t9, 6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:362:5+118
-    assume {:print "$at(27,14815,14933)"} true;
-    assert {:msg "assert_failed(27,14815,14933): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#113, $t8) || (!$IsEqual'u64'($t9, 5) && !$IsEqual'u64'($t9, 6)));
-
-    // assert Or(And(Not(exists[@113]<Roles::RoleId>($t8)), Eq(5, $t14)), And(And(Neq<u64>($t9, 5), Neq<u64>($t9, 6)), Eq(3, $t14))) at /home/ying/diem/language/diem-framework/modules/Roles.move:362:5+118
-    assert {:msg "assert_failed(27,14815,14933): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#113, $t8) && $IsEqual'num'(5, $t14)) || ((!$IsEqual'u64'($t9, 5) && !$IsEqual'u64'($t9, 6)) && $IsEqual'num'(3, $t14)));
-
-    // abort($t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:362:5+118
-    $abort_code := $t14;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_parent_vasp_or_designated_dealer [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:339:5+450
-procedure {:timeLimit 40} $1_Roles_assert_parent_vasp_or_designated_dealer$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: bool;
-    var $t12: int;
-    var $t13: int;
-    var $t14: int;
-    var $t15: $1_Roles_RoleId;
-    var $t16: int;
-    var $t17: int;
-    var $t18: bool;
-    var $t19: bool;
-    var $t20: int;
-    var $t21: bool;
-    var $t22: int;
-    var $t23: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#112: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:339:5+450
-    assume {:print "$at(27,13788,14238)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:339:5+450
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t8, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:563:9+44
-    assume {:print "$at(27,25253,25297)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t9, select Roles::RoleId.role_id(global<Roles::RoleId>($t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:565:9+43
-    assume {:print "$at(27,25374,25417)"} true;
-    assume ($t9 == $role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t8)));
-
-    // @112 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:339:5+1
-    assume {:print "$at(27,13788,13789)"} true;
-    $1_Roles_RoleId_$memory#112 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:339:5+1
-    assume {:print "$track_local(4,4,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:340:20+27
-    // >> opaque call: $t8 := Signer::address_of($t0)
-    assume {:print "$at(27,13894,13921)"} true;
-
-    // $t10 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:340:20+27
-
-    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:340:20+27
-    assume $IsValid'address'($t10);
-
-    // assume Eq<address>($t10, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:340:20+27
-    assume $IsEqual'address'($t10, $1_Signer_spec_address_of($t0));
-
-    // $t10 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:340:20+27
-
-    // trace_local[addr]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:340:13+4
-    assume {:print "$track_local(4,4,6):", $t10} $t10 == $t10;
-
-    // $t11 := exists<Roles::RoleId>($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:16+6
-    assume {:print "$at(27,13938,13944)"} true;
-    $t11 := $ResourceExists($1_Roles_RoleId_$memory, $t10);
-
-    // $t12 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:341:60+8
-    $t12 := 0;
-    assume $IsValid'u64'($t12);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:341:38+31
-    // >> opaque call: $t11 := Errors::not_published($t10)
-
-    // $t13 := opaque begin: Errors::not_published($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:38+31
-
-    // assume WellFormed($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:38+31
-    assume $IsValid'u64'($t13);
-
-    // assume Eq<u64>($t13, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:38+31
-    assume $IsEqual'u64'($t13, 5);
-
-    // $t13 := opaque end: Errors::not_published($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:38+31
-
-    // trace_local[tmp#$2]($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-    assume {:print "$track_local(4,4,2):", $t13} $t13 == $t13;
-
-    // trace_local[tmp#$1]($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-    assume {:print "$track_local(4,4,1):", $t11} $t11 == $t11;
-
-    // if ($t11) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-    if ($t11) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-L1:
-
-    // trace_abort($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-    assume {:print "$at(27,13931,13992)"} true;
-    assume {:print "$track_abort(4,4):", $t13} $t13 == $t13;
-
-    // $t14 := move($t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-    $t14 := $t13;
-
-    // goto L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:341:9+61
-    goto L9;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:342:45+4
-    assume {:print "$at(27,14038,14042)"} true;
-L0:
-
-    // $t15 := get_global<Roles::RoleId>($t10) on_abort goto L9 with $t14 at /home/ying/diem/language/diem-framework/modules/Roles.move:342:23+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t10)) {
-        call $ExecFailureAbort();
-    } else {
-        $t15 := $ResourceValue($1_Roles_RoleId_$memory, $t10);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,14016,14029)"} true;
-        $t14 := $abort_code;
-        assume {:print "$track_abort(4,4):", $t14} $t14 == $t14;
-        goto L9;
-    }
-
-    // $t16 := get_field<Roles::RoleId>.role_id($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:342:23+35
-    $t16 := $role_id#$1_Roles_RoleId($t15);
-
-    // trace_local[role_id]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:342:13+7
-    assume {:print "$track_local(4,4,7):", $t16} $t16 == $t16;
-
-    // $t17 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:24+19
-    assume {:print "$at(27,14092,14111)"} true;
-    $t17 := 5;
-    assume $IsValid'u64'($t17);
-
-    // $t18 := ==($t16, $t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:344:21+2
-    $t18 := $IsEqual'u64'($t16, $t17);
-
-    // if ($t18) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    if ($t18) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-L3:
-
-    // goto L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    goto L4;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-L2:
-
-    // $t19 := true at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    $t19 := true;
-    assume $IsValid'bool'($t19);
-
-    // $t5 := $t19 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    $t5 := $t19;
-
-    // trace_local[tmp#$5]($t19) at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    assume {:print "$track_local(4,4,5):", $t19} $t19 == $t19;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    goto L5;
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:47+7
-L4:
-
-    // $t20 := 2 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:58+25
-    $t20 := 2;
-    assume $IsValid'u64'($t20);
-
-    // $t21 := ==($t16, $t20) at /home/ying/diem/language/diem-framework/modules/Roles.move:344:55+2
-    $t21 := $IsEqual'u64'($t16, $t20);
-
-    // $t5 := $t21 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    $t5 := $t21;
-
-    // trace_local[tmp#$5]($t21) at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-    assume {:print "$track_local(4,4,5):", $t21} $t21 == $t21;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:344:13+70
-L5:
-
-    // $t22 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:345:35+33
-    assume {:print "$at(27,14187,14220)"} true;
-    $t22 := 5;
-    assume $IsValid'u64'($t22);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:345:13+56
-    // >> opaque call: $t20 := Errors::requires_role($t19)
-
-    // $t23 := opaque begin: Errors::requires_role($t22) at /home/ying/diem/language/diem-framework/modules/Roles.move:345:13+56
-
-    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:345:13+56
-    assume $IsValid'u64'($t23);
-
-    // assume Eq<u64>($t23, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:345:13+56
-    assume $IsEqual'u64'($t23, 3);
-
-    // $t23 := opaque end: Errors::requires_role($t22) at /home/ying/diem/language/diem-framework/modules/Roles.move:345:13+56
-
-    // trace_local[tmp#$4]($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-    assume {:print "$at(27,14061,14231)"} true;
-    assume {:print "$track_local(4,4,4):", $t23} $t23 == $t23;
-
-    // trace_local[tmp#$3]($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-    assume {:print "$track_local(4,4,3):", $t5} $t5 == $t5;
-
-    // if ($t5) goto L6 else goto L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-    if ($t5) { goto L6; } else { goto L7; }
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-L7:
-
-    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-    assume {:print "$at(27,14061,14231)"} true;
-    assume {:print "$track_abort(4,4):", $t23} $t23 == $t23;
-
-    // $t14 := move($t23) at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-    $t14 := $t23;
-
-    // goto L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:343:9+170
-    goto L9;
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:346:10+1
-    assume {:print "$at(27,14231,14232)"} true;
-L6:
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/Roles.move:347:5+1
-    assume {:print "$at(27,14237,14238)"} true;
-L8:
-
-    // assert Not(Not(exists[@112]<Roles::RoleId>($t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:564:9+59
-    assume {:print "$at(27,25306,25365)"} true;
-    assert {:msg "assert_failed(27,25306,25365): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#112, $t8);
-
-    // assert Not(And(Neq<u64>($t9, 5), Neq<u64>($t9, 2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:566:9+120
-    assume {:print "$at(27,25426,25546)"} true;
-    assert {:msg "assert_failed(27,25426,25546): function does not abort under this condition"}
-      !(!$IsEqual'u64'($t9, 5) && !$IsEqual'u64'($t9, 2));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@112]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@112]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#112, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#112, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:347:5+1
-    assume {:print "$at(27,14237,14238)"} true;
-L9:
-
-    // assert Or(Not(exists[@112]<Roles::RoleId>($t8)), And(Neq<u64>($t9, 5), Neq<u64>($t9, 2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:348:5+132
-    assume {:print "$at(27,14243,14375)"} true;
-    assert {:msg "assert_failed(27,14243,14375): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#112, $t8) || (!$IsEqual'u64'($t9, 5) && !$IsEqual'u64'($t9, 2)));
-
-    // assert Or(And(Not(exists[@112]<Roles::RoleId>($t8)), Eq(5, $t14)), And(And(Neq<u64>($t9, 5), Neq<u64>($t9, 2)), Eq(3, $t14))) at /home/ying/diem/language/diem-framework/modules/Roles.move:348:5+132
-    assert {:msg "assert_failed(27,14243,14375): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#112, $t8) && $IsEqual'num'(5, $t14)) || ((!$IsEqual'u64'($t9, 5) && !$IsEqual'u64'($t9, 2)) && $IsEqual'num'(3, $t14)));
-
-    // abort($t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:348:5+132
-    $abort_code := $t14;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_parent_vasp_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:268:5+341
-procedure {:timeLimit 40} $1_Roles_assert_parent_vasp_role$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: int;
-    var $t8: bool;
-    var $t9: int;
-    var $t10: int;
-    var $t11: int;
-    var $t12: $1_Roles_RoleId;
-    var $t13: int;
-    var $t14: int;
-    var $t15: bool;
-    var $t16: int;
-    var $t17: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#111: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:268:5+341
-    assume {:print "$at(27,10872,11213)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:268:5+341
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:543:9+44
-    assume {:print "$at(27,24398,24442)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t0));
-
-    // @111 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:268:5+1
-    assume {:print "$at(27,10872,10873)"} true;
-    $1_Roles_RoleId_$memory#111 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:268:5+1
-    assume {:print "$track_local(4,5,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:269:20+27
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,10962,10989)"} true;
-
-    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:269:20+27
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:269:20+27
-    assume $IsValid'address'($t7);
-
-    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:269:20+27
-    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
-
-    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:269:20+27
-
-    // trace_local[addr]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:269:13+4
-    assume {:print "$track_local(4,5,5):", $t7} $t7 == $t7;
-
-    // $t8 := exists<Roles::RoleId>($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:16+6
-    assume {:print "$at(27,11006,11012)"} true;
-    $t8 := $ResourceExists($1_Roles_RoleId_$memory, $t7);
-
-    // $t9 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:270:60+8
-    $t9 := 0;
-    assume $IsValid'u64'($t9);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:270:38+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t10 := opaque begin: Errors::not_published($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:38+31
-
-    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:38+31
-    assume $IsValid'u64'($t10);
-
-    // assume Eq<u64>($t10, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:38+31
-    assume $IsEqual'u64'($t10, 5);
-
-    // $t10 := opaque end: Errors::not_published($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:38+31
-
-    // trace_local[tmp#$2]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-    assume {:print "$track_local(4,5,2):", $t10} $t10 == $t10;
-
-    // trace_local[tmp#$1]($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-    assume {:print "$track_local(4,5,1):", $t8} $t8 == $t8;
-
-    // if ($t8) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-    if ($t8) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-L1:
-
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-    assume {:print "$at(27,10999,11060)"} true;
-    assume {:print "$track_abort(4,5):", $t10} $t10 == $t10;
-
-    // $t11 := move($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-    $t11 := $t10;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:270:9+61
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:272:35+4
-    assume {:print "$at(27,11112,11116)"} true;
-L0:
-
-    // $t12 := get_global<Roles::RoleId>($t7) on_abort goto L5 with $t11 at /home/ying/diem/language/diem-framework/modules/Roles.move:272:13+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t7)) {
-        call $ExecFailureAbort();
-    } else {
-        $t12 := $ResourceValue($1_Roles_RoleId_$memory, $t7);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,11090,11103)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(4,5):", $t11} $t11 == $t11;
-        goto L5;
-    }
-
-    // $t13 := get_field<Roles::RoleId>.role_id($t12) at /home/ying/diem/language/diem-framework/modules/Roles.move:272:13+35
-    $t13 := $role_id#$1_Roles_RoleId($t12);
-
-    // $t14 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:272:52+19
-    $t14 := 5;
-    assume $IsValid'u64'($t14);
-
-    // $t15 := ==($t13, $t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:272:49+2
-    $t15 := $IsEqual'u64'($t13, $t14);
-
-    // $t16 := 3 at /home/ying/diem/language/diem-framework/modules/Roles.move:273:35+12
-    assume {:print "$at(27,11184,11196)"} true;
-    $t16 := 3;
-    assume $IsValid'u64'($t16);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:273:13+35
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t17 := opaque begin: Errors::requires_role($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:273:13+35
-
-    // assume WellFormed($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:273:13+35
-    assume $IsValid'u64'($t17);
-
-    // assume Eq<u64>($t17, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:273:13+35
-    assume $IsEqual'u64'($t17, 3);
-
-    // $t17 := opaque end: Errors::requires_role($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:273:13+35
-
-    // trace_local[tmp#$4]($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-    assume {:print "$at(27,11070,11207)"} true;
-    assume {:print "$track_local(4,5,4):", $t17} $t17 == $t17;
-
-    // trace_local[tmp#$3]($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-    assume {:print "$track_local(4,5,3):", $t15} $t15 == $t15;
-
-    // if ($t15) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-    if ($t15) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-L3:
-
-    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-    assume {:print "$at(27,11070,11207)"} true;
-    assume {:print "$track_abort(4,5):", $t17} $t17 == $t17;
-
-    // $t11 := move($t17) at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-    $t11 := $t17;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:271:9+137
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:275:5+1
-    assume {:print "$at(27,11212,11213)"} true;
-L4:
-
-    // assert Not(Not(exists[@111]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:544:9+59
-    assume {:print "$at(27,24451,24510)"} true;
-    assert {:msg "assert_failed(27,24451,24510): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#111, $t6);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>($t6)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:545:9+89
-    assume {:print "$at(27,24519,24608)"} true;
-    assert {:msg "assert_failed(27,24519,24608): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, $t6)), 5);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@111]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#111, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:275:5+1
-    assume {:print "$at(27,11212,11213)"} true;
-L5:
-
-    // assert Or(Not(exists[@111]<Roles::RoleId>($t6)), Neq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>($t6)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:276:5+98
-    assume {:print "$at(27,11218,11316)"} true;
-    assert {:msg "assert_failed(27,11218,11316): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#111, $t6) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, $t6)), 5));
-
-    // assert Or(And(Not(exists[@111]<Roles::RoleId>($t6)), Eq(5, $t11)), And(Neq<u64>(select Roles::RoleId.role_id(global[@111]<Roles::RoleId>($t6)), 5), Eq(3, $t11))) at /home/ying/diem/language/diem-framework/modules/Roles.move:276:5+98
-    assert {:msg "assert_failed(27,11218,11316): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#111, $t6) && $IsEqual'num'(5, $t11)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#111, $t6)), 5) && $IsEqual'num'(3, $t11)));
-
-    // abort($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:276:5+98
-    $abort_code := $t11;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_validator [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:311:5+380
-procedure {:timeLimit 40} $1_Roles_assert_validator$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: $1_Roles_RoleId;
-    var $t12: int;
-    var $t13: int;
-    var $t14: bool;
-    var $t15: int;
-    var $t16: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#110: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:311:5+380
-    assume {:print "$at(27,12453,12833)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:311:5+380
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @110 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:311:5+1
-    $1_Roles_RoleId_$memory#110 := $1_Roles_RoleId_$memory;
-
-    // trace_local[validator_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:311:5+1
-    assume {:print "$track_local(4,7,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:312:30+37
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,12556,12593)"} true;
-
-    // $t6 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:312:30+37
-
-    // assume WellFormed($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:312:30+37
-    assume $IsValid'address'($t6);
-
-    // assume Eq<address>($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:312:30+37
-    assume $IsEqual'address'($t6, $1_Signer_spec_address_of($t0));
-
-    // $t6 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:312:30+37
-
-    // trace_local[validator_addr]($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:312:13+14
-    assume {:print "$track_local(4,7,5):", $t6} $t6 == $t6;
-
-    // $t7 := exists<Roles::RoleId>($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:16+6
-    assume {:print "$at(27,12610,12616)"} true;
-    $t7 := $ResourceExists($1_Roles_RoleId_$memory, $t6);
-
-    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:313:70+8
-    $t8 := 0;
-    assume $IsValid'u64'($t8);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:313:48+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t9 := opaque begin: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:48+31
-
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:48+31
-    assume $IsValid'u64'($t9);
-
-    // assume Eq<u64>($t9, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:48+31
-    assume $IsEqual'u64'($t9, 5);
-
-    // $t9 := opaque end: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:48+31
-
-    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-    assume {:print "$track_local(4,7,2):", $t9} $t9 == $t9;
-
-    // trace_local[tmp#$1]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-    assume {:print "$track_local(4,7,1):", $t7} $t7 == $t7;
-
-    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-    if ($t7) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-L1:
-
-    // trace_abort($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-    assume {:print "$at(27,12603,12674)"} true;
-    assume {:print "$track_abort(4,7):", $t9} $t9 == $t9;
-
-    // $t10 := move($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-    $t10 := $t9;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:313:9+71
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:315:35+14
-    assume {:print "$at(27,12726,12740)"} true;
-L0:
-
-    // $t11 := get_global<Roles::RoleId>($t6) on_abort goto L5 with $t10 at /home/ying/diem/language/diem-framework/modules/Roles.move:315:13+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t6)) {
-        call $ExecFailureAbort();
-    } else {
-        $t11 := $ResourceValue($1_Roles_RoleId_$memory, $t6);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,12704,12717)"} true;
-        $t10 := $abort_code;
-        assume {:print "$track_abort(4,7):", $t10} $t10 == $t10;
-        goto L5;
-    }
-
-    // $t12 := get_field<Roles::RoleId>.role_id($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:315:13+45
-    $t12 := $role_id#$1_Roles_RoleId($t11);
-
-    // $t13 := 3 at /home/ying/diem/language/diem-framework/modules/Roles.move:315:62+17
-    $t13 := 3;
-    assume $IsValid'u64'($t13);
-
-    // $t14 := ==($t12, $t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:315:59+2
-    $t14 := $IsEqual'u64'($t12, $t13);
-
-    // $t15 := 7 at /home/ying/diem/language/diem-framework/modules/Roles.move:316:35+10
-    assume {:print "$at(27,12806,12816)"} true;
-    $t15 := 7;
-    assume $IsValid'u64'($t15);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:316:13+33
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t16 := opaque begin: Errors::requires_role($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:316:13+33
-
-    // assume WellFormed($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:316:13+33
-    assume $IsValid'u64'($t16);
-
-    // assume Eq<u64>($t16, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:316:13+33
-    assume $IsEqual'u64'($t16, 3);
-
-    // $t16 := opaque end: Errors::requires_role($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:316:13+33
-
-    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-    assume {:print "$at(27,12684,12827)"} true;
-    assume {:print "$track_local(4,7,4):", $t16} $t16 == $t16;
-
-    // trace_local[tmp#$3]($t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-    assume {:print "$track_local(4,7,3):", $t14} $t14 == $t14;
-
-    // if ($t14) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-    if ($t14) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-L3:
-
-    // trace_abort($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-    assume {:print "$at(27,12684,12827)"} true;
-    assume {:print "$track_abort(4,7):", $t16} $t16 == $t16;
-
-    // $t10 := move($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-    $t10 := $t16;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:314:9+143
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:318:5+1
-    assume {:print "$at(27,12832,12833)"} true;
-L4:
-
-    // assert Not(Not(exists[@110]<Roles::RoleId>(Signer::$address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/Roles.move:581:9+69
-    assume {:print "$at(27,26012,26081)"} true;
-    assert {:msg "assert_failed(27,26012,26081): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#110, $1_Signer_$address_of($t0));
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(Signer::$address_of[]($t0))), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:582:9+97
-    assume {:print "$at(27,26090,26187)"} true;
-    assert {:msg "assert_failed(27,26090,26187): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, $1_Signer_$address_of($t0))), 3);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@110]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#110, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:318:5+1
-    assume {:print "$at(27,12832,12833)"} true;
-L5:
-
-    // assert Or(Not(exists[@110]<Roles::RoleId>(Signer::$address_of[]($t0))), Neq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(Signer::$address_of[]($t0))), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:319:5+145
-    assume {:print "$at(27,12838,12983)"} true;
-    assert {:msg "assert_failed(27,12838,12983): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#110, $1_Signer_$address_of($t0)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, $1_Signer_$address_of($t0))), 3));
-
-    // assert Or(And(Not(exists[@110]<Roles::RoleId>(Signer::$address_of[]($t0))), Eq(5, $t10)), And(Neq<u64>(select Roles::RoleId.role_id(global[@110]<Roles::RoleId>(Signer::$address_of[]($t0))), 3), Eq(3, $t10))) at /home/ying/diem/language/diem-framework/modules/Roles.move:319:5+145
-    assert {:msg "assert_failed(27,12838,12983): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#110, $1_Signer_$address_of($t0)) && $IsEqual'num'(5, $t10)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#110, $1_Signer_$address_of($t0))), 3) && $IsEqual'num'(3, $t10)));
-
-    // abort($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:319:5+145
-    $abort_code := $t10;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::assert_validator_operator [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:325:5+452
-procedure {:timeLimit 40} $1_Roles_assert_validator_operator$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: $1_Roles_RoleId;
-    var $t12: int;
-    var $t13: int;
-    var $t14: bool;
-    var $t15: int;
-    var $t16: int;
-    var $t0: $signer;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#109: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:325:5+452
-    assume {:print "$at(27,13054,13506)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:325:5+452
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @109 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:325:5+1
-    $1_Roles_RoleId_$memory#109 := $1_Roles_RoleId_$memory;
-
-    // trace_local[validator_operator_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:325:5+1
-    assume {:print "$track_local(4,8,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:326:39+46
-    // >> opaque call: $t6 := Signer::address_of($t0)
-    assume {:print "$at(27,13184,13230)"} true;
-
-    // $t6 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:326:39+46
-
-    // assume WellFormed($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:326:39+46
-    assume $IsValid'address'($t6);
-
-    // assume Eq<address>($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:326:39+46
-    assume $IsEqual'address'($t6, $1_Signer_spec_address_of($t0));
-
-    // $t6 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:326:39+46
-
-    // trace_local[validator_operator_addr]($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:326:13+23
-    assume {:print "$track_local(4,8,5):", $t6} $t6 == $t6;
-
-    // $t7 := exists<Roles::RoleId>($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:16+6
-    assume {:print "$at(27,13247,13253)"} true;
-    $t7 := $ResourceExists($1_Roles_RoleId_$memory, $t6);
-
-    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:327:79+8
-    $t8 := 0;
-    assume $IsValid'u64'($t8);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:327:57+31
-    // >> opaque call: $t9 := Errors::not_published($t8)
-
-    // $t9 := opaque begin: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:57+31
-
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:57+31
-    assume $IsValid'u64'($t9);
-
-    // assume Eq<u64>($t9, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:57+31
-    assume $IsEqual'u64'($t9, 5);
-
-    // $t9 := opaque end: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:57+31
-
-    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-    assume {:print "$track_local(4,8,2):", $t9} $t9 == $t9;
-
-    // trace_local[tmp#$1]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-    assume {:print "$track_local(4,8,1):", $t7} $t7 == $t7;
-
-    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-    if ($t7) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-L1:
-
-    // trace_abort($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-    assume {:print "$at(27,13240,13320)"} true;
-    assume {:print "$track_abort(4,8):", $t9} $t9 == $t9;
-
-    // $t10 := move($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-    $t10 := $t9;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:327:9+80
-    goto L5;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:329:35+23
-    assume {:print "$at(27,13372,13395)"} true;
-L0:
-
-    // $t11 := get_global<Roles::RoleId>($t6) on_abort goto L5 with $t10 at /home/ying/diem/language/diem-framework/modules/Roles.move:329:13+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t6)) {
-        call $ExecFailureAbort();
-    } else {
-        $t11 := $ResourceValue($1_Roles_RoleId_$memory, $t6);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,13350,13363)"} true;
-        $t10 := $abort_code;
-        assume {:print "$track_abort(4,8):", $t10} $t10 == $t10;
-        goto L5;
-    }
-
-    // $t12 := get_field<Roles::RoleId>.role_id($t11) at /home/ying/diem/language/diem-framework/modules/Roles.move:329:13+54
-    $t12 := $role_id#$1_Roles_RoleId($t11);
-
-    // $t13 := 4 at /home/ying/diem/language/diem-framework/modules/Roles.move:329:71+26
-    $t13 := 4;
-    assume $IsValid'u64'($t13);
-
-    // $t14 := ==($t12, $t13) at /home/ying/diem/language/diem-framework/modules/Roles.move:329:68+2
-    $t14 := $IsEqual'u64'($t12, $t13);
-
-    // $t15 := 8 at /home/ying/diem/language/diem-framework/modules/Roles.move:330:35+19
-    assume {:print "$at(27,13470,13489)"} true;
-    $t15 := 8;
-    assume $IsValid'u64'($t15);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:330:13+42
-    // >> opaque call: $t15 := Errors::requires_role($t14)
-
-    // $t16 := opaque begin: Errors::requires_role($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:330:13+42
-
-    // assume WellFormed($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:330:13+42
-    assume $IsValid'u64'($t16);
-
-    // assume Eq<u64>($t16, 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:330:13+42
-    assume $IsEqual'u64'($t16, 3);
-
-    // $t16 := opaque end: Errors::requires_role($t15) at /home/ying/diem/language/diem-framework/modules/Roles.move:330:13+42
-
-    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-    assume {:print "$at(27,13330,13500)"} true;
-    assume {:print "$track_local(4,8,4):", $t16} $t16 == $t16;
-
-    // trace_local[tmp#$3]($t14) at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-    assume {:print "$track_local(4,8,3):", $t14} $t14 == $t14;
-
-    // if ($t14) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-    if ($t14) { goto L2; } else { goto L3; }
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-L3:
-
-    // trace_abort($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-    assume {:print "$at(27,13330,13500)"} true;
-    assume {:print "$track_abort(4,8):", $t16} $t16 == $t16;
-
-    // $t10 := move($t16) at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-    $t10 := $t16;
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:328:9+170
-L2:
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:332:5+1
-    assume {:print "$at(27,13505,13506)"} true;
-L4:
-
-    // assert Not(Not(exists[@109]<Roles::RoleId>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/Roles.move:587:9+78
-    assume {:print "$at(27,26292,26370)"} true;
-    assert {:msg "assert_failed(27,26292,26370): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#109, $1_Signer_spec_address_of($t0));
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(Signer::spec_address_of[]($t0))), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:588:9+127
-    assume {:print "$at(27,26379,26506)"} true;
-    assert {:msg "assert_failed(27,26379,26506): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, $1_Signer_spec_address_of($t0))), 4);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@109]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#109, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:332:5+1
-    assume {:print "$at(27,13505,13506)"} true;
-L5:
-
-    // assert Or(Not(exists[@109]<Roles::RoleId>(Signer::spec_address_of[]($t0))), Neq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(Signer::spec_address_of[]($t0))), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:333:5+185
-    assume {:print "$at(27,13511,13696)"} true;
-    assert {:msg "assert_failed(27,13511,13696): abort not covered by any of the `aborts_if` clauses"}
-      (!$ResourceExists($1_Roles_RoleId_$memory#109, $1_Signer_spec_address_of($t0)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, $1_Signer_spec_address_of($t0))), 4));
-
-    // assert Or(And(Not(exists[@109]<Roles::RoleId>(Signer::spec_address_of[]($t0))), Eq(5, $t10)), And(Neq<u64>(select Roles::RoleId.role_id(global[@109]<Roles::RoleId>(Signer::spec_address_of[]($t0))), 4), Eq(3, $t10))) at /home/ying/diem/language/diem-framework/modules/Roles.move:333:5+185
-    assert {:msg "assert_failed(27,13511,13696): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((!$ResourceExists($1_Roles_RoleId_$memory#109, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t10)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#109, $1_Signer_spec_address_of($t0))), 4) && $IsEqual'num'(3, $t10)));
-
-    // abort($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:333:5+185
-    $abort_code := $t10;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::can_hold_balance [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:227:5+394
-procedure {:timeLimit 40} $1_Roles_can_hold_balance$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: bool;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: bool;
-    var $t7: bool;
-    var $t8: bool;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#174: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:227:5+394
-    assume {:print "$at(27,9226,9620)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:227:5+394
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @174 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:227:5+1
-    $1_Roles_RoleId_$memory#174 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:227:5+1
-    assume {:print "$track_local(4,9,0):", $t0} $t0 == $t0;
-
-    // $t3 := Roles::has_parent_VASP_role($t0) on_abort goto L9 with $t4 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+29
-    assume {:print "$at(27,9498,9527)"} true;
-    call $t3 := $1_Roles_has_parent_VASP_role($t0);
-    if ($abort_flag) {
-        assume {:print "$at(27,9498,9527)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(4,9):", $t4} $t4 == $t4;
-        goto L9;
-    }
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-L1:
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-L0:
-
-    // $t5 := true at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    $t5 := true;
-    assume $IsValid'bool'($t5);
-
-    // $t1 := $t5 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    $t1 := $t5;
-
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    assume {:print "$track_local(4,9,1):", $t5} $t5 == $t5;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:232:29+7
-    assume {:print "$at(27,9559,9566)"} true;
-L2:
-
-    // $t6 := Roles::has_child_VASP_role($t0) on_abort goto L9 with $t4 at /home/ying/diem/language/diem-framework/modules/Roles.move:232:9+28
-    call $t6 := $1_Roles_has_child_VASP_role($t0);
-    if ($abort_flag) {
-        assume {:print "$at(27,9539,9567)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(4,9):", $t4} $t4 == $t4;
-        goto L9;
-    }
-
-    // $t1 := $t6 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    assume {:print "$at(27,9498,9567)"} true;
-    $t1 := $t6;
-
-    // trace_local[tmp#$1]($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-    assume {:print "$track_local(4,9,1):", $t6} $t6 == $t6;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+69
-L3:
-
-    // if ($t1) goto L4 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    if ($t1) { goto L4; } else { goto L5; }
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-L5:
-
-    // goto L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    goto L6;
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-L4:
-
-    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-
-    // $t7 := true at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    $t7 := true;
-    assume $IsValid'bool'($t7);
-
-    // $t2 := $t7 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    $t2 := $t7;
-
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    assume {:print "$track_local(4,9,2):", $t7} $t7 == $t7;
-
-    // goto L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    goto L7;
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:233:36+7
-    assume {:print "$at(27,9606,9613)"} true;
-L6:
-
-    // $t8 := Roles::has_designated_dealer_role($t0) on_abort goto L9 with $t4 at /home/ying/diem/language/diem-framework/modules/Roles.move:233:9+35
-    call $t8 := $1_Roles_has_designated_dealer_role($t0);
-    if ($abort_flag) {
-        assume {:print "$at(27,9579,9614)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(4,9):", $t4} $t4 == $t4;
-        goto L9;
-    }
-
-    // $t2 := $t8 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    assume {:print "$at(27,9498,9614)"} true;
-    $t2 := $t8;
-
-    // trace_local[tmp#$2]($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    assume {:print "$track_local(4,9,2):", $t8} $t8 == $t8;
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-L7:
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:231:9+116
-    assume {:print "$track_return(4,9,0):", $t2} $t2 == $t2;
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/Roles.move:234:5+1
-    assume {:print "$at(27,9619,9620)"} true;
-L8:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@174]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@174]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#174, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#174, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:234:5+1
-    assume {:print "$at(27,9619,9620)"} true;
-L9:
-
-    // abort($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:234:5+1
-    $abort_code := $t4;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::get_role_id [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:221:5+172
-procedure {:timeLimit 40} $1_Roles_get_role_id$verify(_$t0: int) returns ($ret0: int)
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: int;
-    var $t7: $1_Roles_RoleId;
-    var $t8: int;
-    var $t0: int;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#105: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:221:5+172
-    assume {:print "$at(27,8967,9139)"} true;
-    assume $IsValid'address'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:221:5+172
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @105 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:221:5+1
-    $1_Roles_RoleId_$memory#105 := $1_Roles_RoleId_$memory;
-
-    // trace_local[a]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:221:5+1
-    assume {:print "$track_local(4,10,0):", $t0} $t0 == $t0;
-
-    // $t3 := exists<Roles::RoleId>($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:16+6
-    assume {:print "$at(27,9040,9046)"} true;
-    $t3 := $ResourceExists($1_Roles_RoleId_$memory, $t0);
-
-    // $t4 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:222:57+8
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:222:35+31
-    // >> opaque call: $t5 := Errors::not_published($t4)
-
-    // $t5 := opaque begin: Errors::not_published($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:35+31
-
-    // assume WellFormed($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:35+31
-    assume $IsValid'u64'($t5);
-
-    // assume Eq<u64>($t5, 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:35+31
-    assume $IsEqual'u64'($t5, 5);
-
-    // $t5 := opaque end: Errors::not_published($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:35+31
-
-    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-    assume {:print "$track_local(4,10,2):", $t5} $t5 == $t5;
-
-    // trace_local[tmp#$1]($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-    assume {:print "$track_local(4,10,1):", $t3} $t3 == $t3;
-
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-    if ($t3) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-L1:
-
-    // trace_abort($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-    assume {:print "$at(27,9033,9091)"} true;
-    assume {:print "$track_abort(4,10):", $t5} $t5 == $t5;
-
-    // $t6 := move($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-    $t6 := $t5;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:222:9+58
-    goto L3;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:223:31+1
-    assume {:print "$at(27,9123,9124)"} true;
-L0:
-
-    // $t7 := get_global<Roles::RoleId>($t0) on_abort goto L3 with $t6 at /home/ying/diem/language/diem-framework/modules/Roles.move:223:9+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t0)) {
-        call $ExecFailureAbort();
-    } else {
-        $t7 := $ResourceValue($1_Roles_RoleId_$memory, $t0);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,9101,9114)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(4,10):", $t6} $t6 == $t6;
-        goto L3;
-    }
-
-    // $t8 := get_field<Roles::RoleId>.role_id($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:223:9+32
-    $t8 := $role_id#$1_Roles_RoleId($t7);
-
-    // trace_return[0]($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:223:9+32
-    assume {:print "$track_return(4,10,0):", $t8} $t8 == $t8;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:224:5+1
-    assume {:print "$at(27,9138,9139)"} true;
-L2:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@105]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@105]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#105, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#105, addr)), 6))));
-
-    // return $t8 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t8;
-    return;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:224:5+1
-    assume {:print "$at(27,9138,9139)"} true;
-L3:
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:224:5+1
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::grant_diem_root_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:58:5+376
-procedure {:timeLimit 40} $1_Roles_grant_diem_root_role$verify(_$t0: $signer) returns ()
-{
-    // declare local variables
-    var $t1: bool;
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: int;
-    var $t6: bool;
-    var $t0: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
-    var $1_Roles_RoleId_$memory#144: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:58:5+376
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
-    assume {:print "$at(27,2502,2878)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
-
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:58:5+376
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:58:5+376
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
-    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:58:5+376
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t0)];
-
-    // @143 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
-
-    // @144 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#144 := $1_Roles_RoleId_$memory;
-
-    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:58:5+1
-    assume {:print "$at(27,2502,2503)"} true;
-    assume {:print "$track_local(4,11,0):", $t0} $t0 == $t0;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-    // >> opaque call: DiemTimestamp::assert_genesis()
-    assume {:print "$at(27,2580,2611)"} true;
-
-    // opaque begin: DiemTimestamp::assert_genesis() at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-
-    // assume Identical($t1, Not(DiemTimestamp::$is_genesis())) at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-    assume ($t1 == !$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // if ($t1) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-    if ($t1) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-L4:
-
-    // assume And(Not(DiemTimestamp::$is_genesis()), Eq(1, $t2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-    assume (!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t2));
-
-    // trace_abort($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-    assume {:print "$at(27,2580,2611)"} true;
-    assume {:print "$track_abort(4,11):", $t2} $t2 == $t2;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-L3:
-
-    // opaque end: DiemTimestamp::assert_genesis() at /home/ying/diem/language/diem-framework/modules/Roles.move:61:9+31
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-    // >> opaque call: CoreAddresses::assert_diem_root($t0)
-    assume {:print "$at(27,2726,2769)"} true;
-
-    // opaque begin: CoreAddresses::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-
-    // assume Identical($t3, Neq<address>(Signer::spec_address_of($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-    assume ($t3 == !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
-
-    // if ($t3) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-    if ($t3) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-L6:
-
-    // assume And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-    assume (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t2));
-
-    // trace_abort($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-    assume {:print "$at(27,2726,2769)"} true;
-    assume {:print "$track_abort(4,11):", $t2} $t2 == $t2;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-L5:
-
-    // opaque end: CoreAddresses::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:64:9+43
-
-    // $t4 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:66:32+17
-    assume {:print "$at(27,2853,2870)"} true;
-    $t4 := 0;
-    assume $IsValid'u64'($t4);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    // >> opaque call: Roles::grant_role($t0, $t1)
-
-    // assume Identical($t5, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t5 == $1_Signer_spec_address_of($t0));
-
-    // assert Implies(Eq<u64>($t4, 0), Eq<address>($t5, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t4, 0) ==> $IsEqual'address'($t5, 173345816));
-
-    // assert Implies(Eq<u64>($t4, 1), Eq<address>($t5, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t4, 1) ==> $IsEqual'address'($t5, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    assume {:print "$at(27,2830,2871)"} true;
-    assert {:msg "assert_failed(27,2830,2871): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t0)];
-
-    // opaque begin: Roles::grant_role($t0, $t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-
-    // assume Identical($t6, exists<Roles::RoleId>(Signer::$address_of($t0))) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    assume ($t6 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0)));
-
-    // if ($t6) goto L8 else goto L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    if ($t6) { goto L8; } else { goto L7; }
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-L8:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t0)), Eq(6, $t2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0)) && $IsEqual'num'(6, $t2));
-
-    // trace_abort($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    assume {:print "$at(27,2830,2871)"} true;
-    assume {:print "$track_abort(4,11):", $t2} $t2 == $t2;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    goto L2;
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-L7:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), $t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), $t4);
-
-    // opaque end: Roles::grant_role($t0, $t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:66:9+41
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:67:5+1
-    assume {:print "$at(27,2877,2878)"} true;
-L1:
-
-    // assert Not(Not(DiemTimestamp::$is_genesis[@143]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:140:9+51
-    assume {:print "$at(17,5622,5673)"} true;
-    assert {:msg "assert_failed(17,5622,5673): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(exists[@144]<Roles::RoleId>(Signer::$address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#144, $1_Signer_$address_of($t0));
-
-    // assert Not(Not(DiemTimestamp::$is_genesis[@143]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:140:9+51
-    assume {:print "$at(17,5622,5673)"} true;
-    assert {:msg "assert_failed(17,5622,5673): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), 0) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), 0);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@144]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@144]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#144, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#144, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@144]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@144]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#144, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#144, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@144]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@144]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#144, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#144, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@144]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@144]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#144, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#144, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@144]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@144]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#144, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#144, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@144]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@144]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#144, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#144, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:67:5+1
-    assume {:print "$at(27,2877,2878)"} true;
-L2:
-
-    // assert Or(Or(Or(Not(DiemTimestamp::$is_genesis[@143]()), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), exists[@144]<Roles::RoleId>(Signer::$address_of[]($t0))), Not(DiemTimestamp::$is_genesis[@143]())) at /home/ying/diem/language/diem-framework/modules/Roles.move:68:5+250
-    assume {:print "$at(27,2883,3133)"} true;
-    assert {:msg "assert_failed(27,2883,3133): abort not covered by any of the `aborts_if` clauses"}
-      (((!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || $ResourceExists($1_Roles_RoleId_$memory#144, $1_Signer_$address_of($t0))) || !$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143));
-
-    // assert Or(Or(Or(And(Not(DiemTimestamp::$is_genesis[@143]()), Eq(1, $t2)), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t2))), And(exists[@144]<Roles::RoleId>(Signer::$address_of[]($t0)), Eq(6, $t2))), And(Not(DiemTimestamp::$is_genesis[@143]()), Eq(1, $t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:68:5+250
-    assert {:msg "assert_failed(27,2883,3133): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((((!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143) && $IsEqual'num'(1, $t2)) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t2))) || ($ResourceExists($1_Roles_RoleId_$memory#144, $1_Signer_$address_of($t0)) && $IsEqual'num'(6, $t2))) || (!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#143) && $IsEqual'num'(1, $t2)));
-
-    // abort($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:68:5+250
-    $abort_code := $t2;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::grant_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-procedure {:timeLimit 40} $1_Roles_grant_role$verify(_$t0: $signer, _$t1: int) returns ()
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: int;
-    var $t6: bool;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: int;
-    var $t11: $1_Roles_RoleId;
-    var $t0: $signer;
-    var $t1: int;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#107: $Memory $1_Roles_RoleId;
-    var $1_Roles_RoleId_$memory#270: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    assume {:print "$at(27,6889,7088)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    assume $IsValid'u64'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t4 == $1_Signer_spec_address_of($t0));
-
-    // assume Implies(Eq<u64>($t1, 0), Eq<address>($t4, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assume ($IsEqual'u64'($t1, 0) ==> $IsEqual'address'($t4, 173345816));
-
-    // assume Implies(Eq<u64>($t1, 1), Eq<address>($t4, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assume ($IsEqual'u64'($t1, 1) ==> $IsEqual'address'($t4, 186537453));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t0)];
-
-    // @107 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#107 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+1
-    assume {:print "$at(27,6889,6890)"} true;
-    assume {:print "$track_local(4,12,0):", $t0} $t0 == $t0;
-
-    // trace_local[role_id]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+1
-    assume {:print "$track_local(4,12,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:164:32+27
-    // >> opaque call: $t4 := Signer::address_of($t0)
-    assume {:print "$at(27,6969,6996)"} true;
-
-    // $t5 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:32+27
-
-    // assume WellFormed($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:32+27
-    assume $IsValid'address'($t5);
-
-    // assume Eq<address>($t5, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:32+27
-    assume $IsEqual'address'($t5, $1_Signer_spec_address_of($t0));
-
-    // $t5 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:32+27
-
-    // $t6 := exists<Roles::RoleId>($t5) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:17+6
-    $t6 := $ResourceExists($1_Roles_RoleId_$memory, $t5);
-
-    // $t7 := !($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:16+1
-    call $t7 := $Not($t6);
-
-    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:164:88+8
-    $t8 := 0;
-    assume $IsValid'u64'($t8);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:164:62+35
-    // >> opaque call: $t8 := Errors::already_published($t7)
-
-    // $t9 := opaque begin: Errors::already_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:62+35
-
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:62+35
-    assume $IsValid'u64'($t9);
-
-    // assume Eq<u64>($t9, 6) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:62+35
-    assume $IsEqual'u64'($t9, 6);
-
-    // $t9 := opaque end: Errors::already_published($t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:62+35
-
-    // trace_local[tmp#$3]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-    assume {:print "$track_local(4,12,3):", $t9} $t9 == $t9;
-
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-    assume {:print "$track_local(4,12,2):", $t7} $t7 == $t7;
-
-    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-    if ($t7) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-L1:
-
-    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-
-    // trace_abort($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-    assume {:print "$at(27,6946,7035)"} true;
-    assume {:print "$track_abort(4,12):", $t9} $t9 == $t9;
-
-    // $t10 := move($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-    $t10 := $t9;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:164:9+89
-    goto L3;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:165:17+7
-    assume {:print "$at(27,7053,7060)"} true;
-L0:
-
-    // $t11 := pack Roles::RoleId($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:165:26+18
-    $t11 := $1_Roles_RoleId($t1);
-
-    // assert CanModify<Roles::RoleId>($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:165:9+7
-    assert {:msg "assert_failed(27,7045,7052): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_spec_address_of($t0)];
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_diem_root_role_addr(addr): Eq<address>(addr, a550c18) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:429:9+120
-    assume {:print "$at(27,6889,7088)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($IsEqual'address'(addr, 173345816)));
-
-    // assume Implies(DiemTimestamp::$is_operating(), Roles::spec_has_diem_root_role_addr(a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:431:9+115
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, 173345816));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_treasury_compliance_role_addr(addr): Eq<address>(addr, b1e55ed) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:436:9+140
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($IsEqual'address'(addr, 186537453)));
-
-    // assume Implies(DiemTimestamp::$is_operating(), Roles::spec_has_treasury_compliance_role_addr(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:438:9+151
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, 186537453));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_diem_root_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:445:9+138
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_treasury_compliance_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:449:9+148
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_validator_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:453:9+138
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_validator_operator_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:457:9+147
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_designated_dealer_role_addr(addr): Roles::spec_can_hold_balance_addr(addr) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:461:9+145
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_designated_dealer_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_parent_VASP_role_addr(addr): Roles::spec_can_hold_balance_addr(addr) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:465:9+139
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_parent_VASP_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assume forall addr: TypeDomain<address>() where Roles::spec_has_child_VASP_role_addr(addr): Roles::spec_can_hold_balance_addr(addr) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:469:9+138
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_child_VASP_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // @270 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:163:5+199
-    // state save for global update invariants
-    $1_Roles_RoleId_$memory#270 := $1_Roles_RoleId_$memory;
-
-    // move_to<Roles::RoleId>($t11, $t0) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/Roles.move:165:9+7
-    assume {:print "$at(27,7045,7052)"} true;
-    if ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_spec_address_of($t0))) {
-        call $ExecFailureAbort();
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_spec_address_of($t0), $t11);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,7045,7052)"} true;
-        $t10 := $abort_code;
-        assume {:print "$track_abort(4,12):", $t10} $t10 == $t10;
-        goto L3;
-    }
-
-    // assert forall addr: TypeDomain<address>() where exists[@270]<Roles::RoleId>(addr): And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@270]<Roles::RoleId>(addr)), select Roles::RoleId.role_id(global<Roles::RoleId>(addr)))) at /home/ying/diem/language/diem-framework/modules/Roles.move:375:9+189
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:375:9+189
-    assume {:print "$at(27,15218,15407)"} true;
-    assert {:msg "assert_failed(27,15218,15407): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_Roles_RoleId_$memory#270, addr))  ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#270, addr)), $role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr))))));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_diem_root_role_addr(addr): Eq<address>(addr, a550c18) at /home/ying/diem/language/diem-framework/modules/Roles.move:429:9+120
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:429:9+120
-    assume {:print "$at(27,19328,19448)"} true;
-    assert {:msg "assert_failed(27,19328,19448): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($IsEqual'address'(addr, 173345816)));
-
-    // assert Implies(DiemTimestamp::$is_operating(), Roles::spec_has_diem_root_role_addr(a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:431:9+115
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:431:9+115
-    assume {:print "$at(27,19457,19572)"} true;
-    assert {:msg "assert_failed(27,19457,19572): global memory invariant does not hold"}
-      ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, 173345816));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_treasury_compliance_role_addr(addr): Eq<address>(addr, b1e55ed) at /home/ying/diem/language/diem-framework/modules/Roles.move:436:9+140
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:436:9+140
-    assume {:print "$at(27,19841,19981)"} true;
-    assert {:msg "assert_failed(27,19841,19981): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($IsEqual'address'(addr, 186537453)));
-
-    // assert Implies(DiemTimestamp::$is_operating(), Roles::spec_has_treasury_compliance_role_addr(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:438:9+151
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:438:9+151
-    assume {:print "$at(27,19990,20141)"} true;
-    assert {:msg "assert_failed(27,19990,20141): global memory invariant does not hold"}
-      ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, 186537453));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_diem_root_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:445:9+138
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:445:9+138
-    assume {:print "$at(27,20387,20525)"} true;
-    assert {:msg "assert_failed(27,20387,20525): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_diem_root_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_treasury_compliance_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:449:9+148
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:449:9+148
-    assume {:print "$at(27,20601,20749)"} true;
-    assert {:msg "assert_failed(27,20601,20749): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_validator_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:453:9+138
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:453:9+138
-    assume {:print "$at(27,20816,20954)"} true;
-    assert {:msg "assert_failed(27,20816,20954): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_validator_operator_role_addr(addr): Not(Roles::spec_can_hold_balance_addr(addr)) at /home/ying/diem/language/diem-framework/modules/Roles.move:457:9+147
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:457:9+147
-    assume {:print "$at(27,21029,21176)"} true;
-    assert {:msg "assert_failed(27,21029,21176): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr))  ==> (!$1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_designated_dealer_role_addr(addr): Roles::spec_can_hold_balance_addr(addr) at /home/ying/diem/language/diem-framework/modules/Roles.move:461:9+145
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:461:9+145
-    assume {:print "$at(27,21243,21388)"} true;
-    assert {:msg "assert_failed(27,21243,21388): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_designated_dealer_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_parent_VASP_role_addr(addr): Roles::spec_can_hold_balance_addr(addr) at /home/ying/diem/language/diem-framework/modules/Roles.move:465:9+139
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:465:9+139
-    assume {:print "$at(27,21449,21588)"} true;
-    assert {:msg "assert_failed(27,21449,21588): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_parent_VASP_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // assert forall addr: TypeDomain<address>() where Roles::spec_has_child_VASP_role_addr(addr): Roles::spec_can_hold_balance_addr(addr) at /home/ying/diem/language/diem-framework/modules/Roles.move:469:9+138
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Roles.move:469:9+138
-    assume {:print "$at(27,21648,21786)"} true;
-    assert {:msg "assert_failed(27,21648,21786): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($1_Roles_spec_has_child_VASP_role_addr($1_Roles_RoleId_$memory, addr))  ==> ($1_Roles_spec_can_hold_balance_addr($1_Roles_RoleId_$memory, addr)));
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:166:5+1
-    assume {:print "$at(27,7087,7088)"} true;
-L2:
-
-    // assert Not(exists[@107]<Roles::RoleId>(Signer::$address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#107, $1_Signer_$address_of($t0));
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), $t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), $t1);
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    return;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:166:5+1
-    assume {:print "$at(27,7087,7088)"} true;
-L3:
-
-    // assert exists[@107]<Roles::RoleId>(Signer::$address_of[]($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:167:5+369
-    assume {:print "$at(27,7093,7462)"} true;
-    assert {:msg "assert_failed(27,7093,7462): abort not covered by any of the `aborts_if` clauses"}
-      $ResourceExists($1_Roles_RoleId_$memory#107, $1_Signer_$address_of($t0));
-
-    // assert And(exists[@107]<Roles::RoleId>(Signer::$address_of[]($t0)), Eq(6, $t10)) at /home/ying/diem/language/diem-framework/modules/Roles.move:167:5+369
-    assert {:msg "assert_failed(27,7093,7462): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ($ResourceExists($1_Roles_RoleId_$memory#107, $1_Signer_$address_of($t0)) && $IsEqual'num'(6, $t10));
-
-    // abort($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:167:5+369
-    $abort_code := $t10;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::grant_treasury_compliance_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+448
-procedure {:timeLimit 40} $1_Roles_grant_treasury_compliance_role$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: bool;
-    var $t8: int;
-    var $t9: int;
-    var $t10: bool;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
-    var $1_Roles_RoleId_$memory#166: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+448
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
-    assume {:print "$at(27,3208,3656)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
-
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+448
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+448
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+448
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
-    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+448
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t1));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t0)];
-
-    // @165 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
-
-    // @166 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#166 := $1_Roles_RoleId_$memory;
-
-    // trace_local[treasury_compliance_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+1
-    assume {:print "$at(27,3208,3209)"} true;
-    assume {:print "$track_local(4,13,0):", $t0} $t0 == $t0;
-
-    // trace_local[dr_account]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:75:5+1
-    assume {:print "$track_local(4,13,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-    // >> opaque call: DiemTimestamp::assert_genesis()
-    assume {:print "$at(27,3358,3389)"} true;
-
-    // opaque begin: DiemTimestamp::assert_genesis() at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-
-    // assume Identical($t3, Not(DiemTimestamp::$is_genesis())) at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-    assume ($t3 == !$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // if ($t3) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-    if ($t3) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-L4:
-
-    // assume And(Not(DiemTimestamp::$is_genesis()), Eq(1, $t4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-    assume (!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t4));
-
-    // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-    assume {:print "$at(27,3358,3389)"} true;
-    assume {:print "$track_abort(4,13):", $t4} $t4 == $t4;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-L3:
-
-    // opaque end: DiemTimestamp::assert_genesis() at /home/ying/diem/language/diem-framework/modules/Roles.move:79:9+31
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-    // >> opaque call: CoreAddresses::assert_treasury_compliance($t0)
-    assume {:print "$at(27,3399,3469)"} true;
-
-    // opaque begin: CoreAddresses::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-
-    // assume Identical($t5, Neq<address>(Signer::spec_address_of($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-    assume ($t5 == !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453));
-
-    // if ($t5) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-    if ($t5) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-L6:
-
-    // assume And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-    assume (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t4));
-
-    // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-    assume {:print "$at(27,3399,3469)"} true;
-    assume {:print "$track_abort(4,13):", $t4} $t4 == $t4;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-L5:
-
-    // opaque end: CoreAddresses::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:80:9+70
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    // >> opaque call: Roles::assert_diem_root($t1)
-    assume {:print "$at(27,3479,3507)"} true;
-
-    // assume Identical($t6, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t1));
-
-    // opaque begin: Roles::assert_diem_root($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    assume {:print "$at(27,3479,3507)"} true;
-
-    // assume Identical($t7, Or(Or(Or(Neq<address>(Signer::spec_address_of($t1), a550c18), Not(exists<Roles::RoleId>($t6))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t6)), 0)), Neq<address>(Signer::spec_address_of($t1), a550c18))) at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    assume ($t7 == (((!$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory, $t6)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t6)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816)));
-
-    // if ($t7) goto L8 else goto L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    if ($t7) { goto L8; } else { goto L7; }
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-L8:
-
-    // assume Or(Or(Or(And(Neq<address>(Signer::spec_address_of($t1), a550c18), Eq(2, $t4)), And(Not(exists<Roles::RoleId>($t6)), Eq(5, $t4))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t6)), 0), Eq(3, $t4))), And(Neq<address>(Signer::spec_address_of($t1), a550c18), Eq(2, $t4))) at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    assume ((((!$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816) && $IsEqual'num'(2, $t4)) || (!$ResourceExists($1_Roles_RoleId_$memory, $t6) && $IsEqual'num'(5, $t4))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t6)), 0) && $IsEqual'num'(3, $t4))) || (!$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816) && $IsEqual'num'(2, $t4)));
-
-    // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    assume {:print "$at(27,3479,3507)"} true;
-    assume {:print "$track_abort(4,13):", $t4} $t4 == $t4;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-    goto L2;
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-L7:
-
-    // opaque end: Roles::assert_diem_root($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:81:9+28
-
-    // $t8 := 1 at /home/ying/diem/language/diem-framework/modules/Roles.move:83:49+27
-    assume {:print "$at(27,3621,3648)"} true;
-    $t8 := 1;
-    assume $IsValid'u64'($t8);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    // >> opaque call: Roles::grant_role($t0, $t2)
-
-    // assume Identical($t9, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t9 == $1_Signer_spec_address_of($t0));
-
-    // assert Implies(Eq<u64>($t8, 0), Eq<address>($t9, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t8, 0) ==> $IsEqual'address'($t9, 173345816));
-
-    // assert Implies(Eq<u64>($t8, 1), Eq<address>($t9, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t8, 1) ==> $IsEqual'address'($t9, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    assume {:print "$at(27,3581,3649)"} true;
-    assert {:msg "assert_failed(27,3581,3649): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t0)];
-
-    // opaque begin: Roles::grant_role($t0, $t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-
-    // assume Identical($t10, exists<Roles::RoleId>(Signer::$address_of($t0))) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    assume ($t10 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0)));
-
-    // if ($t10) goto L10 else goto L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    if ($t10) { goto L10; } else { goto L9; }
-
-    // label L10 at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-L10:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t0)), Eq(6, $t4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0)) && $IsEqual'num'(6, $t4));
-
-    // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    assume {:print "$at(27,3581,3649)"} true;
-    assume {:print "$track_abort(4,13):", $t4} $t4 == $t4;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    goto L2;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-L9:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), $t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), $t8);
-
-    // opaque end: Roles::grant_role($t0, $t8) at /home/ying/diem/language/diem-framework/modules/Roles.move:83:9+68
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:84:5+1
-    assume {:print "$at(27,3655,3656)"} true;
-L1:
-
-    // assert Not(Not(DiemTimestamp::$is_genesis[@165]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:140:9+51
-    assume {:print "$at(17,5622,5673)"} true;
-    assert {:msg "assert_failed(17,5622,5673): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
-
-    // assert Not(Not(exists[@166]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#166, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>($t2)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, $t2)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t1), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816);
-
-    // assert Not(exists[@166]<Roles::RoleId>(Signer::$address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#166, $1_Signer_$address_of($t0));
-
-    // assert Not(Not(DiemTimestamp::$is_genesis[@165]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:140:9+51
-    assume {:print "$at(17,5622,5673)"} true;
-    assert {:msg "assert_failed(17,5622,5673): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), 1) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), 1);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@166]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#166, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@166]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#166, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@166]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#166, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@166]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#166, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@166]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#166, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@166]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#166, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:84:5+1
-    assume {:print "$at(27,3655,3656)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Or(Or(Not(DiemTimestamp::$is_genesis[@165]()), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)), Not(exists[@166]<Roles::RoleId>($t2))), Neq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>($t2)), 0)), Neq<address>(Signer::spec_address_of[]($t1), a550c18)), exists[@166]<Roles::RoleId>(Signer::$address_of[]($t0))), Not(DiemTimestamp::$is_genesis[@165]())) at /home/ying/diem/language/diem-framework/modules/Roles.move:85:5+372
-    assume {:print "$at(27,3661,4033)"} true;
-    assert {:msg "assert_failed(27,3661,4033): abort not covered by any of the `aborts_if` clauses"}
-      ((((((!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)) || !$ResourceExists($1_Roles_RoleId_$memory#166, $t2)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, $t2)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816)) || $ResourceExists($1_Roles_RoleId_$memory#166, $1_Signer_$address_of($t0))) || !$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165));
-
-    // assert Or(Or(Or(Or(Or(Or(And(Not(DiemTimestamp::$is_genesis[@165]()), Eq(1, $t4)), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t4))), And(Not(exists[@166]<Roles::RoleId>($t2)), Eq(5, $t4))), And(Neq<u64>(select Roles::RoleId.role_id(global[@166]<Roles::RoleId>($t2)), 0), Eq(3, $t4))), And(Neq<address>(Signer::spec_address_of[]($t1), a550c18), Eq(2, $t4))), And(exists[@166]<Roles::RoleId>(Signer::$address_of[]($t0)), Eq(6, $t4))), And(Not(DiemTimestamp::$is_genesis[@165]()), Eq(1, $t4))) at /home/ying/diem/language/diem-framework/modules/Roles.move:85:5+372
-    assert {:msg "assert_failed(27,3661,4033): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((((!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165) && $IsEqual'num'(1, $t4)) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t4))) || (!$ResourceExists($1_Roles_RoleId_$memory#166, $t2) && $IsEqual'num'(5, $t4))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#166, $t2)), 0) && $IsEqual'num'(3, $t4))) || (!$IsEqual'address'($1_Signer_spec_address_of($t1), 173345816) && $IsEqual'num'(2, $t4))) || ($ResourceExists($1_Roles_RoleId_$memory#166, $1_Signer_$address_of($t0)) && $IsEqual'num'(6, $t4))) || (!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#165) && $IsEqual'num'(1, $t4)));
-
-    // abort($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:85:5+372
-    $abort_code := $t4;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_child_VASP_role [baseline] at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+124
-procedure {:inline 1} $1_Roles_has_child_VASP_role(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    $t0 := _$t0;
-
-    // bytecode translation starts here
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+1
-    assume {:print "$at(27,8837,8838)"} true;
-    assume {:print "$track_local(4,14,0):", $t0} $t0 == $t0;
-
-    // $t1 := 6 at /home/ying/diem/language/diem-framework/modules/Roles.move:218:27+18
-    assume {:print "$at(27,8936,8954)"} true;
-    $t1 := 6;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:218:9+37
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8918,8955)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,14):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:218:9+37
-    assume {:print "$track_return(4,14,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-    assume {:print "$at(27,8960,8961)"} true;
-L1:
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_child_VASP_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+124
-procedure {:timeLimit 40} $1_Roles_has_child_VASP_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#134: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+124
-    assume {:print "$at(27,8837,8961)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+124
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @134 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+1
-    $1_Roles_RoleId_$memory#134 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:217:5+1
-    assume {:print "$track_local(4,14,0):", $t0} $t0 == $t0;
-
-    // $t1 := 6 at /home/ying/diem/language/diem-framework/modules/Roles.move:218:27+18
-    assume {:print "$at(27,8936,8954)"} true;
-    $t1 := 6;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:218:9+37
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8918,8955)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,14):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:218:9+37
-    assume {:print "$track_return(4,14,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-    assume {:print "$at(27,8960,8961)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@134]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@134]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#134, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#134, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-    assume {:print "$at(27,8960,8961)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:219:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_designated_dealer_role [baseline] at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+138
-procedure {:inline 1} $1_Roles_has_designated_dealer_role(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    $t0 := _$t0;
-
-    // bytecode translation starts here
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+1
-    assume {:print "$at(27,8287,8288)"} true;
-    assume {:print "$track_local(4,15,0):", $t0} $t0 == $t0;
-
-    // $t1 := 2 at /home/ying/diem/language/diem-framework/modules/Roles.move:202:27+25
-    assume {:print "$at(27,8393,8418)"} true;
-    $t1 := 2;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:202:9+44
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8375,8419)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,15):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:202:9+44
-    assume {:print "$track_return(4,15,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-    assume {:print "$at(27,8424,8425)"} true;
-L1:
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_designated_dealer_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+138
-procedure {:timeLimit 40} $1_Roles_has_designated_dealer_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#132: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+138
-    assume {:print "$at(27,8287,8425)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+138
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @132 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+1
-    $1_Roles_RoleId_$memory#132 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:201:5+1
-    assume {:print "$track_local(4,15,0):", $t0} $t0 == $t0;
-
-    // $t1 := 2 at /home/ying/diem/language/diem-framework/modules/Roles.move:202:27+25
-    assume {:print "$at(27,8393,8418)"} true;
-    $t1 := 2;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:202:9+44
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8375,8419)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,15):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:202:9+44
-    assume {:print "$track_return(4,15,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-    assume {:print "$at(27,8424,8425)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@132]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@132]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#132, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#132, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-    assume {:print "$at(27,8424,8425)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:203:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_diem_root_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:193:5+122
-procedure {:timeLimit 40} $1_Roles_has_diem_root_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#131: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:193:5+122
-    assume {:print "$at(27,8011,8133)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:193:5+122
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @131 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:193:5+1
-    $1_Roles_RoleId_$memory#131 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:193:5+1
-    assume {:print "$track_local(4,16,0):", $t0} $t0 == $t0;
-
-    // $t1 := 0 at /home/ying/diem/language/diem-framework/modules/Roles.move:194:27+17
-    assume {:print "$at(27,8109,8126)"} true;
-    $t1 := 0;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:194:9+36
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8091,8127)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,16):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:194:9+36
-    assume {:print "$track_return(4,16,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:195:5+1
-    assume {:print "$at(27,8132,8133)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@131]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@131]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#131, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#131, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:195:5+1
-    assume {:print "$at(27,8132,8133)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:195:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_parent_VASP_role [baseline] at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+126
-procedure {:inline 1} $1_Roles_has_parent_VASP_role(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    $t0 := _$t0;
-
-    // bytecode translation starts here
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+1
-    assume {:print "$at(27,8705,8706)"} true;
-    assume {:print "$track_local(4,17,0):", $t0} $t0 == $t0;
-
-    // $t1 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:214:27+19
-    assume {:print "$at(27,8805,8824)"} true;
-    $t1 := 5;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:214:9+38
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8787,8825)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,17):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:214:9+38
-    assume {:print "$track_return(4,17,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-    assume {:print "$at(27,8830,8831)"} true;
-L1:
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_parent_VASP_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+126
-procedure {:timeLimit 40} $1_Roles_has_parent_VASP_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#129: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+126
-    assume {:print "$at(27,8705,8831)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+126
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @129 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+1
-    $1_Roles_RoleId_$memory#129 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:213:5+1
-    assume {:print "$track_local(4,17,0):", $t0} $t0 == $t0;
-
-    // $t1 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:214:27+19
-    assume {:print "$at(27,8805,8824)"} true;
-    $t1 := 5;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:214:9+38
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8787,8825)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,17):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:214:9+38
-    assume {:print "$track_return(4,17,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-    assume {:print "$at(27,8830,8831)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@129]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@129]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#129, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#129, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-    assume {:print "$at(27,8830,8831)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:215:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_role [baseline] at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+210
-procedure {:inline 1} $1_Roles_has_role(_$t0: $signer, _$t1: int) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: $1_Roles_RoleId;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t10: bool;
-    var $t0: $signer;
-    var $t1: int;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // bytecode translation starts here
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+1
-    assume {:print "$at(27,7795,7796)"} true;
-    assume {:print "$track_local(4,18,0):", $t0} $t0 == $t0;
-
-    // trace_local[role_id]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+1
-    assume {:print "$track_local(4,18,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-    // >> opaque call: $t4 := Signer::address_of($t0)
-    assume {:print "$at(27,7882,7909)"} true;
-
-    // $t4 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-
-    // assume WellFormed($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-    assume $IsValid'address'($t4);
-
-    // assume Eq<address>($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-    assume $IsEqual'address'($t4, $1_Signer_spec_address_of($t0));
-
-    // $t4 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-
-    // trace_local[addr]($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:12+4
-    assume {:print "$track_local(4,18,3):", $t4} $t4 == $t4;
-
-    // $t5 := exists<Roles::RoleId>($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+6
-    assume {:print "$at(27,7918,7924)"} true;
-    $t5 := $ResourceExists($1_Roles_RoleId_$memory, $t4);
-
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    if ($t5) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-L1:
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:190:37+4
-    assume {:print "$at(27,7975,7979)"} true;
-L0:
-
-    // $t6 := get_global<Roles::RoleId>($t4) on_abort goto L5 with $t7 at /home/ying/diem/language/diem-framework/modules/Roles.move:190:15+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t4)) {
-        call $ExecFailureAbort();
-    } else {
-        $t6 := $ResourceValue($1_Roles_RoleId_$memory, $t4);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,7953,7966)"} true;
-        $t7 := $abort_code;
-        assume {:print "$track_abort(4,18):", $t7} $t7 == $t7;
-        goto L5;
-    }
-
-    // $t8 := get_field<Roles::RoleId>.role_id($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:190:15+35
-    $t8 := $role_id#$1_Roles_RoleId($t6);
-
-    // $t9 := ==($t8, $t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:190:51+2
-    $t9 := $IsEqual'u64'($t8, $t1);
-
-    // $t2 := $t9 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$at(27,7918,7999)"} true;
-    $t2 := $t9;
-
-    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$track_local(4,18,2):", $t9} $t9 == $t9;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-L2:
-
-    // $t10 := false at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    $t10 := false;
-    assume $IsValid'bool'($t10);
-
-    // $t2 := $t10 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    $t2 := $t10;
-
-    // trace_local[tmp#$2]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$track_local(4,18,2):", $t10} $t10 == $t10;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-L3:
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$track_return(4,18,0):", $t2} $t2 == $t2;
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-    assume {:print "$at(27,8004,8005)"} true;
-L4:
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-    $ret0 := $t2;
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-L5:
-
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-    $abort_code := $t7;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+210
-procedure {:timeLimit 40} $1_Roles_has_role$verify(_$t0: $signer, _$t1: int) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: $1_Roles_RoleId;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t10: bool;
-    var $t0: $signer;
-    var $t1: int;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_Roles_RoleId_$memory#103: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+210
-    assume {:print "$at(27,7795,8005)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+210
-    assume $IsValid'u64'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+210
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @103 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+1
-    $1_Roles_RoleId_$memory#103 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+1
-    assume {:print "$track_local(4,18,0):", $t0} $t0 == $t0;
-
-    // trace_local[role_id]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+1
-    assume {:print "$track_local(4,18,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-    // >> opaque call: $t4 := Signer::address_of($t0)
-    assume {:print "$at(27,7882,7909)"} true;
-
-    // $t4 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-
-    // assume WellFormed($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-    assume $IsValid'address'($t4);
-
-    // assume Eq<address>($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-    assume $IsEqual'address'($t4, $1_Signer_spec_address_of($t0));
-
-    // $t4 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:19+27
-
-    // trace_local[addr]($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:188:12+4
-    assume {:print "$track_local(4,18,3):", $t4} $t4 == $t4;
-
-    // $t5 := exists<Roles::RoleId>($t4) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+6
-    assume {:print "$at(27,7918,7924)"} true;
-    $t5 := $ResourceExists($1_Roles_RoleId_$memory, $t4);
-
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    if ($t5) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-L1:
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/Roles.move:190:37+4
-    assume {:print "$at(27,7975,7979)"} true;
-L0:
-
-    // $t6 := get_global<Roles::RoleId>($t4) on_abort goto L5 with $t7 at /home/ying/diem/language/diem-framework/modules/Roles.move:190:15+13
-    if (!$ResourceExists($1_Roles_RoleId_$memory, $t4)) {
-        call $ExecFailureAbort();
-    } else {
-        $t6 := $ResourceValue($1_Roles_RoleId_$memory, $t4);
-    }
-    if ($abort_flag) {
-        assume {:print "$at(27,7953,7966)"} true;
-        $t7 := $abort_code;
-        assume {:print "$track_abort(4,18):", $t7} $t7 == $t7;
-        goto L5;
-    }
-
-    // $t8 := get_field<Roles::RoleId>.role_id($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:190:15+35
-    $t8 := $role_id#$1_Roles_RoleId($t6);
-
-    // $t9 := ==($t8, $t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:190:51+2
-    $t9 := $IsEqual'u64'($t8, $t1);
-
-    // $t2 := $t9 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$at(27,7918,7999)"} true;
-    $t2 := $t9;
-
-    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$track_local(4,18,2):", $t9} $t9 == $t9;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    goto L3;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-L2:
-
-    // $t10 := false at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    $t10 := false;
-    assume $IsValid'bool'($t10);
-
-    // $t2 := $t10 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    $t2 := $t10;
-
-    // trace_local[tmp#$2]($t10) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$track_local(4,18,2):", $t10} $t10 == $t10;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-L3:
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:189:8+81
-    assume {:print "$track_return(4,18,0):", $t2} $t2 == $t2;
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-    assume {:print "$at(27,8004,8005)"} true;
-L4:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@103]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@103]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#103, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#103, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-    assume {:print "$at(27,8004,8005)"} true;
-L5:
-
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:191:5+1
-    $abort_code := $t7;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_treasury_compliance_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:197:5+142
-procedure {:timeLimit 40} $1_Roles_has_treasury_compliance_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#128: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:197:5+142
-    assume {:print "$at(27,8139,8281)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:197:5+142
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @128 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:197:5+1
-    $1_Roles_RoleId_$memory#128 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:197:5+1
-    assume {:print "$track_local(4,19,0):", $t0} $t0 == $t0;
-
-    // $t1 := 1 at /home/ying/diem/language/diem-framework/modules/Roles.move:198:27+27
-    assume {:print "$at(27,8247,8274)"} true;
-    $t1 := 1;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:198:9+46
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8229,8275)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,19):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:198:9+46
-    assume {:print "$track_return(4,19,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:199:5+1
-    assume {:print "$at(27,8280,8281)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@128]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@128]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#128, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#128, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:199:5+1
-    assume {:print "$at(27,8280,8281)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:199:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_validator_operator_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:209:5+140
-procedure {:timeLimit 40} $1_Roles_has_validator_operator_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#127: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:209:5+140
-    assume {:print "$at(27,8559,8699)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:209:5+140
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @127 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:209:5+1
-    $1_Roles_RoleId_$memory#127 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:209:5+1
-    assume {:print "$track_local(4,20,0):", $t0} $t0 == $t0;
-
-    // $t1 := 4 at /home/ying/diem/language/diem-framework/modules/Roles.move:210:27+26
-    assume {:print "$at(27,8666,8692)"} true;
-    $t1 := 4;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:210:9+45
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8648,8693)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,20):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:210:9+45
-    assume {:print "$track_return(4,20,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:211:5+1
-    assume {:print "$at(27,8698,8699)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@127]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@127]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#127, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#127, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:211:5+1
-    assume {:print "$at(27,8698,8699)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:211:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::has_validator_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:205:5+122
-procedure {:timeLimit 40} $1_Roles_has_validator_role$verify(_$t0: $signer) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: int;
-    var $t2: bool;
-    var $t3: int;
-    var $t0: $signer;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#126: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:205:5+122
-    assume {:print "$at(27,8431,8553)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:205:5+122
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // @126 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:205:5+1
-    $1_Roles_RoleId_$memory#126 := $1_Roles_RoleId_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:205:5+1
-    assume {:print "$track_local(4,21,0):", $t0} $t0 == $t0;
-
-    // $t1 := 3 at /home/ying/diem/language/diem-framework/modules/Roles.move:206:27+17
-    assume {:print "$at(27,8529,8546)"} true;
-    $t1 := 3;
-    assume $IsValid'u64'($t1);
-
-    // $t2 := Roles::has_role($t0, $t1) on_abort goto L2 with $t3 at /home/ying/diem/language/diem-framework/modules/Roles.move:206:9+36
-    call $t2 := $1_Roles_has_role($t0, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(27,8511,8547)"} true;
-        $t3 := $abort_code;
-        assume {:print "$track_abort(4,21):", $t3} $t3 == $t3;
-        goto L2;
-    }
-
-    // trace_return[0]($t2) at /home/ying/diem/language/diem-framework/modules/Roles.move:206:9+36
-    assume {:print "$track_return(4,21,0):", $t2} $t2 == $t2;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:207:5+1
-    assume {:print "$at(27,8552,8553)"} true;
-L1:
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@126]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@126]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#126, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#126, addr)), 6))));
-
-    // return $t2 at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    $ret0 := $t2;
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:207:5+1
-    assume {:print "$at(27,8552,8553)"} true;
-L2:
-
-    // abort($t3) at /home/ying/diem/language/diem-framework/modules/Roles.move:207:5+1
-    $abort_code := $t3;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::new_child_vasp_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:150:5+230
-procedure {:timeLimit 40} $1_Roles_new_child_vasp_role$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#140: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:150:5+230
-    assume {:print "$at(27,6414,6644)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:150:5+230
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:150:5+230
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:543:9+44
-    assume {:print "$at(27,24398,24442)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:543:9+44
-    assume ($t3 == $1_Signer_spec_address_of($t0));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // @140 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#140 := $1_Roles_RoleId_$memory;
-
-    // trace_local[creating_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:150:5+1
-    assume {:print "$at(27,6414,6415)"} true;
-    assume {:print "$track_local(4,22,0):", $t0} $t0 == $t0;
-
-    // trace_local[new_account]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:150:5+1
-    assume {:print "$track_local(4,22,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    // >> opaque call: Roles::assert_parent_vasp_role($t0)
-    assume {:print "$at(27,6543,6584)"} true;
-
-    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:543:9+44
-    assume {:print "$at(27,24398,24442)"} true;
-    assume ($t4 == $1_Signer_spec_address_of($t0));
-
-    // opaque begin: Roles::assert_parent_vasp_role($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    assume {:print "$at(27,6543,6584)"} true;
-
-    // assume Identical($t5, Or(Not(exists<Roles::RoleId>($t4)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 5))) at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    assume ($t5 == (!$ResourceExists($1_Roles_RoleId_$memory, $t4) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 5)));
-
-    // if ($t5) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    if ($t5) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-L4:
-
-    // assume Or(And(Not(exists<Roles::RoleId>($t4)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 5), Eq(3, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    assume ((!$ResourceExists($1_Roles_RoleId_$memory, $t4) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 5) && $IsEqual'num'(3, $t6)));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    assume {:print "$at(27,6543,6584)"} true;
-    assume {:print "$track_abort(4,22):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-L3:
-
-    // opaque end: Roles::assert_parent_vasp_role($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:154:9+41
-
-    // $t7 := 6 at /home/ying/diem/language/diem-framework/modules/Roles.move:155:33+18
-    assume {:print "$at(27,6618,6636)"} true;
-    $t7 := 6;
-    assume $IsValid'u64'($t7);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    // >> opaque call: Roles::grant_role($t1, $t2)
-
-    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t1));
-
-    // assert Implies(Eq<u64>($t7, 0), Eq<address>($t8, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 0) ==> $IsEqual'address'($t8, 173345816));
-
-    // assert Implies(Eq<u64>($t7, 1), Eq<address>($t8, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 1) ==> $IsEqual'address'($t8, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    assume {:print "$at(27,6594,6637)"} true;
-    assert {:msg "assert_failed(27,6594,6637): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // opaque begin: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-
-    // assume Identical($t9, exists<Roles::RoleId>(Signer::$address_of($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    assume ($t9 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)));
-
-    // if ($t9) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    if ($t9) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-L6:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t1)), Eq(6, $t6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    assume {:print "$at(27,6594,6637)"} true;
-    assume {:print "$track_abort(4,22):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-L5:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), $t7);
-
-    // opaque end: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:155:9+43
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:156:5+1
-    assume {:print "$at(27,6643,6644)"} true;
-L1:
-
-    // assert Not(Not(exists[@140]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:544:9+59
-    assume {:print "$at(27,24451,24510)"} true;
-    assert {:msg "assert_failed(27,24451,24510): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#140, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>($t2)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:545:9+89
-    assume {:print "$at(27,24519,24608)"} true;
-    assert {:msg "assert_failed(27,24519,24608): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, $t2)), 5);
-
-    // assert Not(exists[@140]<Roles::RoleId>(Signer::$address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#140, $1_Signer_$address_of($t1));
-
-    // assert Not(Not(exists[@140]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:544:9+59
-    assume {:print "$at(27,24451,24510)"} true;
-    assert {:msg "assert_failed(27,24451,24510): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#140, $t3);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>($t3)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:545:9+89
-    assume {:print "$at(27,24519,24608)"} true;
-    assert {:msg "assert_failed(27,24519,24608): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, $t3)), 5);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), 6) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), 6);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@140]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#140, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@140]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#140, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@140]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#140, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@140]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#140, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@140]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#140, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@140]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#140, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, addr)), 5))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:156:5+1
-    assume {:print "$at(27,6643,6644)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Not(exists[@140]<Roles::RoleId>($t2)), Neq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>($t2)), 5)), exists[@140]<Roles::RoleId>(Signer::$address_of[]($t1))), Not(exists[@140]<Roles::RoleId>($t3))), Neq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>($t3)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:157:5+193
-    assume {:print "$at(27,6649,6842)"} true;
-    assert {:msg "assert_failed(27,6649,6842): abort not covered by any of the `aborts_if` clauses"}
-      ((((!$ResourceExists($1_Roles_RoleId_$memory#140, $t2) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, $t2)), 5)) || $ResourceExists($1_Roles_RoleId_$memory#140, $1_Signer_$address_of($t1))) || !$ResourceExists($1_Roles_RoleId_$memory#140, $t3)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, $t3)), 5));
-
-    // assert Or(Or(Or(Or(And(Not(exists[@140]<Roles::RoleId>($t2)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>($t2)), 5), Eq(3, $t6))), And(exists[@140]<Roles::RoleId>(Signer::$address_of[]($t1)), Eq(6, $t6))), And(Not(exists[@140]<Roles::RoleId>($t3)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global[@140]<Roles::RoleId>($t3)), 5), Eq(3, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:157:5+193
-    assert {:msg "assert_failed(27,6649,6842): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((!$ResourceExists($1_Roles_RoleId_$memory#140, $t2) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, $t2)), 5) && $IsEqual'num'(3, $t6))) || ($ResourceExists($1_Roles_RoleId_$memory#140, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6))) || (!$ResourceExists($1_Roles_RoleId_$memory#140, $t3) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#140, $t3)), 5) && $IsEqual'num'(3, $t6)));
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:157:5+193
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::new_designated_dealer_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:94:5+247
-procedure {:timeLimit 40} $1_Roles_new_designated_dealer_role$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#154: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:94:5+247
-    assume {:print "$at(27,4166,4413)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:94:5+247
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:94:5+247
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume ($t3 == $1_Signer_spec_address_of($t0));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // @154 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#154 := $1_Roles_RoleId_$memory;
-
-    // trace_local[creating_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:94:5+1
-    assume {:print "$at(27,4166,4167)"} true;
-    assume {:print "$track_local(4,23,0):", $t0} $t0 == $t0;
-
-    // trace_local[new_account]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:94:5+1
-    assume {:print "$track_local(4,23,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    // >> opaque call: Roles::assert_treasury_compliance($t0)
-    assume {:print "$at(27,4302,4346)"} true;
-
-    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t4 == $1_Signer_spec_address_of($t0));
-
-    // opaque begin: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    assume {:print "$at(27,4302,4346)"} true;
-
-    // assume Identical($t5, Or(Or(Not(exists<Roles::RoleId>($t4)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 1)), Neq<address>(Signer::spec_address_of($t0), b1e55ed))) at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    assume ($t5 == ((!$ResourceExists($1_Roles_RoleId_$memory, $t4) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)));
-
-    // if ($t5) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    if ($t5) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-L4:
-
-    // assume Or(Or(And(Not(exists<Roles::RoleId>($t4)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    assume (((!$ResourceExists($1_Roles_RoleId_$memory, $t4) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6)));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    assume {:print "$at(27,4302,4346)"} true;
-    assume {:print "$track_abort(4,23):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-L3:
-
-    // opaque end: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:98:9+44
-
-    // $t7 := 2 at /home/ying/diem/language/diem-framework/modules/Roles.move:99:33+25
-    assume {:print "$at(27,4380,4405)"} true;
-    $t7 := 2;
-    assume $IsValid'u64'($t7);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    // >> opaque call: Roles::grant_role($t1, $t2)
-
-    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t1));
-
-    // assert Implies(Eq<u64>($t7, 0), Eq<address>($t8, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 0) ==> $IsEqual'address'($t8, 173345816));
-
-    // assert Implies(Eq<u64>($t7, 1), Eq<address>($t8, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 1) ==> $IsEqual'address'($t8, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    assume {:print "$at(27,4356,4406)"} true;
-    assert {:msg "assert_failed(27,4356,4406): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // opaque begin: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-
-    // assume Identical($t9, exists<Roles::RoleId>(Signer::$address_of($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    assume ($t9 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)));
-
-    // if ($t9) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    if ($t9) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-L6:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t1)), Eq(6, $t6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    assume {:print "$at(27,4356,4406)"} true;
-    assume {:print "$track_abort(4,23):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-L5:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), $t7);
-
-    // opaque end: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:99:9+50
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:100:5+1
-    assume {:print "$at(27,4412,4413)"} true;
-L1:
-
-    // assert Not(Not(exists[@154]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#154, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>($t2)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, $t2)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
-
-    // assert Not(exists[@154]<Roles::RoleId>(Signer::$address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#154, $1_Signer_$address_of($t1));
-
-    // assert Not(Not(exists[@154]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#154, $t3);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>($t3)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, $t3)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), 2) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), 2);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@154]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#154, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@154]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#154, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@154]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#154, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@154]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#154, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@154]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#154, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@154]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#154, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:100:5+1
-    assume {:print "$at(27,4412,4413)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Or(Or(Not(exists[@154]<Roles::RoleId>($t2)), Neq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>($t2)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)), exists[@154]<Roles::RoleId>(Signer::$address_of[]($t1))), Not(exists[@154]<Roles::RoleId>($t3))), Neq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>($t3)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:101:5+215
-    assume {:print "$at(27,4418,4633)"} true;
-    assert {:msg "assert_failed(27,4418,4633): abort not covered by any of the `aborts_if` clauses"}
-      ((((((!$ResourceExists($1_Roles_RoleId_$memory#154, $t2) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, $t2)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)) || $ResourceExists($1_Roles_RoleId_$memory#154, $1_Signer_$address_of($t1))) || !$ResourceExists($1_Roles_RoleId_$memory#154, $t3)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, $t3)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453));
-
-    // assert Or(Or(Or(Or(Or(Or(And(Not(exists[@154]<Roles::RoleId>($t2)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>($t2)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t6))), And(exists[@154]<Roles::RoleId>(Signer::$address_of[]($t1)), Eq(6, $t6))), And(Not(exists[@154]<Roles::RoleId>($t3)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global[@154]<Roles::RoleId>($t3)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:101:5+215
-    assert {:msg "assert_failed(27,4418,4633): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((((!$ResourceExists($1_Roles_RoleId_$memory#154, $t2) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, $t2)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6))) || ($ResourceExists($1_Roles_RoleId_$memory#154, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6))) || (!$ResourceExists($1_Roles_RoleId_$memory#154, $t3) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#154, $t3)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6)));
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:101:5+215
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::new_parent_vasp_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:136:5+235
-procedure {:timeLimit 40} $1_Roles_new_parent_vasp_role$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#153: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:136:5+235
-    assume {:print "$at(27,5855,6090)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:136:5+235
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:136:5+235
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume ($t3 == $1_Signer_spec_address_of($t0));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // @153 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#153 := $1_Roles_RoleId_$memory;
-
-    // trace_local[creating_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:136:5+1
-    assume {:print "$at(27,5855,5856)"} true;
-    assume {:print "$track_local(4,24,0):", $t0} $t0 == $t0;
-
-    // trace_local[new_account]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:136:5+1
-    assume {:print "$track_local(4,24,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    // >> opaque call: Roles::assert_treasury_compliance($t0)
-    assume {:print "$at(27,5985,6029)"} true;
-
-    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t4 == $1_Signer_spec_address_of($t0));
-
-    // opaque begin: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    assume {:print "$at(27,5985,6029)"} true;
-
-    // assume Identical($t5, Or(Or(Not(exists<Roles::RoleId>($t4)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 1)), Neq<address>(Signer::spec_address_of($t0), b1e55ed))) at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    assume ($t5 == ((!$ResourceExists($1_Roles_RoleId_$memory, $t4) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)));
-
-    // if ($t5) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    if ($t5) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-L4:
-
-    // assume Or(Or(And(Not(exists<Roles::RoleId>($t4)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    assume (((!$ResourceExists($1_Roles_RoleId_$memory, $t4) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6)));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    assume {:print "$at(27,5985,6029)"} true;
-    assume {:print "$track_abort(4,24):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-L3:
-
-    // opaque end: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:140:9+44
-
-    // $t7 := 5 at /home/ying/diem/language/diem-framework/modules/Roles.move:141:33+19
-    assume {:print "$at(27,6063,6082)"} true;
-    $t7 := 5;
-    assume $IsValid'u64'($t7);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    // >> opaque call: Roles::grant_role($t1, $t2)
-
-    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t1));
-
-    // assert Implies(Eq<u64>($t7, 0), Eq<address>($t8, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 0) ==> $IsEqual'address'($t8, 173345816));
-
-    // assert Implies(Eq<u64>($t7, 1), Eq<address>($t8, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 1) ==> $IsEqual'address'($t8, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    assume {:print "$at(27,6039,6083)"} true;
-    assert {:msg "assert_failed(27,6039,6083): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // opaque begin: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-
-    // assume Identical($t9, exists<Roles::RoleId>(Signer::$address_of($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    assume ($t9 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)));
-
-    // if ($t9) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    if ($t9) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-L6:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t1)), Eq(6, $t6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    assume {:print "$at(27,6039,6083)"} true;
-    assume {:print "$track_abort(4,24):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-L5:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), $t7);
-
-    // opaque end: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:141:9+44
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:142:5+1
-    assume {:print "$at(27,6089,6090)"} true;
-L1:
-
-    // assert Not(Not(exists[@153]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#153, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>($t2)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, $t2)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
-
-    // assert Not(exists[@153]<Roles::RoleId>(Signer::$address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#153, $1_Signer_$address_of($t1));
-
-    // assert Not(Not(exists[@153]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#153, $t3);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>($t3)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, $t3)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), 5) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), 5);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@153]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#153, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@153]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#153, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@153]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#153, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@153]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#153, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@153]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#153, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@153]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#153, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:142:5+1
-    assume {:print "$at(27,6089,6090)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Or(Or(Not(exists[@153]<Roles::RoleId>($t2)), Neq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>($t2)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)), exists[@153]<Roles::RoleId>(Signer::$address_of[]($t1))), Not(exists[@153]<Roles::RoleId>($t3))), Neq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>($t3)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:143:5+203
-    assume {:print "$at(27,6095,6298)"} true;
-    assert {:msg "assert_failed(27,6095,6298): abort not covered by any of the `aborts_if` clauses"}
-      ((((((!$ResourceExists($1_Roles_RoleId_$memory#153, $t2) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, $t2)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)) || $ResourceExists($1_Roles_RoleId_$memory#153, $1_Signer_$address_of($t1))) || !$ResourceExists($1_Roles_RoleId_$memory#153, $t3)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, $t3)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453));
-
-    // assert Or(Or(Or(Or(Or(Or(And(Not(exists[@153]<Roles::RoleId>($t2)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>($t2)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t6))), And(exists[@153]<Roles::RoleId>(Signer::$address_of[]($t1)), Eq(6, $t6))), And(Not(exists[@153]<Roles::RoleId>($t3)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global[@153]<Roles::RoleId>($t3)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:143:5+203
-    assert {:msg "assert_failed(27,6095,6298): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((((!$ResourceExists($1_Roles_RoleId_$memory#153, $t2) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, $t2)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6))) || ($ResourceExists($1_Roles_RoleId_$memory#153, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6))) || (!$ResourceExists($1_Roles_RoleId_$memory#153, $t3) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#153, $t3)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6)));
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:143:5+203
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::new_validator_operator_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:122:5+239
-procedure {:timeLimit 40} $1_Roles_new_validator_operator_role$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#152: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:122:5+239
-    assume {:print "$at(27,5281,5520)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:122:5+239
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:122:5+239
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume ($t3 == $1_Signer_spec_address_of($t0));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // @152 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#152 := $1_Roles_RoleId_$memory;
-
-    // trace_local[creating_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:122:5+1
-    assume {:print "$at(27,5281,5282)"} true;
-    assume {:print "$track_local(4,25,0):", $t0} $t0 == $t0;
-
-    // trace_local[new_account]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:122:5+1
-    assume {:print "$track_local(4,25,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    // >> opaque call: Roles::assert_diem_root($t0)
-    assume {:print "$at(27,5418,5452)"} true;
-
-    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t4 == $1_Signer_spec_address_of($t0));
-
-    // opaque begin: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    assume {:print "$at(27,5418,5452)"} true;
-
-    // assume Identical($t5, Or(Or(Or(Neq<address>(Signer::spec_address_of($t0), a550c18), Not(exists<Roles::RoleId>($t4))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 0)), Neq<address>(Signer::spec_address_of($t0), a550c18))) at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    assume ($t5 == (((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory, $t4)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)));
-
-    // if ($t5) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    if ($t5) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-L4:
-
-    // assume Or(Or(Or(And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t6)), And(Not(exists<Roles::RoleId>($t4)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 0), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    assume ((((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6)) || (!$ResourceExists($1_Roles_RoleId_$memory, $t4) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 0) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6)));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    assume {:print "$at(27,5418,5452)"} true;
-    assume {:print "$track_abort(4,25):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-L3:
-
-    // opaque end: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:126:9+34
-
-    // $t7 := 4 at /home/ying/diem/language/diem-framework/modules/Roles.move:127:33+26
-    assume {:print "$at(27,5486,5512)"} true;
-    $t7 := 4;
-    assume $IsValid'u64'($t7);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    // >> opaque call: Roles::grant_role($t1, $t2)
-
-    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t1));
-
-    // assert Implies(Eq<u64>($t7, 0), Eq<address>($t8, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 0) ==> $IsEqual'address'($t8, 173345816));
-
-    // assert Implies(Eq<u64>($t7, 1), Eq<address>($t8, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 1) ==> $IsEqual'address'($t8, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    assume {:print "$at(27,5462,5513)"} true;
-    assert {:msg "assert_failed(27,5462,5513): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // opaque begin: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-
-    // assume Identical($t9, exists<Roles::RoleId>(Signer::$address_of($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    assume ($t9 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)));
-
-    // if ($t9) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    if ($t9) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-L6:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t1)), Eq(6, $t6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    assume {:print "$at(27,5462,5513)"} true;
-    assume {:print "$track_abort(4,25):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-L5:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), $t7);
-
-    // opaque end: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:127:9+51
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:128:5+1
-    assume {:print "$at(27,5519,5520)"} true;
-L1:
-
-    // assert Not(Not(exists[@152]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#152, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>($t2)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, $t2)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(exists[@152]<Roles::RoleId>(Signer::$address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#152, $1_Signer_$address_of($t1));
-
-    // assert Not(Not(exists[@152]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#152, $t3);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>($t3)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, $t3)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), 4) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), 4);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@152]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#152, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@152]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#152, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 3)): And(exists[@152]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>(addr)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 3)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#152, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, addr)), 3))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@152]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#152, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@152]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#152, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@152]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#152, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:128:5+1
-    assume {:print "$at(27,5519,5520)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Or(Or(Not(exists[@152]<Roles::RoleId>($t2)), Neq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>($t2)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), exists[@152]<Roles::RoleId>(Signer::$address_of[]($t1))), Not(exists[@152]<Roles::RoleId>($t3))), Neq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>($t3)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:129:5+207
-    assume {:print "$at(27,5525,5732)"} true;
-    assert {:msg "assert_failed(27,5525,5732): abort not covered by any of the `aborts_if` clauses"}
-      ((((((!$ResourceExists($1_Roles_RoleId_$memory#152, $t2) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, $t2)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || $ResourceExists($1_Roles_RoleId_$memory#152, $1_Signer_$address_of($t1))) || !$ResourceExists($1_Roles_RoleId_$memory#152, $t3)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, $t3)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
-
-    // assert Or(Or(Or(Or(Or(Or(And(Not(exists[@152]<Roles::RoleId>($t2)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>($t2)), 0), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t6))), And(exists[@152]<Roles::RoleId>(Signer::$address_of[]($t1)), Eq(6, $t6))), And(Not(exists[@152]<Roles::RoleId>($t3)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global[@152]<Roles::RoleId>($t3)), 0), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:129:5+207
-    assert {:msg "assert_failed(27,5525,5732): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((((!$ResourceExists($1_Roles_RoleId_$memory#152, $t2) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, $t2)), 0) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6))) || ($ResourceExists($1_Roles_RoleId_$memory#152, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6))) || (!$ResourceExists($1_Roles_RoleId_$memory#152, $t3) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#152, $t3)), 0) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6)));
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:129:5+207
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun Roles::new_validator_role [verification] at /home/ying/diem/language/diem-framework/modules/Roles.move:108:5+220
-procedure {:timeLimit 40} $1_Roles_new_validator_role$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: int;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $1_Roles_RoleId_$modifies: [int]bool;
-    var $temp_0'$1_Roles_RoleId': $1_Roles_RoleId;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $1_Roles_RoleId_$memory#151: $Memory $1_Roles_RoleId;
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:108:5+220
-    assume {:print "$at(27,4747,4967)"} true;
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:108:5+220
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/Roles.move:108:5+220
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume Identical($t2, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume ($t3 == $1_Signer_spec_address_of($t0));
-
-    // assume CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    assume {:print "$at(27,7710,7740)"} true;
-    assume $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // @151 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/Roles.move:181:9+30
-    $1_Roles_RoleId_$memory#151 := $1_Roles_RoleId_$memory;
-
-    // trace_local[creating_account]($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:108:5+1
-    assume {:print "$at(27,4747,4748)"} true;
-    assume {:print "$track_local(4,26,0):", $t0} $t0 == $t0;
-
-    // trace_local[new_account]($t1) at /home/ying/diem/language/diem-framework/modules/Roles.move:108:5+1
-    assume {:print "$track_local(4,26,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    // >> opaque call: Roles::assert_diem_root($t0)
-    assume {:print "$at(27,4874,4908)"} true;
-
-    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t4 == $1_Signer_spec_address_of($t0));
-
-    // opaque begin: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    assume {:print "$at(27,4874,4908)"} true;
-
-    // assume Identical($t5, Or(Or(Or(Neq<address>(Signer::spec_address_of($t0), a550c18), Not(exists<Roles::RoleId>($t4))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 0)), Neq<address>(Signer::spec_address_of($t0), a550c18))) at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    assume ($t5 == (((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory, $t4)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)));
-
-    // if ($t5) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    if ($t5) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-L4:
-
-    // assume Or(Or(Or(And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t6)), And(Not(exists<Roles::RoleId>($t4)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 0), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    assume ((((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6)) || (!$ResourceExists($1_Roles_RoleId_$memory, $t4) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 0) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6)));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    assume {:print "$at(27,4874,4908)"} true;
-    assume {:print "$track_abort(4,26):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-L3:
-
-    // opaque end: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/Roles.move:112:9+34
-
-    // $t7 := 3 at /home/ying/diem/language/diem-framework/modules/Roles.move:113:33+17
-    assume {:print "$at(27,4942,4959)"} true;
-    $t7 := 3;
-    assume $IsValid'u64'($t7);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    // >> opaque call: Roles::grant_role($t1, $t2)
-
-    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:170:9+44
-    assume {:print "$at(27,7204,7248)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t1));
-
-    // assert Implies(Eq<u64>($t7, 0), Eq<address>($t8, a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:172:9+60
-    assume {:print "$at(27,7307,7367)"} true;
-    assert {:msg "assert_failed(27,7307,7367): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 0) ==> $IsEqual'address'($t8, 173345816));
-
-    // assert Implies(Eq<u64>($t7, 1), Eq<address>($t8, b1e55ed)) at /home/ying/diem/language/diem-framework/modules/Roles.move:173:9+80
-    assume {:print "$at(27,7376,7456)"} true;
-    assert {:msg "assert_failed(27,7376,7456): precondition does not hold at this call"}
-      ($IsEqual'u64'($t7, 1) ==> $IsEqual'address'($t8, 186537453));
-
-    // assert CanModify<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    assume {:print "$at(27,4918,4960)"} true;
-    assert {:msg "assert_failed(27,4918,4960): caller does not have permission to modify `Roles::RoleId` at given address"}
-      $1_Roles_RoleId_$modifies[$1_Signer_$address_of($t1)];
-
-    // opaque begin: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-
-    // assume Identical($t9, exists<Roles::RoleId>(Signer::$address_of($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    assume ($t9 == $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)));
-
-    // if ($t9) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    if ($t9) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-L6:
-
-    // assume And(exists<Roles::RoleId>(Signer::$address_of($t1)), Eq(6, $t6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    assume ($ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6));
-
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    assume {:print "$at(27,4918,4960)"} true;
-    assume {:print "$track_abort(4,26):", $t6} $t6 == $t6;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-L5:
-
-    // modifies global<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    havoc $temp_0'bool';
-    if ($temp_0'bool') {
-        havoc $temp_0'$1_Roles_RoleId';
-        $1_Roles_RoleId_$memory := $ResourceUpdate($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1), $temp_0'$1_Roles_RoleId');
-    } else {
-        $1_Roles_RoleId_$memory := $ResourceRemove($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-    }
-
-    // assume exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    assume $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assume Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-    assume $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), $t7);
-
-    // opaque end: Roles::grant_role($t1, $t7) at /home/ying/diem/language/diem-framework/modules/Roles.move:113:9+42
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/Roles.move:114:5+1
-    assume {:print "$at(27,4966,4967)"} true;
-L1:
-
-    // assert Not(Not(exists[@151]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#151, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>($t2)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, $t2)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(exists[@151]<Roles::RoleId>(Signer::$address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Roles.move:178:9+62
-    assume {:print "$at(27,7544,7606)"} true;
-    assert {:msg "assert_failed(27,7544,7606): function does not abort under this condition"}
-      !$ResourceExists($1_Roles_RoleId_$memory#151, $1_Signer_$address_of($t1));
-
-    // assert Not(Not(exists[@151]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#151, $t3);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>($t3)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, $t3)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert exists<Roles::RoleId>(Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:179:9+29
-    assume {:print "$at(27,7615,7644)"} true;
-    assert {:msg "assert_failed(27,7615,7644): post-condition does not hold"}
-      $ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1));
-
-    // assert Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t1))), 3) at /home/ying/diem/language/diem-framework/modules/Roles.move:180:9+48
-    assume {:print "$at(27,7653,7701)"} true;
-    assert {:msg "assert_failed(27,7653,7701): post-condition does not hold"}
-      $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t1))), 3);
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 0)): And(exists[@151]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>(addr)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assume {:print "$at(27,23429,23609)"} true;
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 0)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#151, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, addr)), 0))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 1)): And(exists[@151]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>(addr)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 1)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#151, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, addr)), 1))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 4)): And(exists[@151]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>(addr)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 4)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#151, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, addr)), 4))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 2)): And(exists[@151]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>(addr)), 2)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 2)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#151, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, addr)), 2))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 5)): And(exists[@151]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>(addr)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 5)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#151, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, addr)), 5))));
-
-    // assert forall addr: TypeDomain<address>() where And(exists<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(addr)), 6)): And(exists[@151]<Roles::RoleId>(addr), Eq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>(addr)), 6)) at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    assert {:msg "assert_failed(27,23429,23609): post-condition does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> (($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), 6)))  ==> (($ResourceExists($1_Roles_RoleId_$memory#151, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, addr)), 6))));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/Roles.move:521:9+180
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/Roles.move:114:5+1
-    assume {:print "$at(27,4966,4967)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Or(Or(Not(exists[@151]<Roles::RoleId>($t2)), Neq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>($t2)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), exists[@151]<Roles::RoleId>(Signer::$address_of[]($t1))), Not(exists[@151]<Roles::RoleId>($t3))), Neq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>($t3)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/Roles.move:115:5+189
-    assume {:print "$at(27,4972,5161)"} true;
-    assert {:msg "assert_failed(27,4972,5161): abort not covered by any of the `aborts_if` clauses"}
-      ((((((!$ResourceExists($1_Roles_RoleId_$memory#151, $t2) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, $t2)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || $ResourceExists($1_Roles_RoleId_$memory#151, $1_Signer_$address_of($t1))) || !$ResourceExists($1_Roles_RoleId_$memory#151, $t3)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, $t3)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
-
-    // assert Or(Or(Or(Or(Or(Or(And(Not(exists[@151]<Roles::RoleId>($t2)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>($t2)), 0), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t6))), And(exists[@151]<Roles::RoleId>(Signer::$address_of[]($t1)), Eq(6, $t6))), And(Not(exists[@151]<Roles::RoleId>($t3)), Eq(5, $t6))), And(Neq<u64>(select Roles::RoleId.role_id(global[@151]<Roles::RoleId>($t3)), 0), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:115:5+189
-    assert {:msg "assert_failed(27,4972,5161): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((((!$ResourceExists($1_Roles_RoleId_$memory#151, $t2) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, $t2)), 0) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6))) || ($ResourceExists($1_Roles_RoleId_$memory#151, $1_Signer_$address_of($t1)) && $IsEqual'num'(6, $t6))) || (!$ResourceExists($1_Roles_RoleId_$memory#151, $t3) && $IsEqual'num'(5, $t6))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#151, $t3)), 0) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t6)));
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/Roles.move:115:5+189
-    $abort_code := $t6;
-    $abort_flag := true;
-    return;
-
-}
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:62:5+153
 function {:inline} $1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig, validator_operator_addr: int): bool {
@@ -10767,7 +4351,7 @@ procedure {:inline 1} $1_DiemSystem_initialize_validator_set(_$t0: $signer) retu
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_DiemConfig_Configuration_$memory#184: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#151: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
 
     // bytecode translation starts here
@@ -10900,8 +4484,8 @@ L9:
     // label L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
 L8:
 
-    // @184 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
-    $1_DiemConfig_Configuration_$memory#184 := $1_DiemConfig_Configuration_$memory;
+    // @151 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
+    $1_DiemConfig_Configuration_$memory#151 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
     havoc $temp_0'bool';
@@ -10921,8 +4505,8 @@ L8:
     // assume Eq<DiemSystem::DiemSystem>(DiemConfig::$get<DiemSystem::DiemSystem>(), $t12) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
     assume $IsEqual'$1_DiemSystem_DiemSystem'($1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), $t12);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@184](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#184), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@151](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#151), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // $t14 := opaque end: DiemConfig::publish_new_config_and_get_capability<DiemSystem::DiemSystem>($t0, $t12) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
 
@@ -11070,7 +4654,7 @@ procedure {:inline 1} $1_RegisteredCurrencies_initialize(_$t0: $signer) returns 
     var $temp_0'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'': $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies';
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
-    var $1_DiemConfig_Configuration_$memory#218: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#185: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
 
     // bytecode translation starts here
@@ -11196,8 +4780,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
 L7:
 
-    // @218 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
-    $1_DiemConfig_Configuration_$memory#218 := $1_DiemConfig_Configuration_$memory;
+    // @185 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
+    $1_DiemConfig_Configuration_$memory#185 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(a550c18) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
     havoc $temp_0'bool';
@@ -11226,8 +4810,8 @@ L7:
     // assume Eq<RegisteredCurrencies::RegisteredCurrencies>(DiemConfig::$get<RegisteredCurrencies::RegisteredCurrencies>(), $t8) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
     assume $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory), $t8);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@218](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#218), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@185](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#185), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<RegisteredCurrencies::RegisteredCurrencies>($t0, $t8) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
 
@@ -11280,7 +4864,7 @@ procedure {:inline 1} $1_RegisteredCurrencies_add_currency_code(_$t0: $signer, _
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemConfig_Configuration_$memory#190: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#157: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     assume IsEmptyVec(p#$Mutation($t15));
@@ -11468,8 +5052,8 @@ L7:
     // label L6 at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
 L6:
 
-    // @190 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
-    $1_DiemConfig_Configuration_$memory#190 := $1_DiemConfig_Configuration_$memory;
+    // @157 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
+    $1_DiemConfig_Configuration_$memory#157 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::Configuration>(a550c18) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
     havoc $temp_0'bool';
@@ -11495,8 +5079,8 @@ L6:
     // assume Eq<RegisteredCurrencies::RegisteredCurrencies>(DiemConfig::$get<RegisteredCurrencies::RegisteredCurrencies>(), $t17) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
     assume $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory), $t17);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@190](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#190), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@157](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#157), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::set<RegisteredCurrencies::RegisteredCurrencies>($t0, $t17) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
 
@@ -16250,7 +9834,7 @@ procedure {:inline 1} $1_DiemTransactionPublishingOption_initialize(_$t0: $signe
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'vec'vec'u8''': Vec (Vec (int));
-    var $1_DiemConfig_Configuration_$memory#208: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#175: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -16375,8 +9959,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
 L7:
 
-    // @208 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
-    $1_DiemConfig_Configuration_$memory#208 := $1_DiemConfig_Configuration_$memory;
+    // @175 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
+    $1_DiemConfig_Configuration_$memory#175 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
     havoc $temp_0'bool';
@@ -16405,8 +9989,8 @@ L7:
     // assume Eq<DiemTransactionPublishingOption::DiemTransactionPublishingOption>(DiemConfig::$get<DiemTransactionPublishingOption::DiemTransactionPublishingOption>(), $t9) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
     assume $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($1_DiemConfig_$get'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory), $t9);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@208](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#208), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@175](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#175), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemTransactionPublishingOption::DiemTransactionPublishingOption>($t0, $t9) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
 
@@ -18263,7 +11847,7 @@ procedure {:inline 1} $1_DiemVMConfig_initialize(_$t0: $signer, _$t1: Vec (int),
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemConfig_Configuration_$memory#202: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#169: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -18455,8 +12039,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
 L7:
 
-    // @202 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
-    $1_DiemConfig_Configuration_$memory#202 := $1_DiemConfig_Configuration_$memory;
+    // @169 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
+    $1_DiemConfig_Configuration_$memory#169 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     havoc $temp_0'bool';
@@ -18485,8 +12069,8 @@ L7:
     // assume Eq<DiemVMConfig::DiemVMConfig>(DiemConfig::$get<DiemVMConfig::DiemVMConfig>(), $t24) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     assume $IsEqual'$1_DiemVMConfig_DiemVMConfig'($1_DiemConfig_$get'$1_DiemVMConfig_DiemVMConfig'($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory), $t24);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@202](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#202), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@169](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#169), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemVMConfig::DiemVMConfig>($t0, $t24) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
 
@@ -18540,7 +12124,7 @@ procedure {:inline 1} $1_DiemVersion_initialize(_$t0: $signer, _$t1: int) return
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_DiemConfig_Configuration_$memory#196: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#163: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
 
@@ -18661,8 +12245,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
 L7:
 
-    // @196 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
-    $1_DiemConfig_Configuration_$memory#196 := $1_DiemConfig_Configuration_$memory;
+    // @163 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
+    $1_DiemConfig_Configuration_$memory#163 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     havoc $temp_0'bool';
@@ -18691,8 +12275,8 @@ L7:
     // assume Eq<DiemVersion::DiemVersion>(DiemConfig::$get<DiemVersion::DiemVersion>(), $t8) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     assume $IsEqual'$1_DiemVersion_DiemVersion'($1_DiemConfig_$get'$1_DiemVersion_DiemVersion'($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory), $t8);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@196](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#196), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@163](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#163), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemVersion::DiemVersion>($t0, $t8) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
 
@@ -19984,6 +13568,2154 @@ L2:
 
     // abort($t18) at /home/ying/diem/language/diem-framework/modules/Genesis.move:116:5+1
     $abort_code := $t18;
+    $abort_flag := true;
+    return;
+
+}
+
+// struct NetworkIdentity::NetworkIdentity at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:10:5+215
+type {:datatype} $1_NetworkIdentity_NetworkIdentity;
+function {:constructor} $1_NetworkIdentity_NetworkIdentity($identities: Vec (Vec (int)), $identity_change_events: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification'): $1_NetworkIdentity_NetworkIdentity;
+function {:inline} $Update'$1_NetworkIdentity_NetworkIdentity'_identities(s: $1_NetworkIdentity_NetworkIdentity, x: Vec (Vec (int))): $1_NetworkIdentity_NetworkIdentity {
+    $1_NetworkIdentity_NetworkIdentity(x, $identity_change_events#$1_NetworkIdentity_NetworkIdentity(s))
+}
+function {:inline} $Update'$1_NetworkIdentity_NetworkIdentity'_identity_change_events(s: $1_NetworkIdentity_NetworkIdentity, x: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification'): $1_NetworkIdentity_NetworkIdentity {
+    $1_NetworkIdentity_NetworkIdentity($identities#$1_NetworkIdentity_NetworkIdentity(s), x)
+}
+function $IsValid'$1_NetworkIdentity_NetworkIdentity'(s: $1_NetworkIdentity_NetworkIdentity): bool {
+    $IsValid'vec'vec'u8'''($identities#$1_NetworkIdentity_NetworkIdentity(s))
+      && $IsValid'$1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification''($identity_change_events#$1_NetworkIdentity_NetworkIdentity(s))
+}
+function {:inline} $IsEqual'$1_NetworkIdentity_NetworkIdentity'(s1: $1_NetworkIdentity_NetworkIdentity, s2: $1_NetworkIdentity_NetworkIdentity): bool {
+    s1 == s2
+}
+var $1_NetworkIdentity_NetworkIdentity_$memory: $Memory $1_NetworkIdentity_NetworkIdentity;
+
+// struct NetworkIdentity::NetworkIdentityChangeNotification at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:17:5+229
+type {:datatype} $1_NetworkIdentity_NetworkIdentityChangeNotification;
+function {:constructor} $1_NetworkIdentity_NetworkIdentityChangeNotification($identities: Vec (Vec (int)), $time_rotated_seconds: int): $1_NetworkIdentity_NetworkIdentityChangeNotification;
+function {:inline} $Update'$1_NetworkIdentity_NetworkIdentityChangeNotification'_identities(s: $1_NetworkIdentity_NetworkIdentityChangeNotification, x: Vec (Vec (int))): $1_NetworkIdentity_NetworkIdentityChangeNotification {
+    $1_NetworkIdentity_NetworkIdentityChangeNotification(x, $time_rotated_seconds#$1_NetworkIdentity_NetworkIdentityChangeNotification(s))
+}
+function {:inline} $Update'$1_NetworkIdentity_NetworkIdentityChangeNotification'_time_rotated_seconds(s: $1_NetworkIdentity_NetworkIdentityChangeNotification, x: int): $1_NetworkIdentity_NetworkIdentityChangeNotification {
+    $1_NetworkIdentity_NetworkIdentityChangeNotification($identities#$1_NetworkIdentity_NetworkIdentityChangeNotification(s), x)
+}
+function $IsValid'$1_NetworkIdentity_NetworkIdentityChangeNotification'(s: $1_NetworkIdentity_NetworkIdentityChangeNotification): bool {
+    $IsValid'vec'vec'u8'''($identities#$1_NetworkIdentity_NetworkIdentityChangeNotification(s))
+      && $IsValid'u64'($time_rotated_seconds#$1_NetworkIdentity_NetworkIdentityChangeNotification(s))
+}
+function {:inline} $IsEqual'$1_NetworkIdentity_NetworkIdentityChangeNotification'(s1: $1_NetworkIdentity_NetworkIdentityChangeNotification, s2: $1_NetworkIdentity_NetworkIdentityChangeNotification): bool {
+    s1 == s2
+}
+
+// fun NetworkIdentity::get [verification] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:52:5+237
+procedure {:timeLimit 40} $1_NetworkIdentity_get$verify(_$t0: int) returns ($ret0: Vec (Vec (int)))
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: bool;
+    var $t4: int;
+    var $t5: int;
+    var $t6: $1_NetworkIdentity_NetworkIdentity;
+    var $t7: Vec (Vec (int));
+    var $t0: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    var $1_NetworkIdentity_NetworkIdentity_$memory#102: $Memory $1_NetworkIdentity_NetworkIdentity;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:52:5+237
+    assume {:print "$at(23,1964,2201)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume forall $rsc: ResourceDomain<NetworkIdentity::NetworkIdentity>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:52:5+237
+    assume (forall $a_0: int :: {$ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0)}(var $rsc := $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0);
+    ($IsValid'$1_NetworkIdentity_NetworkIdentity'($rsc))));
+
+    // @102 := save_mem(NetworkIdentity::NetworkIdentity) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:52:5+1
+    $1_NetworkIdentity_NetworkIdentity_$memory#102 := $1_NetworkIdentity_NetworkIdentity_$memory;
+
+    // trace_local[account_addr]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:52:5+1
+    assume {:print "$track_local(39,2,0):", $t0} $t0 == $t0;
+
+    // $t3 := exists<NetworkIdentity::NetworkIdentity>($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:16+6
+    assume {:print "$at(23,2064,2070)"} true;
+    $t3 := $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t0);
+
+    // trace_local[tmp#$1]($t3) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:9+71
+    assume {:print "$track_local(39,2,1):", $t3} $t3 == $t3;
+
+    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:9+71
+    if ($t3) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:55+24
+L1:
+
+    // $t4 := 0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:55+24
+    $t4 := 0;
+    assume $IsValid'u64'($t4);
+
+    // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:9+71
+    assume {:print "$at(23,2057,2128)"} true;
+    assume {:print "$track_abort(39,2):", $t4} $t4 == $t4;
+
+    // $t5 := move($t4) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:9+71
+    $t5 := $t4;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:53:9+71
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:54:42+12
+    assume {:print "$at(23,2171,2183)"} true;
+L0:
+
+    // $t6 := get_global<NetworkIdentity::NetworkIdentity>($t0) on_abort goto L3 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:54:11+13
+    if (!$ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t6 := $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(23,2140,2153)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,2):", $t5} $t5 == $t5;
+        goto L3;
+    }
+
+    // $t7 := get_field<NetworkIdentity::NetworkIdentity>.identities($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:54:10+56
+    $t7 := $identities#$1_NetworkIdentity_NetworkIdentity($t6);
+
+    // trace_return[0]($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:54:9+57
+    assume {:print "$track_return(39,2,0):", $t7} $t7 == $t7;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:55:5+1
+    assume {:print "$at(23,2200,2201)"} true;
+L2:
+
+    // assert Not(Not(exists[@102]<NetworkIdentity::NetworkIdentity>($t0))) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:58:9+49
+    assume {:print "$at(23,2226,2275)"} true;
+    assert {:msg "assert_failed(23,2226,2275): function does not abort under this condition"}
+      !!$ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory#102, $t0);
+
+    // return $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:58:9+49
+    $ret0 := $t7;
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:55:5+1
+    assume {:print "$at(23,2200,2201)"} true;
+L3:
+
+    // assert Not(exists[@102]<NetworkIdentity::NetworkIdentity>($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:57:5+74
+    assume {:print "$at(23,2207,2281)"} true;
+    assert {:msg "assert_failed(23,2207,2281): abort not covered by any of the `aborts_if` clauses"}
+      !$ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory#102, $t0);
+
+    // abort($t5) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:57:5+74
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun NetworkIdentity::add_identities [verification] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1099
+procedure {:timeLimit 40} $1_NetworkIdentity_add_identities$verify(_$t0: $signer, _$t1: Vec (Vec (int))) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: bool;
+    var $t8: int;
+    var $t9: $Mutation (Vec (Vec (int)));
+    var $t10: $Mutation ($1_NetworkIdentity_NetworkIdentity);
+    var $t11: int;
+    var $t12: int;
+    var $t13: int;
+    var $t14: int;
+    var $t15: int;
+    var $t16: int;
+    var $t17: bool;
+    var $t18: int;
+    var $t19: int;
+    var $t20: bool;
+    var $t21: bool;
+    var $t22: int;
+    var $t23: int;
+    var $t24: $Mutation ($1_NetworkIdentity_NetworkIdentity);
+    var $t25: $Mutation (Vec (Vec (int)));
+    var $t26: Vec (Vec (int));
+    var $t27: int;
+    var $t28: int;
+    var $t29: int;
+    var $t30: bool;
+    var $t31: int;
+    var $t32: int;
+    var $t33: int;
+    var $t34: bool;
+    var $t35: bool;
+    var $t36: bool;
+    var $t37: Vec (int);
+    var $t38: bool;
+    var $t39: int;
+    var $t40: int;
+    var $t41: $Mutation ($1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification');
+    var $t42: Vec (Vec (int));
+    var $t43: int;
+    var $t44: bool;
+    var $t45: $1_NetworkIdentity_NetworkIdentityChangeNotification;
+    var $t0: $signer;
+    var $t1: Vec (Vec (int));
+    var $1_NetworkIdentity_NetworkIdentity_$modifies: [int]bool;
+    var $temp_0'$1_NetworkIdentity_NetworkIdentity': $1_NetworkIdentity_NetworkIdentity;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t9));
+    assume IsEmptyVec(p#$Mutation($t10));
+    assume IsEmptyVec(p#$Mutation($t24));
+    assume IsEmptyVec(p#$Mutation($t25));
+    assume IsEmptyVec(p#$Mutation($t41));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1099
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
+    assume {:print "$at(23,2344,3443)"} true;
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1099
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1099
+    assume $IsValid'vec'vec'u8'''($t1);
+
+    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1099
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
+    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<NetworkIdentity::NetworkIdentity>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1099
+    assume (forall $a_0: int :: {$ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0)}(var $rsc := $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0);
+    ($IsValid'$1_NetworkIdentity_NetworkIdentity'($rsc))));
+
+    // assume Identical($t12, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:91:9+52
+    assume {:print "$at(23,3479,3531)"} true;
+    assume ($t12 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t13, Len<vector<u8>>(select NetworkIdentity::NetworkIdentity.identities(global<NetworkIdentity::NetworkIdentity>($t12)))) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:92:9+75
+    assume {:print "$at(23,3540,3615)"} true;
+    assume ($t13 == LenVec($identities#$1_NetworkIdentity_NetworkIdentity($ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $t12))));
+
+    // assume exists<NetworkIdentity::NetworkIdentity>($t12) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:97:9+48
+    assume {:print "$at(23,3853,3901)"} true;
+    assume $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t12);
+
+    // assume Le($t13, 100) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:98:9+48
+    assume {:print "$at(23,3910,3958)"} true;
+    assume ($t13 <= 100);
+
+    // assume CanModify<NetworkIdentity::NetworkIdentity>($t12) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:96:9+47
+    assume {:print "$at(23,3797,3844)"} true;
+    assume $1_NetworkIdentity_NetworkIdentity_$modifies[$t12];
+
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1
+    assume {:print "$at(23,2344,2345)"} true;
+    assume {:print "$track_local(39,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[to_add]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:62:5+1
+    assume {:print "$track_local(39,0,1):", $t1} $t1 == $t1;
+
+    // $t14 := Vector::length<vector<u8>>($t1) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:63:26+23
+    assume {:print "$at(23,2468,2491)"} true;
+    call $t14 := $1_Vector_length'vec'u8''($t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,2468,2491)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // trace_local[num_to_add]($t14) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:63:13+10
+    assume {:print "$track_local(39,0,11):", $t14} $t14 == $t14;
+
+    // $t16 := 0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:29+1
+    assume {:print "$at(23,2521,2522)"} true;
+    $t16 := 0;
+    assume $IsValid'u64'($t16);
+
+    // $t17 := >($t14, $t16) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:27+1
+    call $t17 := $Gt($t14, $t16);
+
+    // trace_local[tmp#$2]($t17) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+    assume {:print "$track_local(39,0,2):", $t17} $t17 == $t17;
+
+    // if ($t17) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+    if ($t17) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+
+    // $t18 := 2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:32+20
+    $t18 := 2;
+    assume $IsValid'u64'($t18);
+
+    // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+    assume {:print "$at(23,2501,2545)"} true;
+    assume {:print "$track_abort(39,0):", $t18} $t18 == $t18;
+
+    // $t15 := move($t18) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+    $t15 := $t18;
+
+    // goto L21 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:64:9+44
+    goto L21;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:57+7
+    assume {:print "$at(23,2604,2611)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:38+27
+    // >> opaque call: $t16 := Signer::address_of($t0)
+
+    // $t19 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:38+27
+
+    // assume WellFormed($t19) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:38+27
+    assume $IsValid'address'($t19);
+
+    // assume Eq<address>($t19, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:38+27
+    assume $IsEqual'address'($t19, $1_Signer_spec_address_of($t0));
+
+    // $t19 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:38+27
+
+    // $t20 := exists<NetworkIdentity::NetworkIdentity>($t19) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:14+6
+    $t20 := $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t19);
+
+    // $t21 := !($t20) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:13+1
+    call $t21 := $Not($t20);
+
+    // if ($t21) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:9+120
+    if ($t21) { goto L2; } else { goto L3; }
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:9+120
+L3:
+
+    // goto L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:66:9+120
+    goto L4;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:67:41+7
+    assume {:print "$at(23,2657,2664)"} true;
+L2:
+
+    // assume Identical($t22, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:46:9+52
+    assume {:print "$at(23,1735,1787)"} true;
+    assume ($t22 == $1_Signer_spec_address_of($t0));
+
+    // assert CanModify<NetworkIdentity::NetworkIdentity>($t22) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:67:13+36
+    assume {:print "$at(23,2629,2665)"} true;
+    assert {:msg "assert_failed(23,2629,2665): caller does not have permission to modify `NetworkIdentity::NetworkIdentity` at given address"}
+      $1_NetworkIdentity_NetworkIdentity_$modifies[$t22];
+
+    // NetworkIdentity::initialize_network_identity($t0) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:67:13+36
+    call $1_NetworkIdentity_initialize_network_identity($t0);
+    if ($abort_flag) {
+        assume {:print "$at(23,2629,2665)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:78+7
+    assume {:print "$at(23,2755,2762)"} true;
+L4:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:59+27
+    // >> opaque call: $t19 := Signer::address_of($t0)
+
+    // $t23 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:59+27
+
+    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:59+27
+    assume $IsValid'address'($t23);
+
+    // assume Eq<address>($t23, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:59+27
+    assume $IsEqual'address'($t23, $1_Signer_spec_address_of($t0));
+
+    // $t23 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:59+27
+
+    // assert CanModify<NetworkIdentity::NetworkIdentity>($t23) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:24+17
+    assert {:msg "assert_failed(23,2701,2718): caller does not have permission to modify `NetworkIdentity::NetworkIdentity` at given address"}
+      $1_NetworkIdentity_NetworkIdentity_$modifies[$t23];
+
+    // $t24 := borrow_global<NetworkIdentity::NetworkIdentity>($t23) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:24+17
+    if (!$ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t23)) {
+        call $ExecFailureAbort();
+    } else {
+        $t24 := $Mutation($Global($t23), EmptyVec(), $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $t23));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(23,2701,2718)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // trace_local[identity]($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:69:13+8
+    $temp_0'$1_NetworkIdentity_NetworkIdentity' := $Dereference($t24);
+    assume {:print "$track_local(39,0,10):", $temp_0'$1_NetworkIdentity_NetworkIdentity'} $temp_0'$1_NetworkIdentity_NetworkIdentity' == $temp_0'$1_NetworkIdentity_NetworkIdentity';
+
+    // $t25 := borrow_field<NetworkIdentity::NetworkIdentity>.identities($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:70:26+24
+    assume {:print "$at(23,2791,2815)"} true;
+    $t25 := $ChildMutation($t24, 0, $identities#$1_NetworkIdentity_NetworkIdentity($Dereference($t24)));
+
+    // trace_local[identities]($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:70:13+10
+    $temp_0'vec'vec'u8''' := $Dereference($t25);
+    assume {:print "$track_local(39,0,9):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // $t26 := read_ref($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:31+10
+    assume {:print "$at(23,2848,2858)"} true;
+    $t26 := $Dereference($t25);
+
+    // $t27 := Vector::length<vector<u8>>($t26) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:16+26
+    call $t27 := $1_Vector_length'vec'u8''($t26);
+    if ($abort_flag) {
+        assume {:print "$at(23,2833,2859)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // $t28 := +($t27, $t14) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:43+1
+    call $t28 := $AddU64($t27, $t14);
+    if ($abort_flag) {
+        assume {:print "$at(23,2860,2861)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // $t29 := 100 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:59+19
+    $t29 := 100;
+    assume $IsValid'u64'($t29);
+
+    // $t30 := <=($t28, $t29) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:56+2
+    call $t30 := $Le($t28, $t29);
+
+    // $t31 := 1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:103+26
+    $t31 := 1;
+    assume $IsValid'u64'($t31);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:80+50
+    // >> opaque call: $t28 := Errors::limit_exceeded($t27)
+
+    // $t32 := opaque begin: Errors::limit_exceeded($t31) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:80+50
+
+    // assume WellFormed($t32) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:80+50
+    assume $IsValid'u64'($t32);
+
+    // assume Eq<u64>($t32, 8) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:80+50
+    assume $IsEqual'u64'($t32, 8);
+
+    // $t32 := opaque end: Errors::limit_exceeded($t31) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:80+50
+
+    // trace_local[tmp#$5]($t32) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+    assume {:print "$track_local(39,0,5):", $t32} $t32 == $t32;
+
+    // trace_local[tmp#$4]($t30) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+    assume {:print "$track_local(39,0,4):", $t30} $t30 == $t30;
+
+    // if ($t30) goto L5 else goto L6 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+    if ($t30) { goto L5; } else { goto L6; }
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+L6:
+
+    // destroy($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+
+    // destroy($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+
+    // trace_abort($t32) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+    assume {:print "$at(23,2826,2948)"} true;
+    assume {:print "$track_abort(39,0):", $t32} $t32 == $t32;
+
+    // $t15 := move($t32) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+    $t15 := $t32;
+
+    // goto L21 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:72:9+122
+    goto L21;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:74:17+1
+    assume {:print "$at(23,2967,2968)"} true;
+L5:
+
+    // $t33 := 0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:74:17+1
+    $t33 := 0;
+    assume $IsValid'u64'($t33);
+
+    // trace_local[i]($t33) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:74:13+1
+    assume {:print "$track_local(39,0,8):", $t33} $t33 == $t33;
+
+    // $t34 := false at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:75:26+5
+    assume {:print "$at(23,2995,3000)"} true;
+    $t34 := false;
+    assume $IsValid'bool'($t34);
+
+    // trace_local[has_change]($t34) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:75:13+10
+    assume {:print "$track_local(39,0,7):", $t34} $t34 == $t34;
+
+    // label L14 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    assume {:print "$at(23,3017,3018)"} true;
+L14:
+
+    // havoc[val]($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t6;
+    assume $IsValid'bool'($t6);
+
+    // havoc[val]($t34) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t34;
+    assume $IsValid'bool'($t34);
+
+    // havoc[val]($t33) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t33;
+    assume $IsValid'u64'($t33);
+
+    // havoc[val]($t35) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t35;
+    assume $IsValid'bool'($t35);
+
+    // havoc[val]($t36) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t36;
+    assume $IsValid'bool'($t36);
+
+    // havoc[val]($t37) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t37;
+    assume $IsValid'vec'u8''($t37);
+
+    // havoc[val]($t38) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t38;
+    assume $IsValid'bool'($t38);
+
+    // havoc[val]($t39) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t39;
+    assume $IsValid'u64'($t39);
+
+    // havoc[val]($t40) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $t40;
+    assume $IsValid'u64'($t40);
+
+    // havoc[mut]($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    havoc $temp_0'vec'vec'u8''';
+    $t25 := $UpdateMutation($t25, $temp_0'vec'vec'u8''');
+    assume $IsValid'vec'vec'u8'''($Dereference($t25));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:16+1
+    assume !$abort_flag;
+
+    // $t35 := <($t33, $t14) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:18+1
+    call $t35 := $Lt($t33, $t14);
+
+    // if ($t35) goto L24 else goto L8 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:9+149
+    if ($t35) { goto L24; } else { goto L8; }
+
+    // label L8 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:9+149
+L8:
+
+    // goto L9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:76:9+149
+    goto L9;
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+10
+    assume {:print "$at(23,3059,3069)"} true;
+L7:
+
+    // if ($t34) goto L25 else goto L11 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    if ($t34) { goto L25; } else { goto L11; }
+
+    // label L11 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+L11:
+
+    // goto L12 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    goto L12;
+
+    // label L10 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+L10:
+
+    // $t36 := true at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    $t36 := true;
+    assume $IsValid'bool'($t36);
+
+    // $t6 := $t36 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    $t6 := $t36;
+
+    // trace_local[tmp#$6]($t36) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    assume {:print "$track_local(39,0,6):", $t36} $t36 == $t36;
+
+    // goto L13 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    goto L13;
+
+    // label L12 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:52+10
+L12:
+
+    // $t37 := Vector::borrow<vector<u8>>($t1, $t33) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:65+26
+    call $t37 := $1_Vector_borrow'vec'u8''($t1, $t33);
+    if ($abort_flag) {
+        assume {:print "$at(23,3099,3125)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // $t38 := NetworkIdentity::add_identity($t25, $t37) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:39+53
+    call $t38,$t25 := $1_NetworkIdentity_add_identity($t25, $t37);
+    if ($abort_flag) {
+        assume {:print "$at(23,3073,3126)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // $t6 := $t38 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    $t6 := $t38;
+
+    // trace_local[tmp#$6]($t38) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+    assume {:print "$track_local(39,0,6):", $t38} $t38 == $t38;
+
+    // label L13 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:25+67
+L13:
+
+    // trace_local[has_change]($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:77:12+10
+    assume {:print "$track_local(39,0,7):", $t6} $t6 == $t6;
+
+    // $t39 := 1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:78:20+1
+    assume {:print "$at(23,3147,3148)"} true;
+    $t39 := 1;
+    assume $IsValid'u64'($t39);
+
+    // $t40 := +($t33, $t39) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:78:18+1
+    call $t40 := $AddU64($t33, $t39);
+    if ($abort_flag) {
+        assume {:print "$at(23,3145,3146)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // trace_local[i]($t40) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:78:12+1
+    assume {:print "$track_local(39,0,8):", $t40} $t40 == $t40;
+
+    // goto L19 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:78:21+1
+    goto L19;
+
+    // label L9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    assume {:print "$at(23,3171,3437)"} true;
+L9:
+
+    // write_back[Reference($t24).identities]($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    $t24 := $UpdateMutation($t24, $Update'$1_NetworkIdentity_NetworkIdentity'_identities($Dereference($t24), $Dereference($t25)));
+
+    // destroy($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+
+    // if ($t34) goto L15 else goto L16 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    if ($t34) { goto L15; } else { goto L16; }
+
+    // label L16 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+L16:
+
+    // goto L17 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    goto L17;
+
+    // label L15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:83:36+8
+    assume {:print "$at(23,3224,3232)"} true;
+L15:
+
+    // $t41 := borrow_field<NetworkIdentity::NetworkIdentity>.identity_change_events($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:83:31+36
+    $t41 := $ChildMutation($t24, 1, $identity_change_events#$1_NetworkIdentity_NetworkIdentity($Dereference($t24)));
+
+    // $t42 := get_field<NetworkIdentity::NetworkIdentity>.identities($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:84:30+20
+    assume {:print "$at(23,3322,3342)"} true;
+    $t42 := $identities#$1_NetworkIdentity_NetworkIdentity($Dereference($t24));
+
+    // nop at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    // >> opaque call: $t39 := DiemTimestamp::now_seconds()
+    assume {:print "$at(23,3382,3410)"} true;
+
+    // $t43 := opaque begin: DiemTimestamp::now_seconds() at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+
+    // assume Identical($t44, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    assume ($t44 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // if ($t44) goto L26 else goto L22 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    if ($t44) { goto L26; } else { goto L22; }
+
+    // label L23 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+L23:
+
+    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t15)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t15));
+
+    // trace_abort($t15) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    assume {:print "$at(23,3382,3410)"} true;
+    assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+
+    // goto L21 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    goto L21;
+
+    // label L22 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+L22:
+
+    // assume WellFormed($t43) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    assume $IsValid'u64'($t43);
+
+    // assume Eq<u64>($t43, Div(DiemTimestamp::spec_now_microseconds(), 1000000)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+    assume $IsEqual'u64'($t43, ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) div 1000000));
+
+    // $t43 := opaque end: DiemTimestamp::now_seconds() at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:85:39+28
+
+    // $t45 := pack NetworkIdentity::NetworkIdentityChangeNotification($t42, $t43) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:83:69+168
+    assume {:print "$at(23,3257,3425)"} true;
+    $t45 := $1_NetworkIdentity_NetworkIdentityChangeNotification($t42, $t43);
+
+    // Event::emit_event<NetworkIdentity::NetworkIdentityChangeNotification>($t41, $t45) on_abort goto L21 with $t15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:83:13+225
+    call $t41 := $1_Event_emit_event'$1_NetworkIdentity_NetworkIdentityChangeNotification'($t41, $t45);
+    if ($abort_flag) {
+        assume {:print "$at(23,3201,3426)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(39,0):", $t15} $t15 == $t15;
+        goto L21;
+    }
+
+    // write_back[NetworkIdentity::NetworkIdentity@]($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:83:13+225
+    $1_NetworkIdentity_NetworkIdentity_$memory := $ResourceUpdate($1_NetworkIdentity_NetworkIdentity_$memory, $GlobalLocationAddress($t24),
+        $Dereference($t24));
+
+    // goto L18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    assume {:print "$at(23,3171,3437)"} true;
+    goto L18;
+
+    // label L17 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+L17:
+
+    // write_back[NetworkIdentity::NetworkIdentity@]($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    $1_NetworkIdentity_NetworkIdentity_$memory := $ResourceUpdate($1_NetworkIdentity_NetworkIdentity_$memory, $GlobalLocationAddress($t24),
+        $Dereference($t24));
+
+    // destroy($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+
+    // label L18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+L18:
+
+    // goto L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    goto L20;
+
+    // label L19 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    // Loop invariant checking block for the loop started with header: L14
+L19:
+
+    // stop() at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:82:9+266
+    assume false;
+    return;
+
+    // label L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:88:5+1
+    assume {:print "$at(23,3442,3443)"} true;
+L20:
+
+    // assert exists<NetworkIdentity::NetworkIdentity>($t12) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:97:9+48
+    assume {:print "$at(23,3853,3901)"} true;
+    assert {:msg "assert_failed(23,3853,3901): post-condition does not hold"}
+      $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t12);
+
+    // assert Le($t13, 100) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:98:9+48
+    assume {:print "$at(23,3910,3958)"} true;
+    assert {:msg "assert_failed(23,3910,3958): post-condition does not hold"}
+      ($t13 <= 100);
+
+    // return () at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:98:9+48
+    return;
+
+    // label L21 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:88:5+1
+    assume {:print "$at(23,3442,3443)"} true;
+L21:
+
+    // abort($t15) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:88:5+1
+    $abort_code := $t15;
+    $abort_flag := true;
+    return;
+
+    // label L24 at <internal>:1:1+10
+    assume {:print "$at(1,0,10)"} true;
+L24:
+
+    // destroy($t24) at <internal>:1:1+10
+
+    // goto L7 at <internal>:1:1+10
+    goto L7;
+
+    // label L25 at <internal>:1:1+10
+L25:
+
+    // destroy($t25) at <internal>:1:1+10
+
+    // goto L10 at <internal>:1:1+10
+    goto L10;
+
+    // label L26 at <internal>:1:1+10
+L26:
+
+    // destroy($t24) at <internal>:1:1+10
+
+    // destroy($t41) at <internal>:1:1+10
+
+    // goto L23 at <internal>:1:1+10
+    goto L23;
+
+}
+
+// fun NetworkIdentity::add_identity [baseline] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+254
+procedure {:inline 1} $1_NetworkIdentity_add_identity(_$t0: $Mutation (Vec (Vec (int))), _$t1: Vec (int)) returns ($ret0: bool, $ret1: $Mutation (Vec (Vec (int))))
+{
+    // declare local variables
+    var $t2: $Mutation (Vec (Vec (int)));
+    var $t3: Vec (int);
+    var $t4: bool;
+    var $t5: Vec (Vec (int));
+    var $t6: bool;
+    var $t7: int;
+    var $t8: bool;
+    var $t9: bool;
+    var $t10: bool;
+    var $t0: $Mutation (Vec (Vec (int)));
+    var $t1: Vec (int);
+    var $temp_0'bool': bool;
+    var $temp_0'vec'u8'': Vec (int);
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t2));
+
+    // bytecode translation starts here
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+1
+    assume {:print "$at(23,4033,4034)"} true;
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,1,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // trace_local[to_add]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+1
+    assume {:print "$track_local(39,1,1):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$3]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:30+21
+    assume {:print "$at(23,4144,4165)"} true;
+    assume {:print "$track_local(39,1,3):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$2]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:30+21
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,1,2):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // $t5 := read_ref($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:30+21
+    $t5 := $Dereference($t0);
+
+    // $t6 := Vector::contains<vector<u8>>($t5, $t1) on_abort goto L5 with $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:14+37
+    call $t6 := $1_Vector_contains'vec'u8''($t5, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,4128,4165)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(39,1):", $t7} $t7 == $t7;
+        goto L5;
+    }
+
+    // $t8 := !($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:13+1
+    call $t8 := $Not($t6);
+
+    // if ($t8) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    if ($t8) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+L1:
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    goto L2;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:104:31+10
+    assume {:print "$at(23,4199,4209)"} true;
+L0:
+
+    // Vector::push_back<vector<u8>>($t0, $t1) on_abort goto L5 with $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:104:13+37
+    call $t0 := $1_Vector_push_back'vec'u8''($t0, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,4181,4218)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(39,1):", $t7} $t7 == $t7;
+        goto L5;
+    }
+
+    // $t9 := true at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:105:13+4
+    assume {:print "$at(23,4232,4236)"} true;
+    $t9 := true;
+    assume $IsValid'bool'($t9);
+
+    // $t4 := $t9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$at(23,4123,4281)"} true;
+    $t4 := $t9;
+
+    // trace_local[tmp#$4]($t9) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$track_local(39,1,4):", $t9} $t9 == $t9;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    goto L3;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+L2:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+
+    // $t10 := false at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:107:13+5
+    assume {:print "$at(23,4266,4271)"} true;
+    $t10 := false;
+    assume $IsValid'bool'($t10);
+
+    // $t4 := $t10 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$at(23,4123,4281)"} true;
+    $t4 := $t10;
+
+    // trace_local[tmp#$4]($t10) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$track_local(39,1,4):", $t10} $t10 == $t10;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+L3:
+
+    // trace_return[0]($t4) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$track_return(39,1,0):", $t4} $t4 == $t4;
+
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,1,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+    assume {:print "$at(23,4286,4287)"} true;
+L4:
+
+    // return $t4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+    $ret0 := $t4;
+    $ret1 := $t0;
+    return;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+L5:
+
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+    $abort_code := $t7;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun NetworkIdentity::add_identity [verification] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+254
+procedure {:timeLimit 40} $1_NetworkIdentity_add_identity$verify(_$t0: $Mutation (Vec (Vec (int))), _$t1: Vec (int)) returns ($ret0: bool, $ret1: $Mutation (Vec (Vec (int))))
+{
+    // declare local variables
+    var $t2: $Mutation (Vec (Vec (int)));
+    var $t3: Vec (int);
+    var $t4: bool;
+    var $t5: Vec (Vec (int));
+    var $t6: bool;
+    var $t7: int;
+    var $t8: bool;
+    var $t9: bool;
+    var $t10: bool;
+    var $t0: $Mutation (Vec (Vec (int)));
+    var $t1: Vec (int);
+    var $temp_0'bool': bool;
+    var $temp_0'vec'u8'': Vec (int);
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t2));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+    assume l#$Mutation($t0) == $Param(0);
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+254
+    assume {:print "$at(23,4033,4287)"} true;
+    assume $IsValid'vec'vec'u8'''($Dereference($t0));
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+254
+    assume $IsValid'vec'u8''($t1);
+
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+1
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,1,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // trace_local[to_add]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:102:5+1
+    assume {:print "$track_local(39,1,1):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$3]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:30+21
+    assume {:print "$at(23,4144,4165)"} true;
+    assume {:print "$track_local(39,1,3):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$2]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:30+21
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,1,2):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // $t5 := read_ref($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:30+21
+    $t5 := $Dereference($t0);
+
+    // $t6 := Vector::contains<vector<u8>>($t5, $t1) on_abort goto L5 with $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:14+37
+    call $t6 := $1_Vector_contains'vec'u8''($t5, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,4128,4165)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(39,1):", $t7} $t7 == $t7;
+        goto L5;
+    }
+
+    // $t8 := !($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:13+1
+    call $t8 := $Not($t6);
+
+    // if ($t8) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    if ($t8) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+L1:
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    goto L2;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:104:31+10
+    assume {:print "$at(23,4199,4209)"} true;
+L0:
+
+    // Vector::push_back<vector<u8>>($t0, $t1) on_abort goto L5 with $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:104:13+37
+    call $t0 := $1_Vector_push_back'vec'u8''($t0, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,4181,4218)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(39,1):", $t7} $t7 == $t7;
+        goto L5;
+    }
+
+    // $t9 := true at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:105:13+4
+    assume {:print "$at(23,4232,4236)"} true;
+    $t9 := true;
+    assume $IsValid'bool'($t9);
+
+    // $t4 := $t9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$at(23,4123,4281)"} true;
+    $t4 := $t9;
+
+    // trace_local[tmp#$4]($t9) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$track_local(39,1,4):", $t9} $t9 == $t9;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    goto L3;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+L2:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+
+    // $t10 := false at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:107:13+5
+    assume {:print "$at(23,4266,4271)"} true;
+    $t10 := false;
+    assume $IsValid'bool'($t10);
+
+    // $t4 := $t10 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$at(23,4123,4281)"} true;
+    $t4 := $t10;
+
+    // trace_local[tmp#$4]($t10) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$track_local(39,1,4):", $t10} $t10 == $t10;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+L3:
+
+    // trace_return[0]($t4) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    assume {:print "$track_return(39,1,0):", $t4} $t4 == $t4;
+
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:103:9+158
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,1,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+    assume {:print "$at(23,4286,4287)"} true;
+L4:
+
+    // assert ContainsVec<vector<u8>>($t0, $t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:112:9+49
+    assume {:print "$at(23,4321,4370)"} true;
+    assert {:msg "assert_failed(23,4321,4370): post-condition does not hold"}
+      $ContainsVec'vec'u8''($Dereference($t0), $t1);
+
+    // return $t4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:112:9+49
+    $ret0 := $t4;
+    $ret1 := $t0;
+    return;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+    assume {:print "$at(23,4286,4287)"} true;
+L5:
+
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:109:5+1
+    $abort_code := $t7;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun NetworkIdentity::initialize_network_identity [baseline] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:40:5+299
+procedure {:inline 1} $1_NetworkIdentity_initialize_network_identity(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: Vec (Vec (int));
+    var $t2: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    var $t3: int;
+    var $t4: Vec (Vec (int));
+    var $t5: int;
+    var $t6: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    var $t7: $1_NetworkIdentity_NetworkIdentity;
+    var $t0: $signer;
+    var $1_NetworkIdentity_NetworkIdentity_$modifies: [int]bool;
+    var $temp_0'$1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification'': $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    var $temp_0'signer': $signer;
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:46:9+52
+    assume {:print "$at(23,1735,1787)"} true;
+    assume ($t3 == $1_Signer_spec_address_of($t0));
+
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:40:5+1
+    assume {:print "$at(23,1388,1389)"} true;
+    assume {:print "$track_local(39,3,0):", $t0} $t0 == $t0;
+
+    // $t4 := Vector::empty<vector<u8>>() on_abort goto L2 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:41:26+27
+    assume {:print "$at(23,1465,1492)"} true;
+    call $t4 := $1_Vector_empty'vec'u8''();
+    if ($abort_flag) {
+        assume {:print "$at(23,1465,1492)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[identities]($t4) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:41:13+10
+    assume {:print "$track_local(39,3,1):", $t4} $t4 == $t4;
+
+    // $t6 := Event::new_event_handle<NetworkIdentity::NetworkIdentityChangeNotification>($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:42:38+67
+    assume {:print "$at(23,1531,1598)"} true;
+    call $t6 := $1_Event_new_event_handle'$1_NetworkIdentity_NetworkIdentityChangeNotification'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(23,1531,1598)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[identity_change_events]($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:42:13+22
+    assume {:print "$track_local(39,3,2):", $t6} $t6 == $t6;
+
+    // $t7 := pack NetworkIdentity::NetworkIdentity($t4, $t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:43:26+54
+    assume {:print "$at(23,1625,1679)"} true;
+    $t7 := $1_NetworkIdentity_NetworkIdentity($t4, $t6);
+
+    // move_to<NetworkIdentity::NetworkIdentity>($t7, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:43:9+7
+    if ($ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $1_NetworkIdentity_NetworkIdentity_$memory := $ResourceUpdate($1_NetworkIdentity_NetworkIdentity_$memory, $1_Signer_spec_address_of($t0), $t7);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(23,1608,1615)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+    assume {:print "$at(23,1686,1687)"} true;
+L1:
+
+    // return () at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+    return;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+L2:
+
+    // abort($t5) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun NetworkIdentity::initialize_network_identity [verification] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:40:5+299
+procedure {:timeLimit 40} $1_NetworkIdentity_initialize_network_identity$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: Vec (Vec (int));
+    var $t2: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    var $t3: int;
+    var $t4: Vec (Vec (int));
+    var $t5: int;
+    var $t6: $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    var $t7: $1_NetworkIdentity_NetworkIdentity;
+    var $t0: $signer;
+    var $1_NetworkIdentity_NetworkIdentity_$modifies: [int]bool;
+    var $temp_0'$1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification'': $1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification';
+    var $temp_0'signer': $signer;
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:40:5+299
+    assume {:print "$at(23,1388,1687)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<NetworkIdentity::NetworkIdentity>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:40:5+299
+    assume (forall $a_0: int :: {$ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0)}(var $rsc := $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0);
+    ($IsValid'$1_NetworkIdentity_NetworkIdentity'($rsc))));
+
+    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:46:9+52
+    assume {:print "$at(23,1735,1787)"} true;
+    assume ($t3 == $1_Signer_spec_address_of($t0));
+
+    // assume CanModify<NetworkIdentity::NetworkIdentity>($t3) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:48:9+47
+    assume {:print "$at(23,1851,1898)"} true;
+    assume $1_NetworkIdentity_NetworkIdentity_$modifies[$t3];
+
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:40:5+1
+    assume {:print "$at(23,1388,1389)"} true;
+    assume {:print "$track_local(39,3,0):", $t0} $t0 == $t0;
+
+    // $t4 := Vector::empty<vector<u8>>() on_abort goto L2 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:41:26+27
+    assume {:print "$at(23,1465,1492)"} true;
+    call $t4 := $1_Vector_empty'vec'u8''();
+    if ($abort_flag) {
+        assume {:print "$at(23,1465,1492)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[identities]($t4) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:41:13+10
+    assume {:print "$track_local(39,3,1):", $t4} $t4 == $t4;
+
+    // $t6 := Event::new_event_handle<NetworkIdentity::NetworkIdentityChangeNotification>($t0) on_abort goto L2 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:42:38+67
+    assume {:print "$at(23,1531,1598)"} true;
+    call $t6 := $1_Event_new_event_handle'$1_NetworkIdentity_NetworkIdentityChangeNotification'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(23,1531,1598)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // trace_local[identity_change_events]($t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:42:13+22
+    assume {:print "$track_local(39,3,2):", $t6} $t6 == $t6;
+
+    // $t7 := pack NetworkIdentity::NetworkIdentity($t4, $t6) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:43:26+54
+    assume {:print "$at(23,1625,1679)"} true;
+    $t7 := $1_NetworkIdentity_NetworkIdentity($t4, $t6);
+
+    // assert CanModify<NetworkIdentity::NetworkIdentity>($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:43:9+7
+    assert {:msg "assert_failed(23,1608,1615): caller does not have permission to modify `NetworkIdentity::NetworkIdentity` at given address"}
+      $1_NetworkIdentity_NetworkIdentity_$modifies[$1_Signer_spec_address_of($t0)];
+
+    // move_to<NetworkIdentity::NetworkIdentity>($t7, $t0) on_abort goto L2 with $t5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:43:9+7
+    if ($ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $1_NetworkIdentity_NetworkIdentity_$memory := $ResourceUpdate($1_NetworkIdentity_NetworkIdentity_$memory, $1_Signer_spec_address_of($t0), $t7);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(23,1608,1615)"} true;
+        $t5 := $abort_code;
+        assume {:print "$track_abort(39,3):", $t5} $t5 == $t5;
+        goto L2;
+    }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+    assume {:print "$at(23,1686,1687)"} true;
+L1:
+
+    // assert exists<NetworkIdentity::NetworkIdentity>($t3) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:47:9+46
+    assume {:print "$at(23,1796,1842)"} true;
+    assert {:msg "assert_failed(23,1796,1842): post-condition does not hold"}
+      $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t3);
+
+    // return () at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:47:9+46
+    return;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+    assume {:print "$at(23,1686,1687)"} true;
+L2:
+
+    // abort($t5) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:44:5+1
+    $abort_code := $t5;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun NetworkIdentity::remove_identities [verification] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1065
+procedure {:timeLimit 40} $1_NetworkIdentity_remove_identities$verify(_$t0: $signer, _$t1: Vec (Vec (int))) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: bool;
+    var $t9: int;
+    var $t10: bool;
+    var $t11: int;
+    var $t12: $Mutation (Vec (Vec (int)));
+    var $t13: $Mutation ($1_NetworkIdentity_NetworkIdentity);
+    var $t14: int;
+    var $t15: int;
+    var $t16: int;
+    var $t17: int;
+    var $t18: int;
+    var $t19: int;
+    var $t20: bool;
+    var $t21: int;
+    var $t22: int;
+    var $t23: bool;
+    var $t24: int;
+    var $t25: int;
+    var $t26: bool;
+    var $t27: int;
+    var $t28: $Mutation ($1_NetworkIdentity_NetworkIdentity);
+    var $t29: $Mutation (Vec (Vec (int)));
+    var $t30: int;
+    var $t31: bool;
+    var $t32: bool;
+    var $t33: bool;
+    var $t34: Vec (int);
+    var $t35: bool;
+    var $t36: int;
+    var $t37: int;
+    var $t38: $Mutation ($1_Event_EventHandle'$1_NetworkIdentity_NetworkIdentityChangeNotification');
+    var $t39: Vec (Vec (int));
+    var $t40: int;
+    var $t41: bool;
+    var $t42: $1_NetworkIdentity_NetworkIdentityChangeNotification;
+    var $t0: $signer;
+    var $t1: Vec (Vec (int));
+    var $1_NetworkIdentity_NetworkIdentity_$modifies: [int]bool;
+    var $temp_0'$1_NetworkIdentity_NetworkIdentity': $1_NetworkIdentity_NetworkIdentity;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t12));
+    assume IsEmptyVec(p#$Mutation($t13));
+    assume IsEmptyVec(p#$Mutation($t28));
+    assume IsEmptyVec(p#$Mutation($t29));
+    assume IsEmptyVec(p#$Mutation($t38));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1065
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
+    assume {:print "$at(23,4445,5510)"} true;
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1065
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1065
+    assume $IsValid'vec'vec'u8'''($t1);
+
+    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1065
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
+    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<NetworkIdentity::NetworkIdentity>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1065
+    assume (forall $a_0: int :: {$ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0)}(var $rsc := $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $a_0);
+    ($IsValid'$1_NetworkIdentity_NetworkIdentity'($rsc))));
+
+    // assume Identical($t15, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:142:9+52
+    assume {:print "$at(23,5548,5600)"} true;
+    assume ($t15 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t16, Len<vector<u8>>(select NetworkIdentity::NetworkIdentity.identities(global<NetworkIdentity::NetworkIdentity>($t15)))) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:143:9+75
+    assume {:print "$at(23,5609,5684)"} true;
+    assume ($t16 == LenVec($identities#$1_NetworkIdentity_NetworkIdentity($ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $t15))));
+
+    // assume exists<NetworkIdentity::NetworkIdentity>($t15) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:147:9+48
+    assume {:print "$at(23,5850,5898)"} true;
+    assume $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t15);
+
+    // assume Le($t16, 100) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:148:9+48
+    assume {:print "$at(23,5907,5955)"} true;
+    assume ($t16 <= 100);
+
+    // assume CanModify<NetworkIdentity::NetworkIdentity>($t15) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:146:9+47
+    assume {:print "$at(23,5794,5841)"} true;
+    assume $1_NetworkIdentity_NetworkIdentity_$modifies[$t15];
+
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1
+    assume {:print "$at(23,4445,4446)"} true;
+    assume {:print "$track_local(39,4,0):", $t0} $t0 == $t0;
+
+    // trace_local[to_remove]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:116:5+1
+    assume {:print "$track_local(39,4,1):", $t1} $t1 == $t1;
+
+    // $t17 := Vector::length<vector<u8>>($t1) on_abort goto L20 with $t18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:117:29+26
+    assume {:print "$at(23,4578,4604)"} true;
+    call $t17 := $1_Vector_length'vec'u8''($t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,4578,4604)"} true;
+        $t18 := $abort_code;
+        assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+        goto L20;
+    }
+
+    // trace_local[num_to_remove]($t17) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:117:13+13
+    assume {:print "$track_local(39,4,14):", $t17} $t17 == $t17;
+
+    // $t19 := 0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:32+1
+    assume {:print "$at(23,4637,4638)"} true;
+    $t19 := 0;
+    assume $IsValid'u64'($t19);
+
+    // $t20 := >($t17, $t19) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:30+1
+    call $t20 := $Gt($t17, $t19);
+
+    // trace_local[tmp#$2]($t20) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+    assume {:print "$track_local(39,4,2):", $t20} $t20 == $t20;
+
+    // if ($t20) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+    if ($t20) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+
+    // $t21 := 2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:35+20
+    $t21 := 2;
+    assume $IsValid'u64'($t21);
+
+    // trace_abort($t21) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+    assume {:print "$at(23,4614,4661)"} true;
+    assume {:print "$track_abort(39,4):", $t21} $t21 == $t21;
+
+    // $t18 := move($t21) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+    $t18 := $t21;
+
+    // goto L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:118:9+47
+    goto L20;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:16+13
+    assume {:print "$at(23,4678,4691)"} true;
+L0:
+
+    // $t22 := 100 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:33+19
+    $t22 := 100;
+    assume $IsValid'u64'($t22);
+
+    // $t23 := <=($t17, $t22) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:30+2
+    call $t23 := $Le($t17, $t22);
+
+    // trace_local[tmp#$4]($t23) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+    assume {:print "$track_local(39,4,4):", $t23} $t23 == $t23;
+
+    // if ($t23) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+    if ($t23) { goto L2; } else { goto L3; }
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+L3:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+
+    // $t24 := 1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:54+26
+    $t24 := 1;
+    assume $IsValid'u64'($t24);
+
+    // trace_abort($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+    assume {:print "$at(23,4671,4743)"} true;
+    assume {:print "$track_abort(39,4):", $t24} $t24 == $t24;
+
+    // $t18 := move($t24) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+    $t18 := $t24;
+
+    // goto L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:119:9+72
+    goto L20;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:47+7
+    assume {:print "$at(23,4792,4799)"} true;
+L2:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:28+27
+    // >> opaque call: $t22 := Signer::address_of($t0)
+
+    // $t25 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:28+27
+
+    // assume WellFormed($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:28+27
+    assume $IsValid'address'($t25);
+
+    // assume Eq<address>($t25, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:28+27
+    assume $IsEqual'address'($t25, $1_Signer_spec_address_of($t0));
+
+    // $t25 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:28+27
+
+    // trace_local[account_addr]($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:121:13+12
+    assume {:print "$track_local(39,4,9):", $t25} $t25 == $t25;
+
+    // $t26 := exists<NetworkIdentity::NetworkIdentity>($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:16+6
+    assume {:print "$at(23,4817,4823)"} true;
+    $t26 := $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t25);
+
+    // trace_local[tmp#$6]($t26) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:9+71
+    assume {:print "$track_local(39,4,6):", $t26} $t26 == $t26;
+
+    // if ($t26) goto L4 else goto L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:9+71
+    if ($t26) { goto L4; } else { goto L5; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:55+24
+L5:
+
+    // $t27 := 0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:55+24
+    $t27 := 0;
+    assume $IsValid'u64'($t27);
+
+    // trace_abort($t27) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:9+71
+    assume {:print "$at(23,4810,4881)"} true;
+    assume {:print "$track_abort(39,4):", $t27} $t27 == $t27;
+
+    // $t18 := move($t27) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:9+71
+    $t18 := $t27;
+
+    // goto L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:122:9+71
+    goto L20;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:124:59+12
+    assume {:print "$at(23,4942,4954)"} true;
+L4:
+
+    // assert CanModify<NetworkIdentity::NetworkIdentity>($t25) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:124:24+17
+    assert {:msg "assert_failed(23,4907,4924): caller does not have permission to modify `NetworkIdentity::NetworkIdentity` at given address"}
+      $1_NetworkIdentity_NetworkIdentity_$modifies[$t25];
+
+    // $t28 := borrow_global<NetworkIdentity::NetworkIdentity>($t25) on_abort goto L20 with $t18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:124:24+17
+    if (!$ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t25)) {
+        call $ExecFailureAbort();
+    } else {
+        $t28 := $Mutation($Global($t25), EmptyVec(), $ResourceValue($1_NetworkIdentity_NetworkIdentity_$memory, $t25));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(23,4907,4924)"} true;
+        $t18 := $abort_code;
+        assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+        goto L20;
+    }
+
+    // trace_local[identity]($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:124:13+8
+    $temp_0'$1_NetworkIdentity_NetworkIdentity' := $Dereference($t28);
+    assume {:print "$track_local(39,4,13):", $temp_0'$1_NetworkIdentity_NetworkIdentity'} $temp_0'$1_NetworkIdentity_NetworkIdentity' == $temp_0'$1_NetworkIdentity_NetworkIdentity';
+
+    // $t29 := borrow_field<NetworkIdentity::NetworkIdentity>.identities($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:125:26+24
+    assume {:print "$at(23,4982,5006)"} true;
+    $t29 := $ChildMutation($t28, 0, $identities#$1_NetworkIdentity_NetworkIdentity($Dereference($t28)));
+
+    // trace_local[identities]($t29) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:125:13+10
+    $temp_0'vec'vec'u8''' := $Dereference($t29);
+    assume {:print "$track_local(39,4,12):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // $t30 := 0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:127:17+1
+    assume {:print "$at(23,5025,5026)"} true;
+    $t30 := 0;
+    assume $IsValid'u64'($t30);
+
+    // trace_local[i]($t30) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:127:13+1
+    assume {:print "$track_local(39,4,11):", $t30} $t30 == $t30;
+
+    // $t31 := false at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:128:26+5
+    assume {:print "$at(23,5053,5058)"} true;
+    $t31 := false;
+    assume $IsValid'bool'($t31);
+
+    // trace_local[has_change]($t31) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:128:13+10
+    assume {:print "$track_local(39,4,10):", $t31} $t31 == $t31;
+
+    // label L13 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    assume {:print "$at(23,5075,5076)"} true;
+L13:
+
+    // havoc[val]($t8) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t8;
+    assume $IsValid'bool'($t8);
+
+    // havoc[val]($t31) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t31;
+    assume $IsValid'bool'($t31);
+
+    // havoc[val]($t30) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t30;
+    assume $IsValid'u64'($t30);
+
+    // havoc[val]($t32) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t32;
+    assume $IsValid'bool'($t32);
+
+    // havoc[val]($t33) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t33;
+    assume $IsValid'bool'($t33);
+
+    // havoc[val]($t34) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t34;
+    assume $IsValid'vec'u8''($t34);
+
+    // havoc[val]($t35) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t35;
+    assume $IsValid'bool'($t35);
+
+    // havoc[val]($t36) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t36;
+    assume $IsValid'u64'($t36);
+
+    // havoc[val]($t37) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $t37;
+    assume $IsValid'u64'($t37);
+
+    // havoc[mut]($t29) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    havoc $temp_0'vec'vec'u8''';
+    $t29 := $UpdateMutation($t29, $temp_0'vec'vec'u8''');
+    assume $IsValid'vec'vec'u8'''($Dereference($t29));
+
+    // assume Not(AbortFlag()) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:16+1
+    assume !$abort_flag;
+
+    // $t32 := <($t30, $t17) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:18+1
+    call $t32 := $Lt($t30, $t17);
+
+    // if ($t32) goto L23 else goto L7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:9+158
+    if ($t32) { goto L23; } else { goto L7; }
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:9+158
+L7:
+
+    // goto L8 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:129:9+158
+    goto L8;
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+10
+    assume {:print "$at(23,5120,5130)"} true;
+L6:
+
+    // if ($t31) goto L24 else goto L10 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    if ($t31) { goto L24; } else { goto L10; }
+
+    // label L10 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+L10:
+
+    // goto L11 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    goto L11;
+
+    // label L9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+L9:
+
+    // $t33 := true at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    $t33 := true;
+    assume $IsValid'bool'($t33);
+
+    // $t8 := $t33 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    $t8 := $t33;
+
+    // trace_local[tmp#$8]($t33) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    assume {:print "$track_local(39,4,8):", $t33} $t33 == $t33;
+
+    // goto L12 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    goto L12;
+
+    // label L11 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:55+10
+L11:
+
+    // $t34 := Vector::borrow<vector<u8>>($t1, $t30) on_abort goto L20 with $t18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:68+29
+    call $t34 := $1_Vector_borrow'vec'u8''($t1, $t30);
+    if ($abort_flag) {
+        assume {:print "$at(23,5163,5192)"} true;
+        $t18 := $abort_code;
+        assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+        goto L20;
+    }
+
+    // $t35 := NetworkIdentity::remove_identity($t29, $t34) on_abort goto L20 with $t18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:39+59
+    call $t35,$t29 := $1_NetworkIdentity_remove_identity($t29, $t34);
+    if ($abort_flag) {
+        assume {:print "$at(23,5134,5193)"} true;
+        $t18 := $abort_code;
+        assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+        goto L20;
+    }
+
+    // $t8 := $t35 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    $t8 := $t35;
+
+    // trace_local[tmp#$8]($t35) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+    assume {:print "$track_local(39,4,8):", $t35} $t35 == $t35;
+
+    // label L12 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:25+73
+L12:
+
+    // trace_local[has_change]($t8) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:130:12+10
+    assume {:print "$track_local(39,4,10):", $t8} $t8 == $t8;
+
+    // $t36 := 1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:131:20+1
+    assume {:print "$at(23,5214,5215)"} true;
+    $t36 := 1;
+    assume $IsValid'u64'($t36);
+
+    // $t37 := +($t30, $t36) on_abort goto L20 with $t18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:131:18+1
+    call $t37 := $AddU64($t30, $t36);
+    if ($abort_flag) {
+        assume {:print "$at(23,5212,5213)"} true;
+        $t18 := $abort_code;
+        assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+        goto L20;
+    }
+
+    // trace_local[i]($t37) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:131:12+1
+    assume {:print "$track_local(39,4,11):", $t37} $t37 == $t37;
+
+    // goto L18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:131:21+1
+    goto L18;
+
+    // label L8 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+    assume {:print "$at(23,5237,5503)"} true;
+L8:
+
+    // write_back[Reference($t28).identities]($t29) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+    $t28 := $UpdateMutation($t28, $Update'$1_NetworkIdentity_NetworkIdentity'_identities($Dereference($t28), $Dereference($t29)));
+
+    // destroy($t29) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+
+    // if ($t31) goto L14 else goto L15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+    if ($t31) { goto L14; } else { goto L15; }
+
+    // label L15 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+L15:
+
+    // goto L16 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+    goto L16;
+
+    // label L14 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:135:36+8
+    assume {:print "$at(23,5290,5298)"} true;
+L14:
+
+    // $t38 := borrow_field<NetworkIdentity::NetworkIdentity>.identity_change_events($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:135:31+36
+    $t38 := $ChildMutation($t28, 1, $identity_change_events#$1_NetworkIdentity_NetworkIdentity($Dereference($t28)));
+
+    // $t39 := get_field<NetworkIdentity::NetworkIdentity>.identities($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:136:30+20
+    assume {:print "$at(23,5388,5408)"} true;
+    $t39 := $identities#$1_NetworkIdentity_NetworkIdentity($Dereference($t28));
+
+    // nop at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    // >> opaque call: $t37 := DiemTimestamp::now_seconds()
+    assume {:print "$at(23,5448,5476)"} true;
+
+    // $t40 := opaque begin: DiemTimestamp::now_seconds() at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+
+    // assume Identical($t41, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    assume ($t41 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // if ($t41) goto L25 else goto L21 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    if ($t41) { goto L25; } else { goto L21; }
+
+    // label L22 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+L22:
+
+    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t18)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t18));
+
+    // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    assume {:print "$at(23,5448,5476)"} true;
+    assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+
+    // goto L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    goto L20;
+
+    // label L21 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+L21:
+
+    // assume WellFormed($t40) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    assume $IsValid'u64'($t40);
+
+    // assume Eq<u64>($t40, Div(DiemTimestamp::spec_now_microseconds(), 1000000)) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+    assume $IsEqual'u64'($t40, ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) div 1000000));
+
+    // $t40 := opaque end: DiemTimestamp::now_seconds() at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:137:39+28
+
+    // $t42 := pack NetworkIdentity::NetworkIdentityChangeNotification($t39, $t40) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:135:69+168
+    assume {:print "$at(23,5323,5491)"} true;
+    $t42 := $1_NetworkIdentity_NetworkIdentityChangeNotification($t39, $t40);
+
+    // Event::emit_event<NetworkIdentity::NetworkIdentityChangeNotification>($t38, $t42) on_abort goto L20 with $t18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:135:13+225
+    call $t38 := $1_Event_emit_event'$1_NetworkIdentity_NetworkIdentityChangeNotification'($t38, $t42);
+    if ($abort_flag) {
+        assume {:print "$at(23,5267,5492)"} true;
+        $t18 := $abort_code;
+        assume {:print "$track_abort(39,4):", $t18} $t18 == $t18;
+        goto L20;
+    }
+
+    // write_back[NetworkIdentity::NetworkIdentity@]($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:135:13+225
+    $1_NetworkIdentity_NetworkIdentity_$memory := $ResourceUpdate($1_NetworkIdentity_NetworkIdentity_$memory, $GlobalLocationAddress($t28),
+        $Dereference($t28));
+
+    // goto L17 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:138:15+1
+    assume {:print "$at(23,5492,5493)"} true;
+    goto L17;
+
+    // label L16 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+    assume {:print "$at(23,5237,5503)"} true;
+L16:
+
+    // write_back[NetworkIdentity::NetworkIdentity@]($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+    $1_NetworkIdentity_NetworkIdentity_$memory := $ResourceUpdate($1_NetworkIdentity_NetworkIdentity_$memory, $GlobalLocationAddress($t28),
+        $Dereference($t28));
+
+    // destroy($t28) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:134:9+266
+
+    // label L17 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:139:10+1
+    assume {:print "$at(23,5503,5504)"} true;
+L17:
+
+    // goto L19 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:139:10+1
+    goto L19;
+
+    // label L18 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:139:10+1
+    // Loop invariant checking block for the loop started with header: L13
+L18:
+
+    // stop() at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:139:10+1
+    assume false;
+    return;
+
+    // label L19 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:140:5+1
+    assume {:print "$at(23,5509,5510)"} true;
+L19:
+
+    // assert exists<NetworkIdentity::NetworkIdentity>($t15) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:147:9+48
+    assume {:print "$at(23,5850,5898)"} true;
+    assert {:msg "assert_failed(23,5850,5898): post-condition does not hold"}
+      $ResourceExists($1_NetworkIdentity_NetworkIdentity_$memory, $t15);
+
+    // assert Le($t16, 100) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:148:9+48
+    assume {:print "$at(23,5907,5955)"} true;
+    assert {:msg "assert_failed(23,5907,5955): post-condition does not hold"}
+      ($t16 <= 100);
+
+    // return () at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:148:9+48
+    return;
+
+    // label L20 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:140:5+1
+    assume {:print "$at(23,5509,5510)"} true;
+L20:
+
+    // abort($t18) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:140:5+1
+    $abort_code := $t18;
+    $abort_flag := true;
+    return;
+
+    // label L23 at <internal>:1:1+10
+    assume {:print "$at(1,0,10)"} true;
+L23:
+
+    // destroy($t28) at <internal>:1:1+10
+
+    // goto L6 at <internal>:1:1+10
+    goto L6;
+
+    // label L24 at <internal>:1:1+10
+L24:
+
+    // destroy($t29) at <internal>:1:1+10
+
+    // goto L9 at <internal>:1:1+10
+    goto L9;
+
+    // label L25 at <internal>:1:1+10
+L25:
+
+    // destroy($t28) at <internal>:1:1+10
+
+    // destroy($t38) at <internal>:1:1+10
+
+    // goto L22 at <internal>:1:1+10
+    goto L22;
+
+}
+
+// fun NetworkIdentity::remove_identity [baseline] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+256
+procedure {:inline 1} $1_NetworkIdentity_remove_identity(_$t0: $Mutation (Vec (Vec (int))), _$t1: Vec (int)) returns ($ret0: bool, $ret1: $Mutation (Vec (Vec (int))))
+{
+    // declare local variables
+    var $t2: $Mutation (Vec (Vec (int)));
+    var $t3: Vec (int);
+    var $t4: bool;
+    var $t5: int;
+    var $t6: Vec (Vec (int));
+    var $t7: bool;
+    var $t8: int;
+    var $t9: int;
+    var $t10: Vec (int);
+    var $t0: $Mutation (Vec (Vec (int)));
+    var $t1: Vec (int);
+    var $temp_0'bool': bool;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t2));
+
+    // bytecode translation starts here
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+1
+    assume {:print "$at(23,6033,6034)"} true;
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,5,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // trace_local[to_remove]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+1
+    assume {:print "$track_local(39,5,1):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$3]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:42+24
+    assume {:print "$at(23,6162,6186)"} true;
+    assume {:print "$track_local(39,5,3):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$2]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:42+24
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,5,2):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // $t6 := read_ref($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:42+24
+    $t6 := $Dereference($t0);
+
+    // ($t7, $t8) := Vector::index_of<vector<u8>>($t6, $t1) on_abort goto L5 with $t9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:26+40
+    call $t7,$t8 := $1_Vector_index_of'vec'u8''($t6, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,6146,6186)"} true;
+        $t9 := $abort_code;
+        assume {:print "$track_abort(39,5):", $t9} $t9 == $t9;
+        goto L5;
+    }
+
+    // trace_local[i]($t8) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:21+1
+    assume {:print "$track_local(39,5,5):", $t8} $t8 == $t8;
+
+    // trace_local[exist]($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:14+5
+    assume {:print "$track_local(39,5,4):", $t7} $t7 == $t7;
+
+    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+    assume {:print "$at(23,6197,6267)"} true;
+    if ($t7) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+L1:
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+    goto L2;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:33+10
+    assume {:print "$at(23,6242,6252)"} true;
+L0:
+
+    // $t10 := Vector::swap_remove<vector<u8>>($t0, $t8) on_abort goto L5 with $t9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:13+34
+    call $t10,$t0 := $1_Vector_swap_remove'vec'u8''($t0, $t8);
+    if ($abort_flag) {
+        assume {:print "$at(23,6222,6256)"} true;
+        $t9 := $abort_code;
+        assume {:print "$track_abort(39,5):", $t9} $t9 == $t9;
+        goto L5;
+    }
+
+    // destroy($t10) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:13+34
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:47+1
+    goto L3;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+    assume {:print "$at(23,6197,6267)"} true;
+L2:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:159:9+5
+    assume {:print "$at(23,6278,6283)"} true;
+L3:
+
+    // trace_return[0]($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:159:9+5
+    assume {:print "$track_return(39,5,0):", $t7} $t7 == $t7;
+
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:159:9+5
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,5,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+    assume {:print "$at(23,6288,6289)"} true;
+L4:
+
+    // return $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+    $ret0 := $t7;
+    $ret1 := $t0;
+    return;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+L5:
+
+    // abort($t9) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+    $abort_code := $t9;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun NetworkIdentity::remove_identity [verification] at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+256
+procedure {:timeLimit 40} $1_NetworkIdentity_remove_identity$verify(_$t0: $Mutation (Vec (Vec (int))), _$t1: Vec (int)) returns ($ret0: bool, $ret1: $Mutation (Vec (Vec (int))))
+{
+    // declare local variables
+    var $t2: $Mutation (Vec (Vec (int)));
+    var $t3: Vec (int);
+    var $t4: bool;
+    var $t5: int;
+    var $t6: Vec (Vec (int));
+    var $t7: bool;
+    var $t8: int;
+    var $t9: int;
+    var $t10: Vec (int);
+    var $t0: $Mutation (Vec (Vec (int)));
+    var $t1: Vec (int);
+    var $temp_0'bool': bool;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    var $temp_0'vec'vec'u8''': Vec (Vec (int));
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t2));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+    assume l#$Mutation($t0) == $Param(0);
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+256
+    assume {:print "$at(23,6033,6289)"} true;
+    assume $IsValid'vec'vec'u8'''($Dereference($t0));
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+256
+    assume $IsValid'vec'u8''($t1);
+
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+1
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,5,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // trace_local[to_remove]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:152:5+1
+    assume {:print "$track_local(39,5,1):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$3]($t1) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:42+24
+    assume {:print "$at(23,6162,6186)"} true;
+    assume {:print "$track_local(39,5,3):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$2]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:42+24
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,5,2):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // $t6 := read_ref($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:42+24
+    $t6 := $Dereference($t0);
+
+    // ($t7, $t8) := Vector::index_of<vector<u8>>($t6, $t1) on_abort goto L5 with $t9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:26+40
+    call $t7,$t8 := $1_Vector_index_of'vec'u8''($t6, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(23,6146,6186)"} true;
+        $t9 := $abort_code;
+        assume {:print "$track_abort(39,5):", $t9} $t9 == $t9;
+        goto L5;
+    }
+
+    // trace_local[i]($t8) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:21+1
+    assume {:print "$track_local(39,5,5):", $t8} $t8 == $t8;
+
+    // trace_local[exist]($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:153:14+5
+    assume {:print "$track_local(39,5,4):", $t7} $t7 == $t7;
+
+    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+    assume {:print "$at(23,6197,6267)"} true;
+    if ($t7) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+L1:
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+    goto L2;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:33+10
+    assume {:print "$at(23,6242,6252)"} true;
+L0:
+
+    // $t10 := Vector::swap_remove<vector<u8>>($t0, $t8) on_abort goto L5 with $t9 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:13+34
+    call $t10,$t0 := $1_Vector_swap_remove'vec'u8''($t0, $t8);
+    if ($abort_flag) {
+        assume {:print "$at(23,6222,6256)"} true;
+        $t9 := $abort_code;
+        assume {:print "$track_abort(39,5):", $t9} $t9 == $t9;
+        goto L5;
+    }
+
+    // destroy($t10) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:13+34
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:156:47+1
+    goto L3;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+    assume {:print "$at(23,6197,6267)"} true;
+L2:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:155:9+70
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:159:9+5
+    assume {:print "$at(23,6278,6283)"} true;
+L3:
+
+    // trace_return[0]($t7) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:159:9+5
+    assume {:print "$track_return(39,5,0):", $t7} $t7 == $t7;
+
+    // trace_local[identities]($t0) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:159:9+5
+    $temp_0'vec'vec'u8''' := $Dereference($t0);
+    assume {:print "$track_local(39,5,0):", $temp_0'vec'vec'u8'''} $temp_0'vec'vec'u8''' == $temp_0'vec'vec'u8''';
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+    assume {:print "$at(23,6288,6289)"} true;
+L4:
+
+    // return $t7 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+    $ret0 := $t7;
+    $ret1 := $t0;
+    return;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+L5:
+
+    // abort($t9) at /home/ying/diem/language/diem-framework/modules/NetworkIdentity.move:160:5+1
+    $abort_code := $t9;
     $abort_flag := true;
     return;
 

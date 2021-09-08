@@ -14,42 +14,42 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.296 s, 17 proof obligations]  verified
+  [0.263 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.074 s, 9 proof obligations]  verified
+  [0.071 s, 9 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.082 s, 20 proof obligations]  verified
+  [0.089 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.094 s, 18 proof obligations]  verified
+  [0.090 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.096 s, 20 proof obligations]  verified
+  [0.100 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.102 s, 20 proof obligations]  verified
+  [0.089 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.081 s, 20 proof obligations]  verified
+  [0.085 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
   [0.085 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.018 s, 5 proof obligations]  verified
+  [0.014 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.125 s, 15 proof obligations]  verified
+  [0.113 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.024 s, 2 proof obligations]  verified
+  [0.023 s, 2 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.019 s, 6 proof obligations]  inconclusive
+  [0.021 s, 6 proof obligations]  inconclusive
 /home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.andy.bpl(6815,27): Verification inconclusive ($1_ValidatorConfig_get_config$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe

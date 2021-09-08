@@ -2937,3 +2937,5 @@ PreconditionGeneratedEntry_correct@@0))))))))))))))))))
 PreconditionGeneratedEntry_correct@@1)))))))))))))))))))))))))
 ))
 (check-sat)
+(pop 1)
+; Undetermined

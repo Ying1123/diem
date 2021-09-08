@@ -1,9 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.seqArray.smt2:560.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.seqArray.smt2:2210.267: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.seqArray.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.seqArray.smt2:1420.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

@@ -1,12 +1,10 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_strings.smt2:500.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-unsat
-/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_strings.smt2:1808.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_strings.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
 unsat
 unsat
 unsat
+/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_strings.smt2:1616.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
-cvc5 interrupted by SIGTERM.

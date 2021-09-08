@@ -14,34 +14,34 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DesignatedDealer_add_currency$verify ...
-  [0.229 s, 13 proof obligations]  verified
+  [0.220 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_add_currency$verify_instantiated_0 ...
-  [0.042 s, 13 proof obligations]  verified
+  [0.050 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_add_currency$verify_instantiated_1 ...
-  [0.041 s, 13 proof obligations]  verified
+  [0.040 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_exists_at$verify ...
-  [0.003 s, 2 proof obligations]  verified
+  [0.004 s, 2 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify ...
-  [0.112 s, 21 proof obligations]  verified
+  [0.111 s, 21 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_0 ...
-  [0.079 s, 21 proof obligations]  verified
-
-Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_1 ...
   [0.081 s, 21 proof obligations]  verified
 
+Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify_instantiated_1 ...
+  [0.088 s, 21 proof obligations]  verified
+
 Verifying $1_DesignatedDealer_tiered_mint$verify ...
-  [1.118 s, 21 proof obligations]  verified
+  [1.087 s, 21 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_0 ...
-  [1.206 s, 21 proof obligations]  verified
+  [1.153 s, 21 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_1 ...
-  [1.221 s, 21 proof obligations]  verified
+  [1.168 s, 21 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
   [0.169 s, 0 proof obligations]  verified

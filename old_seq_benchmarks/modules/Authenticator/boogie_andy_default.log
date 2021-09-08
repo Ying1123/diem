@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Authenticator_create_multi_ed25519$verify ...
-  [0.135 s, 0 proof obligations]  verified
+  [0.134 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_public_keys$verify ...
   [0.001 s, 0 proof obligations]  verified
@@ -28,7 +28,7 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $1_Authenticator_multi_ed25519_authentication_key$verify ...
-  [0.021 s, 2 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.andy.bpl(1541,27): Verification inconclusive ($1_Authenticator_multi_ed25519_authentication_key$verify)
+  [0.019 s, 2 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.andy.bpl(1546,27): Verification inconclusive ($1_Authenticator_multi_ed25519_authentication_key$verify)
 
 Boogie program verifier finished with 4 verified, 0 errors, 1 inconclusive

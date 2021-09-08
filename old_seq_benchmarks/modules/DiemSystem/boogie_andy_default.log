@@ -14,16 +14,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.220 s, 8 proof obligations]  verified
+  [0.219 s, 8 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.103 s, 17 proof obligations]  verified
+  [0.086 s, 17 proof obligations]  verified
 Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.017 s, 7 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.andy.bpl(4582,27): Verification inconclusive ($1_Roles_grant_role$verify)
+  [0.015 s, 7 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/DiemSystem/DiemSystem.andy.bpl(4587,27): Verification inconclusive ($1_Roles_grant_role$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

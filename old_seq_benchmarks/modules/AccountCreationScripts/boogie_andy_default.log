@@ -16,8 +16,8 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify ...
-  [0.739 s, 51 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl(21278,27): Verification inconclusive ($1_AccountCreationScripts_create_child_vasp_account$verify)
+  [0.722 s, 51 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.andy.bpl(21283,27): Verification inconclusive ($1_AccountCreationScripts_create_child_vasp_account$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

@@ -14,33 +14,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_VASP_has_account_limits$verify ...
-  [0.165 s, 1 proof obligation]  verified
+  [0.157 s, 1 proof obligation]  verified
 
 Verifying $1_VASP_is_child$verify ...
-  [0.032 s, 4 proof obligations]  verified
+  [0.026 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_is_parent$verify ...
-  [0.030 s, 4 proof obligations]  verified
+  [0.021 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_is_same_vasp$verify ...
-  [0.028 s, 5 proof obligations]  verified
+  [0.032 s, 5 proof obligations]  verified
 
 Verifying $1_VASP_is_vasp$verify ...
-  [0.033 s, 4 proof obligations]  verified
+  [0.032 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_num_children$verify ...
-  [0.030 s, 5 proof obligations]  verified
+  [0.028 s, 5 proof obligations]  verified
 
 Verifying $1_VASP_parent_address$verify ...
-  [0.029 s, 6 proof obligations]  verified
+  [0.026 s, 6 proof obligations]  verified
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.062 s, 18 proof obligations]  verified
+  [0.064 s, 18 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
   [0.035 s, 16 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.198 s, 0 proof obligations]  verified
+  [0.225 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 10 verified, 0 errors

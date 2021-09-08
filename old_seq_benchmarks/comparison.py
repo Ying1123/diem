@@ -1,8 +1,8 @@
 import csv
 import os
 
-TIME_LIMIT = 20
-COLUMN_NAME = ["Benchmark", "z3", "cvc4", "cvc5", "andy_default", "andy_strings-exp", "seqArray"]
+TIME_LIMIT = 20000
+COLUMN_NAME = ["Benchmark", "baseline", "z3", "cvc4", "cvc5", "andy_default", "andy_strings-exp", "seqArray", "seqArray_array"]
 SPECIAL_MAPPING = {
 	"andy_strings-exp" : "andy_strings"
 }
@@ -62,10 +62,10 @@ with open('comparison_result.csv', mode='w') as result_file:
 		for fname in fileList:
 			# print('\t%s' % fname)
 			if fname.startswith("boogie_"):
-				if fname.startswith("boogie_baseline"):
+				#if fname.startswith("boogie_baseline"):
 					# print ("found baseline")
-					pass
-				else:
+					# pass
+				#else:
 					belong = ""
 					for i in COLUMN_NAME[1:]:
 						if fname == "boogie_" + i + ".log":
@@ -85,13 +85,15 @@ with open('comparison_result.csv', mode='w') as result_file:
 								if folder_name in timebooks[belong].keys():
 									result_map[belong] = timebooks[belong][folder_name]
 								else:
-									result_map[belong] = str(folder_name) + " not found in timebook " + str(belong)
+									#result_map[belong] = str(folder_name) + " not found in timebook " + str(belong)
+									continue
 							else:
-								result_map[belong] = str(belong) + " not found"
+								#result_map[belong] = str(belong) + " not found"
+								continue
 							if "0 errors" in last_line:
 								results["succ"] += 1
 							else:
-								if int(result_map[belong]) == TIME_LIMIT:
+								if int(result_map[belong]) >= TIME_LIMIT:
 									results["timeout"] += 1
 									result_map[belong] = "timeout"
 								else:

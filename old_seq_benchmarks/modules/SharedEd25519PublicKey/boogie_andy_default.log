@@ -16,8 +16,8 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $1_SharedEd25519PublicKey_publish$verify ...
-  [0.220 s, 11 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/SharedEd25519PublicKey/SharedEd25519PublicKey.andy.bpl(11423,27): Verification inconclusive ($1_SharedEd25519PublicKey_publish$verify)
+  [0.237 s, 11 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/SharedEd25519PublicKey/SharedEd25519PublicKey.andy.bpl(11428,27): Verification inconclusive ($1_SharedEd25519PublicKey_publish$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

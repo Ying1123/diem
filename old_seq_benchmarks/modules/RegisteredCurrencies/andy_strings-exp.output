@@ -1,3 +1,6 @@
-/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy_strings.smt2:482.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy_strings.smt2:1842.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-cvc5 interrupted by SIGTERM.
+/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy_strings.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/RegisteredCurrencies/RegisteredCurrencies.andy_strings.smt2:1415.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
+unsat

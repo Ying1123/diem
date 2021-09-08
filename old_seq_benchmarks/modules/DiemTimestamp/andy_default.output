@@ -1,4 +1,10 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_default.smt2:499.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_default.smt2:399.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_default.smt2:1807.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")
+unsat
+unsat
+unsat
+unsat
+unsat
+/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.andy_default.smt2:1615.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat

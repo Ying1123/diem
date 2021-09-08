@@ -15,16 +15,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.399 s, 0 proof obligations]  verified
+  [0.404 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_set_gas_constants$verify ...
-  [0.016 s, 0 proof obligations]  verified
+  [0.015 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_initialize_diem_consensus_config$verify ...
   [0.004 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_consensus_config$verify ...
-  [0.017 s, 0 proof obligations]  verified
+  [0.011 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_version$verify ...
   [0.004 s, 0 proof obligations]  verified

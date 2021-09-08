@@ -1,7 +1,7 @@
-06:48:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Signature::ed25519_verify` to be verified
-06:48:41 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Signature::ed25519_validate_pubkey` to be verified
+15:42:46 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Signature::ed25519_verify` to be verified
+15:42:46 [DEBUG] (1) bytecode::verification_analysis_v2: marking `Signature::ed25519_validate_pubkey` to be verified
 [INFO] translating module Signature
-06:48:41 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
+15:42:46 [DEBUG] (1) move_prover: writing boogie to `output.bpl`
 [INFO] running solver
-06:48:41 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
-06:48:41 [DEBUG] (17) boogie_backend::prover_task_runner: running Boogie command with seed 1
+15:42:46 [DEBUG] (1) boogie_backend::boogie_wrapper: command line: /home/ying/boogie/Source/BoogieDriver/bin/Debug/net5.0/BoogieDriver -doModSetAnalysis -printVerifiedProceduresCount:0 -printModel:1 -enhancedErrorMessages:1 -monomorphize -proverOpt:SOLVER=cvc4 -proverOpt:PROVER_PATH=/home/ying/bin/cvc4 -proverOpt:O:smt.QI.EAGER_THRESHOLD=100 -proverOpt:O:smt.QI.LAZY_THRESHOLD=100 -vcsCores:4 output.bpl
+15:42:46 [DEBUG] (14) boogie_backend::prover_task_runner: running Boogie command with seed 1

@@ -1,5 +1,8 @@
-/home/ying/diem/old_seq_benchmarks/modules/SharedEd25519PublicKey/SharedEd25519PublicKey.andy_strings.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/SharedEd25519PublicKey/SharedEd25519PublicKey.andy_strings.smt2:1416.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/SharedEd25519PublicKey/SharedEd25519PublicKey.andy_strings.smt2:405.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/SharedEd25519PublicKey/SharedEd25519PublicKey.andy_strings.smt2:1436.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
 unsat
 unsat
 unsat

@@ -16,7 +16,7 @@ Prover error: Term of kind STRING_SUBSTR not supported in default mode, try --st
 
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [0.269 s, 23 proof obligations]  inconclusive
+  [0.275 s, 23 proof obligations]  inconclusive
 /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.andy.bpl(13357,27): Verification inconclusive ($1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe

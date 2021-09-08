@@ -14,7 +14,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.329 s, 0 proof obligations]  verified
+  [0.326 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify ...
-  [2.243 s, 41 proof obligations]  verified
+  [2.259 s, 41 proof obligations]  verified

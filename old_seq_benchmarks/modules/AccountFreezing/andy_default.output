@@ -1,5 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.andy_default.smt2:513.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.andy_default.smt2:1781.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.andy_default.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountFreezing/AccountFreezing.andy_default.smt2:1418.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -8,8 +8,3 @@ unsat
 unsat
 unsat
 unsat
-unsat
-unsat
-unsat
-unsat
-(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

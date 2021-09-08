@@ -8375,3 +8375,154 @@ anon0_correct@@7))))))))))))))))))))))))))))))
 anon0_correct@@8))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 ))
 (check-sat)
+(pop 1)
+; Valid
+(declare-fun $abort_flag@0@@9 () Bool)
+(declare-fun $t19@2 () T@$Mutation_225059)
+(declare-fun $t19@1 () T@$Mutation_225059)
+(declare-fun |inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$m'@1@@0| () T@$Mutation_107079)
+(declare-fun $1_RecoveryAddress_RecoveryAddress_$memory@0@@0 () T@$Memory_170774)
+(declare-fun $t27@@6 () Int)
+(declare-fun _$t1@@9 () Int)
+(declare-fun $t10@@4 () Int)
+(declare-fun _$t0@@9 () T@$1_DiemAccount_KeyRotationCapability)
+(declare-fun $t14@0@@0 () Int)
+(declare-fun $abort_code@1@@9 () Int)
+(declare-fun $t20@0@@1 () T@$Mutation_107079)
+(declare-fun inline$$Lt$0$dst@1@@4 () Bool)
+(declare-fun $t26@@6 () Int)
+(declare-fun |inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$l@1@@0| () Int)
+(declare-fun $t21@0@@0 () (Seq T@$1_DiemAccount_KeyRotationCapability))
+(declare-fun |$temp_0'vec'$1_DiemAccount_KeyRotationCapability''@0| () (Seq T@$1_DiemAccount_KeyRotationCapability))
+(declare-fun $t19@@7 () T@$Mutation_225059)
+(declare-fun $t19@0@@0 () T@$Mutation_225059)
+(declare-fun $abort_code@0@@9 () Int)
+(declare-fun $t16@@7 () Bool)
+(declare-fun $t18@@8 () Int)
+(declare-fun inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1 () Int)
+(declare-fun $t11@0 () Bool)
+(declare-fun $t13@@7 () Int)
+(declare-fun $t8@@6 () T@$Mutation_107079)
+(declare-fun $t20@@5 () T@$Mutation_107079)
+(push 1)
+(set-info :boogie-vc-id $1_RecoveryAddress_add_rotation_capability$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 509910) (let ((anon30_Else_correct@@3  (=> (not $abort_flag@0@@9) (=> (and (and (= $t19@2 ($Mutation_225059 (|l#$Mutation_225059| $t19@1) (|p#$Mutation_225059| $t19@1) ($1_RecoveryAddress_RecoveryAddress (|v#$Mutation_107079| |inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$m'@1@@0|)))) (forall ((addr1@@32 Int) ) (!  (=> (|$IsValid'address'| addr1@@32) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr1@@32) (and (> (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr1@@32))) 0) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr1@@32)) 0)) addr1@@32))))
+ :qid |RecoveryAddressseqArraybpl.22982:20|
+ :skolemid |579|
+))) (and (forall ((recovery_addr@@13 Int) ) (!  (=> (|$IsValid'address'| recovery_addr@@13) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@13) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) recovery_addr@@13) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) recovery_addr@@13))))
+ :qid |RecoveryAddressseqArraybpl.22986:20|
+ :skolemid |580|
+)) (= $1_RecoveryAddress_RecoveryAddress_$memory@0@@0 ($Memory_170774 (|Store__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) (|a#$Global| (|l#$Mutation_225059| $t19@2)) true) (|Store__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) (|a#$Global| (|l#$Mutation_225059| $t19@2)) (|v#$Mutation_225059| $t19@2)))))) (and (=> (= (ControlFlow 0 374558) (- 0 510928)) (forall ((addr1@@33 Int) ) (!  (=> (|$IsValid'address'| addr1@@33) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr1@@33) (and (> (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr1@@33))) 0) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr1@@33)) 0)) addr1@@33))))
+ :qid |RecoveryAddressseqArraybpl.23001:15|
+ :skolemid |581|
+))) (=> (forall ((addr1@@34 Int) ) (!  (=> (|$IsValid'address'| addr1@@34) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr1@@34) (and (> (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr1@@34))) 0) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr1@@34)) 0)) addr1@@34))))
+ :qid |RecoveryAddressseqArraybpl.23001:15|
+ :skolemid |581|
+)) (and (=> (= (ControlFlow 0 374558) (- 0 510975)) (forall ((addr@@194 Int) ) (!  (=> (|$IsValid'address'| addr@@194) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr@@194) (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr@@194)))
+ :qid |RecoveryAddressseqArraybpl.23007:15|
+ :skolemid |582|
+))) (=> (forall ((addr@@195 Int) ) (!  (=> (|$IsValid'address'| addr@@195) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr@@195) (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr@@195)))
+ :qid |RecoveryAddressseqArraybpl.23007:15|
+ :skolemid |582|
+)) (and (=> (= (ControlFlow 0 374558) (- 0 510999)) (forall ((addr@@196 Int) ) (!  (=> (|$IsValid'address'| addr@@196) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr@@196) (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr@@196)))
+ :qid |RecoveryAddressseqArraybpl.23013:15|
+ :skolemid |583|
+))) (=> (forall ((addr@@197 Int) ) (!  (=> (|$IsValid'address'| addr@@197) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) addr@@197) (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) addr@@197)))
+ :qid |RecoveryAddressseqArraybpl.23013:15|
+ :skolemid |583|
+)) (and (=> (= (ControlFlow 0 374558) (- 0 511023)) (forall ((recovery_addr@@14 Int) (to_recovery_addr@@1 Int) ) (!  (=> (|$IsValid'address'| recovery_addr@@14) (=> (|$IsValid'address'| to_recovery_addr@@1) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@14) (=> (exists ((i@@71 Int) ) (!  (and (and (|$IsValid'u64'| i@@71) (and (<= 0 i@@71) (< i@@71 (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@14)))))) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@14)) i@@71)) to_recovery_addr@@1))
+ :qid |RecoveryAddressseqArraybpl.21640:13|
+ :skolemid |544|
+)) (exists ((i@@72 Int) ) (!  (and (and (|$IsValid'u64'| i@@72) (and (<= 0 i@@72) (< i@@72 (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) recovery_addr@@14)))))) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) recovery_addr@@14)) i@@72)) to_recovery_addr@@1))
+ :qid |RecoveryAddressseqArraybpl.21640:13|
+ :skolemid |544|
+))))))
+ :qid |RecoveryAddressseqArraybpl.23019:15|
+ :skolemid |584|
+))) (=> (forall ((recovery_addr@@15 Int) (to_recovery_addr@@2 Int) ) (!  (=> (|$IsValid'address'| recovery_addr@@15) (=> (|$IsValid'address'| to_recovery_addr@@2) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@15) (=> (exists ((i@@73 Int) ) (!  (and (and (|$IsValid'u64'| i@@73) (and (<= 0 i@@73) (< i@@73 (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@15)))))) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) recovery_addr@@15)) i@@73)) to_recovery_addr@@2))
+ :qid |RecoveryAddressseqArraybpl.21640:13|
+ :skolemid |544|
+)) (exists ((i@@74 Int) ) (!  (and (and (|$IsValid'u64'| i@@74) (and (<= 0 i@@74) (< i@@74 (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) recovery_addr@@15)))))) (= (|$account_address#$1_DiemAccount_KeyRotationCapability| (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) recovery_addr@@15)) i@@74)) to_recovery_addr@@2))
+ :qid |RecoveryAddressseqArraybpl.21640:13|
+ :skolemid |544|
+))))))
+ :qid |RecoveryAddressseqArraybpl.23019:15|
+ :skolemid |584|
+)) (and (=> (= (ControlFlow 0 374558) (- 0 511064)) (forall ((recovery_addr@@16 Int) ) (!  (=> (|$IsValid'address'| recovery_addr@@16) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) recovery_addr@@16) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) recovery_addr@@16) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) recovery_addr@@16))))
+ :qid |RecoveryAddressseqArraybpl.23025:15|
+ :skolemid |585|
+))) (=> (forall ((recovery_addr@@17 Int) ) (!  (=> (|$IsValid'address'| recovery_addr@@17) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) recovery_addr@@17) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) recovery_addr@@17) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) recovery_addr@@17))))
+ :qid |RecoveryAddressseqArraybpl.23025:15|
+ :skolemid |585|
+)) (=> (= $t27@@6 (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) _$t1@@9)))) (and (=> (= (ControlFlow 0 374558) (- 0 511107)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) (and (=> (= (ControlFlow 0 374558) (- 0 511118)) (not (>= (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) 256))) (=> (not (>= (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) 256)) (and (=> (= (ControlFlow 0 374558) (- 0 511135)) (not (not (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))) (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) _$t1@@9 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) $t10@@4 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4)))))))) (=> (not (not (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))) (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) _$t1@@9 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) $t10@@4 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))))))) (=> (= (ControlFlow 0 374558) (- 0 511149)) (= (seq.nth (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory@0@@0) _$t1@@9)) (- $t27@@6 1)) _$t0@@9)))))))))))))))))))))))
+(let ((anon24_Then_correct@@0 true))
+(let ((L7_correct@@1  (and (=> (= (ControlFlow 0 373741) (- 0 510720)) (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9)) (>= (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) 256)) (not (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))) (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) _$t1@@9 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) $t10@@4 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4)))))))) (=> (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9)) (>= (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) 256)) (not (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))) (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) _$t1@@9 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) $t10@@4 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))))))) (=> (= (ControlFlow 0 373741) (- 0 510751)) (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9)) (= 5 $t14@0@@0)) (and (>= (seq.len (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) 256) (= 8 $t14@0@@0))) (and (not (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4))) (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) _$t1@@9 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) $t10@@4) $t10@@4 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $t10@@4)))))) (= 7 $t14@0@@0))))))))
+(let ((anon30_Then_correct@@3  (=> (and (and $abort_flag@0@@9 (= $abort_code@1@@9 $abort_code@1@@9)) (and (= $t14@0@@0 $abort_code@1@@9) (= (ControlFlow 0 374572) 373741))) L7_correct@@1)))
+(let ((|inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0_correct@@0|  (=> (= |inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$m'@1@@0| ($Mutation_107079 (|l#$Mutation_107079| $t20@0@@1) (|p#$Mutation_107079| $t20@0@@1) (seq.++ (|v#$Mutation_107079| $t20@0@@1) (seq.unit _$t0@@9)))) (and (=> (= (ControlFlow 0 374189) 374572) anon30_Then_correct@@3) (=> (= (ControlFlow 0 374189) 374558) anon30_Else_correct@@3)))))
+(let ((anon29_Then_correct@@3  (=> (and inline$$Lt$0$dst@1@@4 (= (ControlFlow 0 374195) 374189)) |inline$$1_Vector_push_back'$1_DiemAccount_KeyRotationCapability'$0$anon0_correct@@0|)))
+(let ((anon29_Else_correct@@3  (=> (and (and (not inline$$Lt$0$dst@1@@4) (= $t26@@6 $t26@@6)) (and (= $t14@0@@0 $t26@@6) (= (ControlFlow 0 374134) 373741))) L7_correct@@1)))
+(let ((anon28_Else$1_correct  (=> (|$IsValid'u64'| 6) (=> (and (and (|$IsValid'u64'| $t26@@6) (= $t26@@6 8)) (and (= $t26@@6 $t26@@6) (= inline$$Lt$0$dst@1@@4 inline$$Lt$0$dst@1@@4))) (and (=> (= (ControlFlow 0 374118) 374195) anon29_Then_correct@@3) (=> (= (ControlFlow 0 374118) 374134) anon29_Else_correct@@3))))))
+(let ((inline$$Lt$0$anon0_correct@@4  (=> (and (= inline$$Lt$0$dst@1@@4 (< |inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$l@1@@0| 256)) (= (ControlFlow 0 374078) 374118)) anon28_Else$1_correct)))
+(let ((anon28_Else_correct@@3  (=> (not $abort_flag@0@@9) (=> (and (|$IsValid'u64'| 256) (= (ControlFlow 0 374084) 374078)) inline$$Lt$0$anon0_correct@@4))))
+(let ((anon28_Then_correct@@3  (=> (and (and $abort_flag@0@@9 (= $abort_code@1@@9 $abort_code@1@@9)) (and (= $t14@0@@0 $abort_code@1@@9) (= (ControlFlow 0 374586) 373741))) L7_correct@@1)))
+(let ((|inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$anon0_correct@@0|  (=> (= |inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$l@1@@0| (seq.len $t21@0@@0)) (and (=> (= (ControlFlow 0 374018) 374586) anon28_Then_correct@@3) (=> (= (ControlFlow 0 374018) 374084) anon28_Else_correct@@3)))))
+(let ((anon27_Else_correct  (=> (and (not $abort_flag@0@@9) (= $t20@0@@1 ($Mutation_107079 (|l#$Mutation_225059| $t19@1) (seq.++ (|p#$Mutation_225059| $t19@1) (seq.unit 0)) (|$rotation_caps#$1_RecoveryAddress_RecoveryAddress| (|v#$Mutation_225059| $t19@1))))) (=> (and (and (= |$temp_0'vec'$1_DiemAccount_KeyRotationCapability''@0| (|v#$Mutation_107079| $t20@0@@1)) (= |$temp_0'vec'$1_DiemAccount_KeyRotationCapability''@0| |$temp_0'vec'$1_DiemAccount_KeyRotationCapability''@0|)) (and (= $t21@0@@0 (|v#$Mutation_107079| $t20@0@@1)) (= (ControlFlow 0 374024) 374018))) |inline$$1_Vector_length'$1_DiemAccount_KeyRotationCapability'$0$anon0_correct@@0|))))
+(let ((anon27_Then_correct  (=> (and (and $abort_flag@0@@9 (= $abort_code@1@@9 $abort_code@1@@9)) (and (= $t14@0@@0 $abort_code@1@@9) (= (ControlFlow 0 374600) 373741))) L7_correct@@1)))
+(let ((anon26_Then$1_correct  (=> (= $t19@1 $t19@@7) (=> (and (= $abort_flag@0@@9 true) (= $abort_code@1@@9 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 374652) 374600) anon27_Then_correct) (=> (= (ControlFlow 0 374652) 374024) anon27_Else_correct))))))
+(let ((anon26_Then_correct@@0  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9)) (= (ControlFlow 0 374650) 374652)) anon26_Then$1_correct)))
+(let ((anon26_Else_correct@@0  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9) (=> (and (and (= $t19@0@@0 ($Mutation_225059 ($Global _$t1@@9) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9))) (= $t19@1 $t19@0@@0)) (and (= $abort_flag@0@@9 false) (= $abort_code@1@@9 $abort_code@0@@9))) (and (=> (= (ControlFlow 0 373952) 374600) anon27_Then_correct) (=> (= (ControlFlow 0 373952) 374024) anon27_Else_correct))))))
+(let ((anon25_Then_correct@@0  (=> $t16@@7 (and (=> (= (ControlFlow 0 373930) 374650) anon26_Then_correct@@0) (=> (= (ControlFlow 0 373930) 373952) anon26_Else_correct@@0)))))
+(let ((anon25_Else_correct@@0  (=> (and (and (not $t16@@7) (= $t18@@8 $t18@@8)) (and (= $t14@0@@0 $t18@@8) (= (ControlFlow 0 373926) 373741))) L7_correct@@1)))
+(let ((anon24_Else_correct@@0  (=> (and (and (and (not false) (= inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1 inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1)) (and (= $t16@@7  (and (and (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9)) (or (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1) (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1))) (= (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) _$t1@@9) _$t1@@9 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) _$t1@@9))) (ite (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1) inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1 (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1)))))) (|$IsValid'u64'| 3))) (and (and (|$IsValid'u64'| $t18@@8) (= $t18@@8 7)) (and (= $t18@@8 $t18@@8) (= $t16@@7 $t16@@7)))) (and (=> (= (ControlFlow 0 373910) 373930) anon25_Then_correct@@0) (=> (= (ControlFlow 0 373910) 373926) anon25_Else_correct@@0)))))
+(let ((inline$$1_DiemAccount_key_rotation_capability_address$0$anon0_correct@@1  (=> (= _$t0@@9 _$t0@@9) (=> (and (= inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1 (|$account_address#$1_DiemAccount_KeyRotationCapability| _$t0@@9)) (= inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1 inline$$1_DiemAccount_key_rotation_capability_address$0$$t1@1@@1)) (and (=> (= (ControlFlow 0 373838) 374666) anon24_Then_correct@@0) (=> (= (ControlFlow 0 373838) 373910) anon24_Else_correct@@0))))))
+(let ((anon23_Then_correct@@0  (=> (and $t11@0 (= (ControlFlow 0 373844) 373838)) inline$$1_DiemAccount_key_rotation_capability_address$0$anon0_correct@@1)))
+(let ((anon23_Else_correct@@0  (=> (and (and (not $t11@0) (= $t13@@7 $t13@@7)) (and (= $t14@0@@0 $t13@@7) (= (ControlFlow 0 373633) 373741))) L7_correct@@1)))
+(let ((anon0$1_correct@@9  (=> (forall ((child_addr@@8 Int) ) (!  (=> (|$IsValid'address'| child_addr@@8) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) child_addr@@8) (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) (|$parent_vasp_addr#$1_VASP_ChildVASP| (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) child_addr@@8)))))
+ :qid |RecoveryAddressseqArraybpl.22714:20|
+ :skolemid |573|
+)) (=> (and (and (and (and (forall ((addr@@198 Int) ) (!  (=> (|$IsValid'address'| addr@@198) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_167732| $1_VASP_ParentVASP_$memory) addr@@198) (and (|Select__T@[Int]Bool_| (|domain#$Memory_140658| $1_Roles_RoleId_$memory) addr@@198) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_140658| $1_Roles_RoleId_$memory) addr@@198)) 5))))
+ :qid |RecoveryAddressseqArraybpl.22718:20|
+ :skolemid |574|
+)) (forall ((addr@@199 Int) ) (!  (=> (|$IsValid'address'| addr@@199) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_167668| $1_VASP_ChildVASP_$memory) addr@@199) (and (|Select__T@[Int]Bool_| (|domain#$Memory_140658| $1_Roles_RoleId_$memory) addr@@199) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_140658| $1_Roles_RoleId_$memory) addr@@199)) 6))))
+ :qid |RecoveryAddressseqArraybpl.22722:20|
+ :skolemid |575|
+))) (and (|$IsValid'$1_DiemAccount_KeyRotationCapability'| _$t0@@9) (|$IsValid'address'| _$t1@@9))) (and (and (forall (($a_0@@92 Int) ) (! (let (($rsc@@92 (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $a_0@@92)))
+(|$IsValid'$1_VASP_ChildVASP'| $rsc@@92))
+ :qid |RecoveryAddressseqArraybpl.22731:20|
+ :skolemid |576|
+ :pattern ( (|Select__T@[Int]$1_VASP_ChildVASP_| (|contents#$Memory_167668| $1_VASP_ChildVASP_$memory) $a_0@@92))
+)) (forall (($a_0@@93 Int) ) (! (let (($rsc@@93 (|Select__T@[Int]$1_VASP_ParentVASP_| (|contents#$Memory_167732| $1_VASP_ParentVASP_$memory) $a_0@@93)))
+(|$IsValid'$1_VASP_ParentVASP'| $rsc@@93))
+ :qid |RecoveryAddressseqArraybpl.22735:20|
+ :skolemid |577|
+ :pattern ( (|Select__T@[Int]$1_VASP_ParentVASP_| (|contents#$Memory_167732| $1_VASP_ParentVASP_$memory) $a_0@@93))
+))) (and (forall (($a_0@@94 Int) ) (! (let (($rsc@@94 (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) $a_0@@94)))
+(|$IsValid'$1_RecoveryAddress_RecoveryAddress'| $rsc@@94))
+ :qid |RecoveryAddressseqArraybpl.22739:20|
+ :skolemid |578|
+ :pattern ( (|Select__T@[Int]$1_RecoveryAddress_RecoveryAddress_| (|contents#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) $a_0@@94))
+)) (= $t10@@4 (|$account_address#$1_DiemAccount_KeyRotationCapability| _$t0@@9))))) (and (and (and (= _$t0@@9 _$t0@@9) (= _$t1@@9 _$t1@@9)) (and (= $t11@0 (|Select__T@[Int]Bool_| (|domain#$Memory_170774| $1_RecoveryAddress_RecoveryAddress_$memory) _$t1@@9)) (|$IsValid'u64'| 5))) (and (and (|$IsValid'u64'| $t13@@7) (= $t13@@7 5)) (and (= $t13@@7 $t13@@7) (= $t11@0 $t11@0))))) (and (=> (= (ControlFlow 0 373617) 373844) anon23_Then_correct@@0) (=> (= (ControlFlow 0 373617) 373633) anon23_Else_correct@@0))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@9  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@29 T@$1_Event_EventHandle) ) (! (let ((stream@@34 (|Select__T@[$1_Event_EventHandle]Multiset_102812_| (|streams#$EventStore| $es) handle@@29)))
+ (and (= (|l#Multiset_102812| stream@@34) 0) (forall ((v@@75 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_102812| stream@@34) v@@75) 0)
+ :qid |RecoveryAddressseqArraybpl.134:13|
+ :skolemid |2|
+))))
+ :qid |RecoveryAddressseqArraybpl.3268:13|
+ :skolemid |89|
+))) (= (ControlFlow 0 373388) 373617)) anon0$1_correct@@9)))
+(let ((anon0_correct@@9  (=> (and (and (= (seq.len (|p#$Mutation_107079| $t8@@6)) 0) (= (seq.len (|p#$Mutation_225059| $t19@@7)) 0)) (and (= (seq.len (|p#$Mutation_107079| $t20@@5)) 0) (= (ControlFlow 0 373398) 373388))) inline$$InitEventStore$0$anon0_correct@@9)))
+(let ((PreconditionGeneratedEntry_correct@@0  (=> (= (ControlFlow 0 509910) 373398) anon0_correct@@9)))
+PreconditionGeneratedEntry_correct@@0))))))))))))))))))))))))))))
+))
+(check-sat)
+(pop 1)
+; Valid
+(push 1)
+(set-info :boogie-vc-id $1_Genesis_initialize$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 511182) true)
+))
+(check-sat)
+(pop 1)
+; Valid

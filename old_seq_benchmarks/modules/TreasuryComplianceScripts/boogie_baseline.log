@@ -14,84 +14,84 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.358 s, 0 proof obligations]  verified
+  [0.348 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify ...
-  [0.419 s, 41 proof obligations]  verified
+  [0.410 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
-  [0.387 s, 41 proof obligations]  verified
+  [0.379 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_1 ...
-  [0.331 s, 41 proof obligations]  verified
+  [0.329 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
-  [0.045 s, 0 proof obligations]  verified
+  [0.053 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_0 ...
-  [0.044 s, 0 proof obligations]  verified
+  [0.045 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_1 ...
-  [0.046 s, 0 proof obligations]  verified
+  [0.038 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
-  [0.107 s, 12 proof obligations]  verified
+  [0.123 s, 12 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
-  [0.071 s, 1 proof obligation]  verified
+  [0.080 s, 1 proof obligation]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
-  [1.089 s, 36 proof obligations]  verified
+  [1.101 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_0 ...
-  [1.110 s, 36 proof obligations]  verified
+  [1.121 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_1 ...
-  [1.027 s, 36 proof obligations]  verified
+  [1.004 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
-  [0.060 s, 0 proof obligations]  verified
+  [0.045 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
-  [0.049 s, 0 proof obligations]  verified
+  [0.050 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
-  [0.055 s, 0 proof obligations]  verified
+  [0.053 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_0 ...
-  [0.061 s, 0 proof obligations]  verified
+  [0.067 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_1 ...
-  [0.056 s, 0 proof obligations]  verified
+  [0.068 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
-  [0.189 s, 18 proof obligations]  verified
+  [0.204 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_0 ...
-  [0.160 s, 18 proof obligations]  verified
+  [0.158 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_1 ...
-  [0.155 s, 18 proof obligations]  verified
+  [0.162 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify ...
-  [0.377 s, 30 proof obligations]  verified
+  [0.347 s, 30 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify_instantiated_0 ...
-  [0.332 s, 30 proof obligations]  verified
+  [0.337 s, 30 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify_instantiated_1 ...
-  [0.411 s, 30 proof obligations]  verified
+  [0.407 s, 30 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_dual_attestation_limit$verify ...
   [0.044 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify ...
-  [0.090 s, 17 proof obligations]  verified
+  [0.079 s, 17 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify_instantiated_0 ...
-  [0.092 s, 17 proof obligations]  verified
+  [0.090 s, 17 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify_instantiated_1 ...
-  [0.085 s, 17 proof obligations]  verified
+  [0.089 s, 17 proof obligations]  verified
 
 Boogie program verifier finished with 27 verified, 0 errors

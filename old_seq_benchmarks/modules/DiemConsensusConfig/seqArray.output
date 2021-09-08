@@ -1,5 +1,9 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.seqArray.smt2:410.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.seqArray.smt2:1452.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.seqArray.smt2:444.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+unsat
+/home/ying/diem/old_seq_benchmarks/modules/DiemConsensusConfig/DiemConsensusConfig.seqArray.smt2:1631.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+unsat
+unsat
 unsat
 unsat
 unsat

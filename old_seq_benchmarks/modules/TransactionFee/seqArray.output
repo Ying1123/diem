@@ -1,7 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.seqArray.smt2:445.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.seqArray.smt2:1530.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.seqArray.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.seqArray.smt2:1418.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

@@ -1,10 +1,4 @@
-/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.seqArray.smt2:455.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.seqArray.smt2:1708.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/AccountCreationScripts/AccountCreationScripts.seqArray.smt2:43.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

@@ -1,38 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.andy_default.smt2:412.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.andy_default.smt2:1440.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.andy_default.smt2:473.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/AccountLimits/AccountLimits.andy_default.smt2:1760.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

@@ -1,4 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:499.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:448.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:1633.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/old_seq_benchmarks/modules/ValidatorOperatorConfig/ValidatorOperatorConfig.cvc4.smt2:1807.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
 (error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

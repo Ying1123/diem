@@ -14,67 +14,67 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.203 s, 8 proof obligations]  verified
+  [0.200 s, 8 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.045 s, 17 proof obligations]  verified
+  [0.049 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.036 s, 7 proof obligations]  verified
+  [0.038 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.055 s, 20 proof obligations]  verified
+  [0.050 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.054 s, 18 proof obligations]  verified
+  [0.049 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.051 s, 20 proof obligations]  verified
+  [0.043 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.045 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.042 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_role$verify ...
   [0.049 s, 20 proof obligations]  verified
 
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [0.046 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [0.045 s, 20 proof obligations]  verified
+
 Verifying $1_DiemSystem_add_validator$verify ...
-  [0.178 s, 21 proof obligations]  verified
+  [0.185 s, 21 proof obligations]  verified
 
 Verifying $1_DiemSystem_get_diem_system_config$verify ...
-  [0.037 s, 5 proof obligations]  verified
+  [0.039 s, 5 proof obligations]  verified
 
 Verifying $1_DiemSystem_get_ith_validator_address$verify ...
-  [0.061 s, 6 proof obligations]  verified
+  [0.054 s, 6 proof obligations]  verified
 
 Verifying $1_DiemSystem_get_validator_config$verify ...
-  [0.086 s, 6 proof obligations]  verified
+  [0.090 s, 6 proof obligations]  verified
 
 Verifying $1_DiemSystem_get_validator_index_$verify ...
-  [0.054 s, 12 proof obligations]  verified
+  [0.045 s, 12 proof obligations]  verified
 
 Verifying $1_DiemSystem_initialize_validator_set$verify ...
-  [0.061 s, 14 proof obligations]  verified
+  [0.060 s, 14 proof obligations]  verified
 
 Verifying $1_DiemSystem_is_validator$verify ...
-  [0.055 s, 5 proof obligations]  verified
+  [0.052 s, 5 proof obligations]  verified
 
 Verifying $1_DiemSystem_is_validator_$verify ...
-  [0.030 s, 3 proof obligations]  verified
+  [0.033 s, 3 proof obligations]  verified
 
 Verifying $1_DiemSystem_remove_validator$verify ...
-  [0.340 s, 17 proof obligations]  verified
+  [0.348 s, 17 proof obligations]  verified
 
 Verifying $1_DiemSystem_set_diem_system_config$verify ...
-  [0.050 s, 9 proof obligations]  verified
+  [0.060 s, 9 proof obligations]  verified
 
 Verifying $1_DiemSystem_update_ith_validator_info_$verify ...
-  [0.075 s, 8 proof obligations]  verified
+  [0.082 s, 8 proof obligations]  verified
 
 Verifying $1_DiemSystem_validator_set_size$verify ...
-  [0.037 s, 5 proof obligations]  verified
+  [0.034 s, 5 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
   [0.179 s, 0 proof obligations]  verified

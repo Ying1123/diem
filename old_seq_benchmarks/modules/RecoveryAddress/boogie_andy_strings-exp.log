@@ -15,18 +15,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.299 s, 14 proof obligations]  verified
+  [0.389 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.090 s, 14 proof obligations]  verified
+  [0.130 s, 14 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [5.695 s, 34 proof obligations]  verified
+  [8.230 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [5.624 s, 34 proof obligations]  verified
+  [8.801 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [6.730 s, 34 proof obligations]  verified
+  [7.704 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
+  [6.798 s, 34 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

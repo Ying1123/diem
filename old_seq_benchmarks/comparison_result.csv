@@ -1,41 +1,41 @@
 Benchmark,baseline,z3,cvc4,cvc5,andy_default,andy_strings-exp,seqArray,seqArray_array
 modules,not found,not found,not found,not found,not found,not found,not found,not found
-TransactionFee,not found,2205,602,timeout,3150,3116,3148,1887
-DiemConsensusConfig,not found,1228,not found,1291,1235,1248,1241,3627
-DiemTimestamp,1629,1364,timeout,not found,1290,1291,1285,1382
-RecoveryAddress,3261,timeout,1655,timeout,timeout,timeout,timeout,1872
-NetworkIdentity,5182,timeout,1424,timeout,timeout,1497,1500,1696
-Signature,2454,383,2681,2888,394,372,377,4376
-AccountLimits,3716,3429,not found,not found,6571,6570,6533,not found
-DualAttestation,2822,2562,not found,not found,3670,3728,3701,not found
-TreasuryComplianceScripts,not found,timeout,timeout,timeout,timeout,timeout,timeout,not found
-DiemAccount,timeout,timeout,timeout,timeout,timeout,timeout,timeout,not found
-PaymentScripts,not found,10689,fail,timeout,timeout,timeout,timeout,timeout
-XDX,8956,timeout,1806,timeout,timeout,1723,1711,timeout
-DiemSystem,2876,timeout,1269,timeout,timeout,fail,fail,timeout
-VASPDomain,1373,timeout,timeout,timeout,timeout,timeout,timeout,timeout
-ValidatorConfig,2147,2083,timeout,1477,timeout,2755,2706,5014
-VASP,not found,1479,not found,1434,1564,1586,1542,1847
-Diem,11220,timeout,fail,1284,timeout,timeout,timeout,not found
-AccountCreationScripts,5190,7072,timeout,timeout,timeout,timeout,timeout,12089
-AccountFreezing,not found,1416,timeout,559,1924,1914,1927,2403
-RegisteredCurrencies,1371,timeout,timeout,363,timeout,1469,fail,399
-ChainId,578,1217,fail,timeout,1248,1247,1253,1335
-SlidingNonce,not found,565,timeout,timeout,564,584,571,timeout
-DiemBlock,1290,1381,583,timeout,1609,1575,1558,1888
-DiemTransactionPublishingOption,1380,1474,timeout,3079,1485,1481,1511,2098
-Authenticator,1287,timeout,not found,3727,587,614,588,616
-Genesis,1474,1653,1331,not found,1615,1640,1629,1669
-DesignatedDealer,not found,2298,not found,1296,5297,5289,5247,6596
-XUS,1390,timeout,timeout,timeout,timeout,1600,1605,timeout
-DiemConfig,not found,1963,not found,timeout,2513,2505,2482,3777
-SystemAdministrationScripts,376,1314,385,not found,1262,1250,1239,not found
-DiemVersion,1456,1284,timeout,timeout,1309,1293,1318,1391
-ValidatorOperatorConfig,1731,1594,timeout,not found,2014,1993,1985,2786
-Roles,3221,2268,timeout,554,2747,2685,2742,not found
-DiemVMConfig,not found,1316,1331,timeout,1412,1401,1413,2282
-CoreAddresses,2336,575,fail,2107,562,557,560,573
-SharedEd25519PublicKey,1389,1419,timeout,1231,timeout,1428,1464,1901
-ValidatorAdministrationScripts,2656,timeout,1318,timeout,timeout,fail,fail,timeout
-DiemId,10906,timeout,timeout,1455,timeout,timeout,timeout,1277
-AccountAdministrationScripts,not found,8664,timeout,5244,timeout,timeout,4990,12000
+TransactionFee,2236,2263,timeout,3613,3144,3158,2274,timeout
+DiemConsensusConfig,1586,444,not found,634,not found,not found,25060,timeout
+DiemTimestamp,2515,2241,fail,not found,timeout,timeout,1465,not found
+RecoveryAddress,not found,1816,timeout,4342,timeout,timeout,timeout,not found
+NetworkIdentity,not found,642,not found,718,timeout,1714,3738,1545
+Signature,not found,timeout,timeout,not found,not found,not found,timeout,not found
+AccountLimits,timeout,1639,not found,not found,1899,1914,not found,timeout
+DualAttestation,2346,1722,not found,1966,timeout,timeout,not found,4783
+TreasuryComplianceScripts,not found,not found,1801,timeout,timeout,timeout,timeout,not found
+DiemAccount,not found,1774,714,timeout,timeout,timeout,timeout,not found
+PaymentScripts,1554,1650,not found,timeout,timeout,30668,1693,1461
+XDX,1762,timeout,not found,timeout,timeout,1699,not found,1948
+DiemSystem,not found,1427,not found,timeout,timeout,not found,1675,2013
+VASPDomain,1907,not found,timeout,timeout,timeout,timeout,timeout,timeout
+ValidatorConfig,2287,not found,timeout,not found,timeout,2726,not found,6378
+VASP,1683,1688,not found,timeout,1573,1595,410,1975
+Diem,3572,3186,timeout,timeout,17203,16494,timeout,not found
+AccountCreationScripts,1604,not found,timeout,20215,timeout,timeout,615,439
+AccountFreezing,not found,not found,timeout,1733,timeout,timeout,33316,not found
+RegisteredCurrencies,not found,not found,timeout,4961,timeout,timeout,not found,timeout
+ChainId,1546,1778,timeout,timeout,not found,not found,1528,not found
+SlidingNonce,timeout,636,787,timeout,570,582,not found,timeout
+DiemBlock,not found,not found,not found,4621,1280,1272,4074,timeout
+DiemTransactionPublishingOption,not found,1491,timeout,7545,timeout,timeout,3963,1752
+Authenticator,not found,1933,timeout,1956,not found,not found,fail,1492
+Genesis,not found,2153,timeout,not found,timeout,timeout,not found,425
+DesignatedDealer,not found,13907,not found,timeout,not found,not found,593,not found
+XUS,timeout,405,timeout,timeout,timeout,1616,not found,timeout
+DiemConfig,1750,1625,fail,1294,not found,not found,1575,not found
+SystemAdministrationScripts,1647,1465,not found,not found,1260,1258,not found,timeout
+DiemVersion,timeout,2353,timeout,1413,not found,not found,7586,606
+ValidatorOperatorConfig,1830,timeout,timeout,timeout,1979,1963,timeout,not found
+Roles,timeout,timeout,timeout,timeout,2791,2773,not found,not found
+DiemVMConfig,2016,1595,timeout,timeout,not found,not found,4839,8182
+CoreAddresses,1631,2346,not found,700,1552,1418,1320,not found
+SharedEd25519PublicKey,not found,3274,1447,not found,timeout,1617,not found,not found
+ValidatorAdministrationScripts,not found,timeout,timeout,1580,timeout,fail,not found,timeout
+DiemId,1475,not found,1364,1345,timeout,timeout,2967,not found
+AccountAdministrationScripts,timeout,timeout,timeout,1897,timeout,timeout,1386,4020

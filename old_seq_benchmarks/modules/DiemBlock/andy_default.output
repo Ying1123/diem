@@ -1,8 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemBlock/DiemBlock.andy_default.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DiemBlock/DiemBlock.andy_default.smt2:1415.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
+/home/ying/diem/old_seq_benchmarks/modules/DiemBlock/DiemBlock.andy_default.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemBlock/DiemBlock.andy_default.smt2:1450.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

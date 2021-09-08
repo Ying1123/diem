@@ -1,14 +1,6 @@
-/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.cvc5.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.cvc5.smt2:1419.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.cvc5.smt2:473.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/TransactionFee/TransactionFee.cvc5.smt2:1765.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
 unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

@@ -15,12 +15,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.373 s, 0 proof obligations]  verified
+  [0.379 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify ...
-  [5.282 s, 41 proof obligations]  verified
+  [5.308 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
-  [6.447 s, 41 proof obligations]  verified
+  [6.450 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_1 ...
+  [6.601 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
+  [0.087 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_0 ...
+  [0.006 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_1 ...
+  [0.006 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
+  [3.398 s, 12 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
+  [0.220 s, 1 proof obligation]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
+  [10.921 s, 36 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

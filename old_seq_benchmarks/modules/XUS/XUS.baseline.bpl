@@ -4,122 +4,97 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-// Basic theory for vectors using arrays. This version of vectors is not extensional.
+// Boogie model for vectors, based on Z3 sequences.
+//
+// This version of vectors has extensional equality.
+//
+// This implementation works to some extend but has been so far been much slower/times out compared to
+// non-extensional array versions, even though the later require stratified custom equality.
+//
+// Major issues seem to be:
+//
+// (a) UpdateVec, SwapVec etc. are slow. UpdateVec requires a ConcatVec of two SliceVec.
+// (b) ReverseVec needs to be fully axiomatized with quantifiers which makes it infeasible
+//     to work in practice.
 
-type {:datatype} Vec _;
+type {:builtin "Seq"} Vec _;
 
-function {:constructor} Vec<T>(v: [int]T, l: int): Vec T;
+function {:builtin "seq.empty"} EmptyVec<T>(): Vec T;
 
-function {:builtin "MapConst"} MapConstVec<T>(T): [int]T;
-function DefaultVecElem<T>(): T;
-function {:inline} DefaultVecMap<T>(): [int]T { MapConstVec(DefaultVecElem()) }
-
-function {:inline} EmptyVec<T>(): Vec T {
-    Vec(DefaultVecMap(), 0)
-}
-
-function {:inline} MakeVec1<T>(v: T): Vec T {
-    Vec(DefaultVecMap()[0 := v], 1)
-}
+function {:builtin "seq.unit"} MakeVec1<T>(v: T): Vec T;
 
 function {:inline} MakeVec2<T>(v1: T, v2: T): Vec T {
-    Vec(DefaultVecMap()[0 := v1][1 := v2], 2)
+    ConcatVec(MakeVec1(v1), MakeVec1(v2))
 }
 
 function {:inline} MakeVec3<T>(v1: T, v2: T, v3: T): Vec T {
-    Vec(DefaultVecMap()[0 := v1][1 := v2][2 := v3], 3)
+    ConcatVec(MakeVec2(v1, v2), MakeVec1(v3))
 }
 
 function {:inline} MakeVec4<T>(v1: T, v2: T, v3: T, v4: T): Vec T {
-    Vec(DefaultVecMap()[0 := v1][1 := v2][2 := v3][3 := v4], 4)
+    ConcatVec(MakeVec3(v1, v2, v3), MakeVec1(v4))
 }
 
 function {:inline} ExtendVec<T>(v: Vec T, elem: T): Vec T {
-    (var l := l#Vec(v);
-    Vec(v#Vec(v)[l := elem], l + 1))
+    ConcatVec(v, MakeVec1(elem))
 }
 
-function {:inline} ReadVec<T>(v: Vec T, i: int): T {
-    v#Vec(v)[i]
-}
+function {:builtin "seq.nth"} ReadVec<T>(v: Vec T, i: int): T;
 
-function {:inline} LenVec<T>(v: Vec T): int {
-    l#Vec(v)
-}
+function {:builtin "seq.len"} LenVec<T>(v: Vec T): int;
 
 function {:inline} IsEmptyVec<T>(v: Vec T): bool {
-    l#Vec(v) == 0
+    LenVec(v) == 0
 }
 
 function {:inline} RemoveVec<T>(v: Vec T): Vec T {
-    (var l := l#Vec(v) - 1;
-    Vec(v#Vec(v)[l := DefaultVecElem()], l))
+    SliceVec(v, 0, LenVec(v) - 1)
 }
 
 function {:inline} RemoveAtVec<T>(v: Vec T, i: int): Vec T {
-    (var l := l#Vec(v) - 1;
-    Vec(
-        (lambda j: int ::
-           if j >= 0 && j < l then
-               if j < i then v#Vec(v)[j] else v#Vec(v)[j+1]
-           else DefaultVecElem()),
-        l))
+    ConcatVec(SliceVec(v, 0, i), SliceVec(v, i + 1, LenVec(v)))
 }
 
-function {:inline} ConcatVec<T>(v1: Vec T, v2: Vec T): Vec T {
-    (var l1, m1, l2, m2 := l#Vec(v1), v#Vec(v1), l#Vec(v2), v#Vec(v2);
-    Vec(
-        (lambda i: int ::
-          if i >= 0 && i < l1 + l2 then
-            if i < l1 then m1[i] else m2[i - l1]
-          else DefaultVecElem()),
-        l1 + l2))
-}
+function {:builtin "seq.++"} ConcatVec<T>(v1: Vec T, v2: Vec T): Vec T;
+/*private*/ function {:builtin "seq.++"} ConcatVec3<T>(v1: Vec T, v2: Vec T, v3: Vec T): Vec T;
+/*private*/ function {:builtin "seq.++"} ConcatVec4<T>(v1: Vec T, v2: Vec T, v3: Vec T, v4: Vec T): Vec T;
+/*private*/ function {:builtin "seq.++"} ConcatVec5<T>(v1: Vec T, v2: Vec T, v3: Vec T, v4: Vec T, v5: Vec T): Vec T;
 
-function {:inline} ReverseVec<T>(v: Vec T): Vec T {
-    (var l := l#Vec(v);
-    Vec(
-        (lambda i: int :: if 0 <= i && i < l then v#Vec(v)[l - i - 1] else DefaultVecElem()),
-        l))
-}
+function {:inline} ReverseVec<T>(v: Vec T): Vec T;
+axiom {:ctor "Vec"} (forall<T> v: Vec T:: {ReverseVec(v)}
+        (var r := ReverseVec(v);
+         LenVec(r) == LenVec(v) &&
+         (forall i: int:: {ReadVec(r, i)} i >= 0 && i < LenVec(r) ==> ReadVec(r, i) == ReadVec(v, LenVec(v) - i - 1))));
 
 function {:inline} SliceVec<T>(v: Vec T, i: int, j: int): Vec T {
-    (var m := v#Vec(v);
-    Vec(
-        (lambda k:int ::
-          if 0 <= k && k < j - i then
-            m[i + k]
-          else
-            DefaultVecElem()),
-        (if j - i < 0 then 0 else j - i)))
+    ExtractVec(v, i, j - i)
 }
+/*private*/ function {:builtin "seq.extract"} ExtractVec<T>(v: Vec T, start: int, len: int): Vec T;
 
+//function {:inline} UpdateVec<T>(v: Vec T, i: int, elem: T): Vec T {
+//    ConcatVec3(SliceVec(v, 0, i), MakeVec1(elem), SliceVec(v, i + 1, LenVec(v)))
+//}
+function {:builtin "seq.update"} Vec_Update<T>(v: Vec T, i: int, x: Vec T): Vec T;
 
 function {:inline} UpdateVec<T>(v: Vec T, i: int, elem: T): Vec T {
-    Vec(v#Vec(v)[i := elem], l#Vec(v))
+	Vec_Update(v, i, MakeVec1(elem))
 }
 
 function {:inline} SwapVec<T>(v: Vec T, i: int, j: int): Vec T {
-    (var m := v#Vec(v);
-    Vec(m[i := m[j]][j := m[i]], l#Vec(v)))
+    UpdateVec(UpdateVec(v, j, ReadVec(v, i)), i, ReadVec(v, j))
 }
 
 function {:inline} ContainsVec<T>(v: Vec T, e: T): bool {
-    (var l := l#Vec(v);
-    (exists i: int :: InRangeVec(v, i) && v#Vec(v)[i] == e))
+    ContainsSubVec(v, MakeVec1(e))
 }
+/*private*/ function {:builtin "seq.contains"} ContainsSubVec<T>(v: Vec T, sub: Vec T): bool;
 
-function IndexOfVec<T>(v: Vec T, e: T): int;
-axiom {:ctor "Vec"} (forall<T> v: Vec T, e: T :: {IndexOfVec(v, e)}
-    (var i := IndexOfVec(v,e);
-     if (!ContainsVec(v, e)) then i == -1
-     else InRangeVec(v, i) && ReadVec(v, i) == e &&
-        (forall j: int :: j >= 0 && j < i ==> ReadVec(v, j) != e)));
+function {:inline} IndexOfVec<T>(v: Vec T, e: T): int {
+    IndexOfSubVec(v, MakeVec1(e))
+}
+/*private*/ function {:builtin "seq.indexof"} IndexOfSubVec<T>(v: Vec T, sub: Vec T): int;
 
-// This function should stay non-inlined as it guards many quantifiers
-// over vectors. It appears important to have this uninterpreted for
-// quantifier triggering.
-function InRangeVec<T>(v: Vec T, i: int): bool {
+function {:inline} InRangeVec<T>(v: Vec T, i: int): bool {
     i >= 0 && i < LenVec(v)
 }
 
@@ -609,10 +584,9 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `#0`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'#0''(v1: Vec (#0), v2: Vec (#0)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'#0'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'#0''(v1: Vec (#0), v2: Vec (#0)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -790,10 +764,9 @@ $1_Vector_index_of'#0'(v: Vec (#0), e: #0) returns (res1: bool, res2: int) {
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_DiemAccount_KeyRotationCapability`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_DiemAccount_KeyRotationCapability''(v1: Vec ($1_DiemAccount_KeyRotationCapability), v2: Vec ($1_DiemAccount_KeyRotationCapability)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_DiemAccount_KeyRotationCapability'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_DiemAccount_KeyRotationCapability''(v1: Vec ($1_DiemAccount_KeyRotationCapability), v2: Vec ($1_DiemAccount_KeyRotationCapability)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -971,10 +944,9 @@ $1_Vector_index_of'$1_DiemAccount_KeyRotationCapability'(v: Vec ($1_DiemAccount_
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_DiemAccount_WithdrawCapability`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_DiemAccount_WithdrawCapability''(v1: Vec ($1_DiemAccount_WithdrawCapability), v2: Vec ($1_DiemAccount_WithdrawCapability)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_DiemAccount_WithdrawCapability'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_DiemAccount_WithdrawCapability''(v1: Vec ($1_DiemAccount_WithdrawCapability), v2: Vec ($1_DiemAccount_WithdrawCapability)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1152,10 +1124,9 @@ $1_Vector_index_of'$1_DiemAccount_WithdrawCapability'(v: Vec ($1_DiemAccount_Wit
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_DiemSystem_ValidatorInfo`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_DiemSystem_ValidatorInfo''(v1: Vec ($1_DiemSystem_ValidatorInfo), v2: Vec ($1_DiemSystem_ValidatorInfo)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_DiemSystem_ValidatorInfo'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_DiemSystem_ValidatorInfo''(v1: Vec ($1_DiemSystem_ValidatorInfo), v2: Vec ($1_DiemSystem_ValidatorInfo)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1333,10 +1304,9 @@ $1_Vector_index_of'$1_DiemSystem_ValidatorInfo'(v: Vec ($1_DiemSystem_ValidatorI
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_Diem_PreburnWithMetadata'$1_XDX_XDX'`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX')): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX')): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1514,10 +1484,9 @@ $1_Vector_index_of'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(v: Vec ($1_Diem_Preb
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_Diem_PreburnWithMetadata'$1_XUS_XUS'`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS')): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS')): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1693,12 +1662,191 @@ $1_Vector_index_of'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(v: Vec ($1_Diem_Preb
 
 
 // ----------------------------------------------------------------------------------
+// Native Vector implementation for element type `$1_VASPDomain_VASPDomain`
+
+
+function {:inline} $IsEqual'vec'$1_VASPDomain_VASPDomain''(v1: Vec ($1_VASPDomain_VASPDomain), v2: Vec ($1_VASPDomain_VASPDomain)): bool {
+    v1 == v2
+}
+
+// Not inlined.
+function $IsValid'vec'$1_VASPDomain_VASPDomain''(v: Vec ($1_VASPDomain_VASPDomain)): bool {
+    $IsValid'u64'(LenVec(v)) &&
+    (forall i: int:: InRangeVec(v, i) ==> $IsValid'$1_VASPDomain_VASPDomain'(ReadVec(v, i)))
+}
+
+
+function {:inline} $ContainsVec'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), e: $1_VASPDomain_VASPDomain): bool {
+    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'$1_VASPDomain_VASPDomain'(ReadVec(v, i), e))
+}
+
+function $IndexOfVec'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), e: $1_VASPDomain_VASPDomain): int;
+axiom (forall v: Vec ($1_VASPDomain_VASPDomain), e: $1_VASPDomain_VASPDomain:: {$IndexOfVec'$1_VASPDomain_VASPDomain'(v, e)}
+    (var i := $IndexOfVec'$1_VASPDomain_VASPDomain'(v, e);
+     if (!$ContainsVec'$1_VASPDomain_VASPDomain'(v, e)) then i == -1
+     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'$1_VASPDomain_VASPDomain'(ReadVec(v, i), e) &&
+        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec(v, j), e))));
+
+
+function {:inline} $RangeVec'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain)): $Range {
+    $Range(0, LenVec(v))
+}
+
+
+function {:inline} $EmptyVec'$1_VASPDomain_VASPDomain'(): Vec ($1_VASPDomain_VASPDomain) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_empty'$1_VASPDomain_VASPDomain'() returns (v: Vec ($1_VASPDomain_VASPDomain)) {
+    v := EmptyVec();
+}
+
+function {:inline} $1_Vector_$empty'$1_VASPDomain_VASPDomain'(): Vec ($1_VASPDomain_VASPDomain) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_is_empty'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain)) returns (b: bool) {
+    b := IsEmptyVec(v);
+}
+
+procedure {:inline 1} $1_Vector_push_back'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain)), val: $1_VASPDomain_VASPDomain) returns (m': $Mutation (Vec ($1_VASPDomain_VASPDomain))) {
+    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
+}
+
+function {:inline} $1_Vector_$push_back'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), val: $1_VASPDomain_VASPDomain): Vec ($1_VASPDomain_VASPDomain) {
+    ExtendVec(v, val)
+}
+
+procedure {:inline 1} $1_Vector_pop_back'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain))) returns (e: $1_VASPDomain_VASPDomain, m': $Mutation (Vec ($1_VASPDomain_VASPDomain))) {
+    var v: Vec ($1_VASPDomain_VASPDomain);
+    var len: int;
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (len == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, len-1);
+    m' := $UpdateMutation(m, RemoveVec(v));
+}
+
+procedure {:inline 1} $1_Vector_append'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain)), other: Vec ($1_VASPDomain_VASPDomain)) returns (m': $Mutation (Vec ($1_VASPDomain_VASPDomain))) {
+    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
+}
+
+procedure {:inline 1} $1_Vector_reverse'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain))) returns (m': $Mutation (Vec ($1_VASPDomain_VASPDomain))) {
+    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
+}
+
+procedure {:inline 1} $1_Vector_length'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain)) returns (l: int) {
+    l := LenVec(v);
+}
+
+function {:inline} $1_Vector_$length'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain)): int {
+    LenVec(v)
+}
+
+procedure {:inline 1} $1_Vector_borrow'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), i: int) returns (dst: $1_VASPDomain_VASPDomain) {
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := ReadVec(v, i);
+}
+
+function {:inline} $1_Vector_$borrow'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), i: int): $1_VASPDomain_VASPDomain {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_borrow_mut'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain)), index: int)
+returns (dst: $Mutation ($1_VASPDomain_VASPDomain), m': $Mutation (Vec ($1_VASPDomain_VASPDomain)))
+{
+    var v: Vec ($1_VASPDomain_VASPDomain);
+    v := $Dereference(m);
+    if (!InRangeVec(v, index)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
+    m' := m;
+}
+
+function {:inline} $1_Vector_$borrow_mut'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), i: int): $1_VASPDomain_VASPDomain {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_destroy_empty'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain)) {
+    if (!IsEmptyVec(v)) {
+      call $ExecFailureAbort();
+    }
+}
+
+procedure {:inline 1} $1_Vector_swap'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain)), i: int, j: int) returns (m': $Mutation (Vec ($1_VASPDomain_VASPDomain)))
+{
+    var v: Vec ($1_VASPDomain_VASPDomain);
+    v := $Dereference(m);
+    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    m' := $UpdateMutation(m, SwapVec(v, i, j));
+}
+
+function {:inline} $1_Vector_$swap'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), i: int, j: int): Vec ($1_VASPDomain_VASPDomain) {
+    SwapVec(v, i, j)
+}
+
+procedure {:inline 1} $1_Vector_remove'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain)), i: int) returns (e: $1_VASPDomain_VASPDomain, m': $Mutation (Vec ($1_VASPDomain_VASPDomain)))
+{
+    var v: Vec ($1_VASPDomain_VASPDomain);
+
+    v := $Dereference(m);
+
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveAtVec(v, i));
+}
+
+procedure {:inline 1} $1_Vector_swap_remove'$1_VASPDomain_VASPDomain'(m: $Mutation (Vec ($1_VASPDomain_VASPDomain)), i: int) returns (e: $1_VASPDomain_VASPDomain, m': $Mutation (Vec ($1_VASPDomain_VASPDomain)))
+{
+    var len: int;
+    var v: Vec ($1_VASPDomain_VASPDomain);
+
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
+}
+
+procedure {:inline 1} $1_Vector_contains'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), e: $1_VASPDomain_VASPDomain) returns (res: bool)  {
+    res := $ContainsVec'$1_VASPDomain_VASPDomain'(v, e);
+}
+
+procedure {:inline 1}
+$1_Vector_index_of'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain), e: $1_VASPDomain_VASPDomain) returns (res1: bool, res2: int) {
+    res2 := $IndexOfVec'$1_VASPDomain_VASPDomain'(v, e);
+    if (res2 >= 0) {
+        res1 := true;
+    } else {
+        res1 := false;
+        res2 := 0;
+    }
+}
+
+
+// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_ValidatorConfig_Config`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_ValidatorConfig_Config''(v1: Vec ($1_ValidatorConfig_Config), v2: Vec ($1_ValidatorConfig_Config)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_ValidatorConfig_Config'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_ValidatorConfig_Config''(v1: Vec ($1_ValidatorConfig_Config), v2: Vec ($1_ValidatorConfig_Config)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1876,10 +2024,9 @@ $1_Vector_index_of'$1_ValidatorConfig_Config'(v: Vec ($1_ValidatorConfig_Config)
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `vec'u8'`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'vec'u8'''(v1: Vec (Vec (int)), v2: Vec (Vec (int))): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'vec'u8''(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'vec'u8'''(v1: Vec (Vec (int)), v2: Vec (Vec (int))): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -2057,10 +2204,9 @@ $1_Vector_index_of'vec'u8''(v: Vec (Vec (int)), e: Vec (int)) returns (res1: boo
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `address`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'address''(v1: Vec (int), v2: Vec (int)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'address'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'address''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -2238,10 +2384,9 @@ $1_Vector_index_of'address'(v: Vec (int), e: int) returns (res1: bool, res2: int
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'u8''(v1: Vec (int), v2: Vec (int)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'u8'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'u8''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -3737,395 +3882,6 @@ L2:
 
 }
 
-// fun DiemTimestamp::update_global_time [verification] at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-procedure {:timeLimit 40} $1_DiemTimestamp_update_global_time$verify(_$t0: $signer, _$t1: int, _$t2: int) returns ()
-{
-    // declare local variables
-    var $t3: bool;
-    var $t4: int;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: $Mutation ($1_DiemTimestamp_CurrentTimeMicroseconds);
-    var $t8: int;
-    var $t9: int;
-    var $t10: bool;
-    var $t11: int;
-    var $t12: bool;
-    var $t13: int;
-    var $t14: $Mutation ($1_DiemTimestamp_CurrentTimeMicroseconds);
-    var $t15: int;
-    var $t16: int;
-    var $t17: bool;
-    var $t18: bool;
-    var $t19: int;
-    var $t20: int;
-    var $t21: bool;
-    var $t22: int;
-    var $t23: int;
-    var $t24: $Mutation (int);
-    var $t25: int;
-    var $t0: $signer;
-    var $t1: int;
-    var $t2: int;
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies: [int]bool;
-    var $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds': $1_DiemTimestamp_CurrentTimeMicroseconds;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    var $temp_0'signer': $signer;
-    var $temp_0'u64': int;
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#118: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
-    $t0 := _$t0;
-    $t1 := _$t1;
-    $t2 := _$t2;
-    assume IsEmptyVec(p#$Mutation($t7));
-    assume IsEmptyVec(p#$Mutation($t14));
-    assume IsEmptyVec(p#$Mutation($t24));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
-    assume {:print "$at(17,2579,3373)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
-
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume $IsValid'address'($t1);
-
-    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume $IsValid'u64'($t2);
-
-    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
-    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
-
-    // assume Identical($t9, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:78:9+34
-    assume {:print "$at(17,3497,3531)"} true;
-    assume ($t9 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // assume CanModify<DiemTimestamp::CurrentTimeMicroseconds>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:76:9+52
-    assume {:print "$at(17,3435,3487)"} true;
-    assume $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies[173345816];
-
-    // @118 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:76:9+52
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#118 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
-
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+1
-    assume {:print "$at(17,2579,2580)"} true;
-    assume {:print "$track_local(3,7,0):", $t0} $t0 == $t0;
-
-    // trace_local[proposer]($t1) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+1
-    assume {:print "$track_local(3,7,1):", $t1} $t1 == $t1;
-
-    // trace_local[timestamp]($t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+1
-    assume {:print "$track_local(3,7,2):", $t2} $t2 == $t2;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    // >> opaque call: DiemTimestamp::assert_operating()
-    assume {:print "$at(17,2735,2753)"} true;
-
-    // opaque begin: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-
-    // assume Identical($t10, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    assume ($t10 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // if ($t10) goto L10 else goto L9 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    if ($t10) { goto L10; } else { goto L9; }
-
-    // label L10 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-L10:
-
-    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t11)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t11));
-
-    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    assume {:print "$at(17,2735,2753)"} true;
-    assume {:print "$track_abort(3,7):", $t11} $t11 == $t11;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-    goto L8;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-L9:
-
-    // opaque end: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:59:9+18
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    // >> opaque call: CoreAddresses::assert_vm($t0)
-    assume {:print "$at(17,2812,2845)"} true;
-
-    // opaque begin: CoreAddresses::assert_vm($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-
-    // assume Identical($t12, Neq<address>(Signer::spec_address_of($t0), 0)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    assume ($t12 == !$IsEqual'address'($1_Signer_spec_address_of($t0), 0));
-
-    // if ($t12) goto L12 else goto L11 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    if ($t12) { goto L12; } else { goto L11; }
-
-    // label L12 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-L12:
-
-    // assume And(Neq<address>(Signer::spec_address_of($t0), 0), Eq(2, $t11)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    assume (!$IsEqual'address'($1_Signer_spec_address_of($t0), 0) && $IsEqual'num'(2, $t11));
-
-    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    assume {:print "$at(17,2812,2845)"} true;
-    assume {:print "$track_abort(3,7):", $t11} $t11 == $t11;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-    goto L8;
-
-    // label L11 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-L11:
-
-    // opaque end: CoreAddresses::assert_vm($t0) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:61:9+33
-
-    // $t13 := 0xa550c18 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:71+9
-    assume {:print "$at(17,2918,2927)"} true;
-    $t13 := 173345816;
-    assume $IsValid'address'($t13);
-
-    // assert CanModify<DiemTimestamp::CurrentTimeMicroseconds>($t13) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:28+17
-    assert {:msg "assert_failed(17,2875,2892): caller does not have permission to modify `DiemTimestamp::CurrentTimeMicroseconds` at given address"}
-      $1_DiemTimestamp_CurrentTimeMicroseconds_$modifies[$t13];
-
-    // $t14 := borrow_global<DiemTimestamp::CurrentTimeMicroseconds>($t13) on_abort goto L8 with $t11 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:28+17
-    if (!$ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $t13)) {
-        call $ExecFailureAbort();
-    } else {
-        $t14 := $Mutation($Global($t13), EmptyVec(), $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $t13));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(17,2875,2892)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(3,7):", $t11} $t11 == $t11;
-        goto L8;
-    }
-
-    // trace_local[global_timer]($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:63:13+12
-    $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds' := $Dereference($t14);
-    assume {:print "$track_local(3,7,7):", $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds'} $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds' == $temp_0'$1_DiemTimestamp_CurrentTimeMicroseconds';
-
-    // $t15 := get_field<DiemTimestamp::CurrentTimeMicroseconds>.microseconds($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:64:19+25
-    assume {:print "$at(17,2948,2973)"} true;
-    $t15 := $microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds($Dereference($t14));
-
-    // trace_local[now]($t15) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:64:13+3
-    assume {:print "$track_local(3,7,8):", $t15} $t15 == $t15;
-
-    // $t16 := 0x0 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:25+11
-    assume {:print "$at(17,2999,3010)"} true;
-    $t16 := 0;
-    assume $IsValid'address'($t16);
-
-    // $t17 := ==($t1, $t16) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:22+2
-    $t17 := $IsEqual'address'($t1, $t16);
-
-    // if ($t17) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:9+336
-    if ($t17) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:9+336
-L1:
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:65:9+336
-    goto L2;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:20+3
-    assume {:print "$at(17,3114,3117)"} true;
-L0:
-
-    // $t18 := ==($t15, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:24+2
-    $t18 := $IsEqual'u64'($t15, $t2);
-
-    // $t19 := 2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:63+10
-    $t19 := 2;
-    assume $IsValid'u64'($t19);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-    // >> opaque call: $t16 := Errors::invalid_argument($t15)
-
-    // $t20 := opaque begin: Errors::invalid_argument($t19) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-
-    // assume WellFormed($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-    assume $IsValid'u64'($t20);
-
-    // assume Eq<u64>($t20, 7) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-    assume $IsEqual'u64'($t20, 7);
-
-    // $t20 := opaque end: Errors::invalid_argument($t19) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:38+36
-
-    // trace_local[tmp#$4]($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    assume {:print "$track_local(3,7,4):", $t20} $t20 == $t20;
-
-    // trace_local[tmp#$3]($t18) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    assume {:print "$track_local(3,7,3):", $t18} $t18 == $t18;
-
-    // if ($t18) goto L3 else goto L4 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    if ($t18) { goto L3; } else { goto L4; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-L4:
-
-    // destroy($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-
-    // trace_abort($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    assume {:print "$at(17,3107,3169)"} true;
-    assume {:print "$track_abort(3,7):", $t20} $t20 == $t20;
-
-    // $t11 := move($t20) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    $t11 := $t20;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:13+62
-    goto L8;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:75+1
-L3:
-
-    // goto L5 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:67:75+1
-    goto L5;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:20+3
-    assume {:print "$at(17,3254,3257)"} true;
-L2:
-
-    // $t21 := <($t15, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:24+1
-    call $t21 := $Lt($t15, $t2);
-
-    // $t22 := 2 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:62+10
-    $t22 := 2;
-    assume $IsValid'u64'($t22);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-    // >> opaque call: $t19 := Errors::invalid_argument($t18)
-
-    // $t23 := opaque begin: Errors::invalid_argument($t22) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-
-    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-    assume $IsValid'u64'($t23);
-
-    // assume Eq<u64>($t23, 7) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-    assume $IsEqual'u64'($t23, 7);
-
-    // $t23 := opaque end: Errors::invalid_argument($t22) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:37+36
-
-    // trace_local[tmp#$6]($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    assume {:print "$track_local(3,7,6):", $t23} $t23 == $t23;
-
-    // trace_local[tmp#$5]($t21) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    assume {:print "$track_local(3,7,5):", $t21} $t21 == $t21;
-
-    // if ($t21) goto L5 else goto L6 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    if ($t21) { goto L5; } else { goto L6; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-L6:
-
-    // destroy($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-
-    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    assume {:print "$at(17,3247,3308)"} true;
-    assume {:print "$track_abort(3,7):", $t23} $t23 == $t23;
-
-    // $t11 := move($t23) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    $t11 := $t23;
-
-    // goto L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:70:13+61
-    goto L8;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:37+9
-    assume {:print "$at(17,3357,3366)"} true;
-L5:
-
-    // $t24 := borrow_field<DiemTimestamp::CurrentTimeMicroseconds>.microseconds($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+25
-    $t24 := $ChildMutation($t14, 0, $microseconds#$1_DiemTimestamp_CurrentTimeMicroseconds($Dereference($t14)));
-
-    // write_ref($t24, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+37
-    $t24 := $UpdateMutation($t24, $t2);
-
-    // write_back[Reference($t14).microseconds]($t24) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+37
-    $t14 := $UpdateMutation($t14, $Update'$1_DiemTimestamp_CurrentTimeMicroseconds'_microseconds($Dereference($t14), $Dereference($t24)));
-
-    // assume Implies(DiemTimestamp::$is_operating(), Diem::$is_currency<XUS::XUS>()) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:56:9+69
-    assume {:print "$at(17,2579,3373)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Diem_$is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory));
-
-    // assume Implies(DiemTimestamp::$is_operating(), exists<AccountLimits::LimitsDefinition<XUS::XUS>>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:54:5+794
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:61:9+112
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, 173345816));
-
-    // write_back[DiemTimestamp::CurrentTimeMicroseconds@]($t14) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:72:9+37
-    assume {:print "$at(17,3329,3366)"} true;
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory := $ResourceUpdate($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $GlobalLocationAddress($t14),
-        $Dereference($t14));
-
-    // assert Implies(DiemTimestamp::$is_operating(), Diem::$is_currency<XUS::XUS>()) at /home/ying/diem/language/diem-framework/modules/XUS.move:56:9+69
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:56:9+69
-    assume {:print "$at(40,2283,2352)"} true;
-    assert {:msg "assert_failed(40,2283,2352): global memory invariant does not hold"}
-      ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Diem_$is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory));
-
-    // assert Implies(DiemTimestamp::$is_operating(), exists<AccountLimits::LimitsDefinition<XUS::XUS>>(a550c18)) at /home/ying/diem/language/diem-framework/modules/XUS.move:61:9+112
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:61:9+112
-    assume {:print "$at(40,2629,2741)"} true;
-    assert {:msg "assert_failed(40,2629,2741): global memory invariant does not hold"}
-      ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, 173345816));
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:73:5+1
-    assume {:print "$at(17,3372,3373)"} true;
-L7:
-
-    // assume Identical($t25, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:79:9+44
-    assume {:print "$at(17,3540,3584)"} true;
-    assume ($t25 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // assert Not(Not(DiemTimestamp::$is_operating[@118]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:160:9+53
-    assume {:print "$at(17,6375,6428)"} true;
-    assert {:msg "assert_failed(17,6375,6428): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#118);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), 0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:75:9+88
-    assume {:print "$at(8,2798,2886)"} true;
-    assert {:msg "assert_failed(8,2798,2886): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 0);
-
-    // assert Not((if Eq<address>($t1, 0) {{let ; Neq<u64>($t9, $t2)}} else {{let ; Ge($t9, $t2)}})) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:87:9+225
-    assume {:print "$at(17,3892,4117)"} true;
-    assert {:msg "assert_failed(17,3892,4117): function does not abort under this condition"}
-      !if ($IsEqual'address'($t1, 0)) then (!$IsEqual'u64'($t9, $t2)) else (($t9 >= $t2));
-
-    // assert Eq<u64>($t25, $t2) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:84:9+30
-    assume {:print "$at(17,3760,3790)"} true;
-    assert {:msg "assert_failed(17,3760,3790): post-condition does not hold"}
-      $IsEqual'u64'($t25, $t2);
-
-    // return () at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:84:9+30
-    return;
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:73:5+1
-    assume {:print "$at(17,3372,3373)"} true;
-L8:
-
-    // assert Or(Or(Not(DiemTimestamp::$is_operating[@118]()), Neq<address>(Signer::spec_address_of[]($t0), 0)), (if Eq<address>($t1, 0) {{let ; Neq<u64>($t9, $t2)}} else {{let ; Ge($t9, $t2)}})) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:74:5+745
-    assume {:print "$at(17,3378,4123)"} true;
-    assert {:msg "assert_failed(17,3378,4123): abort not covered by any of the `aborts_if` clauses"}
-      ((!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#118) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 0)) || if ($IsEqual'address'($t1, 0)) then (!$IsEqual'u64'($t9, $t2)) else (($t9 >= $t2)));
-
-    // assert Or(Or(And(Not(DiemTimestamp::$is_operating[@118]()), Eq(1, $t11)), And(Neq<address>(Signer::spec_address_of[]($t0), 0), Eq(2, $t11))), And((if Eq<address>($t1, 0) {{let ; Neq<u64>($t9, $t2)}} else {{let ; Ge($t9, $t2)}}), Eq(7, $t11))) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:74:5+745
-    assert {:msg "assert_failed(17,3378,4123): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#118) && $IsEqual'num'(1, $t11)) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 0) && $IsEqual'num'(2, $t11))) || (if ($IsEqual'address'($t1, 0)) then (!$IsEqual'u64'($t9, $t2)) else (($t9 >= $t2)) && $IsEqual'num'(7, $t11)));
-
-    // abort($t11) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:74:5+745
-    $abort_code := $t11;
-    $abort_flag := true;
-    return;
-
-}
-
 // spec fun at /home/ying/diem/language/diem-framework/modules/Roles.move:480:9+148
 function {:inline} $1_Roles_spec_has_role_id_addr($1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId, addr: int, role_id: int): bool {
     ($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), role_id))
@@ -4200,12 +3956,18 @@ function $IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'(s: $1_Vali
     $IsValid'vec'u8''($human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig(s))
 }
 function {:inline} $IsEqual'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'(s1: $1_ValidatorOperatorConfig_ValidatorOperatorConfig, s2: $1_ValidatorOperatorConfig_ValidatorOperatorConfig): bool {
-    $IsEqual'vec'u8''($human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig(s1), $human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig(s2))}
+    s1 == s2
+}
 var $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig;
 
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:91:5+86
 function {:inline} $1_Vector_$is_empty'$1_ValidatorConfig_Config'(v: Vec ($1_ValidatorConfig_Config)): bool {
     $IsEqual'u64'($1_Vector_$length'$1_ValidatorConfig_Config'(v), 0)
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:91:5+86
+function {:inline} $1_Vector_$is_empty'$1_VASPDomain_VASPDomain'(v: Vec ($1_VASPDomain_VASPDomain)): bool {
+    $IsEqual'u64'($1_Vector_$length'$1_VASPDomain_VASPDomain'(v), 0)
 }
 
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:91:5+86
@@ -4263,7 +4025,8 @@ function $IsValid'$1_Option_Option'address''(s: $1_Option_Option'address'): bool
     $IsValid'vec'address''($vec#$1_Option_Option'address'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'address''(s1: $1_Option_Option'address', s2: $1_Option_Option'address'): bool {
-    $IsEqual'vec'address''($vec#$1_Option_Option'address'(s1), $vec#$1_Option_Option'address'(s2))}
+    s1 == s2
+}
 
 // struct Option::Option<ValidatorConfig::Config> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'$1_ValidatorConfig_Config';
@@ -4275,7 +4038,8 @@ function $IsValid'$1_Option_Option'$1_ValidatorConfig_Config''(s: $1_Option_Opti
     $IsValid'vec'$1_ValidatorConfig_Config''($vec#$1_Option_Option'$1_ValidatorConfig_Config'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'$1_ValidatorConfig_Config''(s1: $1_Option_Option'$1_ValidatorConfig_Config', s2: $1_Option_Option'$1_ValidatorConfig_Config'): bool {
-    $IsEqual'vec'$1_ValidatorConfig_Config''($vec#$1_Option_Option'$1_ValidatorConfig_Config'(s1), $vec#$1_Option_Option'$1_ValidatorConfig_Config'(s2))}
+    s1 == s2
+}
 
 // struct Option::Option<DiemAccount::KeyRotationCapability> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'$1_DiemAccount_KeyRotationCapability';
@@ -4287,7 +4051,8 @@ function $IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''(s: $1_
     $IsValid'vec'$1_DiemAccount_KeyRotationCapability''($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''(s1: $1_Option_Option'$1_DiemAccount_KeyRotationCapability', s2: $1_Option_Option'$1_DiemAccount_KeyRotationCapability'): bool {
-    $IsEqual'vec'$1_DiemAccount_KeyRotationCapability''($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(s1), $vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(s2))}
+    s1 == s2
+}
 
 // struct Option::Option<DiemAccount::WithdrawCapability> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'$1_DiemAccount_WithdrawCapability';
@@ -4299,7 +4064,8 @@ function $IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''(s: $1_Opt
     $IsValid'vec'$1_DiemAccount_WithdrawCapability''($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'$1_DiemAccount_WithdrawCapability''(s1: $1_Option_Option'$1_DiemAccount_WithdrawCapability', s2: $1_Option_Option'$1_DiemAccount_WithdrawCapability'): bool {
-    $IsEqual'vec'$1_DiemAccount_WithdrawCapability''($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(s1), $vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(s2))}
+    s1 == s2
+}
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:83:5+84
 function {:inline} $1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): bool {
@@ -4329,9 +4095,8 @@ function $IsValid'$1_ValidatorConfig_ValidatorConfig'(s: $1_ValidatorConfig_Vali
       && $IsValid'vec'u8''($human_name#$1_ValidatorConfig_ValidatorConfig(s))
 }
 function {:inline} $IsEqual'$1_ValidatorConfig_ValidatorConfig'(s1: $1_ValidatorConfig_ValidatorConfig, s2: $1_ValidatorConfig_ValidatorConfig): bool {
-    $IsEqual'$1_Option_Option'$1_ValidatorConfig_Config''($config#$1_ValidatorConfig_ValidatorConfig(s1), $config#$1_ValidatorConfig_ValidatorConfig(s2))
-    && $IsEqual'$1_Option_Option'address''($operator_account#$1_ValidatorConfig_ValidatorConfig(s1), $operator_account#$1_ValidatorConfig_ValidatorConfig(s2))
-    && $IsEqual'vec'u8''($human_name#$1_ValidatorConfig_ValidatorConfig(s1), $human_name#$1_ValidatorConfig_ValidatorConfig(s2))}
+    s1 == s2
+}
 var $1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig;
 
 // struct ValidatorConfig::Config at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:16:5+178
@@ -4352,9 +4117,8 @@ function $IsValid'$1_ValidatorConfig_Config'(s: $1_ValidatorConfig_Config): bool
       && $IsValid'vec'u8''($fullnode_network_addresses#$1_ValidatorConfig_Config(s))
 }
 function {:inline} $IsEqual'$1_ValidatorConfig_Config'(s1: $1_ValidatorConfig_Config, s2: $1_ValidatorConfig_Config): bool {
-    $IsEqual'vec'u8''($consensus_pubkey#$1_ValidatorConfig_Config(s1), $consensus_pubkey#$1_ValidatorConfig_Config(s2))
-    && $IsEqual'vec'u8''($validator_network_addresses#$1_ValidatorConfig_Config(s1), $validator_network_addresses#$1_ValidatorConfig_Config(s2))
-    && $IsEqual'vec'u8''($fullnode_network_addresses#$1_ValidatorConfig_Config(s1), $fullnode_network_addresses#$1_ValidatorConfig_Config(s2))}
+    s1 == s2
+}
 
 // struct SlidingNonce::SlidingNonce at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:11:5+341
 type {:datatype} $1_SlidingNonce_SlidingNonce;
@@ -4444,7 +4208,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''(s: $1_Diem
     $IsValid'$1_DiemSystem_DiemSystem'($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''(s1: $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem', s2: $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'): bool {
-    $IsEqual'$1_DiemSystem_DiemSystem'($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'(s1), $payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
 
 // struct DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4457,7 +4222,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCur
     $IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'($payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''(s1: $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies', s2: $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'): bool {
-    $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'(s1), $payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies';
 
 // struct DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4470,7 +4236,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_Di
     $IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''(s1: $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption', s2: $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'): bool {
-    $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s1), $payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption';
 
 // struct DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4483,7 +4250,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''(s: $1_
     $IsValid'$1_DiemVMConfig_DiemVMConfig'($payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''(s1: $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig', s2: $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'): bool {
-    $IsEqual'$1_DiemVMConfig_DiemVMConfig'($payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'(s1), $payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig';
 
 // struct DiemConfig::DiemConfig<DiemVersion::DiemVersion> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4518,9 +4286,8 @@ function $IsValid'$1_DiemConfig_Configuration'(s: $1_DiemConfig_Configuration): 
       && $IsValid'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''($events#$1_DiemConfig_Configuration(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_Configuration'(s1: $1_DiemConfig_Configuration, s2: $1_DiemConfig_Configuration): bool {
-    $IsEqual'u64'($epoch#$1_DiemConfig_Configuration(s1), $epoch#$1_DiemConfig_Configuration(s2))
-    && $IsEqual'u64'($last_reconfiguration_time#$1_DiemConfig_Configuration(s1), $last_reconfiguration_time#$1_DiemConfig_Configuration(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''($events#$1_DiemConfig_Configuration(s1), $events#$1_DiemConfig_Configuration(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_Configuration_$memory: $Memory $1_DiemConfig_Configuration;
 
 // struct DiemConfig::DisableReconfiguration at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:38:5+40
@@ -4639,8 +4406,8 @@ function $IsValid'$1_DiemSystem_DiemSystem'(s: $1_DiemSystem_DiemSystem): bool {
       && $IsValid'vec'$1_DiemSystem_ValidatorInfo''($validators#$1_DiemSystem_DiemSystem(s))
 }
 function {:inline} $IsEqual'$1_DiemSystem_DiemSystem'(s1: $1_DiemSystem_DiemSystem, s2: $1_DiemSystem_DiemSystem): bool {
-    $IsEqual'u8'($scheme#$1_DiemSystem_DiemSystem(s1), $scheme#$1_DiemSystem_DiemSystem(s2))
-    && $IsEqual'vec'$1_DiemSystem_ValidatorInfo''($validators#$1_DiemSystem_DiemSystem(s1), $validators#$1_DiemSystem_DiemSystem(s2))}
+    s1 == s2
+}
 
 // struct DiemSystem::CapabilityHolder at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:39:5+242
 type {:datatype} $1_DiemSystem_CapabilityHolder;
@@ -4678,10 +4445,8 @@ function $IsValid'$1_DiemSystem_ValidatorInfo'(s: $1_DiemSystem_ValidatorInfo): 
       && $IsValid'u64'($last_config_update_time#$1_DiemSystem_ValidatorInfo(s))
 }
 function {:inline} $IsEqual'$1_DiemSystem_ValidatorInfo'(s1: $1_DiemSystem_ValidatorInfo, s2: $1_DiemSystem_ValidatorInfo): bool {
-    $IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(s1), $addr#$1_DiemSystem_ValidatorInfo(s2))
-    && $IsEqual'u64'($consensus_voting_power#$1_DiemSystem_ValidatorInfo(s1), $consensus_voting_power#$1_DiemSystem_ValidatorInfo(s2))
-    && $IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(s1), $config#$1_DiemSystem_ValidatorInfo(s2))
-    && $IsEqual'u64'($last_config_update_time#$1_DiemSystem_ValidatorInfo(s1), $last_config_update_time#$1_DiemSystem_ValidatorInfo(s2))}
+    s1 == s2
+}
 
 // fun DiemSystem::initialize_validator_set [baseline] at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:94:5+583
 procedure {:inline 1} $1_DiemSystem_initialize_validator_set(_$t0: $signer) returns ()
@@ -4715,7 +4480,7 @@ procedure {:inline 1} $1_DiemSystem_initialize_validator_set(_$t0: $signer) retu
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_DiemConfig_Configuration_$memory#151: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#161: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
 
     // bytecode translation starts here
@@ -4848,8 +4613,8 @@ L9:
     // label L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
 L8:
 
-    // @151 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
-    $1_DiemConfig_Configuration_$memory#151 := $1_DiemConfig_Configuration_$memory;
+    // @161 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
+    $1_DiemConfig_Configuration_$memory#161 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
     havoc $temp_0'bool';
@@ -4869,8 +4634,8 @@ L8:
     // assume Eq<DiemSystem::DiemSystem>(DiemConfig::$get<DiemSystem::DiemSystem>(), $t12) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
     assume $IsEqual'$1_DiemSystem_DiemSystem'($1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), $t12);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@151](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#151), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@161](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#161), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // $t14 := opaque end: DiemConfig::publish_new_config_and_get_capability<DiemSystem::DiemSystem>($t0, $t12) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
 
@@ -4996,7 +4761,8 @@ function $IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'(s: $1_Registered
     $IsValid'vec'vec'u8'''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies(s))
 }
 function {:inline} $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'(s1: $1_RegisteredCurrencies_RegisteredCurrencies, s2: $1_RegisteredCurrencies_RegisteredCurrencies): bool {
-    $IsEqual'vec'vec'u8'''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies(s1), $currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies(s2))}
+    s1 == s2
+}
 
 // fun RegisteredCurrencies::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:22:5+280
 procedure {:inline 1} $1_RegisteredCurrencies_initialize(_$t0: $signer) returns ()
@@ -5017,7 +4783,7 @@ procedure {:inline 1} $1_RegisteredCurrencies_initialize(_$t0: $signer) returns 
     var $temp_0'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'': $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies';
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
-    var $1_DiemConfig_Configuration_$memory#185: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#195: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
 
     // bytecode translation starts here
@@ -5143,8 +4909,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
 L7:
 
-    // @185 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
-    $1_DiemConfig_Configuration_$memory#185 := $1_DiemConfig_Configuration_$memory;
+    // @195 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
+    $1_DiemConfig_Configuration_$memory#195 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(a550c18) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
     havoc $temp_0'bool';
@@ -5173,8 +4939,8 @@ L7:
     // assume Eq<RegisteredCurrencies::RegisteredCurrencies>(DiemConfig::$get<RegisteredCurrencies::RegisteredCurrencies>(), $t8) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
     assume $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory), $t8);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@185](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#185), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@195](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#195), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<RegisteredCurrencies::RegisteredCurrencies>($t0, $t8) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
 
@@ -5227,7 +4993,7 @@ procedure {:inline 1} $1_RegisteredCurrencies_add_currency_code(_$t0: $signer, _
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemConfig_Configuration_$memory#157: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#167: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     assume IsEmptyVec(p#$Mutation($t15));
@@ -5415,8 +5181,8 @@ L7:
     // label L6 at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
 L6:
 
-    // @157 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
-    $1_DiemConfig_Configuration_$memory#157 := $1_DiemConfig_Configuration_$memory;
+    // @167 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
+    $1_DiemConfig_Configuration_$memory#167 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::Configuration>(a550c18) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
     havoc $temp_0'bool';
@@ -5442,8 +5208,8 @@ L6:
     // assume Eq<RegisteredCurrencies::RegisteredCurrencies>(DiemConfig::$get<RegisteredCurrencies::RegisteredCurrencies>(), $t17) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
     assume $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory), $t17);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@157](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#157), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@167](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#167), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::set<RegisteredCurrencies::RegisteredCurrencies>($t0, $t17) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
 
@@ -5462,11 +5228,6 @@ L3:
     $abort_flag := true;
     return;
 
-}
-
-// spec fun at /home/ying/diem/language/diem-framework/modules/Diem.move:1394:5+184
-function {:inline} $1_Diem_$is_SCS_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory: $Memory $1_Diem_CurrencyInfo'$1_XUS_XUS'): bool {
-    ($1_Diem_$is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory) && !$is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'($ResourceValue($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory, 173345816)))
 }
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/Diem.move:1390:5+102
@@ -5492,11 +5253,6 @@ function {:inline} $1_Diem_spec_is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_
 // spec fun at /home/ying/diem/language/diem-framework/modules/Diem.move:1801:9+108
 function {:inline} $1_Diem_spec_is_currency'$1_XDX_XDX'($1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory: $Memory $1_Diem_CurrencyInfo'$1_XDX_XDX'): bool {
     $ResourceExists($1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory, 173345816)
-}
-
-// spec fun at /home/ying/diem/language/diem-framework/modules/Diem.move:1821:9+122
-function {:inline} $1_Diem_spec_has_mint_capability'$1_XUS_XUS'($1_Diem_MintCapability'$1_XUS_XUS'_$memory: $Memory $1_Diem_MintCapability'$1_XUS_XUS', addr: int): bool {
-    $ResourceExists($1_Diem_MintCapability'$1_XUS_XUS'_$memory, addr)
 }
 
 // struct Diem::Diem<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:22:5+134
@@ -5571,9 +5327,8 @@ function $IsValid'$1_Diem_BurnEvent'(s: $1_Diem_BurnEvent): bool {
       && $IsValid'address'($preburn_address#$1_Diem_BurnEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_BurnEvent'(s1: $1_Diem_BurnEvent, s2: $1_Diem_BurnEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_BurnEvent(s1), $amount#$1_Diem_BurnEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_BurnEvent(s1), $currency_code#$1_Diem_BurnEvent(s2))
-    && $IsEqual'address'($preburn_address#$1_Diem_BurnEvent(s1), $preburn_address#$1_Diem_BurnEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::CancelBurnEvent at /home/ying/diem/language/diem-framework/modules/Diem.move:81:5+327
 type {:datatype} $1_Diem_CancelBurnEvent;
@@ -5593,9 +5348,8 @@ function $IsValid'$1_Diem_CancelBurnEvent'(s: $1_Diem_CancelBurnEvent): bool {
       && $IsValid'address'($preburn_address#$1_Diem_CancelBurnEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_CancelBurnEvent'(s1: $1_Diem_CancelBurnEvent, s2: $1_Diem_CancelBurnEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_CancelBurnEvent(s1), $amount#$1_Diem_CancelBurnEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_CancelBurnEvent(s1), $currency_code#$1_Diem_CancelBurnEvent(s2))
-    && $IsEqual'address'($preburn_address#$1_Diem_CancelBurnEvent(s1), $preburn_address#$1_Diem_CancelBurnEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::CurrencyInfo<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:109:5+2308
 type {:datatype} $1_Diem_CurrencyInfo'$1_XUS_XUS';
@@ -5655,19 +5409,8 @@ function $IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''(s: $1_Diem_CurrencyInfo'$1_X
       && $IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s))
 }
 function {:inline} $IsEqual'$1_Diem_CurrencyInfo'$1_XUS_XUS''(s1: $1_Diem_CurrencyInfo'$1_XUS_XUS', s2: $1_Diem_CurrencyInfo'$1_XUS_XUS'): bool {
-    $IsEqual'u128'($total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'u64'($preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_FixedPoint32_FixedPoint32'($to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'bool'($is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'u64'($scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'u64'($fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'bool'($can_mint#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $can_mint#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_MintEvent''($mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_BurnEvent''($burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_PreburnEvent''($preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''($cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))}
+    s1 == s2
+}
 var $1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory: $Memory $1_Diem_CurrencyInfo'$1_XUS_XUS';
 
 // struct Diem::CurrencyInfo<XDX::XDX> at /home/ying/diem/language/diem-framework/modules/Diem.move:109:5+2308
@@ -5728,19 +5471,8 @@ function $IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''(s: $1_Diem_CurrencyInfo'$1_X
       && $IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s))
 }
 function {:inline} $IsEqual'$1_Diem_CurrencyInfo'$1_XDX_XDX''(s1: $1_Diem_CurrencyInfo'$1_XDX_XDX', s2: $1_Diem_CurrencyInfo'$1_XDX_XDX'): bool {
-    $IsEqual'u128'($total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'u64'($preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_FixedPoint32_FixedPoint32'($to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'bool'($is_synthetic#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $is_synthetic#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'u64'($scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'u64'($fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'bool'($can_mint#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $can_mint#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_MintEvent''($mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_BurnEvent''($burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_PreburnEvent''($preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''($cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))}
+    s1 == s2
+}
 var $1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory: $Memory $1_Diem_CurrencyInfo'$1_XDX_XDX';
 
 // struct Diem::MintCapability<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:31:5+58
@@ -5785,8 +5517,8 @@ function $IsValid'$1_Diem_MintEvent'(s: $1_Diem_MintEvent): bool {
       && $IsValid'vec'u8''($currency_code#$1_Diem_MintEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_MintEvent'(s1: $1_Diem_MintEvent, s2: $1_Diem_MintEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_MintEvent(s1), $amount#$1_Diem_MintEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_MintEvent(s1), $currency_code#$1_Diem_MintEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::Preburn<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:168:5+240
 type {:datatype} $1_Diem_Preburn'$1_XUS_XUS';
@@ -5834,9 +5566,8 @@ function $IsValid'$1_Diem_PreburnEvent'(s: $1_Diem_PreburnEvent): bool {
       && $IsValid'address'($preburn_address#$1_Diem_PreburnEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnEvent'(s1: $1_Diem_PreburnEvent, s2: $1_Diem_PreburnEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_PreburnEvent(s1), $amount#$1_Diem_PreburnEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_PreburnEvent(s1), $currency_code#$1_Diem_PreburnEvent(s2))
-    && $IsEqual'address'($preburn_address#$1_Diem_PreburnEvent(s1), $preburn_address#$1_Diem_PreburnEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::PreburnQueue<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:192:5+152
 type {:datatype} $1_Diem_PreburnQueue'$1_XUS_XUS';
@@ -5848,7 +5579,8 @@ function $IsValid'$1_Diem_PreburnQueue'$1_XUS_XUS''(s: $1_Diem_PreburnQueue'$1_X
     $IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''($preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnQueue'$1_XUS_XUS''(s1: $1_Diem_PreburnQueue'$1_XUS_XUS', s2: $1_Diem_PreburnQueue'$1_XUS_XUS'): bool {
-    $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''($preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'(s1), $preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'(s2))}
+    s1 == s2
+}
 var $1_Diem_PreburnQueue'$1_XUS_XUS'_$memory: $Memory $1_Diem_PreburnQueue'$1_XUS_XUS';
 
 // struct Diem::PreburnQueue<XDX::XDX> at /home/ying/diem/language/diem-framework/modules/Diem.move:192:5+152
@@ -5861,7 +5593,8 @@ function $IsValid'$1_Diem_PreburnQueue'$1_XDX_XDX''(s: $1_Diem_PreburnQueue'$1_X
     $IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''($preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnQueue'$1_XDX_XDX''(s1: $1_Diem_PreburnQueue'$1_XDX_XDX', s2: $1_Diem_PreburnQueue'$1_XDX_XDX'): bool {
-    $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''($preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'(s1), $preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'(s2))}
+    s1 == s2
+}
 var $1_Diem_PreburnQueue'$1_XDX_XDX'_$memory: $Memory $1_Diem_PreburnQueue'$1_XDX_XDX';
 
 // struct Diem::PreburnWithMetadata<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:176:5+128
@@ -5878,8 +5611,8 @@ function $IsValid'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(s: $1_Diem_PreburnWit
       && $IsValid'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(s1: $1_Diem_PreburnWithMetadata'$1_XUS_XUS', s2: $1_Diem_PreburnWithMetadata'$1_XUS_XUS'): bool {
-    $IsEqual'$1_Diem_Preburn'$1_XUS_XUS''($preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s1), $preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s2))
-    && $IsEqual'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s1), $metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s2))}
+    s1 == s2
+}
 
 // struct Diem::PreburnWithMetadata<XDX::XDX> at /home/ying/diem/language/diem-framework/modules/Diem.move:176:5+128
 type {:datatype} $1_Diem_PreburnWithMetadata'$1_XDX_XDX';
@@ -5895,8 +5628,8 @@ function $IsValid'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(s: $1_Diem_PreburnWit
       && $IsValid'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(s1: $1_Diem_PreburnWithMetadata'$1_XDX_XDX', s2: $1_Diem_PreburnWithMetadata'$1_XDX_XDX'): bool {
-    $IsEqual'$1_Diem_Preburn'$1_XDX_XDX''($preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s1), $preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s2))
-    && $IsEqual'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s1), $metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s2))}
+    s1 == s2
+}
 
 // struct Diem::ToXDXExchangeRateUpdateEvent at /home/ying/diem/language/diem-framework/modules/Diem.move:92:5+424
 type {:datatype} $1_Diem_ToXDXExchangeRateUpdateEvent;
@@ -5912,8 +5645,8 @@ function $IsValid'$1_Diem_ToXDXExchangeRateUpdateEvent'(s: $1_Diem_ToXDXExchange
       && $IsValid'u64'($new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_ToXDXExchangeRateUpdateEvent'(s1: $1_Diem_ToXDXExchangeRateUpdateEvent, s2: $1_Diem_ToXDXExchangeRateUpdateEvent): bool {
-    $IsEqual'vec'u8''($currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent(s1), $currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent(s2))
-    && $IsEqual'u64'($new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent(s1), $new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent(s2))}
+    s1 == s2
+}
 
 // fun Diem::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/Diem.move:246:5+247
 procedure {:inline 1} $1_Diem_initialize(_$t0: $signer) returns ()
@@ -8882,628 +8615,6 @@ L2:
 
 }
 
-// fun XUS::initialize [verification] at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-procedure {:timeLimit 40} $1_XUS_initialize$verify(_$t0: $signer, _$t1: $signer) returns ()
-{
-    // declare local variables
-    var $t2: int;
-    var $t3: int;
-    var $t4: $1_DiemConfig_Configuration;
-    var $t5: int;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: bool;
-    var $t10: int;
-    var $t11: int;
-    var $t12: bool;
-    var $t13: int;
-    var $t14: bool;
-    var $t15: int;
-    var $t16: int;
-    var $t17: int;
-    var $t18: int;
-    var $t19: int;
-    var $t20: int;
-    var $t21: int;
-    var $t22: int;
-    var $t23: $1_FixedPoint32_FixedPoint32;
-    var $t24: bool;
-    var $t25: int;
-    var $t26: int;
-    var $t27: Vec (int);
-    var $t28: int;
-    var $t29: int;
-    var $t30: $1_DiemConfig_Configuration;
-    var $t31: int;
-    var $t32: int;
-    var $t33: int;
-    var $t34: int;
-    var $t0: $signer;
-    var $t1: $signer;
-    var $temp_0'signer': $signer;
-    var $1_Diem_MintCapability'$1_XUS_XUS'_$memory#222: $Memory $1_Diem_MintCapability'$1_XUS_XUS';
-    var $1_Roles_RoleId_$memory#223: $Memory $1_Roles_RoleId;
-    var $1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory#224: $Memory $1_Diem_CurrencyInfo'$1_XUS_XUS';
-    var $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225: $Memory $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies';
-    var $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#226: $Memory $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies';
-    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
-    var $1_DiemConfig_DisableReconfiguration_$memory#228: $Memory $1_DiemConfig_DisableReconfiguration;
-    var $1_Diem_BurnCapability'$1_XUS_XUS'_$memory#229: $Memory $1_Diem_BurnCapability'$1_XUS_XUS';
-    var $1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory#230: $Memory $1_AccountLimits_LimitsDefinition'$1_XUS_XUS';
-    $t0 := _$t0;
-    $t1 := _$t1;
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-
-    // bytecode translation starts here
-    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
-    assume {:print "$at(40,429,1024)"} true;
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
-
-    // assume Implies(DiemTimestamp::$is_operating(), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:410:9+62
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
-
-    // assume And(And(And(And(forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(config_address): Eq<address>(config_address, a550c18), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(config_address): Eq<address>(config_address, a550c18)) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:416:9+171
-    assume (((((forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))));
-
-    // assume Implies(DiemTimestamp::$is_operating(), DiemConfig::spec_is_published<RegisteredCurrencies::RegisteredCurrencies>()) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:91:9+98
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_DiemConfig_spec_is_published'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory));
-
-    // assume And(forall mint_cap_owner: TypeDomain<address>() where exists<Diem::MintCapability<XUS::XUS>>(mint_cap_owner): Roles::spec_has_treasury_compliance_role_addr(mint_cap_owner), forall mint_cap_owner: TypeDomain<address>() where exists<Diem::MintCapability<XDX::XDX>>(mint_cap_owner): Roles::spec_has_treasury_compliance_role_addr(mint_cap_owner)) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1582:9+212
-    assume ((forall mint_cap_owner: int :: $IsValid'address'(mint_cap_owner) ==> ($ResourceExists($1_Diem_MintCapability'$1_XUS_XUS'_$memory, mint_cap_owner))  ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, mint_cap_owner))) && (forall mint_cap_owner: int :: $IsValid'address'(mint_cap_owner) ==> ($ResourceExists($1_Diem_MintCapability'$1_XDX_XDX'_$memory, mint_cap_owner))  ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, mint_cap_owner))));
-
-    // assume forall addr3: TypeDomain<address>() where Diem::spec_has_mint_capability<XUS::XUS>(addr3): Diem::$is_SCS_currency<XUS::XUS>() at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1599:9+156
-    assume (forall addr3: int :: $IsValid'address'(addr3) ==> ($1_Diem_spec_has_mint_capability'$1_XUS_XUS'($1_Diem_MintCapability'$1_XUS_XUS'_$memory, addr3))  ==> ($1_Diem_$is_SCS_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory)));
-
-    // assume And(forall addr1: TypeDomain<address>(): Implies(exists<Diem::BurnCapability<XUS::XUS>>(addr1), Roles::spec_has_treasury_compliance_role_addr(addr1)), forall addr1: TypeDomain<address>(): Implies(exists<Diem::BurnCapability<XDX::XDX>>(addr1), Roles::spec_has_treasury_compliance_role_addr(addr1))) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1660:9+203
-    assume ((forall addr1: int :: $IsValid'address'(addr1) ==> (($ResourceExists($1_Diem_BurnCapability'$1_XUS_XUS'_$memory, addr1) ==> $1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, addr1)))) && (forall addr1: int :: $IsValid'address'(addr1) ==> (($ResourceExists($1_Diem_BurnCapability'$1_XDX_XDX'_$memory, addr1) ==> $1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, addr1)))));
-
-    // assume And(forall addr1: TypeDomain<address>(): Implies(Or(exists<Diem::PreburnQueue<XUS::XUS>>(addr1), exists<Diem::Preburn<XUS::XUS>>(addr1)), Roles::spec_has_designated_dealer_role_addr(addr1)), forall addr1: TypeDomain<address>(): Implies(Or(exists<Diem::PreburnQueue<XDX::XDX>>(addr1), exists<Diem::Preburn<XDX::XDX>>(addr1)), Roles::spec_has_designated_dealer_role_addr(addr1))) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1727:9+236
-    assume ((forall addr1: int :: $IsValid'address'(addr1) ==> ((($ResourceExists($1_Diem_PreburnQueue'$1_XUS_XUS'_$memory, addr1) || $ResourceExists($1_Diem_Preburn'$1_XUS_XUS'_$memory, addr1)) ==> $1_Roles_spec_has_designated_dealer_role_addr($1_Roles_RoleId_$memory, addr1)))) && (forall addr1: int :: $IsValid'address'(addr1) ==> ((($ResourceExists($1_Diem_PreburnQueue'$1_XDX_XDX'_$memory, addr1) || $ResourceExists($1_Diem_Preburn'$1_XDX_XDX'_$memory, addr1)) ==> $1_Roles_spec_has_designated_dealer_role_addr($1_Roles_RoleId_$memory, addr1)))));
-
-    // assume And(forall addr: TypeDomain<address>() where exists<Diem::Preburn<XUS::XUS>>(addr): Diem::spec_is_currency<XUS::XUS>(), forall addr: TypeDomain<address>() where exists<Diem::Preburn<XDX::XDX>>(addr): Diem::spec_is_currency<XDX::XDX>()) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1752:9+142
-    assume ((forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_Diem_Preburn'$1_XUS_XUS'_$memory, addr))  ==> ($1_Diem_spec_is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory))) && (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_Diem_Preburn'$1_XDX_XDX'_$memory, addr))  ==> ($1_Diem_spec_is_currency'$1_XDX_XDX'($1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory))));
-
-    // assume And(forall addr: TypeDomain<address>() where exists<Diem::PreburnQueue<XUS::XUS>>(addr): Diem::spec_is_currency<XUS::XUS>(), forall addr: TypeDomain<address>() where exists<Diem::PreburnQueue<XDX::XDX>>(addr): Diem::spec_is_currency<XDX::XDX>()) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1757:9+147
-    assume ((forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_Diem_PreburnQueue'$1_XUS_XUS'_$memory, addr))  ==> ($1_Diem_spec_is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory))) && (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_Diem_PreburnQueue'$1_XDX_XDX'_$memory, addr))  ==> ($1_Diem_spec_is_currency'$1_XDX_XDX'($1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory))));
-
-    // assume And(forall window_addr: TypeDomain<address>() where exists<AccountLimits::Window<XUS::XUS>>(window_addr): exists<AccountLimits::LimitsDefinition<XUS::XUS>>(select AccountLimits::Window.limit_address(global<AccountLimits::Window<XUS::XUS>>(window_addr))), forall window_addr: TypeDomain<address>() where exists<AccountLimits::Window<XDX::XDX>>(window_addr): exists<AccountLimits::LimitsDefinition<XDX::XDX>>(select AccountLimits::Window.limit_address(global<AccountLimits::Window<XDX::XDX>>(window_addr)))) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/AccountLimits.move:540:9+218
-    assume ((forall window_addr: int :: $IsValid'address'(window_addr) ==> ($ResourceExists($1_AccountLimits_Window'$1_XUS_XUS'_$memory, window_addr))  ==> ($ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, $limit_address#$1_AccountLimits_Window'$1_XUS_XUS'($ResourceValue($1_AccountLimits_Window'$1_XUS_XUS'_$memory, window_addr))))) && (forall window_addr: int :: $IsValid'address'(window_addr) ==> ($ResourceExists($1_AccountLimits_Window'$1_XDX_XDX'_$memory, window_addr))  ==> ($ResourceExists($1_AccountLimits_LimitsDefinition'$1_XDX_XDX'_$memory, $limit_address#$1_AccountLimits_Window'$1_XDX_XDX'($ResourceValue($1_AccountLimits_Window'$1_XDX_XDX'_$memory, window_addr))))));
-
-    // assume true at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/AccountLimits.move:549:9+318
-    assume true;
-
-    // assume Implies(DiemTimestamp::$is_operating(), Diem::$is_currency<XUS::XUS>()) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:56:9+69
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_Diem_$is_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory));
-
-    // assume Implies(DiemTimestamp::$is_operating(), exists<AccountLimits::LimitsDefinition<XUS::XUS>>(a550c18)) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:61:9+112
-    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, 173345816));
-
-    // assume forall addr: TypeDomain<address>() where exists<AccountLimits::LimitsDefinition<XUS::XUS>>(addr): Eq<address>(addr, a550c18) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    // global invariant at /home/ying/diem/language/diem-framework/modules/XUS.move:65:9+119
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, addr))  ==> ($IsEqual'address'(addr, 173345816)));
-
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume $IsValid'signer'($t0);
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume $IsValid'signer'($t1);
-
-    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
-    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
-
-    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
-    ($IsValid'$1_Roles_RoleId'($rsc))));
-
-    // assume forall $rsc: ResourceDomain<DiemConfig::Configuration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_Configuration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_Configuration_$memory, $a_0);
-    ($IsValid'$1_DiemConfig_Configuration'($rsc))));
-
-    // assume forall $rsc: ResourceDomain<DiemConfig::DisableReconfiguration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0);
-    ($IsValid'$1_DiemConfig_DisableReconfiguration'($rsc))));
-
-    // assume forall $rsc: ResourceDomain<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, $a_0);
-    ($IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''($rsc))));
-
-    // assume forall $rsc: ResourceDomain<DiemConfig::ModifyConfigCapability<RegisteredCurrencies::RegisteredCurrencies>>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, $a_0);
-    ($IsValid'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies''($rsc))));
-
-    // assume forall $rsc: ResourceDomain<Diem::BurnCapability<XUS::XUS>>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_Diem_BurnCapability'$1_XUS_XUS'_$memory, $a_0)}(var $rsc := $ResourceValue($1_Diem_BurnCapability'$1_XUS_XUS'_$memory, $a_0);
-    ($IsValid'$1_Diem_BurnCapability'$1_XUS_XUS''($rsc))));
-
-    // assume forall $rsc: ResourceDomain<Diem::CurrencyInfo<XUS::XUS>>(): And(WellFormed($rsc), And(Lt(0, select Diem::CurrencyInfo.scaling_factor($rsc)), Le(select Diem::CurrencyInfo.scaling_factor($rsc), 10000000000))) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory, $a_0)}(var $rsc := $ResourceValue($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory, $a_0);
-    (($IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''($rsc) && ((0 < $scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'($rsc)) && ($scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'($rsc) <= 10000000000))))));
-
-    // assume forall $rsc: ResourceDomain<Diem::MintCapability<XUS::XUS>>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_Diem_MintCapability'$1_XUS_XUS'_$memory, $a_0)}(var $rsc := $ResourceValue($1_Diem_MintCapability'$1_XUS_XUS'_$memory, $a_0);
-    ($IsValid'$1_Diem_MintCapability'$1_XUS_XUS''($rsc))));
-
-    // assume forall $rsc: ResourceDomain<AccountLimits::LimitsDefinition<XUS::XUS>>(): And(WellFormed($rsc), And(And(And(Gt(select AccountLimits::LimitsDefinition.max_inflow($rsc), 0), Gt(select AccountLimits::LimitsDefinition.max_outflow($rsc), 0)), Gt(select AccountLimits::LimitsDefinition.time_period($rsc), 0)), Gt(select AccountLimits::LimitsDefinition.max_holding($rsc), 0))) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+595
-    assume (forall $a_0: int :: {$ResourceValue($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, $a_0)}(var $rsc := $ResourceValue($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, $a_0);
-    (($IsValid'$1_AccountLimits_LimitsDefinition'$1_XUS_XUS''($rsc) && (((($max_inflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'($rsc) > 0) && ($max_outflow#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'($rsc) > 0)) && ($time_period#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'($rsc) > 0)) && ($max_holding#$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'($rsc) > 0))))));
-
-    // assume Identical($t2, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t2 == $1_Signer_spec_address_of($t1));
-
-    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t3 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t4, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
-    assume {:print "$at(13,15416,15462)"} true;
-    assume ($t4 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
-
-    // assume Identical($t5, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
-    assume {:print "$at(13,15471,15529)"} true;
-    assume ($t5 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // assume Identical($t6, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t1));
-
-    // assume Identical($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t7 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t8 == $1_Signer_spec_address_of($t1));
-
-    // @227 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    assume {:print "$at(40,429,430)"} true;
-    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
-
-    // @223 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_Roles_RoleId_$memory#223 := $1_Roles_RoleId_$memory;
-
-    // @228 := save_mem(DiemConfig::DisableReconfiguration) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_DiemConfig_DisableReconfiguration_$memory#228 := $1_DiemConfig_DisableReconfiguration_$memory;
-
-    // @225 := save_mem(DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225 := $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory;
-
-    // @226 := save_mem(DiemConfig::ModifyConfigCapability<RegisteredCurrencies::RegisteredCurrencies>) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#226 := $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory;
-
-    // @229 := save_mem(Diem::BurnCapability<XUS::XUS>) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_Diem_BurnCapability'$1_XUS_XUS'_$memory#229 := $1_Diem_BurnCapability'$1_XUS_XUS'_$memory;
-
-    // @224 := save_mem(Diem::CurrencyInfo<XUS::XUS>) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory#224 := $1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory;
-
-    // @222 := save_mem(Diem::MintCapability<XUS::XUS>) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_Diem_MintCapability'$1_XUS_XUS'_$memory#222 := $1_Diem_MintCapability'$1_XUS_XUS'_$memory;
-
-    // @230 := save_mem(AccountLimits::LimitsDefinition<XUS::XUS>) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    $1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory#230 := $1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory;
-
-    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    assume {:print "$track_local(20,0,0):", $t0} $t0 == $t0;
-
-    // trace_local[tc_account]($t1) at /home/ying/diem/language/diem-framework/modules/XUS.move:13:5+1
-    assume {:print "$track_local(20,0,1):", $t1} $t1 == $t1;
-
-    // nop at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-    // >> opaque call: DiemTimestamp::assert_genesis()
-    assume {:print "$at(40,526,557)"} true;
-
-    // opaque begin: DiemTimestamp::assert_genesis() at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-
-    // assume Identical($t9, Not(DiemTimestamp::$is_genesis())) at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-    assume ($t9 == !$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // if ($t9) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-    if ($t9) { goto L4; } else { goto L3; }
-
-    // label L4 at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-L4:
-
-    // assume And(Not(DiemTimestamp::$is_genesis()), Eq(1, $t10)) at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-    assume (!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t10));
-
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-    assume {:print "$at(40,526,557)"} true;
-    assume {:print "$track_abort(20,0):", $t10} $t10 == $t10;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-    goto L2;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-L3:
-
-    // opaque end: DiemTimestamp::assert_genesis() at /home/ying/diem/language/diem-framework/modules/XUS.move:17:9+31
-
-    // nop at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    // >> opaque call: Roles::assert_treasury_compliance($t1)
-    assume {:print "$at(40,567,612)"} true;
-
-    // assume Identical($t11, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t11 == $1_Signer_spec_address_of($t1));
-
-    // opaque begin: Roles::assert_treasury_compliance($t1) at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    assume {:print "$at(40,567,612)"} true;
-
-    // assume Identical($t12, Or(Or(Not(exists<Roles::RoleId>($t11)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t11)), 1)), Neq<address>(Signer::spec_address_of($t1), b1e55ed))) at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    assume ($t12 == ((!$ResourceExists($1_Roles_RoleId_$memory, $t11) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t11)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453)));
-
-    // if ($t12) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    if ($t12) { goto L6; } else { goto L5; }
-
-    // label L6 at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-L6:
-
-    // assume Or(Or(And(Not(exists<Roles::RoleId>($t11)), Eq(5, $t10)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t11)), 1), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of($t1), b1e55ed), Eq(2, $t10))) at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    assume (((!$ResourceExists($1_Roles_RoleId_$memory, $t11) && $IsEqual'num'(5, $t10)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t11)), 1) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453) && $IsEqual'num'(2, $t10)));
-
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    assume {:print "$at(40,567,612)"} true;
-    assume {:print "$track_abort(20,0):", $t10} $t10 == $t10;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-    goto L2;
-
-    // label L5 at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-L5:
-
-    // opaque end: Roles::assert_treasury_compliance($t1) at /home/ying/diem/language/diem-framework/modules/XUS.move:18:9+45
-
-    // nop at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    // >> opaque call: Roles::assert_diem_root($t0)
-    assume {:print "$at(40,622,657)"} true;
-
-    // assume Identical($t13, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t13 == $1_Signer_spec_address_of($t0));
-
-    // opaque begin: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    assume {:print "$at(40,622,657)"} true;
-
-    // assume Identical($t14, Or(Or(Or(Neq<address>(Signer::spec_address_of($t0), a550c18), Not(exists<Roles::RoleId>($t13))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t13)), 0)), Neq<address>(Signer::spec_address_of($t0), a550c18))) at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    assume ($t14 == (((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory, $t13)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t13)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)));
-
-    // if ($t14) goto L8 else goto L7 at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    if ($t14) { goto L8; } else { goto L7; }
-
-    // label L8 at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-L8:
-
-    // assume Or(Or(Or(And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t10)), And(Not(exists<Roles::RoleId>($t13)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t13)), 0), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t10))) at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    assume ((((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t10)) || (!$ResourceExists($1_Roles_RoleId_$memory, $t13) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t13)), 0) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t10)));
-
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    assume {:print "$at(40,622,657)"} true;
-    assume {:print "$track_abort(20,0):", $t10} $t10 == $t10;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-    goto L2;
-
-    // label L7 at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-L7:
-
-    // opaque end: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/XUS.move:19:9+35
-
-    // $t15 := 1 at /home/ying/diem/language/diem-framework/modules/XUS.move:23:48+1
-    assume {:print "$at(40,796,797)"} true;
-    $t15 := 1;
-    assume $IsValid'u64'($t15);
-
-    // $t16 := 1 at /home/ying/diem/language/diem-framework/modules/XUS.move:23:51+1
-    $t16 := 1;
-    assume $IsValid'u64'($t16);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    // >> opaque call: $t4 := FixedPoint32::create_from_rational($t2, $t3)
-
-    // assume Identical($t17, Shl($t15, 64)) at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:184:9+39
-    assume {:print "$at(44,8340,8379)"} true;
-    assume ($t17 == $shl($t15, 64));
-
-    // assume Identical($t18, Shl($t16, 32)) at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:185:9+43
-    assume {:print "$at(44,8388,8431)"} true;
-    assume ($t18 == $shl($t16, 32));
-
-    // assume Identical($t19, Div($t17, $t18)) at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:186:9+53
-    assume {:print "$at(44,8440,8493)"} true;
-    assume ($t19 == ($t17 div $t18));
-
-    // assume Identical($t20, Shl($t15, 64)) at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:184:9+39
-    assume {:print "$at(44,8340,8379)"} true;
-    assume ($t20 == $shl($t15, 64));
-
-    // assume Identical($t21, Shl($t16, 32)) at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:185:9+43
-    assume {:print "$at(44,8388,8431)"} true;
-    assume ($t21 == $shl($t16, 32));
-
-    // assume Identical($t22, Div($t20, $t21)) at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:186:9+53
-    assume {:print "$at(44,8440,8493)"} true;
-    assume ($t22 == ($t20 div $t21));
-
-    // $t23 := opaque begin: FixedPoint32::create_from_rational($t15, $t16) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    assume {:print "$at(40,761,801)"} true;
-
-    // assume Identical($t24, Or(Or(Eq<num>($t21, 0), And(Eq<num>($t22, 0), Neq<num>($t20, 0))), Gt($t22, 18446744073709551615))) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    assume ($t24 == (($IsEqual'num'($t21, 0) || ($IsEqual'num'($t22, 0) && !$IsEqual'num'($t20, 0))) || ($t22 > 18446744073709551615)));
-
-    // if ($t24) goto L10 else goto L9 at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    if ($t24) { goto L10; } else { goto L9; }
-
-    // label L10 at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-L10:
-
-    // assume Or(Or(And(Eq<num>($t21, 0), Eq(7, $t10)), And(And(Eq<num>($t22, 0), Neq<num>($t20, 0)), Eq(7, $t10))), And(Gt($t22, 18446744073709551615), Eq(8, $t10))) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    assume ((($IsEqual'num'($t21, 0) && $IsEqual'num'(7, $t10)) || (($IsEqual'num'($t22, 0) && !$IsEqual'num'($t20, 0)) && $IsEqual'num'(7, $t10))) || (($t22 > 18446744073709551615) && $IsEqual'num'(8, $t10)));
-
-    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    assume {:print "$at(40,761,801)"} true;
-    assume {:print "$track_abort(20,0):", $t10} $t10 == $t10;
-
-    // goto L2 at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    goto L2;
-
-    // label L9 at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-L9:
-
-    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    assume $IsValid'$1_FixedPoint32_FixedPoint32'($t23);
-
-    // assume Eq<FixedPoint32::FixedPoint32>($t23, FixedPoint32::spec_create_from_rational($t15, $t16)) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-    assume $IsEqual'$1_FixedPoint32_FixedPoint32'($t23, $1_FixedPoint32_spec_create_from_rational($t15, $t16));
-
-    // $t23 := opaque end: FixedPoint32::create_from_rational($t15, $t16) at /home/ying/diem/language/diem-framework/modules/XUS.move:23:13+40
-
-    // $t25 := 1000000 at /home/ying/diem/language/diem-framework/modules/XUS.move:24:13+7
-    assume {:print "$at(40,839,846)"} true;
-    $t25 := 1000000;
-    assume $IsValid'u64'($t25);
-
-    // $t26 := 100 at /home/ying/diem/language/diem-framework/modules/XUS.move:25:13+3
-    assume {:print "$at(40,885,888)"} true;
-    $t26 := 100;
-    assume $IsValid'u64'($t26);
-
-    // $t27 := [88, 85, 83] at /home/ying/diem/language/diem-framework/modules/XUS.move:26:13+6
-    assume {:print "$at(40,932,938)"} true;
-    $t27 := MakeVec3(88, 85, 83);
-    assume $IsValid'vec'u8''($t27);
-
-    // assume Identical($t28, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t28 == $1_Signer_spec_address_of($t1));
-
-    // assume Identical($t29, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
-    assume {:print "$at(27,23740,23784)"} true;
-    assume ($t29 == $1_Signer_spec_address_of($t0));
-
-    // assume Identical($t30, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
-    assume {:print "$at(13,15416,15462)"} true;
-    assume ($t30 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
-
-    // assume Identical($t31, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
-    assume {:print "$at(13,15471,15529)"} true;
-    assume ($t31 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
-
-    // assume Identical($t32, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume {:print "$at(27,24099,24143)"} true;
-    assume ($t32 == $1_Signer_spec_address_of($t1));
-
-    // assume Identical($t33, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume ($t33 == $1_Signer_spec_address_of($t1));
-
-    // assume Identical($t34, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
-    assume ($t34 == $1_Signer_spec_address_of($t1));
-
-    // Diem::register_SCS_currency<XUS::XUS>($t0, $t1, $t23, $t25, $t26, $t27) on_abort goto L2 with $t10 at /home/ying/diem/language/diem-framework/modules/XUS.move:20:9+281
-    assume {:print "$at(40,667,948)"} true;
-    call $1_Diem_register_SCS_currency'$1_XUS_XUS'($t0, $t1, $t23, $t25, $t26, $t27);
-    if ($abort_flag) {
-        assume {:print "$at(40,667,948)"} true;
-        $t10 := $abort_code;
-        assume {:print "$track_abort(20,0):", $t10} $t10 == $t10;
-        goto L2;
-    }
-
-    // AccountLimits::publish_unrestricted_limits<XUS::XUS>($t0) on_abort goto L2 with $t10 at /home/ying/diem/language/diem-framework/modules/XUS.move:28:9+59
-    assume {:print "$at(40,958,1017)"} true;
-    call $1_AccountLimits_publish_unrestricted_limits'$1_XUS_XUS'($t0);
-    if ($abort_flag) {
-        assume {:print "$at(40,958,1017)"} true;
-        $t10 := $abort_code;
-        assume {:print "$track_abort(20,0):", $t10} $t10 == $t10;
-        goto L2;
-    }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/XUS.move:29:5+1
-    assume {:print "$at(40,1023,1024)"} true;
-L1:
-
-    // assert Not(exists[@222]<Diem::MintCapability<XUS::XUS>>(Signer::spec_address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Diem.move:1339:9+111
-    assume {:print "$at(10,63268,63379)"} true;
-    assert {:msg "assert_failed(10,63268,63379): function does not abort under this condition"}
-      !$ResourceExists($1_Diem_MintCapability'$1_XUS_XUS'_$memory#222, $1_Signer_spec_address_of($t1));
-
-    // assert Not(Not(exists[@223]<Roles::RoleId>($t2))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#223, $t2);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t2)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t2)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t1), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453);
-
-    // assert Not(Or(Eq<u64>(1000000, 0), Gt(1000000, 10000000000))) at /home/ying/diem/language/diem-framework/modules/Diem.move:1279:9+99
-    assume {:print "$at(10,60730,60829)"} true;
-    assert {:msg "assert_failed(10,60730,60829): function does not abort under this condition"}
-      !($IsEqual'num'(1000000, 0) || (1000000 > 10000000000));
-
-    // assert Not(exists[@224]<Diem::CurrencyInfo<XUS::XUS>>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/Diem.move:1281:9+121
-    assume {:print "$at(10,60915,61036)"} true;
-    assert {:msg "assert_failed(10,60915,61036): function does not abort under this condition"}
-      !$ResourceExists($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory#224, $1_Signer_spec_address_of($t0));
-
-    // assert Not(Not(exists[@223]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#223, $t3);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t3)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t3)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:90:9+90
-    assume {:print "$at(8,3390,3480)"} true;
-    assert {:msg "assert_failed(8,3390,3480): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(ContainsVec<vector<u8>>(select RegisteredCurrencies::RegisteredCurrencies.currency_codes(DiemConfig::$get[@225]<RegisteredCurrencies::RegisteredCurrencies>()), [88, 85, 83])) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:70:9+154
-    assume {:print "$at(26,2647,2801)"} true;
-    assert {:msg "assert_failed(26,2647,2801): function does not abort under this condition"}
-      !$ContainsVec'vec'u8''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225)), MakeVec3(88, 85, 83));
-
-    // assert Not(Not(exists[@226]<DiemConfig::ModifyConfigCapability<RegisteredCurrencies::RegisteredCurrencies>>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:137:9+129
-    assume {:print "$at(13,5449,5578)"} true;
-    assert {:msg "assert_failed(13,5449,5578): function does not abort under this condition"}
-      !!$ResourceExists($1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#226, $1_Signer_spec_address_of($t0));
-
-    // assert Not(Not(exists[@225]<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(a550c18))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:101:9+76
-    assume {:print "$at(13,3867,3943)"} true;
-    assert {:msg "assert_failed(13,3867,3943): function does not abort under this condition"}
-      !!$ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225, 173345816);
-
-    // assert Not(And(And(And(And(DiemTimestamp::$is_operating[@227](), DiemConfig::$reconfiguration_enabled[@228]()), Gt(DiemTimestamp::spec_now_microseconds[@227](), 0)), Lt(select DiemConfig::Configuration.epoch($t4), 18446744073709551615)), Lt($t5, select DiemConfig::Configuration.last_reconfiguration_time($t4)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:360:9+283
-    assume {:print "$at(13,15538,15821)"} true;
-    assert {:msg "assert_failed(13,15538,15821): function does not abort under this condition"}
-      !(((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#228)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) > 0)) && ($epoch#$1_DiemConfig_Configuration($t4) < 18446744073709551615)) && ($t5 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t4)));
-
-    // assert Not(exists[@229]<Diem::BurnCapability<XUS::XUS>>(Signer::spec_address_of[]($t1))) at /home/ying/diem/language/diem-framework/modules/Diem.move:284:9+111
-    assume {:print "$at(10,14270,14381)"} true;
-    assert {:msg "assert_failed(10,14270,14381): function does not abort under this condition"}
-      !$ResourceExists($1_Diem_BurnCapability'$1_XUS_XUS'_$memory#229, $1_Signer_spec_address_of($t1));
-
-    // assert Not(Not(exists[@223]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#223, $t6);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t6)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t6)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t1), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453);
-
-    // assert Not(exists[@230]<AccountLimits::LimitsDefinition<XUS::XUS>>(Signer::spec_address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/AccountLimits.move:208:9+130
-    assume {:print "$at(5,8811,8941)"} true;
-    assert {:msg "assert_failed(5,8811,8941): function does not abort under this condition"}
-      !$ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory#230, $1_Signer_spec_address_of($t0));
-
-    // assert Not(Not(DiemTimestamp::$is_genesis[@227]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:140:9+51
-    assume {:print "$at(17,5622,5673)"} true;
-    assert {:msg "assert_failed(17,5622,5673): function does not abort under this condition"}
-      !!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227);
-
-    // assert Not(Not(exists[@223]<Roles::RoleId>($t7))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
-    assume {:print "$at(27,23793,23852)"} true;
-    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#223, $t7);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t7)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
-    assume {:print "$at(27,23861,23948)"} true;
-    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t7)), 0);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
-
-    // assert Not(Not(exists[@223]<Roles::RoleId>($t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
-    assume {:print "$at(27,24152,24211)"} true;
-    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
-      !!$ResourceExists($1_Roles_RoleId_$memory#223, $t8);
-
-    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t8)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
-    assume {:print "$at(27,24220,24317)"} true;
-    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
-      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t8)), 1);
-
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t1), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
-      !!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453);
-
-    // assert Diem::spec_has_mint_capability<XUS::XUS>(Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/Diem.move:1345:9+80
-    assume {:print "$at(10,63580,63660)"} true;
-    assert {:msg "assert_failed(10,63580,63660): post-condition does not hold"}
-      $1_Diem_spec_has_mint_capability'$1_XUS_XUS'($1_Diem_MintCapability'$1_XUS_XUS'_$memory, $1_Signer_spec_address_of($t1));
-
-    // assert exists<AccountLimits::LimitsDefinition<XUS::XUS>>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/AccountLimits.move:213:9+85
-    assume {:print "$at(5,9050,9135)"} true;
-    assert {:msg "assert_failed(5,9050,9135): post-condition does not hold"}
-      $ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory, $1_Signer_spec_address_of($t0));
-
-    // return () at /home/ying/diem/language/diem-framework/modules/AccountLimits.move:213:9+85
-    return;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/XUS.move:29:5+1
-    assume {:print "$at(40,1023,1024)"} true;
-L2:
-
-    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(exists[@222]<Diem::MintCapability<XUS::XUS>>(Signer::spec_address_of[]($t1)), Not(exists[@223]<Roles::RoleId>($t2))), Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t2)), 1)), Neq<address>(Signer::spec_address_of[]($t1), b1e55ed)), Or(Eq<u64>(1000000, 0), Gt(1000000, 10000000000))), exists[@224]<Diem::CurrencyInfo<XUS::XUS>>(Signer::spec_address_of[]($t0))), Not(exists[@223]<Roles::RoleId>($t3))), Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t3)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), ContainsVec<vector<u8>>(select RegisteredCurrencies::RegisteredCurrencies.currency_codes(DiemConfig::$get[@225]<RegisteredCurrencies::RegisteredCurrencies>()), [88, 85, 83])), Not(exists[@226]<DiemConfig::ModifyConfigCapability<RegisteredCurrencies::RegisteredCurrencies>>(Signer::spec_address_of[]($t0)))), Not(exists[@225]<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(a550c18))), And(And(And(And(DiemTimestamp::$is_operating[@227](), DiemConfig::$reconfiguration_enabled[@228]()), Gt(DiemTimestamp::spec_now_microseconds[@227](), 0)), Lt(select DiemConfig::Configuration.epoch($t4), 18446744073709551615)), Lt($t5, select DiemConfig::Configuration.last_reconfiguration_time($t4)))), exists[@229]<Diem::BurnCapability<XUS::XUS>>(Signer::spec_address_of[]($t1))), Not(exists[@223]<Roles::RoleId>($t6))), Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t6)), 1)), Neq<address>(Signer::spec_address_of[]($t1), b1e55ed)), exists[@230]<AccountLimits::LimitsDefinition<XUS::XUS>>(Signer::spec_address_of[]($t0))), Not(DiemTimestamp::$is_genesis[@227]())), Not(exists[@223]<Roles::RoleId>($t7))), Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t7)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), Not(exists[@223]<Roles::RoleId>($t8))), Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t8)), 1)), Neq<address>(Signer::spec_address_of[]($t1), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/XUS.move:30:5+981
-    assume {:print "$at(40,1029,2010)"} true;
-    assert {:msg "assert_failed(40,1029,2010): abort not covered by any of the `aborts_if` clauses"}
-      ((((((((((((((((((((((((($ResourceExists($1_Diem_MintCapability'$1_XUS_XUS'_$memory#222, $1_Signer_spec_address_of($t1)) || !$ResourceExists($1_Roles_RoleId_$memory#223, $t2)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t2)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453)) || ($IsEqual'num'(1000000, 0) || (1000000 > 10000000000))) || $ResourceExists($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory#224, $1_Signer_spec_address_of($t0))) || !$ResourceExists($1_Roles_RoleId_$memory#223, $t3)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t3)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || $ContainsVec'vec'u8''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225)), MakeVec3(88, 85, 83))) || !$ResourceExists($1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#226, $1_Signer_spec_address_of($t0))) || !$ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225, 173345816)) || (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#228)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) > 0)) && ($epoch#$1_DiemConfig_Configuration($t4) < 18446744073709551615)) && ($t5 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t4)))) || $ResourceExists($1_Diem_BurnCapability'$1_XUS_XUS'_$memory#229, $1_Signer_spec_address_of($t1))) || !$ResourceExists($1_Roles_RoleId_$memory#223, $t6)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t6)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453)) || $ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory#230, $1_Signer_spec_address_of($t0))) || !$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227)) || !$ResourceExists($1_Roles_RoleId_$memory#223, $t7)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t7)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || !$ResourceExists($1_Roles_RoleId_$memory#223, $t8)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t8)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453));
-
-    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(And(exists[@222]<Diem::MintCapability<XUS::XUS>>(Signer::spec_address_of[]($t1)), Eq(6, $t10)), And(Not(exists[@223]<Roles::RoleId>($t2)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t2)), 1), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of[]($t1), b1e55ed), Eq(2, $t10))), And(Or(Eq<u64>(1000000, 0), Gt(1000000, 10000000000)), Eq(7, $t10))), And(exists[@224]<Diem::CurrencyInfo<XUS::XUS>>(Signer::spec_address_of[]($t0)), Eq(6, $t10))), And(Not(exists[@223]<Roles::RoleId>($t3)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t3)), 0), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t10))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t10))), And(ContainsVec<vector<u8>>(select RegisteredCurrencies::RegisteredCurrencies.currency_codes(DiemConfig::$get[@225]<RegisteredCurrencies::RegisteredCurrencies>()), [88, 85, 83]), Eq(7, $t10))), And(Not(exists[@226]<DiemConfig::ModifyConfigCapability<RegisteredCurrencies::RegisteredCurrencies>>(Signer::spec_address_of[]($t0))), Eq(4, $t10))), And(Not(exists[@225]<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(a550c18)), Eq(5, $t10))), And(And(And(And(And(DiemTimestamp::$is_operating[@227](), DiemConfig::$reconfiguration_enabled[@228]()), Gt(DiemTimestamp::spec_now_microseconds[@227](), 0)), Lt(select DiemConfig::Configuration.epoch($t4), 18446744073709551615)), Lt($t5, select DiemConfig::Configuration.last_reconfiguration_time($t4))), Eq(1, $t10))), And(exists[@229]<Diem::BurnCapability<XUS::XUS>>(Signer::spec_address_of[]($t1)), Eq(6, $t10))), And(Not(exists[@223]<Roles::RoleId>($t6)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t6)), 1), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of[]($t1), b1e55ed), Eq(2, $t10))), And(exists[@230]<AccountLimits::LimitsDefinition<XUS::XUS>>(Signer::spec_address_of[]($t0)), Eq(6, $t10))), And(Not(DiemTimestamp::$is_genesis[@227]()), Eq(1, $t10))), And(Not(exists[@223]<Roles::RoleId>($t7)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t7)), 0), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t10))), And(Not(exists[@223]<Roles::RoleId>($t8)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@223]<Roles::RoleId>($t8)), 1), Eq(3, $t10))), And(Neq<address>(Signer::spec_address_of[]($t1), b1e55ed), Eq(2, $t10))) at /home/ying/diem/language/diem-framework/modules/XUS.move:30:5+981
-    assert {:msg "assert_failed(40,1029,2010): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((((((((((((((((((((((($ResourceExists($1_Diem_MintCapability'$1_XUS_XUS'_$memory#222, $1_Signer_spec_address_of($t1)) && $IsEqual'num'(6, $t10)) || (!$ResourceExists($1_Roles_RoleId_$memory#223, $t2) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t2)), 1) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453) && $IsEqual'num'(2, $t10))) || (($IsEqual'num'(1000000, 0) || (1000000 > 10000000000)) && $IsEqual'num'(7, $t10))) || ($ResourceExists($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory#224, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(6, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#223, $t3) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t3)), 0) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t10))) || ($ContainsVec'vec'u8''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225)), MakeVec3(88, 85, 83)) && $IsEqual'num'(7, $t10))) || (!$ResourceExists($1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#226, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(4, $t10))) || (!$ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory#225, 173345816) && $IsEqual'num'(5, $t10))) || ((((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#228)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) > 0)) && ($epoch#$1_DiemConfig_Configuration($t4) < 18446744073709551615)) && ($t5 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t4))) && $IsEqual'num'(1, $t10))) || ($ResourceExists($1_Diem_BurnCapability'$1_XUS_XUS'_$memory#229, $1_Signer_spec_address_of($t1)) && $IsEqual'num'(6, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#223, $t6) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t6)), 1) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453) && $IsEqual'num'(2, $t10))) || ($ResourceExists($1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory#230, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(6, $t10))) || (!$1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#227) && $IsEqual'num'(1, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#223, $t7) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t7)), 0) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#223, $t8) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#223, $t8)), 1) && $IsEqual'num'(3, $t10))) || (!$IsEqual'address'($1_Signer_spec_address_of($t1), 186537453) && $IsEqual'num'(2, $t10)));
-
-    // abort($t10) at /home/ying/diem/language/diem-framework/modules/XUS.move:30:5+981
-    $abort_code := $t10;
-    $abort_flag := true;
-    return;
-
-}
-
 // spec fun at /home/ying/diem/language/diem-framework/modules/XDX.move:133:9+80
 function {:inline} $1_XDX_reserve_exists($1_XDX_Reserve_$memory: $Memory $1_XDX_Reserve): bool {
     $ResourceExists($1_XDX_Reserve_$memory, 173345816)
@@ -9944,6 +9055,11 @@ L3:
 
 }
 
+// spec fun at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:108:5+90
+function {:inline} $1_VASPDomain_$has_vasp_domains($1_VASPDomain_VASPDomains_$memory: $Memory $1_VASPDomain_VASPDomains, addr: int): bool {
+    $ResourceExists($1_VASPDomain_VASPDomains_$memory, addr)
+}
+
 // spec fun at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:298:5+106
 function {:inline} $1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory: $Memory $1_VASPDomain_VASPDomainManager): bool {
     $ResourceExists($1_VASPDomain_VASPDomainManager_$memory, 186537453)
@@ -9959,7 +9075,8 @@ function $IsValid'$1_VASPDomain_VASPDomain'(s: $1_VASPDomain_VASPDomain): bool {
     $IsValid'vec'u8''($domain#$1_VASPDomain_VASPDomain(s))
 }
 function {:inline} $IsEqual'$1_VASPDomain_VASPDomain'(s1: $1_VASPDomain_VASPDomain, s2: $1_VASPDomain_VASPDomain): bool {
-    $IsEqual'vec'u8''($domain#$1_VASPDomain_VASPDomain(s1), $domain#$1_VASPDomain_VASPDomain(s2))}
+    s1 == s2
+}
 
 // struct VASPDomain::VASPDomainEvent at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:39:5+256
 type {:datatype} $1_VASPDomain_VASPDomainEvent;
@@ -9979,9 +9096,8 @@ function $IsValid'$1_VASPDomain_VASPDomainEvent'(s: $1_VASPDomain_VASPDomainEven
       && $IsValid'address'($address#$1_VASPDomain_VASPDomainEvent(s))
 }
 function {:inline} $IsEqual'$1_VASPDomain_VASPDomainEvent'(s1: $1_VASPDomain_VASPDomainEvent, s2: $1_VASPDomain_VASPDomainEvent): bool {
-    $IsEqual'bool'($removed#$1_VASPDomain_VASPDomainEvent(s1), $removed#$1_VASPDomain_VASPDomainEvent(s2))
-    && $IsEqual'$1_VASPDomain_VASPDomain'($domain#$1_VASPDomain_VASPDomainEvent(s1), $domain#$1_VASPDomain_VASPDomainEvent(s2))
-    && $IsEqual'address'($address#$1_VASPDomain_VASPDomainEvent(s1), $address#$1_VASPDomain_VASPDomainEvent(s2))}
+    s1 == s2
+}
 
 // struct VASPDomain::VASPDomainManager at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:33:5+235
 type {:datatype} $1_VASPDomain_VASPDomainManager;
@@ -9993,8 +9109,2198 @@ function $IsValid'$1_VASPDomain_VASPDomainManager'(s: $1_VASPDomain_VASPDomainMa
     $IsValid'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''($vasp_domain_events#$1_VASPDomain_VASPDomainManager(s))
 }
 function {:inline} $IsEqual'$1_VASPDomain_VASPDomainManager'(s1: $1_VASPDomain_VASPDomainManager, s2: $1_VASPDomain_VASPDomainManager): bool {
-    $IsEqual'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''($vasp_domain_events#$1_VASPDomain_VASPDomainManager(s1), $vasp_domain_events#$1_VASPDomain_VASPDomainManager(s2))}
+    s1 == s2
+}
 var $1_VASPDomain_VASPDomainManager_$memory: $Memory $1_VASPDomain_VASPDomainManager;
+
+// struct VASPDomain::VASPDomains at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:12:5+142
+type {:datatype} $1_VASPDomain_VASPDomains;
+function {:constructor} $1_VASPDomain_VASPDomains($domains: Vec ($1_VASPDomain_VASPDomain)): $1_VASPDomain_VASPDomains;
+function {:inline} $Update'$1_VASPDomain_VASPDomains'_domains(s: $1_VASPDomain_VASPDomains, x: Vec ($1_VASPDomain_VASPDomain)): $1_VASPDomain_VASPDomains {
+    $1_VASPDomain_VASPDomains(x)
+}
+function $IsValid'$1_VASPDomain_VASPDomains'(s: $1_VASPDomain_VASPDomains): bool {
+    $IsValid'vec'$1_VASPDomain_VASPDomain''($domains#$1_VASPDomain_VASPDomains(s))
+}
+function {:inline} $IsEqual'$1_VASPDomain_VASPDomains'(s1: $1_VASPDomain_VASPDomains, s2: $1_VASPDomain_VASPDomains): bool {
+    s1 == s2
+}
+var $1_VASPDomain_VASPDomains_$memory: $Memory $1_VASPDomain_VASPDomains;
+
+// fun VASPDomain::add_vasp_domain [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+procedure {:timeLimit 40} $1_VASPDomain_add_vasp_domain$verify(_$t0: $signer, _$t1: int, _$t2: Vec (int)) returns ()
+{
+    // declare local variables
+    var $t3: bool;
+    var $t4: int;
+    var $t5: bool;
+    var $t6: int;
+    var $t7: bool;
+    var $t8: int;
+    var $t9: $Mutation ($1_VASPDomain_VASPDomains);
+    var $t10: $1_VASPDomain_VASPDomain;
+    var $t11: Vec ($1_VASPDomain_VASPDomain);
+    var $t12: int;
+    var $t13: $1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent';
+    var $t14: $1_VASPDomain_VASPDomainEvent;
+    var $t15: int;
+    var $t16: bool;
+    var $t17: int;
+    var $t18: bool;
+    var $t19: int;
+    var $t20: int;
+    var $t21: bool;
+    var $t22: int;
+    var $t23: int;
+    var $t24: $Mutation ($1_VASPDomain_VASPDomains);
+    var $t25: $1_VASPDomain_VASPDomain;
+    var $t26: Vec ($1_VASPDomain_VASPDomain);
+    var $t27: bool;
+    var $t28: bool;
+    var $t29: int;
+    var $t30: int;
+    var $t31: $Mutation (Vec ($1_VASPDomain_VASPDomain));
+    var $t32: int;
+    var $t33: $Mutation ($1_VASPDomain_VASPDomainManager);
+    var $t34: $Mutation ($1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent');
+    var $t35: bool;
+    var $t36: $1_VASPDomain_VASPDomainEvent;
+    var $t37: Vec ($1_VASPDomain_VASPDomain);
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: Vec (int);
+    var $temp_0'$1_VASPDomain_VASPDomain': $1_VASPDomain_VASPDomain;
+    var $temp_0'$1_VASPDomain_VASPDomains': $1_VASPDomain_VASPDomains;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    var $1_VASPDomain_VASPDomains_$memory#133: $Memory $1_VASPDomain_VASPDomains;
+    var $1_VASPDomain_VASPDomainManager_$memory#134: $Memory $1_VASPDomain_VASPDomainManager;
+    var $1_Roles_RoleId_$memory#135: $Memory $1_Roles_RoleId;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    assume IsEmptyVec(p#$Mutation($t9));
+    assume IsEmptyVec(p#$Mutation($t24));
+    assume IsEmptyVec(p#$Mutation($t31));
+    assume IsEmptyVec(p#$Mutation($t33));
+    assume IsEmptyVec(p#$Mutation($t34));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+    assume {:print "$at(35,5713,6793)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+    assume $IsValid'address'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+    assume $IsValid'vec'u8''($t2);
+
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomainManager>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0);
+    ($IsValid'$1_VASPDomain_VASPDomainManager'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomains>(): And(WellFormed($rsc), And(And(forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($rsc), i))), 63), forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($rsc), i), Index(select VASPDomain::VASPDomains.domains($rsc), j))), forall $elem: select VASPDomain::VASPDomains.domains($rsc): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1080
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0);
+    (($IsValid'$1_VASPDomain_VASPDomains'($rsc) && (((var $range_1 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_2: int :: $InRange($range_1, $i_2) ==> (var i := $i_2;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i))) <= 63))))) && (var $range_3 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_4: int :: $InRange($range_3, $i_4) ==> (var i := $i_4;
+    ((var $range_5 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_6: int :: $InRange($range_5, $i_6) ==> (var j := $i_6;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i), ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), j))))))))))) && (var $range_7 := $domains#$1_VASPDomain_VASPDomains($rsc); (forall $i_8: int :: InRangeVec($range_7, $i_8) ==> (var $elem := ReadVec($range_7, $i_8);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63))))))))));
+
+    // assume Identical($t11, select VASPDomain::VASPDomains.domains(global<VASPDomain::VASPDomains>($t1))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:185:9+51
+    assume {:print "$at(35,7070,7121)"} true;
+    assume ($t11 == $domains#$1_VASPDomain_VASPDomains($ResourceValue($1_VASPDomain_VASPDomains_$memory, $t1)));
+
+    // assume Identical($t12, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
+    assume {:print "$at(27,24099,24143)"} true;
+    assume ($t12 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t13, select VASPDomain::VASPDomainManager.vasp_domain_events(global<VASPDomain::VASPDomainManager>(b1e55ed))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:201:9+79
+    assume {:print "$at(35,7806,7885)"} true;
+    assume ($t13 == $vasp_domain_events#$1_VASPDomain_VASPDomainManager($ResourceValue($1_VASPDomain_VASPDomainManager_$memory, 186537453)));
+
+    // assume Identical($t14, pack VASPDomain::VASPDomainEvent(false, pack VASPDomain::VASPDomain($t2), $t1)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:202:9+130
+    assume {:print "$at(35,7894,8024)"} true;
+    assume ($t14 == $1_VASPDomain_VASPDomainEvent(false, $1_VASPDomain_VASPDomain($t2), $t1));
+
+    // @135 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1
+    assume {:print "$at(35,5713,5714)"} true;
+    $1_Roles_RoleId_$memory#135 := $1_Roles_RoleId_$memory;
+
+    // @134 := save_mem(VASPDomain::VASPDomainManager) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1
+    $1_VASPDomain_VASPDomainManager_$memory#134 := $1_VASPDomain_VASPDomainManager_$memory;
+
+    // @133 := save_mem(VASPDomain::VASPDomains) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1
+    $1_VASPDomain_VASPDomains_$memory#133 := $1_VASPDomain_VASPDomains_$memory;
+
+    // trace_local[tc_account]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1
+    assume {:print "$track_local(22,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[address]($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1
+    assume {:print "$track_local(22,0,1):", $t1} $t1 == $t1;
+
+    // trace_local[domain]($t2) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:145:5+1
+    assume {:print "$track_local(22,0,2):", $t2} $t2 == $t2;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    // >> opaque call: Roles::assert_treasury_compliance($t0)
+    assume {:print "$at(35,5880,5925)"} true;
+
+    // assume Identical($t15, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
+    assume {:print "$at(27,24099,24143)"} true;
+    assume ($t15 == $1_Signer_spec_address_of($t0));
+
+    // opaque begin: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    assume {:print "$at(35,5880,5925)"} true;
+
+    // assume Identical($t16, Or(Or(Not(exists<Roles::RoleId>($t15)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t15)), 1)), Neq<address>(Signer::spec_address_of($t0), b1e55ed))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    assume ($t16 == ((!$ResourceExists($1_Roles_RoleId_$memory, $t15) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t15)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)));
+
+    // if ($t16) goto L9 else goto L8 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    if ($t16) { goto L9; } else { goto L8; }
+
+    // label L9 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+L9:
+
+    // assume Or(Or(And(Not(exists<Roles::RoleId>($t15)), Eq(5, $t17)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t15)), 1), Eq(3, $t17))), And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t17))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    assume (((!$ResourceExists($1_Roles_RoleId_$memory, $t15) && $IsEqual'num'(5, $t17)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t15)), 1) && $IsEqual'num'(3, $t17))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t17)));
+
+    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    assume {:print "$at(35,5880,5925)"} true;
+    assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+    goto L7;
+
+    // label L8 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+L8:
+
+    // opaque end: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:150:9+45
+
+    // $t18 := VASPDomain::tc_domain_manager_exists() on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:16+26
+    assume {:print "$at(35,5942,5968)"} true;
+    call $t18 := $1_VASPDomain_tc_domain_manager_exists();
+    if ($abort_flag) {
+        assume {:print "$at(35,5942,5968)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // $t19 := 1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:66+20
+    $t19 := 1;
+    assume $IsValid'u64'($t19);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:44+43
+    // >> opaque call: $t13 := Errors::not_published($t12)
+
+    // $t20 := opaque begin: Errors::not_published($t19) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:44+43
+
+    // assume WellFormed($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:44+43
+    assume $IsValid'u64'($t20);
+
+    // assume Eq<u64>($t20, 5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:44+43
+    assume $IsEqual'u64'($t20, 5);
+
+    // $t20 := opaque end: Errors::not_published($t19) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:44+43
+
+    // trace_local[tmp#$4]($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+    assume {:print "$track_local(22,0,4):", $t20} $t20 == $t20;
+
+    // trace_local[tmp#$3]($t18) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+    assume {:print "$track_local(22,0,3):", $t18} $t18 == $t18;
+
+    // if ($t18) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+    if ($t18) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+L1:
+
+    // trace_abort($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+    assume {:print "$at(35,5935,6014)"} true;
+    assume {:print "$track_abort(22,0):", $t20} $t20 == $t20;
+
+    // $t17 := move($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+    $t17 := $t20;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:151:9+79
+    goto L7;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:153:33+7
+    assume {:print "$at(35,6064,6071)"} true;
+L0:
+
+    // $t21 := exists<VASPDomain::VASPDomains>($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:153:13+6
+    $t21 := $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t1);
+
+    // $t22 := 4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:154:35+27
+    assume {:print "$at(35,6108,6135)"} true;
+    $t22 := 4;
+    assume $IsValid'u64'($t22);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:154:13+50
+    // >> opaque call: $t16 := Errors::not_published($t15)
+
+    // $t23 := opaque begin: Errors::not_published($t22) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:154:13+50
+
+    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:154:13+50
+    assume $IsValid'u64'($t23);
+
+    // assume Eq<u64>($t23, 5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:154:13+50
+    assume $IsEqual'u64'($t23, 5);
+
+    // $t23 := opaque end: Errors::not_published($t22) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:154:13+50
+
+    // trace_local[tmp#$6]($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+    assume {:print "$at(35,6024,6146)"} true;
+    assume {:print "$track_local(22,0,6):", $t23} $t23 == $t23;
+
+    // trace_local[tmp#$5]($t21) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+    assume {:print "$track_local(22,0,5):", $t21} $t21 == $t21;
+
+    // if ($t21) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+    if ($t21) { goto L2; } else { goto L3; }
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+L3:
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+    assume {:print "$at(35,6024,6146)"} true;
+    assume {:print "$track_abort(22,0):", $t23} $t23 == $t23;
+
+    // $t17 := move($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+    $t17 := $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:152:9+122
+    goto L7;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:157:62+7
+    assume {:print "$at(35,6210,6217)"} true;
+L2:
+
+    // $t24 := borrow_global<VASPDomain::VASPDomains>($t1) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:157:31+17
+    if (!$ResourceExists($1_VASPDomain_VASPDomains_$memory, $t1)) {
+        call $ExecFailureAbort();
+    } else {
+        $t24 := $Mutation($Global($t1), EmptyVec(), $ResourceValue($1_VASPDomain_VASPDomains_$memory, $t1));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,6179,6196)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // trace_local[account_domains]($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:157:13+15
+    $temp_0'$1_VASPDomain_VASPDomains' := $Dereference($t24);
+    assume {:print "$track_local(22,0,9):", $temp_0'$1_VASPDomain_VASPDomains'} $temp_0'$1_VASPDomain_VASPDomains' == $temp_0'$1_VASPDomain_VASPDomains';
+
+    // $t25 := VASPDomain::create_vasp_domain($t2) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:158:27+26
+    assume {:print "$at(35,6246,6272)"} true;
+    call $t25 := $1_VASPDomain_create_vasp_domain($t2);
+    if ($abort_flag) {
+        assume {:print "$at(35,6246,6272)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // trace_local[vasp_domain]($t25) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:158:13+11
+    assume {:print "$track_local(22,0,10):", $t25} $t25 == $t25;
+
+    // $t26 := get_field<VASPDomain::VASPDomains>.domains($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:161:31+24
+    assume {:print "$at(35,6321,6345)"} true;
+    $t26 := $domains#$1_VASPDomain_VASPDomains($Dereference($t24));
+
+    // $t27 := Vector::contains<VASPDomain::VASPDomain>($t26, $t25) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:161:14+56
+    call $t27 := $1_Vector_contains'$1_VASPDomain_VASPDomain'($t26, $t25);
+    if ($abort_flag) {
+        assume {:print "$at(35,6304,6360)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // $t28 := !($t27) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:161:13+1
+    call $t28 := $Not($t27);
+
+    // $t29 := 3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:162:38+27
+    assume {:print "$at(35,6399,6426)"} true;
+    $t29 := 3;
+    assume $IsValid'u64'($t29);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:162:13+53
+    // >> opaque call: $t23 := Errors::invalid_argument($t22)
+
+    // $t30 := opaque begin: Errors::invalid_argument($t29) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:162:13+53
+
+    // assume WellFormed($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:162:13+53
+    assume $IsValid'u64'($t30);
+
+    // assume Eq<u64>($t30, 7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:162:13+53
+    assume $IsEqual'u64'($t30, 7);
+
+    // $t30 := opaque end: Errors::invalid_argument($t29) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:162:13+53
+
+    // trace_local[tmp#$8]($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    assume {:print "$at(35,6283,6437)"} true;
+    assume {:print "$track_local(22,0,8):", $t30} $t30 == $t30;
+
+    // trace_local[tmp#$7]($t28) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    assume {:print "$track_local(22,0,7):", $t28} $t28 == $t28;
+
+    // if ($t28) goto L4 else goto L5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    if ($t28) { goto L4; } else { goto L5; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+L5:
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($t24), i))), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    assume {:print "$at(35,635,714)"} true;
+    assert {:msg "assert_failed(35,635,714): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i))) <= 63)))));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($t24), i), Index(select VASPDomain::VASPDomains.domains($t24), j)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    assume {:print "$at(35,771,876)"} true;
+    assert {:msg "assert_failed(35,771,876): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((var $range_2 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_3: int :: $InRange($range_2, $i_3) ==> (var j := $i_3;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i), ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), j))))))))));
+
+    // assert forall $elem: select VASPDomain::VASPDomains.domains($t24): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    assume {:print "$at(35,1135,1174)"} true;
+    assert {:msg "assert_failed(35,1135,1174): data invariant does not hold"}
+      (var $range_0 := $domains#$1_VASPDomain_VASPDomains($Dereference($t24)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63)))));
+
+    // destroy($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    assume {:print "$at(35,6283,6437)"} true;
+
+    // trace_abort($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    assume {:print "$at(35,6283,6437)"} true;
+    assume {:print "$track_abort(22,0):", $t30} $t30 == $t30;
+
+    // $t17 := move($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    $t17 := $t30;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:160:9+154
+    goto L7;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:165:32+15
+    assume {:print "$at(35,6471,6486)"} true;
+L4:
+
+    // $t31 := borrow_field<VASPDomain::VASPDomains>.domains($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:165:27+28
+    $t31 := $ChildMutation($t24, 0, $domains#$1_VASPDomain_VASPDomains($Dereference($t24)));
+
+    // Vector::push_back<VASPDomain::VASPDomain>($t31, $t25) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:165:9+65
+    call $t31 := $1_Vector_push_back'$1_VASPDomain_VASPDomain'($t31, $t25);
+    if ($abort_flag) {
+        assume {:print "$at(35,6448,6513)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // write_back[Reference($t24).domains]($t31) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:165:9+65
+    $t24 := $UpdateMutation($t24, $Update'$1_VASPDomain_VASPDomains'_domains($Dereference($t24), $Dereference($t31)));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($t24), i))), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    assume {:print "$at(35,635,714)"} true;
+    assert {:msg "assert_failed(35,635,714): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i))) <= 63)))));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($t24), i), Index(select VASPDomain::VASPDomains.domains($t24), j)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    assume {:print "$at(35,771,876)"} true;
+    assert {:msg "assert_failed(35,771,876): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((var $range_2 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_3: int :: $InRange($range_2, $i_3) ==> (var j := $i_3;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i), ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), j))))))))));
+
+    // assert forall $elem: select VASPDomain::VASPDomains.domains($t24): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    assume {:print "$at(35,1135,1174)"} true;
+    assert {:msg "assert_failed(35,1135,1174): data invariant does not hold"}
+      (var $range_0 := $domains#$1_VASPDomain_VASPDomains($Dereference($t24)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63)))));
+
+    // write_back[VASPDomain::VASPDomains@]($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:165:9+65
+    assume {:print "$at(35,6448,6513)"} true;
+    $1_VASPDomain_VASPDomains_$memory := $ResourceUpdate($1_VASPDomain_VASPDomains_$memory, $GlobalLocationAddress($t24),
+        $Dereference($t24));
+
+    // $t32 := 0xb1e55ed at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:168:55+19
+    assume {:print "$at(35,6597,6616)"} true;
+    $t32 := 186537453;
+    assume $IsValid'address'($t32);
+
+    // $t33 := borrow_global<VASPDomain::VASPDomainManager>($t32) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:168:18+17
+    if (!$ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $t32)) {
+        call $ExecFailureAbort();
+    } else {
+        $t33 := $Mutation($Global($t32), EmptyVec(), $ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $t32));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,6560,6577)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // $t34 := borrow_field<VASPDomain::VASPDomainManager>.vasp_domain_events($t33) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:168:13+81
+    $t34 := $ChildMutation($t33, 0, $vasp_domain_events#$1_VASPDomain_VASPDomainManager($Dereference($t33)));
+
+    // $t35 := false at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:170:26+5
+    assume {:print "$at(35,6693,6698)"} true;
+    $t35 := false;
+    assume $IsValid'bool'($t35);
+
+    // $t36 := pack VASPDomain::VASPDomainEvent($t35, $t25, $t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:169:13+125
+    assume {:print "$at(35,6650,6775)"} true;
+    $t36 := $1_VASPDomain_VASPDomainEvent($t35, $t25, $t1);
+
+    // Event::emit_event<VASPDomain::VASPDomainEvent>($t34, $t36) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:167:9+262
+    assume {:print "$at(35,6524,6786)"} true;
+    call $t34 := $1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'($t34, $t36);
+    if ($abort_flag) {
+        assume {:print "$at(35,6524,6786)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,0):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:175:5+1
+    assume {:print "$at(35,6792,6793)"} true;
+L6:
+
+    // assume Identical($t37, select VASPDomain::VASPDomains.domains(global<VASPDomain::VASPDomains>($t1))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:195:9+56
+    assume {:print "$at(35,7586,7642)"} true;
+    assume ($t37 == $domains#$1_VASPDomain_VASPDomains($ResourceValue($1_VASPDomain_VASPDomains_$memory, $t1)));
+
+    // assert Not(Not(exists[@133]<VASPDomain::VASPDomains>($t1))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:188:9+67
+    assume {:print "$at(35,7247,7314)"} true;
+    assert {:msg "assert_failed(35,7247,7314): function does not abort under this condition"}
+      !!$ResourceExists($1_VASPDomain_VASPDomains_$memory#133, $t1);
+
+    // assert Not(Not(VASPDomain::$tc_domain_manager_exists[@134]())) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:189:9+65
+    assume {:print "$at(35,7323,7388)"} true;
+    assert {:msg "assert_failed(35,7323,7388): function does not abort under this condition"}
+      !!$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#134);
+
+    // assert Not(ContainsVec<VASPDomain::VASPDomain>($t11, pack VASPDomain::VASPDomain($t2))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:190:9+81
+    assume {:print "$at(35,7397,7478)"} true;
+    assert {:msg "assert_failed(35,7397,7478): function does not abort under this condition"}
+      !$ContainsVec'$1_VASPDomain_VASPDomain'($t11, $1_VASPDomain_VASPDomain($t2));
+
+    // assert Not(Not(exists[@135]<Roles::RoleId>($t12))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
+    assume {:print "$at(27,24152,24211)"} true;
+    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#135, $t12);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@135]<Roles::RoleId>($t12)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
+    assume {:print "$at(27,24220,24317)"} true;
+    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#135, $t12)), 1);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
+    assume {:print "$at(8,2239,2347)"} true;
+    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
+
+    // assert Not(Gt(Vector::$length[]<u8>($t2), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:74:9+79
+    assume {:print "$at(35,2699,2778)"} true;
+    assert {:msg "assert_failed(35,2699,2778): function does not abort under this condition"}
+      !($1_Vector_$length'u8'($t2) > 63);
+
+    // assert ContainsVec<VASPDomain::VASPDomain>($t37, pack VASPDomain::VASPDomain($t2)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:196:9+49
+    assume {:print "$at(35,7651,7700)"} true;
+    assert {:msg "assert_failed(35,7651,7700): post-condition does not hold"}
+      $ContainsVec'$1_VASPDomain_VASPDomain'($t37, $1_VASPDomain_VASPDomain($t2));
+
+    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), $t14, $t13)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:207:9+20
+    assume {:print "$at(35,8033,8053)"} true;
+    assert {:msg "assert_failed(35,8033,8053): function does not emit the expected event"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$1_VASPDomain_VASPDomainEvent'($EmptyEventStore, $t13, $t14); $EventStore__is_subset(expected, actual)));
+
+    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), $t14, $t13)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:176:5+141
+    assume {:print "$at(35,6798,6939)"} true;
+    assert {:msg "assert_failed(35,6798,6939): emitted event not covered by any of the `emits` clauses"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$1_VASPDomain_VASPDomainEvent'($EmptyEventStore, $t13, $t14); $EventStore__is_subset(actual, expected)));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:176:5+141
+    return;
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:175:5+1
+    assume {:print "$at(35,6792,6793)"} true;
+L7:
+
+    // assert Or(Or(Or(Or(Or(Or(Not(exists[@133]<VASPDomain::VASPDomains>($t1)), Not(VASPDomain::$tc_domain_manager_exists[@134]())), ContainsVec<VASPDomain::VASPDomain>($t11, pack VASPDomain::VASPDomain($t2))), Not(exists[@135]<Roles::RoleId>($t12))), Neq<u64>(select Roles::RoleId.role_id(global[@135]<Roles::RoleId>($t12)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)), Gt(Vector::$length[]<u8>($t2), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:176:5+141
+    assume {:print "$at(35,6798,6939)"} true;
+    assert {:msg "assert_failed(35,6798,6939): abort not covered by any of the `aborts_if` clauses"}
+      ((((((!$ResourceExists($1_VASPDomain_VASPDomains_$memory#133, $t1) || !$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#134)) || $ContainsVec'$1_VASPDomain_VASPDomain'($t11, $1_VASPDomain_VASPDomain($t2))) || !$ResourceExists($1_Roles_RoleId_$memory#135, $t12)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#135, $t12)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)) || ($1_Vector_$length'u8'($t2) > 63));
+
+    // assert Or(Or(Or(Or(Or(Or(And(Not(exists[@133]<VASPDomain::VASPDomains>($t1)), Eq(5, $t17)), And(Not(VASPDomain::$tc_domain_manager_exists[@134]()), Eq(5, $t17))), And(ContainsVec<VASPDomain::VASPDomain>($t11, pack VASPDomain::VASPDomain($t2)), Eq(7, $t17))), And(Not(exists[@135]<Roles::RoleId>($t12)), Eq(5, $t17))), And(Neq<u64>(select Roles::RoleId.role_id(global[@135]<Roles::RoleId>($t12)), 1), Eq(3, $t17))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t17))), And(Gt(Vector::$length[]<u8>($t2), 63), Eq(7, $t17))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:176:5+141
+    assert {:msg "assert_failed(35,6798,6939): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((((((!$ResourceExists($1_VASPDomain_VASPDomains_$memory#133, $t1) && $IsEqual'num'(5, $t17)) || (!$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#134) && $IsEqual'num'(5, $t17))) || ($ContainsVec'$1_VASPDomain_VASPDomain'($t11, $1_VASPDomain_VASPDomain($t2)) && $IsEqual'num'(7, $t17))) || (!$ResourceExists($1_Roles_RoleId_$memory#135, $t12) && $IsEqual'num'(5, $t17))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#135, $t12)), 1) && $IsEqual'num'(3, $t17))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t17))) || (($1_Vector_$length'u8'($t2) > 63) && $IsEqual'num'(7, $t17)));
+
+    // abort($t17) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:176:5+141
+    $abort_code := $t17;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::create_vasp_domain [baseline] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:64:5+197
+procedure {:inline 1} $1_VASPDomain_create_vasp_domain(_$t0: Vec (int)) returns ($ret0: $1_VASPDomain_VASPDomain)
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: int;
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: int;
+    var $t9: $1_VASPDomain_VASPDomain;
+    var $t0: Vec (int);
+    var $temp_0'$1_VASPDomain_VASPDomain': $1_VASPDomain_VASPDomain;
+    var $temp_0'bool': bool;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[domain]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:64:5+1
+    assume {:print "$at(35,2295,2296)"} true;
+    assume {:print "$track_local(22,1,0):", $t0} $t0 == $t0;
+
+    // $t3 := Vector::length<u8>($t0) on_abort goto L3 with $t4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:16+23
+    assume {:print "$at(35,2367,2390)"} true;
+    call $t3 := $1_Vector_length'u8'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(35,2367,2390)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(22,1):", $t4} $t4 == $t4;
+        goto L3;
+    }
+
+    // $t5 := 63 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:43+13
+    $t5 := 63;
+    assume $IsValid'u64'($t5);
+
+    // $t6 := <=($t3, $t5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:40+2
+    call $t6 := $Le($t3, $t5);
+
+    // $t7 := 5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:83+20
+    $t7 := 5;
+    assume $IsValid'u64'($t7);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+    // >> opaque call: $t7 := Errors::invalid_argument($t6)
+
+    // $t8 := opaque begin: Errors::invalid_argument($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+
+    // assume WellFormed($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+    assume $IsValid'u64'($t8);
+
+    // assume Eq<u64>($t8, 7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+    assume $IsEqual'u64'($t8, 7);
+
+    // $t8 := opaque end: Errors::invalid_argument($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+
+    // trace_local[tmp#$2]($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    assume {:print "$track_local(22,1,2):", $t8} $t8 == $t8;
+
+    // trace_local[tmp#$1]($t6) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    assume {:print "$track_local(22,1,1):", $t6} $t6 == $t6;
+
+    // if ($t6) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    if ($t6) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+L1:
+
+    // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    assume {:print "$at(35,2360,2456)"} true;
+    assume {:print "$track_abort(22,1):", $t8} $t8 == $t8;
+
+    // $t4 := move($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    $t4 := $t8;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:66:21+6
+    assume {:print "$at(35,2478,2484)"} true;
+L0:
+
+    // $t9 := pack VASPDomain::VASPDomain($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:66:9+20
+    $t9 := $1_VASPDomain_VASPDomain($t0);
+
+    // trace_return[0]($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:66:9+20
+    assume {:print "$track_return(22,1,0):", $t9} $t9 == $t9;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:67:5+1
+    assume {:print "$at(35,2491,2492)"} true;
+L2:
+
+    // return $t9 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:67:5+1
+    $ret0 := $t9;
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:67:5+1
+L3:
+
+    // abort($t4) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:67:5+1
+    $abort_code := $t4;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::create_vasp_domain [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:64:5+197
+procedure {:timeLimit 40} $1_VASPDomain_create_vasp_domain$verify(_$t0: Vec (int)) returns ($ret0: $1_VASPDomain_VASPDomain)
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: int;
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: int;
+    var $t9: $1_VASPDomain_VASPDomain;
+    var $t0: Vec (int);
+    var $temp_0'$1_VASPDomain_VASPDomain': $1_VASPDomain_VASPDomain;
+    var $temp_0'bool': bool;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:70:17+6
+    assume {:print "$at(35,2581,2587)"} true;
+    assume $IsValid'vec'u8''($t0);
+
+    // trace_local[domain]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:64:5+1
+    assume {:print "$at(35,2295,2296)"} true;
+    assume {:print "$track_local(22,1,0):", $t0} $t0 == $t0;
+
+    // $t3 := Vector::length<u8>($t0) on_abort goto L3 with $t4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:16+23
+    assume {:print "$at(35,2367,2390)"} true;
+    call $t3 := $1_Vector_length'u8'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(35,2367,2390)"} true;
+        $t4 := $abort_code;
+        assume {:print "$track_abort(22,1):", $t4} $t4 == $t4;
+        goto L3;
+    }
+
+    // $t5 := 63 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:43+13
+    $t5 := 63;
+    assume $IsValid'u64'($t5);
+
+    // $t6 := <=($t3, $t5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:40+2
+    call $t6 := $Le($t3, $t5);
+
+    // $t7 := 5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:83+20
+    $t7 := 5;
+    assume $IsValid'u64'($t7);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+    // >> opaque call: $t7 := Errors::invalid_argument($t6)
+
+    // $t8 := opaque begin: Errors::invalid_argument($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+
+    // assume WellFormed($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+    assume $IsValid'u64'($t8);
+
+    // assume Eq<u64>($t8, 7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+    assume $IsEqual'u64'($t8, 7);
+
+    // $t8 := opaque end: Errors::invalid_argument($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:58+46
+
+    // trace_local[tmp#$2]($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    assume {:print "$track_local(22,1,2):", $t8} $t8 == $t8;
+
+    // trace_local[tmp#$1]($t6) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    assume {:print "$track_local(22,1,1):", $t6} $t6 == $t6;
+
+    // if ($t6) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    if ($t6) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+L1:
+
+    // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    assume {:print "$at(35,2360,2456)"} true;
+    assume {:print "$track_abort(22,1):", $t8} $t8 == $t8;
+
+    // $t4 := move($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    $t4 := $t8;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:65:9+96
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:66:21+6
+    assume {:print "$at(35,2478,2484)"} true;
+L0:
+
+    // $t9 := pack VASPDomain::VASPDomain($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:66:9+20
+    $t9 := $1_VASPDomain_VASPDomain($t0);
+
+    // assert Le(Len<u8>(select VASPDomain::VASPDomain.domain($t9)), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    assume {:print "$at(35,1135,1174)"} true;
+    assert {:msg "assert_failed(35,1135,1174): data invariant does not hold"}
+      (LenVec($domain#$1_VASPDomain_VASPDomain($t9)) <= 63);
+
+    // trace_return[0]($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:66:9+20
+    assume {:print "$at(35,2466,2486)"} true;
+    assume {:print "$track_return(22,1,0):", $t9} $t9 == $t9;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:67:5+1
+    assume {:print "$at(35,2491,2492)"} true;
+L2:
+
+    // assert Not(Gt(Vector::$length[]<u8>($t0), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:74:9+79
+    assume {:print "$at(35,2699,2778)"} true;
+    assert {:msg "assert_failed(35,2699,2778): function does not abort under this condition"}
+      !($1_Vector_$length'u8'($t0) > 63);
+
+    // assert Eq<VASPDomain::VASPDomain>($t9, pack VASPDomain::VASPDomain($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:70:9+40
+    assume {:print "$at(35,2573,2613)"} true;
+    assert {:msg "assert_failed(35,2573,2613): post-condition does not hold"}
+      $IsEqual'$1_VASPDomain_VASPDomain'($t9, $1_VASPDomain_VASPDomain($t0));
+
+    // return $t9 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:70:9+40
+    $ret0 := $t9;
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:67:5+1
+    assume {:print "$at(35,2491,2492)"} true;
+L3:
+
+    // assert Gt(Vector::$length[]<u8>($t0), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:68:5+122
+    assume {:print "$at(35,2497,2619)"} true;
+    assert {:msg "assert_failed(35,2497,2619): abort not covered by any of the `aborts_if` clauses"}
+      ($1_Vector_$length'u8'($t0) > 63);
+
+    // assert And(Gt(Vector::$length[]<u8>($t0), 63), Eq(7, $t4)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:68:5+122
+    assert {:msg "assert_failed(35,2497,2619): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (($1_Vector_$length'u8'($t0) > 63) && $IsEqual'num'(7, $t4));
+
+    // abort($t4) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:68:5+122
+    $abort_code := $t4;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::has_vasp_domain [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:277:5+408
+procedure {:timeLimit 40} $1_VASPDomain_has_vasp_domain$verify(_$t0: int, _$t1: Vec (int)) returns ($ret0: bool)
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: $1_VASPDomain_VASPDomains;
+    var $t5: $1_VASPDomain_VASPDomain;
+    var $t6: $1_VASPDomain_VASPDomain;
+    var $t7: bool;
+    var $t8: int;
+    var $t9: int;
+    var $t10: int;
+    var $t11: $1_VASPDomain_VASPDomains;
+    var $t12: $1_VASPDomain_VASPDomain;
+    var $t13: Vec ($1_VASPDomain_VASPDomain);
+    var $t14: bool;
+    var $t0: int;
+    var $t1: Vec (int);
+    var $temp_0'$1_VASPDomain_VASPDomain': $1_VASPDomain_VASPDomain;
+    var $temp_0'$1_VASPDomain_VASPDomains': $1_VASPDomain_VASPDomains;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    var $1_VASPDomain_VASPDomains_$memory#117: $Memory $1_VASPDomain_VASPDomains;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:289:17+6
+    assume {:print "$at(35,11111,11117)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:289:17+6
+    assume $IsValid'vec'u8''($t1);
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomains>(): And(WellFormed($rsc), And(And(forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($rsc), i))), 63), forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($rsc), i), Index(select VASPDomain::VASPDomains.domains($rsc), j))), forall $elem: select VASPDomain::VASPDomains.domains($rsc): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:289:17+6
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0);
+    (($IsValid'$1_VASPDomain_VASPDomains'($rsc) && (((var $range_1 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_2: int :: $InRange($range_1, $i_2) ==> (var i := $i_2;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i))) <= 63))))) && (var $range_3 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_4: int :: $InRange($range_3, $i_4) ==> (var i := $i_4;
+    ((var $range_5 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_6: int :: $InRange($range_5, $i_6) ==> (var j := $i_6;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i), ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), j))))))))))) && (var $range_7 := $domains#$1_VASPDomain_VASPDomains($rsc); (forall $i_8: int :: InRangeVec($range_7, $i_8) ==> (var $elem := ReadVec($range_7, $i_8);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63))))))))));
+
+    // assume Identical($t6, pack VASPDomain::VASPDomain($t1)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:288:9+38
+    assume {:print "$at(35,11056,11094)"} true;
+    assume ($t6 == $1_VASPDomain_VASPDomain($t1));
+
+    // @117 := save_mem(VASPDomain::VASPDomains) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:277:5+1
+    assume {:print "$at(35,10573,10574)"} true;
+    $1_VASPDomain_VASPDomains_$memory#117 := $1_VASPDomain_VASPDomains_$memory;
+
+    // trace_local[addr]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:277:5+1
+    assume {:print "$track_local(22,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[domain]($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:277:5+1
+    assume {:print "$track_local(22,2,1):", $t1} $t1 == $t1;
+
+    // $t7 := exists<VASPDomain::VASPDomains>($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:279:13+6
+    assume {:print "$at(35,10692,10698)"} true;
+    $t7 := $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t0);
+
+    // $t8 := 4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:280:35+27
+    assume {:print "$at(35,10753,10780)"} true;
+    $t8 := 4;
+    assume $IsValid'u64'($t8);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:280:13+50
+    // >> opaque call: $t8 := Errors::not_published($t7)
+
+    // $t9 := opaque begin: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:280:13+50
+
+    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:280:13+50
+    assume $IsValid'u64'($t9);
+
+    // assume Eq<u64>($t9, 5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:280:13+50
+    assume $IsEqual'u64'($t9, 5);
+
+    // $t9 := opaque end: Errors::not_published($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:280:13+50
+
+    // trace_local[tmp#$3]($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+    assume {:print "$at(35,10672,10791)"} true;
+    assume {:print "$track_local(22,2,3):", $t9} $t9 == $t9;
+
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+    assume {:print "$track_local(22,2,2):", $t7} $t7 == $t7;
+
+    // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+    if ($t7) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+L1:
+
+    // trace_abort($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+    assume {:print "$at(35,10672,10791)"} true;
+    assume {:print "$track_abort(22,2):", $t9} $t9 == $t9;
+
+    // $t10 := move($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+    $t10 := $t9;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:278:9+119
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:282:58+4
+    assume {:print "$at(35,10850,10854)"} true;
+L0:
+
+    // $t11 := get_global<VASPDomain::VASPDomains>($t0) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:282:31+13
+    if (!$ResourceExists($1_VASPDomain_VASPDomains_$memory, $t0)) {
+        call $ExecFailureAbort();
+    } else {
+        $t11 := $ResourceValue($1_VASPDomain_VASPDomains_$memory, $t0);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,10823,10836)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(22,2):", $t10} $t10 == $t10;
+        goto L3;
+    }
+
+    // trace_local[account_domains]($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:282:13+15
+    assume {:print "$track_local(22,2,4):", $t11} $t11 == $t11;
+
+    // $t12 := VASPDomain::create_vasp_domain($t1) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:283:27+26
+    assume {:print "$at(35,10883,10909)"} true;
+    call $t12 := $1_VASPDomain_create_vasp_domain($t1);
+    if ($abort_flag) {
+        assume {:print "$at(35,10883,10909)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(22,2):", $t10} $t10 == $t10;
+        goto L3;
+    }
+
+    // trace_local[vasp_domain]($t12) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:283:13+11
+    assume {:print "$track_local(22,2,5):", $t12} $t12 == $t12;
+
+    // $t13 := get_field<VASPDomain::VASPDomains>.domains($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:284:26+24
+    assume {:print "$at(35,10936,10960)"} true;
+    $t13 := $domains#$1_VASPDomain_VASPDomains($t11);
+
+    // $t14 := Vector::contains<VASPDomain::VASPDomain>($t13, $t12) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:284:9+56
+    call $t14 := $1_Vector_contains'$1_VASPDomain_VASPDomain'($t13, $t12);
+    if ($abort_flag) {
+        assume {:print "$at(35,10919,10975)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(22,2):", $t10} $t10 == $t10;
+        goto L3;
+    }
+
+    // trace_return[0]($t14) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:284:9+56
+    assume {:print "$track_return(22,2,0):", $t14} $t14 == $t14;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:285:5+1
+    assume {:print "$at(35,10980,10981)"} true;
+L2:
+
+    // assert Not(Not(exists[@117]<VASPDomain::VASPDomains>($t0))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:295:9+64
+    assume {:print "$at(35,11324,11388)"} true;
+    assert {:msg "assert_failed(35,11324,11388): function does not abort under this condition"}
+      !!$ResourceExists($1_VASPDomain_VASPDomains_$memory#117, $t0);
+
+    // assert Not(Gt(Vector::$length[]<u8>($t1), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:74:9+79
+    assume {:print "$at(35,2699,2778)"} true;
+    assert {:msg "assert_failed(35,2699,2778): function does not abort under this condition"}
+      !($1_Vector_$length'u8'($t1) > 63);
+
+    // assert Eq<bool>($t14, ContainsVec<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains(global<VASPDomain::VASPDomains>($t0)), $t6)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:289:9+73
+    assume {:print "$at(35,11103,11176)"} true;
+    assert {:msg "assert_failed(35,11103,11176): post-condition does not hold"}
+      $IsEqual'bool'($t14, $ContainsVec'$1_VASPDomain_VASPDomain'($domains#$1_VASPDomain_VASPDomains($ResourceValue($1_VASPDomain_VASPDomains_$memory, $t0)), $t6));
+
+    // return $t14 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:289:9+73
+    $ret0 := $t14;
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:285:5+1
+    assume {:print "$at(35,10980,10981)"} true;
+L3:
+
+    // assert Or(Not(exists[@117]<VASPDomain::VASPDomains>($t0)), Gt(Vector::$length[]<u8>($t1), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:286:5+196
+    assume {:print "$at(35,10986,11182)"} true;
+    assert {:msg "assert_failed(35,10986,11182): abort not covered by any of the `aborts_if` clauses"}
+      (!$ResourceExists($1_VASPDomain_VASPDomains_$memory#117, $t0) || ($1_Vector_$length'u8'($t1) > 63));
+
+    // assert Or(And(Not(exists[@117]<VASPDomain::VASPDomains>($t0)), Eq(5, $t10)), And(Gt(Vector::$length[]<u8>($t1), 63), Eq(7, $t10))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:286:5+196
+    assert {:msg "assert_failed(35,10986,11182): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      ((!$ResourceExists($1_VASPDomain_VASPDomains_$memory#117, $t0) && $IsEqual'num'(5, $t10)) || (($1_Vector_$length'u8'($t1) > 63) && $IsEqual'num'(7, $t10)));
+
+    // abort($t10) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:286:5+196
+    $abort_code := $t10;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::has_vasp_domains [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:108:5+90
+procedure {:timeLimit 40} $1_VASPDomain_has_vasp_domains$verify(_$t0: int) returns ($ret0: bool)
+{
+    // declare local variables
+    var $t1: bool;
+    var $t0: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:113:17+6
+    assume {:print "$at(35,4203,4209)"} true;
+    assume $IsValid'address'($t0);
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomains>(): And(WellFormed($rsc), And(And(forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($rsc), i))), 63), forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($rsc), i), Index(select VASPDomain::VASPDomains.domains($rsc), j))), forall $elem: select VASPDomain::VASPDomains.domains($rsc): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:113:17+6
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0);
+    (($IsValid'$1_VASPDomain_VASPDomains'($rsc) && (((var $range_1 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_2: int :: $InRange($range_1, $i_2) ==> (var i := $i_2;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i))) <= 63))))) && (var $range_3 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_4: int :: $InRange($range_3, $i_4) ==> (var i := $i_4;
+    ((var $range_5 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_6: int :: $InRange($range_5, $i_6) ==> (var j := $i_6;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i), ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), j))))))))))) && (var $range_7 := $domains#$1_VASPDomain_VASPDomains($rsc); (forall $i_8: int :: InRangeVec($range_7, $i_8) ==> (var $elem := ReadVec($range_7, $i_8);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63))))))))));
+
+    // trace_local[addr]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:108:5+1
+    assume {:print "$at(35,4043,4044)"} true;
+    assume {:print "$track_local(22,3,0):", $t0} $t0 == $t0;
+
+    // $t1 := exists<VASPDomain::VASPDomains>($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:109:9+6
+    assume {:print "$at(35,4102,4108)"} true;
+    $t1 := $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t0);
+
+    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:109:9+25
+    assume {:print "$track_return(22,3,0):", $t1} $t1 == $t1;
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:110:5+1
+    assume {:print "$at(35,4132,4133)"} true;
+L1:
+
+    // assert Not(false) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:112:9+16
+    assume {:print "$at(35,4170,4186)"} true;
+    assert {:msg "assert_failed(35,4170,4186): function does not abort under this condition"}
+      !false;
+
+    // assert Eq<bool>($t1, exists<VASPDomain::VASPDomains>($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:113:9+44
+    assume {:print "$at(35,4195,4239)"} true;
+    assert {:msg "assert_failed(35,4195,4239): post-condition does not hold"}
+      $IsEqual'bool'($t1, $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t0));
+
+    // return $t1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:113:9+44
+    $ret0 := $t1;
+    return;
+
+}
+
+// fun VASPDomain::publish_vasp_domain_manager [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:119:5+493
+procedure {:timeLimit 40} $1_VASPDomain_publish_vasp_domain_manager$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: int;
+    var $t4: int;
+    var $t5: bool;
+    var $t6: int;
+    var $t7: int;
+    var $t8: bool;
+    var $t9: bool;
+    var $t10: int;
+    var $t11: int;
+    var $t12: $1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent';
+    var $t13: $1_VASPDomain_VASPDomainManager;
+    var $t0: $signer;
+    var $1_VASPDomain_VASPDomainManager_$modifies: [int]bool;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $1_Roles_RoleId_$memory#155: $Memory $1_Roles_RoleId;
+    var $1_VASPDomain_VASPDomainManager_$memory#156: $Memory $1_VASPDomain_VASPDomainManager;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:119:5+493
+    assume {:print "$at(35,4551,5044)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:119:5+493
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomainManager>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:119:5+493
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0);
+    ($IsValid'$1_VASPDomain_VASPDomainManager'($rsc))));
+
+    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
+    assume {:print "$at(27,24099,24143)"} true;
+    assume ($t3 == $1_Signer_spec_address_of($t0));
+
+    // assume CanModify<VASPDomain::VASPDomainManager>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:138:9+72
+    assume {:print "$at(35,5324,5396)"} true;
+    assume $1_VASPDomain_VASPDomainManager_$modifies[$1_Signer_spec_address_of($t0)];
+
+    // @155 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:138:9+72
+    $1_Roles_RoleId_$memory#155 := $1_Roles_RoleId_$memory;
+
+    // @156 := save_mem(VASPDomain::VASPDomainManager) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:138:9+72
+    $1_VASPDomain_VASPDomainManager_$memory#156 := $1_VASPDomain_VASPDomainManager_$memory;
+
+    // trace_local[tc_account]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:119:5+1
+    assume {:print "$at(35,4551,4552)"} true;
+    assume {:print "$track_local(22,4,0):", $t0} $t0 == $t0;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    // >> opaque call: Roles::assert_treasury_compliance($t0)
+    assume {:print "$at(35,4645,4690)"} true;
+
+    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
+    assume {:print "$at(27,24099,24143)"} true;
+    assume ($t4 == $1_Signer_spec_address_of($t0));
+
+    // opaque begin: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    assume {:print "$at(35,4645,4690)"} true;
+
+    // assume Identical($t5, Or(Or(Not(exists<Roles::RoleId>($t4)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 1)), Neq<address>(Signer::spec_address_of($t0), b1e55ed))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    assume ($t5 == ((!$ResourceExists($1_Roles_RoleId_$memory, $t4) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)));
+
+    // if ($t5) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    if ($t5) { goto L5; } else { goto L4; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+L5:
+
+    // assume Or(Or(And(Not(exists<Roles::RoleId>($t4)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t4)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t6))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    assume (((!$ResourceExists($1_Roles_RoleId_$memory, $t4) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t4)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6)));
+
+    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    assume {:print "$at(35,4645,4690)"} true;
+    assume {:print "$track_abort(22,4):", $t6} $t6 == $t6;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+    goto L3;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+L4:
+
+    // opaque end: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:122:9+45
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:40+30
+    // >> opaque call: $t3 := Signer::address_of($t0)
+    assume {:print "$at(35,4747,4777)"} true;
+
+    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:40+30
+
+    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:40+30
+    assume $IsValid'address'($t7);
+
+    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:40+30
+    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
+
+    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:40+30
+
+    // $t8 := exists<VASPDomain::VASPDomainManager>($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:14+6
+    $t8 := $ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $t7);
+
+    // $t9 := !($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:124:13+1
+    call $t9 := $Not($t8);
+
+    // $t10 := 1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:125:39+20
+    assume {:print "$at(35,4818,4838)"} true;
+    $t10 := 1;
+    assume $IsValid'u64'($t10);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:125:13+47
+    // >> opaque call: $t7 := Errors::already_published($t6)
+
+    // $t11 := opaque begin: Errors::already_published($t10) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:125:13+47
+
+    // assume WellFormed($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:125:13+47
+    assume $IsValid'u64'($t11);
+
+    // assume Eq<u64>($t11, 6) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:125:13+47
+    assume $IsEqual'u64'($t11, 6);
+
+    // $t11 := opaque end: Errors::already_published($t10) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:125:13+47
+
+    // trace_local[tmp#$2]($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+    assume {:print "$at(35,4700,4849)"} true;
+    assume {:print "$track_local(22,4,2):", $t11} $t11 == $t11;
+
+    // trace_local[tmp#$1]($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+    assume {:print "$track_local(22,4,1):", $t9} $t9 == $t9;
+
+    // if ($t9) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+    if ($t9) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+
+    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+    assume {:print "$at(35,4700,4849)"} true;
+    assume {:print "$track_abort(22,4):", $t11} $t11 == $t11;
+
+    // $t6 := move($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+    $t6 := $t11;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:123:9+149
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:128:13+10
+    assume {:print "$at(35,4880,4890)"} true;
+L0:
+
+    // $t12 := Event::new_event_handle<VASPDomain::VASPDomainEvent>($t0) on_abort goto L3 with $t6 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:130:37+52
+    assume {:print "$at(35,4960,5012)"} true;
+    call $t12 := $1_Event_new_event_handle'$1_VASPDomain_VASPDomainEvent'($t0);
+    if ($abort_flag) {
+        assume {:print "$at(35,4960,5012)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(22,4):", $t6} $t6 == $t6;
+        goto L3;
+    }
+
+    // $t13 := pack VASPDomain::VASPDomainManager($t12) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:129:13+123
+    assume {:print "$at(35,4904,5027)"} true;
+    $t13 := $1_VASPDomain_VASPDomainManager($t12);
+
+    // assert CanModify<VASPDomain::VASPDomainManager>($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:127:9+7
+    assume {:print "$at(35,4859,4866)"} true;
+    assert {:msg "assert_failed(35,4859,4866): caller does not have permission to modify `VASPDomain::VASPDomainManager` at given address"}
+      $1_VASPDomain_VASPDomainManager_$modifies[$1_Signer_spec_address_of($t0)];
+
+    // move_to<VASPDomain::VASPDomainManager>($t13, $t0) on_abort goto L3 with $t6 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:127:9+7
+    if ($ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $1_VASPDomain_VASPDomainManager_$memory := $ResourceUpdate($1_VASPDomain_VASPDomainManager_$memory, $1_Signer_spec_address_of($t0), $t13);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,4859,4866)"} true;
+        $t6 := $abort_code;
+        assume {:print "$track_abort(22,4):", $t6} $t6 == $t6;
+        goto L3;
+    }
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:133:5+1
+    assume {:print "$at(35,5043,5044)"} true;
+L2:
+
+    // assert Not(Not(exists[@155]<Roles::RoleId>($t3))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
+    assume {:print "$at(27,24152,24211)"} true;
+    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#155, $t3);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@155]<Roles::RoleId>($t3)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
+    assume {:print "$at(27,24220,24317)"} true;
+    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#155, $t3)), 1);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
+    assume {:print "$at(8,2239,2347)"} true;
+    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
+
+    // assert Not(VASPDomain::$tc_domain_manager_exists[@156]()) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:136:9+68
+    assume {:print "$at(35,5167,5235)"} true;
+    assert {:msg "assert_failed(35,5167,5235): function does not abort under this condition"}
+      !$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#156);
+
+    // assert exists<VASPDomain::VASPDomainManager>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:137:9+71
+    assume {:print "$at(35,5244,5315)"} true;
+    assert {:msg "assert_failed(35,5244,5315): post-condition does not hold"}
+      $ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $1_Signer_spec_address_of($t0));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:137:9+71
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:133:5+1
+    assume {:print "$at(35,5043,5044)"} true;
+L3:
+
+    // assert Or(Or(Or(Not(exists[@155]<Roles::RoleId>($t3)), Neq<u64>(select Roles::RoleId.role_id(global[@155]<Roles::RoleId>($t3)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)), VASPDomain::$tc_domain_manager_exists[@156]()) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:134:5+353
+    assume {:print "$at(35,5049,5402)"} true;
+    assert {:msg "assert_failed(35,5049,5402): abort not covered by any of the `aborts_if` clauses"}
+      (((!$ResourceExists($1_Roles_RoleId_$memory#155, $t3) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#155, $t3)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)) || $1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#156));
+
+    // assert Or(Or(Or(And(Not(exists[@155]<Roles::RoleId>($t3)), Eq(5, $t6)), And(Neq<u64>(select Roles::RoleId.role_id(global[@155]<Roles::RoleId>($t3)), 1), Eq(3, $t6))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t6))), And(VASPDomain::$tc_domain_manager_exists[@156](), Eq(6, $t6))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:134:5+353
+    assert {:msg "assert_failed(35,5049,5402): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      ((((!$ResourceExists($1_Roles_RoleId_$memory#155, $t3) && $IsEqual'num'(5, $t6)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#155, $t3)), 1) && $IsEqual'num'(3, $t6))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t6))) || ($1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#156) && $IsEqual'num'(6, $t6)));
+
+    // abort($t6) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:134:5+353
+    $abort_code := $t6;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::publish_vasp_domains [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+380
+procedure {:timeLimit 40} $1_VASPDomain_publish_vasp_domains$verify(_$t0: $signer) returns ()
+{
+    // declare local variables
+    var $t1: bool;
+    var $t2: int;
+    var $t3: int;
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: int;
+    var $t9: bool;
+    var $t10: bool;
+    var $t11: int;
+    var $t12: int;
+    var $t13: Vec ($1_VASPDomain_VASPDomain);
+    var $t14: $1_VASPDomain_VASPDomains;
+    var $t0: $signer;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $1_Roles_RoleId_$memory#118: $Memory $1_Roles_RoleId;
+    var $1_VASPDomain_VASPDomains_$memory#119: $Memory $1_VASPDomain_VASPDomains;
+    $t0 := _$t0;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+380
+    assume {:print "$at(35,3043,3423)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+380
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomains>(): And(WellFormed($rsc), And(And(forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($rsc), i))), 63), forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($rsc), i), Index(select VASPDomain::VASPDomains.domains($rsc), j))), forall $elem: select VASPDomain::VASPDomains.domains($rsc): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+380
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0);
+    (($IsValid'$1_VASPDomain_VASPDomains'($rsc) && (((var $range_1 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_2: int :: $InRange($range_1, $i_2) ==> (var i := $i_2;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i))) <= 63))))) && (var $range_3 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_4: int :: $InRange($range_3, $i_4) ==> (var i := $i_4;
+    ((var $range_5 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_6: int :: $InRange($range_5, $i_6) ==> (var j := $i_6;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i), ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), j))))))))))) && (var $range_7 := $domains#$1_VASPDomain_VASPDomains($rsc); (forall $i_8: int :: InRangeVec($range_7, $i_8) ==> (var $elem := ReadVec($range_7, $i_8);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63))))))))));
+
+    // assume Identical($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:93:9+54
+    assume {:print "$at(35,3464,3518)"} true;
+    assume ($t3 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t4, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:543:9+44
+    assume {:print "$at(27,24398,24442)"} true;
+    assume ($t4 == $1_Signer_spec_address_of($t0));
+
+    // @118 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+1
+    assume {:print "$at(35,3043,3044)"} true;
+    $1_Roles_RoleId_$memory#118 := $1_Roles_RoleId_$memory;
+
+    // @119 := save_mem(VASPDomain::VASPDomains) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+1
+    $1_VASPDomain_VASPDomains_$memory#119 := $1_VASPDomain_VASPDomains_$memory;
+
+    // trace_local[vasp_account]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:80:5+1
+    assume {:print "$track_local(22,5,0):", $t0} $t0 == $t0;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    // >> opaque call: Roles::assert_parent_vasp_role($t0)
+    assume {:print "$at(35,3131,3175)"} true;
+
+    // assume Identical($t5, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:543:9+44
+    assume {:print "$at(27,24398,24442)"} true;
+    assume ($t5 == $1_Signer_spec_address_of($t0));
+
+    // opaque begin: Roles::assert_parent_vasp_role($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    assume {:print "$at(35,3131,3175)"} true;
+
+    // assume Identical($t6, Or(Not(exists<Roles::RoleId>($t5)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t5)), 5))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    assume ($t6 == (!$ResourceExists($1_Roles_RoleId_$memory, $t5) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t5)), 5)));
+
+    // if ($t6) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    if ($t6) { goto L5; } else { goto L4; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+L5:
+
+    // assume Or(And(Not(exists<Roles::RoleId>($t5)), Eq(5, $t7)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t5)), 5), Eq(3, $t7))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    assume ((!$ResourceExists($1_Roles_RoleId_$memory, $t5) && $IsEqual'num'(5, $t7)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t5)), 5) && $IsEqual'num'(3, $t7)));
+
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    assume {:print "$at(35,3131,3175)"} true;
+    assume {:print "$track_abort(22,5):", $t7} $t7 == $t7;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+    goto L3;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+L4:
+
+    // opaque end: Roles::assert_parent_vasp_role($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:83:9+44
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:34+32
+    // >> opaque call: $t3 := Signer::address_of($t0)
+    assume {:print "$at(35,3226,3258)"} true;
+
+    // $t8 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:34+32
+
+    // assume WellFormed($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:34+32
+    assume $IsValid'address'($t8);
+
+    // assume Eq<address>($t8, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:34+32
+    assume $IsEqual'address'($t8, $1_Signer_spec_address_of($t0));
+
+    // $t8 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:34+32
+
+    // $t9 := exists<VASPDomain::VASPDomains>($t8) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:14+6
+    $t9 := $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t8);
+
+    // $t10 := !($t9) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:85:13+1
+    call $t10 := $Not($t9);
+
+    // $t11 := 0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:86:39+13
+    assume {:print "$at(35,3299,3312)"} true;
+    $t11 := 0;
+    assume $IsValid'u64'($t11);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:86:13+40
+    // >> opaque call: $t7 := Errors::already_published($t6)
+
+    // $t12 := opaque begin: Errors::already_published($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:86:13+40
+
+    // assume WellFormed($t12) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:86:13+40
+    assume $IsValid'u64'($t12);
+
+    // assume Eq<u64>($t12, 6) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:86:13+40
+    assume $IsEqual'u64'($t12, 6);
+
+    // $t12 := opaque end: Errors::already_published($t11) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:86:13+40
+
+    // trace_local[tmp#$2]($t12) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+    assume {:print "$at(35,3185,3323)"} true;
+    assume {:print "$track_local(22,5,2):", $t12} $t12 == $t12;
+
+    // trace_local[tmp#$1]($t10) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+    assume {:print "$track_local(22,5,1):", $t10} $t10 == $t10;
+
+    // if ($t10) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+    if ($t10) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+
+    // trace_abort($t12) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+    assume {:print "$at(35,3185,3323)"} true;
+    assume {:print "$track_abort(22,5):", $t12} $t12 == $t12;
+
+    // $t7 := move($t12) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+    $t7 := $t12;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:84:9+138
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:88:17+12
+    assume {:print "$at(35,3341,3353)"} true;
+L0:
+
+    // $t13 := Vector::empty<VASPDomain::VASPDomain>() on_abort goto L3 with $t7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:89:22+15
+    assume {:print "$at(35,3390,3405)"} true;
+    call $t13 := $1_Vector_empty'$1_VASPDomain_VASPDomain'();
+    if ($abort_flag) {
+        assume {:print "$at(35,3390,3405)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(22,5):", $t7} $t7 == $t7;
+        goto L3;
+    }
+
+    // $t14 := pack VASPDomain::VASPDomains($t13) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:88:31+61
+    assume {:print "$at(35,3355,3416)"} true;
+    $t14 := $1_VASPDomain_VASPDomains($t13);
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t14))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($t14), i))), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    assume {:print "$at(35,635,714)"} true;
+    assert {:msg "assert_failed(35,635,714): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($t14))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($t14), i))) <= 63)))));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t14))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t14))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($t14), i), Index(select VASPDomain::VASPDomains.domains($t14), j)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    assume {:print "$at(35,771,876)"} true;
+    assert {:msg "assert_failed(35,771,876): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($t14))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((var $range_2 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($t14))); (forall $i_3: int :: $InRange($range_2, $i_3) ==> (var j := $i_3;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($t14), i), ReadVec($domains#$1_VASPDomain_VASPDomains($t14), j))))))))));
+
+    // move_to<VASPDomain::VASPDomains>($t14, $t0) on_abort goto L3 with $t7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:88:9+7
+    assume {:print "$at(35,3333,3340)"} true;
+    if ($ResourceExists($1_VASPDomain_VASPDomains_$memory, $1_Signer_spec_address_of($t0))) {
+        call $ExecFailureAbort();
+    } else {
+        $1_VASPDomain_VASPDomains_$memory := $ResourceUpdate($1_VASPDomain_VASPDomains_$memory, $1_Signer_spec_address_of($t0), $t14);
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,3333,3340)"} true;
+        $t7 := $abort_code;
+        assume {:print "$track_abort(22,5):", $t7} $t7 == $t7;
+        goto L3;
+    }
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:91:5+1
+    assume {:print "$at(35,3422,3423)"} true;
+L2:
+
+    // assert Not(Not(exists[@118]<Roles::RoleId>($t4))) at /home/ying/diem/language/diem-framework/modules/Roles.move:544:9+59
+    assume {:print "$at(27,24451,24510)"} true;
+    assert {:msg "assert_failed(27,24451,24510): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#118, $t4);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@118]<Roles::RoleId>($t4)), 5)) at /home/ying/diem/language/diem-framework/modules/Roles.move:545:9+89
+    assume {:print "$at(27,24519,24608)"} true;
+    assert {:msg "assert_failed(27,24519,24608): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#118, $t4)), 5);
+
+    // assert Not(VASPDomain::$has_vasp_domains[@119]($t3)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:100:9+69
+    assume {:print "$at(35,3762,3831)"} true;
+    assert {:msg "assert_failed(35,3762,3831): function does not abort under this condition"}
+      !$1_VASPDomain_$has_vasp_domains($1_VASPDomain_VASPDomains_$memory#119, $t3);
+
+    // assert exists<VASPDomain::VASPDomains>($t3) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:104:9+39
+    assume {:print "$at(35,3918,3957)"} true;
+    assert {:msg "assert_failed(35,3918,3957): post-condition does not hold"}
+      $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t3);
+
+    // assert Vector::$is_empty<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains(global<VASPDomain::VASPDomains>($t3))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:105:9+65
+    assume {:print "$at(35,3966,4031)"} true;
+    assert {:msg "assert_failed(35,3966,4031): post-condition does not hold"}
+      $1_Vector_$is_empty'$1_VASPDomain_VASPDomain'($domains#$1_VASPDomain_VASPDomains($ResourceValue($1_VASPDomain_VASPDomains_$memory, $t3)));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:105:9+65
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:91:5+1
+    assume {:print "$at(35,3422,3423)"} true;
+L3:
+
+    // assert Or(Or(Not(exists[@118]<Roles::RoleId>($t4)), Neq<u64>(select Roles::RoleId.role_id(global[@118]<Roles::RoleId>($t4)), 5)), VASPDomain::$has_vasp_domains[@119]($t3)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:92:5+252
+    assume {:print "$at(35,3428,3680)"} true;
+    assert {:msg "assert_failed(35,3428,3680): abort not covered by any of the `aborts_if` clauses"}
+      ((!$ResourceExists($1_Roles_RoleId_$memory#118, $t4) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#118, $t4)), 5)) || $1_VASPDomain_$has_vasp_domains($1_VASPDomain_VASPDomains_$memory#119, $t3));
+
+    // assert Or(Or(And(Not(exists[@118]<Roles::RoleId>($t4)), Eq(5, $t7)), And(Neq<u64>(select Roles::RoleId.role_id(global[@118]<Roles::RoleId>($t4)), 5), Eq(3, $t7))), And(VASPDomain::$has_vasp_domains[@119]($t3), Eq(6, $t7))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:92:5+252
+    assert {:msg "assert_failed(35,3428,3680): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((!$ResourceExists($1_Roles_RoleId_$memory#118, $t4) && $IsEqual'num'(5, $t7)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#118, $t4)), 5) && $IsEqual'num'(3, $t7))) || ($1_VASPDomain_$has_vasp_domains($1_VASPDomain_VASPDomains_$memory#119, $t3) && $IsEqual'num'(6, $t7)));
+
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:92:5+252
+    $abort_code := $t7;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::remove_vasp_domain [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+procedure {:timeLimit 40} $1_VASPDomain_remove_vasp_domain$verify(_$t0: $signer, _$t1: int, _$t2: Vec (int)) returns ()
+{
+    // declare local variables
+    var $t3: bool;
+    var $t4: int;
+    var $t5: bool;
+    var $t6: int;
+    var $t7: $Mutation ($1_VASPDomain_VASPDomains);
+    var $t8: bool;
+    var $t9: int;
+    var $t10: $1_VASPDomain_VASPDomain;
+    var $t11: Vec ($1_VASPDomain_VASPDomain);
+    var $t12: int;
+    var $t13: $1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent';
+    var $t14: $1_VASPDomain_VASPDomainEvent;
+    var $t15: int;
+    var $t16: bool;
+    var $t17: int;
+    var $t18: bool;
+    var $t19: int;
+    var $t20: int;
+    var $t21: bool;
+    var $t22: int;
+    var $t23: int;
+    var $t24: $Mutation ($1_VASPDomain_VASPDomains);
+    var $t25: $1_VASPDomain_VASPDomain;
+    var $t26: Vec ($1_VASPDomain_VASPDomain);
+    var $t27: bool;
+    var $t28: int;
+    var $t29: int;
+    var $t30: int;
+    var $t31: $Mutation (Vec ($1_VASPDomain_VASPDomain));
+    var $t32: $1_VASPDomain_VASPDomain;
+    var $t33: int;
+    var $t34: $Mutation ($1_VASPDomain_VASPDomainManager);
+    var $t35: $Mutation ($1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent');
+    var $t36: bool;
+    var $t37: $1_VASPDomain_VASPDomainEvent;
+    var $t38: Vec ($1_VASPDomain_VASPDomain);
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: Vec (int);
+    var $temp_0'$1_VASPDomain_VASPDomain': $1_VASPDomain_VASPDomain;
+    var $temp_0'$1_VASPDomain_VASPDomains': $1_VASPDomain_VASPDomains;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    var $1_VASPDomain_VASPDomains_$memory#136: $Memory $1_VASPDomain_VASPDomains;
+    var $1_VASPDomain_VASPDomainManager_$memory#137: $Memory $1_VASPDomain_VASPDomainManager;
+    var $1_Roles_RoleId_$memory#138: $Memory $1_Roles_RoleId;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    assume IsEmptyVec(p#$Mutation($t7));
+    assume IsEmptyVec(p#$Mutation($t24));
+    assume IsEmptyVec(p#$Mutation($t31));
+    assume IsEmptyVec(p#$Mutation($t34));
+    assume IsEmptyVec(p#$Mutation($t35));
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+    assume {:print "$at(35,8136,9251)"} true;
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+    assume $IsValid'address'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+    assume $IsValid'vec'u8''($t2);
+
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomainManager>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0);
+    ($IsValid'$1_VASPDomain_VASPDomainManager'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomains>(): And(WellFormed($rsc), And(And(forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($rsc), i))), 63), forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($rsc))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($rsc), i), Index(select VASPDomain::VASPDomains.domains($rsc), j))), forall $elem: select VASPDomain::VASPDomains.domains($rsc): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1115
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomains_$memory, $a_0);
+    (($IsValid'$1_VASPDomain_VASPDomains'($rsc) && (((var $range_1 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_2: int :: $InRange($range_1, $i_2) ==> (var i := $i_2;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i))) <= 63))))) && (var $range_3 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_4: int :: $InRange($range_3, $i_4) ==> (var i := $i_4;
+    ((var $range_5 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($rsc))); (forall $i_6: int :: $InRange($range_5, $i_6) ==> (var j := $i_6;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), i), ReadVec($domains#$1_VASPDomain_VASPDomains($rsc), j))))))))))) && (var $range_7 := $domains#$1_VASPDomain_VASPDomains($rsc); (forall $i_8: int :: InRangeVec($range_7, $i_8) ==> (var $elem := ReadVec($range_7, $i_8);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63))))))))));
+
+    // assume Identical($t11, select VASPDomain::VASPDomains.domains(global<VASPDomain::VASPDomains>($t1))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:251:9+51
+    assume {:print "$at(35,9543,9594)"} true;
+    assume ($t11 == $domains#$1_VASPDomain_VASPDomains($ResourceValue($1_VASPDomain_VASPDomains_$memory, $t1)));
+
+    // assume Identical($t12, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
+    assume {:print "$at(27,24099,24143)"} true;
+    assume ($t12 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t13, select VASPDomain::VASPDomainManager.vasp_domain_events(global<VASPDomain::VASPDomainManager>(b1e55ed))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:268:9+79
+    assume {:print "$at(35,10315,10394)"} true;
+    assume ($t13 == $vasp_domain_events#$1_VASPDomain_VASPDomainManager($ResourceValue($1_VASPDomain_VASPDomainManager_$memory, 186537453)));
+
+    // assume Identical($t14, pack VASPDomain::VASPDomainEvent(true, pack VASPDomain::VASPDomain($t2), $t1)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:269:9+129
+    assume {:print "$at(35,10403,10532)"} true;
+    assume ($t14 == $1_VASPDomain_VASPDomainEvent(true, $1_VASPDomain_VASPDomain($t2), $t1));
+
+    // @138 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1
+    assume {:print "$at(35,8136,8137)"} true;
+    $1_Roles_RoleId_$memory#138 := $1_Roles_RoleId_$memory;
+
+    // @137 := save_mem(VASPDomain::VASPDomainManager) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1
+    $1_VASPDomain_VASPDomainManager_$memory#137 := $1_VASPDomain_VASPDomainManager_$memory;
+
+    // @136 := save_mem(VASPDomain::VASPDomains) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1
+    $1_VASPDomain_VASPDomains_$memory#136 := $1_VASPDomain_VASPDomains_$memory;
+
+    // trace_local[tc_account]($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1
+    assume {:print "$track_local(22,6,0):", $t0} $t0 == $t0;
+
+    // trace_local[address]($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1
+    assume {:print "$track_local(22,6,1):", $t1} $t1 == $t1;
+
+    // trace_local[domain]($t2) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:211:5+1
+    assume {:print "$track_local(22,6,2):", $t2} $t2 == $t2;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    // >> opaque call: Roles::assert_treasury_compliance($t0)
+    assume {:print "$at(35,8306,8351)"} true;
+
+    // assume Identical($t15, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:536:9+44
+    assume {:print "$at(27,24099,24143)"} true;
+    assume ($t15 == $1_Signer_spec_address_of($t0));
+
+    // opaque begin: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    assume {:print "$at(35,8306,8351)"} true;
+
+    // assume Identical($t16, Or(Or(Not(exists<Roles::RoleId>($t15)), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t15)), 1)), Neq<address>(Signer::spec_address_of($t0), b1e55ed))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    assume ($t16 == ((!$ResourceExists($1_Roles_RoleId_$memory, $t15) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t15)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)));
+
+    // if ($t16) goto L9 else goto L8 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    if ($t16) { goto L9; } else { goto L8; }
+
+    // label L9 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+L9:
+
+    // assume Or(Or(And(Not(exists<Roles::RoleId>($t15)), Eq(5, $t17)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t15)), 1), Eq(3, $t17))), And(Neq<address>(Signer::spec_address_of($t0), b1e55ed), Eq(2, $t17))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    assume (((!$ResourceExists($1_Roles_RoleId_$memory, $t15) && $IsEqual'num'(5, $t17)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t15)), 1) && $IsEqual'num'(3, $t17))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t17)));
+
+    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    assume {:print "$at(35,8306,8351)"} true;
+    assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+    goto L7;
+
+    // label L8 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+L8:
+
+    // opaque end: Roles::assert_treasury_compliance($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:216:9+45
+
+    // $t18 := VASPDomain::tc_domain_manager_exists() on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:16+26
+    assume {:print "$at(35,8368,8394)"} true;
+    call $t18 := $1_VASPDomain_tc_domain_manager_exists();
+    if ($abort_flag) {
+        assume {:print "$at(35,8368,8394)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // $t19 := 1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:66+20
+    $t19 := 1;
+    assume $IsValid'u64'($t19);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:44+43
+    // >> opaque call: $t13 := Errors::not_published($t12)
+
+    // $t20 := opaque begin: Errors::not_published($t19) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:44+43
+
+    // assume WellFormed($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:44+43
+    assume $IsValid'u64'($t20);
+
+    // assume Eq<u64>($t20, 5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:44+43
+    assume $IsEqual'u64'($t20, 5);
+
+    // $t20 := opaque end: Errors::not_published($t19) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:44+43
+
+    // trace_local[tmp#$4]($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+    assume {:print "$track_local(22,6,4):", $t20} $t20 == $t20;
+
+    // trace_local[tmp#$3]($t18) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+    assume {:print "$track_local(22,6,3):", $t18} $t18 == $t18;
+
+    // if ($t18) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+    if ($t18) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+L1:
+
+    // trace_abort($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+    assume {:print "$at(35,8361,8440)"} true;
+    assume {:print "$track_abort(22,6):", $t20} $t20 == $t20;
+
+    // $t17 := move($t20) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+    $t17 := $t20;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:217:9+79
+    goto L7;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:219:33+7
+    assume {:print "$at(35,8490,8497)"} true;
+L0:
+
+    // $t21 := exists<VASPDomain::VASPDomains>($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:219:13+6
+    $t21 := $ResourceExists($1_VASPDomain_VASPDomains_$memory, $t1);
+
+    // $t22 := 4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:220:35+27
+    assume {:print "$at(35,8534,8561)"} true;
+    $t22 := 4;
+    assume $IsValid'u64'($t22);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:220:13+50
+    // >> opaque call: $t16 := Errors::not_published($t15)
+
+    // $t23 := opaque begin: Errors::not_published($t22) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:220:13+50
+
+    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:220:13+50
+    assume $IsValid'u64'($t23);
+
+    // assume Eq<u64>($t23, 5) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:220:13+50
+    assume $IsEqual'u64'($t23, 5);
+
+    // $t23 := opaque end: Errors::not_published($t22) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:220:13+50
+
+    // trace_local[tmp#$6]($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+    assume {:print "$at(35,8450,8572)"} true;
+    assume {:print "$track_local(22,6,6):", $t23} $t23 == $t23;
+
+    // trace_local[tmp#$5]($t21) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+    assume {:print "$track_local(22,6,5):", $t21} $t21 == $t21;
+
+    // if ($t21) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+    if ($t21) { goto L2; } else { goto L3; }
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+L3:
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+    assume {:print "$at(35,8450,8572)"} true;
+    assume {:print "$track_abort(22,6):", $t23} $t23 == $t23;
+
+    // $t17 := move($t23) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+    $t17 := $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:218:9+122
+    goto L7;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:223:62+7
+    assume {:print "$at(35,8636,8643)"} true;
+L2:
+
+    // $t24 := borrow_global<VASPDomain::VASPDomains>($t1) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:223:31+17
+    if (!$ResourceExists($1_VASPDomain_VASPDomains_$memory, $t1)) {
+        call $ExecFailureAbort();
+    } else {
+        $t24 := $Mutation($Global($t1), EmptyVec(), $ResourceValue($1_VASPDomain_VASPDomains_$memory, $t1));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,8605,8622)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // trace_local[account_domains]($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:223:13+15
+    $temp_0'$1_VASPDomain_VASPDomains' := $Dereference($t24);
+    assume {:print "$track_local(22,6,7):", $temp_0'$1_VASPDomain_VASPDomains'} $temp_0'$1_VASPDomain_VASPDomains' == $temp_0'$1_VASPDomain_VASPDomains';
+
+    // $t25 := VASPDomain::create_vasp_domain($t2) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:224:27+26
+    assume {:print "$at(35,8672,8698)"} true;
+    call $t25 := $1_VASPDomain_create_vasp_domain($t2);
+    if ($abort_flag) {
+        assume {:print "$at(35,8672,8698)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // trace_local[vasp_domain]($t25) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:224:13+11
+    assume {:print "$track_local(22,6,10):", $t25} $t25 == $t25;
+
+    // $t26 := get_field<VASPDomain::VASPDomains>.domains($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:226:45+24
+    assume {:print "$at(35,8745,8769)"} true;
+    $t26 := $domains#$1_VASPDomain_VASPDomains($Dereference($t24));
+
+    // ($t27, $t28) := Vector::index_of<VASPDomain::VASPDomain>($t26, $t25) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:226:28+56
+    call $t27,$t28 := $1_Vector_index_of'$1_VASPDomain_VASPDomain'($t26, $t25);
+    if ($abort_flag) {
+        assume {:print "$at(35,8728,8784)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // trace_local[index]($t28) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:226:19+5
+    assume {:print "$track_local(22,6,9):", $t28} $t28 == $t28;
+
+    // trace_local[has]($t27) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:226:14+3
+    assume {:print "$track_local(22,6,8):", $t27} $t27 == $t27;
+
+    // if ($t27) goto L4 else goto L5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:227:9+169
+    assume {:print "$at(35,8794,8963)"} true;
+    if ($t27) { goto L4; } else { goto L5; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:13+54
+    assume {:print "$at(35,8899,8953)"} true;
+L5:
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($t24), i))), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    assume {:print "$at(35,635,714)"} true;
+    assert {:msg "assert_failed(35,635,714): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i))) <= 63)))));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($t24), i), Index(select VASPDomain::VASPDomains.domains($t24), j)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    assume {:print "$at(35,771,876)"} true;
+    assert {:msg "assert_failed(35,771,876): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((var $range_2 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_3: int :: $InRange($range_2, $i_3) ==> (var j := $i_3;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i), ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), j))))))))));
+
+    // assert forall $elem: select VASPDomain::VASPDomains.domains($t24): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    assume {:print "$at(35,1135,1174)"} true;
+    assert {:msg "assert_failed(35,1135,1174): data invariant does not hold"}
+      (var $range_0 := $domains#$1_VASPDomain_VASPDomains($Dereference($t24)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63)))));
+
+    // destroy($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:13+54
+    assume {:print "$at(35,8899,8953)"} true;
+
+    // $t29 := 2 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:44+22
+    $t29 := 2;
+    assume $IsValid'u64'($t29);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:19+48
+    // >> opaque call: $t23 := Errors::invalid_argument($t22)
+
+    // $t30 := opaque begin: Errors::invalid_argument($t29) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:19+48
+
+    // assume WellFormed($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:19+48
+    assume $IsValid'u64'($t30);
+
+    // assume Eq<u64>($t30, 7) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:19+48
+    assume $IsEqual'u64'($t30, 7);
+
+    // $t30 := opaque end: Errors::invalid_argument($t29) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:19+48
+
+    // trace_abort($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:13+54
+    assume {:print "$at(35,8899,8953)"} true;
+    assume {:print "$track_abort(22,6):", $t30} $t30 == $t30;
+
+    // $t17 := move($t30) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:13+54
+    $t17 := $t30;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:230:13+54
+    goto L7;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:228:33+15
+    assume {:print "$at(35,8837,8852)"} true;
+L4:
+
+    // $t31 := borrow_field<VASPDomain::VASPDomains>.domains($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:228:28+28
+    $t31 := $ChildMutation($t24, 0, $domains#$1_VASPDomain_VASPDomains($Dereference($t24)));
+
+    // $t32 := Vector::remove<VASPDomain::VASPDomain>($t31, $t28) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:228:13+51
+    call $t32,$t31 := $1_Vector_remove'$1_VASPDomain_VASPDomain'($t31, $t28);
+    if ($abort_flag) {
+        assume {:print "$at(35,8817,8868)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // write_back[Reference($t24).domains]($t31) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:228:13+51
+    $t24 := $UpdateMutation($t24, $Update'$1_VASPDomain_VASPDomains'_domains($Dereference($t24), $Dereference($t31)));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Le(Len<u8>(select VASPDomain::VASPDomain.domain(Index(select VASPDomain::VASPDomains.domains($t24), i))), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:18:9+79
+    assume {:print "$at(35,635,714)"} true;
+    assert {:msg "assert_failed(35,635,714): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((LenVec($domain#$1_VASPDomain_VASPDomain(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i))) <= 63)))));
+
+    // assert forall i: Range(0, Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): forall j: Range(Add(i, 1), Len<VASPDomain::VASPDomain>(select VASPDomain::VASPDomains.domains($t24))): Neq<VASPDomain::VASPDomain>(Index(select VASPDomain::VASPDomains.domains($t24), i), Index(select VASPDomain::VASPDomains.domains($t24), j)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:20:9+105
+    assume {:print "$at(35,771,876)"} true;
+    assert {:msg "assert_failed(35,771,876): data invariant does not hold"}
+      (var $range_0 := $Range(0, LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ((var $range_2 := $Range((i + 1), LenVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)))); (forall $i_3: int :: $InRange($range_2, $i_3) ==> (var j := $i_3;
+    (!$IsEqual'$1_VASPDomain_VASPDomain'(ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), i), ReadVec($domains#$1_VASPDomain_VASPDomains($Dereference($t24)), j))))))))));
+
+    // assert forall $elem: select VASPDomain::VASPDomains.domains($t24): Le(Len<u8>(select VASPDomain::VASPDomain.domain($elem)), 63) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    // data invariant at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:30:5+39
+    assume {:print "$at(35,1135,1174)"} true;
+    assert {:msg "assert_failed(35,1135,1174): data invariant does not hold"}
+      (var $range_0 := $domains#$1_VASPDomain_VASPDomains($Dereference($t24)); (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var $elem := ReadVec($range_0, $i_1);
+    ((LenVec($domain#$1_VASPDomain_VASPDomain($elem)) <= 63)))));
+
+    // write_back[VASPDomain::VASPDomains@]($t24) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:228:13+51
+    assume {:print "$at(35,8817,8868)"} true;
+    $1_VASPDomain_VASPDomains_$memory := $ResourceUpdate($1_VASPDomain_VASPDomains_$memory, $GlobalLocationAddress($t24),
+        $Dereference($t24));
+
+    // destroy($t32) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:228:13+51
+
+    // $t33 := 0xb1e55ed at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:234:55+19
+    assume {:print "$at(35,9047,9066)"} true;
+    $t33 := 186537453;
+    assume $IsValid'address'($t33);
+
+    // $t34 := borrow_global<VASPDomain::VASPDomainManager>($t33) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:234:18+17
+    if (!$ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $t33)) {
+        call $ExecFailureAbort();
+    } else {
+        $t34 := $Mutation($Global($t33), EmptyVec(), $ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $t33));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(35,9010,9027)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // $t35 := borrow_field<VASPDomain::VASPDomainManager>.vasp_domain_events($t34) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:234:13+81
+    $t35 := $ChildMutation($t34, 0, $vasp_domain_events#$1_VASPDomain_VASPDomainManager($Dereference($t34)));
+
+    // $t36 := true at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:236:26+4
+    assume {:print "$at(35,9143,9147)"} true;
+    $t36 := true;
+    assume $IsValid'bool'($t36);
+
+    // $t37 := pack VASPDomain::VASPDomainEvent($t36, $t25, $t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:235:13+133
+    assume {:print "$at(35,9100,9233)"} true;
+    $t37 := $1_VASPDomain_VASPDomainEvent($t36, $t25, $t1);
+
+    // Event::emit_event<VASPDomain::VASPDomainEvent>($t35, $t37) on_abort goto L7 with $t17 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:233:9+270
+    assume {:print "$at(35,8974,9244)"} true;
+    call $t35 := $1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'($t35, $t37);
+    if ($abort_flag) {
+        assume {:print "$at(35,8974,9244)"} true;
+        $t17 := $abort_code;
+        assume {:print "$track_abort(22,6):", $t17} $t17 == $t17;
+        goto L7;
+    }
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:241:5+1
+    assume {:print "$at(35,9250,9251)"} true;
+L6:
+
+    // assume Identical($t38, select VASPDomain::VASPDomains.domains(global<VASPDomain::VASPDomains>($t1))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:261:9+56
+    assume {:print "$at(35,10063,10119)"} true;
+    assume ($t38 == $domains#$1_VASPDomain_VASPDomains($ResourceValue($1_VASPDomain_VASPDomains_$memory, $t1)));
+
+    // assert Not(Not(exists[@136]<VASPDomain::VASPDomains>($t1))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:254:9+67
+    assume {:print "$at(35,9720,9787)"} true;
+    assert {:msg "assert_failed(35,9720,9787): function does not abort under this condition"}
+      !!$ResourceExists($1_VASPDomain_VASPDomains_$memory#136, $t1);
+
+    // assert Not(Not(VASPDomain::$tc_domain_manager_exists[@137]())) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:255:9+65
+    assume {:print "$at(35,9796,9861)"} true;
+    assert {:msg "assert_failed(35,9796,9861): function does not abort under this condition"}
+      !!$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#137);
+
+    // assert Not(Not(ContainsVec<VASPDomain::VASPDomain>($t11, pack VASPDomain::VASPDomain($t2)))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:256:9+82
+    assume {:print "$at(35,9870,9952)"} true;
+    assert {:msg "assert_failed(35,9870,9952): function does not abort under this condition"}
+      !!$ContainsVec'$1_VASPDomain_VASPDomain'($t11, $1_VASPDomain_VASPDomain($t2));
+
+    // assert Not(Not(exists[@138]<Roles::RoleId>($t12))) at /home/ying/diem/language/diem-framework/modules/Roles.move:537:9+59
+    assume {:print "$at(27,24152,24211)"} true;
+    assert {:msg "assert_failed(27,24152,24211): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#138, $t12);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>($t12)), 1)) at /home/ying/diem/language/diem-framework/modules/Roles.move:538:9+97
+    assume {:print "$at(27,24220,24317)"} true;
+    assert {:msg "assert_failed(27,24220,24317): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, $t12)), 1);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
+    assume {:print "$at(8,2239,2347)"} true;
+    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
+
+    // assert Not(Gt(Vector::$length[]<u8>($t2), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:74:9+79
+    assume {:print "$at(35,2699,2778)"} true;
+    assert {:msg "assert_failed(35,2699,2778): function does not abort under this condition"}
+      !($1_Vector_$length'u8'($t2) > 63);
+
+    // assert Not(ContainsVec<VASPDomain::VASPDomain>($t38, pack VASPDomain::VASPDomain($t2))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:262:9+50
+    assume {:print "$at(35,10128,10178)"} true;
+    assert {:msg "assert_failed(35,10128,10178): post-condition does not hold"}
+      !$ContainsVec'$1_VASPDomain_VASPDomain'($t38, $1_VASPDomain_VASPDomain($t2));
+
+    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), $t14, $t13)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:274:9+20
+    assume {:print "$at(35,10541,10561)"} true;
+    assert {:msg "assert_failed(35,10541,10561): function does not emit the expected event"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$1_VASPDomain_VASPDomainEvent'($EmptyEventStore, $t13, $t14); $EventStore__is_subset(expected, actual)));
+
+    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), $t14, $t13)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:242:5+153
+    assume {:print "$at(35,9256,9409)"} true;
+    assert {:msg "assert_failed(35,9256,9409): emitted event not covered by any of the `emits` clauses"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $ExtendEventStore'$1_VASPDomain_VASPDomainEvent'($EmptyEventStore, $t13, $t14); $EventStore__is_subset(actual, expected)));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:242:5+153
+    return;
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:241:5+1
+    assume {:print "$at(35,9250,9251)"} true;
+L7:
+
+    // assert Or(Or(Or(Or(Or(Or(Not(exists[@136]<VASPDomain::VASPDomains>($t1)), Not(VASPDomain::$tc_domain_manager_exists[@137]())), Not(ContainsVec<VASPDomain::VASPDomain>($t11, pack VASPDomain::VASPDomain($t2)))), Not(exists[@138]<Roles::RoleId>($t12))), Neq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>($t12)), 1)), Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)), Gt(Vector::$length[]<u8>($t2), 63)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:242:5+153
+    assume {:print "$at(35,9256,9409)"} true;
+    assert {:msg "assert_failed(35,9256,9409): abort not covered by any of the `aborts_if` clauses"}
+      ((((((!$ResourceExists($1_VASPDomain_VASPDomains_$memory#136, $t1) || !$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#137)) || !$ContainsVec'$1_VASPDomain_VASPDomain'($t11, $1_VASPDomain_VASPDomain($t2))) || !$ResourceExists($1_Roles_RoleId_$memory#138, $t12)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, $t12)), 1)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453)) || ($1_Vector_$length'u8'($t2) > 63));
+
+    // assert Or(Or(Or(Or(Or(Or(And(Not(exists[@136]<VASPDomain::VASPDomains>($t1)), Eq(5, $t17)), And(Not(VASPDomain::$tc_domain_manager_exists[@137]()), Eq(5, $t17))), And(Not(ContainsVec<VASPDomain::VASPDomain>($t11, pack VASPDomain::VASPDomain($t2))), Eq(7, $t17))), And(Not(exists[@138]<Roles::RoleId>($t12)), Eq(5, $t17))), And(Neq<u64>(select Roles::RoleId.role_id(global[@138]<Roles::RoleId>($t12)), 1), Eq(3, $t17))), And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t17))), And(Gt(Vector::$length[]<u8>($t2), 63), Eq(7, $t17))) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:242:5+153
+    assert {:msg "assert_failed(35,9256,9409): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((((((!$ResourceExists($1_VASPDomain_VASPDomains_$memory#136, $t1) && $IsEqual'num'(5, $t17)) || (!$1_VASPDomain_$tc_domain_manager_exists($1_VASPDomain_VASPDomainManager_$memory#137) && $IsEqual'num'(5, $t17))) || (!$ContainsVec'$1_VASPDomain_VASPDomain'($t11, $1_VASPDomain_VASPDomain($t2)) && $IsEqual'num'(7, $t17))) || (!$ResourceExists($1_Roles_RoleId_$memory#138, $t12) && $IsEqual'num'(5, $t17))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#138, $t12)), 1) && $IsEqual'num'(3, $t17))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t17))) || (($1_Vector_$length'u8'($t2) > 63) && $IsEqual'num'(7, $t17)));
+
+    // abort($t17) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:242:5+153
+    $abort_code := $t17;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun VASPDomain::tc_domain_manager_exists [baseline] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:298:5+106
+procedure {:inline 1} $1_VASPDomain_tc_domain_manager_exists() returns ($ret0: bool)
+{
+    // declare local variables
+    var $t0: int;
+    var $t1: bool;
+    var $temp_0'bool': bool;
+
+    // bytecode translation starts here
+    // $t0 := 0xb1e55ed at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:299:35+19
+    assume {:print "$at(35,11480,11499)"} true;
+    $t0 := 186537453;
+    assume $IsValid'address'($t0);
+
+    // $t1 := exists<VASPDomain::VASPDomainManager>($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:299:9+6
+    $t1 := $ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $t0);
+
+    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:299:9+46
+    assume {:print "$track_return(22,7,0):", $t1} $t1 == $t1;
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:300:5+1
+    assume {:print "$at(35,11505,11506)"} true;
+L1:
+
+    // return $t1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:300:5+1
+    $ret0 := $t1;
+    return;
+
+}
+
+// fun VASPDomain::tc_domain_manager_exists [verification] at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:298:5+106
+procedure {:timeLimit 40} $1_VASPDomain_tc_domain_manager_exists$verify() returns ($ret0: bool)
+{
+    // declare local variables
+    var $t0: int;
+    var $t1: bool;
+    var $temp_0'bool': bool;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume forall $rsc: ResourceDomain<VASPDomain::VASPDomainManager>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:303:17+6
+    assume {:print "$at(35,11584,11590)"} true;
+    assume (forall $a_0: int :: {$ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0)}(var $rsc := $ResourceValue($1_VASPDomain_VASPDomainManager_$memory, $a_0);
+    ($IsValid'$1_VASPDomain_VASPDomainManager'($rsc))));
+
+    // $t0 := 0xb1e55ed at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:299:35+19
+    assume {:print "$at(35,11480,11499)"} true;
+    $t0 := 186537453;
+    assume $IsValid'address'($t0);
+
+    // $t1 := exists<VASPDomain::VASPDomainManager>($t0) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:299:9+6
+    $t1 := $ResourceExists($1_VASPDomain_VASPDomainManager_$memory, $t0);
+
+    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:299:9+46
+    assume {:print "$track_return(22,7,0):", $t1} $t1 == $t1;
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:300:5+1
+    assume {:print "$at(35,11505,11506)"} true;
+L1:
+
+    // assert Not(false) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:302:9+16
+    assume {:print "$at(35,11551,11567)"} true;
+    assert {:msg "assert_failed(35,11551,11567): function does not abort under this condition"}
+      !false;
+
+    // assert Eq<bool>($t1, exists<VASPDomain::VASPDomainManager>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:303:9+65
+    assume {:print "$at(35,11576,11641)"} true;
+    assert {:msg "assert_failed(35,11576,11641): post-condition does not hold"}
+      $IsEqual'bool'($t1, $ResourceExists($1_VASPDomain_VASPDomainManager_$memory, 186537453));
+
+    // return $t1 at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:303:9+65
+    $ret0 := $t1;
+    return;
+
+}
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/VASP.move:164:5+80
 function {:inline} $1_VASP_$is_child($1_VASP_ChildVASP_$memory: $Memory $1_VASP_ChildVASP, addr: int): bool {
@@ -10443,8 +11749,8 @@ function $IsValid'$1_DualAttestation_BaseUrlRotationEvent'(s: $1_DualAttestation
       && $IsValid'u64'($time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent(s))
 }
 function {:inline} $IsEqual'$1_DualAttestation_BaseUrlRotationEvent'(s1: $1_DualAttestation_BaseUrlRotationEvent, s2: $1_DualAttestation_BaseUrlRotationEvent): bool {
-    $IsEqual'vec'u8''($new_base_url#$1_DualAttestation_BaseUrlRotationEvent(s1), $new_base_url#$1_DualAttestation_BaseUrlRotationEvent(s2))
-    && $IsEqual'u64'($time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent(s1), $time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent(s2))}
+    s1 == s2
+}
 
 // struct DualAttestation::ComplianceKeyRotationEvent at /home/ying/diem/language/diem-framework/modules/DualAttestation.move:49:5+303
 type {:datatype} $1_DualAttestation_ComplianceKeyRotationEvent;
@@ -10460,8 +11766,8 @@ function $IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'(s: $1_DualAttes
       && $IsValid'u64'($time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent(s))
 }
 function {:inline} $IsEqual'$1_DualAttestation_ComplianceKeyRotationEvent'(s1: $1_DualAttestation_ComplianceKeyRotationEvent, s2: $1_DualAttestation_ComplianceKeyRotationEvent): bool {
-    $IsEqual'vec'u8''($new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent(s1), $new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent(s2))
-    && $IsEqual'u64'($time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent(s1), $time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent(s2))}
+    s1 == s2
+}
 
 // struct DualAttestation::Credential at /home/ying/diem/language/diem-framework/modules/DualAttestation.move:19:5+1467
 type {:datatype} $1_DualAttestation_Credential;
@@ -10493,12 +11799,8 @@ function $IsValid'$1_DualAttestation_Credential'(s: $1_DualAttestation_Credentia
       && $IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''($base_url_rotation_events#$1_DualAttestation_Credential(s))
 }
 function {:inline} $IsEqual'$1_DualAttestation_Credential'(s1: $1_DualAttestation_Credential, s2: $1_DualAttestation_Credential): bool {
-    $IsEqual'vec'u8''($human_name#$1_DualAttestation_Credential(s1), $human_name#$1_DualAttestation_Credential(s2))
-    && $IsEqual'vec'u8''($base_url#$1_DualAttestation_Credential(s1), $base_url#$1_DualAttestation_Credential(s2))
-    && $IsEqual'vec'u8''($compliance_public_key#$1_DualAttestation_Credential(s1), $compliance_public_key#$1_DualAttestation_Credential(s2))
-    && $IsEqual'u64'($expiration_date#$1_DualAttestation_Credential(s1), $expiration_date#$1_DualAttestation_Credential(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''($compliance_key_rotation_events#$1_DualAttestation_Credential(s1), $compliance_key_rotation_events#$1_DualAttestation_Credential(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''($base_url_rotation_events#$1_DualAttestation_Credential(s1), $base_url_rotation_events#$1_DualAttestation_Credential(s2))}
+    s1 == s2
+}
 var $1_DualAttestation_Credential_$memory: $Memory $1_DualAttestation_Credential;
 
 // struct DualAttestation::Limit at /home/ying/diem/language/diem-framework/modules/DualAttestation.move:44:5+58
@@ -10831,8 +12133,8 @@ function $IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOp
       && $IsValid'bool'($module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s))
 }
 function {:inline} $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s1: $1_DiemTransactionPublishingOption_DiemTransactionPublishingOption, s2: $1_DiemTransactionPublishingOption_DiemTransactionPublishingOption): bool {
-    $IsEqual'vec'vec'u8'''($script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s1), $script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s2))
-    && $IsEqual'bool'($module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s1), $module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s2))}
+    s1 == s2
+}
 
 // fun DiemTransactionPublishingOption::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:35:5+436
 procedure {:inline 1} $1_DiemTransactionPublishingOption_initialize(_$t0: $signer, _$t1: Vec (Vec (int)), _$t2: bool) returns ()
@@ -10855,7 +12157,7 @@ procedure {:inline 1} $1_DiemTransactionPublishingOption_initialize(_$t0: $signe
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'vec'vec'u8''': Vec (Vec (int));
-    var $1_DiemConfig_Configuration_$memory#175: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#185: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -10980,8 +12282,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
 L7:
 
-    // @175 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
-    $1_DiemConfig_Configuration_$memory#175 := $1_DiemConfig_Configuration_$memory;
+    // @185 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
+    $1_DiemConfig_Configuration_$memory#185 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
     havoc $temp_0'bool';
@@ -11010,8 +12312,8 @@ L7:
     // assume Eq<DiemTransactionPublishingOption::DiemTransactionPublishingOption>(DiemConfig::$get<DiemTransactionPublishingOption::DiemTransactionPublishingOption>(), $t9) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
     assume $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($1_DiemConfig_$get'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory), $t9);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@175](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#175), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@185](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#185), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemTransactionPublishingOption::DiemTransactionPublishingOption>($t0, $t9) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
 
@@ -11042,7 +12344,8 @@ function $IsValid'$1_DesignatedDealer_Dealer'(s: $1_DesignatedDealer_Dealer): bo
     $IsValid'$1_Event_EventHandle'$1_DesignatedDealer_ReceivedMintEvent''($mint_event_handle#$1_DesignatedDealer_Dealer(s))
 }
 function {:inline} $IsEqual'$1_DesignatedDealer_Dealer'(s1: $1_DesignatedDealer_Dealer, s2: $1_DesignatedDealer_Dealer): bool {
-    $IsEqual'$1_Event_EventHandle'$1_DesignatedDealer_ReceivedMintEvent''($mint_event_handle#$1_DesignatedDealer_Dealer(s1), $mint_event_handle#$1_DesignatedDealer_Dealer(s2))}
+    s1 == s2
+}
 var $1_DesignatedDealer_Dealer_$memory: $Memory $1_DesignatedDealer_Dealer;
 
 // struct DesignatedDealer::ReceivedMintEvent at /home/ying/diem/language/diem-framework/modules/DesignatedDealer.move:38:5+286
@@ -11063,9 +12366,8 @@ function $IsValid'$1_DesignatedDealer_ReceivedMintEvent'(s: $1_DesignatedDealer_
       && $IsValid'u64'($amount#$1_DesignatedDealer_ReceivedMintEvent(s))
 }
 function {:inline} $IsEqual'$1_DesignatedDealer_ReceivedMintEvent'(s1: $1_DesignatedDealer_ReceivedMintEvent, s2: $1_DesignatedDealer_ReceivedMintEvent): bool {
-    $IsEqual'vec'u8''($currency_code#$1_DesignatedDealer_ReceivedMintEvent(s1), $currency_code#$1_DesignatedDealer_ReceivedMintEvent(s2))
-    && $IsEqual'address'($destination_address#$1_DesignatedDealer_ReceivedMintEvent(s1), $destination_address#$1_DesignatedDealer_ReceivedMintEvent(s2))
-    && $IsEqual'u64'($amount#$1_DesignatedDealer_ReceivedMintEvent(s1), $amount#$1_DesignatedDealer_ReceivedMintEvent(s2))}
+    s1 == s2
+}
 
 // struct ChainId::ChainId at /home/ying/diem/language/diem-framework/modules/ChainId.move:10:5+45
 type {:datatype} $1_ChainId_ChainId;
@@ -11117,8 +12419,8 @@ function $IsValid'$1_AccountFreezing_FreezeEventsHolder'(s: $1_AccountFreezing_F
       && $IsValid'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''($unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s))
 }
 function {:inline} $IsEqual'$1_AccountFreezing_FreezeEventsHolder'(s1: $1_AccountFreezing_FreezeEventsHolder, s2: $1_AccountFreezing_FreezeEventsHolder): bool {
-    $IsEqual'$1_Event_EventHandle'$1_AccountFreezing_FreezeAccountEvent''($freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s1), $freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''($unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s1), $unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s2))}
+    s1 == s2
+}
 var $1_AccountFreezing_FreezeEventsHolder_$memory: $Memory $1_AccountFreezing_FreezeEventsHolder;
 
 // struct AccountFreezing::FreezingBit at /home/ying/diem/language/diem-framework/modules/AccountFreezing.move:11:5+164
@@ -11451,12 +12753,8 @@ function $IsValid'$1_DiemAccount_DiemAccount'(s: $1_DiemAccount_DiemAccount): bo
       && $IsValid'u64'($sequence_number#$1_DiemAccount_DiemAccount(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_DiemAccount'(s1: $1_DiemAccount_DiemAccount, s2: $1_DiemAccount_DiemAccount): bool {
-    $IsEqual'vec'u8''($authentication_key#$1_DiemAccount_DiemAccount(s1), $authentication_key#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Option_Option'$1_DiemAccount_WithdrawCapability''($withdraw_capability#$1_DiemAccount_DiemAccount(s1), $withdraw_capability#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''($key_rotation_capability#$1_DiemAccount_DiemAccount(s1), $key_rotation_capability#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemAccount_ReceivedPaymentEvent''($received_events#$1_DiemAccount_DiemAccount(s1), $received_events#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemAccount_SentPaymentEvent''($sent_events#$1_DiemAccount_DiemAccount(s1), $sent_events#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'u64'($sequence_number#$1_DiemAccount_DiemAccount(s1), $sequence_number#$1_DiemAccount_DiemAccount(s2))}
+    s1 == s2
+}
 var $1_DiemAccount_DiemAccount_$memory: $Memory $1_DiemAccount_DiemAccount;
 
 // struct DiemAccount::AccountOperationsCapability at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:91:5+167
@@ -11473,8 +12771,8 @@ function $IsValid'$1_DiemAccount_AccountOperationsCapability'(s: $1_DiemAccount_
       && $IsValid'$1_Event_EventHandle'$1_DiemAccount_CreateAccountEvent''($creation_events#$1_DiemAccount_AccountOperationsCapability(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_AccountOperationsCapability'(s1: $1_DiemAccount_AccountOperationsCapability, s2: $1_DiemAccount_AccountOperationsCapability): bool {
-    $IsEqual'$1_AccountLimits_AccountLimitMutationCapability'($limits_cap#$1_DiemAccount_AccountOperationsCapability(s1), $limits_cap#$1_DiemAccount_AccountOperationsCapability(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemAccount_CreateAccountEvent''($creation_events#$1_DiemAccount_AccountOperationsCapability(s1), $creation_events#$1_DiemAccount_AccountOperationsCapability(s2))}
+    s1 == s2
+}
 var $1_DiemAccount_AccountOperationsCapability_$memory: $Memory $1_DiemAccount_AccountOperationsCapability;
 
 // struct DiemAccount::AdminTransactionEvent at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:127:5+150
@@ -11545,7 +12843,8 @@ function $IsValid'$1_DiemAccount_DiemWriteSetManager'(s: $1_DiemAccount_DiemWrit
     $IsValid'$1_Event_EventHandle'$1_DiemAccount_AdminTransactionEvent''($upgrade_events#$1_DiemAccount_DiemWriteSetManager(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_DiemWriteSetManager'(s1: $1_DiemAccount_DiemWriteSetManager, s2: $1_DiemAccount_DiemWriteSetManager): bool {
-    $IsEqual'$1_Event_EventHandle'$1_DiemAccount_AdminTransactionEvent''($upgrade_events#$1_DiemAccount_DiemWriteSetManager(s1), $upgrade_events#$1_DiemAccount_DiemWriteSetManager(s2))}
+    s1 == s2
+}
 var $1_DiemAccount_DiemWriteSetManager_$memory: $Memory $1_DiemAccount_DiemWriteSetManager;
 
 // struct DiemAccount::KeyRotationCapability at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:83:5+208
@@ -11583,10 +12882,8 @@ function $IsValid'$1_DiemAccount_ReceivedPaymentEvent'(s: $1_DiemAccount_Receive
       && $IsValid'vec'u8''($metadata#$1_DiemAccount_ReceivedPaymentEvent(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_ReceivedPaymentEvent'(s1: $1_DiemAccount_ReceivedPaymentEvent, s2: $1_DiemAccount_ReceivedPaymentEvent): bool {
-    $IsEqual'u64'($amount#$1_DiemAccount_ReceivedPaymentEvent(s1), $amount#$1_DiemAccount_ReceivedPaymentEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_DiemAccount_ReceivedPaymentEvent(s1), $currency_code#$1_DiemAccount_ReceivedPaymentEvent(s2))
-    && $IsEqual'address'($payer#$1_DiemAccount_ReceivedPaymentEvent(s1), $payer#$1_DiemAccount_ReceivedPaymentEvent(s2))
-    && $IsEqual'vec'u8''($metadata#$1_DiemAccount_ReceivedPaymentEvent(s1), $metadata#$1_DiemAccount_ReceivedPaymentEvent(s2))}
+    s1 == s2
+}
 
 // struct DiemAccount::SentPaymentEvent at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:103:5+346
 type {:datatype} $1_DiemAccount_SentPaymentEvent;
@@ -11610,10 +12907,8 @@ function $IsValid'$1_DiemAccount_SentPaymentEvent'(s: $1_DiemAccount_SentPayment
       && $IsValid'vec'u8''($metadata#$1_DiemAccount_SentPaymentEvent(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_SentPaymentEvent'(s1: $1_DiemAccount_SentPaymentEvent, s2: $1_DiemAccount_SentPaymentEvent): bool {
-    $IsEqual'u64'($amount#$1_DiemAccount_SentPaymentEvent(s1), $amount#$1_DiemAccount_SentPaymentEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_DiemAccount_SentPaymentEvent(s1), $currency_code#$1_DiemAccount_SentPaymentEvent(s2))
-    && $IsEqual'address'($payee#$1_DiemAccount_SentPaymentEvent(s1), $payee#$1_DiemAccount_SentPaymentEvent(s2))
-    && $IsEqual'vec'u8''($metadata#$1_DiemAccount_SentPaymentEvent(s1), $metadata#$1_DiemAccount_SentPaymentEvent(s2))}
+    s1 == s2
+}
 
 // struct DiemAccount::WithdrawCapability at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:74:5+202
 type {:datatype} $1_DiemAccount_WithdrawCapability;
@@ -12498,8 +13793,8 @@ function $IsValid'$1_DiemBlock_BlockMetadata'(s: $1_DiemBlock_BlockMetadata): bo
       && $IsValid'$1_Event_EventHandle'$1_DiemBlock_NewBlockEvent''($new_block_events#$1_DiemBlock_BlockMetadata(s))
 }
 function {:inline} $IsEqual'$1_DiemBlock_BlockMetadata'(s1: $1_DiemBlock_BlockMetadata, s2: $1_DiemBlock_BlockMetadata): bool {
-    $IsEqual'u64'($height#$1_DiemBlock_BlockMetadata(s1), $height#$1_DiemBlock_BlockMetadata(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemBlock_NewBlockEvent''($new_block_events#$1_DiemBlock_BlockMetadata(s1), $new_block_events#$1_DiemBlock_BlockMetadata(s2))}
+    s1 == s2
+}
 var $1_DiemBlock_BlockMetadata_$memory: $Memory $1_DiemBlock_BlockMetadata;
 
 // struct DiemBlock::NewBlockEvent at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:16:5+234
@@ -12524,10 +13819,8 @@ function $IsValid'$1_DiemBlock_NewBlockEvent'(s: $1_DiemBlock_NewBlockEvent): bo
       && $IsValid'u64'($time_microseconds#$1_DiemBlock_NewBlockEvent(s))
 }
 function {:inline} $IsEqual'$1_DiemBlock_NewBlockEvent'(s1: $1_DiemBlock_NewBlockEvent, s2: $1_DiemBlock_NewBlockEvent): bool {
-    $IsEqual'u64'($round#$1_DiemBlock_NewBlockEvent(s1), $round#$1_DiemBlock_NewBlockEvent(s2))
-    && $IsEqual'address'($proposer#$1_DiemBlock_NewBlockEvent(s1), $proposer#$1_DiemBlock_NewBlockEvent(s2))
-    && $IsEqual'vec'address''($previous_block_votes#$1_DiemBlock_NewBlockEvent(s1), $previous_block_votes#$1_DiemBlock_NewBlockEvent(s2))
-    && $IsEqual'u64'($time_microseconds#$1_DiemBlock_NewBlockEvent(s1), $time_microseconds#$1_DiemBlock_NewBlockEvent(s2))}
+    s1 == s2
+}
 
 // fun DiemBlock::is_initialized [baseline] at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:55:5+75
 procedure {:inline 1} $1_DiemBlock_is_initialized() returns ($ret0: bool)
@@ -12764,7 +14057,8 @@ function $IsValid'$1_DiemVMConfig_DiemVMConfig'(s: $1_DiemVMConfig_DiemVMConfig)
     $IsValid'$1_DiemVMConfig_GasSchedule'($gas_schedule#$1_DiemVMConfig_DiemVMConfig(s))
 }
 function {:inline} $IsEqual'$1_DiemVMConfig_DiemVMConfig'(s1: $1_DiemVMConfig_DiemVMConfig, s2: $1_DiemVMConfig_DiemVMConfig): bool {
-    $IsEqual'$1_DiemVMConfig_GasSchedule'($gas_schedule#$1_DiemVMConfig_DiemVMConfig(s1), $gas_schedule#$1_DiemVMConfig_DiemVMConfig(s2))}
+    s1 == s2
+}
 
 // struct DiemVMConfig::GasConstants at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:35:5+1690
 type {:datatype} $1_DiemVMConfig_GasConstants;
@@ -12837,9 +14131,8 @@ function $IsValid'$1_DiemVMConfig_GasSchedule'(s: $1_DiemVMConfig_GasSchedule): 
       && $IsValid'$1_DiemVMConfig_GasConstants'($gas_constants#$1_DiemVMConfig_GasSchedule(s))
 }
 function {:inline} $IsEqual'$1_DiemVMConfig_GasSchedule'(s1: $1_DiemVMConfig_GasSchedule, s2: $1_DiemVMConfig_GasSchedule): bool {
-    $IsEqual'vec'u8''($instruction_schedule#$1_DiemVMConfig_GasSchedule(s1), $instruction_schedule#$1_DiemVMConfig_GasSchedule(s2))
-    && $IsEqual'vec'u8''($native_schedule#$1_DiemVMConfig_GasSchedule(s1), $native_schedule#$1_DiemVMConfig_GasSchedule(s2))
-    && $IsEqual'$1_DiemVMConfig_GasConstants'($gas_constants#$1_DiemVMConfig_GasSchedule(s1), $gas_constants#$1_DiemVMConfig_GasSchedule(s2))}
+    s1 == s2
+}
 
 // fun DiemVMConfig::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:73:5+1150
 procedure {:inline 1} $1_DiemVMConfig_initialize(_$t0: $signer, _$t1: Vec (int), _$t2: Vec (int)) returns ()
@@ -12877,7 +14170,7 @@ procedure {:inline 1} $1_DiemVMConfig_initialize(_$t0: $signer, _$t1: Vec (int),
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemConfig_Configuration_$memory#169: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#179: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -13069,8 +14362,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
 L7:
 
-    // @169 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
-    $1_DiemConfig_Configuration_$memory#169 := $1_DiemConfig_Configuration_$memory;
+    // @179 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
+    $1_DiemConfig_Configuration_$memory#179 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     havoc $temp_0'bool';
@@ -13099,8 +14392,8 @@ L7:
     // assume Eq<DiemVMConfig::DiemVMConfig>(DiemConfig::$get<DiemVMConfig::DiemVMConfig>(), $t24) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     assume $IsEqual'$1_DiemVMConfig_DiemVMConfig'($1_DiemConfig_$get'$1_DiemVMConfig_DiemVMConfig'($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory), $t24);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@169](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#169), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@179](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#179), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemVMConfig::DiemVMConfig>($t0, $t24) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
 
@@ -13154,7 +14447,7 @@ procedure {:inline 1} $1_DiemVersion_initialize(_$t0: $signer, _$t1: int) return
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_DiemConfig_Configuration_$memory#163: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#173: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
 
@@ -13275,8 +14568,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
 L7:
 
-    // @163 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
-    $1_DiemConfig_Configuration_$memory#163 := $1_DiemConfig_Configuration_$memory;
+    // @173 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
+    $1_DiemConfig_Configuration_$memory#173 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     havoc $temp_0'bool';
@@ -13305,8 +14598,8 @@ L7:
     // assume Eq<DiemVersion::DiemVersion>(DiemConfig::$get<DiemVersion::DiemVersion>(), $t8) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     assume $IsEqual'$1_DiemVersion_DiemVersion'($1_DiemConfig_$get'$1_DiemVersion_DiemVersion'($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory), $t8);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@163](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#163), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@173](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#173), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemVersion::DiemVersion>($t0, $t8) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
 
@@ -13422,9 +14715,9 @@ procedure {:timeLimit 40} $1_Genesis_initialize$verify(_$t0: $signer, _$t1: $sig
     // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1582:9+212
     assume ((forall mint_cap_owner: int :: $IsValid'address'(mint_cap_owner) ==> ($ResourceExists($1_Diem_MintCapability'$1_XUS_XUS'_$memory, mint_cap_owner))  ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, mint_cap_owner))) && (forall mint_cap_owner: int :: $IsValid'address'(mint_cap_owner) ==> ($ResourceExists($1_Diem_MintCapability'$1_XDX_XDX'_$memory, mint_cap_owner))  ==> ($1_Roles_spec_has_treasury_compliance_role_addr($1_Roles_RoleId_$memory, mint_cap_owner))));
 
-    // assume forall addr3: TypeDomain<address>() where Diem::spec_has_mint_capability<XUS::XUS>(addr3): Diem::$is_SCS_currency<XUS::XUS>() at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+697
+    // assume true at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+697
     // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1599:9+156
-    assume (forall addr3: int :: $IsValid'address'(addr3) ==> ($1_Diem_spec_has_mint_capability'$1_XUS_XUS'($1_Diem_MintCapability'$1_XUS_XUS'_$memory, addr3))  ==> ($1_Diem_$is_SCS_currency'$1_XUS_XUS'($1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory)));
+    assume true;
 
     // assume And(forall addr1: TypeDomain<address>(): Implies(exists<Diem::BurnCapability<XUS::XUS>>(addr1), Roles::spec_has_treasury_compliance_role_addr(addr1)), forall addr1: TypeDomain<address>(): Implies(exists<Diem::BurnCapability<XDX::XDX>>(addr1), Roles::spec_has_treasury_compliance_role_addr(addr1))) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+697
     // global invariant at /home/ying/diem/language/diem-framework/modules/Diem.move:1660:9+203

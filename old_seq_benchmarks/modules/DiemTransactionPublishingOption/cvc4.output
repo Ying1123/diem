@@ -1,16 +1,4 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:437.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:1520.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:418.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-(error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")
+/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.cvc4.smt2:1527.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

@@ -15,19 +15,117 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $1_Authenticator_create_multi_ed25519$verify ...
-  [0.124 s, 0 proof obligations]  verified
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.221 s, 8 proof obligations]  verified
 
-Verifying $1_Authenticator_public_keys$verify ...
-  [0.001 s, 0 proof obligations]  verified
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [0.092 s, 17 proof obligations]  verified
 
-Verifying $1_Authenticator_threshold$verify ...
-  [0.001 s, 0 proof obligations]  verified
+Verifying $1_Roles_grant_role$verify ...
+  [0.055 s, 7 proof obligations]  verified
 
-Verifying $1_Authenticator_ed25519_authentication_key$verify ...
-  [0.011 s, 1 proof obligation]  verified
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [0.110 s, 20 proof obligations]  verified
 
-Verifying $1_Authenticator_multi_ed25519_authentication_key$verify ...
-  [0.033 s, 2 proof obligations]  verified
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [0.093 s, 18 proof obligations]  verified
 
-Boogie program verifier finished with 5 verified, 0 errors
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [0.089 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [0.105 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [0.107 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [0.107 s, 20 proof obligations]  verified
+
+Verifying $1_DiemSystem_add_validator$verify ...
+  [1.748 s, 21 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_diem_system_config$verify ...
+  [0.064 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_ith_validator_address$verify ...
+  [0.102 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_config$verify ...
+  [0.115 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_index_$verify ...
+  [0.161 s, 12 proof obligations]  verified
+
+Verifying $1_DiemSystem_initialize_validator_set$verify ...
+  [0.105 s, 14 proof obligations]  verified
+
+Verifying $1_DiemSystem_is_validator$verify ...
+  [0.087 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_is_validator_$verify ...
+  [0.050 s, 3 proof obligations]  verified
+
+Verifying $1_DiemSystem_remove_validator$verify ...
+  [5.196 s, 17 proof obligations]  errors
+assert_failed(16,2603,2750): data invariant does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(9989,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(2723,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(9989,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10134,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10169,35): anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10199,35): anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10301,17): anon26_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10329,36): anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(1278,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(1280,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10367,5): anon28_Else
+assert_failed(16,12177,12267): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(9989,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(2723,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(9989,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10134,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10169,35): anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10199,35): anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10301,17): anon26_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10329,36): anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(1278,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(1280,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10367,5): anon28_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10425,36): anon29_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10446,9): anon30_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10455,9): anon31_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10462,5): anon21
+assert_failed(16,12407,12450): post-condition does not hold
+Execution trace:
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(9989,9): anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(2723,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(9989,9): anon0$1
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10134,35): anon23_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10169,35): anon24_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10199,35): anon25_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10301,17): anon26_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10329,36): anon27_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(1278,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(1280,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10367,5): anon28_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10425,36): anon29_Else
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10446,9): anon30_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10455,9): anon31_Then
+    /home/ying/diem/old_seq_benchmarks/modules/Authenticator/Authenticator.seqArray.bpl(10462,5): anon21
+
+Verifying $1_DiemSystem_set_diem_system_config$verify ...
+  [0.496 s, 9 proof obligations]  verified
+
+Verifying $1_DiemSystem_update_ith_validator_info_$verify ...
+  [0.249 s, 8 proof obligations]  verified
+
+Verifying $1_DiemSystem_validator_set_size$verify ...
+  [0.045 s, 5 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.190 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 21 verified, 3 errors

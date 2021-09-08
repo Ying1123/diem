@@ -62,7 +62,7 @@ do
             # generate smt2
             bm_smt2=$filename.z3.smt2
             start=$(date +%s%N)
-            timeout 20 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$z3 /proverOpt:SOLVER=Z3 /trace -doModSetAnalysis > $bm_dir_single/boogie_z3.log 2>&1
+            timeout 40 $boogie $bm_bpl -monomorphize /env:2 /proverLog:$bm_smt2 /proverOpt:PROVER_PATH=$z3 /proverOpt:SOLVER=Z3 /trace -doModSetAnalysis > $bm_dir_single/boogie_z3.log 2>&1
             end=$(date +%s%N)
             take=$((($end - $start)/1000000))
             echo $filename >> z3.t
@@ -70,7 +70,7 @@ do
 
             if [ -f "$bm_smt2" ]; then
                 mv $bm_smt2 $bm_dir_single/$bm_smt2
-                timeout 20 $z3 $bm_dir_single/$bm_smt2 > $bm_dir_single/z3.output 2>&1
+                timeout 40 $z3 $bm_dir_single/$bm_smt2 > $bm_dir_single/z3.output 2>&1
             fi
         fi
     fi

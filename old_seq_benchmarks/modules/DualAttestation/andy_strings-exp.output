@@ -1,5 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.andy_strings.smt2:427.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.andy_strings.smt2:1530.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.andy_strings.smt2:480.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DualAttestation/DualAttestation.andy_strings.smt2:1805.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -9,23 +9,4 @@ unsat
 unsat
 unsat
 unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
+cvc5 interrupted by SIGTERM.

@@ -1,5 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.andy_strings.smt2:405.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.andy_strings.smt2:1425.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.andy_strings.smt2:449.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemTransactionPublishingOption/DiemTransactionPublishingOption.andy_strings.smt2:1634.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -7,6 +7,4 @@ unsat
 unsat
 unsat
 unsat
-unsat
-unsat
-unsat
+cvc5 interrupted by SIGTERM.

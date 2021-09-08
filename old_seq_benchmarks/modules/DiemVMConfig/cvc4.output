@@ -1,10 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemVMConfig/DiemVMConfig.cvc4.smt2:399.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemVMConfig/DiemVMConfig.cvc4.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemVMConfig/DiemVMConfig.cvc4.smt2:1415.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
-unsat
-unsat
-unsat
-unsat
-/home/ying/diem/old_seq_benchmarks/modules/DiemVMConfig/DiemVMConfig.cvc4.smt2:1615.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

@@ -1,4 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy_strings.smt2:42.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy_strings.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/CoreAddresses/CoreAddresses.andy_strings.smt2:1418.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat

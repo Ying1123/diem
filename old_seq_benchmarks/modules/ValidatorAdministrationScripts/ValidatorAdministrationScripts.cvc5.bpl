@@ -4,122 +4,97 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-// Basic theory for vectors using arrays. This version of vectors is not extensional.
+// Boogie model for vectors, based on Z3 sequences.
+//
+// This version of vectors has extensional equality.
+//
+// This implementation works to some extend but has been so far been much slower/times out compared to
+// non-extensional array versions, even though the later require stratified custom equality.
+//
+// Major issues seem to be:
+//
+// (a) UpdateVec, SwapVec etc. are slow. UpdateVec requires a ConcatVec of two SliceVec.
+// (b) ReverseVec needs to be fully axiomatized with quantifiers which makes it infeasible
+//     to work in practice.
 
-type {:datatype} Vec _;
+type {:builtin "Seq"} Vec _;
 
-function {:constructor} Vec<T>(v: [int]T, l: int): Vec T;
+function {:builtin "seq.empty"} EmptyVec<T>(): Vec T;
 
-function {:builtin "MapConst"} MapConstVec<T>(T): [int]T;
-function DefaultVecElem<T>(): T;
-function {:inline} DefaultVecMap<T>(): [int]T { MapConstVec(DefaultVecElem()) }
-
-function {:inline} EmptyVec<T>(): Vec T {
-    Vec(DefaultVecMap(), 0)
-}
-
-function {:inline} MakeVec1<T>(v: T): Vec T {
-    Vec(DefaultVecMap()[0 := v], 1)
-}
+function {:builtin "seq.unit"} MakeVec1<T>(v: T): Vec T;
 
 function {:inline} MakeVec2<T>(v1: T, v2: T): Vec T {
-    Vec(DefaultVecMap()[0 := v1][1 := v2], 2)
+    ConcatVec(MakeVec1(v1), MakeVec1(v2))
 }
 
 function {:inline} MakeVec3<T>(v1: T, v2: T, v3: T): Vec T {
-    Vec(DefaultVecMap()[0 := v1][1 := v2][2 := v3], 3)
+    ConcatVec(MakeVec2(v1, v2), MakeVec1(v3))
 }
 
 function {:inline} MakeVec4<T>(v1: T, v2: T, v3: T, v4: T): Vec T {
-    Vec(DefaultVecMap()[0 := v1][1 := v2][2 := v3][3 := v4], 4)
+    ConcatVec(MakeVec3(v1, v2, v3), MakeVec1(v4))
 }
 
 function {:inline} ExtendVec<T>(v: Vec T, elem: T): Vec T {
-    (var l := l#Vec(v);
-    Vec(v#Vec(v)[l := elem], l + 1))
+    ConcatVec(v, MakeVec1(elem))
 }
 
-function {:inline} ReadVec<T>(v: Vec T, i: int): T {
-    v#Vec(v)[i]
-}
+function {:builtin "seq.nth"} ReadVec<T>(v: Vec T, i: int): T;
 
-function {:inline} LenVec<T>(v: Vec T): int {
-    l#Vec(v)
-}
+function {:builtin "seq.len"} LenVec<T>(v: Vec T): int;
 
 function {:inline} IsEmptyVec<T>(v: Vec T): bool {
-    l#Vec(v) == 0
+    LenVec(v) == 0
 }
 
 function {:inline} RemoveVec<T>(v: Vec T): Vec T {
-    (var l := l#Vec(v) - 1;
-    Vec(v#Vec(v)[l := DefaultVecElem()], l))
+    SliceVec(v, 0, LenVec(v) - 1)
 }
 
 function {:inline} RemoveAtVec<T>(v: Vec T, i: int): Vec T {
-    (var l := l#Vec(v) - 1;
-    Vec(
-        (lambda j: int ::
-           if j >= 0 && j < l then
-               if j < i then v#Vec(v)[j] else v#Vec(v)[j+1]
-           else DefaultVecElem()),
-        l))
+    ConcatVec(SliceVec(v, 0, i), SliceVec(v, i + 1, LenVec(v)))
 }
 
-function {:inline} ConcatVec<T>(v1: Vec T, v2: Vec T): Vec T {
-    (var l1, m1, l2, m2 := l#Vec(v1), v#Vec(v1), l#Vec(v2), v#Vec(v2);
-    Vec(
-        (lambda i: int ::
-          if i >= 0 && i < l1 + l2 then
-            if i < l1 then m1[i] else m2[i - l1]
-          else DefaultVecElem()),
-        l1 + l2))
-}
+function {:builtin "seq.++"} ConcatVec<T>(v1: Vec T, v2: Vec T): Vec T;
+/*private*/ function {:builtin "seq.++"} ConcatVec3<T>(v1: Vec T, v2: Vec T, v3: Vec T): Vec T;
+/*private*/ function {:builtin "seq.++"} ConcatVec4<T>(v1: Vec T, v2: Vec T, v3: Vec T, v4: Vec T): Vec T;
+/*private*/ function {:builtin "seq.++"} ConcatVec5<T>(v1: Vec T, v2: Vec T, v3: Vec T, v4: Vec T, v5: Vec T): Vec T;
 
-function {:inline} ReverseVec<T>(v: Vec T): Vec T {
-    (var l := l#Vec(v);
-    Vec(
-        (lambda i: int :: if 0 <= i && i < l then v#Vec(v)[l - i - 1] else DefaultVecElem()),
-        l))
-}
+function {:inline} ReverseVec<T>(v: Vec T): Vec T;
+axiom {:ctor "Vec"} (forall<T> v: Vec T:: {ReverseVec(v)}
+        (var r := ReverseVec(v);
+         LenVec(r) == LenVec(v) &&
+         (forall i: int:: {ReadVec(r, i)} i >= 0 && i < LenVec(r) ==> ReadVec(r, i) == ReadVec(v, LenVec(v) - i - 1))));
 
 function {:inline} SliceVec<T>(v: Vec T, i: int, j: int): Vec T {
-    (var m := v#Vec(v);
-    Vec(
-        (lambda k:int ::
-          if 0 <= k && k < j - i then
-            m[i + k]
-          else
-            DefaultVecElem()),
-        (if j - i < 0 then 0 else j - i)))
+    ExtractVec(v, i, j - i)
 }
+/*private*/ function {:builtin "seq.extract"} ExtractVec<T>(v: Vec T, start: int, len: int): Vec T;
 
+//function {:inline} UpdateVec<T>(v: Vec T, i: int, elem: T): Vec T {
+//    ConcatVec3(SliceVec(v, 0, i), MakeVec1(elem), SliceVec(v, i + 1, LenVec(v)))
+//}
+function {:builtin "seq.update"} Vec_Update<T>(v: Vec T, i: int, x: Vec T): Vec T;
 
 function {:inline} UpdateVec<T>(v: Vec T, i: int, elem: T): Vec T {
-    Vec(v#Vec(v)[i := elem], l#Vec(v))
+	Vec_Update(v, i, MakeVec1(elem))
 }
 
 function {:inline} SwapVec<T>(v: Vec T, i: int, j: int): Vec T {
-    (var m := v#Vec(v);
-    Vec(m[i := m[j]][j := m[i]], l#Vec(v)))
+    UpdateVec(UpdateVec(v, j, ReadVec(v, i)), i, ReadVec(v, j))
 }
 
 function {:inline} ContainsVec<T>(v: Vec T, e: T): bool {
-    (var l := l#Vec(v);
-    (exists i: int :: InRangeVec(v, i) && v#Vec(v)[i] == e))
+    ContainsSubVec(v, MakeVec1(e))
 }
+/*private*/ function {:builtin "seq.contains"} ContainsSubVec<T>(v: Vec T, sub: Vec T): bool;
 
-function IndexOfVec<T>(v: Vec T, e: T): int;
-axiom {:ctor "Vec"} (forall<T> v: Vec T, e: T :: {IndexOfVec(v, e)}
-    (var i := IndexOfVec(v,e);
-     if (!ContainsVec(v, e)) then i == -1
-     else InRangeVec(v, i) && ReadVec(v, i) == e &&
-        (forall j: int :: j >= 0 && j < i ==> ReadVec(v, j) != e)));
+function {:inline} IndexOfVec<T>(v: Vec T, e: T): int {
+    IndexOfSubVec(v, MakeVec1(e))
+}
+/*private*/ function {:builtin "seq.indexof"} IndexOfSubVec<T>(v: Vec T, sub: Vec T): int;
 
-// This function should stay non-inlined as it guards many quantifiers
-// over vectors. It appears important to have this uninterpreted for
-// quantifier triggering.
-function InRangeVec<T>(v: Vec T, i: int): bool {
+function {:inline} InRangeVec<T>(v: Vec T, i: int): bool {
     i >= 0 && i < LenVec(v)
 }
 
@@ -609,10 +584,9 @@ function {:inline} $SliceVecByRange<T>(v: Vec T, r: $Range): Vec T {
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `#0`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'#0''(v1: Vec (#0), v2: Vec (#0)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'#0'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'#0''(v1: Vec (#0), v2: Vec (#0)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -790,10 +764,9 @@ $1_Vector_index_of'#0'(v: Vec (#0), e: #0) returns (res1: bool, res2: int) {
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_DiemAccount_KeyRotationCapability`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_DiemAccount_KeyRotationCapability''(v1: Vec ($1_DiemAccount_KeyRotationCapability), v2: Vec ($1_DiemAccount_KeyRotationCapability)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_DiemAccount_KeyRotationCapability'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_DiemAccount_KeyRotationCapability''(v1: Vec ($1_DiemAccount_KeyRotationCapability), v2: Vec ($1_DiemAccount_KeyRotationCapability)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -971,10 +944,9 @@ $1_Vector_index_of'$1_DiemAccount_KeyRotationCapability'(v: Vec ($1_DiemAccount_
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_DiemAccount_WithdrawCapability`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_DiemAccount_WithdrawCapability''(v1: Vec ($1_DiemAccount_WithdrawCapability), v2: Vec ($1_DiemAccount_WithdrawCapability)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_DiemAccount_WithdrawCapability'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_DiemAccount_WithdrawCapability''(v1: Vec ($1_DiemAccount_WithdrawCapability), v2: Vec ($1_DiemAccount_WithdrawCapability)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1152,10 +1124,9 @@ $1_Vector_index_of'$1_DiemAccount_WithdrawCapability'(v: Vec ($1_DiemAccount_Wit
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_DiemSystem_ValidatorInfo`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_DiemSystem_ValidatorInfo''(v1: Vec ($1_DiemSystem_ValidatorInfo), v2: Vec ($1_DiemSystem_ValidatorInfo)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_DiemSystem_ValidatorInfo'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_DiemSystem_ValidatorInfo''(v1: Vec ($1_DiemSystem_ValidatorInfo), v2: Vec ($1_DiemSystem_ValidatorInfo)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1333,10 +1304,9 @@ $1_Vector_index_of'$1_DiemSystem_ValidatorInfo'(v: Vec ($1_DiemSystem_ValidatorI
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_Diem_PreburnWithMetadata'$1_XDX_XDX'`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX')): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XDX_XDX')): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1514,10 +1484,9 @@ $1_Vector_index_of'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(v: Vec ($1_Diem_Preb
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_Diem_PreburnWithMetadata'$1_XUS_XUS'`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS')): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''(v1: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS'), v2: Vec ($1_Diem_PreburnWithMetadata'$1_XUS_XUS')): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1695,10 +1664,9 @@ $1_Vector_index_of'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(v: Vec ($1_Diem_Preb
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `$1_ValidatorConfig_Config`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'$1_ValidatorConfig_Config''(v1: Vec ($1_ValidatorConfig_Config), v2: Vec ($1_ValidatorConfig_Config)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'$1_ValidatorConfig_Config'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'$1_ValidatorConfig_Config''(v1: Vec ($1_ValidatorConfig_Config), v2: Vec ($1_ValidatorConfig_Config)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -1876,10 +1844,9 @@ $1_Vector_index_of'$1_ValidatorConfig_Config'(v: Vec ($1_ValidatorConfig_Config)
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `vec'u8'`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'vec'u8'''(v1: Vec (Vec (int)), v2: Vec (Vec (int))): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'vec'u8''(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'vec'u8'''(v1: Vec (Vec (int)), v2: Vec (Vec (int))): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -2057,10 +2024,9 @@ $1_Vector_index_of'vec'u8''(v: Vec (Vec (int)), e: Vec (int)) returns (res1: boo
 // ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `address`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'address''(v1: Vec (int), v2: Vec (int)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'address'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'address''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -2236,12 +2202,191 @@ $1_Vector_index_of'address'(v: Vec (int), e: int) returns (res1: bool, res2: int
 
 
 // ----------------------------------------------------------------------------------
+// Native Vector implementation for element type `u64`
+
+
+function {:inline} $IsEqual'vec'u64''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
+}
+
+// Not inlined.
+function $IsValid'vec'u64''(v: Vec (int)): bool {
+    $IsValid'u64'(LenVec(v)) &&
+    (forall i: int:: InRangeVec(v, i) ==> $IsValid'u64'(ReadVec(v, i)))
+}
+
+
+function {:inline} $ContainsVec'u64'(v: Vec (int), e: int): bool {
+    (exists i: int :: $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e))
+}
+
+function $IndexOfVec'u64'(v: Vec (int), e: int): int;
+axiom (forall v: Vec (int), e: int:: {$IndexOfVec'u64'(v, e)}
+    (var i := $IndexOfVec'u64'(v, e);
+     if (!$ContainsVec'u64'(v, e)) then i == -1
+     else $IsValid'u64'(i) && InRangeVec(v, i) && $IsEqual'u64'(ReadVec(v, i), e) &&
+        (forall j: int :: $IsValid'u64'(j) && j >= 0 && j < i ==> !$IsEqual'u64'(ReadVec(v, j), e))));
+
+
+function {:inline} $RangeVec'u64'(v: Vec (int)): $Range {
+    $Range(0, LenVec(v))
+}
+
+
+function {:inline} $EmptyVec'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_empty'u64'() returns (v: Vec (int)) {
+    v := EmptyVec();
+}
+
+function {:inline} $1_Vector_$empty'u64'(): Vec (int) {
+    EmptyVec()
+}
+
+procedure {:inline 1} $1_Vector_is_empty'u64'(v: Vec (int)) returns (b: bool) {
+    b := IsEmptyVec(v);
+}
+
+procedure {:inline 1} $1_Vector_push_back'u64'(m: $Mutation (Vec (int)), val: int) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ExtendVec($Dereference(m), val));
+}
+
+function {:inline} $1_Vector_$push_back'u64'(v: Vec (int), val: int): Vec (int) {
+    ExtendVec(v, val)
+}
+
+procedure {:inline 1} $1_Vector_pop_back'u64'(m: $Mutation (Vec (int))) returns (e: int, m': $Mutation (Vec (int))) {
+    var v: Vec (int);
+    var len: int;
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (len == 0) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, len-1);
+    m' := $UpdateMutation(m, RemoveVec(v));
+}
+
+procedure {:inline 1} $1_Vector_append'u64'(m: $Mutation (Vec (int)), other: Vec (int)) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ConcatVec($Dereference(m), other));
+}
+
+procedure {:inline 1} $1_Vector_reverse'u64'(m: $Mutation (Vec (int))) returns (m': $Mutation (Vec (int))) {
+    m' := $UpdateMutation(m, ReverseVec($Dereference(m)));
+}
+
+procedure {:inline 1} $1_Vector_length'u64'(v: Vec (int)) returns (l: int) {
+    l := LenVec(v);
+}
+
+function {:inline} $1_Vector_$length'u64'(v: Vec (int)): int {
+    LenVec(v)
+}
+
+procedure {:inline 1} $1_Vector_borrow'u64'(v: Vec (int), i: int) returns (dst: int) {
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := ReadVec(v, i);
+}
+
+function {:inline} $1_Vector_$borrow'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_borrow_mut'u64'(m: $Mutation (Vec (int)), index: int)
+returns (dst: $Mutation (int), m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, index)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    dst := $Mutation(l#$Mutation(m), ExtendVec(p#$Mutation(m), index), ReadVec(v, index));
+    m' := m;
+}
+
+function {:inline} $1_Vector_$borrow_mut'u64'(v: Vec (int), i: int): int {
+    ReadVec(v, i)
+}
+
+procedure {:inline 1} $1_Vector_destroy_empty'u64'(v: Vec (int)) {
+    if (!IsEmptyVec(v)) {
+      call $ExecFailureAbort();
+    }
+}
+
+procedure {:inline 1} $1_Vector_swap'u64'(m: $Mutation (Vec (int)), i: int, j: int) returns (m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+    v := $Dereference(m);
+    if (!InRangeVec(v, i) || !InRangeVec(v, j)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    m' := $UpdateMutation(m, SwapVec(v, i, j));
+}
+
+function {:inline} $1_Vector_$swap'u64'(v: Vec (int), i: int, j: int): Vec (int) {
+    SwapVec(v, i, j)
+}
+
+procedure {:inline 1} $1_Vector_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var v: Vec (int);
+
+    v := $Dereference(m);
+
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveAtVec(v, i));
+}
+
+procedure {:inline 1} $1_Vector_swap_remove'u64'(m: $Mutation (Vec (int)), i: int) returns (e: int, m': $Mutation (Vec (int)))
+{
+    var len: int;
+    var v: Vec (int);
+
+    v := $Dereference(m);
+    len := LenVec(v);
+    if (!InRangeVec(v, i)) {
+        call $ExecFailureAbort();
+        return;
+    }
+    e := ReadVec(v, i);
+    m' := $UpdateMutation(m, RemoveVec(SwapVec(v, i, len-1)));
+}
+
+procedure {:inline 1} $1_Vector_contains'u64'(v: Vec (int), e: int) returns (res: bool)  {
+    res := $ContainsVec'u64'(v, e);
+}
+
+procedure {:inline 1}
+$1_Vector_index_of'u64'(v: Vec (int), e: int) returns (res1: bool, res2: int) {
+    res2 := $IndexOfVec'u64'(v, e);
+    if (res2 >= 0) {
+        res1 := true;
+    } else {
+        res1 := false;
+        res2 := 0;
+    }
+}
+
+
+// ----------------------------------------------------------------------------------
 // Native Vector implementation for element type `u8`
 
-// Not inlined. It appears faster this way.
-function $IsEqual'vec'u8''(v1: Vec (int), v2: Vec (int)): bool {
-    LenVec(v1) == LenVec(v2) &&
-    (forall i: int:: InRangeVec(v1, i) ==> $IsEqual'u8'(ReadVec(v1, i), ReadVec(v2, i)))
+
+function {:inline} $IsEqual'vec'u8''(v1: Vec (int), v2: Vec (int)): bool {
+    v1 == v2
 }
 
 // Not inlined.
@@ -3737,6 +3882,16 @@ L2:
 
 }
 
+// spec fun at /home/ying/diem/language/diem-framework/modules/Roles.move:193:5+122
+function {:inline} $1_Roles_$has_diem_root_role($1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId, account: $signer): bool {
+    $1_Roles_$has_role($1_Roles_RoleId_$memory, account, 0)
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/Roles.move:187:5+210
+function {:inline} $1_Roles_$has_role($1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId, account: $signer, role_id: int): bool {
+    (var addr := $1_Signer_$address_of(account); ($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), role_id)))
+}
+
 // spec fun at /home/ying/diem/language/diem-framework/modules/Roles.move:480:9+148
 function {:inline} $1_Roles_spec_has_role_id_addr($1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId, addr: int, role_id: int): bool {
     ($ResourceExists($1_Roles_RoleId_$memory, addr) && $IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, addr)), role_id))
@@ -3796,6 +3951,11 @@ function {:inline} $IsEqual'$1_Roles_RoleId'(s1: $1_Roles_RoleId, s2: $1_Roles_R
 }
 var $1_Roles_RoleId_$memory: $Memory $1_Roles_RoleId;
 
+// spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:53:5+320
+function {:inline} $1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig, validator_operator_addr: int): Vec (int) {
+    $human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig($ResourceValue($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, validator_operator_addr))
+}
+
 // spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:62:5+153
 function {:inline} $1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig, validator_operator_addr: int): bool {
     $ResourceExists($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, validator_operator_addr)
@@ -3811,8 +3971,51 @@ function $IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'(s: $1_Vali
     $IsValid'vec'u8''($human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig(s))
 }
 function {:inline} $IsEqual'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'(s1: $1_ValidatorOperatorConfig_ValidatorOperatorConfig, s2: $1_ValidatorOperatorConfig_ValidatorOperatorConfig): bool {
-    $IsEqual'vec'u8''($human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig(s1), $human_name#$1_ValidatorOperatorConfig_ValidatorOperatorConfig(s2))}
+    s1 == s2
+}
 var $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig;
+
+// fun ValidatorOperatorConfig::has_validator_operator_config [baseline] at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:62:5+153
+procedure {:inline 1} $1_ValidatorOperatorConfig_has_validator_operator_config(_$t0: int) returns ($ret0: bool)
+{
+    // declare local variables
+    var $t1: bool;
+    var $t0: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[validator_operator_addr]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:62:5+1
+    assume {:print "$at(38,2609,2610)"} true;
+    assume {:print "$track_local(5,1,0):", $t0} $t0 == $t0;
+
+    // $t1 := exists<ValidatorOperatorConfig::ValidatorOperatorConfig>($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:63:9+6
+    assume {:print "$at(38,2700,2706)"} true;
+    $t1 := $ResourceExists($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t0);
+
+    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:63:9+56
+    assume {:print "$track_return(5,1,0):", $t1} $t1 == $t1;
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:64:5+1
+    assume {:print "$at(38,2761,2762)"} true;
+L1:
+
+    // return $t1 at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:64:5+1
+    $ret0 := $t1;
+    return;
+
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:91:5+86
+function {:inline} $1_Vector_$is_empty'u64'(v: Vec (int)): bool {
+    $IsEqual'u64'($1_Vector_$length'u64'(v), 0)
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:91:5+86
+function {:inline} $1_Vector_$is_empty'address'(v: Vec (int)): bool {
+    $IsEqual'u64'($1_Vector_$length'address'(v), 0)
+}
 
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:91:5+86
 function {:inline} $1_Vector_$is_empty'$1_ValidatorConfig_Config'(v: Vec ($1_ValidatorConfig_Config)): bool {
@@ -3829,6 +4032,26 @@ function {:inline} $1_Vector_$is_empty'$1_DiemAccount_WithdrawCapability'(v: Vec
     $IsEqual'u64'($1_Vector_$length'$1_DiemAccount_WithdrawCapability'(v), 0)
 }
 
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Vector.move:162:9+216
+function {:inline} $1_Vector_eq_push_back'$1_DiemSystem_ValidatorInfo'(v1: Vec ($1_DiemSystem_ValidatorInfo), v2: Vec ($1_DiemSystem_ValidatorInfo), e: $1_DiemSystem_ValidatorInfo): bool {
+    (($IsEqual'num'(LenVec(v1), (LenVec(v2) + 1)) && $IsEqual'$1_DiemSystem_ValidatorInfo'(ReadVec(v1, (LenVec(v1) - 1)), e)) && $IsEqual'vec'$1_DiemSystem_ValidatorInfo''($SliceVecByRange(v1, $Range(0, (LenVec(v1) - 1))), $SliceVecByRange(v2, $Range(0, LenVec(v2)))))
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:86:5+170
+function {:inline} $1_Option_$borrow'u64'(t: $1_Option_Option'u64'): int {
+    $1_Vector_$borrow'u64'($vec#$1_Option_Option'u64'(t), 0)
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:86:5+170
+function {:inline} $1_Option_$borrow'address'(t: $1_Option_Option'address'): int {
+    $1_Vector_$borrow'address'($vec#$1_Option_Option'address'(t), 0)
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:86:5+170
+function {:inline} $1_Option_$borrow'$1_ValidatorConfig_Config'(t: $1_Option_Option'$1_ValidatorConfig_Config'): $1_ValidatorConfig_Config {
+    $1_Vector_$borrow'$1_ValidatorConfig_Config'($vec#$1_Option_Option'$1_ValidatorConfig_Config'(t), 0)
+}
+
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:86:5+170
 function {:inline} $1_Option_$borrow'$1_DiemAccount_KeyRotationCapability'(t: $1_Option_Option'$1_DiemAccount_KeyRotationCapability'): $1_DiemAccount_KeyRotationCapability {
     $1_Vector_$borrow'$1_DiemAccount_KeyRotationCapability'($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(t), 0)
@@ -3840,6 +4063,16 @@ function {:inline} $1_Option_$borrow'$1_DiemAccount_WithdrawCapability'(t: $1_Op
 }
 
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:51:5+95
+function {:inline} $1_Option_$is_none'u64'(t: $1_Option_Option'u64'): bool {
+    $1_Vector_$is_empty'u64'($vec#$1_Option_Option'u64'(t))
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:51:5+95
+function {:inline} $1_Option_$is_none'$1_ValidatorConfig_Config'(t: $1_Option_Option'$1_ValidatorConfig_Config'): bool {
+    $1_Vector_$is_empty'$1_ValidatorConfig_Config'($vec#$1_Option_Option'$1_ValidatorConfig_Config'(t))
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:51:5+95
 function {:inline} $1_Option_$is_none'$1_DiemAccount_KeyRotationCapability'(t: $1_Option_Option'$1_DiemAccount_KeyRotationCapability'): bool {
     $1_Vector_$is_empty'$1_DiemAccount_KeyRotationCapability'($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(t))
 }
@@ -3847,6 +4080,16 @@ function {:inline} $1_Option_$is_none'$1_DiemAccount_KeyRotationCapability'(t: $
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:51:5+95
 function {:inline} $1_Option_$is_none'$1_DiemAccount_WithdrawCapability'(t: $1_Option_Option'$1_DiemAccount_WithdrawCapability'): bool {
     $1_Vector_$is_empty'$1_DiemAccount_WithdrawCapability'($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(t))
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:61:5+96
+function {:inline} $1_Option_$is_some'u64'(t: $1_Option_Option'u64'): bool {
+    !$1_Vector_$is_empty'u64'($vec#$1_Option_Option'u64'(t))
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:61:5+96
+function {:inline} $1_Option_$is_some'address'(t: $1_Option_Option'address'): bool {
+    !$1_Vector_$is_empty'address'($vec#$1_Option_Option'address'(t))
 }
 
 // spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:61:5+96
@@ -3864,6 +4107,29 @@ function {:inline} $1_Option_$is_some'$1_DiemAccount_WithdrawCapability'(t: $1_O
     !$1_Vector_$is_empty'$1_DiemAccount_WithdrawCapability'($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(t))
 }
 
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:46:10+89
+function {:inline} $1_Option_spec_some'address'(e: int): $1_Option_Option'address' {
+    $1_Option_Option'address'(MakeVec1(e))
+}
+
+// spec fun at /home/ying/diem/language/move-stdlib/modules/Option.move:46:10+89
+function {:inline} $1_Option_spec_some'$1_ValidatorConfig_Config'(e: $1_ValidatorConfig_Config): $1_Option_Option'$1_ValidatorConfig_Config' {
+    $1_Option_Option'$1_ValidatorConfig_Config'(MakeVec1(e))
+}
+
+// struct Option::Option<u64> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
+type {:datatype} $1_Option_Option'u64';
+function {:constructor} $1_Option_Option'u64'($vec: Vec (int)): $1_Option_Option'u64';
+function {:inline} $Update'$1_Option_Option'u64''_vec(s: $1_Option_Option'u64', x: Vec (int)): $1_Option_Option'u64' {
+    $1_Option_Option'u64'(x)
+}
+function $IsValid'$1_Option_Option'u64''(s: $1_Option_Option'u64'): bool {
+    $IsValid'vec'u64''($vec#$1_Option_Option'u64'(s))
+}
+function {:inline} $IsEqual'$1_Option_Option'u64''(s1: $1_Option_Option'u64', s2: $1_Option_Option'u64'): bool {
+    s1 == s2
+}
+
 // struct Option::Option<address> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'address';
 function {:constructor} $1_Option_Option'address'($vec: Vec (int)): $1_Option_Option'address';
@@ -3874,7 +4140,8 @@ function $IsValid'$1_Option_Option'address''(s: $1_Option_Option'address'): bool
     $IsValid'vec'address''($vec#$1_Option_Option'address'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'address''(s1: $1_Option_Option'address', s2: $1_Option_Option'address'): bool {
-    $IsEqual'vec'address''($vec#$1_Option_Option'address'(s1), $vec#$1_Option_Option'address'(s2))}
+    s1 == s2
+}
 
 // struct Option::Option<ValidatorConfig::Config> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'$1_ValidatorConfig_Config';
@@ -3886,7 +4153,8 @@ function $IsValid'$1_Option_Option'$1_ValidatorConfig_Config''(s: $1_Option_Opti
     $IsValid'vec'$1_ValidatorConfig_Config''($vec#$1_Option_Option'$1_ValidatorConfig_Config'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'$1_ValidatorConfig_Config''(s1: $1_Option_Option'$1_ValidatorConfig_Config', s2: $1_Option_Option'$1_ValidatorConfig_Config'): bool {
-    $IsEqual'vec'$1_ValidatorConfig_Config''($vec#$1_Option_Option'$1_ValidatorConfig_Config'(s1), $vec#$1_Option_Option'$1_ValidatorConfig_Config'(s2))}
+    s1 == s2
+}
 
 // struct Option::Option<DiemAccount::KeyRotationCapability> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'$1_DiemAccount_KeyRotationCapability';
@@ -3898,7 +4166,8 @@ function $IsValid'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''(s: $1_
     $IsValid'vec'$1_DiemAccount_KeyRotationCapability''($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''(s1: $1_Option_Option'$1_DiemAccount_KeyRotationCapability', s2: $1_Option_Option'$1_DiemAccount_KeyRotationCapability'): bool {
-    $IsEqual'vec'$1_DiemAccount_KeyRotationCapability''($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(s1), $vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'(s2))}
+    s1 == s2
+}
 
 // struct Option::Option<DiemAccount::WithdrawCapability> at /home/ying/diem/language/move-stdlib/modules/Option.move:8:5+81
 type {:datatype} $1_Option_Option'$1_DiemAccount_WithdrawCapability';
@@ -3910,16 +4179,42 @@ function $IsValid'$1_Option_Option'$1_DiemAccount_WithdrawCapability''(s: $1_Opt
     $IsValid'vec'$1_DiemAccount_WithdrawCapability''($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(s))
 }
 function {:inline} $IsEqual'$1_Option_Option'$1_DiemAccount_WithdrawCapability''(s1: $1_Option_Option'$1_DiemAccount_WithdrawCapability', s2: $1_Option_Option'$1_DiemAccount_WithdrawCapability'): bool {
-    $IsEqual'vec'$1_DiemAccount_WithdrawCapability''($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(s1), $vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'(s2))}
+    s1 == s2
+}
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:83:5+84
 function {:inline} $1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): bool {
     $ResourceExists($1_ValidatorConfig_ValidatorConfig_$memory, addr)
 }
 
+// spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:241:5+341
+function {:inline} $1_ValidatorConfig_$get_config($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): $1_ValidatorConfig_Config {
+    (var config := $config#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr)); $1_Option_$borrow'$1_ValidatorConfig_Config'(config))
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:262:5+259
+function {:inline} $1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): Vec (int) {
+    (var t_ref := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr); $human_name#$1_ValidatorConfig_ValidatorConfig(t_ref))
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:277:5+379
+function {:inline} $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): int {
+    (var t_ref := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr); $1_Option_$borrow'address'($operator_account#$1_ValidatorConfig_ValidatorConfig(t_ref)))
+}
+
 // spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:229:5+176
 function {:inline} $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): bool {
     ($ResourceExists($1_ValidatorConfig_ValidatorConfig_$memory, addr) && $1_Option_$is_some'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr))))
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:256:10+111
+function {:inline} $1_ValidatorConfig_spec_get_config($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): $1_ValidatorConfig_Config {
+    $1_Option_$borrow'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr)))
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:362:10+122
+function {:inline} $1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig, addr: int): bool {
+    $1_Option_$is_some'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr)))
 }
 
 // struct ValidatorConfig::ValidatorConfig at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:22:5+260
@@ -3940,9 +4235,8 @@ function $IsValid'$1_ValidatorConfig_ValidatorConfig'(s: $1_ValidatorConfig_Vali
       && $IsValid'vec'u8''($human_name#$1_ValidatorConfig_ValidatorConfig(s))
 }
 function {:inline} $IsEqual'$1_ValidatorConfig_ValidatorConfig'(s1: $1_ValidatorConfig_ValidatorConfig, s2: $1_ValidatorConfig_ValidatorConfig): bool {
-    $IsEqual'$1_Option_Option'$1_ValidatorConfig_Config''($config#$1_ValidatorConfig_ValidatorConfig(s1), $config#$1_ValidatorConfig_ValidatorConfig(s2))
-    && $IsEqual'$1_Option_Option'address''($operator_account#$1_ValidatorConfig_ValidatorConfig(s1), $operator_account#$1_ValidatorConfig_ValidatorConfig(s2))
-    && $IsEqual'vec'u8''($human_name#$1_ValidatorConfig_ValidatorConfig(s1), $human_name#$1_ValidatorConfig_ValidatorConfig(s2))}
+    s1 == s2
+}
 var $1_ValidatorConfig_ValidatorConfig_$memory: $Memory $1_ValidatorConfig_ValidatorConfig;
 
 // struct ValidatorConfig::Config at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:16:5+178
@@ -3963,9 +4257,315 @@ function $IsValid'$1_ValidatorConfig_Config'(s: $1_ValidatorConfig_Config): bool
       && $IsValid'vec'u8''($fullnode_network_addresses#$1_ValidatorConfig_Config(s))
 }
 function {:inline} $IsEqual'$1_ValidatorConfig_Config'(s1: $1_ValidatorConfig_Config, s2: $1_ValidatorConfig_Config): bool {
-    $IsEqual'vec'u8''($consensus_pubkey#$1_ValidatorConfig_Config(s1), $consensus_pubkey#$1_ValidatorConfig_Config(s2))
-    && $IsEqual'vec'u8''($validator_network_addresses#$1_ValidatorConfig_Config(s1), $validator_network_addresses#$1_ValidatorConfig_Config(s2))
-    && $IsEqual'vec'u8''($fullnode_network_addresses#$1_ValidatorConfig_Config(s1), $fullnode_network_addresses#$1_ValidatorConfig_Config(s2))}
+    s1 == s2
+}
+
+// fun ValidatorConfig::exists_config [baseline] at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:83:5+84
+procedure {:inline 1} $1_ValidatorConfig_exists_config(_$t0: int) returns ($ret0: bool)
+{
+    // declare local variables
+    var $t1: bool;
+    var $t0: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    $t0 := _$t0;
+
+    // bytecode translation starts here
+    // trace_local[addr]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:83:5+1
+    assume {:print "$at(37,3335,3336)"} true;
+    assume {:print "$track_local(9,0,0):", $t0} $t0 == $t0;
+
+    // $t1 := exists<ValidatorConfig::ValidatorConfig>($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:84:9+6
+    assume {:print "$at(37,3384,3390)"} true;
+    $t1 := $ResourceExists($1_ValidatorConfig_ValidatorConfig_$memory, $t0);
+
+    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:84:9+29
+    assume {:print "$track_return(9,0,0):", $t1} $t1 == $t1;
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:85:5+1
+    assume {:print "$at(37,3418,3419)"} true;
+L1:
+
+    // return $t1 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:85:5+1
+    $ret0 := $t1;
+    return;
+
+}
+
+// fun ValidatorConfig::set_operator [baseline] at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:99:5+705
+procedure {:inline 1} $1_ValidatorConfig_set_operator(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: int;
+    var $t8: int;
+    var $t9: int;
+    var $t10: bool;
+    var $t11: int;
+    var $t12: bool;
+    var $t13: int;
+    var $t14: int;
+    var $t15: int;
+    var $t16: bool;
+    var $t17: int;
+    var $t18: int;
+    var $t19: $1_Option_Option'address';
+    var $t20: $Mutation ($1_ValidatorConfig_ValidatorConfig);
+    var $t21: $Mutation ($1_Option_Option'address');
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t20));
+    assume IsEmptyVec(p#$Mutation($t21));
+
+    // bytecode translation starts here
+    // assume Identical($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:113:9+56
+    assume {:print "$at(37,4833,4889)"} true;
+    assume ($t7 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t8, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:123:9+64
+    assume {:print "$at(37,5229,5293)"} true;
+    assume ($t8 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t9, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:134:9+64
+    assume {:print "$at(37,5804,5868)"} true;
+    assume ($t9 == $1_Signer_spec_address_of($t0));
+
+    // trace_local[validator_account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:99:5+1
+    assume {:print "$at(37,4004,4005)"} true;
+    assume {:print "$track_local(9,10,0):", $t0} $t0 == $t0;
+
+    // trace_local[operator_addr]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:99:5+1
+    assume {:print "$track_local(9,10,1):", $t1} $t1 == $t1;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+    // >> opaque call: Roles::assert_validator($t0)
+    assume {:print "$at(37,4115,4157)"} true;
+
+    // opaque begin: Roles::assert_validator($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+
+    // assume Identical($t10, Or(Not(exists<Roles::RoleId>(Signer::$address_of($t0))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), 3))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+    assume ($t10 == (!$ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), 3)));
+
+    // if ($t10) goto L7 else goto L6 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+    if ($t10) { goto L7; } else { goto L6; }
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+L7:
+
+    // assume Or(And(Not(exists<Roles::RoleId>(Signer::$address_of($t0))), Eq(5, $t11)), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>(Signer::$address_of($t0))), 3), Eq(3, $t11))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+    assume ((!$ResourceExists($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0)) && $IsEqual'num'(5, $t11)) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $1_Signer_$address_of($t0))), 3) && $IsEqual'num'(3, $t11)));
+
+    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+    assume {:print "$at(37,4115,4157)"} true;
+    assume {:print "$track_abort(9,10):", $t11} $t11 == $t11;
+
+    // goto L5 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+    goto L5;
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+L6:
+
+    // opaque end: Roles::assert_validator($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:100:9+42
+
+    // $t12 := ValidatorOperatorConfig::has_validator_operator_config($t1) on_abort goto L5 with $t11 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:104:13+69
+    assume {:print "$at(37,4316,4385)"} true;
+    call $t12 := $1_ValidatorOperatorConfig_has_validator_operator_config($t1);
+    if ($abort_flag) {
+        assume {:print "$at(37,4316,4385)"} true;
+        $t11 := $abort_code;
+        assume {:print "$track_abort(9,10):", $t11} $t11 == $t11;
+        goto L5;
+    }
+
+    // $t13 := 3 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:105:38+25
+    assume {:print "$at(37,4424,4449)"} true;
+    $t13 := 3;
+    assume $IsValid'u64'($t13);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:105:13+51
+    // >> opaque call: $t9 := Errors::invalid_argument($t8)
+
+    // $t14 := opaque begin: Errors::invalid_argument($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:105:13+51
+
+    // assume WellFormed($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:105:13+51
+    assume $IsValid'u64'($t14);
+
+    // assume Eq<u64>($t14, 7) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:105:13+51
+    assume $IsEqual'u64'($t14, 7);
+
+    // $t14 := opaque end: Errors::invalid_argument($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:105:13+51
+
+    // trace_local[tmp#$3]($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+    assume {:print "$at(37,4296,4460)"} true;
+    assume {:print "$track_local(9,10,3):", $t14} $t14 == $t14;
+
+    // trace_local[tmp#$2]($t12) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+    assume {:print "$track_local(9,10,2):", $t12} $t12 == $t12;
+
+    // if ($t12) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+    if ($t12) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+L1:
+
+    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+
+    // trace_abort($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+    assume {:print "$at(37,4296,4460)"} true;
+    assume {:print "$track_abort(9,10):", $t14} $t14 == $t14;
+
+    // $t11 := move($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+    $t11 := $t14;
+
+    // goto L5 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:103:9+164
+    goto L5;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:41+17
+    assume {:print "$at(37,4502,4519)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:22+37
+    // >> opaque call: $t10 := Signer::address_of($t0)
+
+    // $t15 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:22+37
+
+    // assume WellFormed($t15) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:22+37
+    assume $IsValid'address'($t15);
+
+    // assume Eq<address>($t15, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:22+37
+    assume $IsEqual'address'($t15, $1_Signer_spec_address_of($t0));
+
+    // $t15 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:22+37
+
+    // trace_local[sender]($t15) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:107:13+6
+    assume {:print "$track_local(9,10,6):", $t15} $t15 == $t15;
+
+    // $t16 := ValidatorConfig::exists_config($t15) on_abort goto L5 with $t11 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:16+21
+    assume {:print "$at(37,4537,4558)"} true;
+    call $t16 := $1_ValidatorConfig_exists_config($t15);
+    if ($abort_flag) {
+        assume {:print "$at(37,4537,4558)"} true;
+        $t11 := $abort_code;
+        assume {:print "$track_abort(9,10):", $t11} $t11 == $t11;
+        goto L5;
+    }
+
+    // $t17 := 0 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:61+17
+    $t17 := 0;
+    assume $IsValid'u64'($t17);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:39+40
+    // >> opaque call: $t13 := Errors::not_published($t12)
+
+    // $t18 := opaque begin: Errors::not_published($t17) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:39+40
+
+    // assume WellFormed($t18) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:39+40
+    assume $IsValid'u64'($t18);
+
+    // assume Eq<u64>($t18, 5) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:39+40
+    assume $IsEqual'u64'($t18, 5);
+
+    // $t18 := opaque end: Errors::not_published($t17) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:39+40
+
+    // trace_local[tmp#$5]($t18) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+    assume {:print "$track_local(9,10,5):", $t18} $t18 == $t18;
+
+    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+    assume {:print "$track_local(9,10,4):", $t16} $t16 == $t16;
+
+    // if ($t16) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+    if ($t16) { goto L2; } else { goto L3; }
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+L3:
+
+    // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+    assume {:print "$at(37,4530,4601)"} true;
+    assume {:print "$track_abort(9,10):", $t18} $t18 == $t18;
+
+    // $t11 := move($t18) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+    $t11 := $t18;
+
+    // goto L5 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:108:9+71
+    goto L5;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:86+13
+    assume {:print "$at(37,4688,4701)"} true;
+L2:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:73+27
+    // >> opaque call: $t14 := Option::some<address>($t1)
+
+    // $t19 := opaque begin: Option::some<address>($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:73+27
+
+    // assume And(WellFormed($t19), Le(Len<address>(select Option::Option.vec($t19)), 1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:73+27
+    assume ($IsValid'$1_Option_Option'address''($t19) && (LenVec($vec#$1_Option_Option'address'($t19)) <= 1));
+
+    // assume Eq<Option::Option<address>>($t19, Option::spec_some<address>($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:73+27
+    assume $IsEqual'$1_Option_Option'address''($t19, $1_Option_spec_some'address'($t1));
+
+    // $t19 := opaque end: Option::some<address>($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:73+27
+
+    // $t20 := borrow_global<ValidatorConfig::ValidatorConfig>($t15) on_abort goto L5 with $t11 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:10+17
+    if (!$ResourceExists($1_ValidatorConfig_ValidatorConfig_$memory, $t15)) {
+        call $ExecFailureAbort();
+    } else {
+        $t20 := $Mutation($Global($t15), EmptyVec(), $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $t15));
+    }
+    if ($abort_flag) {
+        assume {:print "$at(37,4612,4629)"} true;
+        $t11 := $abort_code;
+        assume {:print "$track_abort(9,10):", $t11} $t11 == $t11;
+        goto L5;
+    }
+
+    // $t21 := borrow_field<ValidatorConfig::ValidatorConfig>.operator_account($t20) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:9+61
+    $t21 := $ChildMutation($t20, 1, $operator_account#$1_ValidatorConfig_ValidatorConfig($Dereference($t20)));
+
+    // write_ref($t21, $t19) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:9+91
+    $t21 := $UpdateMutation($t21, $t19);
+
+    // write_back[Reference($t20).operator_account]($t21) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:9+91
+    $t20 := $UpdateMutation($t20, $Update'$1_ValidatorConfig_ValidatorConfig'_operator_account($Dereference($t20), $Dereference($t21)));
+
+    // pack_ref_deep($t20) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:9+91
+
+    // write_back[ValidatorConfig::ValidatorConfig@]($t20) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:109:9+91
+    $1_ValidatorConfig_ValidatorConfig_$memory := $ResourceUpdate($1_ValidatorConfig_ValidatorConfig_$memory, $GlobalLocationAddress($t20),
+        $Dereference($t20));
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:110:5+1
+    assume {:print "$at(37,4708,4709)"} true;
+L4:
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:110:5+1
+    return;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:110:5+1
+L5:
+
+    // abort($t11) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:110:5+1
+    $abort_code := $t11;
+    $abort_flag := true;
+    return;
+
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:257:10+64
+function {:inline} $1_SlidingNonce_spec_try_record_nonce(account: $signer, seq_nonce: int): int;
+axiom (forall account: $signer, seq_nonce: int ::
+(var $$res := $1_SlidingNonce_spec_try_record_nonce(account, seq_nonce);
+$IsValid'u64'($$res)));
 
 // struct SlidingNonce::SlidingNonce at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:11:5+341
 type {:datatype} $1_SlidingNonce_SlidingNonce;
@@ -3984,6 +4584,147 @@ function {:inline} $IsEqual'$1_SlidingNonce_SlidingNonce'(s1: $1_SlidingNonce_Sl
     s1 == s2
 }
 var $1_SlidingNonce_SlidingNonce_$memory: $Memory $1_SlidingNonce_SlidingNonce;
+
+// fun SlidingNonce::record_nonce_or_abort [baseline] at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+212
+procedure {:inline 1} $1_SlidingNonce_record_nonce_or_abort(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: int;
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: int;
+    var $t9: bool;
+    var $t10: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $temp_0'$1_SlidingNonce_SlidingNonce': $1_SlidingNonce_SlidingNonce;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+
+    // bytecode translation starts here
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+1
+    assume {:print "$at(30,1585,1586)"} true;
+    assume {:print "$track_local(10,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[seq_nonce]($t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:35:5+1
+    assume {:print "$track_local(10,1,1):", $t1} $t1 == $t1;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    // >> opaque call: $t5 := SlidingNonce::try_record_nonce($t0, $t1)
+    assume {:print "$at(30,1695,1731)"} true;
+
+    // $t5 := opaque begin: SlidingNonce::try_record_nonce($t0, $t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+
+    // assume Identical($t6, Not(exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    assume ($t6 == !$ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0)));
+
+    // if ($t6) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    if ($t6) { goto L5; } else { goto L4; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+L5:
+
+    // assume And(Not(exists<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0))), Eq(5, $t7)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    assume (!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t7));
+
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    assume {:print "$at(30,1695,1731)"} true;
+    assume {:print "$track_abort(10,1):", $t7} $t7 == $t7;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    goto L3;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+L4:
+
+    // modifies global<SlidingNonce::SlidingNonce>(Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_SlidingNonce_SlidingNonce';
+        $1_SlidingNonce_SlidingNonce_$memory := $ResourceUpdate($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0), $temp_0'$1_SlidingNonce_SlidingNonce');
+    } else {
+        $1_SlidingNonce_SlidingNonce_$memory := $ResourceRemove($1_SlidingNonce_SlidingNonce_$memory, $1_Signer_spec_address_of($t0));
+    }
+
+    // assume WellFormed($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    assume $IsValid'u64'($t5);
+
+    // assume Eq<u64>($t5, SlidingNonce::spec_try_record_nonce($t0, $t1)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+    assume $IsEqual'u64'($t5, $1_SlidingNonce_spec_try_record_nonce($t0, $t1));
+
+    // $t5 := opaque end: SlidingNonce::try_record_nonce($t0, $t1) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:20+36
+
+    // trace_local[code]($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:36:13+4
+    assume {:print "$track_local(10,1,4):", $t5} $t5 == $t5;
+
+    // $t8 := 0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:24+1
+    assume {:print "$at(30,1756,1757)"} true;
+    $t8 := 0;
+    assume $IsValid'u64'($t8);
+
+    // $t9 := ==($t5, $t8) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:21+2
+    $t9 := $IsEqual'u64'($t5, $t8);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
+    // >> opaque call: $t8 := Errors::invalid_argument($t5)
+
+    // $t10 := opaque begin: Errors::invalid_argument($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
+
+    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
+    assume $IsValid'u64'($t10);
+
+    // assume Eq<u64>($t10, 7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
+    assume $IsEqual'u64'($t10, 7);
+
+    // $t10 := opaque end: Errors::invalid_argument($t5) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:27+30
+
+    // trace_local[tmp#$3]($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    assume {:print "$track_local(10,1,3):", $t10} $t10 == $t10;
+
+    // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    assume {:print "$track_local(10,1,2):", $t9} $t9 == $t9;
+
+    // if ($t9) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    if ($t9) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+L1:
+
+    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    assume {:print "$at(30,1741,1790)"} true;
+    assume {:print "$track_abort(10,1):", $t10} $t10 == $t10;
+
+    // $t7 := move($t10) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    $t7 := $t10;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:9+49
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:37:58+1
+L0:
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:38:5+1
+    assume {:print "$at(30,1796,1797)"} true;
+L2:
+
+    // return () at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:38:5+1
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:38:5+1
+L3:
+
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:38:5+1
+    $abort_code := $t7;
+    $abort_flag := true;
+    return;
+
+}
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:89:5+260
 function {:inline} $1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'): $1_DiemSystem_DiemSystem {
@@ -4013,6 +4754,11 @@ function {:inline} $1_DiemConfig_$get'$1_DiemVersion_DiemVersion'($1_DiemConfig_
 // spec fun at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:200:5+94
 function {:inline} $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory: $Memory $1_DiemConfig_DisableReconfiguration): bool {
     !$ResourceExists($1_DiemConfig_DisableReconfiguration_$memory, 173345816)
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:320:10+156
+function {:inline} $1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds, $1_DiemConfig_DisableReconfiguration_$memory: $Memory $1_DiemConfig_DisableReconfiguration): bool {
+    (($1_DiemTimestamp_$is_genesis($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) || $IsEqual'u64'($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory), 0)) || !$1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory))
 }
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:437:9+84
@@ -4055,7 +4801,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''(s: $1_Diem
     $IsValid'$1_DiemSystem_DiemSystem'($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''(s1: $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem', s2: $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'): bool {
-    $IsEqual'$1_DiemSystem_DiemSystem'($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'(s1), $payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
 
 // struct DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4068,7 +4815,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCur
     $IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'($payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies''(s1: $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies', s2: $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'): bool {
-    $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'(s1), $payload#$1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies';
 
 // struct DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4081,7 +4829,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_Di
     $IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption''(s1: $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption', s2: $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'): bool {
-    $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s1), $payload#$1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption';
 
 // struct DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4094,7 +4843,8 @@ function $IsValid'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''(s: $1_
     $IsValid'$1_DiemVMConfig_DiemVMConfig'($payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig''(s1: $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig', s2: $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'): bool {
-    $IsEqual'$1_DiemVMConfig_DiemVMConfig'($payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'(s1), $payload#$1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig';
 
 // struct DiemConfig::DiemConfig<DiemVersion::DiemVersion> at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:12:5+156
@@ -4129,9 +4879,8 @@ function $IsValid'$1_DiemConfig_Configuration'(s: $1_DiemConfig_Configuration): 
       && $IsValid'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''($events#$1_DiemConfig_Configuration(s))
 }
 function {:inline} $IsEqual'$1_DiemConfig_Configuration'(s1: $1_DiemConfig_Configuration, s2: $1_DiemConfig_Configuration): bool {
-    $IsEqual'u64'($epoch#$1_DiemConfig_Configuration(s1), $epoch#$1_DiemConfig_Configuration(s2))
-    && $IsEqual'u64'($last_reconfiguration_time#$1_DiemConfig_Configuration(s1), $last_reconfiguration_time#$1_DiemConfig_Configuration(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemConfig_NewEpochEvent''($events#$1_DiemConfig_Configuration(s1), $events#$1_DiemConfig_Configuration(s2))}
+    s1 == s2
+}
 var $1_DiemConfig_Configuration_$memory: $Memory $1_DiemConfig_Configuration;
 
 // struct DiemConfig::DisableReconfiguration at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:38:5+40
@@ -4231,6 +4980,22 @@ function {:inline} $IsEqual'$1_DiemConfig_NewEpochEvent'(s1: $1_DiemConfig_NewEp
     s1 == s2
 }
 
+// spec fun at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:369:5+93
+function {:inline} $1_DiemSystem_$get_diem_system_config($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'): $1_DiemSystem_DiemSystem {
+    $1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory)
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:411:5+105
+function {:inline} $1_DiemSystem_$validator_set_size($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'): int {
+    $1_Vector_$length'$1_DiemSystem_ValidatorInfo'($validators#$1_DiemSystem_DiemSystem($1_DiemSystem_$get_diem_system_config($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory)))
+}
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:390:10+108
+function {:inline} $1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem', addr: int): bool {
+    (var $range_0 := $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory); (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var v := ReadVec($range_0, $i_1);
+    ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(v), addr)))))
+}
+
 // spec fun at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:597:10+105
 function {:inline} $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'): Vec ($1_DiemSystem_ValidatorInfo) {
     $validators#$1_DiemSystem_DiemSystem($1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))
@@ -4250,8 +5015,8 @@ function $IsValid'$1_DiemSystem_DiemSystem'(s: $1_DiemSystem_DiemSystem): bool {
       && $IsValid'vec'$1_DiemSystem_ValidatorInfo''($validators#$1_DiemSystem_DiemSystem(s))
 }
 function {:inline} $IsEqual'$1_DiemSystem_DiemSystem'(s1: $1_DiemSystem_DiemSystem, s2: $1_DiemSystem_DiemSystem): bool {
-    $IsEqual'u8'($scheme#$1_DiemSystem_DiemSystem(s1), $scheme#$1_DiemSystem_DiemSystem(s2))
-    && $IsEqual'vec'$1_DiemSystem_ValidatorInfo''($validators#$1_DiemSystem_DiemSystem(s1), $validators#$1_DiemSystem_DiemSystem(s2))}
+    s1 == s2
+}
 
 // struct DiemSystem::CapabilityHolder at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:39:5+242
 type {:datatype} $1_DiemSystem_CapabilityHolder;
@@ -4289,10 +5054,691 @@ function $IsValid'$1_DiemSystem_ValidatorInfo'(s: $1_DiemSystem_ValidatorInfo): 
       && $IsValid'u64'($last_config_update_time#$1_DiemSystem_ValidatorInfo(s))
 }
 function {:inline} $IsEqual'$1_DiemSystem_ValidatorInfo'(s1: $1_DiemSystem_ValidatorInfo, s2: $1_DiemSystem_ValidatorInfo): bool {
-    $IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(s1), $addr#$1_DiemSystem_ValidatorInfo(s2))
-    && $IsEqual'u64'($consensus_voting_power#$1_DiemSystem_ValidatorInfo(s1), $consensus_voting_power#$1_DiemSystem_ValidatorInfo(s2))
-    && $IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(s1), $config#$1_DiemSystem_ValidatorInfo(s2))
-    && $IsEqual'u64'($last_config_update_time#$1_DiemSystem_ValidatorInfo(s1), $last_config_update_time#$1_DiemSystem_ValidatorInfo(s2))}
+    s1 == s2
+}
+
+// fun DiemSystem::add_validator [baseline] at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:157:5+1334
+procedure {:inline 1} $1_DiemSystem_add_validator(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: $Mutation (Vec ($1_DiemSystem_ValidatorInfo));
+    var $t5: int;
+    var $t6: bool;
+    var $t7: int;
+    var $t8: bool;
+    var $t9: int;
+    var $t10: int;
+    var $t11: $1_ValidatorConfig_Config;
+    var $t12: int;
+    var $t13: $1_ValidatorConfig_Config;
+    var $t14: $1_DiemSystem_DiemSystem;
+    var $t15: int;
+    var $t16: $1_DiemConfig_Configuration;
+    var $t17: int;
+    var $t18: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t19: $1_DiemConfig_Configuration;
+    var $t20: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t21: int;
+    var $t22: bool;
+    var $t23: int;
+    var $t24: int;
+    var $t25: bool;
+    var $t26: bool;
+    var $t27: int;
+    var $t28: int;
+    var $t29: int;
+    var $t30: bool;
+    var $t31: int;
+    var $t32: bool;
+    var $t33: int;
+    var $t34: int;
+    var $t35: bool;
+    var $t36: $1_DiemSystem_DiemSystem;
+    var $t37: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t38: bool;
+    var $t39: bool;
+    var $t40: int;
+    var $t41: int;
+    var $t42: $1_ValidatorConfig_Config;
+    var $t43: bool;
+    var $t44: $Mutation ($1_DiemSystem_DiemSystem);
+    var $t45: $Mutation (Vec ($1_DiemSystem_ValidatorInfo));
+    var $t46: int;
+    var $t47: bool;
+    var $t48: int;
+    var $t49: $1_DiemSystem_ValidatorInfo;
+    var $t50: $1_DiemSystem_DiemSystem;
+    var $t51: $1_DiemConfig_Configuration;
+    var $t52: int;
+    var $t53: $1_DiemConfig_Configuration;
+    var $t54: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t55: bool;
+    var $t56: $1_DiemConfig_Configuration;
+    var $t57: int;
+    var $t58: $1_DiemConfig_NewEpochEvent;
+    var $t59: $1_DiemConfig_NewEpochEvent;
+    var $t60: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t61: bool;
+    var $t0: $signer;
+    var $t1: int;
+    var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$modifies: [int]bool;
+    var $temp_0'$1_DiemConfig_Configuration': $1_DiemConfig_Configuration;
+    var $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'': $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
+    var $temp_0'$1_DiemSystem_DiemSystem': $1_DiemSystem_DiemSystem;
+    var $temp_0'$1_ValidatorConfig_Config': $1_ValidatorConfig_Config;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $temp_0'vec'$1_DiemSystem_ValidatorInfo'': Vec ($1_DiemSystem_ValidatorInfo);
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t4));
+    assume IsEmptyVec(p#$Mutation($t44));
+    assume IsEmptyVec(p#$Mutation($t45));
+
+    // bytecode translation starts here
+    // assume Identical($t15, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t15 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t16, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t16 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t17, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t17 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t18, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:217:9+31
+    assume {:print "$at(16,9868,9899)"} true;
+    assume ($t18 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t19, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t19 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t20, select DiemConfig::Configuration.events($t19)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t20 == $events#$1_DiemConfig_Configuration($t19));
+
+    // assume Identical($t21, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t21 == $1_Signer_spec_address_of($t0));
+
+    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:157:5+1
+    assume {:print "$at(16,7201,7202)"} true;
+    assume {:print "$track_local(14,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[validator_addr]($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:157:5+1
+    assume {:print "$track_local(14,0,1):", $t1} $t1 == $t1;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+    // >> opaque call: DiemTimestamp::assert_operating()
+    assume {:print "$at(16,7331,7364)"} true;
+
+    // opaque begin: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+
+    // assume Identical($t22, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+    assume ($t22 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // if ($t22) goto L9 else goto L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+    if ($t22) { goto L9; } else { goto L8; }
+
+    // label L9 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+L9:
+
+    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t23)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t23));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+    assume {:print "$at(16,7331,7364)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+    goto L7;
+
+    // label L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+L8:
+
+    // opaque end: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:162:9+33
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    // >> opaque call: Roles::assert_diem_root($t0)
+    assume {:print "$at(16,7374,7409)"} true;
+
+    // assume Identical($t24, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t24 == $1_Signer_spec_address_of($t0));
+
+    // opaque begin: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    assume {:print "$at(16,7374,7409)"} true;
+
+    // assume Identical($t25, Or(Or(Or(Neq<address>(Signer::spec_address_of($t0), a550c18), Not(exists<Roles::RoleId>($t24))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t24)), 0)), Neq<address>(Signer::spec_address_of($t0), a550c18))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    assume ($t25 == (((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory, $t24)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t24)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)));
+
+    // if ($t25) goto L11 else goto L10 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    if ($t25) { goto L11; } else { goto L10; }
+
+    // label L11 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+L11:
+
+    // assume Or(Or(Or(And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t23)), And(Not(exists<Roles::RoleId>($t24)), Eq(5, $t23))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t24)), 0), Eq(3, $t23))), And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t23))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    assume ((((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t23)) || (!$ResourceExists($1_Roles_RoleId_$memory, $t24) && $IsEqual'num'(5, $t23))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t24)), 0) && $IsEqual'num'(3, $t23))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t23)));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    assume {:print "$at(16,7374,7409)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+    goto L7;
+
+    // label L10 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+L10:
+
+    // opaque end: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:163:9+35
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:16+41
+    // >> opaque call: $t15 := ValidatorConfig::is_valid($t1)
+    assume {:print "$at(16,7499,7540)"} true;
+
+    // $t26 := opaque begin: ValidatorConfig::is_valid($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:16+41
+
+    // assume WellFormed($t26) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:16+41
+    assume $IsValid'bool'($t26);
+
+    // assume Eq<bool>($t26, ValidatorConfig::$is_valid($t1)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:16+41
+    assume $IsEqual'bool'($t26, $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1));
+
+    // $t26 := opaque end: ValidatorConfig::is_valid($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:16+41
+
+    // $t27 := 1 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:84+30
+    $t27 := 1;
+    assume $IsValid'u64'($t27);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:59+56
+    // >> opaque call: $t17 := Errors::invalid_argument($t16)
+
+    // $t28 := opaque begin: Errors::invalid_argument($t27) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:59+56
+
+    // assume WellFormed($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:59+56
+    assume $IsValid'u64'($t28);
+
+    // assume Eq<u64>($t28, 7) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:59+56
+    assume $IsEqual'u64'($t28, 7);
+
+    // $t28 := opaque end: Errors::invalid_argument($t27) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:59+56
+
+    // trace_local[tmp#$5]($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+    assume {:print "$track_local(14,0,5):", $t28} $t28 == $t28;
+
+    // trace_local[tmp#$2]($t26) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+    assume {:print "$track_local(14,0,2):", $t26} $t26 == $t26;
+
+    // if ($t26) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+    if ($t26) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+L1:
+
+    // trace_abort($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+    assume {:print "$at(16,7492,7599)"} true;
+    assume {:print "$track_abort(14,0):", $t28} $t28 == $t28;
+
+    // $t23 := move($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+    $t23 := $t28;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:165:9+107
+    goto L7;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    assume {:print "$at(16,7670,7690)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    // >> opaque call: $t18 := DiemSystem::validator_set_size()
+
+    // $t29 := opaque begin: DiemSystem::validator_set_size() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+
+    // assume Identical($t30, Not(exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    assume ($t30 == !$ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816));
+
+    // if ($t30) goto L13 else goto L12 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    if ($t30) { goto L13; } else { goto L12; }
+
+    // label L13 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+L13:
+
+    // assume And(Not(exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18)), Eq(5, $t23)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    assume (!$ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816) && $IsEqual'num'(5, $t23));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    assume {:print "$at(16,7670,7690)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    goto L7;
+
+    // label L12 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+L12:
+
+    // assume WellFormed($t29) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    assume $IsValid'u64'($t29);
+
+    // assume Eq<u64>($t29, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+    assume $IsEqual'u64'($t29, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory)));
+
+    // $t29 := opaque end: DiemSystem::validator_set_size() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:13+20
+
+    // $t31 := 256 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:36+14
+    $t31 := 256;
+    assume $IsValid'u64'($t31);
+
+    // $t32 := <($t29, $t31) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:169:34+1
+    call $t32 := $Lt($t29, $t31);
+
+    // $t33 := 7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:170:36+15
+    assume {:print "$at(16,7744,7759)"} true;
+    $t33 := 7;
+    assume $IsValid'u64'($t33);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:170:13+39
+    // >> opaque call: $t22 := Errors::limit_exceeded($t21)
+
+    // $t34 := opaque begin: Errors::limit_exceeded($t33) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:170:13+39
+
+    // assume WellFormed($t34) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:170:13+39
+    assume $IsValid'u64'($t34);
+
+    // assume Eq<u64>($t34, 8) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:170:13+39
+    assume $IsEqual'u64'($t34, 8);
+
+    // $t34 := opaque end: Errors::limit_exceeded($t33) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:170:13+39
+
+    // trace_local[tmp#$7]($t34) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+    assume {:print "$at(16,7650,7770)"} true;
+    assume {:print "$track_local(14,0,7):", $t34} $t34 == $t34;
+
+    // trace_local[tmp#$6]($t32) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+    assume {:print "$track_local(14,0,6):", $t32} $t32 == $t32;
+
+    // if ($t32) goto L2 else goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+    if ($t32) { goto L2; } else { goto L3; }
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+L3:
+
+    // trace_abort($t34) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+    assume {:print "$at(16,7650,7770)"} true;
+    assume {:print "$track_abort(14,0):", $t34} $t34 == $t34;
+
+    // $t23 := move($t34) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+    $t23 := $t34;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:168:9+120
+    goto L7;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    assume {:print "$at(16,7806,7830)"} true;
+L2:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    // >> opaque call: $t14 := DiemSystem::get_diem_system_config()
+
+    // $t14 := opaque begin: DiemSystem::get_diem_system_config() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+
+    // assume Identical($t35, Not(exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    assume ($t35 == !$ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816));
+
+    // if ($t35) goto L15 else goto L14 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    if ($t35) { goto L15; } else { goto L14; }
+
+    // label L15 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+L15:
+
+    // assume And(Not(exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18)), Eq(5, $t23)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    assume (!$ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816) && $IsEqual'num'(5, $t23));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    assume {:print "$at(16,7806,7830)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    goto L7;
+
+    // label L14 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+L14:
+
+    // assume And(WellFormed($t14), forall i: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators($t14))), j: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators($t14))): Implies(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators($t14), i)), select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators($t14), j))), Eq<num>(i, j))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    assume ($IsValid'$1_DiemSystem_DiemSystem'($t14) && (var $range_0 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($t14))); (var $range_1 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($t14))); (forall $i_2: int, $i_3: int :: $InRange($range_0, $i_2) ==> $InRange($range_1, $i_3) ==> (var i := $i_2;
+    (var j := $i_3;
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($t14), i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($t14), j))) ==> $IsEqual'num'(i, j)))))))));
+
+    // assume Eq<DiemSystem::DiemSystem>($t14, DiemConfig::$get<DiemSystem::DiemSystem>()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+    assume $IsEqual'$1_DiemSystem_DiemSystem'($t14, $1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // $t14 := opaque end: DiemSystem::get_diem_system_config() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:34+24
+
+    // trace_local[diem_system_config]($t14) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:173:13+18
+    assume {:print "$track_local(14,0,14):", $t14} $t14 == $t14;
+
+    // $t36 := copy($t14) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:45+18
+    assume {:print "$at(16,7956,7974)"} true;
+    $t36 := $t14;
+
+    // $t37 := get_field<DiemSystem::DiemSystem>.validators($t36) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:44+30
+    $t37 := $validators#$1_DiemSystem_DiemSystem($t36);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:14+61
+    // >> opaque call: $t25 := DiemSystem::is_validator_($t1, $t24)
+
+    // $t38 := opaque begin: DiemSystem::is_validator_($t1, $t37) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:14+61
+
+    // assume WellFormed($t38) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:14+61
+    assume $IsValid'bool'($t38);
+
+    // assume Eq<bool>($t38, exists v: $t37: Eq<address>(select DiemSystem::ValidatorInfo.addr(v), $t1)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:14+61
+    assume $IsEqual'bool'($t38, (var $range_0 := $t37; (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var v := ReadVec($range_0, $i_1);
+    ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(v), $t1))))));
+
+    // $t38 := opaque end: DiemSystem::is_validator_($t1, $t37) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:14+61
+
+    // $t39 := !($t38) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:177:13+1
+    call $t39 := $Not($t38);
+
+    // $t40 := 2 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:178:38+20
+    assume {:print "$at(16,8025,8045)"} true;
+    $t40 := 2;
+    assume $IsValid'u64'($t40);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:178:13+46
+    // >> opaque call: $t28 := Errors::invalid_argument($t27)
+
+    // $t41 := opaque begin: Errors::invalid_argument($t40) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:178:13+46
+
+    // assume WellFormed($t41) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:178:13+46
+    assume $IsValid'u64'($t41);
+
+    // assume Eq<u64>($t41, 7) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:178:13+46
+    assume $IsEqual'u64'($t41, 7);
+
+    // $t41 := opaque end: Errors::invalid_argument($t40) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:178:13+46
+
+    // trace_local[tmp#$9]($t41) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+    assume {:print "$at(16,7904,8056)"} true;
+    assume {:print "$track_local(14,0,9):", $t41} $t41 == $t41;
+
+    // trace_local[tmp#$8]($t39) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+    assume {:print "$track_local(14,0,8):", $t39} $t39 == $t39;
+
+    // if ($t39) goto L4 else goto L5 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+    if ($t39) { goto L4; } else { goto L5; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+L5:
+
+    // trace_abort($t41) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+    assume {:print "$at(16,7904,8056)"} true;
+    assume {:print "$track_abort(14,0):", $t41} $t41 == $t41;
+
+    // $t23 := move($t41) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+    $t23 := $t41;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:176:9+152
+    goto L7;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:50+14
+    assume {:print "$at(16,8165,8179)"} true;
+L4:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    // >> opaque call: $t29 := ValidatorConfig::get_config($t1)
+
+    // $t42 := opaque begin: ValidatorConfig::get_config($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+
+    // assume Identical($t43, Or(Not(ValidatorConfig::$exists_config($t1)), Option::$is_none<ValidatorConfig::Config>(select ValidatorConfig::ValidatorConfig.config(global<ValidatorConfig::ValidatorConfig>($t1))))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    assume ($t43 == (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1) || $1_Option_$is_none'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $t1)))));
+
+    // if ($t43) goto L17 else goto L16 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    if ($t43) { goto L17; } else { goto L16; }
+
+    // label L17 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+L17:
+
+    // assume Or(And(Not(ValidatorConfig::$exists_config($t1)), Eq(5, $t23)), And(Option::$is_none<ValidatorConfig::Config>(select ValidatorConfig::ValidatorConfig.config(global<ValidatorConfig::ValidatorConfig>($t1))), Eq(7, $t23))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    assume ((!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(5, $t23)) || ($1_Option_$is_none'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $t1))) && $IsEqual'num'(7, $t23)));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    assume {:print "$at(16,8137,8180)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    goto L7;
+
+    // label L16 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+L16:
+
+    // assume WellFormed($t42) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    assume $IsValid'$1_ValidatorConfig_Config'($t42);
+
+    // assume Eq<ValidatorConfig::Config>($t42, ValidatorConfig::spec_get_config($t1)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+    assume $IsEqual'$1_ValidatorConfig_Config'($t42, $1_ValidatorConfig_spec_get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1));
+
+    // $t42 := opaque end: ValidatorConfig::get_config($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:22+43
+
+    // trace_local[config]($t42) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:182:13+6
+    assume {:print "$track_local(14,0,13):", $t42} $t42 == $t42;
+
+    // $t44 := borrow_local($t14) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:32+18
+    assume {:print "$at(16,8213,8231)"} true;
+    $t44 := $Mutation($Local(14), EmptyVec(), $t14);
+
+    // $t45 := borrow_field<DiemSystem::DiemSystem>.validators($t44) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:27+34
+    $t45 := $ChildMutation($t44, 1, $validators#$1_DiemSystem_DiemSystem($Dereference($t44)));
+
+    // trace_local[tmp#$4]($t45) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:27+34
+    $temp_0'vec'$1_DiemSystem_ValidatorInfo'' := $Dereference($t45);
+    assume {:print "$track_local(14,0,4):", $temp_0'vec'$1_DiemSystem_ValidatorInfo''} $temp_0'vec'$1_DiemSystem_ValidatorInfo'' == $temp_0'vec'$1_DiemSystem_ValidatorInfo'';
+
+    // trace_local[tmp#$10]($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:184:19+14
+    assume {:print "$at(16,8278,8292)"} true;
+    assume {:print "$track_local(14,0,10):", $t1} $t1 == $t1;
+
+    // trace_local[tmp#$11]($t42) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:185:13+6
+    assume {:print "$at(16,8306,8312)"} true;
+    assume {:print "$track_local(14,0,11):", $t42} $t42 == $t42;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    // >> opaque call: $t32 := DiemTimestamp::now_microseconds()
+    assume {:print "$at(16,8430,8463)"} true;
+
+    // $t46 := opaque begin: DiemTimestamp::now_microseconds() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+
+    // assume Identical($t47, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    assume ($t47 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // if ($t47) goto L22 else goto L18 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    if ($t47) { goto L22; } else { goto L18; }
+
+    // label L19 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+L19:
+
+    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t23)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t23));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    assume {:print "$at(16,8430,8463)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    goto L7;
+
+    // label L18 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+L18:
+
+    // assume WellFormed($t46) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    assume $IsValid'u64'($t46);
+
+    // assume Eq<u64>($t46, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    assume $IsEqual'u64'($t46, $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // $t46 := opaque end: DiemTimestamp::now_microseconds() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+
+    // trace_local[tmp#$3]($t46) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:187:38+33
+    assume {:print "$track_local(14,0,3):", $t46} $t46 == $t46;
+
+    // $t48 := 1 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:186:37+1
+    assume {:print "$at(16,8390,8391)"} true;
+    $t48 := 1;
+    assume $IsValid'u64'($t48);
+
+    // $t49 := pack DiemSystem::ValidatorInfo($t1, $t48, $t42, $t46) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:63+230
+    assume {:print "$at(16,8244,8474)"} true;
+    $t49 := $1_DiemSystem_ValidatorInfo($t1, $t48, $t42, $t46);
+
+    // Vector::push_back<DiemSystem::ValidatorInfo>($t45, $t49) on_abort goto L7 with $t23 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:9+285
+    call $t45 := $1_Vector_push_back'$1_DiemSystem_ValidatorInfo'($t45, $t49);
+    if ($abort_flag) {
+        assume {:print "$at(16,8190,8475)"} true;
+        $t23 := $abort_code;
+        assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+        goto L7;
+    }
+
+    // write_back[Reference($t44).validators]($t45) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:9+285
+    $t44 := $UpdateMutation($t44, $Update'$1_DiemSystem_DiemSystem'_validators($Dereference($t44), $Dereference($t45)));
+
+    // pack_ref_deep($t44) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:9+285
+
+    // write_back[LocalRoot($t14)@]($t44) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:183:9+285
+    $t14 := $Dereference($t44);
+
+    // $t50 := move($t14) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:32+18
+    assume {:print "$at(16,8509,8527)"} true;
+    $t50 := $t14;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    // >> opaque call: DiemSystem::set_diem_system_config($t35)
+
+    // assume Identical($t51, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t51 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t52, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t52 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t53, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t53 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t54, select DiemConfig::Configuration.events($t53)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t54 == $events#$1_DiemConfig_Configuration($t53));
+
+    // opaque begin: DiemSystem::set_diem_system_config($t50) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    assume {:print "$at(16,8486,8528)"} true;
+
+    // assume Identical($t55, Or(Not(DiemTimestamp::$is_operating()), And(And(And(And(DiemTimestamp::$is_operating(), DiemConfig::$reconfiguration_enabled()), Gt(DiemTimestamp::spec_now_microseconds(), 0)), Lt(select DiemConfig::Configuration.epoch($t51), 18446744073709551615)), Lt($t52, select DiemConfig::Configuration.last_reconfiguration_time($t51))))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    assume ($t55 == (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) || (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) > 0)) && ($epoch#$1_DiemConfig_Configuration($t51) < 18446744073709551615)) && ($t52 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t51)))));
+
+    // if ($t55) goto L21 else goto L20 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    if ($t55) { goto L21; } else { goto L20; }
+
+    // label L21 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+L21:
+
+    // assume Or(And(Not(DiemTimestamp::$is_operating()), Eq(1, $t23)), And(And(And(And(And(DiemTimestamp::$is_operating(), DiemConfig::$reconfiguration_enabled()), Gt(DiemTimestamp::spec_now_microseconds(), 0)), Lt(select DiemConfig::Configuration.epoch($t51), 18446744073709551615)), Lt($t52, select DiemConfig::Configuration.last_reconfiguration_time($t51))), Eq(1, $t23))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    assume ((!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t23)) || ((((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) > 0)) && ($epoch#$1_DiemConfig_Configuration($t51) < 18446744073709551615)) && ($t52 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t51))) && $IsEqual'num'(1, $t23)));
+
+    // trace_abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    assume {:print "$at(16,8486,8528)"} true;
+    assume {:print "$track_abort(14,0):", $t23} $t23 == $t23;
+
+    // goto L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    goto L7;
+
+    // label L20 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+L20:
+
+    // modifies global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'';
+        $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory := $ResourceUpdate($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816, $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'');
+    } else {
+        $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory := $ResourceRemove($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816);
+    }
+
+    // modifies global<DiemConfig::Configuration>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_DiemConfig_Configuration';
+        $1_DiemConfig_Configuration_$memory := $ResourceUpdate($1_DiemConfig_Configuration_$memory, 173345816, $temp_0'$1_DiemConfig_Configuration');
+    } else {
+        $1_DiemConfig_Configuration_$memory := $ResourceRemove($1_DiemConfig_Configuration_$memory, 173345816);
+    }
+
+    // assume Identical($t56, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:369:9+56
+    assume {:print "$at(13,15926,15982)"} true;
+    assume ($t56 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t57, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:370:9+54
+    assume {:print "$at(13,15991,16045)"} true;
+    assume ($t57 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t58, pack DiemConfig::NewEpochEvent(select DiemConfig::Configuration.epoch($t56))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+    assume ($t58 == $1_DiemConfig_NewEpochEvent($epoch#$1_DiemConfig_Configuration($t56)));
+
+    // assume Eq<DiemSystem::DiemSystem>(select DiemConfig::DiemConfig.payload(global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18)), $t50) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume $IsEqual'$1_DiemSystem_DiemSystem'($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816)), $t50);
+
+    // assume Identical($t59, $t58) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t59 == $t58);
+
+    // assume Identical($t60, $t54) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t60 == $t54);
+
+    // assume Identical($t61, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t57, select DiemConfig::Configuration.last_reconfiguration_time($t53)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t61 == (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t57, $last_reconfiguration_time#$1_DiemConfig_Configuration($t53))));
+
+    // emit_event($t59, $t60, $t61) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:190:9+42
+    assume {:print "$at(16,8486,8528)"} true;
+    $es := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($es, $t60, $t59, $t61);
+
+    // opaque end: DiemSystem::set_diem_system_config($t50) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:191:5+1
+    assume {:print "$at(16,8534,8535)"} true;
+L6:
+
+    // return () at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:191:5+1
+    return;
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:191:5+1
+L7:
+
+    // abort($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:191:5+1
+    $abort_code := $t23;
+    $abort_flag := true;
+    return;
+
+    // label L22 at <internal>:1:1+10
+    assume {:print "$at(1,0,10)"} true;
+L22:
+
+    // destroy($t44) at <internal>:1:1+10
+
+    // destroy($t45) at <internal>:1:1+10
+
+    // goto L19 at <internal>:1:1+10
+    goto L19;
+
+}
 
 // fun DiemSystem::initialize_validator_set [baseline] at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:94:5+583
 procedure {:inline 1} $1_DiemSystem_initialize_validator_set(_$t0: $signer) returns ()
@@ -4326,7 +5772,7 @@ procedure {:inline 1} $1_DiemSystem_initialize_validator_set(_$t0: $signer) retu
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_DiemConfig_Configuration_$memory#158: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#164: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
 
     // bytecode translation starts here
@@ -4459,8 +5905,8 @@ L9:
     // label L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
 L8:
 
-    // @158 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
-    $1_DiemConfig_Configuration_$memory#158 := $1_DiemConfig_Configuration_$memory;
+    // @164 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
+    $1_DiemConfig_Configuration_$memory#164 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
     havoc $temp_0'bool';
@@ -4480,8 +5926,8 @@ L8:
     // assume Eq<DiemSystem::DiemSystem>(DiemConfig::$get<DiemSystem::DiemSystem>(), $t12) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
     assume $IsEqual'$1_DiemSystem_DiemSystem'($1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), $t12);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@158](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#158), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@164](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#164), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // $t14 := opaque end: DiemConfig::publish_new_config_and_get_capability<DiemSystem::DiemSystem>($t0, $t12) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:100:19+208
 
@@ -4579,6 +6025,477 @@ L3:
 
 }
 
+// fun DiemSystem::remove_validator [baseline] at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:232:5+824
+procedure {:inline 1} $1_DiemSystem_remove_validator(_$t0: $signer, _$t1: int) returns ()
+{
+    // declare local variables
+    var $t2: bool;
+    var $t3: int;
+    var $t4: $1_DiemSystem_DiemSystem;
+    var $t5: int;
+    var $t6: $1_Option_Option'u64';
+    var $t7: int;
+    var $t8: $1_DiemConfig_Configuration;
+    var $t9: int;
+    var $t10: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t11: $1_DiemConfig_Configuration;
+    var $t12: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t13: int;
+    var $t14: bool;
+    var $t15: int;
+    var $t16: int;
+    var $t17: bool;
+    var $t18: bool;
+    var $t19: $1_DiemSystem_DiemSystem;
+    var $t20: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t21: int;
+    var $t22: $1_Option_Option'u64';
+    var $t23: bool;
+    var $t24: int;
+    var $t25: int;
+    var $t26: int;
+    var $t27: bool;
+    var $t28: $Mutation ($1_DiemSystem_DiemSystem);
+    var $t29: $Mutation (Vec ($1_DiemSystem_ValidatorInfo));
+    var $t30: $1_DiemSystem_ValidatorInfo;
+    var $t31: $1_DiemSystem_DiemSystem;
+    var $t32: $1_DiemConfig_Configuration;
+    var $t33: int;
+    var $t34: $1_DiemConfig_Configuration;
+    var $t35: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t36: bool;
+    var $t37: $1_DiemConfig_Configuration;
+    var $t38: int;
+    var $t39: $1_DiemConfig_NewEpochEvent;
+    var $t40: $1_DiemConfig_NewEpochEvent;
+    var $t41: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t42: bool;
+    var $t0: $signer;
+    var $t1: int;
+    var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$modifies: [int]bool;
+    var $temp_0'$1_DiemConfig_Configuration': $1_DiemConfig_Configuration;
+    var $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'': $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
+    var $temp_0'$1_DiemSystem_DiemSystem': $1_DiemSystem_DiemSystem;
+    var $temp_0'$1_Option_Option'u64'': $1_Option_Option'u64';
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    assume IsEmptyVec(p#$Mutation($t28));
+    assume IsEmptyVec(p#$Mutation($t29));
+
+    // bytecode translation starts here
+    // assume Identical($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t7 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t8, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t8 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t9, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t9 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t10, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:264:9+31
+    assume {:print "$at(16,12087,12118)"} true;
+    assume ($t10 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t11, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t11 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t12, select DiemConfig::Configuration.events($t11)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t12 == $events#$1_DiemConfig_Configuration($t11));
+
+    // assume Identical($t13, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t13 == $1_Signer_spec_address_of($t0));
+
+    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:232:5+1
+    assume {:print "$at(16,10587,10588)"} true;
+    assume {:print "$track_local(14,8,0):", $t0} $t0 == $t0;
+
+    // trace_local[validator_addr]($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:232:5+1
+    assume {:print "$track_local(14,8,1):", $t1} $t1 == $t1;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+    // >> opaque call: DiemTimestamp::assert_operating()
+    assume {:print "$at(16,10719,10752)"} true;
+
+    // opaque begin: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+
+    // assume Identical($t14, Not(DiemTimestamp::$is_operating())) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+    assume ($t14 == !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // if ($t14) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+    if ($t14) { goto L5; } else { goto L4; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+L5:
+
+    // assume And(Not(DiemTimestamp::$is_operating()), Eq(1, $t15)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+    assume (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t15));
+
+    // trace_abort($t15) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+    assume {:print "$at(16,10719,10752)"} true;
+    assume {:print "$track_abort(14,8):", $t15} $t15 == $t15;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+    goto L3;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+L4:
+
+    // opaque end: DiemTimestamp::assert_operating() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:236:9+33
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    // >> opaque call: Roles::assert_diem_root($t0)
+    assume {:print "$at(16,10762,10797)"} true;
+
+    // assume Identical($t16, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t16 == $1_Signer_spec_address_of($t0));
+
+    // opaque begin: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    assume {:print "$at(16,10762,10797)"} true;
+
+    // assume Identical($t17, Or(Or(Or(Neq<address>(Signer::spec_address_of($t0), a550c18), Not(exists<Roles::RoleId>($t16))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t16)), 0)), Neq<address>(Signer::spec_address_of($t0), a550c18))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    assume ($t17 == (((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) || !$ResourceExists($1_Roles_RoleId_$memory, $t16)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t16)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)));
+
+    // if ($t17) goto L7 else goto L6 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    if ($t17) { goto L7; } else { goto L6; }
+
+    // label L7 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+L7:
+
+    // assume Or(Or(Or(And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t15)), And(Not(exists<Roles::RoleId>($t16)), Eq(5, $t15))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t16)), 0), Eq(3, $t15))), And(Neq<address>(Signer::spec_address_of($t0), a550c18), Eq(2, $t15))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    assume ((((!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t15)) || (!$ResourceExists($1_Roles_RoleId_$memory, $t16) && $IsEqual'num'(5, $t15))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t16)), 0) && $IsEqual'num'(3, $t15))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t15)));
+
+    // trace_abort($t15) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    assume {:print "$at(16,10762,10797)"} true;
+    assume {:print "$track_abort(14,8):", $t15} $t15 == $t15;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+    goto L3;
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+L6:
+
+    // opaque end: Roles::assert_diem_root($t0) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:237:9+35
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    // >> opaque call: $t4 := DiemSystem::get_diem_system_config()
+    assume {:print "$at(16,10832,10856)"} true;
+
+    // $t4 := opaque begin: DiemSystem::get_diem_system_config() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+
+    // assume Identical($t18, Not(exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    assume ($t18 == !$ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816));
+
+    // if ($t18) goto L9 else goto L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    if ($t18) { goto L9; } else { goto L8; }
+
+    // label L9 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+L9:
+
+    // assume And(Not(exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18)), Eq(5, $t15)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    assume (!$ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816) && $IsEqual'num'(5, $t15));
+
+    // trace_abort($t15) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    assume {:print "$at(16,10832,10856)"} true;
+    assume {:print "$track_abort(14,8):", $t15} $t15 == $t15;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    goto L3;
+
+    // label L8 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+L8:
+
+    // assume And(WellFormed($t4), forall i: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators($t4))), j: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators($t4))): Implies(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators($t4), i)), select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators($t4), j))), Eq<num>(i, j))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    assume ($IsValid'$1_DiemSystem_DiemSystem'($t4) && (var $range_0 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($t4))); (var $range_1 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($t4))); (forall $i_2: int, $i_3: int :: $InRange($range_0, $i_2) ==> $InRange($range_1, $i_3) ==> (var i := $i_2;
+    (var j := $i_3;
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($t4), i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($t4), j))) ==> $IsEqual'num'(i, j)))))))));
+
+    // assume Eq<DiemSystem::DiemSystem>($t4, DiemConfig::$get<DiemSystem::DiemSystem>()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+    assume $IsEqual'$1_DiemSystem_DiemSystem'($t4, $1_DiemConfig_$get'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // $t4 := opaque end: DiemSystem::get_diem_system_config() at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:34+24
+
+    // trace_local[diem_system_config]($t4) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:238:13+18
+    assume {:print "$track_local(14,8,4):", $t4} $t4 == $t4;
+
+    // $t19 := copy($t4) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:57+18
+    assume {:print "$at(16,10973,10991)"} true;
+    $t19 := $t4;
+
+    // $t20 := get_field<DiemSystem::DiemSystem>.validators($t19) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:56+30
+    $t20 := $validators#$1_DiemSystem_DiemSystem($t19);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:35+68
+    // >> opaque call: $t9 := DiemSystem::get_validator_index_($t8, $t1)
+
+    // assume Identical($t21, Len<DiemSystem::ValidatorInfo>($t20)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:467:9+27
+    assume {:print "$at(16,22165,22192)"} true;
+    assume ($t21 == LenVec($t20));
+
+    // $t22 := opaque begin: DiemSystem::get_validator_index_($t20, $t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:35+68
+    assume {:print "$at(16,10951,11019)"} true;
+
+    // assume And(WellFormed($t22), Le(Len<u64>(select Option::Option.vec($t22)), 1)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:35+68
+    assume ($IsValid'$1_Option_Option'u64''($t22) && (LenVec($vec#$1_Option_Option'u64'($t22)) <= 1));
+
+    // assume Implies(forall i: Range(0, $t21): Neq<address>(select DiemSystem::ValidatorInfo.addr(Index($t20, i)), $t1), Option::$is_none<u64>($t22)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:35+68
+    assume ((var $range_0 := $Range(0, $t21); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    (!$IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t20, i)), $t1))))) ==> $1_Option_$is_none'u64'($t22));
+
+    // assume Implies(exists i: Range(0, $t21): Eq<address>(select DiemSystem::ValidatorInfo.addr(Index($t20, i)), $t1), And(Option::$is_some<u64>($t22), {let at = Option::$borrow<u64>($t22); And(And(Le(0, at), Lt(at, $t21)), Eq<address>(select DiemSystem::ValidatorInfo.addr(Index($t20, at)), $t1))})) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:35+68
+    assume ((var $range_0 := $Range(0, $t21); (exists $i_1: int :: $InRange($range_0, $i_1) && (var i := $i_1;
+    ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t20, i)), $t1))))) ==> ($1_Option_$is_some'u64'($t22) && (var at := $1_Option_$borrow'u64'($t22); (((0 <= at) && (at < $t21)) && $IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t20, at)), $t1)))));
+
+    // $t22 := opaque end: DiemSystem::get_validator_index_($t20, $t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:35+68
+
+    // trace_local[to_remove_index_vec]($t22) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:240:13+19
+    assume {:print "$track_local(14,8,6):", $t22} $t22 == $t22;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:16+37
+    // >> opaque call: $t10 := Option::is_some<u64>($t9)
+    assume {:print "$at(16,11036,11073)"} true;
+
+    // $t23 := opaque begin: Option::is_some<u64>($t22) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:16+37
+
+    // assume WellFormed($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:16+37
+    assume $IsValid'bool'($t23);
+
+    // assume Eq<bool>($t23, Option::$is_some<u64>($t22)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:16+37
+    assume $IsEqual'bool'($t23, $1_Option_$is_some'u64'($t22));
+
+    // $t23 := opaque end: Option::is_some<u64>($t22) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:16+37
+
+    // $t24 := 3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:80+24
+    $t24 := 3;
+    assume $IsValid'u64'($t24);
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:55+50
+    // >> opaque call: $t12 := Errors::invalid_argument($t11)
+
+    // $t25 := opaque begin: Errors::invalid_argument($t24) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:55+50
+
+    // assume WellFormed($t25) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:55+50
+    assume $IsValid'u64'($t25);
+
+    // assume Eq<u64>($t25, 7) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:55+50
+    assume $IsEqual'u64'($t25, 7);
+
+    // $t25 := opaque end: Errors::invalid_argument($t24) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:55+50
+
+    // trace_local[tmp#$3]($t25) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+    assume {:print "$track_local(14,8,3):", $t25} $t25 == $t25;
+
+    // trace_local[tmp#$2]($t23) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+    assume {:print "$track_local(14,8,2):", $t23} $t23 == $t23;
+
+    // if ($t23) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+    if ($t23) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+L1:
+
+    // trace_abort($t25) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+    assume {:print "$at(16,11029,11126)"} true;
+    assume {:print "$track_abort(14,8):", $t25} $t25 == $t25;
+
+    // $t15 := move($t25) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+    $t15 := $t25;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:241:9+97
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:47+20
+    assume {:print "$at(16,11174,11194)"} true;
+L0:
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    // >> opaque call: $t13 := Option::borrow<u64>($t9)
+
+    // $t26 := opaque begin: Option::borrow<u64>($t22) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+
+    // assume Identical($t27, Option::$is_none<u64>($t22)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    assume ($t27 == $1_Option_$is_none'u64'($t22));
+
+    // if ($t27) goto L11 else goto L10 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    if ($t27) { goto L11; } else { goto L10; }
+
+    // label L11 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+L11:
+
+    // assume And(Option::$is_none<u64>($t22), Eq(7, $t15)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    assume ($1_Option_$is_none'u64'($t22) && $IsEqual'num'(7, $t15));
+
+    // trace_abort($t15) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    assume {:print "$at(16,11159,11195)"} true;
+    assume {:print "$track_abort(14,8):", $t15} $t15 == $t15;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    goto L3;
+
+    // label L10 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+L10:
+
+    // assume WellFormed($t26) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    assume $IsValid'u64'($t26);
+
+    // assume Eq<u64>($t26, Option::$borrow<u64>($t22)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+    assume $IsEqual'u64'($t26, $1_Option_$borrow'u64'($t22));
+
+    // $t26 := opaque end: Option::borrow<u64>($t22) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:32+36
+
+    // trace_local[to_remove_index]($t26) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:242:13+15
+    assume {:print "$track_local(14,8,5):", $t26} $t26 == $t26;
+
+    // $t28 := borrow_local($t4) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:39+18
+    assume {:print "$at(16,11304,11322)"} true;
+    $t28 := $Mutation($Local(4), EmptyVec(), $t4);
+
+    // $t29 := borrow_field<DiemSystem::DiemSystem>.validators($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:34+34
+    $t29 := $ChildMutation($t28, 1, $validators#$1_DiemSystem_DiemSystem($Dereference($t28)));
+
+    // $t30 := Vector::swap_remove<DiemSystem::ValidatorInfo>($t29, $t26) on_abort goto L3 with $t15 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:14+72
+    call $t30,$t29 := $1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'($t29, $t26);
+    if ($abort_flag) {
+        assume {:print "$at(16,11279,11351)"} true;
+        $t15 := $abort_code;
+        assume {:print "$track_abort(14,8):", $t15} $t15 == $t15;
+        goto L3;
+    }
+
+    // write_back[Reference($t28).validators]($t29) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:14+72
+    $t28 := $UpdateMutation($t28, $Update'$1_DiemSystem_DiemSystem'_validators($Dereference($t28), $Dereference($t29)));
+
+    // pack_ref_deep($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:14+72
+
+    // write_back[LocalRoot($t4)@]($t28) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:14+72
+    $t4 := $Dereference($t28);
+
+    // destroy($t30) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:244:9+1
+
+    // $t31 := move($t4) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:32+18
+    assume {:print "$at(16,11385,11403)"} true;
+    $t31 := $t4;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    // >> opaque call: DiemSystem::set_diem_system_config($t17)
+
+    // assume Identical($t32, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t32 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t33, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t33 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t34, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t34 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t35, select DiemConfig::Configuration.events($t34)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t35 == $events#$1_DiemConfig_Configuration($t34));
+
+    // opaque begin: DiemSystem::set_diem_system_config($t31) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    assume {:print "$at(16,11362,11404)"} true;
+
+    // assume Identical($t36, Or(Not(DiemTimestamp::$is_operating()), And(And(And(And(DiemTimestamp::$is_operating(), DiemConfig::$reconfiguration_enabled()), Gt(DiemTimestamp::spec_now_microseconds(), 0)), Lt(select DiemConfig::Configuration.epoch($t32), 18446744073709551615)), Lt($t33, select DiemConfig::Configuration.last_reconfiguration_time($t32))))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    assume ($t36 == (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) || (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) > 0)) && ($epoch#$1_DiemConfig_Configuration($t32) < 18446744073709551615)) && ($t33 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t32)))));
+
+    // if ($t36) goto L13 else goto L12 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    if ($t36) { goto L13; } else { goto L12; }
+
+    // label L13 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+L13:
+
+    // assume Or(And(Not(DiemTimestamp::$is_operating()), Eq(1, $t15)), And(And(And(And(And(DiemTimestamp::$is_operating(), DiemConfig::$reconfiguration_enabled()), Gt(DiemTimestamp::spec_now_microseconds(), 0)), Lt(select DiemConfig::Configuration.epoch($t32), 18446744073709551615)), Lt($t33, select DiemConfig::Configuration.last_reconfiguration_time($t32))), Eq(1, $t15))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    assume ((!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t15)) || ((((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) > 0)) && ($epoch#$1_DiemConfig_Configuration($t32) < 18446744073709551615)) && ($t33 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t32))) && $IsEqual'num'(1, $t15)));
+
+    // trace_abort($t15) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    assume {:print "$at(16,11362,11404)"} true;
+    assume {:print "$track_abort(14,8):", $t15} $t15 == $t15;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    goto L3;
+
+    // label L12 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+L12:
+
+    // modifies global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'';
+        $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory := $ResourceUpdate($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816, $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'');
+    } else {
+        $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory := $ResourceRemove($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816);
+    }
+
+    // modifies global<DiemConfig::Configuration>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_DiemConfig_Configuration';
+        $1_DiemConfig_Configuration_$memory := $ResourceUpdate($1_DiemConfig_Configuration_$memory, 173345816, $temp_0'$1_DiemConfig_Configuration');
+    } else {
+        $1_DiemConfig_Configuration_$memory := $ResourceRemove($1_DiemConfig_Configuration_$memory, 173345816);
+    }
+
+    // assume Identical($t37, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:369:9+56
+    assume {:print "$at(13,15926,15982)"} true;
+    assume ($t37 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t38, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:370:9+54
+    assume {:print "$at(13,15991,16045)"} true;
+    assume ($t38 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t39, pack DiemConfig::NewEpochEvent(select DiemConfig::Configuration.epoch($t37))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+    assume ($t39 == $1_DiemConfig_NewEpochEvent($epoch#$1_DiemConfig_Configuration($t37)));
+
+    // assume Eq<DiemSystem::DiemSystem>(select DiemConfig::DiemConfig.payload(global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18)), $t31) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume $IsEqual'$1_DiemSystem_DiemSystem'($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816)), $t31);
+
+    // assume Identical($t40, $t39) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t40 == $t39);
+
+    // assume Identical($t41, $t35) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t41 == $t35);
+
+    // assume Identical($t42, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t38, select DiemConfig::Configuration.last_reconfiguration_time($t34)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t42 == (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t38, $last_reconfiguration_time#$1_DiemConfig_Configuration($t34))));
+
+    // emit_event($t40, $t41, $t42) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:246:9+42
+    assume {:print "$at(16,11362,11404)"} true;
+    $es := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($es, $t41, $t40, $t42);
+
+    // opaque end: DiemSystem::set_diem_system_config($t31) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:247:5+1
+    assume {:print "$at(16,11410,11411)"} true;
+L2:
+
+    // return () at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:247:5+1
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:247:5+1
+L3:
+
+    // abort($t15) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:247:5+1
+    $abort_code := $t15;
+    $abort_flag := true;
+    return;
+
+}
+
 // spec fun at /home/ying/diem/language/move-stdlib/modules/FixedPoint32.move:204:10+244
 function {:inline} $1_FixedPoint32_spec_create_from_rational(numerator: int, denominator: int): $1_FixedPoint32_FixedPoint32 {
     if ($IsEqual'num'(numerator, denominator)) then ($1_FixedPoint32_FixedPoint32(1)) else ($1_FixedPoint32_FixedPoint32(2))
@@ -4607,7 +6524,8 @@ function $IsValid'$1_RegisteredCurrencies_RegisteredCurrencies'(s: $1_Registered
     $IsValid'vec'vec'u8'''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies(s))
 }
 function {:inline} $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'(s1: $1_RegisteredCurrencies_RegisteredCurrencies, s2: $1_RegisteredCurrencies_RegisteredCurrencies): bool {
-    $IsEqual'vec'vec'u8'''($currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies(s1), $currency_codes#$1_RegisteredCurrencies_RegisteredCurrencies(s2))}
+    s1 == s2
+}
 
 // fun RegisteredCurrencies::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:22:5+280
 procedure {:inline 1} $1_RegisteredCurrencies_initialize(_$t0: $signer) returns ()
@@ -4628,7 +6546,7 @@ procedure {:inline 1} $1_RegisteredCurrencies_initialize(_$t0: $signer) returns 
     var $temp_0'$1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies'': $1_DiemConfig_ModifyConfigCapability'$1_RegisteredCurrencies_RegisteredCurrencies';
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
-    var $1_DiemConfig_Configuration_$memory#192: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#200: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
 
     // bytecode translation starts here
@@ -4754,8 +6672,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
 L7:
 
-    // @192 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
-    $1_DiemConfig_Configuration_$memory#192 := $1_DiemConfig_Configuration_$memory;
+    // @200 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
+    $1_DiemConfig_Configuration_$memory#200 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(a550c18) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
     havoc $temp_0'bool';
@@ -4784,8 +6702,8 @@ L7:
     // assume Eq<RegisteredCurrencies::RegisteredCurrencies>(DiemConfig::$get<RegisteredCurrencies::RegisteredCurrencies>(), $t8) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
     assume $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory), $t8);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@192](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#192), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@200](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#200), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<RegisteredCurrencies::RegisteredCurrencies>($t0, $t8) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:25:9+134
 
@@ -4838,7 +6756,7 @@ procedure {:inline 1} $1_RegisteredCurrencies_add_currency_code(_$t0: $signer, _
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemConfig_Configuration_$memory#164: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#172: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     assume IsEmptyVec(p#$Mutation($t15));
@@ -5026,8 +6944,8 @@ L7:
     // label L6 at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
 L6:
 
-    // @164 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
-    $1_DiemConfig_Configuration_$memory#164 := $1_DiemConfig_Configuration_$memory;
+    // @172 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
+    $1_DiemConfig_Configuration_$memory#172 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::Configuration>(a550c18) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
     havoc $temp_0'bool';
@@ -5053,8 +6971,8 @@ L6:
     // assume Eq<RegisteredCurrencies::RegisteredCurrencies>(DiemConfig::$get<RegisteredCurrencies::RegisteredCurrencies>(), $t17) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
     assume $IsEqual'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_$get'$1_RegisteredCurrencies_RegisteredCurrencies'($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory), $t17);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@164](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#164), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@172](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#172), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::set<RegisteredCurrencies::RegisteredCurrencies>($t0, $t17) at /home/ying/diem/language/diem-framework/modules/RegisteredCurrencies.move:59:9+35
 
@@ -5172,9 +7090,8 @@ function $IsValid'$1_Diem_BurnEvent'(s: $1_Diem_BurnEvent): bool {
       && $IsValid'address'($preburn_address#$1_Diem_BurnEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_BurnEvent'(s1: $1_Diem_BurnEvent, s2: $1_Diem_BurnEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_BurnEvent(s1), $amount#$1_Diem_BurnEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_BurnEvent(s1), $currency_code#$1_Diem_BurnEvent(s2))
-    && $IsEqual'address'($preburn_address#$1_Diem_BurnEvent(s1), $preburn_address#$1_Diem_BurnEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::CancelBurnEvent at /home/ying/diem/language/diem-framework/modules/Diem.move:81:5+327
 type {:datatype} $1_Diem_CancelBurnEvent;
@@ -5194,9 +7111,8 @@ function $IsValid'$1_Diem_CancelBurnEvent'(s: $1_Diem_CancelBurnEvent): bool {
       && $IsValid'address'($preburn_address#$1_Diem_CancelBurnEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_CancelBurnEvent'(s1: $1_Diem_CancelBurnEvent, s2: $1_Diem_CancelBurnEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_CancelBurnEvent(s1), $amount#$1_Diem_CancelBurnEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_CancelBurnEvent(s1), $currency_code#$1_Diem_CancelBurnEvent(s2))
-    && $IsEqual'address'($preburn_address#$1_Diem_CancelBurnEvent(s1), $preburn_address#$1_Diem_CancelBurnEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::CurrencyInfo<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:109:5+2308
 type {:datatype} $1_Diem_CurrencyInfo'$1_XUS_XUS';
@@ -5256,19 +7172,8 @@ function $IsValid'$1_Diem_CurrencyInfo'$1_XUS_XUS''(s: $1_Diem_CurrencyInfo'$1_X
       && $IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s))
 }
 function {:inline} $IsEqual'$1_Diem_CurrencyInfo'$1_XUS_XUS''(s1: $1_Diem_CurrencyInfo'$1_XUS_XUS', s2: $1_Diem_CurrencyInfo'$1_XUS_XUS'): bool {
-    $IsEqual'u128'($total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $total_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'u64'($preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $preburn_value#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_FixedPoint32_FixedPoint32'($to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'bool'($is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $is_synthetic#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'u64'($scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $scaling_factor#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'u64'($fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $fractional_part#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $currency_code#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'bool'($can_mint#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $can_mint#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_MintEvent''($mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $mint_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_BurnEvent''($burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_PreburnEvent''($preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $preburn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''($cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $cancel_burn_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s1), $exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XUS_XUS'(s2))}
+    s1 == s2
+}
 var $1_Diem_CurrencyInfo'$1_XUS_XUS'_$memory: $Memory $1_Diem_CurrencyInfo'$1_XUS_XUS';
 
 // struct Diem::CurrencyInfo<XDX::XDX> at /home/ying/diem/language/diem-framework/modules/Diem.move:109:5+2308
@@ -5329,19 +7234,8 @@ function $IsValid'$1_Diem_CurrencyInfo'$1_XDX_XDX''(s: $1_Diem_CurrencyInfo'$1_X
       && $IsValid'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s))
 }
 function {:inline} $IsEqual'$1_Diem_CurrencyInfo'$1_XDX_XDX''(s1: $1_Diem_CurrencyInfo'$1_XDX_XDX', s2: $1_Diem_CurrencyInfo'$1_XDX_XDX'): bool {
-    $IsEqual'u128'($total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $total_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'u64'($preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $preburn_value#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_FixedPoint32_FixedPoint32'($to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $to_xdx_exchange_rate#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'bool'($is_synthetic#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $is_synthetic#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'u64'($scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $scaling_factor#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'u64'($fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $fractional_part#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $currency_code#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'bool'($can_mint#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $can_mint#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_MintEvent''($mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $mint_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_BurnEvent''($burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_PreburnEvent''($preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $preburn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_CancelBurnEvent''($cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $cancel_burn_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_Diem_ToXDXExchangeRateUpdateEvent''($exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s1), $exchange_rate_update_events#$1_Diem_CurrencyInfo'$1_XDX_XDX'(s2))}
+    s1 == s2
+}
 var $1_Diem_CurrencyInfo'$1_XDX_XDX'_$memory: $Memory $1_Diem_CurrencyInfo'$1_XDX_XDX';
 
 // struct Diem::MintCapability<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:31:5+58
@@ -5386,8 +7280,8 @@ function $IsValid'$1_Diem_MintEvent'(s: $1_Diem_MintEvent): bool {
       && $IsValid'vec'u8''($currency_code#$1_Diem_MintEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_MintEvent'(s1: $1_Diem_MintEvent, s2: $1_Diem_MintEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_MintEvent(s1), $amount#$1_Diem_MintEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_MintEvent(s1), $currency_code#$1_Diem_MintEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::Preburn<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:168:5+240
 type {:datatype} $1_Diem_Preburn'$1_XUS_XUS';
@@ -5435,9 +7329,8 @@ function $IsValid'$1_Diem_PreburnEvent'(s: $1_Diem_PreburnEvent): bool {
       && $IsValid'address'($preburn_address#$1_Diem_PreburnEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnEvent'(s1: $1_Diem_PreburnEvent, s2: $1_Diem_PreburnEvent): bool {
-    $IsEqual'u64'($amount#$1_Diem_PreburnEvent(s1), $amount#$1_Diem_PreburnEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_Diem_PreburnEvent(s1), $currency_code#$1_Diem_PreburnEvent(s2))
-    && $IsEqual'address'($preburn_address#$1_Diem_PreburnEvent(s1), $preburn_address#$1_Diem_PreburnEvent(s2))}
+    s1 == s2
+}
 
 // struct Diem::PreburnQueue<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:192:5+152
 type {:datatype} $1_Diem_PreburnQueue'$1_XUS_XUS';
@@ -5449,7 +7342,8 @@ function $IsValid'$1_Diem_PreburnQueue'$1_XUS_XUS''(s: $1_Diem_PreburnQueue'$1_X
     $IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''($preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnQueue'$1_XUS_XUS''(s1: $1_Diem_PreburnQueue'$1_XUS_XUS', s2: $1_Diem_PreburnQueue'$1_XUS_XUS'): bool {
-    $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XUS_XUS'''($preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'(s1), $preburns#$1_Diem_PreburnQueue'$1_XUS_XUS'(s2))}
+    s1 == s2
+}
 var $1_Diem_PreburnQueue'$1_XUS_XUS'_$memory: $Memory $1_Diem_PreburnQueue'$1_XUS_XUS';
 
 // struct Diem::PreburnQueue<XDX::XDX> at /home/ying/diem/language/diem-framework/modules/Diem.move:192:5+152
@@ -5462,7 +7356,8 @@ function $IsValid'$1_Diem_PreburnQueue'$1_XDX_XDX''(s: $1_Diem_PreburnQueue'$1_X
     $IsValid'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''($preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnQueue'$1_XDX_XDX''(s1: $1_Diem_PreburnQueue'$1_XDX_XDX', s2: $1_Diem_PreburnQueue'$1_XDX_XDX'): bool {
-    $IsEqual'vec'$1_Diem_PreburnWithMetadata'$1_XDX_XDX'''($preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'(s1), $preburns#$1_Diem_PreburnQueue'$1_XDX_XDX'(s2))}
+    s1 == s2
+}
 var $1_Diem_PreburnQueue'$1_XDX_XDX'_$memory: $Memory $1_Diem_PreburnQueue'$1_XDX_XDX';
 
 // struct Diem::PreburnWithMetadata<XUS::XUS> at /home/ying/diem/language/diem-framework/modules/Diem.move:176:5+128
@@ -5479,8 +7374,8 @@ function $IsValid'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(s: $1_Diem_PreburnWit
       && $IsValid'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnWithMetadata'$1_XUS_XUS''(s1: $1_Diem_PreburnWithMetadata'$1_XUS_XUS', s2: $1_Diem_PreburnWithMetadata'$1_XUS_XUS'): bool {
-    $IsEqual'$1_Diem_Preburn'$1_XUS_XUS''($preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s1), $preburn#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s2))
-    && $IsEqual'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s1), $metadata#$1_Diem_PreburnWithMetadata'$1_XUS_XUS'(s2))}
+    s1 == s2
+}
 
 // struct Diem::PreburnWithMetadata<XDX::XDX> at /home/ying/diem/language/diem-framework/modules/Diem.move:176:5+128
 type {:datatype} $1_Diem_PreburnWithMetadata'$1_XDX_XDX';
@@ -5496,8 +7391,8 @@ function $IsValid'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(s: $1_Diem_PreburnWit
       && $IsValid'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s))
 }
 function {:inline} $IsEqual'$1_Diem_PreburnWithMetadata'$1_XDX_XDX''(s1: $1_Diem_PreburnWithMetadata'$1_XDX_XDX', s2: $1_Diem_PreburnWithMetadata'$1_XDX_XDX'): bool {
-    $IsEqual'$1_Diem_Preburn'$1_XDX_XDX''($preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s1), $preburn#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s2))
-    && $IsEqual'vec'u8''($metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s1), $metadata#$1_Diem_PreburnWithMetadata'$1_XDX_XDX'(s2))}
+    s1 == s2
+}
 
 // struct Diem::ToXDXExchangeRateUpdateEvent at /home/ying/diem/language/diem-framework/modules/Diem.move:92:5+424
 type {:datatype} $1_Diem_ToXDXExchangeRateUpdateEvent;
@@ -5513,8 +7408,8 @@ function $IsValid'$1_Diem_ToXDXExchangeRateUpdateEvent'(s: $1_Diem_ToXDXExchange
       && $IsValid'u64'($new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent(s))
 }
 function {:inline} $IsEqual'$1_Diem_ToXDXExchangeRateUpdateEvent'(s1: $1_Diem_ToXDXExchangeRateUpdateEvent, s2: $1_Diem_ToXDXExchangeRateUpdateEvent): bool {
-    $IsEqual'vec'u8''($currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent(s1), $currency_code#$1_Diem_ToXDXExchangeRateUpdateEvent(s2))
-    && $IsEqual'u64'($new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent(s1), $new_to_xdx_exchange_rate#$1_Diem_ToXDXExchangeRateUpdateEvent(s2))}
+    s1 == s2
+}
 
 // fun Diem::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/Diem.move:246:5+247
 procedure {:inline 1} $1_Diem_initialize(_$t0: $signer) returns ()
@@ -8938,7 +10833,8 @@ function $IsValid'$1_VASPDomain_VASPDomain'(s: $1_VASPDomain_VASPDomain): bool {
     $IsValid'vec'u8''($domain#$1_VASPDomain_VASPDomain(s))
 }
 function {:inline} $IsEqual'$1_VASPDomain_VASPDomain'(s1: $1_VASPDomain_VASPDomain, s2: $1_VASPDomain_VASPDomain): bool {
-    $IsEqual'vec'u8''($domain#$1_VASPDomain_VASPDomain(s1), $domain#$1_VASPDomain_VASPDomain(s2))}
+    s1 == s2
+}
 
 // struct VASPDomain::VASPDomainEvent at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:39:5+256
 type {:datatype} $1_VASPDomain_VASPDomainEvent;
@@ -8958,9 +10854,8 @@ function $IsValid'$1_VASPDomain_VASPDomainEvent'(s: $1_VASPDomain_VASPDomainEven
       && $IsValid'address'($address#$1_VASPDomain_VASPDomainEvent(s))
 }
 function {:inline} $IsEqual'$1_VASPDomain_VASPDomainEvent'(s1: $1_VASPDomain_VASPDomainEvent, s2: $1_VASPDomain_VASPDomainEvent): bool {
-    $IsEqual'bool'($removed#$1_VASPDomain_VASPDomainEvent(s1), $removed#$1_VASPDomain_VASPDomainEvent(s2))
-    && $IsEqual'$1_VASPDomain_VASPDomain'($domain#$1_VASPDomain_VASPDomainEvent(s1), $domain#$1_VASPDomain_VASPDomainEvent(s2))
-    && $IsEqual'address'($address#$1_VASPDomain_VASPDomainEvent(s1), $address#$1_VASPDomain_VASPDomainEvent(s2))}
+    s1 == s2
+}
 
 // struct VASPDomain::VASPDomainManager at /home/ying/diem/language/diem-framework/modules/VASPDomain.move:33:5+235
 type {:datatype} $1_VASPDomain_VASPDomainManager;
@@ -8972,7 +10867,8 @@ function $IsValid'$1_VASPDomain_VASPDomainManager'(s: $1_VASPDomain_VASPDomainMa
     $IsValid'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''($vasp_domain_events#$1_VASPDomain_VASPDomainManager(s))
 }
 function {:inline} $IsEqual'$1_VASPDomain_VASPDomainManager'(s1: $1_VASPDomain_VASPDomainManager, s2: $1_VASPDomain_VASPDomainManager): bool {
-    $IsEqual'$1_Event_EventHandle'$1_VASPDomain_VASPDomainEvent''($vasp_domain_events#$1_VASPDomain_VASPDomainManager(s1), $vasp_domain_events#$1_VASPDomain_VASPDomainManager(s2))}
+    s1 == s2
+}
 var $1_VASPDomain_VASPDomainManager_$memory: $Memory $1_VASPDomain_VASPDomainManager;
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/VASP.move:164:5+80
@@ -9422,8 +11318,8 @@ function $IsValid'$1_DualAttestation_BaseUrlRotationEvent'(s: $1_DualAttestation
       && $IsValid'u64'($time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent(s))
 }
 function {:inline} $IsEqual'$1_DualAttestation_BaseUrlRotationEvent'(s1: $1_DualAttestation_BaseUrlRotationEvent, s2: $1_DualAttestation_BaseUrlRotationEvent): bool {
-    $IsEqual'vec'u8''($new_base_url#$1_DualAttestation_BaseUrlRotationEvent(s1), $new_base_url#$1_DualAttestation_BaseUrlRotationEvent(s2))
-    && $IsEqual'u64'($time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent(s1), $time_rotated_seconds#$1_DualAttestation_BaseUrlRotationEvent(s2))}
+    s1 == s2
+}
 
 // struct DualAttestation::ComplianceKeyRotationEvent at /home/ying/diem/language/diem-framework/modules/DualAttestation.move:49:5+303
 type {:datatype} $1_DualAttestation_ComplianceKeyRotationEvent;
@@ -9439,8 +11335,8 @@ function $IsValid'$1_DualAttestation_ComplianceKeyRotationEvent'(s: $1_DualAttes
       && $IsValid'u64'($time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent(s))
 }
 function {:inline} $IsEqual'$1_DualAttestation_ComplianceKeyRotationEvent'(s1: $1_DualAttestation_ComplianceKeyRotationEvent, s2: $1_DualAttestation_ComplianceKeyRotationEvent): bool {
-    $IsEqual'vec'u8''($new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent(s1), $new_compliance_public_key#$1_DualAttestation_ComplianceKeyRotationEvent(s2))
-    && $IsEqual'u64'($time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent(s1), $time_rotated_seconds#$1_DualAttestation_ComplianceKeyRotationEvent(s2))}
+    s1 == s2
+}
 
 // struct DualAttestation::Credential at /home/ying/diem/language/diem-framework/modules/DualAttestation.move:19:5+1467
 type {:datatype} $1_DualAttestation_Credential;
@@ -9472,12 +11368,8 @@ function $IsValid'$1_DualAttestation_Credential'(s: $1_DualAttestation_Credentia
       && $IsValid'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''($base_url_rotation_events#$1_DualAttestation_Credential(s))
 }
 function {:inline} $IsEqual'$1_DualAttestation_Credential'(s1: $1_DualAttestation_Credential, s2: $1_DualAttestation_Credential): bool {
-    $IsEqual'vec'u8''($human_name#$1_DualAttestation_Credential(s1), $human_name#$1_DualAttestation_Credential(s2))
-    && $IsEqual'vec'u8''($base_url#$1_DualAttestation_Credential(s1), $base_url#$1_DualAttestation_Credential(s2))
-    && $IsEqual'vec'u8''($compliance_public_key#$1_DualAttestation_Credential(s1), $compliance_public_key#$1_DualAttestation_Credential(s2))
-    && $IsEqual'u64'($expiration_date#$1_DualAttestation_Credential(s1), $expiration_date#$1_DualAttestation_Credential(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DualAttestation_ComplianceKeyRotationEvent''($compliance_key_rotation_events#$1_DualAttestation_Credential(s1), $compliance_key_rotation_events#$1_DualAttestation_Credential(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DualAttestation_BaseUrlRotationEvent''($base_url_rotation_events#$1_DualAttestation_Credential(s1), $base_url_rotation_events#$1_DualAttestation_Credential(s2))}
+    s1 == s2
+}
 var $1_DualAttestation_Credential_$memory: $Memory $1_DualAttestation_Credential;
 
 // struct DualAttestation::Limit at /home/ying/diem/language/diem-framework/modules/DualAttestation.move:44:5+58
@@ -9810,8 +11702,8 @@ function $IsValid'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOp
       && $IsValid'bool'($module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s))
 }
 function {:inline} $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'(s1: $1_DiemTransactionPublishingOption_DiemTransactionPublishingOption, s2: $1_DiemTransactionPublishingOption_DiemTransactionPublishingOption): bool {
-    $IsEqual'vec'vec'u8'''($script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s1), $script_allow_list#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s2))
-    && $IsEqual'bool'($module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s1), $module_publishing_allowed#$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption(s2))}
+    s1 == s2
+}
 
 // fun DiemTransactionPublishingOption::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:35:5+436
 procedure {:inline 1} $1_DiemTransactionPublishingOption_initialize(_$t0: $signer, _$t1: Vec (Vec (int)), _$t2: bool) returns ()
@@ -9834,7 +11726,7 @@ procedure {:inline 1} $1_DiemTransactionPublishingOption_initialize(_$t0: $signe
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'vec'vec'u8''': Vec (Vec (int));
-    var $1_DiemConfig_Configuration_$memory#182: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#190: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -9959,8 +11851,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
 L7:
 
-    // @182 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
-    $1_DiemConfig_Configuration_$memory#182 := $1_DiemConfig_Configuration_$memory;
+    // @190 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
+    $1_DiemConfig_Configuration_$memory#190 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
     havoc $temp_0'bool';
@@ -9989,8 +11881,8 @@ L7:
     // assume Eq<DiemTransactionPublishingOption::DiemTransactionPublishingOption>(DiemConfig::$get<DiemTransactionPublishingOption::DiemTransactionPublishingOption>(), $t9) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
     assume $IsEqual'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($1_DiemConfig_$get'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory), $t9);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@182](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#182), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@190](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#190), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemTransactionPublishingOption::DiemTransactionPublishingOption>($t0, $t9) at /home/ying/diem/language/diem-framework/modules/DiemTransactionPublishingOption.move:43:9+186
 
@@ -10021,7 +11913,8 @@ function $IsValid'$1_DesignatedDealer_Dealer'(s: $1_DesignatedDealer_Dealer): bo
     $IsValid'$1_Event_EventHandle'$1_DesignatedDealer_ReceivedMintEvent''($mint_event_handle#$1_DesignatedDealer_Dealer(s))
 }
 function {:inline} $IsEqual'$1_DesignatedDealer_Dealer'(s1: $1_DesignatedDealer_Dealer, s2: $1_DesignatedDealer_Dealer): bool {
-    $IsEqual'$1_Event_EventHandle'$1_DesignatedDealer_ReceivedMintEvent''($mint_event_handle#$1_DesignatedDealer_Dealer(s1), $mint_event_handle#$1_DesignatedDealer_Dealer(s2))}
+    s1 == s2
+}
 var $1_DesignatedDealer_Dealer_$memory: $Memory $1_DesignatedDealer_Dealer;
 
 // struct DesignatedDealer::ReceivedMintEvent at /home/ying/diem/language/diem-framework/modules/DesignatedDealer.move:38:5+286
@@ -10042,9 +11935,8 @@ function $IsValid'$1_DesignatedDealer_ReceivedMintEvent'(s: $1_DesignatedDealer_
       && $IsValid'u64'($amount#$1_DesignatedDealer_ReceivedMintEvent(s))
 }
 function {:inline} $IsEqual'$1_DesignatedDealer_ReceivedMintEvent'(s1: $1_DesignatedDealer_ReceivedMintEvent, s2: $1_DesignatedDealer_ReceivedMintEvent): bool {
-    $IsEqual'vec'u8''($currency_code#$1_DesignatedDealer_ReceivedMintEvent(s1), $currency_code#$1_DesignatedDealer_ReceivedMintEvent(s2))
-    && $IsEqual'address'($destination_address#$1_DesignatedDealer_ReceivedMintEvent(s1), $destination_address#$1_DesignatedDealer_ReceivedMintEvent(s2))
-    && $IsEqual'u64'($amount#$1_DesignatedDealer_ReceivedMintEvent(s1), $amount#$1_DesignatedDealer_ReceivedMintEvent(s2))}
+    s1 == s2
+}
 
 // struct ChainId::ChainId at /home/ying/diem/language/diem-framework/modules/ChainId.move:10:5+45
 type {:datatype} $1_ChainId_ChainId;
@@ -10059,6 +11951,11 @@ function {:inline} $IsEqual'$1_ChainId_ChainId'(s1: $1_ChainId_ChainId, s2: $1_C
     s1 == s2
 }
 var $1_ChainId_ChainId_$memory: $Memory $1_ChainId_ChainId;
+
+// spec fun at /home/ying/diem/language/diem-framework/modules/AccountFreezing.move:160:5+163
+function {:inline} $1_AccountFreezing_$account_is_frozen($1_AccountFreezing_FreezingBit_$memory: $Memory $1_AccountFreezing_FreezingBit, addr: int): bool {
+    ($ResourceExists($1_AccountFreezing_FreezingBit_$memory, addr) && $is_frozen#$1_AccountFreezing_FreezingBit($ResourceValue($1_AccountFreezing_FreezingBit_$memory, addr)))
+}
 
 // spec fun at /home/ying/diem/language/diem-framework/modules/AccountFreezing.move:233:9+141
 function {:inline} $1_AccountFreezing_spec_account_is_not_frozen($1_AccountFreezing_FreezingBit_$memory: $Memory $1_AccountFreezing_FreezingBit, addr: int): bool {
@@ -10096,8 +11993,8 @@ function $IsValid'$1_AccountFreezing_FreezeEventsHolder'(s: $1_AccountFreezing_F
       && $IsValid'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''($unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s))
 }
 function {:inline} $IsEqual'$1_AccountFreezing_FreezeEventsHolder'(s1: $1_AccountFreezing_FreezeEventsHolder, s2: $1_AccountFreezing_FreezeEventsHolder): bool {
-    $IsEqual'$1_Event_EventHandle'$1_AccountFreezing_FreezeAccountEvent''($freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s1), $freeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_AccountFreezing_UnfreezeAccountEvent''($unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s1), $unfreeze_event_handle#$1_AccountFreezing_FreezeEventsHolder(s2))}
+    s1 == s2
+}
 var $1_AccountFreezing_FreezeEventsHolder_$memory: $Memory $1_AccountFreezing_FreezeEventsHolder;
 
 // struct AccountFreezing::FreezingBit at /home/ying/diem/language/diem-framework/modules/AccountFreezing.move:11:5+164
@@ -10400,6 +12297,11 @@ function {:inline} $1_DiemAccount_spec_holds_delegated_withdraw_capability($1_Di
     ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) && $1_Option_$is_none'$1_DiemAccount_WithdrawCapability'($withdraw_capability#$1_DiemAccount_DiemAccount($ResourceValue($1_DiemAccount_DiemAccount_$memory, addr))))
 }
 
+// spec fun at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2503:10+208
+function {:inline} $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds, $1_AccountFreezing_FreezingBit_$memory: $Memory $1_AccountFreezing_FreezingBit, $1_DiemAccount_DiemAccount_$memory: $Memory $1_DiemAccount_DiemAccount, sender: $signer): bool {
+    (var addr := $1_Signer_spec_address_of(sender); (($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr)) && !$1_AccountFreezing_$account_is_frozen($1_AccountFreezing_FreezingBit_$memory, addr)))
+}
+
 // struct DiemAccount::DiemAccount at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:34:5+1558
 type {:datatype} $1_DiemAccount_DiemAccount;
 function {:constructor} $1_DiemAccount_DiemAccount($authentication_key: Vec (int), $withdraw_capability: $1_Option_Option'$1_DiemAccount_WithdrawCapability', $key_rotation_capability: $1_Option_Option'$1_DiemAccount_KeyRotationCapability', $received_events: $1_Event_EventHandle'$1_DiemAccount_ReceivedPaymentEvent', $sent_events: $1_Event_EventHandle'$1_DiemAccount_SentPaymentEvent', $sequence_number: int): $1_DiemAccount_DiemAccount;
@@ -10430,12 +12332,8 @@ function $IsValid'$1_DiemAccount_DiemAccount'(s: $1_DiemAccount_DiemAccount): bo
       && $IsValid'u64'($sequence_number#$1_DiemAccount_DiemAccount(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_DiemAccount'(s1: $1_DiemAccount_DiemAccount, s2: $1_DiemAccount_DiemAccount): bool {
-    $IsEqual'vec'u8''($authentication_key#$1_DiemAccount_DiemAccount(s1), $authentication_key#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Option_Option'$1_DiemAccount_WithdrawCapability''($withdraw_capability#$1_DiemAccount_DiemAccount(s1), $withdraw_capability#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Option_Option'$1_DiemAccount_KeyRotationCapability''($key_rotation_capability#$1_DiemAccount_DiemAccount(s1), $key_rotation_capability#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemAccount_ReceivedPaymentEvent''($received_events#$1_DiemAccount_DiemAccount(s1), $received_events#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemAccount_SentPaymentEvent''($sent_events#$1_DiemAccount_DiemAccount(s1), $sent_events#$1_DiemAccount_DiemAccount(s2))
-    && $IsEqual'u64'($sequence_number#$1_DiemAccount_DiemAccount(s1), $sequence_number#$1_DiemAccount_DiemAccount(s2))}
+    s1 == s2
+}
 var $1_DiemAccount_DiemAccount_$memory: $Memory $1_DiemAccount_DiemAccount;
 
 // struct DiemAccount::AccountOperationsCapability at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:91:5+167
@@ -10452,8 +12350,8 @@ function $IsValid'$1_DiemAccount_AccountOperationsCapability'(s: $1_DiemAccount_
       && $IsValid'$1_Event_EventHandle'$1_DiemAccount_CreateAccountEvent''($creation_events#$1_DiemAccount_AccountOperationsCapability(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_AccountOperationsCapability'(s1: $1_DiemAccount_AccountOperationsCapability, s2: $1_DiemAccount_AccountOperationsCapability): bool {
-    $IsEqual'$1_AccountLimits_AccountLimitMutationCapability'($limits_cap#$1_DiemAccount_AccountOperationsCapability(s1), $limits_cap#$1_DiemAccount_AccountOperationsCapability(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemAccount_CreateAccountEvent''($creation_events#$1_DiemAccount_AccountOperationsCapability(s1), $creation_events#$1_DiemAccount_AccountOperationsCapability(s2))}
+    s1 == s2
+}
 var $1_DiemAccount_AccountOperationsCapability_$memory: $Memory $1_DiemAccount_AccountOperationsCapability;
 
 // struct DiemAccount::AdminTransactionEvent at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:127:5+150
@@ -10524,7 +12422,8 @@ function $IsValid'$1_DiemAccount_DiemWriteSetManager'(s: $1_DiemAccount_DiemWrit
     $IsValid'$1_Event_EventHandle'$1_DiemAccount_AdminTransactionEvent''($upgrade_events#$1_DiemAccount_DiemWriteSetManager(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_DiemWriteSetManager'(s1: $1_DiemAccount_DiemWriteSetManager, s2: $1_DiemAccount_DiemWriteSetManager): bool {
-    $IsEqual'$1_Event_EventHandle'$1_DiemAccount_AdminTransactionEvent''($upgrade_events#$1_DiemAccount_DiemWriteSetManager(s1), $upgrade_events#$1_DiemAccount_DiemWriteSetManager(s2))}
+    s1 == s2
+}
 var $1_DiemAccount_DiemWriteSetManager_$memory: $Memory $1_DiemAccount_DiemWriteSetManager;
 
 // struct DiemAccount::KeyRotationCapability at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:83:5+208
@@ -10562,10 +12461,8 @@ function $IsValid'$1_DiemAccount_ReceivedPaymentEvent'(s: $1_DiemAccount_Receive
       && $IsValid'vec'u8''($metadata#$1_DiemAccount_ReceivedPaymentEvent(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_ReceivedPaymentEvent'(s1: $1_DiemAccount_ReceivedPaymentEvent, s2: $1_DiemAccount_ReceivedPaymentEvent): bool {
-    $IsEqual'u64'($amount#$1_DiemAccount_ReceivedPaymentEvent(s1), $amount#$1_DiemAccount_ReceivedPaymentEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_DiemAccount_ReceivedPaymentEvent(s1), $currency_code#$1_DiemAccount_ReceivedPaymentEvent(s2))
-    && $IsEqual'address'($payer#$1_DiemAccount_ReceivedPaymentEvent(s1), $payer#$1_DiemAccount_ReceivedPaymentEvent(s2))
-    && $IsEqual'vec'u8''($metadata#$1_DiemAccount_ReceivedPaymentEvent(s1), $metadata#$1_DiemAccount_ReceivedPaymentEvent(s2))}
+    s1 == s2
+}
 
 // struct DiemAccount::SentPaymentEvent at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:103:5+346
 type {:datatype} $1_DiemAccount_SentPaymentEvent;
@@ -10589,10 +12486,8 @@ function $IsValid'$1_DiemAccount_SentPaymentEvent'(s: $1_DiemAccount_SentPayment
       && $IsValid'vec'u8''($metadata#$1_DiemAccount_SentPaymentEvent(s))
 }
 function {:inline} $IsEqual'$1_DiemAccount_SentPaymentEvent'(s1: $1_DiemAccount_SentPaymentEvent, s2: $1_DiemAccount_SentPaymentEvent): bool {
-    $IsEqual'u64'($amount#$1_DiemAccount_SentPaymentEvent(s1), $amount#$1_DiemAccount_SentPaymentEvent(s2))
-    && $IsEqual'vec'u8''($currency_code#$1_DiemAccount_SentPaymentEvent(s1), $currency_code#$1_DiemAccount_SentPaymentEvent(s2))
-    && $IsEqual'address'($payee#$1_DiemAccount_SentPaymentEvent(s1), $payee#$1_DiemAccount_SentPaymentEvent(s2))
-    && $IsEqual'vec'u8''($metadata#$1_DiemAccount_SentPaymentEvent(s1), $metadata#$1_DiemAccount_SentPaymentEvent(s2))}
+    s1 == s2
+}
 
 // struct DiemAccount::WithdrawCapability at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:74:5+202
 type {:datatype} $1_DiemAccount_WithdrawCapability;
@@ -11458,1164 +13353,2305 @@ L5:
 
 }
 
-// spec fun at /home/ying/diem/language/diem-framework/modules/Authenticator.move:69:10+72
-function {:inline} $1_Authenticator_spec_ed25519_authentication_key(public_key: Vec (int)): Vec (int);
-axiom (forall public_key: Vec (int) ::
-(var $$res := $1_Authenticator_spec_ed25519_authentication_key(public_key);
-$IsValid'vec'u8''($$res)));
-
-// spec fun at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+94
-function {:inline} $1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory: $Memory $1_SharedEd25519PublicKey_SharedEd25519PublicKey, addr: int): bool {
-    $ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, addr)
-}
-
-// struct SharedEd25519PublicKey::SharedEd25519PublicKey at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:13:5+268
-type {:datatype} $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-function {:constructor} $1_SharedEd25519PublicKey_SharedEd25519PublicKey($key: Vec (int), $rotation_cap: $1_DiemAccount_KeyRotationCapability): $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-function {:inline} $Update'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'_key(s: $1_SharedEd25519PublicKey_SharedEd25519PublicKey, x: Vec (int)): $1_SharedEd25519PublicKey_SharedEd25519PublicKey {
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey(x, $rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s))
-}
-function {:inline} $Update'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'_rotation_cap(s: $1_SharedEd25519PublicKey_SharedEd25519PublicKey, x: $1_DiemAccount_KeyRotationCapability): $1_SharedEd25519PublicKey_SharedEd25519PublicKey {
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey($key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s), x)
-}
-function $IsValid'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'(s: $1_SharedEd25519PublicKey_SharedEd25519PublicKey): bool {
-    $IsValid'vec'u8''($key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s))
-      && $IsValid'$1_DiemAccount_KeyRotationCapability'($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s))
-}
-function {:inline} $IsEqual'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'(s1: $1_SharedEd25519PublicKey_SharedEd25519PublicKey, s2: $1_SharedEd25519PublicKey_SharedEd25519PublicKey): bool {
-    $IsEqual'vec'u8''($key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s1), $key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s2))
-    && $IsEqual'$1_DiemAccount_KeyRotationCapability'($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s1), $rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey(s2))}
-var $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory: $Memory $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-
-// fun SharedEd25519PublicKey::publish [verification] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-procedure {:timeLimit 40} $1_SharedEd25519PublicKey_publish$verify(_$t0: $signer, _$t1: Vec (int)) returns ()
+// fun ValidatorAdministrationScripts::add_validator_and_reconfigure [verification] at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+procedure {:timeLimit 40} $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify(_$t0: $signer, _$t1: int, _$t2: Vec (int), _$t3: int) returns ()
 {
     // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
+    var $t4: bool;
     var $t5: int;
     var $t6: int;
-    var $t7: int;
-    var $t8: Vec (int);
-    var $t9: int;
-    var $t10: $1_DiemAccount_KeyRotationCapability;
-    var $t11: int;
-    var $t12: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey);
+    var $t7: $1_DiemConfig_Configuration;
+    var $t8: int;
+    var $t9: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t10: $1_DiemConfig_Configuration;
+    var $t11: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t12: int;
     var $t13: int;
-    var $t14: bool;
+    var $t14: Vec (int);
     var $t15: bool;
-    var $t16: int;
+    var $t16: bool;
     var $t17: int;
-    var $t18: $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
+    var $t18: int;
+    var $t19: $1_DiemConfig_Configuration;
+    var $t20: int;
+    var $t21: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t22: $1_DiemConfig_Configuration;
+    var $t23: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t24: int;
+    var $t25: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t26: $1_DiemConfig_Configuration;
+    var $t27: int;
+    var $t28: $1_DiemConfig_NewEpochEvent;
     var $t0: $signer;
-    var $t1: Vec (int);
-    var $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey': $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
+    var $t1: int;
+    var $t2: Vec (int);
+    var $t3: int;
+    var $temp_0'address': int;
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#152: $Memory $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-    var $1_DiemAccount_DiemAccount_$memory#153: $Memory $1_DiemAccount_DiemAccount;
-    var $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#245: $Memory $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
+    var $1_SlidingNonce_SlidingNonce_$memory#234: $Memory $1_SlidingNonce_SlidingNonce;
+    var $1_ValidatorConfig_ValidatorConfig_$memory#235: $Memory $1_ValidatorConfig_ValidatorConfig;
+    var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
+    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
+    var $1_Roles_RoleId_$memory#238: $Memory $1_Roles_RoleId;
+    var $1_DiemConfig_DisableReconfiguration_$memory#239: $Memory $1_DiemConfig_DisableReconfiguration;
     $t0 := _$t0;
     $t1 := _$t1;
-    assume IsEmptyVec(p#$Mutation($t12));
+    $t2 := _$t2;
+    $t3 := _$t3;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where DiemAccount::$exists_at(addr): Or(DiemAccount::$delegated_key_rotation_capability(addr), DiemAccount::spec_holds_own_key_rotation_cap(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2220:9+147
-    assume {:print "$at(28,1433,1808)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))  ==> (($1_DiemAccount_$delegated_key_rotation_capability($1_DiemAccount_DiemAccount_$memory, addr) || $1_DiemAccount_spec_holds_own_key_rotation_cap($1_DiemAccount_DiemAccount_$memory, addr))));
+    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
+    assume {:print "$at(36,5750,6169)"} true;
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
 
-    // assume forall addr: TypeDomain<address>() where DiemAccount::$exists_at(addr): Or(DiemAccount::spec_holds_delegated_withdraw_capability(addr), DiemAccount::spec_holds_own_withdraw_cap(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2250:9+150
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))  ==> (($1_DiemAccount_spec_holds_delegated_withdraw_capability($1_DiemAccount_DiemAccount_$memory, addr) || $1_DiemAccount_spec_holds_own_withdraw_cap($1_DiemAccount_DiemAccount_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorOperatorConfig::$has_validator_operator_config(addr): Roles::spec_has_validator_operator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:75:9+137
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>(): Implies(DiemAccount::$exists_at(addr), exists<Roles::RoleId>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2324:9+81
-    assume (forall addr: int :: $IsValid'address'(addr) ==> (($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) ==> $ResourceExists($1_Roles_RoleId_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:343:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>(): Implies(And(Eq<address>(addr, a550c18), DiemAccount::$exists_at(addr)), exists<DiemAccount::AccountOperationsCapability>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2338:9+130
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ((($IsEqual'address'(addr, 173345816) && $1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr)) ==> $ResourceExists($1_DiemAccount_AccountOperationsCapability_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:348:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>(): Implies(DiemAccount::$exists_at(addr), exists<AccountFreezing::FreezingBit>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2394:9+107
-    assume (forall addr: int :: $IsValid'address'(addr) ==> (($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) ==> $ResourceExists($1_AccountFreezing_FreezingBit_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$is_valid(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:355:9+107
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume And(forall addr: TypeDomain<address>() where exists<DiemAccount::Balance<XUS::XUS>>(addr): DiemAccount::$exists_at(addr), forall addr: TypeDomain<address>() where exists<DiemAccount::Balance<XDX::XDX>>(addr): DiemAccount::$exists_at(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2400:9+115
-    assume ((forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_DiemAccount_Balance'$1_XUS_XUS'_$memory, addr))  ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))) && (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_DiemAccount_Balance'$1_XDX_XDX'_$memory, addr))  ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))));
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
+
+    // assume Implies(DiemTimestamp::$is_operating(), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:410:9+62
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+
+    // assume And(And(And(And(forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(config_address): Eq<address>(config_address, a550c18), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(config_address): Eq<address>(config_address, a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:416:9+171
+    assume (((((forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))));
+
+    // assume Implies(DiemTimestamp::$is_operating(), And(DiemConfig::spec_is_published<DiemSystem::DiemSystem>(), exists<DiemSystem::CapabilityHolder>(a550c18))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:559:9+151
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> ($1_DiemConfig_spec_is_published'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory) && $ResourceExists($1_DiemSystem_CapabilityHolder_$memory, 173345816)));
+
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Roles::spec_has_validator_role_addr(select DiemSystem::ValidatorInfo.addr(Index(DiemSystem::spec_get_validators(), i1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:618:8+133
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $addr#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)))))));
+
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Eq<u64>(select DiemSystem::ValidatorInfo.consensus_voting_power(Index(DiemSystem::spec_get_validators(), i1)), 1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:626:8+119
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($IsEqual'u64'($consensus_voting_power#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)), 1)))));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
     assume $IsValid'signer'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    assume $IsValid'vec'u8''($t1);
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume $IsValid'u64'($t1);
 
-    // assume forall $rsc: ResourceDomain<DiemAccount::DiemAccount>(): And(WellFormed($rsc), And(Le(Len<DiemAccount::WithdrawCapability>(select Option::Option.vec(select DiemAccount::DiemAccount.withdraw_capability($rsc))), 1), Le(Len<DiemAccount::KeyRotationCapability>(select Option::Option.vec(select DiemAccount::DiemAccount.key_rotation_capability($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemAccount_DiemAccount_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemAccount_DiemAccount_$memory, $a_0);
-    (($IsValid'$1_DiemAccount_DiemAccount'($rsc) && ((LenVec($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'($withdraw_capability#$1_DiemAccount_DiemAccount($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'($key_rotation_capability#$1_DiemAccount_DiemAccount($rsc))) <= 1))))));
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume $IsValid'vec'u8''($t2);
 
-    // assume forall $rsc: ResourceDomain<SharedEd25519PublicKey::SharedEd25519PublicKey>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    assume (forall $a_0: int :: {$ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0)}(var $rsc := $ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0);
-    ($IsValid'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'($rsc))));
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume $IsValid'address'($t3);
 
-    // assume Identical($t5, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:46:9+44
-    assume {:print "$at(28,1991,2035)"} true;
-    assume ($t5 == $1_Signer_spec_address_of($t0));
+    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
+    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
 
-    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:965:9+52
-    assume {:print "$at(11,43138,43190)"} true;
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<ValidatorConfig::ValidatorConfig>(): And(WellFormed($rsc), And(Le(Len<ValidatorConfig::Config>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.config($rsc))), 1), Le(Len<address>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.operator_account($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0);
+    (($IsValid'$1_ValidatorConfig_ValidatorConfig'($rsc) && ((LenVec($vec#$1_Option_Option'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1))))));
+
+    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0)}(var $rsc := $ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0);
+    ($IsValid'$1_SlidingNonce_SlidingNonce'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::Configuration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_Configuration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_Configuration_$memory, $a_0);
+    ($IsValid'$1_DiemConfig_Configuration'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::DisableReconfiguration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0);
+    ($IsValid'$1_DiemConfig_DisableReconfiguration'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(): And(WellFormed($rsc), forall i: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)))), j: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)))): Implies(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)), i)), select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)), j))), Eq<num>(i, j))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $a_0);
+    (($IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''($rsc) && (var $range_1 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)))); (var $range_2 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)))); (forall $i_3: int, $i_4: int :: $InRange($range_1, $i_3) ==> $InRange($range_2, $i_4) ==> (var i := $i_3;
+    (var j := $i_4;
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)), i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)), j))) ==> $IsEqual'num'(i, j))))))))))));
+
+    // assume forall $rsc: ResourceDomain<DiemSystem::CapabilityHolder>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+419
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemSystem_CapabilityHolder_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemSystem_CapabilityHolder_$memory, $a_0);
+    ($IsValid'$1_DiemSystem_CapabilityHolder'($rsc))));
+
+    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
     assume ($t6 == $1_Signer_spec_address_of($t0));
 
-    // assume Identical($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:60:9+44
-    assume {:print "$at(28,2531,2575)"} true;
-    assume ($t7 == $1_Signer_spec_address_of($t0));
+    // assume Identical($t7, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t7 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
 
-    // @153 := save_mem(DiemAccount::DiemAccount) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+1
-    assume {:print "$at(28,1433,1434)"} true;
-    $1_DiemAccount_DiemAccount_$memory#153 := $1_DiemAccount_DiemAccount_$memory;
+    // assume Identical($t8, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t8 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
 
-    // @152 := save_mem(SharedEd25519PublicKey::SharedEd25519PublicKey) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+1
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#152 := $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory;
+    // assume Identical($t9, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:217:9+31
+    assume {:print "$at(16,9868,9899)"} true;
+    assume ($t9 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+1
-    assume {:print "$track_local(32,2,0):", $t0} $t0 == $t0;
+    // assume Identical($t10, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t10 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
 
-    // trace_local[key]($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+1
-    assume {:print "$track_local(32,2,1):", $t1} $t1 == $t1;
+    // assume Identical($t11, select DiemConfig::Configuration.events($t10)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t11 == $events#$1_DiemConfig_Configuration($t10));
 
-    // $t8 := [] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:32:18+3
-    assume {:print "$at(28,1547,1550)"} true;
-    $t8 := $EmptyVec'u8'();
-    assume $IsValid'vec'u8''($t8);
+    // assume Identical($t12, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t12 == $1_Signer_spec_address_of($t0));
 
-    // assume Identical($t9, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:965:9+52
-    assume {:print "$at(11,43138,43190)"} true;
-    assume ($t9 == $1_Signer_spec_address_of($t0));
+    // assume DiemAccount::prologue_guarantees($t0) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    assume {:print "$at(11,115530,115567)"} true;
+    assume $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_AccountFreezing_FreezingBit_$memory, $1_DiemAccount_DiemAccount_$memory, $t0);
 
-    // $t10 := DiemAccount::extract_key_rotation_capability($t0) on_abort goto L3 with $t11 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:33:27+53
-    assume {:print "$at(28,1578,1631)"} true;
-    call $t10 := $1_DiemAccount_extract_key_rotation_capability($t0);
+    // @237 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
+
+    // @238 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_Roles_RoleId_$memory#238 := $1_Roles_RoleId_$memory;
+
+    // @235 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_ValidatorConfig_ValidatorConfig_$memory#235 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // @234 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_SlidingNonce_SlidingNonce_$memory#234 := $1_SlidingNonce_SlidingNonce_$memory;
+
+    // @239 := save_mem(DiemConfig::DisableReconfiguration) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemConfig_DisableReconfiguration_$memory#239 := $1_DiemConfig_DisableReconfiguration_$memory;
+
+    // @236 := save_mem(DiemConfig::DiemConfig<DiemSystem::DiemSystem>) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236 := $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory;
+
+    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+1
+    assume {:print "$at(36,5750,5751)"} true;
+    assume {:print "$track_local(31,0,0):", $t0} $t0 == $t0;
+
+    // trace_local[sliding_nonce]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+1
+    assume {:print "$track_local(31,0,1):", $t1} $t1 == $t1;
+
+    // trace_local[validator_name]($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+1
+    assume {:print "$track_local(31,0,2):", $t2} $t2 == $t2;
+
+    // trace_local[validator_address]($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:55:5+1
+    assume {:print "$track_local(31,0,3):", $t3} $t3 == $t3;
+
+    // SlidingNonce::record_nonce_or_abort($t0, $t1) on_abort goto L3 with $t13 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:61:9+63
+    assume {:print "$at(36,5943,6006)"} true;
+    call $1_SlidingNonce_record_nonce_or_abort($t0, $t1);
     if ($abort_flag) {
-        assume {:print "$at(28,1578,1631)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(32,2):", $t11} $t11 == $t11;
+        assume {:print "$at(36,5943,6006)"} true;
+        $t13 := $abort_code;
+        assume {:print "$track_abort(31,0):", $t13} $t13 == $t13;
         goto L3;
     }
 
-    // $t4 := pack SharedEd25519PublicKey::SharedEd25519PublicKey($t8, $t10) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:31:17+136
-    assume {:print "$at(28,1505,1641)"} true;
-    $t4 := $1_SharedEd25519PublicKey_SharedEd25519PublicKey($t8, $t10);
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    // >> opaque call: $t6 := ValidatorConfig::get_human_name($t3)
+    assume {:print "$at(36,6023,6073)"} true;
 
-    // trace_local[t]($t4) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:31:13+1
-    assume {:print "$track_local(32,2,4):", $t4} $t4 == $t4;
+    // $t14 := opaque begin: ValidatorConfig::get_human_name($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
 
-    // $t12 := borrow_local($t4) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:35:21+6
-    assume {:print "$at(28,1663,1669)"} true;
-    $t12 := $Mutation($Local(4), EmptyVec(), $t4);
+    // assume Identical($t15, Not(ValidatorConfig::$exists_config($t3))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    assume ($t15 == !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t3));
 
-    // SharedEd25519PublicKey::rotate_key_($t12, $t1) on_abort goto L3 with $t11 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:35:9+24
-    call $t12 := $1_SharedEd25519PublicKey_rotate_key_($t12, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(28,1651,1675)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(32,2):", $t11} $t11 == $t11;
-        goto L3;
-    }
+    // if ($t15) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    if ($t15) { goto L5; } else { goto L4; }
 
-    // write_back[LocalRoot($t4)@]($t12) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:35:9+24
-    $t4 := $Dereference($t12);
+    // label L5 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+L5:
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:27+27
-    // >> opaque call: $t8 := Signer::address_of($t0)
-    assume {:print "$at(28,1703,1730)"} true;
+    // assume And(Not(ValidatorConfig::$exists_config($t3)), Eq(5, $t13)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    assume (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t3) && $IsEqual'num'(5, $t13));
 
-    // $t13 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:27+27
+    // trace_abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    assume {:print "$at(36,6023,6073)"} true;
+    assume {:print "$track_abort(31,0):", $t13} $t13 == $t13;
 
-    // assume WellFormed($t13) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:27+27
-    assume $IsValid'address'($t13);
-
-    // assume Eq<address>($t13, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:27+27
-    assume $IsEqual'address'($t13, $1_Signer_spec_address_of($t0));
-
-    // $t13 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:27+27
-
-    // $t14 := SharedEd25519PublicKey::exists_at($t13) on_abort goto L3 with $t11 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:17+38
-    call $t14 := $1_SharedEd25519PublicKey_exists_at($t13);
-    if ($abort_flag) {
-        assume {:print "$at(28,1693,1731)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(32,2):", $t11} $t11 == $t11;
-        goto L3;
-    }
-
-    // $t15 := !($t14) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:16+1
-    call $t15 := $Not($t14);
-
-    // $t16 := 1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:83+11
-    $t16 := 1;
-    assume $IsValid'u64'($t16);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:57+38
-    // >> opaque call: $t12 := Errors::already_published($t11)
-
-    // $t17 := opaque begin: Errors::already_published($t16) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:57+38
-
-    // assume WellFormed($t17) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:57+38
-    assume $IsValid'u64'($t17);
-
-    // assume Eq<u64>($t17, 6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:57+38
-    assume $IsEqual'u64'($t17, 6);
-
-    // $t17 := opaque end: Errors::already_published($t16) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:57+38
-
-    // trace_local[tmp#$3]($t17) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-    assume {:print "$track_local(32,2,3):", $t17} $t17 == $t17;
-
-    // trace_local[tmp#$2]($t15) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-    assume {:print "$track_local(32,2,2):", $t15} $t15 == $t15;
-
-    // if ($t15) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-    if ($t15) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-L1:
-
-    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-
-    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-    assume {:print "$at(28,1685,1772)"} true;
-    assume {:print "$track_abort(32,2):", $t17} $t17 == $t17;
-
-    // $t11 := move($t17) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
-    $t11 := $t17;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:36:9+87
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:37:17+7
-    assume {:print "$at(28,1790,1797)"} true;
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+L4:
+
+    // assume WellFormed($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    assume $IsValid'vec'u8''($t14);
+
+    // assume Eq<vector<u8>>($t14, ValidatorConfig::$get_human_name($t3)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+    assume $IsEqual'vec'u8''($t14, $1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory, $t3));
+
+    // $t14 := opaque end: ValidatorConfig::get_human_name($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:16+50
+
+    // $t16 := ==($t14, $t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:67+2
+    $t16 := $IsEqual'vec'u8''($t14, $t2);
+
+    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:9+79
+    assume {:print "$track_local(31,0,4):", $t16} $t16 == $t16;
+
+    // if ($t16) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:9+79
+    if ($t16) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:86+1
+L1:
+
+    // $t17 := 0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:86+1
+    $t17 := 0;
+    assume $IsValid'u64'($t17);
+
+    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:9+79
+    assume {:print "$at(36,6016,6095)"} true;
+    assume {:print "$track_abort(31,0):", $t17} $t17 == $t17;
+
+    // $t13 := move($t17) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:9+79
+    $t13 := $t17;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:62:9+79
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:63:35+11
+    assume {:print "$at(36,6131,6142)"} true;
 L0:
 
-    // $t18 := move($t4) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:37:26+1
-    $t18 := $t4;
+    // assume Identical($t18, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t18 == $1_Signer_spec_address_of($t0));
 
-    // @245 := save_mem(SharedEd25519PublicKey::SharedEd25519PublicKey) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:30:5+375
-    // state save for global update invariants
-    assume {:print "$at(28,1433,1808)"} true;
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#245 := $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory;
+    // assume Identical($t19, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t19 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
 
-    // move_to<SharedEd25519PublicKey::SharedEd25519PublicKey>($t18, $t0) on_abort goto L3 with $t11 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:37:9+7
-    assume {:print "$at(28,1782,1789)"} true;
-    if ($ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $1_Signer_spec_address_of($t0))) {
-        call $ExecFailureAbort();
-    } else {
-        $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory := $ResourceUpdate($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $1_Signer_spec_address_of($t0), $t18);
-    }
+    // assume Identical($t20, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t20 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t21, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:217:9+31
+    assume {:print "$at(16,9868,9899)"} true;
+    assume ($t21 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t22, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t22 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t23, select DiemConfig::Configuration.events($t22)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t23 == $events#$1_DiemConfig_Configuration($t22));
+
+    // assume Identical($t24, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t24 == $1_Signer_spec_address_of($t0));
+
+    // DiemSystem::add_validator($t0, $t3) on_abort goto L3 with $t13 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:63:9+57
+    assume {:print "$at(36,6105,6162)"} true;
+    call $1_DiemSystem_add_validator($t0, $t3);
     if ($abort_flag) {
-        assume {:print "$at(28,1782,1789)"} true;
-        $t11 := $abort_code;
-        assume {:print "$track_abort(32,2):", $t11} $t11 == $t11;
+        assume {:print "$at(36,6105,6162)"} true;
+        $t13 := $abort_code;
+        assume {:print "$track_abort(31,0):", $t13} $t13 == $t13;
         goto L3;
     }
 
-    // assert forall addr: TypeDomain<address>() where exists[@245]<SharedEd25519PublicKey::SharedEd25519PublicKey>(addr): exists<SharedEd25519PublicKey::SharedEd25519PublicKey>(addr) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:145:9+136
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:145:9+136
-    assume {:print "$at(28,6066,6202)"} true;
-    assert {:msg "assert_failed(28,6066,6202): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#245, addr))  ==> ($ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, addr)));
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:38:5+1
-    assume {:print "$at(28,1807,1808)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:64:5+1
+    assume {:print "$at(36,6168,6169)"} true;
 L2:
 
-    // assert Not(SharedEd25519PublicKey::$exists_at[@152]($t5)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:55:9+57
-    assume {:print "$at(28,2376,2433)"} true;
-    assert {:msg "assert_failed(28,2376,2433): function does not abort under this condition"}
-      !$1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#152, $t5);
+    // assume Identical($t25, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:218:9+41
+    assume {:print "$at(16,9908,9949)"} true;
+    assume ($t25 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
 
-    // assert Not(Not(DiemAccount::$exists_at[@153]($t6))) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:966:9+62
-    assume {:print "$at(11,43199,43261)"} true;
-    assert {:msg "assert_failed(11,43199,43261): function does not abort under this condition"}
-      !!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#153, $t6);
+    // assume Identical($t26, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:369:9+56
+    assume {:print "$at(13,15926,15982)"} true;
+    assume ($t26 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
 
-    // assert Not(DiemAccount::$delegated_key_rotation_capability[@153](Signer::spec_address_of[]($t0))) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:971:9+105
-    assume {:print "$at(11,43414,43519)"} true;
-    assert {:msg "assert_failed(11,43414,43519): function does not abort under this condition"}
-      !$1_DiemAccount_$delegated_key_rotation_capability($1_DiemAccount_DiemAccount_$memory#153, $1_Signer_spec_address_of($t0));
+    // assume Identical($t27, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:370:9+54
+    assume {:print "$at(13,15991,16045)"} true;
+    assume ($t27 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
 
-    // assert Not(Not(Signature::$ed25519_validate_pubkey[]($t1))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:85:9+92
-    assume {:print "$at(28,3470,3562)"} true;
-    assert {:msg "assert_failed(28,3470,3562): function does not abort under this condition"}
-      !!$1_Signature_$ed25519_validate_pubkey($t1);
+    // assume Identical($t28, pack DiemConfig::NewEpochEvent(select DiemConfig::Configuration.epoch($t26))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+    assume ($t28 == $1_DiemConfig_NewEpochEvent($epoch#$1_DiemConfig_Configuration($t26)));
 
-    // assert Not(Not(DiemAccount::$exists_at[@153](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap(pack SharedEd25519PublicKey::SharedEd25519PublicKey([], DiemAccount::spec_get_key_rotation_cap[@153]($t5))))))) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:929:9+69
-    assume {:print "$at(11,41359,41428)"} true;
-    assert {:msg "assert_failed(11,41359,41428): function does not abort under this condition"}
-      !!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#153, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($1_SharedEd25519PublicKey_SharedEd25519PublicKey($EmptyVec'u8'(), $1_DiemAccount_spec_get_key_rotation_cap($1_DiemAccount_DiemAccount_$memory#153, $t5)))));
+    // assert Not(Not(exists[@234]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:47:9+93
+    assume {:print "$at(30,1971,2064)"} true;
+    assert {:msg "assert_failed(30,1971,2064): function does not abort under this condition"}
+      !!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#234, $1_Signer_spec_address_of($t0));
 
-    // assert Not(Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32)) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:930:9+74
-    assume {:print "$at(11,41437,41511)"} true;
-    assert {:msg "assert_failed(11,41437,41511): function does not abort under this condition"}
-      !!$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32);
+    // assert Not(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:48:9+87
+    assume {:print "$at(30,2073,2160)"} true;
+    assert {:msg "assert_failed(30,2073,2160): function does not abort under this condition"}
+      !!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0);
 
-    // assert SharedEd25519PublicKey::$exists_at($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:62:9+24
-    assume {:print "$at(28,2585,2609)"} true;
-    assert {:msg "assert_failed(28,2585,2609): post-condition does not hold"}
-      $1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t7);
+    // assert Not(Not(ValidatorConfig::$exists_config[@235]($t3))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3);
 
-    // assert Eq<vector<u8>>(select SharedEd25519PublicKey::SharedEd25519PublicKey.key(global<SharedEd25519PublicKey::SharedEd25519PublicKey>($t7)), $t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:94:9+41
-    assume {:print "$at(28,3908,3949)"} true;
-    assert {:msg "assert_failed(28,3908,3949): post-condition does not hold"}
-      $IsEqual'vec'u8''($key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t7)), $t1);
+    // assert Not(Neq<vector<u8>>(ValidatorConfig::$get_human_name[@235]($t3), $t2)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:78:9+86
+    assume {:print "$at(36,6766,6852)"} true;
+    assert {:msg "assert_failed(36,6766,6852): function does not abort under this condition"}
+      !!$IsEqual'vec'u8''($1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3), $t2);
 
-    // return () at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:94:9+41
+    // assert Not(Ge(DiemSystem::$validator_set_size[@236](), 256)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:201:9+77
+    assume {:print "$at(16,8868,8945)"} true;
+    assert {:msg "assert_failed(16,8868,8945): function does not abort under this condition"}
+      !($1_DiemSystem_$validator_set_size($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236) >= 256);
+
+    // assert Not(Not(ValidatorConfig::$is_valid[@235]($t3))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:205:9+83
+    assume {:print "$at(16,9121,9204)"} true;
+    assert {:msg "assert_failed(16,9121,9204): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3);
+
+    // assert Not(DiemSystem::spec_is_validator[@236]($t3)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:206:9+74
+    assume {:print "$at(16,9213,9287)"} true;
+    assert {:msg "assert_failed(16,9213,9287): function does not abort under this condition"}
+      !$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236, $t3);
+
+    // assert Not(Not(DiemTimestamp::$is_operating[@237]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:160:9+53
+    assume {:print "$at(17,6375,6428)"} true;
+    assert {:msg "assert_failed(17,6375,6428): function does not abort under this condition"}
+      !!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237);
+
+    // assert Not(Not(exists[@238]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
+    assume {:print "$at(27,23793,23852)"} true;
+    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#238, $t6);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@238]<Roles::RoleId>($t6)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
+    assume {:print "$at(27,23861,23948)"} true;
+    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#238, $t6)), 0);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
+    assume {:print "$at(8,1561,1647)"} true;
+    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
+
+    // assert Not(And(And(And(And(DiemTimestamp::$is_operating[@237](), DiemConfig::$reconfiguration_enabled[@239]()), Gt(DiemTimestamp::spec_now_microseconds[@237](), 0)), Lt(select DiemConfig::Configuration.epoch($t7), 18446744073709551615)), Lt($t8, select DiemConfig::Configuration.last_reconfiguration_time($t7)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:360:9+283
+    assume {:print "$at(13,15538,15821)"} true;
+    assert {:msg "assert_failed(13,15538,15821): function does not abort under this condition"}
+      !(((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#239)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) > 0)) && ($epoch#$1_DiemConfig_Configuration($t7) < 18446744073709551615)) && ($t8 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t7)));
+
+    // assert Not(Not(exists[@238]<Roles::RoleId>($t12))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
+    assume {:print "$at(27,23793,23852)"} true;
+    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#238, $t12);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@238]<Roles::RoleId>($t12)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
+    assume {:print "$at(27,23861,23948)"} true;
+    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#238, $t12)), 0);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
+    assume {:print "$at(8,1561,1647)"} true;
+    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
+
+    // assert Roles::spec_has_validator_role_addr($t3) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:214:9+60
+    assume {:print "$at(16,9689,9749)"} true;
+    assert {:msg "assert_failed(16,9689,9749): post-condition does not hold"}
+      $1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $t3);
+
+    // assert ValidatorConfig::$is_valid($t3) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:215:9+50
+    assume {:print "$at(16,9758,9808)"} true;
+    assert {:msg "assert_failed(16,9758,9808): post-condition does not hold"}
+      $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t3);
+
+    // assert DiemSystem::spec_is_validator($t3) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:216:9+42
+    assume {:print "$at(16,9817,9859)"} true;
+    assert {:msg "assert_failed(16,9817,9859): post-condition does not hold"}
+      $1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $t3);
+
+    // assert Vector::eq_push_back<DiemSystem::ValidatorInfo>($t25, $t9, pack DiemSystem::ValidatorInfo($t3, 1, ValidatorConfig::spec_get_config($t3), DiemTimestamp::spec_now_microseconds())) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:219:9+545
+    assume {:print "$at(16,9958,10503)"} true;
+    assert {:msg "assert_failed(16,9958,10503): post-condition does not hold"}
+      $1_Vector_eq_push_back'$1_DiemSystem_ValidatorInfo'($t25, $t9, $1_DiemSystem_ValidatorInfo($t3, 1, $1_ValidatorConfig_spec_get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t3), $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory)));
+
+    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), $t28, $t11, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t27, select DiemConfig::Configuration.last_reconfiguration_time($t10))))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:375:9+96
+    assume {:print "$at(13,16178,16274)"} true;
+    assert {:msg "assert_failed(13,16178,16274): function does not emit the expected event"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($EmptyEventStore, $t11, $t28, (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t27, $last_reconfiguration_time#$1_DiemConfig_Configuration($t10)))); $EventStore__is_subset(expected, actual)));
+
+    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), $t28, $t11, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t27, select DiemConfig::Configuration.last_reconfiguration_time($t10))))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:67:5+1839
+    assume {:print "$at(36,6176,8015)"} true;
+    assert {:msg "assert_failed(36,6176,8015): emitted event not covered by any of the `emits` clauses"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($EmptyEventStore, $t11, $t28, (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t27, $last_reconfiguration_time#$1_DiemConfig_Configuration($t10)))); $EventStore__is_subset(actual, expected)));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:67:5+1839
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:38:5+1
-    assume {:print "$at(28,1807,1808)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:64:5+1
+    assume {:print "$at(36,6168,6169)"} true;
 L3:
 
-    // assert Or(Or(Or(Or(Or(SharedEd25519PublicKey::$exists_at[@152]($t5), Not(DiemAccount::$exists_at[@153]($t6))), DiemAccount::$delegated_key_rotation_capability[@153](Signer::spec_address_of[]($t0))), Not(Signature::$ed25519_validate_pubkey[]($t1))), Not(DiemAccount::$exists_at[@153](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap(pack SharedEd25519PublicKey::SharedEd25519PublicKey([], DiemAccount::spec_get_key_rotation_cap[@153]($t5))))))), Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:39:5+85
-    assume {:print "$at(28,1813,1898)"} true;
-    assert {:msg "assert_failed(28,1813,1898): abort not covered by any of the `aborts_if` clauses"}
-      ((((($1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#152, $t5) || !$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#153, $t6)) || $1_DiemAccount_$delegated_key_rotation_capability($1_DiemAccount_DiemAccount_$memory#153, $1_Signer_spec_address_of($t0))) || !$1_Signature_$ed25519_validate_pubkey($t1)) || !$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#153, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($1_SharedEd25519PublicKey_SharedEd25519PublicKey($EmptyVec'u8'(), $1_DiemAccount_spec_get_key_rotation_cap($1_DiemAccount_DiemAccount_$memory#153, $t5)))))) || !$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32));
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Not(exists[@234]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)), Not(ValidatorConfig::$exists_config[@235]($t3))), Neq<vector<u8>>(ValidatorConfig::$get_human_name[@235]($t3), $t2)), Ge(DiemSystem::$validator_set_size[@236](), 256)), Not(ValidatorConfig::$is_valid[@235]($t3))), DiemSystem::spec_is_validator[@236]($t3)), Not(DiemTimestamp::$is_operating[@237]())), Not(exists[@238]<Roles::RoleId>($t6))), Neq<u64>(select Roles::RoleId.role_id(global[@238]<Roles::RoleId>($t6)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), And(And(And(And(DiemTimestamp::$is_operating[@237](), DiemConfig::$reconfiguration_enabled[@239]()), Gt(DiemTimestamp::spec_now_microseconds[@237](), 0)), Lt(select DiemConfig::Configuration.epoch($t7), 18446744073709551615)), Lt($t8, select DiemConfig::Configuration.last_reconfiguration_time($t7)))), Not(exists[@238]<Roles::RoleId>($t12))), Neq<u64>(select Roles::RoleId.role_id(global[@238]<Roles::RoleId>($t12)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:67:5+1839
+    assume {:print "$at(36,6176,8015)"} true;
+    assert {:msg "assert_failed(36,6176,8015): abort not covered by any of the `aborts_if` clauses"}
+      ((((((((((((((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#234, $1_Signer_spec_address_of($t0)) || !$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3)) || !$IsEqual'vec'u8''($1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3), $t2)) || ($1_DiemSystem_$validator_set_size($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236) >= 256)) || !$1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3)) || $1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236, $t3)) || !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237)) || !$ResourceExists($1_Roles_RoleId_$memory#238, $t6)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#238, $t6)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#239)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) > 0)) && ($epoch#$1_DiemConfig_Configuration($t7) < 18446744073709551615)) && ($t8 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t7)))) || !$ResourceExists($1_Roles_RoleId_$memory#238, $t12)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#238, $t12)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
 
-    // assert Or(Or(Or(Or(Or(And(SharedEd25519PublicKey::$exists_at[@152]($t5), Eq(6, $t11)), And(Not(DiemAccount::$exists_at[@153]($t6)), Eq(5, $t11))), And(DiemAccount::$delegated_key_rotation_capability[@153](Signer::spec_address_of[]($t0)), Eq(1, $t11))), And(Not(Signature::$ed25519_validate_pubkey[]($t1)), Eq(7, $t11))), And(Not(DiemAccount::$exists_at[@153](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap(pack SharedEd25519PublicKey::SharedEd25519PublicKey([], DiemAccount::spec_get_key_rotation_cap[@153]($t5)))))), Eq(5, $t11))), And(Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32), Eq(7, $t11))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:39:5+85
-    assert {:msg "assert_failed(28,1813,1898): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((((($1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#152, $t5) && $IsEqual'num'(6, $t11)) || (!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#153, $t6) && $IsEqual'num'(5, $t11))) || ($1_DiemAccount_$delegated_key_rotation_capability($1_DiemAccount_DiemAccount_$memory#153, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(1, $t11))) || (!$1_Signature_$ed25519_validate_pubkey($t1) && $IsEqual'num'(7, $t11))) || (!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#153, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($1_SharedEd25519PublicKey_SharedEd25519PublicKey($EmptyVec'u8'(), $1_DiemAccount_spec_get_key_rotation_cap($1_DiemAccount_DiemAccount_$memory#153, $t5))))) && $IsEqual'num'(5, $t11))) || (!$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32) && $IsEqual'num'(7, $t11)));
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(And(Not(exists[@234]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Eq(5, $t13)), And(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0), Eq(7, $t13))), And(Not(ValidatorConfig::$exists_config[@235]($t3)), Eq(5, $t13))), And(Neq<vector<u8>>(ValidatorConfig::$get_human_name[@235]($t3), $t2), Eq(0, $t13))), And(Ge(DiemSystem::$validator_set_size[@236](), 256), Eq(8, $t13))), And(Not(ValidatorConfig::$is_valid[@235]($t3)), Eq(7, $t13))), And(DiemSystem::spec_is_validator[@236]($t3), Eq(7, $t13))), And(Not(DiemTimestamp::$is_operating[@237]()), Eq(1, $t13))), And(Not(exists[@238]<Roles::RoleId>($t6)), Eq(5, $t13))), And(Neq<u64>(select Roles::RoleId.role_id(global[@238]<Roles::RoleId>($t6)), 0), Eq(3, $t13))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t13))), And(And(And(And(And(DiemTimestamp::$is_operating[@237](), DiemConfig::$reconfiguration_enabled[@239]()), Gt(DiemTimestamp::spec_now_microseconds[@237](), 0)), Lt(select DiemConfig::Configuration.epoch($t7), 18446744073709551615)), Lt($t8, select DiemConfig::Configuration.last_reconfiguration_time($t7))), Eq(1, $t13))), And(Not(exists[@238]<Roles::RoleId>($t12)), Eq(5, $t13))), And(Neq<u64>(select Roles::RoleId.role_id(global[@238]<Roles::RoleId>($t12)), 0), Eq(3, $t13))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t13))), Eq(0, $t13)), Eq(7, $t13)), Eq(5, $t13)), Eq(2, $t13)), Eq(1, $t13)), Eq(8, $t13)), Eq(3, $t13)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:67:5+1839
+    assert {:msg "assert_failed(36,6176,8015): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      ((((((((((((((((((((((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#234, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t13)) || (!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0) && $IsEqual'num'(7, $t13))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3) && $IsEqual'num'(5, $t13))) || (!$IsEqual'vec'u8''($1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3), $t2) && $IsEqual'num'(0, $t13))) || (($1_DiemSystem_$validator_set_size($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236) >= 256) && $IsEqual'num'(8, $t13))) || (!$1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory#235, $t3) && $IsEqual'num'(7, $t13))) || ($1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#236, $t3) && $IsEqual'num'(7, $t13))) || (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) && $IsEqual'num'(1, $t13))) || (!$ResourceExists($1_Roles_RoleId_$memory#238, $t6) && $IsEqual'num'(5, $t13))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#238, $t6)), 0) && $IsEqual'num'(3, $t13))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t13))) || ((((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#239)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#237) > 0)) && ($epoch#$1_DiemConfig_Configuration($t7) < 18446744073709551615)) && ($t8 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t7))) && $IsEqual'num'(1, $t13))) || (!$ResourceExists($1_Roles_RoleId_$memory#238, $t12) && $IsEqual'num'(5, $t13))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#238, $t12)), 0) && $IsEqual'num'(3, $t13))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t13))) || $IsEqual'num'(0, $t13)) || $IsEqual'num'(7, $t13)) || $IsEqual'num'(5, $t13)) || $IsEqual'num'(2, $t13)) || $IsEqual'num'(1, $t13)) || $IsEqual'num'(8, $t13)) || $IsEqual'num'(3, $t13));
 
-    // abort($t11) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:39:5+85
-    $abort_code := $t11;
+    // abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:67:5+1839
+    $abort_code := $t13;
     $abort_flag := true;
     return;
 
 }
 
-// fun SharedEd25519PublicKey::exists_at [baseline] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+94
-procedure {:inline 1} $1_SharedEd25519PublicKey_exists_at(_$t0: int) returns ($ret0: bool)
+// fun ValidatorAdministrationScripts::register_validator_config [verification] at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+procedure {:timeLimit 40} $1_ValidatorAdministrationScripts_register_validator_config$verify(_$t0: $signer, _$t1: int, _$t2: Vec (int), _$t3: Vec (int), _$t4: Vec (int)) returns ()
 {
     // declare local variables
-    var $t1: bool;
-    var $t0: int;
+    var $t5: bool;
+    var $t6: int;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: Vec (int);
+    var $t3: Vec (int);
+    var $t4: Vec (int);
+    var $temp_0'$1_ValidatorConfig_ValidatorConfig': $1_ValidatorConfig_ValidatorConfig;
     var $temp_0'address': int;
     var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'vec'u8'': Vec (int);
+    var $1_ValidatorConfig_ValidatorConfig_$memory#165: $Memory $1_ValidatorConfig_ValidatorConfig;
+    var $1_ValidatorConfig_ValidatorConfig_$memory#166: $Memory $1_ValidatorConfig_ValidatorConfig;
     $t0 := _$t0;
-
-    // bytecode translation starts here
-    // trace_local[addr]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+1
-    assume {:print "$at(28,5758,5759)"} true;
-    assume {:print "$track_local(32,0,0):", $t0} $t0 == $t0;
-
-    // $t1 := exists<SharedEd25519PublicKey::SharedEd25519PublicKey>($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:135:9+6
-    assume {:print "$at(28,5810,5816)"} true;
-    $t1 := $ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t0);
-
-    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:135:9+36
-    assume {:print "$track_return(32,0,0):", $t1} $t1 == $t1;
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:136:5+1
-    assume {:print "$at(28,5851,5852)"} true;
-L1:
-
-    // return $t1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:136:5+1
-    $ret0 := $t1;
-    return;
-
-}
-
-// fun SharedEd25519PublicKey::exists_at [verification] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+94
-procedure {:timeLimit 40} $1_SharedEd25519PublicKey_exists_at$verify(_$t0: int) returns ($ret0: bool)
-{
-    // declare local variables
-    var $t1: bool;
-    var $t0: int;
-    var $temp_0'address': int;
-    var $temp_0'bool': bool;
-    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    $t3 := _$t3;
+    $t4 := _$t4;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+94
-    assume {:print "$at(28,5758,5852)"} true;
-    assume $IsValid'address'($t0);
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:343:9+112
+    assume {:print "$at(36,11577,12148)"} true;
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall $rsc: ResourceDomain<SharedEd25519PublicKey::SharedEd25519PublicKey>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+94
-    assume (forall $a_0: int :: {$ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0)}(var $rsc := $ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0);
-    ($IsValid'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'($rsc))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:348:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // trace_local[addr]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:134:5+1
-    assume {:print "$track_local(32,0,0):", $t0} $t0 == $t0;
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$is_valid(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:355:9+107
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // $t1 := exists<SharedEd25519PublicKey::SharedEd25519PublicKey>($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:135:9+6
-    assume {:print "$at(28,5810,5816)"} true;
-    $t1 := $ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    assume $IsValid'signer'($t0);
 
-    // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:135:9+36
-    assume {:print "$track_return(32,0,0):", $t1} $t1 == $t1;
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    assume $IsValid'address'($t1);
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:136:5+1
-    assume {:print "$at(28,5851,5852)"} true;
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    assume $IsValid'vec'u8''($t2);
+
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    assume $IsValid'vec'u8''($t3);
+
+    // assume WellFormed($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    assume $IsValid'vec'u8''($t4);
+
+    // assume forall $rsc: ResourceDomain<ValidatorConfig::ValidatorConfig>(): And(WellFormed($rsc), And(Le(Len<ValidatorConfig::Config>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.config($rsc))), 1), Le(Len<address>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.operator_account($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+571
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0);
+    (($IsValid'$1_ValidatorConfig_ValidatorConfig'($rsc) && ((LenVec($vec#$1_Option_Option'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1))))));
+
+    // assume DiemAccount::prologue_guarantees($t0) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    assume {:print "$at(11,115530,115567)"} true;
+    assume $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_AccountFreezing_FreezingBit_$memory, $1_DiemAccount_DiemAccount_$memory, $t0);
+
+    // @165 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_ValidatorConfig_ValidatorConfig_$memory#165 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // trace_local[validator_operator_account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+1
+    assume {:print "$at(36,11577,11578)"} true;
+    assume {:print "$track_local(31,1,0):", $t0} $t0 == $t0;
+
+    // trace_local[validator_account]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+1
+    assume {:print "$track_local(31,1,1):", $t1} $t1 == $t1;
+
+    // trace_local[consensus_pubkey]($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+1
+    assume {:print "$track_local(31,1,2):", $t2} $t2 == $t2;
+
+    // trace_local[validator_network_addresses]($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+1
+    assume {:print "$track_local(31,1,3):", $t3} $t3 == $t3;
+
+    // trace_local[fullnode_network_addresses]($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:140:5+1
+    assume {:print "$track_local(31,1,4):", $t4} $t4 == $t4;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    // >> opaque call: ValidatorConfig::set_config($t0, $t1, $t2, $t3, $t4)
+    assume {:print "$at(36,11920,12140)"} true;
+
+    // opaque begin: ValidatorConfig::set_config($t0, $t1, $t2, $t3, $t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+
+    // assume Identical($t5, Or(Or(Or(Neq<address>(Signer::$address_of($t0), ValidatorConfig::$get_operator($t1)), Not(Signature::$ed25519_validate_pubkey($t2))), Not(ValidatorConfig::spec_has_operator($t1))), Not(ValidatorConfig::$exists_config($t1)))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    assume ($t5 == (((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) || !$1_Signature_$ed25519_validate_pubkey($t2)) || !$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1)));
+
+    // if ($t5) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    if ($t5) { goto L4; } else { goto L3; }
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+L4:
+
+    // assume Or(Or(Or(And(Neq<address>(Signer::$address_of($t0), ValidatorConfig::$get_operator($t1)), Eq(7, $t6)), And(Not(Signature::$ed25519_validate_pubkey($t2)), Eq(7, $t6))), And(Not(ValidatorConfig::spec_has_operator($t1)), Eq(7, $t6))), And(Not(ValidatorConfig::$exists_config($t1)), Eq(5, $t6))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    assume ((((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) && $IsEqual'num'(7, $t6)) || (!$1_Signature_$ed25519_validate_pubkey($t2) && $IsEqual'num'(7, $t6))) || (!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(7, $t6))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(5, $t6)));
+
+    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    assume {:print "$at(36,11920,12140)"} true;
+    assume {:print "$track_abort(31,1):", $t6} $t6 == $t6;
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    goto L2;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+L3:
+
+    // @166 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    $1_ValidatorConfig_ValidatorConfig_$memory#166 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // modifies global<ValidatorConfig::ValidatorConfig>($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_ValidatorConfig_ValidatorConfig';
+        $1_ValidatorConfig_ValidatorConfig_$memory := $ResourceUpdate($1_ValidatorConfig_ValidatorConfig_$memory, $t1, $temp_0'$1_ValidatorConfig_ValidatorConfig');
+    } else {
+        $1_ValidatorConfig_ValidatorConfig_$memory := $ResourceRemove($1_ValidatorConfig_ValidatorConfig_$memory, $t1);
+    }
+
+    // assume ValidatorConfig::$is_valid($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    assume $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1);
+
+    // assume Eq<ValidatorConfig::ValidatorConfig>(global<ValidatorConfig::ValidatorConfig>($t1), update ValidatorConfig::ValidatorConfig.config<ValidatorConfig::ValidatorConfig>(global[@166]<ValidatorConfig::ValidatorConfig>($t1), Option::spec_some<ValidatorConfig::Config>(pack ValidatorConfig::Config($t2, $t3, $t4)))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+    assume $IsEqual'$1_ValidatorConfig_ValidatorConfig'($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $t1), $Update'$1_ValidatorConfig_ValidatorConfig'_config($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory#166, $t1), $1_Option_spec_some'$1_ValidatorConfig_Config'($1_ValidatorConfig_Config($t2, $t3, $t4))));
+
+    // opaque end: ValidatorConfig::set_config($t0, $t1, $t2, $t3, $t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:148:9+220
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:155:6+1
+    assume {:print "$at(36,12147,12148)"} true;
 L1:
 
-    // return $t1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:136:5+1
-    $ret0 := $t1;
+    // assert Not(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@165]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:213:9+131
+    assume {:print "$at(37,9740,9871)"} true;
+    assert {:msg "assert_failed(37,9740,9871): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1));
+
+    // assert Not(Not(Signature::$ed25519_validate_pubkey[]($t2))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:216:9+94
+    assume {:print "$at(37,9939,10033)"} true;
+    assert {:msg "assert_failed(37,9939,10033): function does not abort under this condition"}
+      !!$1_Signature_$ed25519_validate_pubkey($t2);
+
+    // assert Not(Not(ValidatorConfig::spec_has_operator[@165]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:293:9+65
+    assume {:print "$at(37,13035,13100)"} true;
+    assert {:msg "assert_failed(37,13035,13100): function does not abort under this condition"}
+      !!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@165]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1);
+
+    // assert Not(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@165]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:175:9+183
+    assume {:print "$at(36,13041,13224)"} true;
+    assert {:msg "assert_failed(36,13041,13224): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1));
+
+    // assert ValidatorConfig::$is_valid($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:166:9+53
+    assume {:print "$at(36,12677,12730)"} true;
+    assert {:msg "assert_failed(36,12677,12730): post-condition does not hold"}
+      $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1);
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:166:9+53
+    return;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:155:6+1
+    assume {:print "$at(36,12147,12148)"} true;
+L2:
+
+    // assert Or(Or(Or(Or(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@165]($t1)), Not(Signature::$ed25519_validate_pubkey[]($t2))), Not(ValidatorConfig::spec_has_operator[@165]($t1))), Not(ValidatorConfig::$exists_config[@165]($t1))), Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@165]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:159:5+896
+    assume {:print "$at(36,12334,13230)"} true;
+    assert {:msg "assert_failed(36,12334,13230): abort not covered by any of the `aborts_if` clauses"}
+      ((((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1)) || !$1_Signature_$ed25519_validate_pubkey($t2)) || !$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1)) || !$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1)));
+
+    // assert Or(Or(Or(Or(Or(Or(And(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@165]($t1)), Eq(7, $t6)), And(Not(Signature::$ed25519_validate_pubkey[]($t2)), Eq(7, $t6))), And(Not(ValidatorConfig::spec_has_operator[@165]($t1)), Eq(7, $t6))), And(Not(ValidatorConfig::$exists_config[@165]($t1)), Eq(5, $t6))), And(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@165]($t1)), Eq(7, $t6))), Eq(7, $t6)), Eq(5, $t6)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:159:5+896
+    assert {:msg "assert_failed(36,12334,13230): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((((((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1)) && $IsEqual'num'(7, $t6)) || (!$1_Signature_$ed25519_validate_pubkey($t2) && $IsEqual'num'(7, $t6))) || (!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1) && $IsEqual'num'(7, $t6))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1) && $IsEqual'num'(5, $t6))) || (!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#165, $t1)) && $IsEqual'num'(7, $t6))) || $IsEqual'num'(7, $t6)) || $IsEqual'num'(5, $t6));
+
+    // abort($t6) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:159:5+896
+    $abort_code := $t6;
+    $abort_flag := true;
     return;
 
 }
 
-// fun SharedEd25519PublicKey::key [verification] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:128:5+208
-procedure {:timeLimit 40} $1_SharedEd25519PublicKey_key$verify(_$t0: int) returns ($ret0: Vec (int))
+// fun ValidatorAdministrationScripts::remove_validator_and_reconfigure [verification] at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+procedure {:timeLimit 40} $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify(_$t0: $signer, _$t1: int, _$t2: Vec (int), _$t3: int) returns ()
 {
     // declare local variables
-    var $t1: bool;
-    var $t2: int;
+    var $t4: bool;
+    var $t5: int;
+    var $t6: int;
+    var $t7: $1_DiemConfig_Configuration;
+    var $t8: int;
+    var $t9: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t10: $1_DiemConfig_Configuration;
+    var $t11: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t12: int;
+    var $t13: int;
+    var $t14: Vec (int);
+    var $t15: bool;
+    var $t16: bool;
+    var $t17: int;
+    var $t18: int;
+    var $t19: $1_DiemConfig_Configuration;
+    var $t20: int;
+    var $t21: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t22: $1_DiemConfig_Configuration;
+    var $t23: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t24: int;
+    var $t25: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t26: $1_DiemConfig_Configuration;
+    var $t27: int;
+    var $t28: $1_DiemConfig_NewEpochEvent;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: Vec (int);
+    var $t3: int;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'u64': int;
+    var $temp_0'vec'u8'': Vec (int);
+    var $1_SlidingNonce_SlidingNonce_$memory#228: $Memory $1_SlidingNonce_SlidingNonce;
+    var $1_ValidatorConfig_ValidatorConfig_$memory#229: $Memory $1_ValidatorConfig_ValidatorConfig;
+    var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#230: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
+    var $1_Roles_RoleId_$memory#231: $Memory $1_Roles_RoleId;
+    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
+    var $1_DiemConfig_DisableReconfiguration_$memory#233: $Memory $1_DiemConfig_DisableReconfiguration;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    $t3 := _$t3;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
+    assume {:print "$at(36,17814,18291)"} true;
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorOperatorConfig::$has_validator_operator_config(addr): Roles::spec_has_validator_operator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:75:9+137
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:343:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:348:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$is_valid(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:355:9+107
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
+
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
+
+    // assume Implies(DiemTimestamp::$is_operating(), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:410:9+62
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+
+    // assume And(And(And(And(forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(config_address): Eq<address>(config_address, a550c18), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(config_address): Eq<address>(config_address, a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:416:9+171
+    assume (((((forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))));
+
+    // assume Implies(DiemTimestamp::$is_operating(), And(DiemConfig::spec_is_published<DiemSystem::DiemSystem>(), exists<DiemSystem::CapabilityHolder>(a550c18))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:559:9+151
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> ($1_DiemConfig_spec_is_published'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory) && $ResourceExists($1_DiemSystem_CapabilityHolder_$memory, 173345816)));
+
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Roles::spec_has_validator_role_addr(select DiemSystem::ValidatorInfo.addr(Index(DiemSystem::spec_get_validators(), i1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:618:8+133
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $addr#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)))))));
+
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Eq<u64>(select DiemSystem::ValidatorInfo.consensus_voting_power(Index(DiemSystem::spec_get_validators(), i1)), 1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:626:8+119
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($IsEqual'u64'($consensus_voting_power#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)), 1)))));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume $IsValid'u64'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume $IsValid'vec'u8''($t2);
+
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume $IsValid'address'($t3);
+
+    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
+    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<ValidatorConfig::ValidatorConfig>(): And(WellFormed($rsc), And(Le(Len<ValidatorConfig::Config>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.config($rsc))), 1), Le(Len<address>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.operator_account($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0);
+    (($IsValid'$1_ValidatorConfig_ValidatorConfig'($rsc) && ((LenVec($vec#$1_Option_Option'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1))))));
+
+    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0)}(var $rsc := $ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0);
+    ($IsValid'$1_SlidingNonce_SlidingNonce'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::Configuration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_Configuration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_Configuration_$memory, $a_0);
+    ($IsValid'$1_DiemConfig_Configuration'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::DisableReconfiguration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0);
+    ($IsValid'$1_DiemConfig_DisableReconfiguration'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(): And(WellFormed($rsc), forall i: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)))), j: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)))): Implies(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)), i)), select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)), j))), Eq<num>(i, j))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $a_0);
+    (($IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''($rsc) && (var $range_1 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)))); (var $range_2 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)))); (forall $i_3: int, $i_4: int :: $InRange($range_1, $i_3) ==> $InRange($range_2, $i_4) ==> (var i := $i_3;
+    (var j := $i_4;
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)), i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)), j))) ==> $IsEqual'num'(i, j))))))))))));
+
+    // assume forall $rsc: ResourceDomain<DiemSystem::CapabilityHolder>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+477
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemSystem_CapabilityHolder_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemSystem_CapabilityHolder_$memory, $a_0);
+    ($IsValid'$1_DiemSystem_CapabilityHolder'($rsc))));
+
+    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t6 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t7, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t7 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t8, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t8 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t9, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:264:9+31
+    assume {:print "$at(16,12087,12118)"} true;
+    assume ($t9 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t10, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t10 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t11, select DiemConfig::Configuration.events($t10)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t11 == $events#$1_DiemConfig_Configuration($t10));
+
+    // assume Identical($t12, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t12 == $1_Signer_spec_address_of($t0));
+
+    // assume DiemAccount::prologue_guarantees($t0) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    assume {:print "$at(11,115530,115567)"} true;
+    assume $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_AccountFreezing_FreezingBit_$memory, $1_DiemAccount_DiemAccount_$memory, $t0);
+
+    // @232 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
+
+    // @231 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_Roles_RoleId_$memory#231 := $1_Roles_RoleId_$memory;
+
+    // @229 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_ValidatorConfig_ValidatorConfig_$memory#229 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // @228 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_SlidingNonce_SlidingNonce_$memory#228 := $1_SlidingNonce_SlidingNonce_$memory;
+
+    // @233 := save_mem(DiemConfig::DisableReconfiguration) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemConfig_DisableReconfiguration_$memory#233 := $1_DiemConfig_DisableReconfiguration_$memory;
+
+    // @230 := save_mem(DiemConfig::DiemConfig<DiemSystem::DiemSystem>) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#230 := $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory;
+
+    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+1
+    assume {:print "$at(36,17814,17815)"} true;
+    assume {:print "$track_local(31,2,0):", $t0} $t0 == $t0;
+
+    // trace_local[sliding_nonce]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+1
+    assume {:print "$track_local(31,2,1):", $t1} $t1 == $t1;
+
+    // trace_local[validator_name]($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+1
+    assume {:print "$track_local(31,2,2):", $t2} $t2 == $t2;
+
+    // trace_local[validator_address]($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:223:5+1
+    assume {:print "$track_local(31,2,3):", $t3} $t3 == $t3;
+
+    // SlidingNonce::record_nonce_or_abort($t0, $t1) on_abort goto L3 with $t13 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:229:9+63
+    assume {:print "$at(36,18010,18073)"} true;
+    call $1_SlidingNonce_record_nonce_or_abort($t0, $t1);
+    if ($abort_flag) {
+        assume {:print "$at(36,18010,18073)"} true;
+        $t13 := $abort_code;
+        assume {:print "$track_abort(31,2):", $t13} $t13 == $t13;
+        goto L3;
+    }
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    // >> opaque call: $t6 := ValidatorConfig::get_human_name($t3)
+    assume {:print "$at(36,18142,18192)"} true;
+
+    // $t14 := opaque begin: ValidatorConfig::get_human_name($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+
+    // assume Identical($t15, Not(ValidatorConfig::$exists_config($t3))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    assume ($t15 == !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t3));
+
+    // if ($t15) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    if ($t15) { goto L5; } else { goto L4; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+L5:
+
+    // assume And(Not(ValidatorConfig::$exists_config($t3)), Eq(5, $t13)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    assume (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t3) && $IsEqual'num'(5, $t13));
+
+    // trace_abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    assume {:print "$at(36,18142,18192)"} true;
+    assume {:print "$track_abort(31,2):", $t13} $t13 == $t13;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    goto L3;
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+L4:
+
+    // assume WellFormed($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    assume $IsValid'vec'u8''($t14);
+
+    // assume Eq<vector<u8>>($t14, ValidatorConfig::$get_human_name($t3)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+    assume $IsEqual'vec'u8''($t14, $1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory, $t3));
+
+    // $t14 := opaque end: ValidatorConfig::get_human_name($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:16+50
+
+    // $t16 := ==($t14, $t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:67+2
+    $t16 := $IsEqual'vec'u8''($t14, $t2);
+
+    // trace_local[tmp#$4]($t16) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:9+79
+    assume {:print "$track_local(31,2,4):", $t16} $t16 == $t16;
+
+    // if ($t16) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:9+79
+    if ($t16) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:86+1
+L1:
+
+    // $t17 := 0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:86+1
+    $t17 := 0;
+    assume $IsValid'u64'($t17);
+
+    // trace_abort($t17) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:9+79
+    assume {:print "$at(36,18135,18214)"} true;
+    assume {:print "$track_abort(31,2):", $t17} $t17 == $t17;
+
+    // $t13 := move($t17) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:9+79
+    $t13 := $t17;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:231:9+79
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:232:38+11
+    assume {:print "$at(36,18253,18264)"} true;
+L0:
+
+    // assume Identical($t18, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t18 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t19, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t19 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t20, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t20 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t21, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:264:9+31
+    assume {:print "$at(16,12087,12118)"} true;
+    assume ($t21 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t22, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t22 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t23, select DiemConfig::Configuration.events($t22)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t23 == $events#$1_DiemConfig_Configuration($t22));
+
+    // assume Identical($t24, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:528:9+44
+    assume {:print "$at(27,23740,23784)"} true;
+    assume ($t24 == $1_Signer_spec_address_of($t0));
+
+    // DiemSystem::remove_validator($t0, $t3) on_abort goto L3 with $t13 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:232:9+60
+    assume {:print "$at(36,18224,18284)"} true;
+    call $1_DiemSystem_remove_validator($t0, $t3);
+    if ($abort_flag) {
+        assume {:print "$at(36,18224,18284)"} true;
+        $t13 := $abort_code;
+        assume {:print "$track_abort(31,2):", $t13} $t13 == $t13;
+        goto L3;
+    }
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:233:5+1
+    assume {:print "$at(36,18290,18291)"} true;
+L2:
+
+    // assume Identical($t25, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:265:9+41
+    assume {:print "$at(16,12127,12168)"} true;
+    assume ($t25 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t26, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:369:9+56
+    assume {:print "$at(13,15926,15982)"} true;
+    assume ($t26 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t27, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:370:9+54
+    assume {:print "$at(13,15991,16045)"} true;
+    assume ($t27 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t28, pack DiemConfig::NewEpochEvent(select DiemConfig::Configuration.epoch($t26))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+    assume ($t28 == $1_DiemConfig_NewEpochEvent($epoch#$1_DiemConfig_Configuration($t26)));
+
+    // assert Not(Not(exists[@228]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:47:9+93
+    assume {:print "$at(30,1971,2064)"} true;
+    assert {:msg "assert_failed(30,1971,2064): function does not abort under this condition"}
+      !!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#228, $1_Signer_spec_address_of($t0));
+
+    // assert Not(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:48:9+87
+    assume {:print "$at(30,2073,2160)"} true;
+    assert {:msg "assert_failed(30,2073,2160): function does not abort under this condition"}
+      !!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@229]($t3))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#229, $t3);
+
+    // assert Not(Neq<vector<u8>>(ValidatorConfig::$get_human_name[@229]($t3), $t2)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:246:9+86
+    assume {:print "$at(36,18890,18976)"} true;
+    assert {:msg "assert_failed(36,18890,18976): function does not abort under this condition"}
+      !!$IsEqual'vec'u8''($1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory#229, $t3), $t2);
+
+    // assert Not(Not(DiemSystem::spec_is_validator[@230]($t3))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:260:9+75
+    assume {:print "$at(16,11923,11998)"} true;
+    assert {:msg "assert_failed(16,11923,11998): function does not abort under this condition"}
+      !!$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#230, $t3);
+
+    // assert Not(Not(exists[@231]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
+    assume {:print "$at(27,23793,23852)"} true;
+    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#231, $t6);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@231]<Roles::RoleId>($t6)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
+    assume {:print "$at(27,23861,23948)"} true;
+    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#231, $t6)), 0);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
+    assume {:print "$at(8,1561,1647)"} true;
+    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
+
+    // assert Not(Not(DiemTimestamp::$is_operating[@232]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:160:9+53
+    assume {:print "$at(17,6375,6428)"} true;
+    assert {:msg "assert_failed(17,6375,6428): function does not abort under this condition"}
+      !!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232);
+
+    // assert Not(And(And(And(And(DiemTimestamp::$is_operating[@232](), DiemConfig::$reconfiguration_enabled[@233]()), Gt(DiemTimestamp::spec_now_microseconds[@232](), 0)), Lt(select DiemConfig::Configuration.epoch($t7), 18446744073709551615)), Lt($t8, select DiemConfig::Configuration.last_reconfiguration_time($t7)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:360:9+283
+    assume {:print "$at(13,15538,15821)"} true;
+    assert {:msg "assert_failed(13,15538,15821): function does not abort under this condition"}
+      !(((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#233)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) > 0)) && ($epoch#$1_DiemConfig_Configuration($t7) < 18446744073709551615)) && ($t8 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t7)));
+
+    // assert Not(Not(exists[@231]<Roles::RoleId>($t12))) at /home/ying/diem/language/diem-framework/modules/Roles.move:529:9+59
+    assume {:print "$at(27,23793,23852)"} true;
+    assert {:msg "assert_failed(27,23793,23852): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#231, $t12);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@231]<Roles::RoleId>($t12)), 0)) at /home/ying/diem/language/diem-framework/modules/Roles.move:530:9+87
+    assume {:print "$at(27,23861,23948)"} true;
+    assert {:msg "assert_failed(27,23861,23948): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#231, $t12)), 0);
+
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
+    assume {:print "$at(8,1561,1647)"} true;
+    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
+
+    // assert forall vi: $t25 where Neq<address>(select DiemSystem::ValidatorInfo.addr(vi), $t3): exists ovi: $t9: Eq<DiemSystem::ValidatorInfo>(vi, ovi) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:266:9+90
+    assume {:print "$at(16,12177,12267)"} true;
+    assert {:msg "assert_failed(16,12177,12267): post-condition does not hold"}
+      (var $range_0 := $t25; (forall $i_1: int :: InRangeVec($range_0, $i_1) ==> (var vi := ReadVec($range_0, $i_1);
+    (!$IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(vi), $t3))  ==> ((var $range_2 := $t9; (exists $i_3: int :: InRangeVec($range_2, $i_3) && (var ovi := ReadVec($range_2, $i_3);
+    ($IsEqual'$1_DiemSystem_ValidatorInfo'(vi, ovi)))))))));
+
+    // assert Not(DiemSystem::spec_is_validator($t3)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:269:9+43
+    assume {:print "$at(16,12407,12450)"} true;
+    assert {:msg "assert_failed(16,12407,12450): post-condition does not hold"}
+      !$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $t3);
+
+    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), $t28, $t11, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t27, select DiemConfig::Configuration.last_reconfiguration_time($t10))))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:375:9+96
+    assume {:print "$at(13,16178,16274)"} true;
+    assert {:msg "assert_failed(13,16178,16274): function does not emit the expected event"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($EmptyEventStore, $t11, $t28, (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t27, $last_reconfiguration_time#$1_DiemConfig_Configuration($t10)))); $EventStore__is_subset(expected, actual)));
+
+    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), $t28, $t11, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t27, select DiemConfig::Configuration.last_reconfiguration_time($t10))))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:235:5+1815
+    assume {:print "$at(36,18297,20112)"} true;
+    assert {:msg "assert_failed(36,18297,20112): emitted event not covered by any of the `emits` clauses"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($EmptyEventStore, $t11, $t28, (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t27, $last_reconfiguration_time#$1_DiemConfig_Configuration($t10)))); $EventStore__is_subset(actual, expected)));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:235:5+1815
+    return;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:233:5+1
+    assume {:print "$at(36,18290,18291)"} true;
+L3:
+
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Not(exists[@228]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0)), Not(ValidatorConfig::$exists_config[@229]($t3))), Neq<vector<u8>>(ValidatorConfig::$get_human_name[@229]($t3), $t2)), Not(DiemSystem::spec_is_validator[@230]($t3))), Not(exists[@231]<Roles::RoleId>($t6))), Neq<u64>(select Roles::RoleId.role_id(global[@231]<Roles::RoleId>($t6)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)), Not(DiemTimestamp::$is_operating[@232]())), And(And(And(And(DiemTimestamp::$is_operating[@232](), DiemConfig::$reconfiguration_enabled[@233]()), Gt(DiemTimestamp::spec_now_microseconds[@232](), 0)), Lt(select DiemConfig::Configuration.epoch($t7), 18446744073709551615)), Lt($t8, select DiemConfig::Configuration.last_reconfiguration_time($t7)))), Not(exists[@231]<Roles::RoleId>($t12))), Neq<u64>(select Roles::RoleId.role_id(global[@231]<Roles::RoleId>($t12)), 0)), Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:235:5+1815
+    assume {:print "$at(36,18297,20112)"} true;
+    assert {:msg "assert_failed(36,18297,20112): abort not covered by any of the `aborts_if` clauses"}
+      ((((((((((((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#228, $1_Signer_spec_address_of($t0)) || !$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#229, $t3)) || !$IsEqual'vec'u8''($1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory#229, $t3), $t2)) || !$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#230, $t3)) || !$ResourceExists($1_Roles_RoleId_$memory#231, $t6)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#231, $t6)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816)) || !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232)) || (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#233)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) > 0)) && ($epoch#$1_DiemConfig_Configuration($t7) < 18446744073709551615)) && ($t8 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t7)))) || !$ResourceExists($1_Roles_RoleId_$memory#231, $t12)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#231, $t12)), 0)) || !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816));
+
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(And(Not(exists[@228]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Eq(5, $t13)), And(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t1), 0), Eq(7, $t13))), And(Not(ValidatorConfig::$exists_config[@229]($t3)), Eq(5, $t13))), And(Neq<vector<u8>>(ValidatorConfig::$get_human_name[@229]($t3), $t2), Eq(0, $t13))), And(Not(DiemSystem::spec_is_validator[@230]($t3)), Eq(7, $t13))), And(Not(exists[@231]<Roles::RoleId>($t6)), Eq(5, $t13))), And(Neq<u64>(select Roles::RoleId.role_id(global[@231]<Roles::RoleId>($t6)), 0), Eq(3, $t13))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t13))), And(Not(DiemTimestamp::$is_operating[@232]()), Eq(1, $t13))), And(And(And(And(And(DiemTimestamp::$is_operating[@232](), DiemConfig::$reconfiguration_enabled[@233]()), Gt(DiemTimestamp::spec_now_microseconds[@232](), 0)), Lt(select DiemConfig::Configuration.epoch($t7), 18446744073709551615)), Lt($t8, select DiemConfig::Configuration.last_reconfiguration_time($t7))), Eq(1, $t13))), And(Not(exists[@231]<Roles::RoleId>($t12)), Eq(5, $t13))), And(Neq<u64>(select Roles::RoleId.role_id(global[@231]<Roles::RoleId>($t12)), 0), Eq(3, $t13))), And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t13))), Eq(0, $t13)), Eq(7, $t13)), Eq(5, $t13)), Eq(2, $t13)), Eq(1, $t13)), Eq(3, $t13)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:235:5+1815
+    assert {:msg "assert_failed(36,18297,20112): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((((((((((((((((((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#228, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t13)) || (!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t1), 0) && $IsEqual'num'(7, $t13))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#229, $t3) && $IsEqual'num'(5, $t13))) || (!$IsEqual'vec'u8''($1_ValidatorConfig_$get_human_name($1_ValidatorConfig_ValidatorConfig_$memory#229, $t3), $t2) && $IsEqual'num'(0, $t13))) || (!$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#230, $t3) && $IsEqual'num'(7, $t13))) || (!$ResourceExists($1_Roles_RoleId_$memory#231, $t6) && $IsEqual'num'(5, $t13))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#231, $t6)), 0) && $IsEqual'num'(3, $t13))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t13))) || (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) && $IsEqual'num'(1, $t13))) || ((((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#233)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#232) > 0)) && ($epoch#$1_DiemConfig_Configuration($t7) < 18446744073709551615)) && ($t8 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t7))) && $IsEqual'num'(1, $t13))) || (!$ResourceExists($1_Roles_RoleId_$memory#231, $t12) && $IsEqual'num'(5, $t13))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#231, $t12)), 0) && $IsEqual'num'(3, $t13))) || (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t13))) || $IsEqual'num'(0, $t13)) || $IsEqual'num'(7, $t13)) || $IsEqual'num'(5, $t13)) || $IsEqual'num'(2, $t13)) || $IsEqual'num'(1, $t13)) || $IsEqual'num'(3, $t13));
+
+    // abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:235:5+1815
+    $abort_code := $t13;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun ValidatorAdministrationScripts::set_validator_config_and_reconfigure [verification] at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+procedure {:timeLimit 40} $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify(_$t0: $signer, _$t1: int, _$t2: Vec (int), _$t3: Vec (int), _$t4: Vec (int)) returns ()
+{
+    // declare local variables
+    var $t5: bool;
+    var $t6: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t7: int;
+    var $t8: $1_DiemConfig_Configuration;
+    var $t9: int;
+    var $t10: $1_DiemConfig_Configuration;
+    var $t11: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t12: bool;
+    var $t13: int;
+    var $t14: bool;
+    var $t15: int;
+    var $t16: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t17: $1_DiemConfig_Configuration;
+    var $t18: int;
+    var $t19: bool;
+    var $t20: $1_DiemConfig_Configuration;
+    var $t21: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t22: bool;
+    var $t23: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t24: $1_DiemConfig_Configuration;
+    var $t25: int;
+    var $t26: $1_DiemConfig_NewEpochEvent;
+    var $t27: $1_DiemConfig_NewEpochEvent;
+    var $t28: $1_Event_EventHandle'$1_DiemConfig_NewEpochEvent';
+    var $t29: bool;
+    var $t30: Vec ($1_DiemSystem_ValidatorInfo);
+    var $t31: $1_DiemConfig_Configuration;
+    var $t32: int;
+    var $t33: $1_DiemConfig_NewEpochEvent;
+    var $t0: $signer;
+    var $t1: int;
+    var $t2: Vec (int);
+    var $t3: Vec (int);
+    var $t4: Vec (int);
+    var $temp_0'$1_DiemConfig_Configuration': $1_DiemConfig_Configuration;
+    var $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'': $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
+    var $temp_0'$1_ValidatorConfig_ValidatorConfig': $1_ValidatorConfig_ValidatorConfig;
+    var $temp_0'address': int;
+    var $temp_0'bool': bool;
+    var $temp_0'signer': $signer;
+    var $temp_0'vec'u8'': Vec (int);
+    var $1_ValidatorConfig_ValidatorConfig_$memory#258: $Memory $1_ValidatorConfig_ValidatorConfig;
+    var $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#259: $Memory $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem';
+    var $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260: $Memory $1_DiemTimestamp_CurrentTimeMicroseconds;
+    var $1_Roles_RoleId_$memory#261: $Memory $1_Roles_RoleId;
+    var $1_DiemConfig_DisableReconfiguration_$memory#262: $Memory $1_DiemConfig_DisableReconfiguration;
+    var $1_ValidatorConfig_ValidatorConfig_$memory#263: $Memory $1_ValidatorConfig_ValidatorConfig;
+    $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
+    $t3 := _$t3;
+    $t4 := _$t4;
+
+    // verification entrypoint assumptions
+    call $InitVerification();
+
+    // bytecode translation starts here
+    // assume Implies(DiemTimestamp::$is_operating(), exists<DiemTimestamp::CurrentTimeMicroseconds>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:169:9+72
+    assume {:print "$at(36,24005,24620)"} true;
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, 173345816));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorOperatorConfig::$has_validator_operator_config(addr): Roles::spec_has_validator_operator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:75:9+137
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:343:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:348:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$is_valid(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:355:9+107
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
+
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
+
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
+
+    // assume Implies(DiemTimestamp::$is_operating(), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:410:9+62
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+
+    // assume And(And(And(And(forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(config_address): Eq<address>(config_address, a550c18), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<RegisteredCurrencies::RegisteredCurrencies>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemTransactionPublishingOption::DiemTransactionPublishingOption>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(config_address): Eq<address>(config_address, a550c18)), forall config_address: TypeDomain<address>() where exists<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(config_address): Eq<address>(config_address, a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:416:9+171
+    assume (((((forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_RegisteredCurrencies_RegisteredCurrencies'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemTransactionPublishingOption_DiemTransactionPublishingOption'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816)))) && (forall config_address: int :: $IsValid'address'(config_address) ==> ($ResourceExists($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory, config_address))  ==> ($IsEqual'address'(config_address, 173345816))));
+
+    // assume Implies(DiemTimestamp::$is_operating(), And(DiemConfig::spec_is_published<DiemSystem::DiemSystem>(), exists<DiemSystem::CapabilityHolder>(a550c18))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:559:9+151
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> ($1_DiemConfig_spec_is_published'$1_DiemSystem_DiemSystem'($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory) && $ResourceExists($1_DiemSystem_CapabilityHolder_$memory, 173345816)));
+
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Roles::spec_has_validator_role_addr(select DiemSystem::ValidatorInfo.addr(Index(DiemSystem::spec_get_validators(), i1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:618:8+133
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $addr#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)))))));
+
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Eq<u64>(select DiemSystem::ValidatorInfo.consensus_voting_power(Index(DiemSystem::spec_get_validators(), i1)), 1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:626:8+119
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($IsEqual'u64'($consensus_voting_power#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)), 1)))));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume $IsValid'signer'($t0);
+
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume $IsValid'address'($t1);
+
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume $IsValid'vec'u8''($t2);
+
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume $IsValid'vec'u8''($t3);
+
+    // assume WellFormed($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume $IsValid'vec'u8''($t4);
+
+    // assume forall $rsc: ResourceDomain<DiemTimestamp::CurrentTimeMicroseconds>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $a_0);
+    ($IsValid'$1_DiemTimestamp_CurrentTimeMicroseconds'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<ValidatorConfig::ValidatorConfig>(): And(WellFormed($rsc), And(Le(Len<ValidatorConfig::Config>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.config($rsc))), 1), Le(Len<address>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.operator_account($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0);
+    (($IsValid'$1_ValidatorConfig_ValidatorConfig'($rsc) && ((LenVec($vec#$1_Option_Option'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1))))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::Configuration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_Configuration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_Configuration_$memory, $a_0);
+    ($IsValid'$1_DiemConfig_Configuration'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::DisableReconfiguration>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DisableReconfiguration_$memory, $a_0);
+    ($IsValid'$1_DiemConfig_DisableReconfiguration'($rsc))));
+
+    // assume forall $rsc: ResourceDomain<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(): And(WellFormed($rsc), forall i: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)))), j: Range(0, Len<DiemSystem::ValidatorInfo>(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)))): Implies(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)), i)), select DiemSystem::ValidatorInfo.addr(Index(select DiemSystem::DiemSystem.validators(select DiemConfig::DiemConfig.payload($rsc)), j))), Eq<num>(i, j))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $a_0);
+    (($IsValid'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem''($rsc) && (var $range_1 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)))); (var $range_2 := $Range(0, LenVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)))); (forall $i_3: int, $i_4: int :: $InRange($range_1, $i_3) ==> $InRange($range_2, $i_4) ==> (var i := $i_3;
+    (var j := $i_4;
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)), i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($validators#$1_DiemSystem_DiemSystem($payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'($rsc)), j))) ==> $IsEqual'num'(i, j))))))))))));
+
+    // assume forall $rsc: ResourceDomain<DiemSystem::CapabilityHolder>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+615
+    assume (forall $a_0: int :: {$ResourceValue($1_DiemSystem_CapabilityHolder_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemSystem_CapabilityHolder_$memory, $a_0);
+    ($IsValid'$1_DiemSystem_CapabilityHolder'($rsc))));
+
+    // assume Identical($t5, exists v_info: DiemSystem::spec_get_validators(): And(Eq<address>(select DiemSystem::ValidatorInfo.addr(v_info), $t1), Neq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(v_info), pack ValidatorConfig::Config($t2, $t3, $t4)))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:354:9+377
+    assume {:print "$at(36,26235,26612)"} true;
+    assume ($t5 == (var $range_0 := $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory); (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var v_info := ReadVec($range_0, $i_1);
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(v_info), $t1) && !$IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(v_info), $1_ValidatorConfig_Config($t2, $t3, $t4))))))));
+
+    // assume Identical($t6, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:339:9+31
+    assume {:print "$at(16,16660,16691)"} true;
+    assume ($t6 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t7, Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:326:9+77
+    assume {:print "$at(16,15782,15859)"} true;
+    assume ($t7 == $1_Signer_$address_of($t0));
+
+    // assume Identical($t8, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t8 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t9, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t9 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t10, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t10 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t11, select DiemConfig::Configuration.events($t10)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t11 == $events#$1_DiemConfig_Configuration($t10));
+
+    // assume DiemAccount::prologue_guarantees($t0) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    assume {:print "$at(11,115530,115567)"} true;
+    assume $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_AccountFreezing_FreezingBit_$memory, $1_DiemAccount_DiemAccount_$memory, $t0);
+
+    // @260 := save_mem(DiemTimestamp::CurrentTimeMicroseconds) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260 := $1_DiemTimestamp_CurrentTimeMicroseconds_$memory;
+
+    // @261 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_Roles_RoleId_$memory#261 := $1_Roles_RoleId_$memory;
+
+    // @258 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_ValidatorConfig_ValidatorConfig_$memory#258 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // @262 := save_mem(DiemConfig::DisableReconfiguration) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemConfig_DisableReconfiguration_$memory#262 := $1_DiemConfig_DisableReconfiguration_$memory;
+
+    // @259 := save_mem(DiemConfig::DiemConfig<DiemSystem::DiemSystem>) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#259 := $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory;
+
+    // trace_local[validator_operator_account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+1
+    assume {:print "$at(36,24005,24006)"} true;
+    assume {:print "$track_local(31,3,0):", $t0} $t0 == $t0;
+
+    // trace_local[validator_account]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+1
+    assume {:print "$track_local(31,3,1):", $t1} $t1 == $t1;
+
+    // trace_local[consensus_pubkey]($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+1
+    assume {:print "$track_local(31,3,2):", $t2} $t2 == $t2;
+
+    // trace_local[validator_network_addresses]($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+1
+    assume {:print "$track_local(31,3,3):", $t3} $t3 == $t3;
+
+    // trace_local[fullnode_network_addresses]($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:308:5+1
+    assume {:print "$track_local(31,3,4):", $t4} $t4 == $t4;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    // >> opaque call: ValidatorConfig::set_config($t0, $t1, $t2, $t3, $t4)
+    assume {:print "$at(36,24293,24513)"} true;
+
+    // opaque begin: ValidatorConfig::set_config($t0, $t1, $t2, $t3, $t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+
+    // assume Identical($t12, Or(Or(Or(Neq<address>(Signer::$address_of($t0), ValidatorConfig::$get_operator($t1)), Not(Signature::$ed25519_validate_pubkey($t2))), Not(ValidatorConfig::spec_has_operator($t1))), Not(ValidatorConfig::$exists_config($t1)))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    assume ($t12 == (((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) || !$1_Signature_$ed25519_validate_pubkey($t2)) || !$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1)));
+
+    // if ($t12) goto L4 else goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    if ($t12) { goto L4; } else { goto L3; }
+
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+L4:
+
+    // assume Or(Or(Or(And(Neq<address>(Signer::$address_of($t0), ValidatorConfig::$get_operator($t1)), Eq(7, $t13)), And(Not(Signature::$ed25519_validate_pubkey($t2)), Eq(7, $t13))), And(Not(ValidatorConfig::spec_has_operator($t1)), Eq(7, $t13))), And(Not(ValidatorConfig::$exists_config($t1)), Eq(5, $t13))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    assume ((((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) && $IsEqual'num'(7, $t13)) || (!$1_Signature_$ed25519_validate_pubkey($t2) && $IsEqual'num'(7, $t13))) || (!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(7, $t13))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(5, $t13)));
+
+    // trace_abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    assume {:print "$at(36,24293,24513)"} true;
+    assume {:print "$track_abort(31,3):", $t13} $t13 == $t13;
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    goto L2;
+
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+L3:
+
+    // @263 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    $1_ValidatorConfig_ValidatorConfig_$memory#263 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // modifies global<ValidatorConfig::ValidatorConfig>($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_ValidatorConfig_ValidatorConfig';
+        $1_ValidatorConfig_ValidatorConfig_$memory := $ResourceUpdate($1_ValidatorConfig_ValidatorConfig_$memory, $t1, $temp_0'$1_ValidatorConfig_ValidatorConfig');
+    } else {
+        $1_ValidatorConfig_ValidatorConfig_$memory := $ResourceRemove($1_ValidatorConfig_ValidatorConfig_$memory, $t1);
+    }
+
+    // assume ValidatorConfig::$is_valid($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    assume $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1);
+
+    // assume Eq<ValidatorConfig::ValidatorConfig>(global<ValidatorConfig::ValidatorConfig>($t1), update ValidatorConfig::ValidatorConfig.config<ValidatorConfig::ValidatorConfig>(global[@263]<ValidatorConfig::ValidatorConfig>($t1), Option::spec_some<ValidatorConfig::Config>(pack ValidatorConfig::Config($t2, $t3, $t4)))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+    assume $IsEqual'$1_ValidatorConfig_ValidatorConfig'($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $t1), $Update'$1_ValidatorConfig_ValidatorConfig'_config($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory#263, $t1), $1_Option_spec_some'$1_ValidatorConfig_Config'($1_ValidatorConfig_Config($t2, $t3, $t4))));
+
+    // opaque end: ValidatorConfig::set_config($t0, $t1, $t2, $t3, $t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:315:9+220
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    // >> opaque call: DiemSystem::update_config_and_reconfigure($t0, $t1)
+    assume {:print "$at(36,24523,24612)"} true;
+
+    // assume Identical($t14, And(ValidatorConfig::$is_valid($t1), exists v_info: DiemSystem::spec_get_validators(): And(Eq<address>(select DiemSystem::ValidatorInfo.addr(v_info), $t1), Neq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(v_info), ValidatorConfig::spec_get_config($t1))))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:315:9+274
+    assume {:print "$at(16,15235,15509)"} true;
+    assume ($t14 == ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && (var $range_0 := $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory); (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var v_info := ReadVec($range_0, $i_1);
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(v_info), $t1) && !$IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(v_info), $1_ValidatorConfig_spec_get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1)))))))));
+
+    // assume Identical($t15, Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:326:9+77
+    assume {:print "$at(16,15782,15859)"} true;
+    assume ($t15 == $1_Signer_$address_of($t0));
+
+    // assume Identical($t16, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:339:9+31
+    assume {:print "$at(16,16660,16691)"} true;
+    assume ($t16 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t17, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:358:9+46
+    assume {:print "$at(13,15416,15462)"} true;
+    assume ($t17 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t18, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:359:9+58
+    assume {:print "$at(13,15471,15529)"} true;
+    assume ($t18 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t19, And(ValidatorConfig::$is_valid($t1), exists v_info: DiemSystem::spec_get_validators(): And(Eq<address>(select DiemSystem::ValidatorInfo.addr(v_info), $t1), Neq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(v_info), ValidatorConfig::spec_get_config($t1))))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:356:9+274
+    assume {:print "$at(16,17599,17873)"} true;
+    assume ($t19 == ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && (var $range_0 := $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory); (exists $i_1: int :: InRangeVec($range_0, $i_1) && (var v_info := ReadVec($range_0, $i_1);
+    (($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(v_info), $t1) && !$IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(v_info), $1_ValidatorConfig_spec_get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1)))))))));
+
+    // assume Identical($t20, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:368:9+46
+    assume {:print "$at(13,15871,15917)"} true;
+    assume ($t20 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t21, select DiemConfig::Configuration.events($t20)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:374:9+27
+    assume {:print "$at(13,16142,16169)"} true;
+    assume ($t21 == $events#$1_DiemConfig_Configuration($t20));
+
+    // opaque begin: DiemSystem::update_config_and_reconfigure($t0, $t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    assume {:print "$at(36,24523,24612)"} true;
+
+    // assume Identical($t22, Or(Or(Or(Or(Or(Or(Or(Or(Not(ValidatorConfig::spec_has_operator($t1)), Not(ValidatorConfig::$exists_config($t1))), Neq<address>(ValidatorConfig::$get_operator($t1), $t15)), Not(DiemSystem::spec_is_validator($t1))), Not(DiemTimestamp::$is_operating())), Not(exists<Roles::RoleId>($t15))), Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t15)), 4)), Not(ValidatorConfig::$exists_config($t1))), And($t14, And(And(And(And(DiemTimestamp::$is_operating(), DiemConfig::$reconfiguration_enabled()), Gt(DiemTimestamp::spec_now_microseconds(), 0)), Lt(select DiemConfig::Configuration.epoch($t17), 18446744073709551615)), Lt($t18, select DiemConfig::Configuration.last_reconfiguration_time($t17)))))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    assume ($t22 == ((((((((!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) || !$IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1), $t15)) || !$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $t1)) || !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory)) || !$ResourceExists($1_Roles_RoleId_$memory, $t15)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t15)), 4)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1)) || ($t14 && (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) > 0)) && ($epoch#$1_DiemConfig_Configuration($t17) < 18446744073709551615)) && ($t18 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t17))))));
+
+    // if ($t22) goto L6 else goto L5 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    if ($t22) { goto L6; } else { goto L5; }
+
+    // label L6 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+L6:
+
+    // assume Or(Or(Or(Or(Or(Or(Or(Or(And(Not(ValidatorConfig::spec_has_operator($t1)), Eq(7, $t13)), And(Not(ValidatorConfig::$exists_config($t1)), Eq(5, $t13))), And(Neq<address>(ValidatorConfig::$get_operator($t1), $t15), Eq(7, $t13))), And(Not(DiemSystem::spec_is_validator($t1)), Eq(7, $t13))), And(Not(DiemTimestamp::$is_operating()), Eq(1, $t13))), And(Not(exists<Roles::RoleId>($t15)), Eq(5, $t13))), And(Neq<u64>(select Roles::RoleId.role_id(global<Roles::RoleId>($t15)), 4), Eq(3, $t13))), And(Not(ValidatorConfig::$exists_config($t1)), Eq(5, $t13))), And(And($t14, And(And(And(And(DiemTimestamp::$is_operating(), DiemConfig::$reconfiguration_enabled()), Gt(DiemTimestamp::spec_now_microseconds(), 0)), Lt(select DiemConfig::Configuration.epoch($t17), 18446744073709551615)), Lt($t18, select DiemConfig::Configuration.last_reconfiguration_time($t17)))), Eq(1, $t13))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    assume (((((((((!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(7, $t13)) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(5, $t13))) || (!$IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t1), $t15) && $IsEqual'num'(7, $t13))) || (!$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, $t1) && $IsEqual'num'(7, $t13))) || (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $IsEqual'num'(1, $t13))) || (!$ResourceExists($1_Roles_RoleId_$memory, $t15) && $IsEqual'num'(5, $t13))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory, $t15)), 4) && $IsEqual'num'(3, $t13))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1) && $IsEqual'num'(5, $t13))) || (($t14 && (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) > 0)) && ($epoch#$1_DiemConfig_Configuration($t17) < 18446744073709551615)) && ($t18 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t17)))) && $IsEqual'num'(1, $t13)));
+
+    // trace_abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    assume {:print "$at(36,24523,24612)"} true;
+    assume {:print "$track_abort(31,3):", $t13} $t13 == $t13;
+
+    // goto L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    goto L2;
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+L5:
+
+    // modifies global<DiemConfig::Configuration>(a550c18) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_DiemConfig_Configuration';
+        $1_DiemConfig_Configuration_$memory := $ResourceUpdate($1_DiemConfig_Configuration_$memory, 173345816, $temp_0'$1_DiemConfig_Configuration');
+    } else {
+        $1_DiemConfig_Configuration_$memory := $ResourceRemove($1_DiemConfig_Configuration_$memory, 173345816);
+    }
+
+    // modifies global<DiemConfig::DiemConfig<DiemSystem::DiemSystem>>(a550c18) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    havoc $temp_0'bool';
+    if ($temp_0'bool') {
+        havoc $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'';
+        $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory := $ResourceUpdate($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816, $temp_0'$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'');
+    } else {
+        $1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory := $ResourceRemove($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory, 173345816);
+    }
+
+    // assume Identical($t23, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:340:9+41
+    assume {:print "$at(16,16700,16741)"} true;
+    assume ($t23 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t24, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:369:9+56
+    assume {:print "$at(13,15926,15982)"} true;
+    assume ($t24 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t25, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:370:9+54
+    assume {:print "$at(13,15991,16045)"} true;
+    assume ($t25 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t26, pack DiemConfig::NewEpochEvent(select DiemConfig::Configuration.epoch($t24))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+    assume ($t26 == $1_DiemConfig_NewEpochEvent($epoch#$1_DiemConfig_Configuration($t24)));
+
+    // assume Eq<num>(Len<DiemSystem::ValidatorInfo>($t23), Len<DiemSystem::ValidatorInfo>($t16)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume $IsEqual'num'(LenVec($t23), LenVec($t16));
+
+    // assume forall i: Range(0, Len<DiemSystem::ValidatorInfo>($t16)): Eq<address>(select DiemSystem::ValidatorInfo.addr(Index($t23, i)), select DiemSystem::ValidatorInfo.addr(Index($t16, i))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume (var $range_0 := $Range(0, LenVec($t16)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t23, i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($t16, i)))))));
+
+    // assume forall i: Range(0, Len<DiemSystem::ValidatorInfo>($t16)) where Neq<address>(select DiemSystem::ValidatorInfo.addr(Index($t16, i)), $t1): Eq<DiemSystem::ValidatorInfo>(Index($t23, i), Index($t16, i)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume (var $range_0 := $Range(0, LenVec($t16)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    (!$IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t16, i)), $t1))  ==> ($IsEqual'$1_DiemSystem_ValidatorInfo'(ReadVec($t23, i), ReadVec($t16, i))))));
+
+    // assume forall i: Range(0, Len<DiemSystem::ValidatorInfo>($t16)): Or(Eq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(Index($t23, i)), select DiemSystem::ValidatorInfo.config(Index($t16, i))), And(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index($t16, i)), $t1), Eq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(Index($t23, i)), ValidatorConfig::$get_config($t1)))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume (var $range_0 := $Range(0, LenVec($t16)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    (($IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(ReadVec($t23, i)), $config#$1_DiemSystem_ValidatorInfo(ReadVec($t16, i))) || ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t16, i)), $t1) && $IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(ReadVec($t23, i)), $1_ValidatorConfig_$get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1))))))));
+
+    // assume Roles::spec_has_validator_role_addr($t1) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume $1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $t1);
+
+    // assume Identical($t27, $t26) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t27 == $t26);
+
+    // assume Identical($t28, $t21) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t28 == $t21);
+
+    // assume Identical($t29, And($t19, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t25, select DiemConfig::Configuration.last_reconfiguration_time($t20))))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume ($t29 == ($t19 && (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t25, $last_reconfiguration_time#$1_DiemConfig_Configuration($t20)))));
+
+    // emit_event($t27, $t28, $t29) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:322:9+89
+    assume {:print "$at(36,24523,24612)"} true;
+    $es := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($es, $t28, $t27, $t29);
+
+    // opaque end: DiemSystem::update_config_and_reconfigure($t0, $t1) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:323:6+1
+    assume {:print "$at(36,24619,24620)"} true;
+L1:
+
+    // assume Identical($t30, DiemSystem::spec_get_validators()) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:340:9+41
+    assume {:print "$at(16,16700,16741)"} true;
+    assume ($t30 == $1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory));
+
+    // assume Identical($t31, global<DiemConfig::Configuration>(a550c18)) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:369:9+56
+    assume {:print "$at(13,15926,15982)"} true;
+    assume ($t31 == $ResourceValue($1_DiemConfig_Configuration_$memory, 173345816));
+
+    // assume Identical($t32, DiemTimestamp::spec_now_microseconds()) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:370:9+54
+    assume {:print "$at(13,15991,16045)"} true;
+    assume ($t32 == $1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory));
+
+    // assume Identical($t33, pack DiemConfig::NewEpochEvent(select DiemConfig::Configuration.epoch($t31))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:371:9+79
+    assume {:print "$at(13,16054,16133)"} true;
+    assume ($t33 == $1_DiemConfig_NewEpochEvent($epoch#$1_DiemConfig_Configuration($t31)));
+
+    // assert Not(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@258]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:213:9+131
+    assume {:print "$at(37,9740,9871)"} true;
+    assert {:msg "assert_failed(37,9740,9871): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1));
+
+    // assert Not(Not(Signature::$ed25519_validate_pubkey[]($t2))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:216:9+94
+    assume {:print "$at(37,9939,10033)"} true;
+    assert {:msg "assert_failed(37,9939,10033): function does not abort under this condition"}
+      !!$1_Signature_$ed25519_validate_pubkey($t2);
+
+    // assert Not(Not(ValidatorConfig::spec_has_operator[@258]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:293:9+65
+    assume {:print "$at(37,13035,13100)"} true;
+    assert {:msg "assert_failed(37,13035,13100): function does not abort under this condition"}
+      !!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@258]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1);
+
+    // assert Not(Neq<address>(ValidatorConfig::$get_operator[@258]($t1), $t7)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:331:9+125
+    assume {:print "$at(16,16205,16330)"} true;
+    assert {:msg "assert_failed(16,16205,16330): function does not abort under this condition"}
+      !!$IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1), $t7);
+
+    // assert Not(Not(DiemSystem::spec_is_validator[@259]($t1))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:333:9+75
+    assume {:print "$at(16,16339,16414)"} true;
+    assert {:msg "assert_failed(16,16339,16414): function does not abort under this condition"}
+      !!$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#259, $t1);
+
+    // assert Not(Not(DiemTimestamp::$is_operating[@260]())) at /home/ying/diem/language/diem-framework/modules/DiemTimestamp.move:160:9+53
+    assume {:print "$at(17,6375,6428)"} true;
+    assert {:msg "assert_failed(17,6375,6428): function does not abort under this condition"}
+      !!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260);
+
+    // assert Not(Not(exists[@261]<Roles::RoleId>($t7))) at /home/ying/diem/language/diem-framework/modules/Roles.move:587:9+78
+    assume {:print "$at(27,26292,26370)"} true;
+    assert {:msg "assert_failed(27,26292,26370): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#261, $t7);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@261]<Roles::RoleId>($t7)), 4)) at /home/ying/diem/language/diem-framework/modules/Roles.move:588:9+127
+    assume {:print "$at(27,26379,26506)"} true;
+    assert {:msg "assert_failed(27,26379,26506): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#261, $t7)), 4);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@258]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1);
+
+    // assert Not(And($t5, And(And(And(And(DiemTimestamp::$is_operating[@260](), DiemConfig::$reconfiguration_enabled[@262]()), Gt(DiemTimestamp::spec_now_microseconds[@260](), 0)), Lt(select DiemConfig::Configuration.epoch($t8), 18446744073709551615)), Lt($t9, select DiemConfig::Configuration.last_reconfiguration_time($t8))))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:360:9+283
+    assume {:print "$at(13,15538,15821)"} true;
+    assert {:msg "assert_failed(13,15538,15821): function does not abort under this condition"}
+      !($t5 && (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#262)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) > 0)) && ($epoch#$1_DiemConfig_Configuration($t8) < 18446744073709551615)) && ($t9 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t8))));
+
+    // assert Not(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@258]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:379:9+183
+    assume {:print "$at(36,27455,27638)"} true;
+    assert {:msg "assert_failed(36,27455,27638): function does not abort under this condition"}
+      !!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1));
+
+    // assert Eq<num>(Len<DiemSystem::ValidatorInfo>($t30), Len<DiemSystem::ValidatorInfo>($t6)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:341:9+32
+    assume {:print "$at(16,16750,16782)"} true;
+    assert {:msg "assert_failed(16,16750,16782): post-condition does not hold"}
+      $IsEqual'num'(LenVec($t30), LenVec($t6));
+
+    // assert forall i: Range(0, Len<DiemSystem::ValidatorInfo>($t6)): Eq<address>(select DiemSystem::ValidatorInfo.addr(Index($t30, i)), select DiemSystem::ValidatorInfo.addr(Index($t6, i))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:343:9+62
+    assume {:print "$at(16,16844,16906)"} true;
+    assert {:msg "assert_failed(16,16844,16906): post-condition does not hold"}
+      (var $range_0 := $Range(0, LenVec($t6)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t30, i)), $addr#$1_DiemSystem_ValidatorInfo(ReadVec($t6, i)))))));
+
+    // assert forall i: Range(0, Len<DiemSystem::ValidatorInfo>($t6)) where Neq<address>(select DiemSystem::ValidatorInfo.addr(Index($t6, i)), $t1): Eq<DiemSystem::ValidatorInfo>(Index($t30, i), Index($t6, i)) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:345:9+112
+    assume {:print "$at(16,17015,17127)"} true;
+    assert {:msg "assert_failed(16,17015,17127): post-condition does not hold"}
+      (var $range_0 := $Range(0, LenVec($t6)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    (!$IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t6, i)), $t1))  ==> ($IsEqual'$1_DiemSystem_ValidatorInfo'(ReadVec($t30, i), ReadVec($t6, i))))));
+
+    // assert forall i: Range(0, Len<DiemSystem::ValidatorInfo>($t6)): Or(Eq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(Index($t30, i)), select DiemSystem::ValidatorInfo.config(Index($t6, i))), And(Eq<address>(select DiemSystem::ValidatorInfo.addr(Index($t6, i)), $t1), Eq<ValidatorConfig::Config>(select DiemSystem::ValidatorInfo.config(Index($t30, i)), ValidatorConfig::$get_config($t1)))) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:348:9+209
+    assume {:print "$at(16,17196,17405)"} true;
+    assert {:msg "assert_failed(16,17196,17405): post-condition does not hold"}
+      (var $range_0 := $Range(0, LenVec($t6)); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i := $i_1;
+    (($IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(ReadVec($t30, i)), $config#$1_DiemSystem_ValidatorInfo(ReadVec($t6, i))) || ($IsEqual'address'($addr#$1_DiemSystem_ValidatorInfo(ReadVec($t6, i)), $t1) && $IsEqual'$1_ValidatorConfig_Config'($config#$1_DiemSystem_ValidatorInfo(ReadVec($t30, i)), $1_ValidatorConfig_$get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1))))))));
+
+    // assert Roles::spec_has_validator_role_addr($t1) at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:352:9+60
+    assume {:print "$at(16,17441,17501)"} true;
+    assert {:msg "assert_failed(16,17441,17501): post-condition does not hold"}
+      $1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $t1);
+
+    // assert ValidatorConfig::$is_valid($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:338:9+53
+    assume {:print "$at(36,25345,25398)"} true;
+    assert {:msg "assert_failed(36,25345,25398): post-condition does not hold"}
+      $1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, $t1);
+
+    // assert Eq<ValidatorConfig::Config>(ValidatorConfig::spec_get_config($t1), pack ValidatorConfig::Config($t2, $t3, $t4)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:341:9+258
+    assume {:print "$at(36,25548,25806)"} true;
+    assert {:msg "assert_failed(36,25548,25806): post-condition does not hold"}
+      $IsEqual'$1_ValidatorConfig_Config'($1_ValidatorConfig_spec_get_config($1_ValidatorConfig_ValidatorConfig_$memory, $t1), $1_ValidatorConfig_Config($t2, $t3, $t4));
+
+    // assert EventStoreIncludes(ExtendEventStore(EmptyEventStore(), $t33, $t11, And($t5, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t32, select DiemConfig::Configuration.last_reconfiguration_time($t10)))))) at /home/ying/diem/language/diem-framework/modules/DiemConfig.move:375:9+96
+    assume {:print "$at(13,16178,16274)"} true;
+    assert {:msg "assert_failed(13,16178,16274): function does not emit the expected event"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($EmptyEventStore, $t11, $t33, ($t5 && (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t32, $last_reconfiguration_time#$1_DiemConfig_Configuration($t10))))); $EventStore__is_subset(expected, actual)));
+
+    // assert EventStoreIncludedIn(ExtendEventStore(EmptyEventStore(), $t33, $t11, And($t5, And(Not(DiemConfig::spec_reconfigure_omitted()), Neq<u64>($t32, select DiemConfig::Configuration.last_reconfiguration_time($t10)))))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:325:5+3018
+    assume {:print "$at(36,24626,27644)"} true;
+    assert {:msg "assert_failed(36,24626,27644): emitted event not covered by any of the `emits` clauses"}
+      (var actual := $EventStore__subtract($es, old($es)); (var expected := $CondExtendEventStore'$1_DiemConfig_NewEpochEvent'($EmptyEventStore, $t11, $t33, ($t5 && (!$1_DiemConfig_spec_reconfigure_omitted($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_DiemConfig_DisableReconfiguration_$memory) && !$IsEqual'u64'($t32, $last_reconfiguration_time#$1_DiemConfig_Configuration($t10))))); $EventStore__is_subset(actual, expected)));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:325:5+3018
+    return;
+
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:323:6+1
+    assume {:print "$at(36,24619,24620)"} true;
+L2:
+
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@258]($t1)), Not(Signature::$ed25519_validate_pubkey[]($t2))), Not(ValidatorConfig::spec_has_operator[@258]($t1))), Not(ValidatorConfig::$exists_config[@258]($t1))), Neq<address>(ValidatorConfig::$get_operator[@258]($t1), $t7)), Not(DiemSystem::spec_is_validator[@259]($t1))), Not(DiemTimestamp::$is_operating[@260]())), Not(exists[@261]<Roles::RoleId>($t7))), Neq<u64>(select Roles::RoleId.role_id(global[@261]<Roles::RoleId>($t7)), 4)), Not(ValidatorConfig::$exists_config[@258]($t1))), And($t5, And(And(And(And(DiemTimestamp::$is_operating[@260](), DiemConfig::$reconfiguration_enabled[@262]()), Gt(DiemTimestamp::spec_now_microseconds[@260](), 0)), Lt(select DiemConfig::Configuration.epoch($t8), 18446744073709551615)), Lt($t9, select DiemConfig::Configuration.last_reconfiguration_time($t8))))), Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@258]($t1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:325:5+3018
+    assume {:print "$at(36,24626,27644)"} true;
+    assert {:msg "assert_failed(36,24626,27644): abort not covered by any of the `aborts_if` clauses"}
+      (((((((((((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)) || !$1_Signature_$ed25519_validate_pubkey($t2)) || !$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)) || !$IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1), $t7)) || !$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#259, $t1)) || !$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260)) || !$ResourceExists($1_Roles_RoleId_$memory#261, $t7)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#261, $t7)), 4)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)) || ($t5 && (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#262)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) > 0)) && ($epoch#$1_DiemConfig_Configuration($t8) < 18446744073709551615)) && ($t9 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t8))))) || !$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)));
+
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(And(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@258]($t1)), Eq(7, $t13)), And(Not(Signature::$ed25519_validate_pubkey[]($t2)), Eq(7, $t13))), And(Not(ValidatorConfig::spec_has_operator[@258]($t1)), Eq(7, $t13))), And(Not(ValidatorConfig::$exists_config[@258]($t1)), Eq(5, $t13))), And(Neq<address>(ValidatorConfig::$get_operator[@258]($t1), $t7), Eq(7, $t13))), And(Not(DiemSystem::spec_is_validator[@259]($t1)), Eq(7, $t13))), And(Not(DiemTimestamp::$is_operating[@260]()), Eq(1, $t13))), And(Not(exists[@261]<Roles::RoleId>($t7)), Eq(5, $t13))), And(Neq<u64>(select Roles::RoleId.role_id(global[@261]<Roles::RoleId>($t7)), 4), Eq(3, $t13))), And(Not(ValidatorConfig::$exists_config[@258]($t1)), Eq(5, $t13))), And(And($t5, And(And(And(And(DiemTimestamp::$is_operating[@260](), DiemConfig::$reconfiguration_enabled[@262]()), Gt(DiemTimestamp::spec_now_microseconds[@260](), 0)), Lt(select DiemConfig::Configuration.epoch($t8), 18446744073709551615)), Lt($t9, select DiemConfig::Configuration.last_reconfiguration_time($t8)))), Eq(1, $t13))), And(Neq<address>(Signer::$address_of[]($t0), ValidatorConfig::$get_operator[@258]($t1)), Eq(7, $t13))), Eq(5, $t13)), Eq(3, $t13)), Eq(7, $t13)), Eq(1, $t13)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:325:5+3018
+    assert {:msg "assert_failed(36,24626,27644): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      ((((((((((((((((!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)) && $IsEqual'num'(7, $t13)) || (!$1_Signature_$ed25519_validate_pubkey($t2) && $IsEqual'num'(7, $t13))) || (!$1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1) && $IsEqual'num'(7, $t13))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1) && $IsEqual'num'(5, $t13))) || (!$IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1), $t7) && $IsEqual'num'(7, $t13))) || (!$1_DiemSystem_spec_is_validator($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory#259, $t1) && $IsEqual'num'(7, $t13))) || (!$1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) && $IsEqual'num'(1, $t13))) || (!$ResourceExists($1_Roles_RoleId_$memory#261, $t7) && $IsEqual'num'(5, $t13))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#261, $t7)), 4) && $IsEqual'num'(3, $t13))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1) && $IsEqual'num'(5, $t13))) || (($t5 && (((($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) && $1_DiemConfig_$reconfiguration_enabled($1_DiemConfig_DisableReconfiguration_$memory#262)) && ($1_DiemTimestamp_spec_now_microseconds($1_DiemTimestamp_CurrentTimeMicroseconds_$memory#260) > 0)) && ($epoch#$1_DiemConfig_Configuration($t8) < 18446744073709551615)) && ($t9 < $last_reconfiguration_time#$1_DiemConfig_Configuration($t8)))) && $IsEqual'num'(1, $t13))) || (!$IsEqual'address'($1_Signer_$address_of($t0), $1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory#258, $t1)) && $IsEqual'num'(7, $t13))) || $IsEqual'num'(5, $t13)) || $IsEqual'num'(3, $t13)) || $IsEqual'num'(7, $t13)) || $IsEqual'num'(1, $t13));
+
+    // abort($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:325:5+3018
+    $abort_code := $t13;
+    $abort_flag := true;
+    return;
+
+}
+
+// fun ValidatorAdministrationScripts::set_validator_operator [verification] at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+procedure {:timeLimit 40} $1_ValidatorAdministrationScripts_set_validator_operator$verify(_$t0: $signer, _$t1: Vec (int), _$t2: int) returns ()
+{
+    // declare local variables
     var $t3: bool;
     var $t4: int;
     var $t5: int;
     var $t6: int;
-    var $t7: $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
+    var $t7: int;
     var $t8: Vec (int);
-    var $t0: int;
+    var $t9: bool;
+    var $t10: int;
+    var $t11: bool;
+    var $t12: int;
+    var $t13: int;
+    var $t14: int;
+    var $t15: int;
+    var $t0: $signer;
+    var $t1: Vec (int);
+    var $t2: int;
     var $temp_0'address': int;
     var $temp_0'bool': bool;
-    var $temp_0'u64': int;
+    var $temp_0'signer': $signer;
     var $temp_0'vec'u8'': Vec (int);
+    var $1_ValidatorConfig_ValidatorConfig_$memory#123: $Memory $1_ValidatorConfig_ValidatorConfig;
+    var $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig;
+    var $1_Roles_RoleId_$memory#125: $Memory $1_Roles_RoleId;
     $t0 := _$t0;
+    $t1 := _$t1;
+    $t2 := _$t2;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:128:5+208
-    assume {:print "$at(28,5470,5678)"} true;
-    assume $IsValid'address'($t0);
+    // assume forall addr: TypeDomain<address>() where ValidatorOperatorConfig::$has_validator_operator_config(addr): Roles::spec_has_validator_operator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:75:9+137
+    assume {:print "$at(36,31735,32047)"} true;
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall $rsc: ResourceDomain<SharedEd25519PublicKey::SharedEd25519PublicKey>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:128:5+208
-    assume (forall $a_0: int :: {$ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0)}(var $rsc := $ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0);
-    ($IsValid'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'($rsc))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:343:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // trace_local[addr]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:128:5+1
-    assume {:print "$track_local(32,1,0):", $t0} $t0 == $t0;
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:348:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // $t3 := SharedEd25519PublicKey::exists_at($t0) on_abort goto L3 with $t4 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:16+15
-    assume {:print "$at(28,5561,5576)"} true;
-    call $t3 := $1_SharedEd25519PublicKey_exists_at($t0);
-    if ($abort_flag) {
-        assume {:print "$at(28,5561,5576)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(32,1):", $t4} $t4 == $t4;
-        goto L3;
-    }
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$is_valid(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:355:9+107
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // $t5 := 1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:55+11
-    $t5 := 1;
-    assume $IsValid'u64'($t5);
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Roles::spec_has_validator_role_addr(select DiemSystem::ValidatorInfo.addr(Index(DiemSystem::spec_get_validators(), i1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:618:8+133
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $addr#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)))))));
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:33+34
-    // >> opaque call: $t5 := Errors::not_published($t4)
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    assume $IsValid'signer'($t0);
 
-    // $t6 := opaque begin: Errors::not_published($t5) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:33+34
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    assume $IsValid'vec'u8''($t1);
 
-    // assume WellFormed($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:33+34
-    assume $IsValid'u64'($t6);
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    assume $IsValid'address'($t2);
 
-    // assume Eq<u64>($t6, 5) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:33+34
-    assume $IsEqual'u64'($t6, 5);
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
 
-    // $t6 := opaque end: Errors::not_published($t5) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:33+34
+    // assume forall $rsc: ResourceDomain<ValidatorOperatorConfig::ValidatorOperatorConfig>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $a_0);
+    ($IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'($rsc))));
 
-    // trace_local[tmp#$2]($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
-    assume {:print "$track_local(32,1,2):", $t6} $t6 == $t6;
+    // assume forall $rsc: ResourceDomain<ValidatorConfig::ValidatorConfig>(): And(WellFormed($rsc), And(Le(Len<ValidatorConfig::Config>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.config($rsc))), 1), Le(Len<address>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.operator_account($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+312
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0);
+    (($IsValid'$1_ValidatorConfig_ValidatorConfig'($rsc) && ((LenVec($vec#$1_Option_Option'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1))))));
 
-    // trace_local[tmp#$1]($t3) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
-    assume {:print "$track_local(32,1,1):", $t3} $t3 == $t3;
+    // assume Identical($t5, Signer::$address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:438:9+47
+    assume {:print "$at(36,32216,32263)"} true;
+    assume ($t5 == $1_Signer_$address_of($t0));
 
-    // if ($t3) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
-    if ($t3) { goto L0; } else { goto L1; }
+    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:123:9+64
+    assume {:print "$at(37,5229,5293)"} true;
+    assume ($t6 == $1_Signer_spec_address_of($t0));
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
-L1:
+    // assume Identical($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:134:9+64
+    assume {:print "$at(37,5804,5868)"} true;
+    assume ($t7 == $1_Signer_spec_address_of($t0));
 
-    // trace_abort($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
-    assume {:print "$at(28,5554,5613)"} true;
-    assume {:print "$track_abort(32,1):", $t6} $t6 == $t6;
+    // assume DiemAccount::prologue_guarantees($t0) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    assume {:print "$at(11,115530,115567)"} true;
+    assume $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_AccountFreezing_FreezingBit_$memory, $1_DiemAccount_DiemAccount_$memory, $t0);
 
-    // $t4 := move($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
-    $t4 := $t6;
+    // @125 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_Roles_RoleId_$memory#125 := $1_Roles_RoleId_$memory;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:129:9+59
+    // @124 := save_mem(ValidatorOperatorConfig::ValidatorOperatorConfig) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124 := $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory;
+
+    // @123 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    $1_ValidatorConfig_ValidatorConfig_$memory#123 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+1
+    assume {:print "$at(36,31735,31736)"} true;
+    assume {:print "$track_local(31,4,0):", $t0} $t0 == $t0;
+
+    // trace_local[operator_name]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+1
+    assume {:print "$track_local(31,4,1):", $t1} $t1 == $t1;
+
+    // trace_local[operator_account]($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:423:5+1
+    assume {:print "$track_local(31,4,2):", $t2} $t2 == $t2;
+
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    // >> opaque call: $t5 := ValidatorOperatorConfig::get_human_name($t2)
+    assume {:print "$at(36,31895,31952)"} true;
+
+    // $t8 := opaque begin: ValidatorOperatorConfig::get_human_name($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+
+    // assume Identical($t9, Not(ValidatorOperatorConfig::$has_validator_operator_config($t2))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    assume ($t9 == !$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t2));
+
+    // if ($t9) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    if ($t9) { goto L5; } else { goto L4; }
+
+    // label L5 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+L5:
+
+    // assume And(Not(ValidatorOperatorConfig::$has_validator_operator_config($t2)), Eq(5, $t10)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    assume (!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t2) && $IsEqual'num'(5, $t10));
+
+    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    assume {:print "$at(36,31895,31952)"} true;
+    assume {:print "$track_abort(31,4):", $t10} $t10 == $t10;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:130:49+4
-    assume {:print "$at(28,5663,5667)"} true;
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+L4:
+
+    // assume WellFormed($t8) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    assume $IsValid'vec'u8''($t8);
+
+    // assume Eq<vector<u8>>($t8, ValidatorOperatorConfig::$get_human_name($t2)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+    assume $IsEqual'vec'u8''($t8, $1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t2));
+
+    // $t8 := opaque end: ValidatorOperatorConfig::get_human_name($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:16+57
+
+    // $t11 := ==($t8, $t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:74+2
+    $t11 := $IsEqual'vec'u8''($t8, $t1);
+
+    // trace_local[tmp#$3]($t11) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:9+85
+    assume {:print "$track_local(31,4,3):", $t11} $t11 == $t11;
+
+    // if ($t11) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:9+85
+    if ($t11) { goto L0; } else { goto L1; }
+
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:92+1
+L1:
+
+    // $t12 := 0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:92+1
+    $t12 := 0;
+    assume $IsValid'u64'($t12);
+
+    // trace_abort($t12) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:9+85
+    assume {:print "$at(36,31888,31973)"} true;
+    assume {:print "$track_abort(31,4):", $t12} $t12 == $t12;
+
+    // $t10 := move($t12) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:9+85
+    $t10 := $t12;
+
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:428:9+85
+    goto L3;
+
+    // label L0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:429:39+8
+    assume {:print "$at(36,32013,32021)"} true;
 L0:
 
-    // $t7 := get_global<SharedEd25519PublicKey::SharedEd25519PublicKey>($t0) on_abort goto L3 with $t4 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:130:11+13
-    if (!$ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t0)) {
-        call $ExecFailureAbort();
-    } else {
-        $t7 := $ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t0);
-    }
+    // assume Identical($t13, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:113:9+56
+    assume {:print "$at(37,4833,4889)"} true;
+    assume ($t13 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t14, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:123:9+64
+    assume {:print "$at(37,5229,5293)"} true;
+    assume ($t14 == $1_Signer_spec_address_of($t0));
+
+    // assume Identical($t15, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:134:9+64
+    assume {:print "$at(37,5804,5868)"} true;
+    assume ($t15 == $1_Signer_spec_address_of($t0));
+
+    // ValidatorConfig::set_operator($t0, $t2) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:429:9+57
+    assume {:print "$at(36,31983,32040)"} true;
+    call $1_ValidatorConfig_set_operator($t0, $t2);
     if ($abort_flag) {
-        assume {:print "$at(28,5625,5638)"} true;
-        $t4 := $abort_code;
-        assume {:print "$track_abort(32,1):", $t4} $t4 == $t4;
+        assume {:print "$at(36,31983,32040)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(31,4):", $t10} $t10 == $t10;
         goto L3;
     }
 
-    // $t8 := get_field<SharedEd25519PublicKey::SharedEd25519PublicKey>.key($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:130:10+48
-    $t8 := $key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($t7);
-
-    // trace_return[0]($t8) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:130:9+49
-    assume {:print "$track_return(32,1,0):", $t8} $t8 == $t8;
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:131:5+1
-    assume {:print "$at(28,5677,5678)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:430:5+1
+    assume {:print "$at(36,32046,32047)"} true;
 L2:
 
-    // return $t8 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:131:5+1
-    $ret0 := $t8;
+    // assert Not(Not(ValidatorConfig::$exists_config[@123]($t5))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#123, $t5);
+
+    // assert Not(Neq<vector<u8>>(ValidatorOperatorConfig::$get_human_name[@124]($t2), $t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:443:9+92
+    assume {:print "$at(36,32572,32664)"} true;
+    assert {:msg "assert_failed(36,32572,32664): function does not abort under this condition"}
+      !!$IsEqual'vec'u8''($1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2), $t1);
+
+    // assert Not(Not(ValidatorOperatorConfig::$has_validator_operator_config[@124]($t2))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:125:9+123
+    assume {:print "$at(37,5379,5502)"} true;
+    assert {:msg "assert_failed(37,5379,5502): function does not abort under this condition"}
+      !!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2);
+
+    // assert Not(Not(ValidatorOperatorConfig::$has_validator_operator_config[@124]($t2))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:128:9+108
+    assume {:print "$at(37,5576,5684)"} true;
+    assert {:msg "assert_failed(37,5576,5684): function does not abort under this condition"}
+      !!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2);
+
+    // assert Not(Not(exists[@125]<Roles::RoleId>($t6))) at /home/ying/diem/language/diem-framework/modules/Roles.move:581:9+69
+    assume {:print "$at(27,26012,26081)"} true;
+    assert {:msg "assert_failed(27,26012,26081): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#125, $t6);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@125]<Roles::RoleId>($t6)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:582:9+97
+    assume {:print "$at(27,26090,26187)"} true;
+    assert {:msg "assert_failed(27,26090,26187): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#125, $t6)), 3);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@123]($t6))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#123, $t6);
+
+    // assert Not(Not(exists[@125]<Roles::RoleId>($t5))) at /home/ying/diem/language/diem-framework/modules/Roles.move:581:9+69
+    assume {:print "$at(27,26012,26081)"} true;
+    assert {:msg "assert_failed(27,26012,26081): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#125, $t5);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@125]<Roles::RoleId>($t5)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:582:9+97
+    assume {:print "$at(27,26090,26187)"} true;
+    assert {:msg "assert_failed(27,26090,26187): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#125, $t5)), 3);
+
+    // assert ValidatorConfig::spec_has_operator($t7) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:135:9+42
+    assume {:print "$at(37,5877,5919)"} true;
+    assert {:msg "assert_failed(37,5877,5919): post-condition does not hold"}
+      $1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t7);
+
+    // assert Eq<address>(ValidatorConfig::$get_operator($t7), $t2) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:136:9+54
+    assume {:print "$at(37,5928,5982)"} true;
+    assert {:msg "assert_failed(37,5928,5982): post-condition does not hold"}
+      $IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t7), $t2);
+
+    // assert forall addr: TypeDomain<address>() where Neq<address>(addr, $t7): Eq<Option::Option<address>>(select ValidatorConfig::ValidatorConfig.operator_account(global<ValidatorConfig::ValidatorConfig>(addr)), select ValidatorConfig::ValidatorConfig.operator_account(global[@123]<ValidatorConfig::ValidatorConfig>(addr))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:138:9+173
+    assume {:print "$at(37,6076,6249)"} true;
+    assert {:msg "assert_failed(37,6076,6249): post-condition does not hold"}
+      (forall addr: int :: $IsValid'address'(addr) ==> (!$IsEqual'address'(addr, $t7))  ==> ($IsEqual'$1_Option_Option'address''($operator_account#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr)), $operator_account#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory#123, addr)))));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:138:9+173
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:131:5+1
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:430:5+1
+    assume {:print "$at(36,32046,32047)"} true;
 L3:
 
-    // abort($t4) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:131:5+1
-    $abort_code := $t4;
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Not(ValidatorConfig::$exists_config[@123]($t5)), Neq<vector<u8>>(ValidatorOperatorConfig::$get_human_name[@124]($t2), $t1)), Not(ValidatorOperatorConfig::$has_validator_operator_config[@124]($t2))), Not(ValidatorOperatorConfig::$has_validator_operator_config[@124]($t2))), Not(exists[@125]<Roles::RoleId>($t6))), Neq<u64>(select Roles::RoleId.role_id(global[@125]<Roles::RoleId>($t6)), 3)), Not(ValidatorConfig::$exists_config[@123]($t6))), Not(exists[@125]<Roles::RoleId>($t5))), Neq<u64>(select Roles::RoleId.role_id(global[@125]<Roles::RoleId>($t5)), 3)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:432:5+1465
+    assume {:print "$at(36,32053,33518)"} true;
+    assert {:msg "assert_failed(36,32053,33518): abort not covered by any of the `aborts_if` clauses"}
+      ((((((((!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#123, $t5) || !$IsEqual'vec'u8''($1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2), $t1)) || !$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2)) || !$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2)) || !$ResourceExists($1_Roles_RoleId_$memory#125, $t6)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#125, $t6)), 3)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#123, $t6)) || !$ResourceExists($1_Roles_RoleId_$memory#125, $t5)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#125, $t5)), 3));
+
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(And(Not(ValidatorConfig::$exists_config[@123]($t5)), Eq(5, $t10)), And(Neq<vector<u8>>(ValidatorOperatorConfig::$get_human_name[@124]($t2), $t1), Eq(0, $t10))), And(Not(ValidatorOperatorConfig::$has_validator_operator_config[@124]($t2)), Eq(7, $t10))), And(Not(ValidatorOperatorConfig::$has_validator_operator_config[@124]($t2)), Eq(5, $t10))), And(Not(exists[@125]<Roles::RoleId>($t6)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@125]<Roles::RoleId>($t6)), 3), Eq(3, $t10))), And(Not(ValidatorConfig::$exists_config[@123]($t6)), Eq(5, $t10))), And(Not(exists[@125]<Roles::RoleId>($t5)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@125]<Roles::RoleId>($t5)), 3), Eq(3, $t10))), Eq(0, $t10)), Eq(7, $t10)), Eq(5, $t10)), Eq(3, $t10)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:432:5+1465
+    assert {:msg "assert_failed(36,32053,33518): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((((((((((((!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#123, $t5) && $IsEqual'num'(5, $t10)) || (!$IsEqual'vec'u8''($1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2), $t1) && $IsEqual'num'(0, $t10))) || (!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2) && $IsEqual'num'(7, $t10))) || (!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#124, $t2) && $IsEqual'num'(5, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#125, $t6) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#125, $t6)), 3) && $IsEqual'num'(3, $t10))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#123, $t6) && $IsEqual'num'(5, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#125, $t5) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#125, $t5)), 3) && $IsEqual'num'(3, $t10))) || $IsEqual'num'(0, $t10)) || $IsEqual'num'(7, $t10)) || $IsEqual'num'(5, $t10)) || $IsEqual'num'(3, $t10));
+
+    // abort($t10) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:432:5+1465
+    $abort_code := $t10;
     $abort_flag := true;
     return;
 
 }
 
-// fun SharedEd25519PublicKey::rotate_key [verification] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-procedure {:timeLimit 40} $1_SharedEd25519PublicKey_rotate_key$verify(_$t0: $signer, _$t1: Vec (int)) returns ()
+// fun ValidatorAdministrationScripts::set_validator_operator_with_nonce_admin [verification] at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+procedure {:timeLimit 40} $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify(_$t0: $signer, _$t1: $signer, _$t2: int, _$t3: Vec (int), _$t4: int) returns ()
 {
     // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: int;
-    var $t5: int;
+    var $t5: bool;
     var $t6: int;
     var $t7: int;
-    var $t8: bool;
+    var $t8: int;
     var $t9: int;
     var $t10: int;
-    var $t11: int;
-    var $t12: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey);
+    var $t11: Vec (int);
+    var $t12: bool;
+    var $t13: bool;
+    var $t14: int;
+    var $t15: int;
+    var $t16: int;
+    var $t17: int;
     var $t0: $signer;
-    var $t1: Vec (int);
+    var $t1: $signer;
+    var $t2: int;
+    var $t3: Vec (int);
+    var $t4: int;
     var $temp_0'address': int;
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122: $Memory $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-    var $1_DiemAccount_DiemAccount_$memory#123: $Memory $1_DiemAccount_DiemAccount;
-    var $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#244: $Memory $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
+    var $1_SlidingNonce_SlidingNonce_$memory#144: $Memory $1_SlidingNonce_SlidingNonce;
+    var $1_ValidatorConfig_ValidatorConfig_$memory#145: $Memory $1_ValidatorConfig_ValidatorConfig;
+    var $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146: $Memory $1_ValidatorOperatorConfig_ValidatorOperatorConfig;
+    var $1_Roles_RoleId_$memory#147: $Memory $1_Roles_RoleId;
     $t0 := _$t0;
     $t1 := _$t1;
-    assume IsEmptyVec(p#$Mutation($t12));
+    $t2 := _$t2;
+    $t3 := _$t3;
+    $t4 := _$t4;
 
     // verification entrypoint assumptions
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where DiemAccount::$exists_at(addr): Or(DiemAccount::$delegated_key_rotation_capability(addr), DiemAccount::spec_holds_own_key_rotation_cap(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2220:9+147
-    assume {:print "$at(28,4383,4693)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))  ==> (($1_DiemAccount_$delegated_key_rotation_capability($1_DiemAccount_DiemAccount_$memory, addr) || $1_DiemAccount_spec_holds_own_key_rotation_cap($1_DiemAccount_DiemAccount_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorOperatorConfig::$has_validator_operator_config(addr): Roles::spec_has_validator_operator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorOperatorConfig.move:75:9+137
+    assume {:print "$at(36,39128,39586)"} true;
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_operator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>() where DiemAccount::$exists_at(addr): Or(DiemAccount::spec_holds_delegated_withdraw_capability(addr), DiemAccount::spec_holds_own_withdraw_cap(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2250:9+150
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))  ==> (($1_DiemAccount_spec_holds_delegated_withdraw_capability($1_DiemAccount_DiemAccount_$memory, addr) || $1_DiemAccount_spec_holds_own_withdraw_cap($1_DiemAccount_DiemAccount_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:343:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>(): Implies(DiemAccount::$exists_at(addr), exists<Roles::RoleId>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2324:9+81
-    assume (forall addr: int :: $IsValid'address'(addr) ==> (($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) ==> $ResourceExists($1_Roles_RoleId_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$exists_config(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:348:9+112
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>(): Implies(And(Eq<address>(addr, a550c18), DiemAccount::$exists_at(addr)), exists<DiemAccount::AccountOperationsCapability>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2338:9+130
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ((($IsEqual'address'(addr, 173345816) && $1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr)) ==> $ResourceExists($1_DiemAccount_AccountOperationsCapability_$memory, addr))));
+    // assume forall addr: TypeDomain<address>() where ValidatorConfig::$is_valid(addr): Roles::spec_has_validator_role_addr(addr) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:355:9+107
+    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_ValidatorConfig_$is_valid($1_ValidatorConfig_ValidatorConfig_$memory, addr))  ==> ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, addr)));
 
-    // assume forall addr: TypeDomain<address>(): Implies(DiemAccount::$exists_at(addr), exists<AccountFreezing::FreezingBit>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2394:9+107
-    assume (forall addr: int :: $IsValid'address'(addr) ==> (($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) ==> $ResourceExists($1_AccountFreezing_FreezingBit_$memory, addr))));
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(a550c18)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:281:9+88
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 173345816));
 
-    // assume And(forall addr: TypeDomain<address>() where exists<DiemAccount::Balance<XUS::XUS>>(addr): DiemAccount::$exists_at(addr), forall addr: TypeDomain<address>() where exists<DiemAccount::Balance<XDX::XDX>>(addr): DiemAccount::$exists_at(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2400:9+115
-    assume ((forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_DiemAccount_Balance'$1_XUS_XUS'_$memory, addr))  ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))) && (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_DiemAccount_Balance'$1_XDX_XDX'_$memory, addr))  ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))));
+    // assume Implies(DiemTimestamp::$is_operating(), exists<SlidingNonce::SlidingNonce>(b1e55ed)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:284:9+98
+    assume ($1_DiemTimestamp_$is_operating($1_DiemTimestamp_CurrentTimeMicroseconds_$memory) ==> $ResourceExists($1_SlidingNonce_SlidingNonce_$memory, 186537453));
 
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
+    // assume forall i1: Range(0, Len<DiemSystem::ValidatorInfo>(DiemSystem::spec_get_validators())): Roles::spec_has_validator_role_addr(select DiemSystem::ValidatorInfo.addr(Index(DiemSystem::spec_get_validators(), i1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemSystem.move:618:8+133
+    assume (var $range_0 := $Range(0, LenVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory))); (forall $i_1: int :: $InRange($range_0, $i_1) ==> (var i1 := $i_1;
+    ($1_Roles_spec_has_validator_role_addr($1_Roles_RoleId_$memory, $addr#$1_DiemSystem_ValidatorInfo(ReadVec($1_DiemSystem_spec_get_validators($1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory), i1)))))));
+
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
     assume $IsValid'signer'($t0);
 
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    assume $IsValid'vec'u8''($t1);
+    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume $IsValid'signer'($t1);
 
-    // assume forall $rsc: ResourceDomain<DiemAccount::DiemAccount>(): And(WellFormed($rsc), And(Le(Len<DiemAccount::WithdrawCapability>(select Option::Option.vec(select DiemAccount::DiemAccount.withdraw_capability($rsc))), 1), Le(Len<DiemAccount::KeyRotationCapability>(select Option::Option.vec(select DiemAccount::DiemAccount.key_rotation_capability($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemAccount_DiemAccount_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemAccount_DiemAccount_$memory, $a_0);
-    (($IsValid'$1_DiemAccount_DiemAccount'($rsc) && ((LenVec($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'($withdraw_capability#$1_DiemAccount_DiemAccount($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'($key_rotation_capability#$1_DiemAccount_DiemAccount($rsc))) <= 1))))));
+    // assume WellFormed($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume $IsValid'u64'($t2);
 
-    // assume forall $rsc: ResourceDomain<SharedEd25519PublicKey::SharedEd25519PublicKey>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    assume (forall $a_0: int :: {$ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0)}(var $rsc := $ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $a_0);
-    ($IsValid'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'($rsc))));
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume $IsValid'vec'u8''($t3);
 
-    // assume Identical($t5, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:115:9+44
-    assume {:print "$at(28,4896,4940)"} true;
-    assume ($t5 == $1_Signer_spec_address_of($t0));
+    // assume WellFormed($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume $IsValid'address'($t4);
 
-    // assume Identical($t6, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:122:9+44
-    assume {:print "$at(28,5201,5245)"} true;
-    assume ($t6 == $1_Signer_spec_address_of($t0));
+    // assume forall $rsc: ResourceDomain<Roles::RoleId>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume (forall $a_0: int :: {$ResourceValue($1_Roles_RoleId_$memory, $a_0)}(var $rsc := $ResourceValue($1_Roles_RoleId_$memory, $a_0);
+    ($IsValid'$1_Roles_RoleId'($rsc))));
 
-    // @123 := save_mem(DiemAccount::DiemAccount) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+1
-    assume {:print "$at(28,4383,4384)"} true;
-    $1_DiemAccount_DiemAccount_$memory#123 := $1_DiemAccount_DiemAccount_$memory;
+    // assume forall $rsc: ResourceDomain<ValidatorOperatorConfig::ValidatorOperatorConfig>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $a_0);
+    ($IsValid'$1_ValidatorOperatorConfig_ValidatorOperatorConfig'($rsc))));
 
-    // @122 := save_mem(SharedEd25519PublicKey::SharedEd25519PublicKey) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+1
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122 := $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory;
+    // assume forall $rsc: ResourceDomain<ValidatorConfig::ValidatorConfig>(): And(WellFormed($rsc), And(Le(Len<ValidatorConfig::Config>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.config($rsc))), 1), Le(Len<address>(select Option::Option.vec(select ValidatorConfig::ValidatorConfig.operator_account($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume (forall $a_0: int :: {$ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0)}(var $rsc := $ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, $a_0);
+    (($IsValid'$1_ValidatorConfig_ValidatorConfig'($rsc) && ((LenVec($vec#$1_Option_Option'$1_ValidatorConfig_Config'($config#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'address'($operator_account#$1_ValidatorConfig_ValidatorConfig($rsc))) <= 1))))));
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+1
-    assume {:print "$track_local(32,3,0):", $t0} $t0 == $t0;
+    // assume forall $rsc: ResourceDomain<SlidingNonce::SlidingNonce>(): WellFormed($rsc) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+458
+    assume (forall $a_0: int :: {$ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0)}(var $rsc := $ResourceValue($1_SlidingNonce_SlidingNonce_$memory, $a_0);
+    ($IsValid'$1_SlidingNonce_SlidingNonce'($rsc))));
 
-    // trace_local[new_public_key]($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+1
-    assume {:print "$track_local(32,3,1):", $t1} $t1 == $t1;
+    // assume Identical($t7, Signer::$address_of($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:524:9+47
+    assume {:print "$at(36,39772,39819)"} true;
+    assume ($t7 == $1_Signer_$address_of($t1));
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:104:20+27
-    // >> opaque call: $t5 := Signer::address_of($t0)
-    assume {:print "$at(28,4504,4531)"} true;
+    // assume Identical($t8, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:123:9+64
+    assume {:print "$at(37,5229,5293)"} true;
+    assume ($t8 == $1_Signer_spec_address_of($t1));
 
-    // $t7 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:104:20+27
+    // assume Identical($t9, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:134:9+64
+    assume {:print "$at(37,5804,5868)"} true;
+    assume ($t9 == $1_Signer_spec_address_of($t1));
 
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:104:20+27
-    assume $IsValid'address'($t7);
+    // assume DiemAccount::prologue_guarantees($t1) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2511:9+37
+    assume {:print "$at(11,115530,115567)"} true;
+    assume $1_DiemAccount_prologue_guarantees($1_DiemTimestamp_CurrentTimeMicroseconds_$memory, $1_AccountFreezing_FreezingBit_$memory, $1_DiemAccount_DiemAccount_$memory, $t1);
 
-    // assume Eq<address>($t7, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:104:20+27
-    assume $IsEqual'address'($t7, $1_Signer_spec_address_of($t0));
+    // assume Roles::$has_diem_root_role($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:542:9+47
+    assume {:print "$at(36,40911,40958)"} true;
+    assume $1_Roles_$has_diem_root_role($1_Roles_RoleId_$memory, $t0);
 
-    // $t7 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:104:20+27
+    // @147 := save_mem(Roles::RoleId) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:542:9+47
+    $1_Roles_RoleId_$memory#147 := $1_Roles_RoleId_$memory;
 
-    // trace_local[addr]($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:104:13+4
-    assume {:print "$track_local(32,3,4):", $t7} $t7 == $t7;
+    // @146 := save_mem(ValidatorOperatorConfig::ValidatorOperatorConfig) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:542:9+47
+    $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146 := $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory;
 
-    // $t8 := SharedEd25519PublicKey::exists_at($t7) on_abort goto L3 with $t9 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:16+15
-    assume {:print "$at(28,4548,4563)"} true;
-    call $t8 := $1_SharedEd25519PublicKey_exists_at($t7);
+    // @145 := save_mem(ValidatorConfig::ValidatorConfig) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:542:9+47
+    $1_ValidatorConfig_ValidatorConfig_$memory#145 := $1_ValidatorConfig_ValidatorConfig_$memory;
+
+    // @144 := save_mem(SlidingNonce::SlidingNonce) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:542:9+47
+    $1_SlidingNonce_SlidingNonce_$memory#144 := $1_SlidingNonce_SlidingNonce_$memory;
+
+    // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+1
+    assume {:print "$at(36,39128,39129)"} true;
+    assume {:print "$track_local(31,5,0):", $t0} $t0 == $t0;
+
+    // trace_local[account]($t1) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+1
+    assume {:print "$track_local(31,5,1):", $t1} $t1 == $t1;
+
+    // trace_local[sliding_nonce]($t2) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+1
+    assume {:print "$track_local(31,5,2):", $t2} $t2 == $t2;
+
+    // trace_local[operator_name]($t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+1
+    assume {:print "$track_local(31,5,3):", $t3} $t3 == $t3;
+
+    // trace_local[operator_account]($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:506:5+1
+    assume {:print "$track_local(31,5,4):", $t4} $t4 == $t4;
+
+    // SlidingNonce::record_nonce_or_abort($t0, $t2) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:513:9+63
+    assume {:print "$at(36,39354,39417)"} true;
+    call $1_SlidingNonce_record_nonce_or_abort($t0, $t2);
     if ($abort_flag) {
-        assume {:print "$at(28,4548,4563)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(32,3):", $t9} $t9 == $t9;
+        assume {:print "$at(36,39354,39417)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(31,5):", $t10} $t10 == $t10;
         goto L3;
     }
 
-    // $t10 := 1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:55+11
-    $t10 := 1;
-    assume $IsValid'u64'($t10);
+    // nop at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    // >> opaque call: $t7 := ValidatorOperatorConfig::get_human_name($t4)
+    assume {:print "$at(36,39434,39491)"} true;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:33+34
-    // >> opaque call: $t8 := Errors::not_published($t7)
+    // $t11 := opaque begin: ValidatorOperatorConfig::get_human_name($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
 
-    // $t11 := opaque begin: Errors::not_published($t10) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:33+34
+    // assume Identical($t12, Not(ValidatorOperatorConfig::$has_validator_operator_config($t4))) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    assume ($t12 == !$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t4));
 
-    // assume WellFormed($t11) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:33+34
-    assume $IsValid'u64'($t11);
+    // if ($t12) goto L5 else goto L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    if ($t12) { goto L5; } else { goto L4; }
 
-    // assume Eq<u64>($t11, 5) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:33+34
-    assume $IsEqual'u64'($t11, 5);
+    // label L5 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+L5:
 
-    // $t11 := opaque end: Errors::not_published($t10) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:33+34
+    // assume And(Not(ValidatorOperatorConfig::$has_validator_operator_config($t4)), Eq(5, $t10)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    assume (!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t4) && $IsEqual'num'(5, $t10));
 
-    // trace_local[tmp#$3]($t11) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
-    assume {:print "$track_local(32,3,3):", $t11} $t11 == $t11;
+    // trace_abort($t10) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    assume {:print "$at(36,39434,39491)"} true;
+    assume {:print "$track_abort(31,5):", $t10} $t10 == $t10;
 
-    // trace_local[tmp#$2]($t8) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
-    assume {:print "$track_local(32,3,2):", $t8} $t8 == $t8;
-
-    // if ($t8) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
-    if ($t8) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
-L1:
-
-    // trace_abort($t11) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
-    assume {:print "$at(28,4541,4600)"} true;
-    assume {:print "$track_abort(32,3):", $t11} $t11 == $t11;
-
-    // $t9 := move($t11) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
-    $t9 := $t11;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:105:9+59
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:106:63+4
-    assume {:print "$at(28,4664,4668)"} true;
-L0:
+    // label L4 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+L4:
 
-    // $t12 := borrow_global<SharedEd25519PublicKey::SharedEd25519PublicKey>($t7) on_abort goto L3 with $t9 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:106:21+17
-    if (!$ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t7)) {
-        call $ExecFailureAbort();
-    } else {
-        $t12 := $Mutation($Global($t7), EmptyVec(), $ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t7));
-    }
-    if ($abort_flag) {
-        assume {:print "$at(28,4622,4639)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(32,3):", $t9} $t9 == $t9;
-        goto L3;
-    }
+    // assume WellFormed($t11) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    assume $IsValid'vec'u8''($t11);
 
-    // SharedEd25519PublicKey::rotate_key_($t12, $t1) on_abort goto L3 with $t9 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:106:9+76
-    call $t12 := $1_SharedEd25519PublicKey_rotate_key_($t12, $t1);
-    if ($abort_flag) {
-        assume {:print "$at(28,4610,4686)"} true;
-        $t9 := $abort_code;
-        assume {:print "$track_abort(32,3):", $t9} $t9 == $t9;
-        goto L3;
-    }
+    // assume Eq<vector<u8>>($t11, ValidatorOperatorConfig::$get_human_name($t4)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
+    assume $IsEqual'vec'u8''($t11, $1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory, $t4));
 
-    // @244 := save_mem(SharedEd25519PublicKey::SharedEd25519PublicKey) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:103:5+310
-    // state save for global update invariants
-    assume {:print "$at(28,4383,4693)"} true;
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#244 := $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory;
+    // $t11 := opaque end: ValidatorOperatorConfig::get_human_name($t4) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:16+57
 
-    // write_back[SharedEd25519PublicKey::SharedEd25519PublicKey@]($t12) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:106:9+76
-    assume {:print "$at(28,4610,4686)"} true;
-    $1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory := $ResourceUpdate($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $GlobalLocationAddress($t12),
-        $Dereference($t12));
+    // $t13 := ==($t11, $t3) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:74+2
+    $t13 := $IsEqual'vec'u8''($t11, $t3);
 
-    // assert forall addr: TypeDomain<address>() where exists[@244]<SharedEd25519PublicKey::SharedEd25519PublicKey>(addr): exists<SharedEd25519PublicKey::SharedEd25519PublicKey>(addr) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:145:9+136
-    // global invariant at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:145:9+136
-    assume {:print "$at(28,6066,6202)"} true;
-    assert {:msg "assert_failed(28,6066,6202): global memory invariant does not hold"}
-      (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#244, addr))  ==> ($ResourceExists($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, addr)));
+    // trace_local[tmp#$5]($t13) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:9+85
+    assume {:print "$track_local(31,5,5):", $t13} $t13 == $t13;
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:107:5+1
-    assume {:print "$at(28,4692,4693)"} true;
-L2:
+    // if ($t13) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:9+85
+    if ($t13) { goto L0; } else { goto L1; }
 
-    // assert Not(Not(SharedEd25519PublicKey::$exists_at[@122]($t5))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:116:9+54
-    assume {:print "$at(28,4949,5003)"} true;
-    assert {:msg "assert_failed(28,4949,5003): function does not abort under this condition"}
-      !!$1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122, $t5);
-
-    // assert Not(Not(Signature::$ed25519_validate_pubkey[]($t1))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:85:9+92
-    assume {:print "$at(28,3470,3562)"} true;
-    assert {:msg "assert_failed(28,3470,3562): function does not abort under this condition"}
-      !!$1_Signature_$ed25519_validate_pubkey($t1);
-
-    // assert Not(Not(DiemAccount::$exists_at[@123](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap(global[@122]<SharedEd25519PublicKey::SharedEd25519PublicKey>($t5)))))) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:929:9+69
-    assume {:print "$at(11,41359,41428)"} true;
-    assert {:msg "assert_failed(11,41359,41428): function does not abort under this condition"}
-      !!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#123, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122, $t5))));
-
-    // assert Not(Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32)) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:930:9+74
-    assume {:print "$at(11,41437,41511)"} true;
-    assert {:msg "assert_failed(11,41437,41511): function does not abort under this condition"}
-      !!$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32);
-
-    // assert Eq<vector<u8>>(select SharedEd25519PublicKey::SharedEd25519PublicKey.key(global<SharedEd25519PublicKey::SharedEd25519PublicKey>($t6)), $t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:94:9+41
-    assume {:print "$at(28,3908,3949)"} true;
-    assert {:msg "assert_failed(28,3908,3949): post-condition does not hold"}
-      $IsEqual'vec'u8''($key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory, $t6)), $t1);
-
-    // return () at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:94:9+41
-    return;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:107:5+1
-    assume {:print "$at(28,4692,4693)"} true;
-L3:
-
-    // assert Or(Or(Or(Not(SharedEd25519PublicKey::$exists_at[@122]($t5)), Not(Signature::$ed25519_validate_pubkey[]($t1))), Not(DiemAccount::$exists_at[@123](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap(global[@122]<SharedEd25519PublicKey::SharedEd25519PublicKey>($t5)))))), Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:108:5+92
-    assume {:print "$at(28,4698,4790)"} true;
-    assert {:msg "assert_failed(28,4698,4790): abort not covered by any of the `aborts_if` clauses"}
-      (((!$1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122, $t5) || !$1_Signature_$ed25519_validate_pubkey($t1)) || !$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#123, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122, $t5))))) || !$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32));
-
-    // assert Or(Or(Or(And(Not(SharedEd25519PublicKey::$exists_at[@122]($t5)), Eq(5, $t9)), And(Not(Signature::$ed25519_validate_pubkey[]($t1)), Eq(7, $t9))), And(Not(DiemAccount::$exists_at[@123](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap(global[@122]<SharedEd25519PublicKey::SharedEd25519PublicKey>($t5))))), Eq(5, $t9))), And(Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32), Eq(7, $t9))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:108:5+92
-    assert {:msg "assert_failed(28,4698,4790): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      ((((!$1_SharedEd25519PublicKey_$exists_at($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122, $t5) && $IsEqual'num'(5, $t9)) || (!$1_Signature_$ed25519_validate_pubkey($t1) && $IsEqual'num'(7, $t9))) || (!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#123, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($ResourceValue($1_SharedEd25519PublicKey_SharedEd25519PublicKey_$memory#122, $t5)))) && $IsEqual'num'(5, $t9))) || (!$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32) && $IsEqual'num'(7, $t9)));
-
-    // abort($t9) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:108:5+92
-    $abort_code := $t9;
-    $abort_flag := true;
-    return;
-
-}
-
-// fun SharedEd25519PublicKey::rotate_key_ [baseline] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-procedure {:inline 1} $1_SharedEd25519PublicKey_rotate_key_(_$t0: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey), _$t1: Vec (int)) returns ($ret0: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey))
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: bool;
-    var $t5: int;
-    var $t6: int;
-    var $t7: int;
-    var $t8: $1_DiemAccount_KeyRotationCapability;
-    var $t9: Vec (int);
-    var $t10: $Mutation (Vec (int));
-    var $t0: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey);
-    var $t1: Vec (int);
-    var $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey': $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-    var $temp_0'bool': bool;
-    var $temp_0'u64': int;
-    var $temp_0'vec'u8'': Vec (int);
-    $t0 := _$t0;
-    $t1 := _$t1;
-    assume IsEmptyVec(p#$Mutation($t10));
-
-    // bytecode translation starts here
-    // trace_local[shared_key]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+1
-    assume {:print "$at(28,2729,2730)"} true;
-    $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' := $Dereference($t0);
-    assume {:print "$track_local(32,4,0):", $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'} $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' == $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey';
-
-    // trace_local[new_public_key]($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+1
-    assume {:print "$track_local(32,4,1):", $t1} $t1 == $t1;
-
-    // $t4 := Signature::ed25519_validate_pubkey($t1) on_abort goto L3 with $t5 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:69:13+55
-    assume {:print "$at(28,2898,2953)"} true;
-    call $t4 := $1_Signature_ed25519_validate_pubkey($t1);
-    if ($abort_flag) {
-        assume {:print "$at(28,2898,2953)"} true;
-        $t5 := $abort_code;
-        assume {:print "$track_abort(32,4):", $t5} $t5 == $t5;
-        goto L3;
-    }
-
-    // $t6 := 0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:38+21
-    assume {:print "$at(28,2992,3013)"} true;
-    $t6 := 0;
-    assume $IsValid'u64'($t6);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-    // >> opaque call: $t6 := Errors::invalid_argument($t5)
-
-    // $t7 := opaque begin: Errors::invalid_argument($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-    assume $IsValid'u64'($t7);
-
-    // assume Eq<u64>($t7, 7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-    assume $IsEqual'u64'($t7, 7);
-
-    // $t7 := opaque end: Errors::invalid_argument($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-
-    // trace_local[tmp#$3]($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    assume {:print "$at(28,2878,3024)"} true;
-    assume {:print "$track_local(32,4,3):", $t7} $t7 == $t7;
-
-    // trace_local[tmp#$2]($t4) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    assume {:print "$track_local(32,4,2):", $t4} $t4 == $t4;
-
-    // if ($t4) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    if ($t4) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
+    // label L1 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:92+1
 L1:
 
-    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
+    // $t14 := 0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:92+1
+    $t14 := 0;
+    assume $IsValid'u64'($t14);
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    assume {:print "$at(28,2878,3024)"} true;
-    assume {:print "$track_abort(32,4):", $t7} $t7 == $t7;
+    // trace_abort($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:9+85
+    assume {:print "$at(36,39427,39512)"} true;
+    assume {:print "$track_abort(31,5):", $t14} $t14 == $t14;
 
-    // $t5 := move($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    $t5 := $t7;
+    // $t10 := move($t14) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:9+85
+    $t10 := $t14;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:514:9+85
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:73:14+10
-    assume {:print "$at(28,3087,3097)"} true;
+    // label L0 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:515:39+8
+    assume {:print "$at(36,39552,39560)"} true;
 L0:
 
-    // $t8 := get_field<SharedEd25519PublicKey::SharedEd25519PublicKey>.rotation_cap($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:73:13+24
-    $t8 := $rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($Dereference($t0));
+    // assume Identical($t15, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:113:9+56
+    assume {:print "$at(37,4833,4889)"} true;
+    assume ($t15 == $1_Signer_spec_address_of($t1));
 
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-    // >> opaque call: $t8 := Authenticator::ed25519_authentication_key($t1)
-    assume {:print "$at(28,3124,3186)"} true;
+    // assume Identical($t16, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:123:9+64
+    assume {:print "$at(37,5229,5293)"} true;
+    assume ($t16 == $1_Signer_spec_address_of($t1));
 
-    // $t9 := opaque begin: Authenticator::ed25519_authentication_key($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
+    // assume Identical($t17, Signer::spec_address_of($t1)) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:134:9+64
+    assume {:print "$at(37,5804,5868)"} true;
+    assume ($t17 == $1_Signer_spec_address_of($t1));
 
-    // assume WellFormed($t9) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-    assume $IsValid'vec'u8''($t9);
-
-    // assume Eq<vector<u8>>($t9, Authenticator::spec_ed25519_authentication_key($t1)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-    assume $IsEqual'vec'u8''($t9, $1_Authenticator_spec_ed25519_authentication_key($t1));
-
-    // $t9 := opaque end: Authenticator::ed25519_authentication_key($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-
-    // DiemAccount::rotate_authentication_key($t8, $t9) on_abort goto L3 with $t5 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:72:9+162
-    assume {:print "$at(28,3034,3196)"} true;
-    call $1_DiemAccount_rotate_authentication_key($t8, $t9);
+    // ValidatorConfig::set_operator($t1, $t4) on_abort goto L3 with $t10 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:515:9+57
+    assume {:print "$at(36,39522,39579)"} true;
+    call $1_ValidatorConfig_set_operator($t1, $t4);
     if ($abort_flag) {
-        assume {:print "$at(28,3034,3196)"} true;
-        $t5 := $abort_code;
-        assume {:print "$track_abort(32,4):", $t5} $t5 == $t5;
+        assume {:print "$at(36,39522,39579)"} true;
+        $t10 := $abort_code;
+        assume {:print "$track_abort(31,5):", $t10} $t10 == $t10;
         goto L3;
     }
 
-    // $t10 := borrow_field<SharedEd25519PublicKey::SharedEd25519PublicKey>.key($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:9+14
-    assume {:print "$at(28,3206,3220)"} true;
-    $t10 := $ChildMutation($t0, 0, $key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($Dereference($t0)));
-
-    // write_ref($t10, $t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:9+31
-    $t10 := $UpdateMutation($t10, $t1);
-
-    // write_back[Reference($t0).key]($t10) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:9+31
-    $t0 := $UpdateMutation($t0, $Update'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'_key($Dereference($t0), $Dereference($t10)));
-
-    // trace_local[shared_key]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:40+1
-    $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' := $Dereference($t0);
-    assume {:print "$track_local(32,4,0):", $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'} $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' == $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey';
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:77:5+1
-    assume {:print "$at(28,3243,3244)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:516:5+1
+    assume {:print "$at(36,39585,39586)"} true;
 L2:
 
-    // return () at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:77:5+1
-    $ret0 := $t0;
+    // assert Not(Not(exists[@144]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0)))) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:47:9+93
+    assume {:print "$at(30,1971,2064)"} true;
+    assert {:msg "assert_failed(30,1971,2064): function does not abort under this condition"}
+      !!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#144, $1_Signer_spec_address_of($t0));
+
+    // assert Not(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t2), 0)) at /home/ying/diem/language/diem-framework/modules/SlidingNonce.move:48:9+87
+    assume {:print "$at(30,2073,2160)"} true;
+    assert {:msg "assert_failed(30,2073,2160): function does not abort under this condition"}
+      !!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t2), 0);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@145]($t7))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#145, $t7);
+
+    // assert Not(Neq<vector<u8>>(ValidatorOperatorConfig::$get_human_name[@146]($t4), $t3)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:530:9+92
+    assume {:print "$at(36,40226,40318)"} true;
+    assert {:msg "assert_failed(36,40226,40318): function does not abort under this condition"}
+      !!$IsEqual'vec'u8''($1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4), $t3);
+
+    // assert Not(Not(ValidatorOperatorConfig::$has_validator_operator_config[@146]($t4))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:125:9+123
+    assume {:print "$at(37,5379,5502)"} true;
+    assert {:msg "assert_failed(37,5379,5502): function does not abort under this condition"}
+      !!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4);
+
+    // assert Not(Not(ValidatorOperatorConfig::$has_validator_operator_config[@146]($t4))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:128:9+108
+    assume {:print "$at(37,5576,5684)"} true;
+    assert {:msg "assert_failed(37,5576,5684): function does not abort under this condition"}
+      !!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4);
+
+    // assert Not(Not(exists[@147]<Roles::RoleId>($t8))) at /home/ying/diem/language/diem-framework/modules/Roles.move:581:9+69
+    assume {:print "$at(27,26012,26081)"} true;
+    assert {:msg "assert_failed(27,26012,26081): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#147, $t8);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@147]<Roles::RoleId>($t8)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:582:9+97
+    assume {:print "$at(27,26090,26187)"} true;
+    assert {:msg "assert_failed(27,26090,26187): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#147, $t8)), 3);
+
+    // assert Not(Not(ValidatorConfig::$exists_config[@145]($t8))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:90:9+58
+    assume {:print "$at(37,3555,3613)"} true;
+    assert {:msg "assert_failed(37,3555,3613): function does not abort under this condition"}
+      !!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#145, $t8);
+
+    // assert Not(Not(exists[@147]<Roles::RoleId>($t7))) at /home/ying/diem/language/diem-framework/modules/Roles.move:581:9+69
+    assume {:print "$at(27,26012,26081)"} true;
+    assert {:msg "assert_failed(27,26012,26081): function does not abort under this condition"}
+      !!$ResourceExists($1_Roles_RoleId_$memory#147, $t7);
+
+    // assert Not(Neq<u64>(select Roles::RoleId.role_id(global[@147]<Roles::RoleId>($t7)), 3)) at /home/ying/diem/language/diem-framework/modules/Roles.move:582:9+97
+    assume {:print "$at(27,26090,26187)"} true;
+    assert {:msg "assert_failed(27,26090,26187): function does not abort under this condition"}
+      !!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#147, $t7)), 3);
+
+    // assert ValidatorConfig::spec_has_operator($t9) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:135:9+42
+    assume {:print "$at(37,5877,5919)"} true;
+    assert {:msg "assert_failed(37,5877,5919): post-condition does not hold"}
+      $1_ValidatorConfig_spec_has_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t9);
+
+    // assert Eq<address>(ValidatorConfig::$get_operator($t9), $t4) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:136:9+54
+    assume {:print "$at(37,5928,5982)"} true;
+    assert {:msg "assert_failed(37,5928,5982): post-condition does not hold"}
+      $IsEqual'address'($1_ValidatorConfig_$get_operator($1_ValidatorConfig_ValidatorConfig_$memory, $t9), $t4);
+
+    // assert forall addr: TypeDomain<address>() where Neq<address>(addr, $t9): Eq<Option::Option<address>>(select ValidatorConfig::ValidatorConfig.operator_account(global<ValidatorConfig::ValidatorConfig>(addr)), select ValidatorConfig::ValidatorConfig.operator_account(global[@145]<ValidatorConfig::ValidatorConfig>(addr))) at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:138:9+173
+    assume {:print "$at(37,6076,6249)"} true;
+    assert {:msg "assert_failed(37,6076,6249): post-condition does not hold"}
+      (forall addr: int :: $IsValid'address'(addr) ==> (!$IsEqual'address'(addr, $t9))  ==> ($IsEqual'$1_Option_Option'address''($operator_account#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory, addr)), $operator_account#$1_ValidatorConfig_ValidatorConfig($ResourceValue($1_ValidatorConfig_ValidatorConfig_$memory#145, addr)))));
+
+    // return () at /home/ying/diem/language/diem-framework/modules/ValidatorConfig.move:138:9+173
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:77:5+1
+    // label L3 at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:516:5+1
+    assume {:print "$at(36,39585,39586)"} true;
 L3:
 
-    // abort($t5) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:77:5+1
-    $abort_code := $t5;
-    $abort_flag := true;
-    return;
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Not(exists[@144]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t2), 0)), Not(ValidatorConfig::$exists_config[@145]($t7))), Neq<vector<u8>>(ValidatorOperatorConfig::$get_human_name[@146]($t4), $t3)), Not(ValidatorOperatorConfig::$has_validator_operator_config[@146]($t4))), Not(ValidatorOperatorConfig::$has_validator_operator_config[@146]($t4))), Not(exists[@147]<Roles::RoleId>($t8))), Neq<u64>(select Roles::RoleId.role_id(global[@147]<Roles::RoleId>($t8)), 3)), Not(ValidatorConfig::$exists_config[@145]($t8))), Not(exists[@147]<Roles::RoleId>($t7))), Neq<u64>(select Roles::RoleId.role_id(global[@147]<Roles::RoleId>($t7)), 3)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:518:5+1591
+    assume {:print "$at(36,39592,41183)"} true;
+    assert {:msg "assert_failed(36,39592,41183): abort not covered by any of the `aborts_if` clauses"}
+      ((((((((((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#144, $1_Signer_spec_address_of($t0)) || !$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t2), 0)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#145, $t7)) || !$IsEqual'vec'u8''($1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4), $t3)) || !$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4)) || !$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4)) || !$ResourceExists($1_Roles_RoleId_$memory#147, $t8)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#147, $t8)), 3)) || !$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#145, $t8)) || !$ResourceExists($1_Roles_RoleId_$memory#147, $t7)) || !$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#147, $t7)), 3));
 
-}
+    // assert Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(Or(And(Not(exists[@144]<SlidingNonce::SlidingNonce>(Signer::spec_address_of[]($t0))), Eq(5, $t10)), And(Neq<u64>(SlidingNonce::spec_try_record_nonce[]($t0, $t2), 0), Eq(7, $t10))), And(Not(ValidatorConfig::$exists_config[@145]($t7)), Eq(5, $t10))), And(Neq<vector<u8>>(ValidatorOperatorConfig::$get_human_name[@146]($t4), $t3), Eq(0, $t10))), And(Not(ValidatorOperatorConfig::$has_validator_operator_config[@146]($t4)), Eq(7, $t10))), And(Not(ValidatorOperatorConfig::$has_validator_operator_config[@146]($t4)), Eq(5, $t10))), And(Not(exists[@147]<Roles::RoleId>($t8)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@147]<Roles::RoleId>($t8)), 3), Eq(3, $t10))), And(Not(ValidatorConfig::$exists_config[@145]($t8)), Eq(5, $t10))), And(Not(exists[@147]<Roles::RoleId>($t7)), Eq(5, $t10))), And(Neq<u64>(select Roles::RoleId.role_id(global[@147]<Roles::RoleId>($t7)), 3), Eq(3, $t10))), Eq(0, $t10)), Eq(7, $t10)), Eq(5, $t10)), Eq(3, $t10)) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:518:5+1591
+    assert {:msg "assert_failed(36,39592,41183): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+      (((((((((((((((!$ResourceExists($1_SlidingNonce_SlidingNonce_$memory#144, $1_Signer_spec_address_of($t0)) && $IsEqual'num'(5, $t10)) || (!$IsEqual'u64'($1_SlidingNonce_spec_try_record_nonce($t0, $t2), 0) && $IsEqual'num'(7, $t10))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#145, $t7) && $IsEqual'num'(5, $t10))) || (!$IsEqual'vec'u8''($1_ValidatorOperatorConfig_$get_human_name($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4), $t3) && $IsEqual'num'(0, $t10))) || (!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4) && $IsEqual'num'(7, $t10))) || (!$1_ValidatorOperatorConfig_$has_validator_operator_config($1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory#146, $t4) && $IsEqual'num'(5, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#147, $t8) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#147, $t8)), 3) && $IsEqual'num'(3, $t10))) || (!$1_ValidatorConfig_$exists_config($1_ValidatorConfig_ValidatorConfig_$memory#145, $t8) && $IsEqual'num'(5, $t10))) || (!$ResourceExists($1_Roles_RoleId_$memory#147, $t7) && $IsEqual'num'(5, $t10))) || (!$IsEqual'u64'($role_id#$1_Roles_RoleId($ResourceValue($1_Roles_RoleId_$memory#147, $t7)), 3) && $IsEqual'num'(3, $t10))) || $IsEqual'num'(0, $t10)) || $IsEqual'num'(7, $t10)) || $IsEqual'num'(5, $t10)) || $IsEqual'num'(3, $t10));
 
-// fun SharedEd25519PublicKey::rotate_key_ [verification] at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-procedure {:timeLimit 40} $1_SharedEd25519PublicKey_rotate_key_$verify(_$t0: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey), _$t1: Vec (int)) returns ($ret0: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey))
-{
-    // declare local variables
-    var $t2: bool;
-    var $t3: int;
-    var $t4: $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-    var $t5: bool;
-    var $t6: int;
-    var $t7: int;
-    var $t8: int;
-    var $t9: $1_DiemAccount_KeyRotationCapability;
-    var $t10: Vec (int);
-    var $t11: $Mutation (Vec (int));
-    var $t0: $Mutation ($1_SharedEd25519PublicKey_SharedEd25519PublicKey);
-    var $t1: Vec (int);
-    var $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey': $1_SharedEd25519PublicKey_SharedEd25519PublicKey;
-    var $temp_0'bool': bool;
-    var $temp_0'u64': int;
-    var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemAccount_DiemAccount_$memory#117: $Memory $1_DiemAccount_DiemAccount;
-    $t0 := _$t0;
-    $t1 := _$t1;
-    assume IsEmptyVec(p#$Mutation($t11));
-
-    // verification entrypoint assumptions
-    call $InitVerification();
-    assume l#$Mutation($t0) == $Param(0);
-
-    // bytecode translation starts here
-    // assume forall addr: TypeDomain<address>() where DiemAccount::$exists_at(addr): Or(DiemAccount::$delegated_key_rotation_capability(addr), DiemAccount::spec_holds_own_key_rotation_cap(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2220:9+147
-    assume {:print "$at(28,2729,3244)"} true;
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))  ==> (($1_DiemAccount_$delegated_key_rotation_capability($1_DiemAccount_DiemAccount_$memory, addr) || $1_DiemAccount_spec_holds_own_key_rotation_cap($1_DiemAccount_DiemAccount_$memory, addr))));
-
-    // assume forall addr: TypeDomain<address>() where DiemAccount::$exists_at(addr): Or(DiemAccount::spec_holds_delegated_withdraw_capability(addr), DiemAccount::spec_holds_own_withdraw_cap(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2250:9+150
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))  ==> (($1_DiemAccount_spec_holds_delegated_withdraw_capability($1_DiemAccount_DiemAccount_$memory, addr) || $1_DiemAccount_spec_holds_own_withdraw_cap($1_DiemAccount_DiemAccount_$memory, addr))));
-
-    // assume forall addr: TypeDomain<address>(): Implies(DiemAccount::$exists_at(addr), exists<Roles::RoleId>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2324:9+81
-    assume (forall addr: int :: $IsValid'address'(addr) ==> (($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) ==> $ResourceExists($1_Roles_RoleId_$memory, addr))));
-
-    // assume forall addr: TypeDomain<address>(): Implies(And(Eq<address>(addr, a550c18), DiemAccount::$exists_at(addr)), exists<DiemAccount::AccountOperationsCapability>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2338:9+130
-    assume (forall addr: int :: $IsValid'address'(addr) ==> ((($IsEqual'address'(addr, 173345816) && $1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr)) ==> $ResourceExists($1_DiemAccount_AccountOperationsCapability_$memory, addr))));
-
-    // assume forall addr: TypeDomain<address>(): Implies(DiemAccount::$exists_at(addr), exists<AccountFreezing::FreezingBit>(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2394:9+107
-    assume (forall addr: int :: $IsValid'address'(addr) ==> (($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr) ==> $ResourceExists($1_AccountFreezing_FreezingBit_$memory, addr))));
-
-    // assume And(forall addr: TypeDomain<address>() where exists<DiemAccount::Balance<XUS::XUS>>(addr): DiemAccount::$exists_at(addr), forall addr: TypeDomain<address>() where exists<DiemAccount::Balance<XDX::XDX>>(addr): DiemAccount::$exists_at(addr)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    // global invariant at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:2400:9+115
-    assume ((forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_DiemAccount_Balance'$1_XUS_XUS'_$memory, addr))  ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))) && (forall addr: int :: $IsValid'address'(addr) ==> ($ResourceExists($1_DiemAccount_Balance'$1_XDX_XDX'_$memory, addr))  ==> ($1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory, addr))));
-
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    assume $IsValid'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'($Dereference($t0));
-
-    // assume WellFormed($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    assume $IsValid'vec'u8''($t1);
-
-    // assume forall $rsc: ResourceDomain<DiemAccount::DiemAccount>(): And(WellFormed($rsc), And(Le(Len<DiemAccount::WithdrawCapability>(select Option::Option.vec(select DiemAccount::DiemAccount.withdraw_capability($rsc))), 1), Le(Len<DiemAccount::KeyRotationCapability>(select Option::Option.vec(select DiemAccount::DiemAccount.key_rotation_capability($rsc))), 1))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+515
-    assume (forall $a_0: int :: {$ResourceValue($1_DiemAccount_DiemAccount_$memory, $a_0)}(var $rsc := $ResourceValue($1_DiemAccount_DiemAccount_$memory, $a_0);
-    (($IsValid'$1_DiemAccount_DiemAccount'($rsc) && ((LenVec($vec#$1_Option_Option'$1_DiemAccount_WithdrawCapability'($withdraw_capability#$1_DiemAccount_DiemAccount($rsc))) <= 1) && (LenVec($vec#$1_Option_Option'$1_DiemAccount_KeyRotationCapability'($key_rotation_capability#$1_DiemAccount_DiemAccount($rsc))) <= 1))))));
-
-    // @117 := save_mem(DiemAccount::DiemAccount) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+1
-    $1_DiemAccount_DiemAccount_$memory#117 := $1_DiemAccount_DiemAccount_$memory;
-
-    // $t4 := read_ref($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+1
-    $t4 := $Dereference($t0);
-
-    // trace_local[shared_key]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+1
-    $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' := $Dereference($t0);
-    assume {:print "$track_local(32,4,0):", $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'} $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' == $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey';
-
-    // trace_local[new_public_key]($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:66:5+1
-    assume {:print "$track_local(32,4,1):", $t1} $t1 == $t1;
-
-    // $t5 := Signature::ed25519_validate_pubkey($t1) on_abort goto L3 with $t6 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:69:13+55
-    assume {:print "$at(28,2898,2953)"} true;
-    call $t5 := $1_Signature_ed25519_validate_pubkey($t1);
-    if ($abort_flag) {
-        assume {:print "$at(28,2898,2953)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(32,4):", $t6} $t6 == $t6;
-        goto L3;
-    }
-
-    // $t7 := 0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:38+21
-    assume {:print "$at(28,2992,3013)"} true;
-    $t7 := 0;
-    assume $IsValid'u64'($t7);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-    // >> opaque call: $t6 := Errors::invalid_argument($t5)
-
-    // $t8 := opaque begin: Errors::invalid_argument($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-
-    // assume WellFormed($t8) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-    assume $IsValid'u64'($t8);
-
-    // assume Eq<u64>($t8, 7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-    assume $IsEqual'u64'($t8, 7);
-
-    // $t8 := opaque end: Errors::invalid_argument($t7) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:70:13+47
-
-    // trace_local[tmp#$3]($t8) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    assume {:print "$at(28,2878,3024)"} true;
-    assume {:print "$track_local(32,4,3):", $t8} $t8 == $t8;
-
-    // trace_local[tmp#$2]($t5) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    assume {:print "$track_local(32,4,2):", $t5} $t5 == $t5;
-
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    if ($t5) { goto L0; } else { goto L1; }
-
-    // label L1 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-L1:
-
-    // destroy($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-
-    // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    assume {:print "$at(28,2878,3024)"} true;
-    assume {:print "$track_abort(32,4):", $t8} $t8 == $t8;
-
-    // $t6 := move($t8) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    $t6 := $t8;
-
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:68:9+146
-    goto L3;
-
-    // label L0 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:73:14+10
-    assume {:print "$at(28,3087,3097)"} true;
-L0:
-
-    // $t9 := get_field<SharedEd25519PublicKey::SharedEd25519PublicKey>.rotation_cap($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:73:13+24
-    $t9 := $rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($Dereference($t0));
-
-    // nop at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-    // >> opaque call: $t8 := Authenticator::ed25519_authentication_key($t1)
-    assume {:print "$at(28,3124,3186)"} true;
-
-    // $t10 := opaque begin: Authenticator::ed25519_authentication_key($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-
-    // assume WellFormed($t10) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-    assume $IsValid'vec'u8''($t10);
-
-    // assume Eq<vector<u8>>($t10, Authenticator::spec_ed25519_authentication_key($t1)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-    assume $IsEqual'vec'u8''($t10, $1_Authenticator_spec_ed25519_authentication_key($t1));
-
-    // $t10 := opaque end: Authenticator::ed25519_authentication_key($t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:74:13+62
-
-    // DiemAccount::rotate_authentication_key($t9, $t10) on_abort goto L3 with $t6 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:72:9+162
-    assume {:print "$at(28,3034,3196)"} true;
-    call $1_DiemAccount_rotate_authentication_key($t9, $t10);
-    if ($abort_flag) {
-        assume {:print "$at(28,3034,3196)"} true;
-        $t6 := $abort_code;
-        assume {:print "$track_abort(32,4):", $t6} $t6 == $t6;
-        goto L3;
-    }
-
-    // $t11 := borrow_field<SharedEd25519PublicKey::SharedEd25519PublicKey>.key($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:9+14
-    assume {:print "$at(28,3206,3220)"} true;
-    $t11 := $ChildMutation($t0, 0, $key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($Dereference($t0)));
-
-    // write_ref($t11, $t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:9+31
-    $t11 := $UpdateMutation($t11, $t1);
-
-    // write_back[Reference($t0).key]($t11) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:9+31
-    $t0 := $UpdateMutation($t0, $Update'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'_key($Dereference($t0), $Dereference($t11)));
-
-    // trace_local[shared_key]($t0) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:76:40+1
-    $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' := $Dereference($t0);
-    assume {:print "$track_local(32,4,0):", $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey'} $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey' == $temp_0'$1_SharedEd25519PublicKey_SharedEd25519PublicKey';
-
-    // label L2 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:77:5+1
-    assume {:print "$at(28,3243,3244)"} true;
-L2:
-
-    // assert Not(Not(Signature::$ed25519_validate_pubkey[]($t1))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:85:9+92
-    assume {:print "$at(28,3470,3562)"} true;
-    assert {:msg "assert_failed(28,3470,3562): function does not abort under this condition"}
-      !!$1_Signature_$ed25519_validate_pubkey($t1);
-
-    // assert Not(Not(DiemAccount::$exists_at[@117](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap($t4))))) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:929:9+69
-    assume {:print "$at(11,41359,41428)"} true;
-    assert {:msg "assert_failed(11,41359,41428): function does not abort under this condition"}
-      !!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#117, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($t4)));
-
-    // assert Not(Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32)) at /home/ying/diem/language/diem-framework/modules/DiemAccount.move:930:9+74
-    assume {:print "$at(11,41437,41511)"} true;
-    assert {:msg "assert_failed(11,41437,41511): function does not abort under this condition"}
-      !!$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32);
-
-    // assert Eq<vector<u8>>(select SharedEd25519PublicKey::SharedEd25519PublicKey.key($t0), $t1) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:94:9+41
-    assume {:print "$at(28,3908,3949)"} true;
-    assert {:msg "assert_failed(28,3908,3949): post-condition does not hold"}
-      $IsEqual'vec'u8''($key#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($Dereference($t0)), $t1);
-
-    // return () at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:94:9+41
-    $ret0 := $t0;
-    return;
-
-    // label L3 at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:77:5+1
-    assume {:print "$at(28,3243,3244)"} true;
-L3:
-
-    // assert Or(Or(Not(Signature::$ed25519_validate_pubkey[]($t1)), Not(DiemAccount::$exists_at[@117](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap($t4))))), Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32)) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:78:5+95
-    assume {:print "$at(28,3249,3344)"} true;
-    assert {:msg "assert_failed(28,3249,3344): abort not covered by any of the `aborts_if` clauses"}
-      ((!$1_Signature_$ed25519_validate_pubkey($t1) || !$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#117, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($t4)))) || !$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32));
-
-    // assert Or(Or(And(Not(Signature::$ed25519_validate_pubkey[]($t1)), Eq(7, $t6)), And(Not(DiemAccount::$exists_at[@117](select DiemAccount::KeyRotationCapability.account_address(select SharedEd25519PublicKey::SharedEd25519PublicKey.rotation_cap($t4)))), Eq(5, $t6))), And(Neq<num>(Len<u8>(Authenticator::spec_ed25519_authentication_key[]($t1)), 32), Eq(7, $t6))) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:78:5+95
-    assert {:msg "assert_failed(28,3249,3344): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
-      (((!$1_Signature_$ed25519_validate_pubkey($t1) && $IsEqual'num'(7, $t6)) || (!$1_DiemAccount_$exists_at($1_DiemAccount_DiemAccount_$memory#117, $account_address#$1_DiemAccount_KeyRotationCapability($rotation_cap#$1_SharedEd25519PublicKey_SharedEd25519PublicKey($t4))) && $IsEqual'num'(5, $t6))) || (!$IsEqual'num'(LenVec($1_Authenticator_spec_ed25519_authentication_key($t1)), 32) && $IsEqual'num'(7, $t6)));
-
-    // abort($t6) at /home/ying/diem/language/diem-framework/modules/SharedEd25519PublicKey.move:78:5+95
-    $abort_code := $t6;
+    // abort($t10) at /home/ying/diem/language/diem-framework/modules/ValidatorAdministrationScripts.move:518:5+1591
+    $abort_code := $t10;
     $abort_flag := true;
     return;
 
@@ -12640,8 +15676,8 @@ function $IsValid'$1_DiemBlock_BlockMetadata'(s: $1_DiemBlock_BlockMetadata): bo
       && $IsValid'$1_Event_EventHandle'$1_DiemBlock_NewBlockEvent''($new_block_events#$1_DiemBlock_BlockMetadata(s))
 }
 function {:inline} $IsEqual'$1_DiemBlock_BlockMetadata'(s1: $1_DiemBlock_BlockMetadata, s2: $1_DiemBlock_BlockMetadata): bool {
-    $IsEqual'u64'($height#$1_DiemBlock_BlockMetadata(s1), $height#$1_DiemBlock_BlockMetadata(s2))
-    && $IsEqual'$1_Event_EventHandle'$1_DiemBlock_NewBlockEvent''($new_block_events#$1_DiemBlock_BlockMetadata(s1), $new_block_events#$1_DiemBlock_BlockMetadata(s2))}
+    s1 == s2
+}
 var $1_DiemBlock_BlockMetadata_$memory: $Memory $1_DiemBlock_BlockMetadata;
 
 // struct DiemBlock::NewBlockEvent at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:16:5+234
@@ -12666,10 +15702,8 @@ function $IsValid'$1_DiemBlock_NewBlockEvent'(s: $1_DiemBlock_NewBlockEvent): bo
       && $IsValid'u64'($time_microseconds#$1_DiemBlock_NewBlockEvent(s))
 }
 function {:inline} $IsEqual'$1_DiemBlock_NewBlockEvent'(s1: $1_DiemBlock_NewBlockEvent, s2: $1_DiemBlock_NewBlockEvent): bool {
-    $IsEqual'u64'($round#$1_DiemBlock_NewBlockEvent(s1), $round#$1_DiemBlock_NewBlockEvent(s2))
-    && $IsEqual'address'($proposer#$1_DiemBlock_NewBlockEvent(s1), $proposer#$1_DiemBlock_NewBlockEvent(s2))
-    && $IsEqual'vec'address''($previous_block_votes#$1_DiemBlock_NewBlockEvent(s1), $previous_block_votes#$1_DiemBlock_NewBlockEvent(s2))
-    && $IsEqual'u64'($time_microseconds#$1_DiemBlock_NewBlockEvent(s1), $time_microseconds#$1_DiemBlock_NewBlockEvent(s2))}
+    s1 == s2
+}
 
 // fun DiemBlock::is_initialized [baseline] at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:55:5+75
 procedure {:inline 1} $1_DiemBlock_is_initialized() returns ($ret0: bool)
@@ -12689,7 +15723,7 @@ procedure {:inline 1} $1_DiemBlock_is_initialized() returns ($ret0: bool)
     $t1 := $ResourceExists($1_DiemBlock_BlockMetadata_$memory, $t0);
 
     // trace_return[0]($t1) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:56:9+32
-    assume {:print "$track_return(35,3,0):", $t1} $t1 == $t1;
+    assume {:print "$track_return(36,3,0):", $t1} $t1 == $t1;
 
     // label L1 at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:57:5+1
     assume {:print "$at(12,2116,2117)"} true;
@@ -12726,7 +15760,7 @@ procedure {:inline 1} $1_DiemBlock_initialize_block_metadata(_$t0: $signer) retu
     // bytecode translation starts here
     // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:32:5+1
     assume {:print "$at(12,1130,1131)"} true;
-    assume {:print "$track_local(35,2,0):", $t0} $t0 == $t0;
+    assume {:print "$track_local(36,2,0):", $t0} $t0 == $t0;
 
     // nop at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:33:9+31
     // >> opaque call: DiemTimestamp::assert_genesis()
@@ -12748,7 +15782,7 @@ L5:
 
     // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:33:9+31
     assume {:print "$at(12,1195,1226)"} true;
-    assume {:print "$track_abort(35,2):", $t4} $t4 == $t4;
+    assume {:print "$track_abort(36,2):", $t4} $t4 == $t4;
 
     // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:33:9+31
     goto L3;
@@ -12778,7 +15812,7 @@ L7:
 
     // trace_abort($t4) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:35:9+40
     assume {:print "$at(12,1312,1352)"} true;
-    assume {:print "$track_abort(35,2):", $t4} $t4 == $t4;
+    assume {:print "$track_abort(36,2):", $t4} $t4 == $t4;
 
     // goto L3 at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:35:9+40
     goto L3;
@@ -12794,7 +15828,7 @@ L6:
     if ($abort_flag) {
         assume {:print "$at(12,1371,1387)"} true;
         $t4 := $abort_code;
-        assume {:print "$track_abort(35,2):", $t4} $t4 == $t4;
+        assume {:print "$track_abort(36,2):", $t4} $t4 == $t4;
         goto L3;
     }
 
@@ -12819,10 +15853,10 @@ L6:
     // $t9 := opaque end: Errors::already_published($t8) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:37:35+42
 
     // trace_local[tmp#$2]($t9) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:37:9+69
-    assume {:print "$track_local(35,2,2):", $t9} $t9 == $t9;
+    assume {:print "$track_local(36,2,2):", $t9} $t9 == $t9;
 
     // trace_local[tmp#$1]($t7) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:37:9+69
-    assume {:print "$track_local(35,2,1):", $t7} $t7 == $t7;
+    assume {:print "$track_local(36,2,1):", $t7} $t7 == $t7;
 
     // if ($t7) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:37:9+69
     if ($t7) { goto L0; } else { goto L1; }
@@ -12834,7 +15868,7 @@ L1:
 
     // trace_abort($t9) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:37:9+69
     assume {:print "$at(12,1363,1432)"} true;
-    assume {:print "$track_abort(35,2):", $t9} $t9 == $t9;
+    assume {:print "$track_abort(36,2):", $t9} $t9 == $t9;
 
     // $t4 := move($t9) at /home/ying/diem/language/diem-framework/modules/DiemBlock.move:37:9+69
     $t4 := $t9;
@@ -12857,7 +15891,7 @@ L0:
     if ($abort_flag) {
         assume {:print "$at(12,1576,1629)"} true;
         $t4 := $abort_code;
-        assume {:print "$track_abort(35,2):", $t4} $t4 == $t4;
+        assume {:print "$track_abort(36,2):", $t4} $t4 == $t4;
         goto L3;
     }
 
@@ -12875,7 +15909,7 @@ L0:
     if ($abort_flag) {
         assume {:print "$at(12,1442,1449)"} true;
         $t4 := $abort_code;
-        assume {:print "$track_abort(35,2):", $t4} $t4 == $t4;
+        assume {:print "$track_abort(36,2):", $t4} $t4 == $t4;
         goto L3;
     }
 
@@ -12906,7 +15940,8 @@ function $IsValid'$1_DiemVMConfig_DiemVMConfig'(s: $1_DiemVMConfig_DiemVMConfig)
     $IsValid'$1_DiemVMConfig_GasSchedule'($gas_schedule#$1_DiemVMConfig_DiemVMConfig(s))
 }
 function {:inline} $IsEqual'$1_DiemVMConfig_DiemVMConfig'(s1: $1_DiemVMConfig_DiemVMConfig, s2: $1_DiemVMConfig_DiemVMConfig): bool {
-    $IsEqual'$1_DiemVMConfig_GasSchedule'($gas_schedule#$1_DiemVMConfig_DiemVMConfig(s1), $gas_schedule#$1_DiemVMConfig_DiemVMConfig(s2))}
+    s1 == s2
+}
 
 // struct DiemVMConfig::GasConstants at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:35:5+1690
 type {:datatype} $1_DiemVMConfig_GasConstants;
@@ -12979,9 +16014,8 @@ function $IsValid'$1_DiemVMConfig_GasSchedule'(s: $1_DiemVMConfig_GasSchedule): 
       && $IsValid'$1_DiemVMConfig_GasConstants'($gas_constants#$1_DiemVMConfig_GasSchedule(s))
 }
 function {:inline} $IsEqual'$1_DiemVMConfig_GasSchedule'(s1: $1_DiemVMConfig_GasSchedule, s2: $1_DiemVMConfig_GasSchedule): bool {
-    $IsEqual'vec'u8''($instruction_schedule#$1_DiemVMConfig_GasSchedule(s1), $instruction_schedule#$1_DiemVMConfig_GasSchedule(s2))
-    && $IsEqual'vec'u8''($native_schedule#$1_DiemVMConfig_GasSchedule(s1), $native_schedule#$1_DiemVMConfig_GasSchedule(s2))
-    && $IsEqual'$1_DiemVMConfig_GasConstants'($gas_constants#$1_DiemVMConfig_GasSchedule(s1), $gas_constants#$1_DiemVMConfig_GasSchedule(s2))}
+    s1 == s2
+}
 
 // fun DiemVMConfig::initialize [baseline] at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:73:5+1150
 procedure {:inline 1} $1_DiemVMConfig_initialize(_$t0: $signer, _$t1: Vec (int), _$t2: Vec (int)) returns ()
@@ -13019,7 +16053,7 @@ procedure {:inline 1} $1_DiemVMConfig_initialize(_$t0: $signer, _$t1: Vec (int),
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'vec'u8'': Vec (int);
-    var $1_DiemConfig_Configuration_$memory#176: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#184: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
     $t2 := _$t2;
@@ -13038,13 +16072,13 @@ procedure {:inline 1} $1_DiemVMConfig_initialize(_$t0: $signer, _$t1: Vec (int),
 
     // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:73:5+1
     assume {:print "$at(19,3418,3419)"} true;
-    assume {:print "$track_local(36,0,0):", $t0} $t0 == $t0;
+    assume {:print "$track_local(37,0,0):", $t0} $t0 == $t0;
 
     // trace_local[instruction_schedule]($t1) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:73:5+1
-    assume {:print "$track_local(36,0,1):", $t1} $t1 == $t1;
+    assume {:print "$track_local(37,0,1):", $t1} $t1 == $t1;
 
     // trace_local[native_schedule]($t2) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:73:5+1
-    assume {:print "$track_local(36,0,2):", $t2} $t2 == $t2;
+    assume {:print "$track_local(37,0,2):", $t2} $t2 == $t2;
 
     // nop at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:78:9+31
     // >> opaque call: DiemTimestamp::assert_genesis()
@@ -13066,7 +16100,7 @@ L4:
 
     // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:78:9+31
     assume {:print "$at(19,3565,3596)"} true;
-    assume {:print "$track_abort(36,0):", $t8} $t8 == $t8;
+    assume {:print "$track_abort(37,0):", $t8} $t8 == $t8;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:78:9+31
     goto L2;
@@ -13101,7 +16135,7 @@ L6:
 
     // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:81:9+35
     assume {:print "$at(19,3694,3729)"} true;
-    assume {:print "$track_abort(36,0):", $t8} $t8 == $t8;
+    assume {:print "$track_abort(37,0):", $t8} $t8 == $t8;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:81:9+35
     goto L2;
@@ -13203,7 +16237,7 @@ L8:
 
     // trace_abort($t8) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     assume {:print "$at(19,4278,4561)"} true;
-    assume {:print "$track_abort(36,0):", $t8} $t8 == $t8;
+    assume {:print "$track_abort(37,0):", $t8} $t8 == $t8;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     goto L2;
@@ -13211,8 +16245,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
 L7:
 
-    // @176 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
-    $1_DiemConfig_Configuration_$memory#176 := $1_DiemConfig_Configuration_$memory;
+    // @184 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
+    $1_DiemConfig_Configuration_$memory#184 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemVMConfig::DiemVMConfig>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     havoc $temp_0'bool';
@@ -13241,8 +16275,8 @@ L7:
     // assume Eq<DiemVMConfig::DiemVMConfig>(DiemConfig::$get<DiemVMConfig::DiemVMConfig>(), $t24) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
     assume $IsEqual'$1_DiemVMConfig_DiemVMConfig'($1_DiemConfig_$get'$1_DiemVMConfig_DiemVMConfig'($1_DiemConfig_DiemConfig'$1_DiemVMConfig_DiemVMConfig'_$memory), $t24);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@176](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#176), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@184](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#184), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemVMConfig::DiemVMConfig>($t0, $t24) at /home/ying/diem/language/diem-framework/modules/DiemVMConfig.move:97:9+283
 
@@ -13296,7 +16330,7 @@ procedure {:inline 1} $1_DiemVersion_initialize(_$t0: $signer, _$t1: int) return
     var $temp_0'bool': bool;
     var $temp_0'signer': $signer;
     var $temp_0'u64': int;
-    var $1_DiemConfig_Configuration_$memory#170: $Memory $1_DiemConfig_Configuration;
+    var $1_DiemConfig_Configuration_$memory#178: $Memory $1_DiemConfig_Configuration;
     $t0 := _$t0;
     $t1 := _$t1;
 
@@ -13310,10 +16344,10 @@ procedure {:inline 1} $1_DiemVersion_initialize(_$t0: $signer, _$t1: int) return
 
     // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:17:5+1
     assume {:print "$at(20,618,619)"} true;
-    assume {:print "$track_local(37,0,0):", $t0} $t0 == $t0;
+    assume {:print "$track_local(38,0,0):", $t0} $t0 == $t0;
 
     // trace_local[initial_version]($t1) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:17:5+1
-    assume {:print "$track_local(37,0,1):", $t1} $t1 == $t1;
+    assume {:print "$track_local(38,0,1):", $t1} $t1 == $t1;
 
     // nop at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:18:9+31
     // >> opaque call: DiemTimestamp::assert_genesis()
@@ -13335,7 +16369,7 @@ L4:
 
     // trace_abort($t5) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:18:9+31
     assume {:print "$at(20,693,724)"} true;
-    assume {:print "$track_abort(37,0):", $t5} $t5 == $t5;
+    assume {:print "$track_abort(38,0):", $t5} $t5 == $t5;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:18:9+31
     goto L2;
@@ -13370,7 +16404,7 @@ L6:
 
     // trace_abort($t5) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:19:9+35
     assume {:print "$at(20,734,769)"} true;
-    assume {:print "$track_abort(37,0):", $t5} $t5 == $t5;
+    assume {:print "$track_abort(38,0):", $t5} $t5 == $t5;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:19:9+35
     goto L2;
@@ -13409,7 +16443,7 @@ L8:
 
     // trace_abort($t5) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     assume {:print "$at(20,779,909)"} true;
-    assume {:print "$track_abort(37,0):", $t5} $t5 == $t5;
+    assume {:print "$track_abort(38,0):", $t5} $t5 == $t5;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     goto L2;
@@ -13417,8 +16451,8 @@ L8:
     // label L7 at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
 L7:
 
-    // @170 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
-    $1_DiemConfig_Configuration_$memory#170 := $1_DiemConfig_Configuration_$memory;
+    // @178 := save_mem(DiemConfig::Configuration) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
+    $1_DiemConfig_Configuration_$memory#178 := $1_DiemConfig_Configuration_$memory;
 
     // modifies global<DiemConfig::DiemConfig<DiemVersion::DiemVersion>>(a550c18) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     havoc $temp_0'bool';
@@ -13447,8 +16481,8 @@ L7:
     // assume Eq<DiemVersion::DiemVersion>(DiemConfig::$get<DiemVersion::DiemVersion>(), $t8) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
     assume $IsEqual'$1_DiemVersion_DiemVersion'($1_DiemConfig_$get'$1_DiemVersion_DiemVersion'($1_DiemConfig_DiemConfig'$1_DiemVersion_DiemVersion'_$memory), $t8);
 
-    // assume Eq<bool>(DiemConfig::spec_has_config[@170](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
-    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#170), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
+    // assume Eq<bool>(DiemConfig::spec_has_config[@178](), DiemConfig::spec_has_config()) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
+    assume $IsEqual'bool'($1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory#178), $1_DiemConfig_spec_has_config($1_DiemConfig_Configuration_$memory));
 
     // opaque end: DiemConfig::publish_new_config<DiemVersion::DiemVersion>($t0, $t8) at /home/ying/diem/language/diem-framework/modules/DiemVersion.move:20:9+130
 
@@ -13898,34 +16932,34 @@ procedure {:timeLimit 40} $1_Genesis_initialize$verify(_$t0: $signer, _$t1: $sig
 
     // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
     assume {:print "$at(22,1043,1044)"} true;
-    assume {:print "$track_local(38,1,0):", $t0} $t0 == $t0;
+    assume {:print "$track_local(39,1,0):", $t0} $t0 == $t0;
 
     // trace_local[tc_account]($t1) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,1):", $t1} $t1 == $t1;
+    assume {:print "$track_local(39,1,1):", $t1} $t1 == $t1;
 
     // trace_local[dr_auth_key]($t2) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,2):", $t2} $t2 == $t2;
+    assume {:print "$track_local(39,1,2):", $t2} $t2 == $t2;
 
     // trace_local[tc_auth_key]($t3) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,3):", $t3} $t3 == $t3;
+    assume {:print "$track_local(39,1,3):", $t3} $t3 == $t3;
 
     // trace_local[initial_script_allow_list]($t4) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,4):", $t4} $t4 == $t4;
+    assume {:print "$track_local(39,1,4):", $t4} $t4 == $t4;
 
     // trace_local[is_open_module]($t5) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,5):", $t5} $t5 == $t5;
+    assume {:print "$track_local(39,1,5):", $t5} $t5 == $t5;
 
     // trace_local[instruction_schedule]($t6) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,6):", $t6} $t6 == $t6;
+    assume {:print "$track_local(39,1,6):", $t6} $t6 == $t6;
 
     // trace_local[native_schedule]($t7) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,7):", $t7} $t7 == $t7;
+    assume {:print "$track_local(39,1,7):", $t7} $t7 == $t7;
 
     // trace_local[chain_id]($t8) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,8):", $t8} $t8 == $t8;
+    assume {:print "$track_local(39,1,8):", $t8} $t8 == $t8;
 
     // trace_local[initial_diem_version]($t9) at /home/ying/diem/language/diem-framework/modules/Genesis.move:28:5+1
-    assume {:print "$track_local(38,1,9):", $t9} $t9 == $t9;
+    assume {:print "$track_local(39,1,9):", $t9} $t9 == $t9;
 
     // Genesis::initialize_internal($t0, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9) on_abort goto L2 with $t10 at /home/ying/diem/language/diem-framework/modules/Genesis.move:40:9+316
     assume {:print "$at(22,1418,1734)"} true;
@@ -13933,7 +16967,7 @@ procedure {:timeLimit 40} $1_Genesis_initialize$verify(_$t0: $signer, _$t1: $sig
     if ($abort_flag) {
         assume {:print "$at(22,1418,1734)"} true;
         $t10 := $abort_code;
-        assume {:print "$track_abort(38,1):", $t10} $t10 == $t10;
+        assume {:print "$track_abort(39,1):", $t10} $t10 == $t10;
         goto L2;
     }
 
@@ -14042,34 +17076,34 @@ procedure {:inline 1} $1_Genesis_initialize_internal(_$t0: $signer, _$t1: $signe
     // bytecode translation starts here
     // trace_local[dr_account]($t0) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
     assume {:print "$at(22,1860,1861)"} true;
-    assume {:print "$track_local(38,2,0):", $t0} $t0 == $t0;
+    assume {:print "$track_local(39,2,0):", $t0} $t0 == $t0;
 
     // trace_local[tc_account]($t1) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,1):", $t1} $t1 == $t1;
+    assume {:print "$track_local(39,2,1):", $t1} $t1 == $t1;
 
     // trace_local[dr_auth_key]($t2) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,2):", $t2} $t2 == $t2;
+    assume {:print "$track_local(39,2,2):", $t2} $t2 == $t2;
 
     // trace_local[tc_auth_key]($t3) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,3):", $t3} $t3 == $t3;
+    assume {:print "$track_local(39,2,3):", $t3} $t3 == $t3;
 
     // trace_local[initial_script_allow_list]($t4) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,4):", $t4} $t4 == $t4;
+    assume {:print "$track_local(39,2,4):", $t4} $t4 == $t4;
 
     // trace_local[is_open_module]($t5) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,5):", $t5} $t5 == $t5;
+    assume {:print "$track_local(39,2,5):", $t5} $t5 == $t5;
 
     // trace_local[instruction_schedule]($t6) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,6):", $t6} $t6 == $t6;
+    assume {:print "$track_local(39,2,6):", $t6} $t6 == $t6;
 
     // trace_local[native_schedule]($t7) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,7):", $t7} $t7 == $t7;
+    assume {:print "$track_local(39,2,7):", $t7} $t7 == $t7;
 
     // trace_local[chain_id]($t8) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,8):", $t8} $t8 == $t8;
+    assume {:print "$track_local(39,2,8):", $t8} $t8 == $t8;
 
     // trace_local[initial_diem_version]($t9) at /home/ying/diem/language/diem-framework/modules/Genesis.move:55:5+1
-    assume {:print "$track_local(38,2,9):", $t9} $t9 == $t9;
+    assume {:print "$track_local(39,2,9):", $t9} $t9 == $t9;
 
     // $t12 := [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] at /home/ying/diem/language/diem-framework/modules/Genesis.move:67:45+35
     assume {:print "$at(22,2282,2317)"} true;
@@ -14112,7 +17146,7 @@ L4:
 
     // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/Genesis.move:67:9+72
     assume {:print "$at(22,2246,2318)"} true;
-    assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+    assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/Genesis.move:67:9+72
     goto L2;
@@ -14351,7 +17385,7 @@ L6:
 
     // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/Genesis.move:69:9+41
     assume {:print "$at(22,2329,2370)"} true;
-    assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+    assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/Genesis.move:69:9+41
     goto L2;
@@ -14393,7 +17427,7 @@ L8:
 
     // trace_abort($t18) at /home/ying/diem/language/diem-framework/modules/Genesis.move:72:9+34
     assume {:print "$at(22,2414,2448)"} true;
-    assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+    assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
 
     // goto L2 at /home/ying/diem/language/diem-framework/modules/Genesis.move:72:9+34
     goto L2;
@@ -14447,7 +17481,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2485,2513)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14485,7 +17519,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2550,2589)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14515,7 +17549,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2600,2639)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14529,7 +17563,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2650,2689)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14543,7 +17577,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2699,2737)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14561,7 +17595,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2748,2796)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14578,7 +17612,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2806,2863)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14592,7 +17626,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2873,2912)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14602,7 +17636,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,2922,2970)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14616,12 +17650,12 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3109,3165)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
     // trace_local[dr_rotate_key_cap]($t45) at /home/ying/diem/language/diem-framework/modules/Genesis.move:92:13+17
-    assume {:print "$track_local(38,2,10):", $t45} $t45 == $t45;
+    assume {:print "$track_local(39,2,10):", $t45} $t45 == $t45;
 
     // DiemAccount::rotate_authentication_key($t45, $t2) on_abort goto L2 with $t18 at /home/ying/diem/language/diem-framework/modules/Genesis.move:93:9+71
     assume {:print "$at(22,3175,3246)"} true;
@@ -14629,7 +17663,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3175,3246)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14639,7 +17673,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3256,3319)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14653,12 +17687,12 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3354,3410)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
     // trace_local[tc_rotate_key_cap]($t47) at /home/ying/diem/language/diem-framework/modules/Genesis.move:96:13+17
-    assume {:print "$track_local(38,2,11):", $t47} $t47 == $t47;
+    assume {:print "$track_local(39,2,11):", $t47} $t47 == $t47;
 
     // DiemAccount::rotate_authentication_key($t47, $t3) on_abort goto L2 with $t18 at /home/ying/diem/language/diem-framework/modules/Genesis.move:97:9+71
     assume {:print "$at(22,3420,3491)"} true;
@@ -14666,7 +17700,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3420,3491)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14676,7 +17710,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3501,3564)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14693,7 +17727,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3575,3720)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14714,7 +17748,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,3731,3853)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 
@@ -14724,7 +17758,7 @@ L7:
     if ($abort_flag) {
         assume {:print "$at(22,4105,4152)"} true;
         $t18 := $abort_code;
-        assume {:print "$track_abort(38,2):", $t18} $t18 == $t18;
+        assume {:print "$track_abort(39,2):", $t18} $t18 == $t18;
         goto L2;
     }
 

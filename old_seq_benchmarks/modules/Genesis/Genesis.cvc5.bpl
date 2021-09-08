@@ -71,8 +71,13 @@ function {:inline} SliceVec<T>(v: Vec T, i: int, j: int): Vec T {
 }
 /*private*/ function {:builtin "seq.extract"} ExtractVec<T>(v: Vec T, start: int, len: int): Vec T;
 
+//function {:inline} UpdateVec<T>(v: Vec T, i: int, elem: T): Vec T {
+//    ConcatVec3(SliceVec(v, 0, i), MakeVec1(elem), SliceVec(v, i + 1, LenVec(v)))
+//}
+function {:builtin "seq.update"} Vec_Update<T>(v: Vec T, i: int, x: Vec T): Vec T;
+
 function {:inline} UpdateVec<T>(v: Vec T, i: int, elem: T): Vec T {
-    ConcatVec3(SliceVec(v, 0, i), MakeVec1(elem), SliceVec(v, i + 1, LenVec(v)))
+	Vec_Update(v, i, MakeVec1(elem))
 }
 
 function {:inline} SwapVec<T>(v: Vec T, i: int, j: int): Vec T {

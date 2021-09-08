@@ -1,5 +1,5 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.cvc5.smt2:437.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.cvc5.smt2:1520.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.cvc5.smt2:513.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/old_seq_benchmarks/modules/DiemAccount/DiemAccount.cvc5.smt2:1781.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
 unsat
 unsat
@@ -12,5 +12,4 @@ unsat
 unsat
 unsat
 unsat
-unsat
-(error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

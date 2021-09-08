@@ -14,31 +14,31 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.266 s, 17 proof obligations]  verified
+  [0.264 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.043 s, 9 proof obligations]  verified
+  [0.052 s, 9 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.078 s, 20 proof obligations]  verified
+  [0.080 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.063 s, 18 proof obligations]  verified
+  [0.060 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.059 s, 20 proof obligations]  verified
+  [0.065 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.072 s, 20 proof obligations]  verified
+  [0.080 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.056 s, 20 proof obligations]  verified
+  [0.065 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.057 s, 20 proof obligations]  verified
+  [0.064 s, 20 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.023 s, 5 proof obligations]  verified
+  [0.025 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
   [0.083 s, 15 proof obligations]  verified
@@ -49,8 +49,8 @@ Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-
 
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.029 s, 6 proof obligations]  inconclusive
-/home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.cvc4.bpl(6810,27): Verification inconclusive ($1_ValidatorConfig_get_config$verify)
+  [0.021 s, 6 proof obligations]  inconclusive
+/home/ying/diem/old_seq_benchmarks/modules/ValidatorConfig/ValidatorConfig.cvc4.bpl(6815,27): Verification inconclusive ($1_ValidatorConfig_get_config$verify)
 Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
  ---> System.IO.IOException: Broken pipe
    at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)

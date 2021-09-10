@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray/_1_Roles_has_role_verify.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray/_1_Roles_has_role_verify.smt2:1419.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

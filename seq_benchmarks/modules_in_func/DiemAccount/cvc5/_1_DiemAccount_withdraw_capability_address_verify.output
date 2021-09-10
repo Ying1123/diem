@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/cvc5/_1_DiemAccount_withdraw_capability_address_verify.smt2:515.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/cvc5/_1_DiemAccount_withdraw_capability_address_verify.smt2:1783.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/cvc5/_1_DiemAccount_withdraw_capability_address_verify.smt2:2063.37: Cannot bind $abort_flag@0@@5 to symbol of type Bool, maybe the symbol has already been defined?")

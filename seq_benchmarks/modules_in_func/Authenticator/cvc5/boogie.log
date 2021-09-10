@@ -1,0 +1,36 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/Authenticator/cvc5/Authenticator.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Authenticator/cvc5/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/Authenticator/cvc5/Authenticator.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_Authenticator_create_multi_ed25519$verify ...
+  [0.134 s, 0 proof obligations]  verified
+
+Verifying $1_Authenticator_public_keys$verify ...
+  [0.001 s, 0 proof obligations]  verified
+
+Verifying $1_Authenticator_threshold$verify ...
+  [0.001 s, 0 proof obligations]  verified
+
+Verifying $1_Authenticator_ed25519_authentication_key$verify ...
+  [0.008 s, 1 proof obligation]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Authenticator_multi_ed25519_authentication_key$verify ...
+  [0.024 s, 2 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/Authenticator/cvc5/Authenticator.bpl(1546,27): Verification inconclusive ($1_Authenticator_multi_ed25519_authentication_key$verify)
+
+Boogie program verifier finished with 4 verified, 0 errors, 1 inconclusive

@@ -1,0 +1,26 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/XUS.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/XUS.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.165 s, 9 proof obligations]  verified
+
+Verifying $1_XUS_initialize$verify ...
+  [40.104 s, 30 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/XUS.bpl(8833,27): Verification of '$1_XUS_initialize$verify' timed out after 40 seconds
+
+Verifying $1_Genesis_initialize$verify ...
+  [18.732 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 2 verified, 0 errors, 1 time out

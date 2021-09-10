@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/andy_default/_1_Diem_add_preburn_to_queue_verify.smt2:439.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/andy_default/_1_Diem_add_preburn_to_queue_verify.smt2:1522.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind STRING_SUBSTR not supported in default mode, try --strings-exp")

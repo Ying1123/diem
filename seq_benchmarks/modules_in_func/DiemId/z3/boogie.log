@@ -1,0 +1,36 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/z3/DiemId.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/z3/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/z3/DiemId.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemId_tc_domain_manager_exists$verify ...
+  [0.159 s, 2 proof obligations]  verified
+
+Verifying $1_DiemId_add_diem_id_domain$verify ...
+  [40.056 s, 18 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/z3/DiemId.bpl(12063,27): Verification of '$1_DiemId_add_diem_id_domain$verify' timed out after 40 seconds
+
+Verifying $1_DiemId_create_diem_id_domain$verify ...
+  [0.140 s, 5 proof obligations]  verified
+
+Verifying $1_DiemId_has_diem_id_domain$verify ...
+  [0.224 s, 5 proof obligations]  verified
+
+Verifying $1_DiemId_has_diem_id_domains$verify ...
+  [0.027 s, 2 proof obligations]  verified
+
+Verifying $1_DiemId_publish_diem_id_domain_manager$verify ...
+  [0.036 s, 8 proof obligations]  verified
+
+Verifying $1_DiemId_publish_diem_id_domains$verify ...
+  [0.035 s, 9 proof obligations]  verified

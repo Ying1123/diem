@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_strings/_1_ValidatorConfig_set_config_verify.smt2:404.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_strings/_1_ValidatorConfig_set_config_verify.smt2:1422.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

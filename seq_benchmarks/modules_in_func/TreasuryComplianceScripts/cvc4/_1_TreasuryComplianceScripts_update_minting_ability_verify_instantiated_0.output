@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc4/_1_TreasuryComplianceScripts_update_minting_ability_verify_instantiated_0.smt2:501.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc4/_1_TreasuryComplianceScripts_update_minting_ability_verify_instantiated_0.smt2:1802.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc4/_1_TreasuryComplianceScripts_update_minting_ability_verify_instantiated_0.smt2:1936.26: Cannot bind $t3@@0 to symbol of type Int, maybe the symbol has already been defined?")

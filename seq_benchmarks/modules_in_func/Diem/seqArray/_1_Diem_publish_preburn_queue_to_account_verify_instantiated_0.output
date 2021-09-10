@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/seqArray/_1_Diem_publish_preburn_queue_to_account_verify_instantiated_0.smt2:441.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/seqArray/_1_Diem_publish_preburn_queue_to_account_verify_instantiated_0.smt2:1524.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

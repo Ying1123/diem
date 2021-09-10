@@ -1,0 +1,21 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/VASPDomain.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/VASPDomain.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_VASPDomain_add_vasp_domain$verify ...
+  [40.296 s, 18 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/VASPDomain.bpl(9131,27): Verification of '$1_VASPDomain_add_vasp_domain$verify' timed out after 40 seconds
+
+Verifying $1_VASPDomain_create_vasp_domain$verify ...
+  [0.135 s, 5 proof obligations]  verified

@@ -1,0 +1,41 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/DiemId.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/DiemId.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemId_tc_domain_manager_exists$verify ...
+  [0.188 s, 2 proof obligations]  verified
+
+Verifying $1_DiemId_add_diem_id_domain$verify ...
+  [39.981 s, 18 proof obligations]  verified
+
+Verifying $1_DiemId_create_diem_id_domain$verify ...
+  [0.915 s, 5 proof obligations]  verified
+
+Verifying $1_DiemId_has_diem_id_domain$verify ...
+  [0.106 s, 5 proof obligations]  verified
+
+Verifying $1_DiemId_has_diem_id_domains$verify ...
+  [0.007 s, 2 proof obligations]  verified
+
+Verifying $1_DiemId_publish_diem_id_domain_manager$verify ...
+  [0.044 s, 8 proof obligations]  verified
+
+Verifying $1_DiemId_publish_diem_id_domains$verify ...
+  [0.064 s, 9 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

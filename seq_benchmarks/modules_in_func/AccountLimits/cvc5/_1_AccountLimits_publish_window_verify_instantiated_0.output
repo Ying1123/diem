@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/cvc5/_1_AccountLimits_publish_window_verify_instantiated_0.smt2:414.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/cvc5/_1_AccountLimits_publish_window_verify_instantiated_0.smt2:1442.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray_array/_1_AccountLimits_can_withdraw_and_update_window_verify_instantiated_0.smt2:487.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray_array/_1_AccountLimits_can_withdraw_and_update_window_verify_instantiated_0.smt2:1793.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

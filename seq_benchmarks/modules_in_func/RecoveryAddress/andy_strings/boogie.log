@@ -1,0 +1,46 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/RecoveryAddress.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/RecoveryAddress.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_VASP_publish_child_vasp_credential$verify ...
+  [0.314 s, 14 proof obligations]  verified
+
+Verifying $1_VASP_publish_parent_vasp_credential$verify ...
+  [0.087 s, 14 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify ...
+  [5.954 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
+  [5.602 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
+  [6.875 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
+  [6.160 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
+  [6.746 s, 34 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
+  [7.045 s, 34 proof obligations]  verified
+
+Verifying $1_RecoveryAddress_publish$verify ...
+  [0.526 s, 13 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

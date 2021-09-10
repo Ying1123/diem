@@ -1,0 +1,49 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/AccountAdministrationScripts.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/AccountAdministrationScripts.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
+  [0.406 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
+  [0.103 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_0 ...
+  [0.097 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_1 ...
+  [0.111 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
+  [0.252 s, 9 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
+  [0.149 s, 11 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
+  [0.078 s, 7 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
+  [0.151 s, 10 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
+  [0.259 s, 10 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
+  [0.225 s, 10 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

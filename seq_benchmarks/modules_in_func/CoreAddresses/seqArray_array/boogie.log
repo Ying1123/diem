@@ -1,0 +1,30 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/CoreAddresses/seqArray_array/CoreAddresses.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/CoreAddresses/seqArray_array/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/CoreAddresses/seqArray_array/CoreAddresses.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_CoreAddresses_assert_currency_info$verify ...
+  [0.135 s, 3 proof obligations]  verified
+
+Verifying $1_CoreAddresses_assert_diem_root$verify ...
+  [0.006 s, 3 proof obligations]  verified
+
+Verifying $1_CoreAddresses_assert_treasury_compliance$verify ...
+  [0.007 s, 3 proof obligations]  verified
+
+Verifying $1_CoreAddresses_assert_vm$verify ...
+  [0.006 s, 3 proof obligations]  verified
+
+Boogie program verifier finished with 4 verified, 0 errors

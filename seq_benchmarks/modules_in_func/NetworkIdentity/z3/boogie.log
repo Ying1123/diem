@@ -1,0 +1,44 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.378 s, 0 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_get$verify ...
+  [0.036 s, 2 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_add_identities$verify ...
+  [0.068 s, 4 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_add_identity$verify ...
+  [40.037 s, 1 proof obligation]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl(14521,27): Verification of '$1_NetworkIdentity_add_identity$verify' timed out after 40 seconds
+
+Verifying $1_NetworkIdentity_initialize_network_identity$verify ...
+  [0.039 s, 2 proof obligations]  verified
+Prover error: line 9174 column 785: unknown function/constant seq.update
+
+Prover error: Prover died
+
+
+Verifying $1_NetworkIdentity_remove_identities$verify ...
+  [0.040 s, 3 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl(14873,27): Verification inconclusive ($1_NetworkIdentity_remove_identities$verify)
+
+Verifying $1_NetworkIdentity_remove_identity$verify ...
+  [0.048 s, 0 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl(15593,27): Verification inconclusive ($1_NetworkIdentity_remove_identity$verify)
+
+Boogie program verifier finished with 4 verified, 0 errors, 2 inconclusives, 1 time out

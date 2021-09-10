@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_default/_1_AccountAdministrationScripts_rotate_dual_attestation_info_verify.smt2:457.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_default/_1_AccountAdministrationScripts_rotate_dual_attestation_info_verify.smt2:1662.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_default/_1_AccountAdministrationScripts_rotate_dual_attestation_info_verify.smt2:1754.35: Cannot bind $abort_flag@17 to symbol of type Bool, maybe the symbol has already been defined?")

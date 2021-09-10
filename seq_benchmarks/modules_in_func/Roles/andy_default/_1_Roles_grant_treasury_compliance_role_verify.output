@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/andy_default/_1_Roles_grant_treasury_compliance_role_verify.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/andy_default/_1_Roles_grant_treasury_compliance_role_verify.smt2:1417.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,5 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/andy_default/_1_Genesis_initialize_verify.smt2:406.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/andy_default/_1_Genesis_initialize_verify.smt2:1447.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/andy_default/_1_Genesis_initialize_verify.smt2:1490.189: warning: Attribute ':we' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/andy_default/_1_Genesis_initialize_verify.smt2:1490.189: Unexpected token: '<<EOF>>'.")

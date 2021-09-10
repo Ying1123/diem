@@ -1,0 +1,42 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/cvc4/DiemTimestamp.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/cvc4/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/cvc4/DiemTimestamp.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $1_DiemTimestamp_assert_genesis$verify ...
+  [0.200 s, 3 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_assert_operating$verify ...
+  [0.033 s, 3 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_is_genesis$verify ...
+  [0.005 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTimestamp_is_operating$verify ...
+  [0.005 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTimestamp_now_microseconds$verify ...
+  [0.021 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_now_seconds$verify ...
+  [0.018 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.050 s, 9 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.197 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 8 verified, 0 errors

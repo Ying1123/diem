@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/cvc4/_1_TransactionFee_is_coin_initialized_verify.smt2:445.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/cvc4/_1_TransactionFee_is_coin_initialized_verify.smt2:1530.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/cvc4/_1_TransactionFee_is_coin_initialized_verify.smt2:1995.38: Cannot bind $abort_flag@15@@0 to symbol of type Bool, maybe the symbol has already been defined?")

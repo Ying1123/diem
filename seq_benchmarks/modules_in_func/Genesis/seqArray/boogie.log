@@ -1,0 +1,29 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/Genesis/seqArray/Genesis.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Genesis/seqArray/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/Genesis/seqArray/Genesis.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.424 s, 0 proof obligations]  verified
+
+Verifying $1_Genesis_create_initialize_owners_operators$verify ...
+  [0.084 s, 0 proof obligations]  verified
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.156 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 3 verified, 0 errors

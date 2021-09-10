@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/_1_DiemTimestamp_update_global_time_verify.smt2:446.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/_1_DiemTimestamp_update_global_time_verify.smt2:1531.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

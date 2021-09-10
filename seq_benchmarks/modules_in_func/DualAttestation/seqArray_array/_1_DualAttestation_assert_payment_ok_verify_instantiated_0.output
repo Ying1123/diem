@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_assert_payment_ok_verify_instantiated_0.smt2:509.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_assert_payment_ok_verify_instantiated_0.smt2:1914.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/cvc5/_1_AccountFreezing_initialize_verify.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/cvc5/_1_AccountFreezing_initialize_verify.smt2:1420.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

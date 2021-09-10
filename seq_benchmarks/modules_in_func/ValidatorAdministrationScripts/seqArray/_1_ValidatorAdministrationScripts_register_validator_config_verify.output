@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/seqArray/_1_ValidatorAdministrationScripts_register_validator_config_verify.smt2:410.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/seqArray/_1_ValidatorAdministrationScripts_register_validator_config_verify.smt2:1478.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

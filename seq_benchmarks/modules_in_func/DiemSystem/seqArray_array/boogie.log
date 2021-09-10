@@ -1,0 +1,69 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/seqArray_array/DiemSystem.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/seqArray_array/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/seqArray_array/DiemSystem.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.255 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [0.062 s, 17 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.033 s, 7 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [0.084 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [0.063 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [0.088 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [0.065 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [0.073 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [0.065 s, 20 proof obligations]  verified
+
+Verifying $1_DiemSystem_add_validator$verify ...
+  [31.418 s, 21 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_diem_system_config$verify ...
+  [0.088 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_ith_validator_address$verify ...
+  [0.091 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_config$verify ...
+  [0.392 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_index_$verify ...
+  [0.122 s, 12 proof obligations]  verified
+
+Verifying $1_DiemSystem_initialize_validator_set$verify ...
+  [0.087 s, 14 proof obligations]  verified
+
+Verifying $1_DiemSystem_is_validator$verify ...
+  [0.184 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_is_validator_$verify ...
+  [0.074 s, 3 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

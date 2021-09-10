@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/andy_strings/_1_Diem_create_preburn_verify_instantiated_1.smt2:440.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/andy_strings/_1_Diem_create_preburn_verify_instantiated_1.smt2:1523.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

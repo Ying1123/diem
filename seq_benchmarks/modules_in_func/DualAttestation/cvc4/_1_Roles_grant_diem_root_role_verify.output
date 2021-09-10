@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/_1_Roles_grant_diem_root_role_verify.smt2:428.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/_1_Roles_grant_diem_root_role_verify.smt2:1531.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

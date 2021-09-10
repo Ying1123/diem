@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/seqArray_array/_1_TreasuryComplianceScripts_preburn_verify.smt2:607.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/seqArray_array/_1_TreasuryComplianceScripts_preburn_verify.smt2:2302.267: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

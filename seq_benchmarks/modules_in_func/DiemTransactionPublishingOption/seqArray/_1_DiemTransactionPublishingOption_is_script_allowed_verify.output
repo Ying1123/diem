@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/seqArray/_1_DiemTransactionPublishingOption_is_script_allowed_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/seqArray/_1_DiemTransactionPublishingOption_is_script_allowed_verify.smt2:1428.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/cvc5/_1_TransactionFee_is_coin_initialized_verify_instantiated_0.smt2:445.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/cvc5/_1_TransactionFee_is_coin_initialized_verify_instantiated_0.smt2:1530.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

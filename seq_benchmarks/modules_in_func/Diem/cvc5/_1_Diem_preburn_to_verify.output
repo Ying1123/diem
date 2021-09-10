@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/cvc5/_1_Diem_preburn_to_verify.smt2:439.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/cvc5/_1_Diem_preburn_to_verify.smt2:1522.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/Diem/cvc5/_1_Diem_preburn_to_verify.smt2:1794.27: Cannot bind $t6@@7 to symbol of type Bool, maybe the symbol has already been defined?")

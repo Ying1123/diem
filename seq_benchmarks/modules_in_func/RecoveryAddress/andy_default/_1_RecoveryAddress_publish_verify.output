@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_default/_1_RecoveryAddress_publish_verify.smt2:450.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_default/_1_RecoveryAddress_publish_verify.smt2:1635.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_default/_1_RecoveryAddress_publish_verify.smt2:2189.27: Cannot bind _$t1@@2 to symbol of type Int, maybe the symbol has already been defined?")

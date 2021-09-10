@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/seqArray/_1_VASPDomain_publish_vasp_domains_verify.smt2:413.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/seqArray/_1_VASPDomain_publish_vasp_domains_verify.smt2:1472.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

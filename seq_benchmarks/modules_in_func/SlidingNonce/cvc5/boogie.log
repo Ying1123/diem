@@ -1,0 +1,24 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/cvc5/SlidingNonce.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/cvc5/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/cvc5/SlidingNonce.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_SlidingNonce_publish$verify ...
+  [0.142 s, 7 proof obligations]  verified
+
+Verifying $1_SlidingNonce_record_nonce_or_abort$verify ...
+  [0.021 s, 4 proof obligations]  verified
+
+Boogie program verifier finished with 2 verified, 0 errors

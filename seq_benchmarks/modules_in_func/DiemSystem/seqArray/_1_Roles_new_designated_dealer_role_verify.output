@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/seqArray/_1_Roles_new_designated_dealer_role_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/seqArray/_1_Roles_new_designated_dealer_role_verify.smt2:1449.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

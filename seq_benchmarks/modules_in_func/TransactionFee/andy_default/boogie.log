@@ -1,0 +1,60 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/TransactionFee.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/TransactionFee.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.222 s, 8 proof obligations]  verified
+
+Verifying $1_TransactionFee_initialize$verify ...
+  [0.057 s, 10 proof obligations]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
+  [0.033 s, 1 proof obligation]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
+  [0.038 s, 1 proof obligation]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
+  [0.011 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify ...
+  [0.612 s, 18 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify_instantiated_0 ...
+  [0.656 s, 18 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify_instantiated_1 ...
+  [0.150 s, 17 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_coin_initialized$verify ...
+  [0.025 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_coin_initialized$verify_instantiated_0 ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_initialized$verify ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_pay_fee$verify ...
+  [0.061 s, 7 proof obligations]  verified
+
+Verifying $1_TransactionFee_pay_fee$verify_instantiated_0 ...
+  [0.070 s, 7 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.157 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 14 verified, 0 errors

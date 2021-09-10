@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/cvc4/_1_SlidingNonce_publish_verify.smt2:52.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/cvc4/_1_SlidingNonce_publish_verify.smt2:181.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/seqArray/_1_SharedEd25519PublicKey_exists_at_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/seqArray/_1_SharedEd25519PublicKey_exists_at_verify.smt2:1439.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

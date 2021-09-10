@@ -1,0 +1,39 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/seqArray_array/NetworkIdentity.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/seqArray_array/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/seqArray_array/NetworkIdentity.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.431 s, 0 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_get$verify ...
+  [0.022 s, 2 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_add_identities$verify ...
+  [0.058 s, 4 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_add_identity$verify ...
+  [0.052 s, 1 proof obligation]  verified
+
+Verifying $1_NetworkIdentity_initialize_network_identity$verify ...
+  [0.019 s, 2 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_remove_identities$verify ...
+  [0.052 s, 3 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_remove_identity$verify ...
+  [0.005 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 7 verified, 0 errors

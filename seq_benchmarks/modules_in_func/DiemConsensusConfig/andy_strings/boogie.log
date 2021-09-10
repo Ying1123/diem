@@ -1,0 +1,28 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/DiemConsensusConfig.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/DiemConsensusConfig.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemConsensusConfig_initialize$verify ...
+  [0.193 s, 15 proof obligations]  verified
+
+Verifying $1_DiemConsensusConfig_set$verify ...
+  [0.033 s, 12 proof obligations]  verified
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.197 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 3 verified, 0 errors

@@ -1,0 +1,54 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/z3/DiemSystem.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/z3/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/z3/DiemSystem.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.167 s, 8 proof obligations]  verified
+
+Verifying $1_Roles_grant_diem_root_role$verify ...
+  [0.046 s, 17 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.036 s, 7 proof obligations]  verified
+
+Verifying $1_Roles_grant_treasury_compliance_role$verify ...
+  [0.042 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_child_vasp_role$verify ...
+  [0.040 s, 18 proof obligations]  verified
+
+Verifying $1_Roles_new_designated_dealer_role$verify ...
+  [0.049 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_parent_vasp_role$verify ...
+  [0.039 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [0.044 s, 20 proof obligations]  verified
+
+Verifying $1_Roles_new_validator_role$verify ...
+  [0.035 s, 20 proof obligations]  verified
+
+Verifying $1_DiemSystem_add_validator$verify ...
+  [42.978 s, 21 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/z3/DiemSystem.bpl(6987,27): Verification of '$1_DiemSystem_add_validator$verify' timed out after 40 seconds
+
+Verifying $1_DiemSystem_get_diem_system_config$verify ...
+  [0.124 s, 5 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_ith_validator_address$verify ...
+  [0.047 s, 6 proof obligations]  verified
+
+Verifying $1_DiemSystem_get_validator_config$verify ...
+  [0.506 s, 6 proof obligations]  verified

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_DiemAccount_create_child_vasp_account_verify_instantiated_1.smt2:555.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_DiemAccount_create_child_vasp_account_verify_instantiated_1.smt2:2138.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

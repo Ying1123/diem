@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorOperatorConfig/seqArray_array/_1_Roles_grant_role_verify.smt2:473.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorOperatorConfig/seqArray_array/_1_Roles_grant_role_verify.smt2:1769.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

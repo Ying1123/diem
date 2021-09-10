@@ -1,0 +1,22 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/baseline/SlidingNonce.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/baseline/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/baseline/SlidingNonce.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_SlidingNonce_publish$verify ...
+  [0.138 s, 7 proof obligations]  verified
+
+Verifying $1_SlidingNonce_record_nonce_or_abort$verify ...
+  [0.022 s, 4 proof obligations]  verified
+
+Boogie program verifier finished with 2 verified, 0 errors

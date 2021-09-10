@@ -1,0 +1,8 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_Genesis_initialize_verify.smt2:406.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_Genesis_initialize_verify.smt2:1437.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_Genesis_initialize_verify.smt2:1483.2: expected SMT-LIBv2 command, got `d'.
+
+  (d
+   ^
+")

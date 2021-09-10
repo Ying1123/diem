@@ -1,0 +1,17 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/Signature/cvc4/Signature.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Signature/cvc4/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/Signature/cvc4/Signature.bpl
+Coalescing blocks...
+Inlining...
+
+Boogie program verifier finished with 0 verified, 0 errors

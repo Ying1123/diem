@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/PaymentScripts/andy_strings/_1_PaymentScripts_peer_to_peer_by_signers_verify.smt2:445.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/PaymentScripts/andy_strings/_1_PaymentScripts_peer_to_peer_by_signers_verify.smt2:1625.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

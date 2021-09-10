@@ -1,0 +1,49 @@
+---Command arguments
+/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl
+-monomorphize
+/env:2
+-proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/@PROC@.smt2
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:SOLVER=CVC5
+/trace
+-doModSetAnalysis
+--------------------
+Parsing /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl
+Coalescing blocks...
+Inlining...
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.221 s, 8 proof obligations]  verified
+
+Verifying $1_RegisteredCurrencies_initialize$verify ...
+  [0.043 s, 16 proof obligations]  verified
+
+Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
+  [0.169 s, 10 proof obligations]  error
+assert_failed(26,3010,3103): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(5811,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(2543,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(5811,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(5903,34): anon19_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(2009,9): inline$$1_Vector_contains'vec'u8''$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(5941,5): anon20_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(5941,5): anon20_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(5977,17): anon21_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(1893,8): inline$$1_Vector_push_back'vec'u8''$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6006,5): anon22_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6041,35): anon23_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6065,9): anon24_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6074,9): anon25_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6081,5): anon17
+
+Verifying $1_Genesis_initialize$verify ...
+  [0.212 s, 0 proof obligations]  verified
+
+Boogie program verifier finished with 3 verified, 1 error

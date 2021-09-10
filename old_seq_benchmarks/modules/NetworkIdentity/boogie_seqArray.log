@@ -5,7 +5,9 @@
 /proverLog:NetworkIdentity.seqArray.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,22 +18,22 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.408 s, 0 proof obligations]  verified
+  [0.419 s, 0 proof obligations]  verified
 
 Verifying $1_NetworkIdentity_get$verify ...
-  [0.013 s, 2 proof obligations]  verified
+  [0.010 s, 2 proof obligations]  verified
 
 Verifying $1_NetworkIdentity_add_identities$verify ...
-  [0.065 s, 4 proof obligations]  verified
+  [0.068 s, 4 proof obligations]  verified
 
 Verifying $1_NetworkIdentity_add_identity$verify ...
-  [0.097 s, 1 proof obligation]  verified
+  [0.102 s, 1 proof obligation]  verified
 
 Verifying $1_NetworkIdentity_initialize_network_identity$verify ...
-  [0.028 s, 2 proof obligations]  verified
+  [0.035 s, 2 proof obligations]  verified
 
 Verifying $1_NetworkIdentity_remove_identities$verify ...
-  [0.052 s, 3 proof obligations]  verified
+  [0.053 s, 3 proof obligations]  verified
 
 Verifying $1_NetworkIdentity_remove_identity$verify ...
   [0.014 s, 0 proof obligations]  verified

@@ -14,39 +14,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify ...
-  [0.642 s, 51 proof obligations]  verified
+  [0.638 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_0 ...
-  [0.434 s, 51 proof obligations]  verified
+  [0.436 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_1 ...
-  [0.462 s, 51 proof obligations]  verified
+  [0.463 s, 51 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify ...
-  [0.260 s, 39 proof obligations]  verified
+  [0.247 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_0 ...
-  [0.305 s, 39 proof obligations]  verified
+  [0.281 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_1 ...
-  [0.230 s, 39 proof obligations]  verified
+  [0.244 s, 39 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify ...
-  [0.275 s, 36 proof obligations]  verified
+  [0.258 s, 36 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_0 ...
-  [0.288 s, 36 proof obligations]  verified
+  [0.271 s, 36 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_1 ...
-  [0.253 s, 36 proof obligations]  verified
+  [0.239 s, 36 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_validator_account$verify ...
-  [0.124 s, 25 proof obligations]  verified
+  [0.121 s, 25 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_validator_operator_account$verify ...
-  [0.124 s, 25 proof obligations]  verified
+  [0.098 s, 25 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.188 s, 0 proof obligations]  verified
+  [0.183 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

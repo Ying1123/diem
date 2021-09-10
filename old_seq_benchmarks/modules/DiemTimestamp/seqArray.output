@@ -1,10 +1,3 @@
-/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.seqArray.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-/home/ying/diem/old_seq_benchmarks/modules/DiemTimestamp/DiemTimestamp.seqArray.smt2:1617.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
+(error "Error in option parsing: option `--strings-seq-update' missing its required argument")
+
+Please use --help to get help on command-line options.

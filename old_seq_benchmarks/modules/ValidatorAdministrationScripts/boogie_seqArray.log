@@ -5,7 +5,9 @@
 /proverLog:ValidatorAdministrationScripts.seqArray.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,13 +18,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.068 s, 23 proof obligations]  verified
+  [1.097 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.028 s, 8 proof obligations]  verified
+  [0.036 s, 8 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify ...
-  [3.191 s, 19 proof obligations]  errors
+  [3.120 s, 19 proof obligations]  errors
 assert_failed(16,12177,12267): post-condition does not hold
 Execution trace:
     /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14063,9): anon0
@@ -79,15 +81,15 @@ Execution trace:
     /home/ying/diem/old_seq_benchmarks/modules/ValidatorAdministrationScripts/ValidatorAdministrationScripts.seqArray.bpl(14339,5): anon14_Else
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify ...
-  [1.031 s, 23 proof obligations]  verified
+  [1.080 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_operator$verify ...
-  [0.137 s, 14 proof obligations]  verified
+  [0.145 s, 14 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify ...
-  [0.145 s, 16 proof obligations]  verified
+  [0.153 s, 16 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.183 s, 0 proof obligations]  verified
+  [0.191 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 6 verified, 2 errors

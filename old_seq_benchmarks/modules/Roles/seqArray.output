@@ -1,31 +1,3 @@
-/home/ying/diem/old_seq_benchmarks/modules/Roles/Roles.seqArray.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/old_seq_benchmarks/modules/Roles/Roles.seqArray.smt2:1417.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
-unsat
+(error "Error in option parsing: option `--strings-seq-update' missing its required argument")
+
+Please use --help to get help on command-line options.

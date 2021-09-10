@@ -5,7 +5,9 @@
 /proverLog:RecoveryAddress.seqArray.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,39 +18,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.305 s, 14 proof obligations]  verified
+  [0.308 s, 14 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.091 s, 14 proof obligations]  verified
+  [0.093 s, 14 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [2.648 s, 34 proof obligations]  verified
+  [2.645 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [2.586 s, 34 proof obligations]  verified
+  [2.734 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [2.970 s, 34 proof obligations]  verified
+  [2.807 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [2.776 s, 34 proof obligations]  verified
+  [2.803 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.842 s, 34 proof obligations]  verified
+  [2.881 s, 34 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [2.853 s, 34 proof obligations]  verified
+  [2.873 s, 34 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_publish$verify ...
-  [0.416 s, 13 proof obligations]  verified
+  [0.399 s, 13 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_rotate_authentication_key$verify ...
-  [0.777 s, 14 proof obligations]  verified
+  [0.776 s, 14 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_add_rotation_capability$verify ...
-  [0.611 s, 11 proof obligations]  verified
+  [0.622 s, 11 proof obligations]  verified
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.183 s, 0 proof obligations]  verified
+  [0.182 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

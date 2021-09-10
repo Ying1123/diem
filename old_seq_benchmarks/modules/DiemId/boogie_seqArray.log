@@ -5,7 +5,9 @@
 /proverLog:DiemId.seqArray.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,6 +18,6 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemId_tc_domain_manager_exists$verify ...
-  [0.199 s, 2 proof obligations]  verified
+  [0.203 s, 2 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

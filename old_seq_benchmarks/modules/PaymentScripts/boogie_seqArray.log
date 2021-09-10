@@ -5,7 +5,9 @@
 /proverLog:PaymentScripts.seqArray.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,24 +18,24 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.408 s, 0 proof obligations]  verified
+  [0.409 s, 0 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify ...
-  [2.562 s, 39 proof obligations]  verified
+  [2.558 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_0 ...
-  [2.832 s, 39 proof obligations]  verified
+  [2.904 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_1 ...
-  [3.022 s, 39 proof obligations]  verified
+  [2.904 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify ...
-  [3.242 s, 46 proof obligations]  verified
+  [3.175 s, 46 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_0 ...
-  [3.581 s, 46 proof obligations]  verified
+  [3.419 s, 46 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_1 ...
-  [3.492 s, 46 proof obligations]  verified
+  [3.527 s, 46 proof obligations]  verified
 
 Boogie program verifier finished with 7 verified, 0 errors

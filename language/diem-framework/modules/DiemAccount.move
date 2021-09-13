@@ -22,6 +22,7 @@ module DiemFramework::DiemAccount {
     use DiemFramework::Diem::{Self, Diem};
     use DiemFramework::Roles;
     use DiemFramework::VASPDomain;
+    use DiemFramework::CRSN;
     use Std::BCS;
     use Std::Event::{Self, EventHandle};
     use Std::Errors;
@@ -29,6 +30,8 @@ module DiemFramework::DiemAccount {
     use Std::Option::{Self, Option};
     use Std::Signer;
     use Std::Vector;
+
+    friend DiemFramework::AccountAdministrationScripts;
 
     /// An `address` is a Diem Account iff it has a published DiemAccount resource.
     struct DiemAccount has key {
@@ -196,6 +199,7 @@ module DiemFramework::DiemAccount {
     const PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG: u64 = 1011;
     const PROLOGUE_EBAD_TRANSACTION_FEE_CURRENCY: u64 = 1012;
     const PROLOGUE_ESECONDARY_KEYS_ADDRESSES_COUNT_MISMATCH: u64 = 1013;
+    const PROLOGUE_ESEQ_NONCE_INVALID: u64 = 1014;
 
     /// Initialize this module. This is only callable from genesis.
     public fun initialize(
@@ -342,17 +346,6 @@ module DiemFramework::DiemAccount {
         modifies global<Balance<Token>>(payee);
         modifies global<DiemAccount>(payee);
         modifies global<AccountLimits::Window<Token>>(VASP::spec_parent_address(payee));
-        // TODO(wrwg): precisely specify what changed in the modified resources using `update_field`
-        ensures exists<DiemAccount>(payee);
-        ensures exists<Balance<Token>>(payee);
-        ensures global<DiemAccount>(payee).withdraw_capability
-            == old(global<DiemAccount>(payee).withdraw_capability);
-        ensures global<DiemAccount>(payee).authentication_key
-            == old(global<DiemAccount>(payee).authentication_key);
-        ensures Event::spec_guid_eq(global<DiemAccount>(payee).sent_events,
-                                    old(global<DiemAccount>(payee).sent_events));
-        ensures Event::spec_guid_eq(global<DiemAccount>(payee).received_events,
-                                    old(global<DiemAccount>(payee).received_events));
         let amount = to_deposit.value;
         include DepositAbortsIf<Token>{amount: amount};
         include DepositOverflowAbortsIf<Token>{amount: amount};
@@ -396,7 +389,21 @@ module DiemFramework::DiemAccount {
     spec schema DepositEnsures<Token> {
         payee: address;
         amount: u64;
+
+        // TODO(wrwg): precisely specify what changed in the modified resources using `update_field`
+        ensures exists<Balance<Token>>(payee);
         ensures balance<Token>(payee) == old(balance<Token>(payee)) + amount;
+
+        ensures exists<DiemAccount>(payee);
+        ensures global<DiemAccount>(payee).withdraw_capability
+            == old(global<DiemAccount>(payee).withdraw_capability);
+        ensures global<DiemAccount>(payee).authentication_key
+            == old(global<DiemAccount>(payee).authentication_key);
+
+        ensures Event::spec_guid_eq(global<DiemAccount>(payee).sent_events,
+                                    old(global<DiemAccount>(payee).sent_events));
+        ensures Event::spec_guid_eq(global<DiemAccount>(payee).received_events,
+                                    old(global<DiemAccount>(payee).received_events));
     }
     spec schema DepositEmits<Token> {
         payer: address;
@@ -1102,9 +1109,11 @@ module DiemFramework::DiemAccount {
         pragma opaque;
         // This is called from a context where invariants are disabled
         let new_account_addr = Signer::address_of(new_account);
+        requires !exists<DiemAccount>(new_account_addr);
         modifies global<DiemAccount>(new_account_addr);
         modifies global<Event::EventHandleGenerator>(new_account_addr);
         modifies global<AccountFreezing::FreezingBit>(new_account_addr);
+        requires exists<AccountOperationsCapability>(@DiemRoot);
         modifies global<AccountOperationsCapability>(@DiemRoot);
         ensures exists<AccountOperationsCapability>(@DiemRoot);
         // Next requires is needed to prove invariant
@@ -1215,8 +1224,7 @@ module DiemFramework::DiemAccount {
     }
 
     spec create_diem_root_account {
-// TODO: Temporarily commented out until inv disable is fixed
-//        pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         pragma opaque;
         include CreateDiemRootAccountModifies;
         include CreateDiemRootAccountAbortsIf;
@@ -1279,8 +1287,7 @@ module DiemFramework::DiemAccount {
         make_account(&new_account, auth_key_prefix)
     }
     spec create_treasury_compliance_account {
-// TODO: Temporarily commented out until inv disable is fixed
-//      pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         pragma opaque;
         let tc_addr = @TreasuryCompliance;
         include CreateTreasuryComplianceAccountModifies;
@@ -1339,6 +1346,7 @@ module DiemFramework::DiemAccount {
         human_name: vector<u8>,
         add_all_currencies: bool,
     ) acquires AccountOperationsCapability {
+        DiemTimestamp::assert_operating();
         Roles::assert_treasury_compliance(creator_account);
         let new_dd_account = create_signer(new_account_address);
         Event::publish_generator(&new_dd_account);
@@ -1350,8 +1358,7 @@ module DiemFramework::DiemAccount {
     }
 
     spec create_designated_dealer {
-// TODO: Temporarily commented out until inv disable is fixed
-//      pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         include CreateDesignatedDealerAbortsIf<CoinType>;
         include CreateDesignatedDealerEnsures<CoinType>;
         include MakeAccountEmits;
@@ -1362,6 +1369,7 @@ module DiemFramework::DiemAccount {
         new_account_address: address;
         auth_key_prefix: vector<u8>;
         add_all_currencies: bool;
+        include DiemTimestamp::AbortsIfNotOperating;
         include Roles::AbortsIfNotTreasuryCompliance{account: creator_account};
         aborts_if exists<Roles::RoleId>(new_account_address) with Errors::ALREADY_PUBLISHED;
         aborts_if exists<DesignatedDealer::Dealer>(new_account_address) with Errors::ALREADY_PUBLISHED;
@@ -1378,6 +1386,7 @@ module DiemFramework::DiemAccount {
         ensures Roles::spec_has_designated_dealer_role_addr(new_account_address);
         include AddCurrencyForAccountEnsures<CoinType>{addr: new_account_address};
     }
+
     ///////////////////////////////////////////////////////////////////////////
     // VASP methods
     ///////////////////////////////////////////////////////////////////////////
@@ -1400,12 +1409,15 @@ module DiemFramework::DiemAccount {
         DualAttestation::publish_credential(&new_account, creator_account, human_name);
         VASPDomain::publish_vasp_domains(&new_account);
         make_account(&new_account, auth_key_prefix);
-        add_currencies_for_account<Token>(&new_account, add_all_currencies)
+        add_currencies_for_account<Token>(&new_account, add_all_currencies);
+        spec {
+            assert exists<VASPDomain::VASPDomains>(Signer::address_of(new_account));
+            assert Roles::spec_has_treasury_compliance_role_addr(Signer::address_of(creator_account));
+        }
     }
 
     spec create_parent_vasp_account {
-// TODO: Temporarily commented out until inv disable is fixed
-//      pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         include CreateParentVASPAccountAbortsIf<Token>;
         include CreateParentVASPAccountEnsures<Token>;
         include MakeAccountEmits;
@@ -1444,6 +1456,7 @@ module DiemFramework::DiemAccount {
         auth_key_prefix: vector<u8>,
         add_all_currencies: bool,
     ) acquires AccountOperationsCapability {
+        DiemTimestamp::assert_operating();
         Roles::assert_parent_vasp_role(parent);
         let new_account = create_signer(new_account_address);
         Roles::new_child_vasp_role(parent, &new_account);
@@ -1453,11 +1466,10 @@ module DiemFramework::DiemAccount {
         );
         Event::publish_generator(&new_account);
         make_account(&new_account, auth_key_prefix);
-        add_currencies_for_account<Token>(&new_account, add_all_currencies)
+        add_currencies_for_account<Token>(&new_account, add_all_currencies);
     }
     spec create_child_vasp_account {
-// TODO: Temporarily commented out until inv disable is fixed
-//      pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         include CreateChildVASPAccountAbortsIf<Token>;
         include CreateChildVASPAccountEnsures<Token>{
             parent_addr: Signer::spec_address_of(parent),
@@ -1471,6 +1483,7 @@ module DiemFramework::DiemAccount {
         new_account_address: address;
         auth_key_prefix: vector<u8>;
         add_all_currencies: bool;
+        include DiemTimestamp::AbortsIfNotOperating;
         include Roles::AbortsIfNotParentVasp{account: parent};
         aborts_if exists<Roles::RoleId>(new_account_address) with Errors::ALREADY_PUBLISHED;
         include VASP::PublishChildVASPAbortsIf{child_addr: new_account_address};
@@ -1492,6 +1505,18 @@ module DiemFramework::DiemAccount {
 
     native fun create_signer(addr: address): signer;
 
+    public fun publish_crsn(account: &signer, size: u64)
+    acquires DiemAccount {
+        let account_state = borrow_global<DiemAccount>(Signer::address_of(account));
+        // Don't set this to start at account_state.sequence_number + 1, since
+        // after this the epilogue will record the sequence nonce
+        // `account_state.sequence_number` which will shift the window.
+        // If we set the window to start at `account_state.sequence_number +
+        // 1`, this transaction would be rejected in the epilogue as the
+        // sequence nonce would be outside of the window.
+        CRSN::publish(account, account_state.sequence_number, size)
+    }
+
     /// Helper to return the u64 value of the `balance` for `account`
     fun balance_for<Token>(balance: &Balance<Token>): u64 {
         Diem::value<Token>(&balance.coin)
@@ -1507,7 +1532,7 @@ module DiemFramework::DiemAccount {
     }
 
     /// Add a balance of `Token` type to the sending account
-    public fun add_currency<Token>(account: &signer) {
+    public(friend) fun add_currency<Token>(account: &signer) {
         let addr = Signer::address_of(account);
         // aborts if `Token` is not a currency type in the system
         Diem::assert_is_currency<Token>();
@@ -1518,15 +1543,19 @@ module DiemFramework::DiemAccount {
             Errors::invalid_argument(EROLE_CANT_STORE_BALANCE)
         );
         // aborts if this account already has a balance in `Token`
-        assert(!exists<Balance<Token>>(addr), Errors::already_published(EADD_EXISTING_CURRENCY));
+        assert(
+            !exists<Balance<Token>>(addr),
+            Errors::already_published(EADD_EXISTING_CURRENCY)
+        );
 
         move_to(account, Balance<Token>{ coin: Diem::zero<Token>() })
     }
     spec add_currency {
         /// An account must exist at the address
-        aborts_if !exists_at(Signer::spec_address_of(account)) with Errors::NOT_PUBLISHED;
+        let addr = Signer::spec_address_of(account);
+        aborts_if !exists_at(addr) with Errors::NOT_PUBLISHED;
         include AddCurrencyAbortsIf<Token>;
-        include AddCurrencyEnsures<Token>{addr: Signer::spec_address_of(account)};
+        include AddCurrencyEnsures<Token>;
     }
     spec schema AddCurrencyAbortsIf<Token> {
         account: signer;
@@ -1544,6 +1573,14 @@ module DiemFramework::DiemAccount {
         ensures exists<Balance<Token>>(addr);
         ensures global<Balance<Token>>(addr)
             == Balance<Token>{ coin: Diem<Token> { value: 0 } };
+    }
+
+    // #[test_only] TODO: uncomment once unit tests are fully migrated
+    public fun add_currency_for_test<Token>(account: &signer) {
+        add_currency<Token>(account)
+    }
+    spec add_currency_for_test {
+        pragma verify = false;
     }
 
     /// # Access Control
@@ -1790,8 +1827,8 @@ module DiemFramework::DiemAccount {
         let i = 0;
         while ({
             spec {
-                assert forall j in 0..i: exists_at(secondary_signer_addresses[j]);
-                assert forall j in 0..i: secondary_signer_public_key_hashes[j]
+                invariant forall j in 0..i: exists_at(secondary_signer_addresses[j]);
+                invariant forall j in 0..i: secondary_signer_public_key_hashes[j]
                     == global<DiemAccount>(secondary_signer_addresses[j]).authentication_key;
             };
             (i < num_secondary_signers)
@@ -1937,20 +1974,29 @@ module DiemFramework::DiemAccount {
             Errors::limit_exceeded(PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG)
         );
 
-        // [PCA11]: Check that the transaction sequence number is not too old (in the past)
-        assert(
-            txn_sequence_number >= sender_account.sequence_number,
-            Errors::invalid_argument(PROLOGUE_ESEQUENCE_NUMBER_TOO_OLD)
-        );
+        if (CRSN::has_crsn(transaction_sender)) {
+            // [PCA13]: If using a sequence nonce check that it's accepted
+            assert(
+                CRSN::check(sender, txn_sequence_number),
+                Errors::invalid_argument(PROLOGUE_ESEQ_NONCE_INVALID)
+            );
+        } else {
+            // [PCA11]: Check that the transaction sequence number is not too old (in the past)
+            assert(
+                txn_sequence_number >= sender_account.sequence_number,
+                Errors::invalid_argument(PROLOGUE_ESEQUENCE_NUMBER_TOO_OLD)
+            );
 
-        // [PCA12]: Check that the transaction's sequence number matches the
-        // current sequence number. Otherwise sequence number is too new by [PCA11].
-        assert(
-            txn_sequence_number == sender_account.sequence_number,
-            Errors::invalid_argument(PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW)
-        );
-        // WARNING: No checks should be added here as the sequence number too new check should be the last check run
-        // by the prologue.
+            // [PCA12]: Check that the transaction's sequence number matches the
+            // current sequence number. Otherwise sequence number is too new by [PCA11].
+            assert(
+                txn_sequence_number == sender_account.sequence_number,
+                Errors::invalid_argument(PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW)
+            );
+
+            // WARNING: No checks should be added here as the sequence number too new check should be the last check run
+            // by the prologue.
+        }
     }
     spec prologue_common {
         let transaction_sender = Signer::spec_address_of(sender);
@@ -1990,9 +2036,11 @@ module DiemFramework::DiemAccount {
         /// [PCA10] Covered: L81 (match 11)
         aborts_if txn_sequence_number >= MAX_U64 with Errors::LIMIT_EXCEEDED;
         /// [PCA11] Covered: L61 (Match 2)
-        aborts_if txn_sequence_number < global<DiemAccount>(transaction_sender).sequence_number with Errors::INVALID_ARGUMENT;
+        aborts_if !CRSN::has_crsn(transaction_sender) && txn_sequence_number < global<DiemAccount>(transaction_sender).sequence_number with Errors::INVALID_ARGUMENT;
         /// [PCA12] Covered: L63 (match 3)
-        aborts_if txn_sequence_number > global<DiemAccount>(transaction_sender).sequence_number with Errors::INVALID_ARGUMENT;
+        aborts_if !CRSN::has_crsn(transaction_sender) && txn_sequence_number > global<DiemAccount>(transaction_sender).sequence_number with Errors::INVALID_ARGUMENT;
+        /// [PCA13] Covered: L93 (match 14)
+        aborts_if CRSN::has_crsn(transaction_sender) && !CRSN::spec_check(transaction_sender, txn_sequence_number) with Errors::INVALID_ARGUMENT;
     }
 
     /// Collects gas and bumps the sequence number for executing a transaction.
@@ -2049,17 +2097,25 @@ module DiemFramework::DiemAccount {
             Errors::limit_exceeded(PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG)
         );
 
-        // [EA4; Invariant]: Make sure passed-in `txn_sequence_number` matches
-        // the `sender_account`'s `sequence_number`. Already checked in [PCA12].
-        assert(
-            sender_account.sequence_number == txn_sequence_number,
-            Errors::invalid_argument(PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW)
-        );
+        if (CRSN::has_crsn(sender)) {
+            // Make sure the `sender_account`'s CRSN is still valid and record it.
+            assert(
+                CRSN::record(account, txn_sequence_number),
+                Errors::invalid_argument(PROLOGUE_ESEQ_NONCE_INVALID),
+            );
+        } else {
+            // [EA4; Invariant]: Make sure passed-in `txn_sequence_number` matches
+            // the `sender_account`'s `sequence_number`. Already checked in [PCA12].
+            assert(
+                sender_account.sequence_number == txn_sequence_number,
+                Errors::invalid_argument(PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW)
+            );
+        };
 
         // The transaction sequence number is passed in to prevent any
         // possibility of the account's sequence number increasing by more than
         // one for any transaction.
-        sender_account.sequence_number = txn_sequence_number + 1;
+        sender_account.sequence_number = sender_account.sequence_number + 1;
 
         if (transaction_fee_amount > 0) {
             // [Invariant Use]: Balance for `Token` verified to exist for non-zero transaction fee amounts by [PCA7].
@@ -2095,16 +2151,19 @@ module DiemFramework::DiemAccount {
             Signer::address_of(dr_account) == @DiemRoot,
             Errors::invalid_argument(PROLOGUE_EINVALID_WRITESET_SENDER)
         );
-        assert(Roles::has_diem_root_role(dr_account), Errors::invalid_argument(PROLOGUE_EINVALID_WRITESET_SENDER));
+        assert(
+            Roles::has_diem_root_role(dr_account),
+            Errors::invalid_argument(PROLOGUE_EINVALID_WRITESET_SENDER)
+        );
 
         // Currency code don't matter here as it won't be charged anyway.
         epilogue_common<XUS>(dr_account, txn_sequence_number, 0, 0, 0);
         if (should_trigger_reconfiguration) DiemConfig::reconfigure(dr_account)
     }
     spec writeset_epilogue {
-        include WritesetEpiloguEmits;
+        include WritesetEpilogueEmits;
     }
-    spec schema WritesetEpiloguEmits {
+    spec schema WritesetEpilogueEmits {
         should_trigger_reconfiguration: bool;
         let handle = global<DiemWriteSetManager>(@DiemRoot).upgrade_events;
         let msg = AdminTransactionEvent {
@@ -2131,8 +2190,7 @@ module DiemFramework::DiemAccount {
     }
 
     spec create_validator_account {
-// TODO: Temporarily commented out until inv disable is fixed
-//      pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         include CreateValidatorAccountAbortsIf;
         include CreateValidatorAccountEnsures;
         include MakeAccountEmits;
@@ -2174,8 +2232,7 @@ module DiemFramework::DiemAccount {
     }
 
     spec create_validator_operator_account {
-// TODO: Temporarily commented out until inv disable is fixed
-//      pragma disable_invariants_in_body;
+        pragma disable_invariants_in_body;
         include CreateValidatorOperatorAccountAbortsIf;
         include CreateValidatorOperatorAccountEnsures;
     }
@@ -2296,15 +2353,15 @@ module DiemFramework::DiemAccount {
         invariant update forall addr: address where old(exists_at(addr)): exists_at(addr);
 
         /// After genesis, the `AccountOperationsCapability` exists.
-        invariant DiemTimestamp::is_operating() ==> exists<AccountOperationsCapability>(@DiemRoot);
+        invariant [suspendable] DiemTimestamp::is_operating() ==> exists<AccountOperationsCapability>(@DiemRoot);
 
         /// After genesis, the `DiemWriteSetManager` exists.
-        invariant DiemTimestamp::is_operating() ==> exists<DiemWriteSetManager>(@DiemRoot);
+        invariant [suspendable] DiemTimestamp::is_operating() ==> exists<DiemWriteSetManager>(@DiemRoot);
 
         /// resource struct `Balance<CoinType>` is persistent
-        invariant update forall coin_type: type, addr: address
-            where old(exists<Balance<coin_type>>(addr)):
-                exists<Balance<coin_type>>(addr);
+        invariant<CoinType> update forall addr: address
+            where old(exists<Balance<CoinType>>(addr)):
+                exists<Balance<CoinType>>(addr);
 
         /// resource struct `AccountOperationsCapability` is persistent
         invariant update old(exists<AccountOperationsCapability>(@DiemRoot))
@@ -2319,123 +2376,89 @@ module DiemFramework::DiemAccount {
     spec module {
 
         /// An address has a published account iff it has a published RoleId
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:  exists_at(addr) <==> exists<Roles::RoleId>(addr);
-        invariant forall addr: address:  exists_at(addr) ==> exists<Roles::RoleId>(addr);
+        invariant [suspendable] forall addr: address:  exists_at(addr) <==> exists<Roles::RoleId>(addr);
 
         // Every address with a published account has a publish event handle generator
-        // >TODO: Prover can't deal with this because it gets an error when a public functions
-        // such as Events::publish_generator, are called while invariants are disabled.
+        // >TODO: When commented in, odd things happen.
         // However, this particular invariant does not need to be disabled, and the function
         // needs to be public because it is a general-purpose function in stdlib.
         // Also, the invariant is not specified in Events, which also seems relevant.
         // invariant forall addr: address where exists_at(addr): exists<Event::EventHandleGenerator>(addr);
 
         /// There is a published AccountOperationsCapability iff there is an account and it's at Diem root address
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:
-        //    exists<AccountOperationsCapability>(addr) <==> (addr == @DiemRoot && exists_at(addr));
-        invariant forall addr: address:
-             (addr == @DiemRoot && exists_at(addr)) ==> exists<AccountOperationsCapability>(addr);
-
+        invariant [suspendable] forall addr: address:
+            exists<AccountOperationsCapability>(addr) <==> (addr == @DiemRoot && exists_at(addr));
 
         /// An account has a WriteSetManager iff if it is Diem root
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:
-        //    exists<DiemWriteSetManager>(addr) <==> (addr == @DiemRoot && exists_at(addr));
-        invariant forall addr: address:
-            addr != @DiemRoot ==> !exists<DiemWriteSetManager>(addr);
+        invariant [suspendable] forall addr: address:
+           exists<DiemWriteSetManager>(addr) <==> (addr == @DiemRoot && exists_at(addr));
 
         /// There is a VASPDomainManager at an address iff the address is a diem treasury compliance account
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:
-        //     exists<VASPDomain::VASPDomainManager>(addr) <==> Roles::spec_has_treasury_compliance_role_addr(addr);
-        invariant forall addr: address:
-            exists<VASPDomain::VASPDomainManager>(addr) ==> Roles::spec_has_treasury_compliance_role_addr(addr);
+        invariant [suspendable] forall addr: address:
+            exists<VASPDomain::VASPDomainManager>(addr) <==> Roles::spec_has_treasury_compliance_role_addr(addr);
 
         /// There is a VASPDomains at an address iff the address is a Diem treasury compliance account
-        // > TODO: Temporarily commented out due to inv disable problem
-        // Weakened form requires verifying in context of call site.
-        // invariant forall addr: address:
-        //     exists<VASPDomain::VASPDomains>(addr) <==> Roles::spec_has_treasury_compliance_role_addr(addr);
+        invariant [suspendable] forall addr: address:
+            exists<VASPDomain::VASPDomains>(addr) <==> Roles::spec_has_parent_VASP_role_addr(addr);
 
         /// Account has a balance only iff it is parent or child VASP or a designated dealer
         /// > Note: It would be better to make this generic over all existing and future coins, but that
         /// would require existential quantification over types, and I'm not sure if that works with monomorphization.
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:
-        //     (exists<Balance<XUS>>(addr) || exists<Balance<XDX>>(addr)) <==> Roles::spec_can_hold_balance_addr(addr);
+        // > TODO: This fails because type parameter add_currency_for_account<token> can
+        // have token type that is not XDX or XUS !!
+        //  invariant [suspendable] forall addr: address:
+        // (exists<Balance<XUS>>(addr) || exists<Balance<XDX>>(addr)) <==> Roles::spec_can_hold_balance_addr(addr);
         invariant forall addr: address:
             (exists<Balance<XUS>>(addr) || exists<Balance<XDX>>(addr)) ==> Roles::spec_can_hold_balance_addr(addr);
 
         ///  There is a `DesignatedDealer::Dealer` published at `addr` iff the `addr` has a
         /// `Roles::DesignatedDealer` role.
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address: exists<DesignatedDealer::Dealer>(addr)
-        //     <==> Roles::spec_has_designated_dealer_role_addr(addr);
-        invariant forall addr: address: exists<DesignatedDealer::Dealer>(addr)
-            ==> Roles::spec_has_designated_dealer_role_addr(addr);
+        invariant [suspendable] forall addr: address: exists<DesignatedDealer::Dealer>(addr)
+            <==> Roles::spec_has_designated_dealer_role_addr(addr);
 
         /// There is a DualAttestation credential iff account has designated dealer or parent VASP role
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:
-        //     exists<DualAttestation::Credential>(addr)
-        //     <==> (Roles::spec_has_designated_dealer_role_addr(addr)
-        //           || Roles::spec_has_parent_VASP_role_addr(addr));
-        invariant forall addr: address:
+        invariant [suspendable] forall addr: address:
             exists<DualAttestation::Credential>(addr)
-            ==> (Roles::spec_has_designated_dealer_role_addr(addr)
+            <==> (Roles::spec_has_designated_dealer_role_addr(addr)
                   || Roles::spec_has_parent_VASP_role_addr(addr));
 
         /// An address has an account iff there is a published FreezingBit struct
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address:
-        //     exists_at(addr) <==> exists<AccountFreezing::FreezingBit>(addr);
-        invariant forall addr: address:
+        invariant [suspendable] forall addr: address:
+            exists_at(addr) <==> exists<AccountFreezing::FreezingBit>(addr);
+
+        // This invariant is redundant with the previous invariant, but weaker.
+        // But it holds throughout make_account, and is useful to prove that the
+        // "move_to" that publishes the account will never abort.
+        // TODO: This is too clever.  Should modify code to an assert or requires at
+        // beginning of make_account that account does not already exist.
+        invariant [suspendable] forall addr: address:
             exists_at(addr) ==> exists<AccountFreezing::FreezingBit>(addr);
 
         /// Balances can only be published at addresses where an account exists
         /// >TODO: I think this is redundant with previous invariants. exists_at <==> Role, and
         /// Balance <==> can_hold_balance
-        invariant forall token: type: forall addr: address where exists<Balance<token>>(addr):
+        invariant<CoinType> [suspendable]  forall addr: address where exists<Balance<CoinType>>(addr):
             exists_at(addr);
 
         /// Account has SlidingNonce only if it's Diem Root or Treasury Compliance
-        // > TODO: Temporarily commented out due to inv disable problem
-        // > The weakened rule fails in SlidingNonce::publish, because it depends on publish only
-        // being called from create_diem_root_account and create_treasury_compliance_account
-        // invariant forall addr: address: exists<SlidingNonce::SlidingNonce>(addr)
-        //     <==> (Roles::spec_has_diem_root_role_addr(addr) || Roles::spec_has_treasury_compliance_role_addr(addr));
+        invariant [suspendable] forall addr: address: exists<SlidingNonce::SlidingNonce>(addr)
+            <==> (Roles::spec_has_diem_root_role_addr(addr) || Roles::spec_has_treasury_compliance_role_addr(addr));
 
-        // > TODO: Temporarily weakened due to inv disable problem
         /// Address has a ValidatorConfig iff it is a Validator address
-        // invariant forall addr: address: ValidatorConfig::exists_config(addr)
-        //     <==> Roles::spec_has_validator_role_addr(addr);
-        invariant forall addr: address: ValidatorConfig::exists_config(addr)
-            ==> Roles::spec_has_validator_role_addr(addr);
+        invariant [suspendable] forall addr: address: ValidatorConfig::exists_config(addr)
+            <==> Roles::spec_has_validator_role_addr(addr);
 
-        // > TODO: Temporarily weakened due to inv disable problem
         /// Address has a ValidatorOperatorConfig iff it is a ValidatorOperator address
-        // invariant forall addr: address: ValidatorOperatorConfig::has_validator_operator_config(addr)
-        //     <==> Roles::spec_has_validator_operator_role_addr(addr);
-        invariant forall addr: address: ValidatorOperatorConfig::has_validator_operator_config(addr)
-            ==> Roles::spec_has_validator_operator_role_addr(addr);
+        invariant [suspendable] forall addr: address: ValidatorOperatorConfig::has_validator_operator_config(addr)
+            <==> Roles::spec_has_validator_operator_role_addr(addr);
 
         /// Address has a parent VASP credential iff it has a parent VASP role
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address: VASP::is_parent(addr)
-        //     <==> Roles::spec_has_parent_VASP_role_addr(addr);
-        invariant forall addr: address: VASP::is_parent(addr)
-            ==> Roles::spec_has_parent_VASP_role_addr(addr);
-
+        invariant [suspendable] forall addr: address: VASP::is_parent(addr)
+            <==> Roles::spec_has_parent_VASP_role_addr(addr);
 
         /// Address has a child VASP credential iff it has a child VASP role
-        // > TODO: Temporarily weakened due to inv disable problem
-        // invariant forall addr: address: VASP::is_child(addr)
-        //     <==> Roles::spec_has_child_VASP_role_addr(addr);
-        invariant forall addr: address: VASP::is_child(addr)
-            ==> Roles::spec_has_child_VASP_role_addr(addr);
-
+        invariant [suspendable] forall addr: address: VASP::is_child(addr)
+            <==> Roles::spec_has_child_VASP_role_addr(addr);
     }
 
     /// # Helper Functions and Schemas

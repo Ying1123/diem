@@ -149,7 +149,7 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
         loc: Loc,
         module_def: EA::ModuleDefinition,
         compiled_module: CompiledModule,
-        source_map: SourceMap<MoveIrLoc>,
+        source_map: SourceMap,
         function_infos: UniqueMap<PA::FunctionName, FunctionInfo>,
     ) {
         self.decl_ana(&module_def, &compiled_module, &source_map);
@@ -249,7 +249,7 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
         &mut self,
         module_def: &EA::ModuleDefinition,
         compiled_module: &CompiledModule,
-        source_map: &SourceMap<MoveIrLoc>,
+        source_map: &SourceMap,
     ) {
         for (name, struct_def) in module_def.structs.key_cloned_iter() {
             self.decl_ana_struct(&name, struct_def);
@@ -270,11 +270,11 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
         name: &PA::ConstantName,
         def: &EA::Constant,
         compiled_module: &CompiledModule,
-        source_map: &SourceMap<MoveIrLoc>,
+        source_map: &SourceMap,
     ) {
         let qsym = self.qualified_by_module_from_name(&name.0);
         let name = qsym.symbol;
-        let const_name = ConstantName::new(self.symbol_pool().string(name).to_string());
+        let const_name = ConstantName(self.symbol_pool().string(name).to_string().into());
         let const_idx = source_map
             .constant_map
             .get(&const_name)
@@ -296,9 +296,9 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
         let struct_id = StructId::new(qsym.symbol);
         let is_resource =
             // TODO migrate to abilities
-            def.abilities.has_ability_(PA::Ability_::Key)|| (
+            def.abilities.has_ability_(PA::Ability_::Key) || (
                 !def.abilities.has_ability_(PA::Ability_::Copy) &&
-                !def.abilities.has_ability_(PA::Ability_::Drop)
+                    !def.abilities.has_ability_(PA::Ability_::Drop)
             );
         let mut et = ExpTranslator::new(self);
         let type_params =
@@ -1251,7 +1251,22 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
 
                 et
             }
-            Module => ExpTranslator::new_with_old(self, allows_old),
+            Module => {
+                let mut et = ExpTranslator::new_with_old(self, allows_old);
+
+                // define the type params
+                match kind {
+                    ConditionKind::GlobalInvariant(ty_params)
+                    | ConditionKind::GlobalInvariantUpdate(ty_params) => {
+                        for (i, name) in ty_params.iter().enumerate() {
+                            et.define_type_param(loc, *name, Type::TypeParameter(i as u16));
+                        }
+                    }
+                    _ => (),
+                }
+
+                et
+            }
             Schema(name) => {
                 let entry = self
                     .parent
@@ -1502,42 +1517,12 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
             }
 
             // If this is a schema invariant, convert the kind based on its application context
-            if let ConditionKind::SchemaInvariant(tys) = &cond.kind {
+            if cond.kind == ConditionKind::SchemaInvariant {
                 let new_kind = match context {
-                    SpecBlockContext::Module => ConditionKind::GlobalInvariant(tys.clone()),
-                    SpecBlockContext::Struct(..) => {
-                        if !tys.is_empty() {
-                            self.parent.error(
-                                &cond.loc,
-                                "Type locals are not allowed in struct invariants \
-                                    included from a schema",
-                            );
-                            return;
-                        }
-                        ConditionKind::StructInvariant
-                    }
-                    SpecBlockContext::Function(..) => {
-                        if !tys.is_empty() {
-                            self.parent.error(
-                                &cond.loc,
-                                "Type locals are not allowed in function invariants \
-                                    included from a schema",
-                            );
-                            return;
-                        }
-                        ConditionKind::FunctionInvariant
-                    }
-                    SpecBlockContext::FunctionCode(..) => {
-                        if !tys.is_empty() {
-                            self.parent.error(
-                                &cond.loc,
-                                "Type locals are not allowed in loop invariants \
-                                    included from a schema",
-                            );
-                            return;
-                        }
-                        ConditionKind::LoopInvariant
-                    }
+                    SpecBlockContext::Module => ConditionKind::GlobalInvariant(vec![]),
+                    SpecBlockContext::Struct(..) => ConditionKind::StructInvariant,
+                    SpecBlockContext::Function(..) => ConditionKind::FunctionInvariant,
+                    SpecBlockContext::FunctionCode(..) => ConditionKind::LoopInvariant,
                     SpecBlockContext::Schema(..) => {
                         // this is the initial pass that put the condition into the schema context
                         cond.kind.clone()
@@ -1639,9 +1624,9 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
             _ => {
                 if !additional_exps.is_empty() {
                     et.error(
-                       loc,
-                       "additional expressions only allowed with `aborts_if`, `aborts_with`, `modifies`, or `emits`",
-                   );
+                        loc,
+                        "additional expressions only allowed with `aborts_if`, `aborts_with`, `modifies`, or `emits`",
+                    );
                 }
                 (et.translate_exp(exp, &expected_type).into_exp(), vec![])
             }
@@ -1674,31 +1659,31 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
         context: &SpecBlockContext,
     ) -> Option<ConditionKind> {
         // Defines a type local with duplication check
-        fn define_type_local(
+        fn define_type_param(
             builder: &mut ModuleBuilder,
-            ty_locals_defined: &mut BTreeSet<Symbol>,
+            ty_params_defined: &mut BTreeSet<Symbol>,
             name: &Name,
-        ) -> Option<Type> {
+        ) -> Option<Symbol> {
             let symbol = builder.symbol_pool().make(&name.value);
-            if !ty_locals_defined.insert(symbol) {
+            if !ty_params_defined.insert(symbol) {
                 builder.parent.env.error(
                     &builder.parent.to_loc(&name.loc),
                     &format!("duplicate declaration of `{}`", &name.value),
                 );
                 None
             } else {
-                Some(Type::TypeLocal(symbol))
+                Some(symbol)
             }
         }
 
-        fn define_type_locals(
+        fn define_type_params(
             builder: &mut ModuleBuilder,
-            locals: &[(Name, EA::AbilitySet)],
-        ) -> Option<Vec<Type>> {
-            let mut ty_locals_defined = BTreeSet::new();
-            locals
+            type_params: &[(Name, EA::AbilitySet)],
+        ) -> Option<Vec<Symbol>> {
+            let mut ty_params_defined = BTreeSet::new();
+            type_params
                 .iter()
-                .map(|(name, _)| define_type_local(builder, &mut ty_locals_defined, name))
+                .map(|(name, _)| define_type_param(builder, &mut ty_params_defined, name))
                 .collect()
         }
 
@@ -1715,17 +1700,16 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
             PK::AbortsIf => AbortsIf,
             PK::AbortsWith => AbortsWith,
             PK::SucceedsIf => SucceedsIf,
-            PK::Invariant(ty_locals) => {
-                let tys = define_type_locals(self, ty_locals)?;
+            PK::Invariant(ty_params) => {
+                let tys = define_type_params(self, ty_params)?;
                 match context {
                     SpecBlockContext::Module => GlobalInvariant(tys),
                     SpecBlockContext::Struct(..) => {
                         if !tys.is_empty() {
                             self.parent.env.error(
                                 &self.parent.to_loc(&kind.loc),
-                                "Type locals are not allowed in struct invariants",
-                            );
-                            return None;
+                                "type parameters are not allowed in struct invariants",
+                            )
                         }
                         StructInvariant
                     }
@@ -1733,9 +1717,8 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                         if !tys.is_empty() {
                             self.parent.env.error(
                                 &self.parent.to_loc(&kind.loc),
-                                "Type locals are not allowed in function invariants",
-                            );
-                            return None;
+                                "type parameters are not allowed in function invariants",
+                            )
                         }
                         FunctionInvariant
                     }
@@ -1743,27 +1726,33 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                         if !tys.is_empty() {
                             self.parent.env.error(
                                 &self.parent.to_loc(&kind.loc),
-                                "Type locals are not allowed in loop invariants",
-                            );
-                            return None;
+                                "type parameters are not allowed in loop invariants",
+                            )
                         }
                         LoopInvariant
                     }
-                    SpecBlockContext::Schema(..) => SchemaInvariant(tys),
+                    SpecBlockContext::Schema(..) => {
+                        if !tys.is_empty() {
+                            self.parent.env.error(
+                                &self.parent.to_loc(&kind.loc),
+                                "type parameters are not allowed in schema invariants",
+                            )
+                        }
+                        SchemaInvariant
+                    }
                 }
             }
-            PK::InvariantUpdate(ty_locals) => {
-                let tys = define_type_locals(self, ty_locals)?;
+            PK::InvariantUpdate(ty_params) => {
+                let tys = define_type_params(self, ty_params)?;
                 if !matches!(context, SpecBlockContext::Module) {
                     self.parent.env.error(
                         &self.parent.to_loc(&kind.loc),
-                        "Update invariants are only allowed in module specs",
-                    );
-                    return None;
+                        "update invariants are only allowed in module specs",
+                    )
                 }
                 GlobalInvariantUpdate(tys)
             }
-            PK::Axiom(ty_locals) => Axiom(define_type_locals(self, ty_locals)?),
+            PK::Axiom(ty_params) => Axiom(define_type_params(self, ty_params)?),
         };
         Some(converted)
     }
@@ -2357,6 +2346,14 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                 exp,
                 additional_exps,
             });
+            match kind {
+                ConditionKind::LetPost(name) | ConditionKind::LetPre(name) => {
+                    // If a let name is introduced by this condition, remove it from argument_map
+                    // as it shadows schema arguments.
+                    argument_map.remove(name);
+                }
+                _ => {}
+            }
         }
 
         // Put schema entry back.
@@ -2588,7 +2585,7 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
                 .iter()
                 .map(|p| match &p.value {
                     PA::SpecApplyFragment_::Wildcard => ".*".to_string(),
-                    PA::SpecApplyFragment_::NamePart(n) => n.value.clone(),
+                    PA::SpecApplyFragment_::NamePart(n) => n.value.to_string(),
                 })
                 .join("")
         ))
@@ -2921,7 +2918,7 @@ impl<'env, 'translator> ModuleBuilder<'env, 'translator> {
         &mut self,
         loc: Loc,
         module: CompiledModule,
-        source_map: SourceMap<MoveIrLoc>,
+        source_map: SourceMap,
     ) {
         let struct_data: BTreeMap<StructId, StructData> = (0..module.struct_defs().len())
             .filter_map(|idx| {

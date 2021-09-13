@@ -25,7 +25,7 @@ use crate::{
     stackless_bytecode::{
         AbortAction, AssignKind, AttrId, Bytecode, HavocKind, Label, Operation, PropKind,
     },
-    usage_analysis, verification_analysis, verification_analysis_v2,
+    usage_analysis, verification_analysis,
 };
 use move_model::{
     ast::{Exp, QuantKind},
@@ -106,21 +106,11 @@ impl FunctionTargetProcessor for SpecInstrumentationProcessor {
             return data;
         }
 
-        let is_verified: bool;
-        let is_inlined: bool;
-
         let options = ProverOptions::get(fun_env.module_env.env);
-        if options.invariants_v2 {
-            let verification_info =
-                verification_analysis_v2::get_info(&FunctionTarget::new(fun_env, &data));
-            is_verified = verification_info.verified;
-            is_inlined = verification_info.inlined;
-        } else {
-            let verification_info =
-                verification_analysis::get_info(&FunctionTarget::new(fun_env, &data));
-            is_verified = verification_info.verified;
-            is_inlined = verification_info.inlined;
-        };
+        let verification_info =
+            verification_analysis::get_info(&FunctionTarget::new(fun_env, &data));
+        let is_verified = verification_info.verified;
+        let is_inlined = verification_info.inlined;
 
         if is_verified {
             // Create a clone of the function data, moving annotations
@@ -311,7 +301,11 @@ impl<'a> Instrumenter<'a> {
             }
 
             // Inject well-formedness assumption for used memory.
-            for mem in usage_analysis::get_used_memory_inst(&self.builder.get_target()).clone() {
+            for mem in usage_analysis::get_memory_usage(&self.builder.get_target())
+                .accessed
+                .all
+                .clone()
+            {
                 // If this is native or intrinsic memory, skip this.
                 let struct_env = self
                     .builder
@@ -510,26 +504,6 @@ impl<'a> Instrumenter<'a> {
         );
 
         self.builder.set_loc_from_attr(id);
-        let opaque_display = if callee_opaque {
-            // Add a debug comment about the original function call to easier identify
-            // the opaque call in dumped bytecode.
-            let bc = Call(
-                id,
-                dests.clone(),
-                Operation::Function(mid, fid, targs.clone()),
-                srcs.clone(),
-                aa.clone(),
-            );
-            let bc_display = bc
-                .display(&self.builder.get_target(), &Default::default())
-                .to_string();
-            self.builder
-                .set_next_debug_comment(format!(">> opaque call: {}", bc_display));
-            self.builder.emit_with(Nop);
-            Some(bc_display)
-        } else {
-            None
-        };
 
         // Emit `let` assignments.
         self.emit_lets(&callee_spec, targs, false);
@@ -589,18 +563,16 @@ impl<'a> Instrumenter<'a> {
             ));
             self.can_abort = true;
         } else {
-            // Generates OpaqueCallBegin if invariant_v2 flag is set.
-            if self.options.invariants_v2 {
-                self.generate_opaque_call(
-                    dests.clone(),
-                    mid,
-                    fid,
-                    targs,
-                    srcs.clone(),
-                    aa.clone(),
-                    true,
-                );
-            }
+            // Generates OpaqueCallBegin.
+            self.generate_opaque_call(
+                dests.clone(),
+                mid,
+                fid,
+                targs,
+                srcs.clone(),
+                aa.clone(),
+                true,
+            );
 
             // Emit saves for parameters used in old(..) context. Those can be referred
             // to in aborts conditions, and must be initialized before evaluating those.
@@ -728,17 +700,8 @@ impl<'a> Instrumenter<'a> {
                     .emit(Call(id, vec![], Operation::EventStoreDiverge, vec![], None));
             }
 
-            if !self.options.invariants_v2 {
-                // If enabled, mark end of opaque function call.
-                if let Some(bc_display) = opaque_display {
-                    self.builder
-                        .set_next_debug_comment(format!("<< opaque call: {}", bc_display));
-                    self.builder.emit_with(Nop);
-                }
-            } else {
-                // Generate OpaqueCallEnd instruction if invariant_v2.
-                self.generate_opaque_call(dests, mid, fid, targs, srcs, aa, false);
-            }
+            // Generate OpaqueCallEnd instruction if invariant_v2.
+            self.generate_opaque_call(dests, mid, fid, targs, srcs, aa, false);
         }
     }
 
@@ -1051,7 +1014,9 @@ fn check_caller_callee_modifies_relation(
             continue;
         }
         let callee_func_target = targets.get_target(&callee_fun_env, &FunctionVariant::Baseline);
-        let callee_modified_memory = usage_analysis::get_modified_memory(&callee_func_target);
+        let callee_modified_memory = usage_analysis::get_memory_usage(&callee_func_target)
+            .modified
+            .get_all_uninst();
         for target in caller_func_target.get_modify_targets().keys() {
             if callee_modified_memory.contains(target)
                 && callee_func_target
@@ -1088,7 +1053,11 @@ fn check_opaque_modifies_completeness(
     // a modifies clause. Otherwise we could introduce unsoundness.
     // TODO: we currently except Event::EventHandle from this, because this is treated as
     //   an immutable reference. We should find a better way how to deal with event handles.
-    for mem in usage_analysis::get_modified_memory_inst(&target).iter() {
+    for mem in usage_analysis::get_memory_usage(&target)
+        .modified
+        .all
+        .iter()
+    {
         if env.is_wellknown_event_handle_type(&Type::Struct(mem.module_id, mem.id, vec![])) {
             continue;
         }

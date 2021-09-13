@@ -5,17 +5,18 @@ use crate::{
     cfgir,
     command_line::{DEFAULT_OUTPUT_DIR, MOVE_COMPILED_INTERFACES_DIR},
     compiled_unit,
-    compiled_unit::CompiledUnit,
+    compiled_unit::AnnotatedCompiledUnit,
     diagnostics::{codes::Severity, *},
     expansion, hlir, interface_generator, naming, parser,
     parser::{comments::*, *},
-    shared::{CompilationEnv, Flags},
+    shared::{AddressBytes, CompilationEnv, Flags},
     to_bytecode, typing, unit_test,
 };
 use move_command_line_common::files::{
     extension_equals, find_filenames, MOVE_COMPILED_EXTENSION, MOVE_EXTENSION, SOURCE_MAP_EXTENSION,
 };
 use move_core_types::language_storage::ModuleId as CompiledModuleId;
+use move_symbol_pool::Symbol;
 use std::{
     collections::BTreeMap,
     fs,
@@ -35,6 +36,7 @@ pub struct Compiler<'a, 'b> {
     interface_files_dir_opt: Option<String>,
     pre_compiled_lib: Option<&'b FullyCompiledProgram>,
     compiled_module_named_address_mapping: BTreeMap<CompiledModuleId, String>,
+    named_address_mapping: BTreeMap<Symbol, AddressBytes>,
     flags: Flags,
 }
 
@@ -62,7 +64,7 @@ enum PassResult {
     Typing(typing::ast::Program),
     HLIR(hlir::ast::Program),
     CFGIR(cfgir::ast::Program),
-    Compilation(Vec<CompiledUnit>, /* warnings */ Diagnostics),
+    Compilation(Vec<AnnotatedCompiledUnit>, /* warnings */ Diagnostics),
 }
 
 #[derive(Clone)]
@@ -75,7 +77,7 @@ pub struct FullyCompiledProgram {
     pub typing: typing::ast::Program,
     pub hlir: hlir::ast::Program,
     pub cfgir: cfgir::ast::Program,
-    pub compiled: Vec<CompiledUnit>,
+    pub compiled: Vec<AnnotatedCompiledUnit>,
 }
 
 //**************************************************************************************************
@@ -91,6 +93,7 @@ impl<'a, 'b> Compiler<'a, 'b> {
             pre_compiled_lib: None,
             compiled_module_named_address_mapping: BTreeMap::new(),
             flags: Flags::empty(),
+            named_address_mapping: BTreeMap::new(),
         }
     }
 
@@ -136,6 +139,18 @@ impl<'a, 'b> Compiler<'a, 'b> {
         self
     }
 
+    pub fn set_named_address_values(
+        mut self,
+        named_address_mapping: BTreeMap<impl Into<Symbol>, AddressBytes>,
+    ) -> Self {
+        assert!(self.named_address_mapping.is_empty());
+        self.named_address_mapping = named_address_mapping
+            .into_iter()
+            .map(|(k, v)| (k.into(), v))
+            .collect();
+        self
+    }
+
     pub fn run<const TARGET: Pass>(
         self,
     ) -> anyhow::Result<(
@@ -148,6 +163,7 @@ impl<'a, 'b> Compiler<'a, 'b> {
             interface_files_dir_opt,
             pre_compiled_lib,
             compiled_module_named_address_mapping,
+            named_address_mapping,
             flags,
         } = self;
         let mut deps = deps.to_vec();
@@ -156,7 +172,7 @@ impl<'a, 'b> Compiler<'a, 'b> {
             interface_files_dir_opt,
             &compiled_module_named_address_mapping,
         )?;
-        let compilation_env = CompilationEnv::new(flags);
+        let compilation_env = CompilationEnv::new(flags, named_address_mapping);
         let (source_text, pprog_and_comments_res) =
             parse_program(&compilation_env, targets, &deps)?;
         let res: Result<_, Diagnostics> = pprog_and_comments_res.and_then(|(pprog, comments)| {
@@ -182,7 +198,7 @@ impl<'a, 'b> Compiler<'a, 'b> {
         self,
     ) -> anyhow::Result<(
         FilesSourceText,
-        Result<(Vec<CompiledUnit>, Diagnostics), Diagnostics>,
+        Result<(Vec<AnnotatedCompiledUnit>, Diagnostics), Diagnostics>,
     )> {
         let (files, res) = self.run::<PASS_COMPILATION>()?;
         Ok((
@@ -191,7 +207,7 @@ impl<'a, 'b> Compiler<'a, 'b> {
         ))
     }
 
-    pub fn build_and_report(self) -> anyhow::Result<(FilesSourceText, Vec<CompiledUnit>)> {
+    pub fn build_and_report(self) -> anyhow::Result<(FilesSourceText, Vec<AnnotatedCompiledUnit>)> {
         let (files, units_res) = self.build()?;
         let (units, warnings) = unwrap_or_report_diagnostics(&files, units_res);
         report_warnings(&files, warnings);
@@ -300,7 +316,7 @@ macro_rules! ast_stepped_compilers {
                     Ok(())
                 }
 
-                pub fn build(self) -> Result<(Vec<CompiledUnit>, Diagnostics), Diagnostics> {
+                pub fn build(self) -> Result<(Vec<AnnotatedCompiledUnit>, Diagnostics), Diagnostics> {
                     let units = self.run::<PASS_COMPILATION>()?.into_compiled_units();
                     Ok(units)
                 }
@@ -313,7 +329,7 @@ macro_rules! ast_stepped_compilers {
                 pub fn build_and_report(
                     self,
                     files: &FilesSourceText,
-                ) -> Vec<CompiledUnit> {
+                ) -> Vec<AnnotatedCompiledUnit> {
                     let units_result = self.build();
                     let (units, warnings) = unwrap_or_report_diagnostics(&files, units_result);
                     report_warnings(&files, warnings);
@@ -340,7 +356,7 @@ ast_stepped_compilers!(
 );
 
 impl<'a> SteppedCompiler<'a, PASS_COMPILATION> {
-    pub fn into_compiled_units(self) -> (Vec<CompiledUnit>, Diagnostics) {
+    pub fn into_compiled_units(self) -> (Vec<AnnotatedCompiledUnit>, Diagnostics) {
         let Self {
             compilation_env: _,
             pre_compiled_lib: _,
@@ -359,10 +375,12 @@ pub fn construct_pre_compiled_lib(
     deps: &[String],
     interface_files_dir_opt: Option<String>,
     flags: Flags,
+    named_address_values: BTreeMap<String, AddressBytes>,
 ) -> anyhow::Result<Result<FullyCompiledProgram, (FilesSourceText, Diagnostics)>> {
     let (files, pprog_and_comments_res) = Compiler::new(&[], deps)
         .set_interface_files_dir_opt(interface_files_dir_opt)
         .set_flags(flags)
+        .set_named_address_values(named_address_values)
         .run::<PASS_PARSER>()?;
 
     let (_comments, stepped) = match pprog_and_comments_res {
@@ -464,7 +482,10 @@ macro_rules! file_path {
 
 /// Runs the bytecode verifier on the compiled units
 /// Fails if the bytecode verifier errors
-pub fn sanity_check_compiled_units(files: FilesSourceText, compiled_units: Vec<CompiledUnit>) {
+pub fn sanity_check_compiled_units(
+    files: FilesSourceText,
+    compiled_units: Vec<AnnotatedCompiledUnit>,
+) {
     let (_, ice_errors) = compiled_unit::verify_units(compiled_units);
     if !ice_errors.is_empty() {
         report_diagnostics(&files, ice_errors)
@@ -475,7 +496,7 @@ pub fn sanity_check_compiled_units(files: FilesSourceText, compiled_units: Vec<C
 pub fn output_compiled_units(
     emit_source_maps: bool,
     files: FilesSourceText,
-    compiled_units: Vec<CompiledUnit>,
+    compiled_units: Vec<AnnotatedCompiledUnit>,
     out_dir: &str,
 ) -> anyhow::Result<()> {
     const SCRIPT_SUB_DIR: &str = "scripts";
@@ -502,7 +523,7 @@ pub fn output_compiled_units(
     let (compiled_units, ice_errors) = compiled_unit::verify_units(compiled_units);
     let (modules, scripts): (Vec<_>, Vec<_>) = compiled_units
         .into_iter()
-        .partition(|u| matches!(u, CompiledUnit::Module { .. }));
+        .partition(|u| matches!(u, AnnotatedCompiledUnit::Module(_)));
 
     // modules
     if !modules.is_empty() {
@@ -510,6 +531,7 @@ pub fn output_compiled_units(
     }
     let digit_width = num_digits(modules.len());
     for (idx, unit) in modules.into_iter().enumerate() {
+        let unit = unit.into_compiled_unit();
         let mut path = dir_path!(
             out_dir,
             MODULE_SUB_DIR,
@@ -523,7 +545,8 @@ pub fn output_compiled_units(
         std::fs::create_dir_all(dir_path!(out_dir, SCRIPT_SUB_DIR))?;
     }
     for unit in scripts {
-        let mut path = dir_path!(out_dir, SCRIPT_SUB_DIR, unit.name());
+        let unit = unit.into_compiled_unit();
+        let mut path = dir_path!(out_dir, SCRIPT_SUB_DIR, unit.name().as_str());
         emit_unit!(path, unit);
     }
 

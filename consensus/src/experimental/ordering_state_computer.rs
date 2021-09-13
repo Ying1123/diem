@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{
-    error::StateSyncError, experimental::execution_phase::ExecutionChannelType,
+    error::StateSyncError, experimental::execution_phase::ExecutionRequest,
     state_replication::StateComputer,
 };
 use anyhow::Result;
@@ -16,7 +16,7 @@ use futures::SinkExt;
 use std::{boxed::Box, sync::Arc};
 
 use crate::{
-    experimental::{errors::Error, execution_phase::ResetAck},
+    experimental::{buffer_manager::SyncAck, errors::Error},
     state_replication::StateComputerCommitCallBackType,
 };
 use futures::channel::oneshot;
@@ -27,16 +27,16 @@ use futures::channel::oneshot;
 pub struct OrderingStateComputer {
     // the channel to pour vectors of blocks into
     // the real execution phase (will be handled in ExecutionPhase).
-    executor_channel: Sender<ExecutionChannelType>,
+    executor_channel: Sender<ExecutionRequest>,
     state_computer_for_sync: Arc<dyn StateComputer>,
-    reset_event_channel_tx: Sender<oneshot::Sender<ResetAck>>,
+    reset_event_channel_tx: Sender<oneshot::Sender<SyncAck>>,
 }
 
 impl OrderingStateComputer {
     pub fn new(
-        executor_channel: Sender<ExecutionChannelType>,
+        executor_channel: Sender<ExecutionRequest>,
         state_computer_for_sync: Arc<dyn StateComputer>,
-        reset_event_channel_tx: Sender<oneshot::Sender<ResetAck>>,
+        reset_event_channel_tx: Sender<oneshot::Sender<SyncAck>>,
     ) -> Self {
         Self {
             executor_channel,
@@ -67,24 +67,13 @@ impl StateComputer for OrderingStateComputer {
     async fn commit(
         &self,
         blocks: &[Arc<ExecutedBlock>],
-        finality_proof: LedgerInfoWithSignatures,
-        callback: StateComputerCommitCallBackType,
+        _finality_proof: LedgerInfoWithSignatures,
+        _callback: StateComputerCommitCallBackType,
     ) -> Result<(), ExecutionError> {
         assert!(!blocks.is_empty());
 
-        let ordered_block = blocks.iter().map(|b| b.block().clone()).collect();
+        // TODO: send blocks to buffer manager
 
-        self.executor_channel
-            .clone()
-            .send(ExecutionChannelType(
-                ordered_block,
-                finality_proof,
-                callback,
-            ))
-            .await
-            .map_err(|e| ExecutionError::InternalError {
-                error: e.to_string(),
-            })?;
         Ok(())
     }
 
@@ -96,7 +85,7 @@ impl StateComputer for OrderingStateComputer {
         self.state_computer_for_sync.sync_to(target).await?;
 
         // reset execution phase and commit phase
-        let (tx, rx) = oneshot::channel::<ResetAck>();
+        let (tx, rx) = oneshot::channel::<SyncAck>();
         self.reset_event_channel_tx
             .clone()
             .send(tx)

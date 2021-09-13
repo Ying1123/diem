@@ -46,9 +46,11 @@ before and after every transaction.
 -  [Function `create_parent_vasp_account`](#0x1_DiemAccount_create_parent_vasp_account)
 -  [Function `create_child_vasp_account`](#0x1_DiemAccount_create_child_vasp_account)
 -  [Function `create_signer`](#0x1_DiemAccount_create_signer)
+-  [Function `publish_crsn`](#0x1_DiemAccount_publish_crsn)
 -  [Function `balance_for`](#0x1_DiemAccount_balance_for)
 -  [Function `balance`](#0x1_DiemAccount_balance)
 -  [Function `add_currency`](#0x1_DiemAccount_add_currency)
+-  [Function `add_currency_for_test`](#0x1_DiemAccount_add_currency_for_test)
     -  [Access Control](#@Access_Control_3)
 -  [Function `accepts_currency`](#0x1_DiemAccount_accepts_currency)
 -  [Function `sequence_number_for_account`](#0x1_DiemAccount_sequence_number_for_account)
@@ -85,6 +87,7 @@ before and after every transaction.
 <pre><code><b>use</b> <a href="AccountFreezing.md#0x1_AccountFreezing">0x1::AccountFreezing</a>;
 <b>use</b> <a href="AccountLimits.md#0x1_AccountLimits">0x1::AccountLimits</a>;
 <b>use</b> <a href="../../../../../../move-stdlib/docs/BCS.md#0x1_BCS">0x1::BCS</a>;
+<b>use</b> <a href="CRSN.md#0x1_CRSN">0x1::CRSN</a>;
 <b>use</b> <a href="ChainId.md#0x1_ChainId">0x1::ChainId</a>;
 <b>use</b> <a href="CoreAddresses.md#0x1_CoreAddresses">0x1::CoreAddresses</a>;
 <b>use</b> <a href="DesignatedDealer.md#0x1_DesignatedDealer">0x1::DesignatedDealer</a>;
@@ -818,6 +821,15 @@ important to the semantics of the system.
 
 
 
+<a name="0x1_DiemAccount_PROLOGUE_ESEQ_NONCE_INVALID"></a>
+
+
+
+<pre><code><b>const</b> <a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQ_NONCE_INVALID">PROLOGUE_ESEQ_NONCE_INVALID</a>: u64 = 1014;
+</code></pre>
+
+
+
 <a name="0x1_DiemAccount_PROLOGUE_ETRANSACTION_EXPIRED"></a>
 
 
@@ -1076,16 +1088,6 @@ Record a payment of <code>to_deposit</code> from <code>payer</code> to <code>pay
 <b>modifies</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;&gt;(payee);
 <b>modifies</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee);
 <b>modifies</b> <b>global</b>&lt;<a href="AccountLimits.md#0x1_AccountLimits_Window">AccountLimits::Window</a>&lt;Token&gt;&gt;(<a href="VASP.md#0x1_VASP_spec_parent_address">VASP::spec_parent_address</a>(payee));
-<b>ensures</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee);
-<b>ensures</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;&gt;(payee);
-<b>ensures</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).withdraw_capability
-    == <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).withdraw_capability);
-<b>ensures</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).authentication_key
-    == <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).authentication_key);
-<b>ensures</b> <a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_spec_guid_eq">Event::spec_guid_eq</a>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).sent_events,
-                            <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).sent_events));
-<b>ensures</b> <a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_spec_guid_eq">Event::spec_guid_eq</a>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).received_events,
-                            <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).received_events));
 <b>let</b> amount = to_deposit.value;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_DepositAbortsIf">DepositAbortsIf</a>&lt;Token&gt;{amount: amount};
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_DepositOverflowAbortsIf">DepositOverflowAbortsIf</a>&lt;Token&gt;{amount: amount};
@@ -1160,7 +1162,17 @@ Record a payment of <code>to_deposit</code> from <code>payer</code> to <code>pay
 <pre><code><b>schema</b> <a href="DiemAccount.md#0x1_DiemAccount_DepositEnsures">DepositEnsures</a>&lt;Token&gt; {
     payee: address;
     amount: u64;
+    <b>ensures</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;&gt;(payee);
     <b>ensures</b> <a href="DiemAccount.md#0x1_DiemAccount_balance">balance</a>&lt;Token&gt;(payee) == <b>old</b>(<a href="DiemAccount.md#0x1_DiemAccount_balance">balance</a>&lt;Token&gt;(payee)) + amount;
+    <b>ensures</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee);
+    <b>ensures</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).withdraw_capability
+        == <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).withdraw_capability);
+    <b>ensures</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).authentication_key
+        == <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).authentication_key);
+    <b>ensures</b> <a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_spec_guid_eq">Event::spec_guid_eq</a>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).sent_events,
+                                <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).sent_events));
+    <b>ensures</b> <a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_spec_guid_eq">Event::spec_guid_eq</a>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).received_events,
+                                <b>old</b>(<b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(payee).received_events));
 }
 </code></pre>
 
@@ -2544,9 +2556,11 @@ Creating an account at address 0x0 will abort as it is a reserved address for th
 
 <pre><code><b>pragma</b> opaque;
 <b>let</b> new_account_addr = <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(new_account);
+<b>requires</b> !<b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(new_account_addr);
 <b>modifies</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(new_account_addr);
 <b>modifies</b> <b>global</b>&lt;<a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_EventHandleGenerator">Event::EventHandleGenerator</a>&gt;(new_account_addr);
 <b>modifies</b> <b>global</b>&lt;<a href="AccountFreezing.md#0x1_AccountFreezing_FreezingBit">AccountFreezing::FreezingBit</a>&gt;(new_account_addr);
+<b>requires</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(@DiemRoot);
 <b>modifies</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(@DiemRoot);
 <b>ensures</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(@DiemRoot);
 <b>requires</b> <b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">Roles::RoleId</a>&gt;(new_account_addr);
@@ -2740,7 +2754,8 @@ AccountOperationsCapability, WriteSetManager, and finally makes the account.
 
 
 
-<pre><code><b>pragma</b> opaque;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>pragma</b> opaque;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateDiemRootAccountModifies">CreateDiemRootAccountModifies</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateDiemRootAccountAbortsIf">CreateDiemRootAccountAbortsIf</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateDiemRootAccountEnsures">CreateDiemRootAccountEnsures</a>;
@@ -2854,7 +2869,8 @@ event handle generator, then makes the account.
 
 
 
-<pre><code><b>pragma</b> opaque;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>pragma</b> opaque;
 <b>let</b> tc_addr = @TreasuryCompliance;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateTreasuryComplianceAccountModifies">CreateTreasuryComplianceAccountModifies</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateTreasuryComplianceAccountAbortsIf">CreateTreasuryComplianceAccountAbortsIf</a>;
@@ -2951,6 +2967,7 @@ Creates Preburn resource under account 'new_account_address'
     human_name: vector&lt;u8&gt;,
     add_all_currencies: bool,
 ) <b>acquires</b> <a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a> {
+    <a href="DiemTimestamp.md#0x1_DiemTimestamp_assert_operating">DiemTimestamp::assert_operating</a>();
     <a href="Roles.md#0x1_Roles_assert_treasury_compliance">Roles::assert_treasury_compliance</a>(creator_account);
     <b>let</b> new_dd_account = <a href="DiemAccount.md#0x1_DiemAccount_create_signer">create_signer</a>(new_account_address);
     <a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_publish_generator">Event::publish_generator</a>(&new_dd_account);
@@ -2971,7 +2988,8 @@ Creates Preburn resource under account 'new_account_address'
 
 
 
-<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateDesignatedDealerAbortsIf">CreateDesignatedDealerAbortsIf</a>&lt;CoinType&gt;;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateDesignatedDealerAbortsIf">CreateDesignatedDealerAbortsIf</a>&lt;CoinType&gt;;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateDesignatedDealerEnsures">CreateDesignatedDealerEnsures</a>&lt;CoinType&gt;;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_MakeAccountEmits">MakeAccountEmits</a>;
 </code></pre>
@@ -2987,6 +3005,7 @@ Creates Preburn resource under account 'new_account_address'
     new_account_address: address;
     auth_key_prefix: vector&lt;u8&gt;;
     add_all_currencies: bool;
+    <b>include</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_AbortsIfNotOperating">DiemTimestamp::AbortsIfNotOperating</a>;
     <b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotTreasuryCompliance">Roles::AbortsIfNotTreasuryCompliance</a>{account: creator_account};
     <b>aborts_if</b> <b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">Roles::RoleId</a>&gt;(new_account_address) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_ALREADY_PUBLISHED">Errors::ALREADY_PUBLISHED</a>;
     <b>aborts_if</b> <b>exists</b>&lt;<a href="DesignatedDealer.md#0x1_DesignatedDealer_Dealer">DesignatedDealer::Dealer</a>&gt;(new_account_address) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_ALREADY_PUBLISHED">Errors::ALREADY_PUBLISHED</a>;
@@ -3049,7 +3068,11 @@ all available currencies in the system will also be added.
     <a href="DualAttestation.md#0x1_DualAttestation_publish_credential">DualAttestation::publish_credential</a>(&new_account, creator_account, human_name);
     <a href="VASPDomain.md#0x1_VASPDomain_publish_vasp_domains">VASPDomain::publish_vasp_domains</a>(&new_account);
     <a href="DiemAccount.md#0x1_DiemAccount_make_account">make_account</a>(&new_account, auth_key_prefix);
-    <a href="DiemAccount.md#0x1_DiemAccount_add_currencies_for_account">add_currencies_for_account</a>&lt;Token&gt;(&new_account, add_all_currencies)
+    <a href="DiemAccount.md#0x1_DiemAccount_add_currencies_for_account">add_currencies_for_account</a>&lt;Token&gt;(&new_account, add_all_currencies);
+    <b>spec</b> {
+        <b>assert</b> <b>exists</b>&lt;<a href="VASPDomain.md#0x1_VASPDomain_VASPDomains">VASPDomain::VASPDomains</a>&gt;(<a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(new_account));
+        <b>assert</b> <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">Roles::spec_has_treasury_compliance_role_addr</a>(<a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(creator_account));
+    }
 }
 </code></pre>
 
@@ -3062,7 +3085,8 @@ all available currencies in the system will also be added.
 
 
 
-<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateParentVASPAccountAbortsIf">CreateParentVASPAccountAbortsIf</a>&lt;Token&gt;;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateParentVASPAccountAbortsIf">CreateParentVASPAccountAbortsIf</a>&lt;Token&gt;;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateParentVASPAccountEnsures">CreateParentVASPAccountEnsures</a>&lt;Token&gt;;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_MakeAccountEmits">MakeAccountEmits</a>;
 </code></pre>
@@ -3133,6 +3157,7 @@ also be added. This account will be a child of <code>creator</code>, which must 
     auth_key_prefix: vector&lt;u8&gt;,
     add_all_currencies: bool,
 ) <b>acquires</b> <a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a> {
+    <a href="DiemTimestamp.md#0x1_DiemTimestamp_assert_operating">DiemTimestamp::assert_operating</a>();
     <a href="Roles.md#0x1_Roles_assert_parent_vasp_role">Roles::assert_parent_vasp_role</a>(parent);
     <b>let</b> new_account = <a href="DiemAccount.md#0x1_DiemAccount_create_signer">create_signer</a>(new_account_address);
     <a href="Roles.md#0x1_Roles_new_child_vasp_role">Roles::new_child_vasp_role</a>(parent, &new_account);
@@ -3142,7 +3167,7 @@ also be added. This account will be a child of <code>creator</code>, which must 
     );
     <a href="../../../../../../move-stdlib/docs/Event.md#0x1_Event_publish_generator">Event::publish_generator</a>(&new_account);
     <a href="DiemAccount.md#0x1_DiemAccount_make_account">make_account</a>(&new_account, auth_key_prefix);
-    <a href="DiemAccount.md#0x1_DiemAccount_add_currencies_for_account">add_currencies_for_account</a>&lt;Token&gt;(&new_account, add_all_currencies)
+    <a href="DiemAccount.md#0x1_DiemAccount_add_currencies_for_account">add_currencies_for_account</a>&lt;Token&gt;(&new_account, add_all_currencies);
 }
 </code></pre>
 
@@ -3155,7 +3180,8 @@ also be added. This account will be a child of <code>creator</code>, which must 
 
 
 
-<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateChildVASPAccountAbortsIf">CreateChildVASPAccountAbortsIf</a>&lt;Token&gt;;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateChildVASPAccountAbortsIf">CreateChildVASPAccountAbortsIf</a>&lt;Token&gt;;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateChildVASPAccountEnsures">CreateChildVASPAccountEnsures</a>&lt;Token&gt;{
     parent_addr: <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(parent),
     child_addr: new_account_address,
@@ -3175,6 +3201,7 @@ also be added. This account will be a child of <code>creator</code>, which must 
     new_account_address: address;
     auth_key_prefix: vector&lt;u8&gt;;
     add_all_currencies: bool;
+    <b>include</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_AbortsIfNotOperating">DiemTimestamp::AbortsIfNotOperating</a>;
     <b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotParentVasp">Roles::AbortsIfNotParentVasp</a>{account: parent};
     <b>aborts_if</b> <b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">Roles::RoleId</a>&gt;(new_account_address) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_ALREADY_PUBLISHED">Errors::ALREADY_PUBLISHED</a>;
     <b>include</b> <a href="VASP.md#0x1_VASP_PublishChildVASPAbortsIf">VASP::PublishChildVASPAbortsIf</a>{child_addr: new_account_address};
@@ -3219,6 +3246,38 @@ also be added. This account will be a child of <code>creator</code>, which must 
 
 
 <pre><code><b>native</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_create_signer">create_signer</a>(addr: address): signer;
+</code></pre>
+
+
+
+</details>
+
+<a name="0x1_DiemAccount_publish_crsn"></a>
+
+## Function `publish_crsn`
+
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_publish_crsn">publish_crsn</a>(account: &signer, size: u64)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_publish_crsn">publish_crsn</a>(account: &signer, size: u64)
+<b>acquires</b> <a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a> {
+    <b>let</b> account_state = borrow_global&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(<a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(account));
+    // Don't set this <b>to</b> start at account_state.sequence_number + 1, since
+    // after this the epilogue will record the sequence nonce
+    // `account_state.sequence_number` which will shift the window.
+    // If we set the window <b>to</b> start at `account_state.sequence_number +
+    // 1`, this transaction would be rejected in the epilogue <b>as</b> the
+    // sequence nonce would be outside of the window.
+    <a href="CRSN.md#0x1_CRSN_publish">CRSN::publish</a>(account, account_state.sequence_number, size)
+}
 </code></pre>
 
 
@@ -3295,7 +3354,7 @@ Return the current balance of the account at <code>addr</code>.
 Add a balance of <code>Token</code> type to the sending account
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_add_currency">add_currency</a>&lt;Token&gt;(account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_add_currency">add_currency</a>&lt;Token&gt;(account: &signer)
 </code></pre>
 
 
@@ -3304,7 +3363,7 @@ Add a balance of <code>Token</code> type to the sending account
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_add_currency">add_currency</a>&lt;Token&gt;(account: &signer) {
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_add_currency">add_currency</a>&lt;Token&gt;(account: &signer) {
     <b>let</b> addr = <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(account);
     // aborts <b>if</b> `Token` is not a currency type in the system
     <a href="Diem.md#0x1_Diem_assert_is_currency">Diem::assert_is_currency</a>&lt;Token&gt;();
@@ -3315,7 +3374,10 @@ Add a balance of <code>Token</code> type to the sending account
         <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_EROLE_CANT_STORE_BALANCE">EROLE_CANT_STORE_BALANCE</a>)
     );
     // aborts <b>if</b> this account already has a balance in `Token`
-    <b>assert</b>(!<b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;&gt;(addr), <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_already_published">Errors::already_published</a>(<a href="DiemAccount.md#0x1_DiemAccount_EADD_EXISTING_CURRENCY">EADD_EXISTING_CURRENCY</a>));
+    <b>assert</b>(
+        !<b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;&gt;(addr),
+        <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_already_published">Errors::already_published</a>(<a href="DiemAccount.md#0x1_DiemAccount_EADD_EXISTING_CURRENCY">EADD_EXISTING_CURRENCY</a>)
+    );
 
     move_to(account, <a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;{ coin: <a href="Diem.md#0x1_Diem_zero">Diem::zero</a>&lt;Token&gt;() })
 }
@@ -3332,9 +3394,10 @@ Add a balance of <code>Token</code> type to the sending account
 An account must exist at the address
 
 
-<pre><code><b>aborts_if</b> !<a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(<a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(account)) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_NOT_PUBLISHED">Errors::NOT_PUBLISHED</a>;
+<pre><code><b>let</b> addr = <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(account);
+<b>aborts_if</b> !<a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_NOT_PUBLISHED">Errors::NOT_PUBLISHED</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_AddCurrencyAbortsIf">AddCurrencyAbortsIf</a>&lt;Token&gt;;
-<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_AddCurrencyEnsures">AddCurrencyEnsures</a>&lt;Token&gt;{addr: <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(account)};
+<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_AddCurrencyEnsures">AddCurrencyEnsures</a>&lt;Token&gt;;
 </code></pre>
 
 
@@ -3395,6 +3458,42 @@ This publishes a <code><a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance<
     <b>ensures</b> <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;&gt;(addr)
         == <a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;Token&gt;{ coin: <a href="Diem.md#0x1_Diem">Diem</a>&lt;Token&gt; { value: 0 } };
 }
+</code></pre>
+
+
+
+</details>
+
+<a name="0x1_DiemAccount_add_currency_for_test"></a>
+
+## Function `add_currency_for_test`
+
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_add_currency_for_test">add_currency_for_test</a>&lt;Token&gt;(account: &signer)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="DiemAccount.md#0x1_DiemAccount_add_currency_for_test">add_currency_for_test</a>&lt;Token&gt;(account: &signer) {
+    <a href="DiemAccount.md#0x1_DiemAccount_add_currency">add_currency</a>&lt;Token&gt;(account)
+}
+</code></pre>
+
+
+
+</details>
+
+<details>
+<summary>Specification</summary>
+
+
+
+<pre><code><b>pragma</b> verify = <b>false</b>;
 </code></pre>
 
 
@@ -4005,8 +4104,8 @@ The prologue for multi-agent user transactions
     <b>let</b> i = 0;
     <b>while</b> ({
         <b>spec</b> {
-            <b>assert</b> <b>forall</b> j in 0..i: <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(secondary_signer_addresses[j]);
-            <b>assert</b> <b>forall</b> j in 0..i: secondary_signer_public_key_hashes[j]
+            <b>invariant</b> <b>forall</b> j in 0..i: <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(secondary_signer_addresses[j]);
+            <b>invariant</b> <b>forall</b> j in 0..i: secondary_signer_public_key_hashes[j]
                 == <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(secondary_signer_addresses[j]).authentication_key;
         };
         (i &lt; num_secondary_signers)
@@ -4187,20 +4286,29 @@ The main properties that it verifies:
         <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_limit_exceeded">Errors::limit_exceeded</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG">PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG</a>)
     );
 
-    // [PCA11]: Check that the transaction sequence number is not too <b>old</b> (in the past)
-    <b>assert</b>(
-        txn_sequence_number &gt;= sender_account.sequence_number,
-        <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_OLD">PROLOGUE_ESEQUENCE_NUMBER_TOO_OLD</a>)
-    );
+    <b>if</b> (<a href="CRSN.md#0x1_CRSN_has_crsn">CRSN::has_crsn</a>(transaction_sender)) {
+        // [PCA13]: If using a sequence nonce check that it's accepted
+        <b>assert</b>(
+            <a href="CRSN.md#0x1_CRSN_check">CRSN::check</a>(sender, txn_sequence_number),
+            <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQ_NONCE_INVALID">PROLOGUE_ESEQ_NONCE_INVALID</a>)
+        );
+    } <b>else</b> {
+        // [PCA11]: Check that the transaction sequence number is not too <b>old</b> (in the past)
+        <b>assert</b>(
+            txn_sequence_number &gt;= sender_account.sequence_number,
+            <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_OLD">PROLOGUE_ESEQUENCE_NUMBER_TOO_OLD</a>)
+        );
 
-    // [PCA12]: Check that the transaction's sequence number matches the
-    // current sequence number. Otherwise sequence number is too new by [PCA11].
-    <b>assert</b>(
-        txn_sequence_number == sender_account.sequence_number,
-        <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW">PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW</a>)
-    );
-    // WARNING: No checks should be added here <b>as</b> the sequence number too new check should be the last check run
-    // by the prologue.
+        // [PCA12]: Check that the transaction's sequence number matches the
+        // current sequence number. Otherwise sequence number is too new by [PCA11].
+        <b>assert</b>(
+            txn_sequence_number == sender_account.sequence_number,
+            <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW">PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW</a>)
+        );
+
+        // WARNING: No checks should be added here <b>as</b> the sequence number too new check should be the last check run
+        // by the prologue.
+    }
 }
 </code></pre>
 
@@ -4341,7 +4449,7 @@ Only happens if this is called in Genesis. Doesn't need to be handled.
 
 
 <pre><code><b>schema</b> <a href="DiemAccount.md#0x1_DiemAccount_PrologueCommonAbortsIf">PrologueCommonAbortsIf</a>&lt;Token&gt; {
-    <b>aborts_if</b> txn_sequence_number &lt; <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(transaction_sender).sequence_number <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_ARGUMENT">Errors::INVALID_ARGUMENT</a>;
+    <b>aborts_if</b> !<a href="CRSN.md#0x1_CRSN_has_crsn">CRSN::has_crsn</a>(transaction_sender) && txn_sequence_number &lt; <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(transaction_sender).sequence_number <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_ARGUMENT">Errors::INVALID_ARGUMENT</a>;
 }
 </code></pre>
 
@@ -4350,7 +4458,16 @@ Only happens if this is called in Genesis. Doesn't need to be handled.
 
 
 <pre><code><b>schema</b> <a href="DiemAccount.md#0x1_DiemAccount_PrologueCommonAbortsIf">PrologueCommonAbortsIf</a>&lt;Token&gt; {
-    <b>aborts_if</b> txn_sequence_number &gt; <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(transaction_sender).sequence_number <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_ARGUMENT">Errors::INVALID_ARGUMENT</a>;
+    <b>aborts_if</b> !<a href="CRSN.md#0x1_CRSN_has_crsn">CRSN::has_crsn</a>(transaction_sender) && txn_sequence_number &gt; <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount">DiemAccount</a>&gt;(transaction_sender).sequence_number <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_ARGUMENT">Errors::INVALID_ARGUMENT</a>;
+}
+</code></pre>
+
+
+[PCA13] Covered: L93 (match 14)
+
+
+<pre><code><b>schema</b> <a href="DiemAccount.md#0x1_DiemAccount_PrologueCommonAbortsIf">PrologueCommonAbortsIf</a>&lt;Token&gt; {
+    <b>aborts_if</b> <a href="CRSN.md#0x1_CRSN_has_crsn">CRSN::has_crsn</a>(transaction_sender) && !<a href="CRSN.md#0x1_CRSN_spec_check">CRSN::spec_check</a>(transaction_sender, txn_sequence_number) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_ARGUMENT">Errors::INVALID_ARGUMENT</a>;
 }
 </code></pre>
 
@@ -4447,17 +4564,25 @@ based on the conditions checked in the prologue, should never fail.
         <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_limit_exceeded">Errors::limit_exceeded</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG">PROLOGUE_ESEQUENCE_NUMBER_TOO_BIG</a>)
     );
 
-    // [EA4; Invariant]: Make sure passed-in `txn_sequence_number` matches
-    // the `sender_account`'s `sequence_number`. Already checked in [PCA12].
-    <b>assert</b>(
-        sender_account.sequence_number == txn_sequence_number,
-        <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW">PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW</a>)
-    );
+    <b>if</b> (<a href="CRSN.md#0x1_CRSN_has_crsn">CRSN::has_crsn</a>(sender)) {
+        // Make sure the `sender_account`'s <a href="CRSN.md#0x1_CRSN">CRSN</a> is still valid and record it.
+        <b>assert</b>(
+            <a href="CRSN.md#0x1_CRSN_record">CRSN::record</a>(account, txn_sequence_number),
+            <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQ_NONCE_INVALID">PROLOGUE_ESEQ_NONCE_INVALID</a>),
+        );
+    } <b>else</b> {
+        // [EA4; Invariant]: Make sure passed-in `txn_sequence_number` matches
+        // the `sender_account`'s `sequence_number`. Already checked in [PCA12].
+        <b>assert</b>(
+            sender_account.sequence_number == txn_sequence_number,
+            <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW">PROLOGUE_ESEQUENCE_NUMBER_TOO_NEW</a>)
+        );
+    };
 
     // The transaction sequence number is passed in <b>to</b> prevent any
     // possibility of the account's sequence number increasing by more than
     // one for any transaction.
-    sender_account.sequence_number = txn_sequence_number + 1;
+    sender_account.sequence_number = sender_account.sequence_number + 1;
 
     <b>if</b> (transaction_fee_amount &gt; 0) {
         // [Invariant Use]: <a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a> for `Token` verified <b>to</b> exist for non-zero transaction fee amounts by [PCA7].
@@ -4513,7 +4638,10 @@ Epilogue for WriteSet trasnaction
         <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(dr_account) == @DiemRoot,
         <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_EINVALID_WRITESET_SENDER">PROLOGUE_EINVALID_WRITESET_SENDER</a>)
     );
-    <b>assert</b>(<a href="Roles.md#0x1_Roles_has_diem_root_role">Roles::has_diem_root_role</a>(dr_account), <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_EINVALID_WRITESET_SENDER">PROLOGUE_EINVALID_WRITESET_SENDER</a>));
+    <b>assert</b>(
+        <a href="Roles.md#0x1_Roles_has_diem_root_role">Roles::has_diem_root_role</a>(dr_account),
+        <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_invalid_argument">Errors::invalid_argument</a>(<a href="DiemAccount.md#0x1_DiemAccount_PROLOGUE_EINVALID_WRITESET_SENDER">PROLOGUE_EINVALID_WRITESET_SENDER</a>)
+    );
 
     // Currency code don't matter here <b>as</b> it won't be charged anyway.
     <a href="DiemAccount.md#0x1_DiemAccount_epilogue_common">epilogue_common</a>&lt;<a href="XUS.md#0x1_XUS">XUS</a>&gt;(dr_account, txn_sequence_number, 0, 0, 0);
@@ -4530,16 +4658,16 @@ Epilogue for WriteSet trasnaction
 
 
 
-<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_WritesetEpiloguEmits">WritesetEpiloguEmits</a>;
+<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_WritesetEpilogueEmits">WritesetEpilogueEmits</a>;
 </code></pre>
 
 
 
 
-<a name="0x1_DiemAccount_WritesetEpiloguEmits"></a>
+<a name="0x1_DiemAccount_WritesetEpilogueEmits"></a>
 
 
-<pre><code><b>schema</b> <a href="DiemAccount.md#0x1_DiemAccount_WritesetEpiloguEmits">WritesetEpiloguEmits</a> {
+<pre><code><b>schema</b> <a href="DiemAccount.md#0x1_DiemAccount_WritesetEpilogueEmits">WritesetEpilogueEmits</a> {
     should_trigger_reconfiguration: bool;
     <b>let</b> handle = <b>global</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_DiemWriteSetManager">DiemWriteSetManager</a>&gt;(@DiemRoot).upgrade_events;
     <b>let</b> msg = <a href="DiemAccount.md#0x1_DiemAccount_AdminTransactionEvent">AdminTransactionEvent</a> {
@@ -4595,7 +4723,8 @@ Create a Validator account
 
 
 
-<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateValidatorAccountAbortsIf">CreateValidatorAccountAbortsIf</a>;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateValidatorAccountAbortsIf">CreateValidatorAccountAbortsIf</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateValidatorAccountEnsures">CreateValidatorAccountEnsures</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_MakeAccountEmits">MakeAccountEmits</a>;
 </code></pre>
@@ -4675,7 +4804,8 @@ Create a Validator Operator account
 
 
 
-<pre><code><b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateValidatorOperatorAccountAbortsIf">CreateValidatorOperatorAccountAbortsIf</a>;
+<pre><code><b>pragma</b> disable_invariants_in_body;
+<b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateValidatorOperatorAccountAbortsIf">CreateValidatorOperatorAccountAbortsIf</a>;
 <b>include</b> <a href="DiemAccount.md#0x1_DiemAccount_CreateValidatorOperatorAccountEnsures">CreateValidatorOperatorAccountEnsures</a>;
 </code></pre>
 
@@ -4925,23 +5055,23 @@ Accounts are never deleted.
 After genesis, the <code><a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a></code> exists.
 
 
-<pre><code><b>invariant</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(@DiemRoot);
+<pre><code><b>invariant</b> [suspendable] <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(@DiemRoot);
 </code></pre>
 
 
 After genesis, the <code><a href="DiemAccount.md#0x1_DiemAccount_DiemWriteSetManager">DiemWriteSetManager</a></code> exists.
 
 
-<pre><code><b>invariant</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_DiemWriteSetManager">DiemWriteSetManager</a>&gt;(@DiemRoot);
+<pre><code><b>invariant</b> [suspendable] <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_DiemWriteSetManager">DiemWriteSetManager</a>&gt;(@DiemRoot);
 </code></pre>
 
 
 resource struct <code><a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;CoinType&gt;</code> is persistent
 
 
-<pre><code><b>invariant</b> <b>update</b> <b>forall</b> coin_type: type, addr: address
-    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;coin_type&gt;&gt;(addr)):
-        <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;coin_type&gt;&gt;(addr);
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b> <b>forall</b> addr: address
+    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;CoinType&gt;&gt;(addr)):
+        <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;CoinType&gt;&gt;(addr);
 </code></pre>
 
 
@@ -4970,35 +5100,42 @@ resource struct <code><a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsC
 An address has a published account iff it has a published RoleId
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address:  <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr) ==&gt; <b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">Roles::RoleId</a>&gt;(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:  <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr) &lt;==&gt; <b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">Roles::RoleId</a>&gt;(addr);
 </code></pre>
 
 
 There is a published AccountOperationsCapability iff there is an account and it's at Diem root address
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address:
-     (addr == @DiemRoot && <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr)) ==&gt; <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:
+    <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_AccountOperationsCapability">AccountOperationsCapability</a>&gt;(addr) &lt;==&gt; (addr == @DiemRoot && <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr));
 </code></pre>
 
 
 An account has a WriteSetManager iff if it is Diem root
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address:
-    addr != @DiemRoot ==&gt; !<b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_DiemWriteSetManager">DiemWriteSetManager</a>&gt;(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:
+   <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_DiemWriteSetManager">DiemWriteSetManager</a>&gt;(addr) &lt;==&gt; (addr == @DiemRoot && <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr));
 </code></pre>
 
 
 There is a VASPDomainManager at an address iff the address is a diem treasury compliance account
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address:
-    <b>exists</b>&lt;<a href="VASPDomain.md#0x1_VASPDomain_VASPDomainManager">VASPDomain::VASPDomainManager</a>&gt;(addr) ==&gt; <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">Roles::spec_has_treasury_compliance_role_addr</a>(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:
+    <b>exists</b>&lt;<a href="VASPDomain.md#0x1_VASPDomain_VASPDomainManager">VASPDomain::VASPDomainManager</a>&gt;(addr) &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">Roles::spec_has_treasury_compliance_role_addr</a>(addr);
 </code></pre>
 
 
 There is a VASPDomains at an address iff the address is a Diem treasury compliance account
+
+
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:
+    <b>exists</b>&lt;<a href="VASPDomain.md#0x1_VASPDomain_VASPDomains">VASPDomain::VASPDomains</a>&gt;(addr) &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">Roles::spec_has_parent_VASP_role_addr</a>(addr);
+</code></pre>
+
+
 Account has a balance only iff it is parent or child VASP or a designated dealer
 > Note: It would be better to make this generic over all existing and future coins, but that
 would require existential quantification over types, and I'm not sure if that works with monomorphization.
@@ -5013,17 +5150,17 @@ There is a <code><a href="DesignatedDealer.md#0x1_DesignatedDealer_Dealer">Desig
 <code>Roles::DesignatedDealer</code> role.
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address: <b>exists</b>&lt;<a href="DesignatedDealer.md#0x1_DesignatedDealer_Dealer">DesignatedDealer::Dealer</a>&gt;(addr)
-    ==&gt; <a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">Roles::spec_has_designated_dealer_role_addr</a>(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address: <b>exists</b>&lt;<a href="DesignatedDealer.md#0x1_DesignatedDealer_Dealer">DesignatedDealer::Dealer</a>&gt;(addr)
+    &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">Roles::spec_has_designated_dealer_role_addr</a>(addr);
 </code></pre>
 
 
 There is a DualAttestation credential iff account has designated dealer or parent VASP role
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address:
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:
     <b>exists</b>&lt;<a href="DualAttestation.md#0x1_DualAttestation_Credential">DualAttestation::Credential</a>&gt;(addr)
-    ==&gt; (<a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">Roles::spec_has_designated_dealer_role_addr</a>(addr)
+    &lt;==&gt; (<a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">Roles::spec_has_designated_dealer_role_addr</a>(addr)
           || <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">Roles::spec_has_parent_VASP_role_addr</a>(addr));
 </code></pre>
 
@@ -5031,7 +5168,9 @@ There is a DualAttestation credential iff account has designated dealer or paren
 An address has an account iff there is a published FreezingBit struct
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address:
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address:
+    <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr) &lt;==&gt; <b>exists</b>&lt;<a href="AccountFreezing.md#0x1_AccountFreezing_FreezingBit">AccountFreezing::FreezingBit</a>&gt;(addr);
+<b>invariant</b> [suspendable] <b>forall</b> addr: address:
     <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr) ==&gt; <b>exists</b>&lt;<a href="AccountFreezing.md#0x1_AccountFreezing_FreezingBit">AccountFreezing::FreezingBit</a>&gt;(addr);
 </code></pre>
 
@@ -5041,41 +5180,48 @@ Balances can only be published at addresses where an account exists
 Balance <==> can_hold_balance
 
 
-<pre><code><b>invariant</b> <b>forall</b> token: type: <b>forall</b> addr: address <b>where</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;token&gt;&gt;(addr):
+<pre><code><b>invariant</b>&lt;CoinType&gt; [suspendable]  <b>forall</b> addr: address <b>where</b> <b>exists</b>&lt;<a href="DiemAccount.md#0x1_DiemAccount_Balance">Balance</a>&lt;CoinType&gt;&gt;(addr):
     <a href="DiemAccount.md#0x1_DiemAccount_exists_at">exists_at</a>(addr);
 </code></pre>
 
 
 Account has SlidingNonce only if it's Diem Root or Treasury Compliance
+
+
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address: <b>exists</b>&lt;<a href="SlidingNonce.md#0x1_SlidingNonce_SlidingNonce">SlidingNonce::SlidingNonce</a>&gt;(addr)
+    &lt;==&gt; (<a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">Roles::spec_has_diem_root_role_addr</a>(addr) || <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">Roles::spec_has_treasury_compliance_role_addr</a>(addr));
+</code></pre>
+
+
 Address has a ValidatorConfig iff it is a Validator address
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address: <a href="ValidatorConfig.md#0x1_ValidatorConfig_exists_config">ValidatorConfig::exists_config</a>(addr)
-    ==&gt; <a href="Roles.md#0x1_Roles_spec_has_validator_role_addr">Roles::spec_has_validator_role_addr</a>(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address: <a href="ValidatorConfig.md#0x1_ValidatorConfig_exists_config">ValidatorConfig::exists_config</a>(addr)
+    &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_validator_role_addr">Roles::spec_has_validator_role_addr</a>(addr);
 </code></pre>
 
 
 Address has a ValidatorOperatorConfig iff it is a ValidatorOperator address
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address: <a href="ValidatorOperatorConfig.md#0x1_ValidatorOperatorConfig_has_validator_operator_config">ValidatorOperatorConfig::has_validator_operator_config</a>(addr)
-    ==&gt; <a href="Roles.md#0x1_Roles_spec_has_validator_operator_role_addr">Roles::spec_has_validator_operator_role_addr</a>(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address: <a href="ValidatorOperatorConfig.md#0x1_ValidatorOperatorConfig_has_validator_operator_config">ValidatorOperatorConfig::has_validator_operator_config</a>(addr)
+    &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_validator_operator_role_addr">Roles::spec_has_validator_operator_role_addr</a>(addr);
 </code></pre>
 
 
 Address has a parent VASP credential iff it has a parent VASP role
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address: <a href="VASP.md#0x1_VASP_is_parent">VASP::is_parent</a>(addr)
-    ==&gt; <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">Roles::spec_has_parent_VASP_role_addr</a>(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address: <a href="VASP.md#0x1_VASP_is_parent">VASP::is_parent</a>(addr)
+    &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">Roles::spec_has_parent_VASP_role_addr</a>(addr);
 </code></pre>
 
 
 Address has a child VASP credential iff it has a child VASP role
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address: <a href="VASP.md#0x1_VASP_is_child">VASP::is_child</a>(addr)
-    ==&gt; <a href="Roles.md#0x1_Roles_spec_has_child_VASP_role_addr">Roles::spec_has_child_VASP_role_addr</a>(addr);
+<pre><code><b>invariant</b> [suspendable] <b>forall</b> addr: address: <a href="VASP.md#0x1_VASP_is_child">VASP::is_child</a>(addr)
+    &lt;==&gt; <a href="Roles.md#0x1_Roles_spec_has_child_VASP_role_addr">Roles::spec_has_child_VASP_role_addr</a>(addr);
 </code></pre>
 
 

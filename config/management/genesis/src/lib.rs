@@ -5,6 +5,7 @@
 
 pub mod builder;
 pub mod command;
+pub mod fullnode_builder;
 mod genesis;
 mod key;
 pub mod layout;
@@ -19,8 +20,6 @@ mod waypoint;
 pub mod config_builder;
 #[cfg(test)]
 mod storage_helper;
-#[cfg(any(test, feature = "testing"))]
-pub mod swarm_config;
 
 #[cfg(any(test, feature = "testing"))]
 pub use crate::config_builder::test_config;

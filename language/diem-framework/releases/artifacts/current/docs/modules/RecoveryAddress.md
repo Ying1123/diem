@@ -278,8 +278,8 @@ Aborts if <code>recovery_address</code> does not have the <code>KeyRotationCapab
     <b>let</b> len = <a href="../../../../../../move-stdlib/docs/Vector.md#0x1_Vector_length">Vector::length</a>(caps);
     <b>while</b> ({
         <b>spec</b> {
-            <b>assert</b> i &lt;= len;
-            <b>assert</b> <b>forall</b> j in 0..i: caps[j].account_address != to_recover;
+            <b>invariant</b> i &lt;= len;
+            <b>invariant</b> <b>forall</b> j in 0..i: caps[j].account_address != to_recover;
         };
         (i &lt; len)
     })
@@ -450,10 +450,11 @@ Aborts if <code>to_recover.address</code> and <code>recovery_address</code> belo
 A RecoveryAddress has its own <code>KeyRotationCapability</code>.
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated]
-    <b>forall</b> addr1: address <b>where</b> <a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_is_recovery_address">spec_is_recovery_address</a>(addr1):
-        len(<a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_get_rotation_caps">spec_get_rotation_caps</a>(addr1)) &gt; 0 &&
-        <a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_get_rotation_caps">spec_get_rotation_caps</a>(addr1)[0].account_address == addr1;
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_is_recovery_address">spec_is_recovery_address</a>(addr): (
+        len(<a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_get_rotation_caps">spec_get_rotation_caps</a>(addr)) &gt; 0 &&
+        <a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_get_rotation_caps">spec_get_rotation_caps</a>(addr)[0].account_address == addr
+    );
 </code></pre>
 
 
@@ -505,9 +506,8 @@ in the previous state, then it continues to hold the capability after the update
 Only VASPs can hold <code>RecoverAddress</code> resources.
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated]
-    <b>forall</b> recovery_addr: address <b>where</b> <a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_is_recovery_address">spec_is_recovery_address</a>(recovery_addr):
-        <a href="VASP.md#0x1_VASP_is_vasp">VASP::is_vasp</a>(recovery_addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="RecoveryAddress.md#0x1_RecoveryAddress_spec_is_recovery_address">spec_is_recovery_address</a>(addr): <a href="VASP.md#0x1_VASP_is_vasp">VASP::is_vasp</a>(addr);
 </code></pre>
 
 

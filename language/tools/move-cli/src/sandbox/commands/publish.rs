@@ -8,7 +8,9 @@ use crate::{
     },
     NativeFunctionRecord,
 };
-use move_lang::{self, compiled_unit::CompiledUnit, Compiler, Flags};
+use move_lang::{
+    self, compiled_unit::AnnotatedCompiledUnit, shared::AddressBytes, Compiler, Flags,
+};
 use move_vm_runtime::move_vm::MoveVM;
 
 use anyhow::{bail, Result};
@@ -21,6 +23,7 @@ pub fn publish(
     republish: bool,
     ignore_breaking_changes: bool,
     override_ordering: Option<&[String]>,
+    named_address_mapping: BTreeMap<String, AddressBytes>,
     verbose: bool,
 ) -> Result<()> {
     if verbose {
@@ -29,11 +32,12 @@ pub fn publish(
 
     let (_, compiled_units) = Compiler::new(files, &[state.interface_files_dir()?])
         .set_flags(Flags::empty().set_sources_shadow_deps(republish))
+        .set_named_address_values(named_address_mapping.clone())
         .build_and_report()?;
 
     let num_modules = compiled_units
         .iter()
-        .filter(|u| matches!(u, CompiledUnit::Module { .. }))
+        .filter(|u| matches!(u, AnnotatedCompiledUnit::Module(_)))
         .count();
     if verbose {
         println!("Found and compiled {} modules", num_modules)
@@ -42,16 +46,22 @@ pub fn publish(
     let mut modules = vec![];
     for c in compiled_units {
         match c {
-            CompiledUnit::Script { loc, .. } => {
+            AnnotatedCompiledUnit::Script(_) => {
                 if verbose {
                     println!(
                         "Warning: Found script in specified files for publishing. But scripts \
                          cannot be published. Script found in: {}",
-                        loc.file()
+                        c.loc().file()
                     )
                 }
             }
-            CompiledUnit::Module { module, ident, .. } => modules.push((ident, module)),
+            AnnotatedCompiledUnit::Module(annot_module) => modules.push((
+                (
+                    annot_module.module_ident(),
+                    annot_module.address_name.map(|n| n.value),
+                ),
+                annot_module.named_module.module,
+            )),
         }
     }
 
@@ -59,9 +69,9 @@ pub fn publish(
     if !ignore_breaking_changes {
         let id_to_ident: BTreeMap<_, _> = modules
             .iter()
-            .map(|(ident, module)| {
+            .map(|((_, addr_name_opt), module)| {
                 let id = module.self_id();
-                (id, ident.address_name.as_ref().map(|n| n.value.clone()))
+                (id, *addr_name_opt)
             })
             .collect();
 
@@ -90,7 +100,7 @@ pub fn publish(
             Some(ordering) => {
                 let module_map: BTreeMap<_, _> = modules
                     .into_iter()
-                    .map(|(ident, m)| (ident.module_name.0.value, m))
+                    .map(|((ident, _), m)| (ident.value.module.0.value.to_string(), m))
                     .collect();
 
                 let mut sender_opt = None;
@@ -136,26 +146,25 @@ pub fn publish(
             let modules: Vec<_> = changeset
                 .into_modules()
                 .map(|(module_id, blob_opt)| {
-                    let addr_name = id_to_ident[&module_id].clone();
+                    let addr_name = id_to_ident[&module_id];
                     let ident = (module_id, addr_name);
                     (ident, blob_opt.expect("must be non-deletion"))
                 })
                 .collect();
-            state.save_modules(&modules)?;
+            state.save_modules(&modules, named_address_mapping)?;
         }
     } else {
         // NOTE: the VM enforces the most strict way of module republishing and does not allow
         // backward incompatible changes, as as result, if this flag is set, we skip the VM process
         // and force the CLI to override the on-disk state directly
         let mut serialized_modules = vec![];
-        for (ident, module) in modules {
-            let (address_name_opt, id) = ident.into_module_id();
-            let address_name_opt = address_name_opt.map(|n| n.value);
+        for ((_, address_name_opt), module) in modules {
+            let id = module.self_id();
             let mut module_bytes = vec![];
             module.serialize(&mut module_bytes)?;
             serialized_modules.push(((id, address_name_opt), module_bytes));
         }
-        state.save_modules(&serialized_modules)?;
+        state.save_modules(&serialized_modules, named_address_mapping)?;
     }
 
     Ok(())

@@ -21,6 +21,7 @@ when executing from a fresh state.
 <b>use</b> <a href="DiemAccount.md#0x1_DiemAccount">0x1::DiemAccount</a>;
 <b>use</b> <a href="DiemBlock.md#0x1_DiemBlock">0x1::DiemBlock</a>;
 <b>use</b> <a href="DiemConfig.md#0x1_DiemConfig">0x1::DiemConfig</a>;
+<b>use</b> <a href="DiemConsensusConfig.md#0x1_DiemConsensusConfig">0x1::DiemConsensusConfig</a>;
 <b>use</b> <a href="DiemSystem.md#0x1_DiemSystem">0x1::DiemSystem</a>;
 <b>use</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp">0x1::DiemTimestamp</a>;
 <b>use</b> <a href="DiemTransactionPublishingOption.md#0x1_DiemTransactionPublishingOption">0x1::DiemTransactionPublishingOption</a>;
@@ -45,7 +46,7 @@ when executing from a fresh state.
 Initializes the Diem framework.
 
 
-<pre><code><b>fun</b> <a href="Genesis.md#0x1_Genesis_initialize">initialize</a>(dr_account: signer, tc_account: signer, dr_auth_key: vector&lt;u8&gt;, tc_auth_key: vector&lt;u8&gt;, initial_script_allow_list: vector&lt;vector&lt;u8&gt;&gt;, is_open_module: bool, instruction_schedule: vector&lt;u8&gt;, native_schedule: vector&lt;u8&gt;, chain_id: u8, initial_diem_version: u64)
+<pre><code><b>fun</b> <a href="Genesis.md#0x1_Genesis_initialize">initialize</a>(dr_account: signer, tc_account: signer, dr_auth_key: vector&lt;u8&gt;, tc_auth_key: vector&lt;u8&gt;, initial_script_allow_list: vector&lt;vector&lt;u8&gt;&gt;, is_open_module: bool, instruction_schedule: vector&lt;u8&gt;, native_schedule: vector&lt;u8&gt;, chain_id: u8, initial_diem_version: u64, consensus_config: vector&lt;u8&gt;)
 </code></pre>
 
 
@@ -65,6 +66,7 @@ Initializes the Diem framework.
     native_schedule: vector&lt;u8&gt;,
     chain_id: u8,
     initial_diem_version: u64,
+    consensus_config: vector&lt;u8&gt;,
 ) {
     <a href="Genesis.md#0x1_Genesis_initialize_internal">initialize_internal</a>(
         &dr_account,
@@ -77,6 +79,7 @@ Initializes the Diem framework.
         native_schedule,
         chain_id,
         initial_diem_version,
+        consensus_config,
     )
 }
 </code></pre>
@@ -115,7 +118,7 @@ Assume that this is called in genesis state (no timestamp).
 Initializes the Diem Framework. Internal so it can be used by both genesis code, and for testing purposes
 
 
-<pre><code><b>fun</b> <a href="Genesis.md#0x1_Genesis_initialize_internal">initialize_internal</a>(dr_account: &signer, tc_account: &signer, dr_auth_key: vector&lt;u8&gt;, tc_auth_key: vector&lt;u8&gt;, initial_script_allow_list: vector&lt;vector&lt;u8&gt;&gt;, is_open_module: bool, instruction_schedule: vector&lt;u8&gt;, native_schedule: vector&lt;u8&gt;, chain_id: u8, initial_diem_version: u64)
+<pre><code><b>fun</b> <a href="Genesis.md#0x1_Genesis_initialize_internal">initialize_internal</a>(dr_account: &signer, tc_account: &signer, dr_auth_key: vector&lt;u8&gt;, tc_auth_key: vector&lt;u8&gt;, initial_script_allow_list: vector&lt;vector&lt;u8&gt;&gt;, is_open_module: bool, instruction_schedule: vector&lt;u8&gt;, native_schedule: vector&lt;u8&gt;, chain_id: u8, initial_diem_version: u64, consensus_config: vector&lt;u8&gt;)
 </code></pre>
 
 
@@ -135,6 +138,7 @@ Initializes the Diem Framework. Internal so it can be used by both genesis code,
     native_schedule: vector&lt;u8&gt;,
     chain_id: u8,
     initial_diem_version: u64,
+    consensus_config: vector&lt;u8&gt;,
 ) {
     <a href="DiemAccount.md#0x1_DiemAccount_initialize">DiemAccount::initialize</a>(dr_account, x"00000000000000000000000000000000");
 
@@ -142,6 +146,9 @@ Initializes the Diem Framework. Internal so it can be used by both genesis code,
 
     // On-chain config setup
     <a href="DiemConfig.md#0x1_DiemConfig_initialize">DiemConfig::initialize</a>(dr_account);
+
+    // Consensus config setup
+    <a href="DiemConsensusConfig.md#0x1_DiemConsensusConfig_initialize">DiemConsensusConfig::initialize</a>(dr_account);
 
     // Currency setup
     <a href="Diem.md#0x1_Diem_initialize">Diem::initialize</a>(dr_account);
@@ -180,6 +187,8 @@ Initializes the Diem Framework. Internal so it can be used by both genesis code,
         instruction_schedule,
         native_schedule,
     );
+
+    <a href="DiemConsensusConfig.md#0x1_DiemConsensusConfig_set">DiemConsensusConfig::set</a>(dr_account, consensus_config);
 
     // After we have called this function, all invariants which are guarded by
     // `<a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; ...` will become active and a verification condition.

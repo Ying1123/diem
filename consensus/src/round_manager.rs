@@ -30,6 +30,7 @@ use consensus_types::{
     proposal_msg::ProposalMsg,
     quorum_cert::QuorumCert,
     sync_info::SyncInfo,
+    timeout_2chain::TwoChainTimeoutCertificate,
     timeout_certificate::TimeoutCertificate,
     vote::Vote,
     vote_msg::VoteMsg,
@@ -37,7 +38,10 @@ use consensus_types::{
 use core::sync::atomic::Ordering;
 use diem_infallible::{checked, Mutex};
 use diem_logger::prelude::*;
-use diem_types::{epoch_state::EpochState, validator_verifier::ValidatorVerifier};
+use diem_types::{
+    epoch_state::EpochState, on_chain_config::OnChainConsensusConfig,
+    validator_verifier::ValidatorVerifier,
+};
 use fail::fail_point;
 #[cfg(test)]
 use safety_rules::ConsensusState;
@@ -133,6 +137,7 @@ pub struct RecoveryManager {
     storage: Arc<dyn PersistentLivenessStorage>,
     state_computer: Arc<dyn StateComputer>,
     last_committed_round: Round,
+    onchain_config: OnChainConsensusConfig,
 }
 
 impl RecoveryManager {
@@ -142,6 +147,7 @@ impl RecoveryManager {
         storage: Arc<dyn PersistentLivenessStorage>,
         state_computer: Arc<dyn StateComputer>,
         last_committed_round: Round,
+        onchain_config: OnChainConsensusConfig,
     ) -> Self {
         RecoveryManager {
             epoch_state,
@@ -149,6 +155,7 @@ impl RecoveryManager {
             storage,
             state_computer,
             last_committed_round,
+            onchain_config,
         }
     }
 
@@ -195,6 +202,10 @@ impl RecoveryManager {
     pub fn epoch_state(&self) -> &EpochState {
         &self.epoch_state
     }
+
+    pub fn onchain_config(&self) -> &OnChainConsensusConfig {
+        &self.onchain_config
+    }
 }
 
 /// Consensus SMR is working in an event based fashion: RoundManager is responsible for
@@ -216,6 +227,7 @@ pub struct RoundManager {
     back_pressure: Arc<AtomicU64>,
     decoupled_execution: bool,
     back_pressure_limit: u64,
+    onchain_config: OnChainConsensusConfig,
 }
 
 impl RoundManager {
@@ -230,12 +242,16 @@ impl RoundManager {
         txn_manager: Arc<dyn TxnManager>,
         storage: Arc<dyn PersistentLivenessStorage>,
         sync_only: bool,
+        onchain_config: OnChainConsensusConfig,
     ) -> Self {
         // when decoupled execution is false,
         // the counter is still static.
         counters::OP_COUNTERS
             .gauge("sync_only")
             .set(sync_only as i64);
+        counters::OP_COUNTERS
+            .gauge("two_chain")
+            .set(onchain_config.two_chain() as i64);
         Self {
             epoch_state,
             block_store,
@@ -250,6 +266,7 @@ impl RoundManager {
             back_pressure: Arc::new(AtomicU64::new(0)), // dummy value
             decoupled_execution: false,
             back_pressure_limit: 1, // arbitrary dummy value
+            onchain_config,
         }
     }
 
@@ -266,6 +283,7 @@ impl RoundManager {
         sync_only: bool,
         back_pressure: Arc<AtomicU64>,
         back_pressure_limit: u64,
+        onchain_config: OnChainConsensusConfig,
     ) -> Self {
         Self {
             epoch_state,
@@ -281,7 +299,12 @@ impl RoundManager {
             back_pressure,
             decoupled_execution: true,
             back_pressure_limit,
+            onchain_config,
         }
+    }
+
+    fn two_chain(&self) -> bool {
+        self.onchain_config.two_chain()
     }
 
     fn create_block_retriever(&self, author: Author) -> BlockRetriever {
@@ -322,10 +345,16 @@ impl RoundManager {
             .proposer_election
             .is_valid_proposer(self.proposal_generator.author(), new_round_event.round)
         {
-            let proposal_msg =
-                ConsensusMsg::ProposalMsg(Box::new(self.generate_proposal(new_round_event).await?));
+            let proposal_msg = Box::new(self.generate_proposal(new_round_event).await?);
             let mut network = self.network.clone();
-            network.broadcast(proposal_msg).await;
+            #[cfg(feature = "failpoints")]
+            {
+                self.attempt_to_inject_reconfiguration_error(&proposal_msg)
+                    .await?;
+            }
+            network
+                .broadcast(ConsensusMsg::ProposalMsg(proposal_msg))
+                .await;
             counters::PROPOSALS_COUNT.inc();
         }
         Ok(())
@@ -345,7 +374,6 @@ impl RoundManager {
             Block::new_proposal_from_block_data_and_signature(proposal, signature);
         observe_block(signed_proposal.timestamp_usecs(), BlockStage::SIGNED);
         debug!(self.new_log(LogEvent::Propose), "{}", signed_proposal);
-        // return proposal
         Ok(ProposalMsg::new(
             signed_proposal,
             self.block_store.sync_info(),
@@ -399,7 +427,9 @@ impl RoundManager {
                 self.new_log(LogEvent::HelpPeerSync).remote_peer(author),
                 "Remote peer has stale state {}, send it back {}", sync_info, local_sync_info,
             );
-            self.network.send_sync_info(local_sync_info.clone(), author);
+            self.network
+                .send_sync_info(local_sync_info.clone(), author)
+                .await;
         }
         if sync_info.has_newer_certificates(&local_sync_info) {
             debug!(
@@ -541,13 +571,28 @@ impl RoundManager {
         };
 
         if !timeout_vote.is_timeout() {
-            let timeout = timeout_vote.timeout();
-            let signature = self
-                .safety_rules
-                .lock()
-                .sign_timeout(&timeout)
-                .context("[RoundManager] SafetyRules signs timeout")?;
-            timeout_vote.add_timeout_signature(signature);
+            if self.two_chain() {
+                let timeout = timeout_vote.generate_2chain_timeout(
+                    self.block_store.highest_quorum_cert().as_ref().clone(),
+                );
+                let signature = self
+                    .safety_rules
+                    .lock()
+                    .sign_timeout_with_qc(
+                        &timeout,
+                        self.block_store.highest_2chain_timeout_cert().as_deref(),
+                    )
+                    .context("[RoundManager] SafetyRules signs 2-chain timeout")?;
+                timeout_vote.add_2chain_timeout(timeout, signature);
+            } else {
+                let timeout = timeout_vote.generate_timeout();
+                let signature = self
+                    .safety_rules
+                    .lock()
+                    .sign_timeout(&timeout)
+                    .context("[RoundManager] SafetyRules signs timeout")?;
+                timeout_vote.add_timeout_signature(signature);
+            }
         }
 
         self.round_state.record_vote(timeout_vote.clone());
@@ -665,16 +710,22 @@ impl RoundManager {
         );
 
         let maybe_signed_vote_proposal = executed_block.maybe_signed_vote_proposal();
-        let vote = self
-            .safety_rules
-            .lock()
-            .construct_and_sign_vote(&maybe_signed_vote_proposal)
-            .context(format!(
-                "[RoundManager] SafetyRules {}Rejected{} {}",
-                Fg(Red),
-                Fg(Reset),
-                executed_block.block()
-            ))?;
+        let vote_result = if self.two_chain() {
+            self.safety_rules.lock().construct_and_sign_vote_two_chain(
+                &maybe_signed_vote_proposal,
+                self.block_store.highest_2chain_timeout_cert().as_deref(),
+            )
+        } else {
+            self.safety_rules
+                .lock()
+                .construct_and_sign_vote(&maybe_signed_vote_proposal)
+        };
+        let vote = vote_result.context(format!(
+            "[RoundManager] SafetyRules {}Rejected{} {}",
+            Fg(Red),
+            Fg(Reset),
+            executed_block.block()
+        ))?;
         observe_block(executed_block.block().timestamp_usecs(), BlockStage::VOTED);
 
         self.storage
@@ -758,6 +809,9 @@ impl RoundManager {
                 self.new_qc_aggregated(qc, vote.author()).await
             }
             VoteReceptionResult::NewTimeoutCertificate(tc) => self.new_tc_aggregated(tc).await,
+            VoteReceptionResult::New2ChainTimeoutCertificate(tc) => {
+                self.new_2chain_tc_aggregated(tc).await
+            }
             _ => Ok(()),
         }
     }
@@ -785,6 +839,18 @@ impl RoundManager {
             .block_store
             .insert_timeout_certificate(tc.clone())
             .context("[RoundManager] Failed to process a newly aggregated TC");
+        self.process_certificates().await?;
+        result
+    }
+
+    async fn new_2chain_tc_aggregated(
+        &mut self,
+        tc: Arc<TwoChainTimeoutCertificate>,
+    ) -> anyhow::Result<()> {
+        let result = self
+            .block_store
+            .insert_2chain_timeout_certificate(tc)
+            .context("[RoundManager] Failed to process a newly aggregated 2-chain TC");
         self.process_certificates().await?;
         result
     }
@@ -867,5 +933,44 @@ impl RoundManager {
         LogSchema::new(event)
             .round(self.round_state.current_round())
             .epoch(self.epoch_state.epoch)
+    }
+
+    /// Given R1 <- B2 if R1 has the reconfiguration txn, we inject error on B2 if R1.round + 1 = B2.round
+    /// Direct suffix is checked by parent.has_reconfiguration && !parent.parent.has_reconfiguration
+    /// The error is injected by sending proposals to half of the validators to force a timeout.
+    ///
+    /// It's only enabled with fault injection (failpoints feature).
+    #[cfg(feature = "failpoints")]
+    async fn attempt_to_inject_reconfiguration_error(
+        &self,
+        proposal_msg: &ProposalMsg,
+    ) -> anyhow::Result<()> {
+        let block_data = proposal_msg.proposal().block_data();
+        let direct_suffix = block_data.is_reconfiguration_suffix()
+            && !block_data
+                .quorum_cert()
+                .parent_block()
+                .has_reconfiguration();
+        let continuous_round =
+            block_data.round() == block_data.quorum_cert().certified_block().round() + 1;
+        let should_inject = direct_suffix && continuous_round;
+        if should_inject {
+            let mut half_peers: Vec<_> = self
+                .epoch_state
+                .verifier
+                .get_ordered_account_addresses_iter()
+                .collect();
+            half_peers.truncate(half_peers.len() / 2);
+            self.network
+                .clone()
+                .send(
+                    ConsensusMsg::ProposalMsg(Box::new(proposal_msg.clone())),
+                    half_peers,
+                )
+                .await;
+            Err(anyhow::anyhow!("Injected error in reconfiguration suffix"))
+        } else {
+            Ok(())
+        }
     }
 }

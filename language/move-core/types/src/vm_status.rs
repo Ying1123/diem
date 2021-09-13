@@ -464,6 +464,8 @@ pub enum StatusCode {
     SECONDARY_KEYS_ADDRESSES_COUNT_MISMATCH = 27,
     // There are duplicates among signers, including the sender and all the secondary signers
     SIGNERS_CONTAIN_DUPLICATES = 28,
+    // The sequence nonce in the transaction is invalid (too new, too old, or already used).
+    SEQUENCE_NONCE_INVALID = 29,
 
     // When a code module/script is published it is verified. These are the
     // possible errors that can arise from the verification process.
@@ -574,7 +576,8 @@ pub enum StatusCode {
     CYCLIC_MODULE_FRIENDSHIP = 1107,
     // A phantom type parameter was used in a non-phantom position.
     INVALID_PHANTOM_TYPE_PARAM_POSITION = 1108,
-
+    VEC_UPDATE_EXISTS_MUTABLE_BORROW_ERROR = 1109,
+    VEC_BORROW_ELEMENT_EXISTS_MUTABLE_BORROW_ERROR = 1110,
 
     // These are errors that the VM might raise if a violation of internal
     // invariants takes place.

@@ -1491,6 +1491,58 @@ pub enum Bytecode {
     ///
     /// ```..., u64_value(1), u64_value(2) -> ..., u64_value```
     Shr,
+    /// Create a vector by packing a statically known number of elements from the stack. Abort the
+    /// execution if there are not enough number of elements on the stack to pack from or they don't
+    /// have the same type identified by the SignatureIndex.
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., e1, e2, ..., eN -> ..., vec[e1, e2, ..., eN]```
+    VecPack(SignatureIndex, u64),
+    /// Return the length of the vector,
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., vector_reference -> ..., u64_value```
+    VecLen(SignatureIndex),
+    /// Acquire an immutable reference to the element at a given index of the vector. Abort the
+    /// execution if the index is out of bounds.
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., vector_reference, u64_value -> .., element_reference```
+    VecImmBorrow(SignatureIndex),
+    /// Acquire a mutable reference to the element at a given index of the vector. Abort the
+    /// execution if the index is out of bounds.
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., vector_reference, u64_value -> .., element_reference```
+    VecMutBorrow(SignatureIndex),
+    /// Add an element to the end of the vector.
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., vector_reference, element -> ...```
+    VecPushBack(SignatureIndex),
+    /// Pop an element from the end of vector. Aborts if the vector is empty.
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., vector_reference -> ..., element```
+    VecPopBack(SignatureIndex),
+    /// Destroy the vector and unpack a statically known number of elements onto the stack. Aborts
+    /// if the vector does not have a length N.
+    ///
+    /// Stack transition:
+    ///
+    /// ```..., vec[e1, e2, ..., eN] -> ..., e1, e2, ..., eN```
+    VecUnpack(SignatureIndex, u64),
+    /// Swaps the elements at two indices in the vector. Abort the execution if any of the indice
+    /// is out of bounds.
+    ///
+    /// ```..., vector_reference, u64_value(1), u64_value(2) -> ...```
+    VecSwap(SignatureIndex),
 }
 
 pub const NUMBER_OF_NATIVE_FUNCTIONS: usize = 18;
@@ -1561,6 +1613,14 @@ impl ::std::fmt::Debug for Bytecode {
             Bytecode::MoveFromGeneric(a) => write!(f, "MoveFromGeneric({:?})", a),
             Bytecode::MoveTo(a) => write!(f, "MoveTo({:?})", a),
             Bytecode::MoveToGeneric(a) => write!(f, "MoveToGeneric({:?})", a),
+            Bytecode::VecPack(a, n) => write!(f, "VecPack({}, {})", a, n),
+            Bytecode::VecLen(a) => write!(f, "VecLen({})", a),
+            Bytecode::VecImmBorrow(a) => write!(f, "VecImmBorrow({})", a),
+            Bytecode::VecMutBorrow(a) => write!(f, "VecMutBorrow({})", a),
+            Bytecode::VecPushBack(a) => write!(f, "VecPushBack({})", a),
+            Bytecode::VecPopBack(a) => write!(f, "VecPopBack({})", a),
+            Bytecode::VecUnpack(a, n) => write!(f, "VecUnpack({}, {})", a, n),
+            Bytecode::VecSwap(a) => write!(f, "VecSwap({})", a),
         }
     }
 }
@@ -1697,8 +1757,7 @@ pub struct CompiledModule {
     /// Field instantiations.
     pub field_instantiations: Vec<FieldInstantiation>,
 
-    /// Locals signature pool. The signature for all locals of the functions defined in
-    /// the module.
+    /// Locals signature pool. The signature for all locals of the functions defined in the module.
     pub signatures: SignaturePool,
 
     /// All identifiers used in this module.

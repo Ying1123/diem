@@ -1,14 +1,19 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use move_core_types::{account_address::AccountAddress, identifier::Identifier};
+use move_core_types::account_address::AccountAddress;
+use move_symbol_pool::symbol::Symbol;
 use std::{collections::BTreeMap, path::PathBuf};
 
-pub type AddressDeclarations = BTreeMap<Identifier, Option<AccountAddress>>;
-pub type DevAddressDeclarations = BTreeMap<Identifier, AccountAddress>;
+pub type NamedAddress = Symbol;
+pub type PackageName = Symbol;
+pub type FileName = Symbol;
+
+pub type AddressDeclarations = BTreeMap<NamedAddress, Option<AccountAddress>>;
+pub type DevAddressDeclarations = BTreeMap<NamedAddress, AccountAddress>;
 pub type Version = (u64, u64, u64);
-pub type Dependencies = BTreeMap<Identifier, Dependency>;
-pub type Substitution = BTreeMap<Identifier, SubstOrRename>;
+pub type Dependencies = BTreeMap<PackageName, Dependency>;
+pub type Substitution = BTreeMap<NamedAddress, SubstOrRename>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct SourceManifest {
@@ -22,15 +27,15 @@ pub struct SourceManifest {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct PackageInfo {
-    pub name: Identifier,
+    pub name: PackageName,
     pub version: Version,
-    pub authors: Vec<String>,
-    pub license: Option<String>,
+    pub authors: Vec<Symbol>,
+    pub license: Option<Symbol>,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Dependency {
-    pub local: Option<PathBuf>,
+    pub local: PathBuf,
     pub subst: Option<Substitution>,
     pub version: Option<Version>,
     pub digest: Option<Vec<u8>>,
@@ -43,6 +48,6 @@ pub struct BuildInfo {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum SubstOrRename {
-    RenameFrom(Identifier),
+    RenameFrom(NamedAddress),
     Assign(AccountAddress),
 }

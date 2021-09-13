@@ -393,7 +393,7 @@ reconfiguration. This function requires that the signer have a <code><a href="Di
 resource published under it.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set">set</a>&lt;Config: <b>copy</b>, drop, store&gt;(account: &signer, payload: Config)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set">set</a>&lt;Config: <b>copy</b>, drop, store&gt;(account: &signer, payload: Config)
 </code></pre>
 
 
@@ -402,7 +402,7 @@ resource published under it.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set">set</a>&lt;Config: <b>copy</b> + drop + store&gt;(account: &signer, payload: Config)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set">set</a>&lt;Config: <b>copy</b> + drop + store&gt;(account: &signer, payload: Config)
 <b>acquires</b> <a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>, <a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a> {
     <b>let</b> signer_address = <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(account);
     // Next should always be <b>true</b> <b>if</b> properly initialized.
@@ -425,11 +425,10 @@ resource published under it.
 <summary>Specification</summary>
 
 
-TODO: turned off verification until we solve the
-generic type/specific invariant issue
 
-
-<pre><code><b>pragma</b> opaque, verify = <b>false</b>;
+<pre><code><b>pragma</b> opaque;
+<b>pragma</b> delegate_invariants_to_caller;
+<b>requires</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a>&gt;(@DiemRoot);
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>&lt;Config&gt;&gt;(@DiemRoot);
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_SetAbortsIf">SetAbortsIf</a>&lt;Config&gt;;
@@ -493,7 +492,7 @@ validator operators to change the validator set.  All other config changes requi
 a Diem root signer.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set_with_capability_and_reconfigure">set_with_capability_and_reconfigure</a>&lt;Config: <b>copy</b>, drop, store&gt;(_cap: &<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">DiemConfig::ModifyConfigCapability</a>&lt;Config&gt;, payload: Config)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set_with_capability_and_reconfigure">set_with_capability_and_reconfigure</a>&lt;Config: <b>copy</b>, drop, store&gt;(_cap: &<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">DiemConfig::ModifyConfigCapability</a>&lt;Config&gt;, payload: Config)
 </code></pre>
 
 
@@ -502,7 +501,7 @@ a Diem root signer.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set_with_capability_and_reconfigure">set_with_capability_and_reconfigure</a>&lt;Config: <b>copy</b> + drop + store&gt;(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_set_with_capability_and_reconfigure">set_with_capability_and_reconfigure</a>&lt;Config: <b>copy</b> + drop + store&gt;(
     _cap: &<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;Config&gt;,
     payload: Config
 ) <b>acquires</b> <a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>, <a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a> {
@@ -522,11 +521,10 @@ a Diem root signer.
 <summary>Specification</summary>
 
 
-TODO: turned off verification until we solve the
-generic type/specific invariant issue
 
-
-<pre><code><b>pragma</b> opaque, verify = <b>false</b>;
+<pre><code><b>pragma</b> opaque;
+<b>pragma</b> delegate_invariants_to_caller;
+<b>requires</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a>&gt;(@DiemRoot);
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_AbortsIfNotPublished">AbortsIfNotPublished</a>&lt;Config&gt;;
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_ReconfigureAbortsIf">ReconfigureAbortsIf</a>;
@@ -638,7 +636,7 @@ policy for who can modify the config.
 Does not trigger a reconfiguration.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config_and_get_capability">publish_new_config_and_get_capability</a>&lt;Config: <b>copy</b>, drop, store&gt;(dr_account: &signer, payload: Config): <a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">DiemConfig::ModifyConfigCapability</a>&lt;Config&gt;
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config_and_get_capability">publish_new_config_and_get_capability</a>&lt;Config: <b>copy</b>, drop, store&gt;(dr_account: &signer, payload: Config): <a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">DiemConfig::ModifyConfigCapability</a>&lt;Config&gt;
 </code></pre>
 
 
@@ -647,7 +645,7 @@ Does not trigger a reconfiguration.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config_and_get_capability">publish_new_config_and_get_capability</a>&lt;Config: <b>copy</b> + drop + store&gt;(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config_and_get_capability">publish_new_config_and_get_capability</a>&lt;Config: <b>copy</b> + drop + store&gt;(
     dr_account: &signer,
     payload: Config,
 ): <a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;Config&gt; {
@@ -669,11 +667,9 @@ Does not trigger a reconfiguration.
 <summary>Specification</summary>
 
 
-TODO: turned off verification until we solve the
-generic type/specific invariant issue
 
-
-<pre><code><b>pragma</b> opaque, verify = <b>false</b>;
+<pre><code><b>pragma</b> opaque;
+<b>pragma</b> delegate_invariants_to_caller;
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>&lt;Config&gt;&gt;(@DiemRoot);
 <b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotDiemRoot">Roles::AbortsIfNotDiemRoot</a>{account: dr_account};
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_AbortsIfPublished">AbortsIfPublished</a>&lt;Config&gt;;
@@ -704,7 +700,7 @@ Publishes the capability to modify this config under the Diem root account.
 Does not trigger a reconfiguration.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config">publish_new_config</a>&lt;Config: <b>copy</b>, drop, store&gt;(dr_account: &signer, payload: Config)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config">publish_new_config</a>&lt;Config: <b>copy</b>, drop, store&gt;(dr_account: &signer, payload: Config)
 </code></pre>
 
 
@@ -713,7 +709,7 @@ Does not trigger a reconfiguration.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config">publish_new_config</a>&lt;Config: <b>copy</b> + drop + store&gt;(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="DiemConfig.md#0x1_DiemConfig_publish_new_config">publish_new_config</a>&lt;Config: <b>copy</b> + drop + store&gt;(
     dr_account: &signer,
     payload: Config
 ) {
@@ -736,6 +732,7 @@ Does not trigger a reconfiguration.
 
 
 <pre><code><b>pragma</b> opaque;
+<b>pragma</b> delegate_invariants_to_caller;
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>&lt;Config&gt;&gt;(@DiemRoot);
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;Config&gt;&gt;(@DiemRoot);
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_PublishNewConfigAbortsIf">PublishNewConfigAbortsIf</a>&lt;Config&gt;;
@@ -809,6 +806,7 @@ Signal validators to start using new configuration. Must be called by Diem root.
 
 <pre><code><b>pragma</b> opaque;
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a>&gt;(@DiemRoot);
+<b>ensures</b> <b>old</b>(<a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>()) == <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
 <b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotDiemRoot">Roles::AbortsIfNotDiemRoot</a>{account: dr_account};
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_ReconfigureAbortsIf">ReconfigureAbortsIf</a>;
 <b>include</b> <a href="DiemConfig.md#0x1_DiemConfig_ReconfigureEmits">ReconfigureEmits</a>;
@@ -884,6 +882,7 @@ Private function to do reconfiguration.  Updates reconfiguration status resource
 
 <pre><code><b>pragma</b> opaque;
 <b>modifies</b> <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a>&gt;(@DiemRoot);
+<b>requires</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
 <b>ensures</b> <b>old</b>(<a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>()) == <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
 <b>let</b> config = <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a>&gt;(@DiemRoot);
 <b>let</b> post post_config = <b>global</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a>&gt;(@DiemRoot);
@@ -1039,7 +1038,7 @@ emits msg <b>to</b> handle;
 After genesis, the <code><a href="DiemConfig.md#0x1_DiemConfig_Configuration">Configuration</a></code> is published.
 
 
-<pre><code><b>invariant</b> <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
+<pre><code><b>invariant</b> [suspendable] <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="DiemConfig.md#0x1_DiemConfig_spec_has_config">spec_has_config</a>();
 </code></pre>
 
 
@@ -1052,35 +1051,26 @@ After genesis, the <code><a href="DiemConfig.md#0x1_DiemConfig_Configuration">Co
 Configurations are only stored at the diem root address.
 
 
-<pre><code><b>invariant</b>
-    <b>forall</b> config_address: address, config_type: type <b>where</b> <b>exists</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>&lt;config_type&gt;&gt;(config_address):
+<pre><code><b>invariant</b>&lt;ConfigType&gt;
+    <b>forall</b> config_address: address <b>where</b> <b>exists</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig">DiemConfig</a>&lt;ConfigType&gt;&gt;(config_address):
         config_address == @DiemRoot;
-</code></pre>
-
-
-After genesis, no new configurations are added.
-
-
-<pre><code><b>invariant</b> <b>update</b>
-    <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt;
-        (<b>forall</b> config_type: type <b>where</b> <a href="DiemConfig.md#0x1_DiemConfig_spec_is_published">spec_is_published</a>&lt;config_type&gt;(): <b>old</b>(<a href="DiemConfig.md#0x1_DiemConfig_spec_is_published">spec_is_published</a>&lt;config_type&gt;()));
 </code></pre>
 
 
 Published configurations are persistent.
 
 
-<pre><code><b>invariant</b> <b>update</b>
-    (<b>forall</b> config_type: type <b>where</b> <b>old</b>(<a href="DiemConfig.md#0x1_DiemConfig_spec_is_published">spec_is_published</a>&lt;config_type&gt;()): <a href="DiemConfig.md#0x1_DiemConfig_spec_is_published">spec_is_published</a>&lt;config_type&gt;());
+<pre><code><b>invariant</b>&lt;ConfigType&gt; <b>update</b>
+    <b>old</b>(<a href="DiemConfig.md#0x1_DiemConfig_spec_is_published">spec_is_published</a>&lt;ConfigType&gt;()) ==&gt; <a href="DiemConfig.md#0x1_DiemConfig_spec_is_published">spec_is_published</a>&lt;ConfigType&gt;();
 </code></pre>
 
 
 If <code><a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;Config&gt;</code> is published, it is persistent.
 
 
-<pre><code><b>invariant</b> <b>update</b> <b>forall</b> config_type: type
-    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;config_type&gt;&gt;(@DiemRoot)):
-        <b>exists</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;config_type&gt;&gt;(@DiemRoot);
+<pre><code><b>invariant</b>&lt;ConfigType&gt; <b>update</b>
+    <b>old</b>(<b>exists</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;ConfigType&gt;&gt;(@DiemRoot)) ==&gt;
+        <b>exists</b>&lt;<a href="DiemConfig.md#0x1_DiemConfig_ModifyConfigCapability">ModifyConfigCapability</a>&lt;ConfigType&gt;&gt;(@DiemRoot);
 </code></pre>
 
 

@@ -3,7 +3,7 @@
 
 #![forbid(unsafe_code)]
 
-use bytecode_source_map::utils::{remap_owned_loc_to_loc, source_map_from_file, OwnedLoc};
+use bytecode_source_map::utils::source_map_from_file;
 use move_binary_format::file_format::CompiledModule;
 use move_bytecode_viewer::{
     bytecode_viewer::BytecodeViewer, source_viewer::ModuleViewer,
@@ -36,10 +36,9 @@ pub fn main() {
     let compiled_module =
         CompiledModule::deserialize(&bytecode_bytes).expect("Module blob can't be deserialized");
 
-    let source_map = source_map_from_file::<OwnedLoc>(
+    let source_map = source_map_from_file(
         &Path::new(&args.module_binary_path).with_extension(source_map_extension),
     )
-    .map(remap_owned_loc_to_loc)
     .unwrap();
 
     let source_path = Path::new(&args.source_file_path);

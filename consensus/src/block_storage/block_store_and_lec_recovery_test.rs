@@ -15,8 +15,6 @@ use diem_types::validator_signer::ValidatorSigner;
 use execution_correctness::{ExecutionCorrectness, ExecutionCorrectnessManager};
 use executor_test_helpers::start_storage_service;
 use executor_types::ExecutedTrees;
-use futures::channel::mpsc;
-use state_sync::client::StateSyncClient;
 use std::sync::Arc;
 use storage_interface::DbReader;
 
@@ -52,6 +50,7 @@ fn get_initial_data_and_qc(db: &dyn DbReader) -> (RecoveryData, QuorumCert) {
             ),
             vec![],
             None,
+            None,
         )
         .unwrap(),
         qc,
@@ -63,12 +62,13 @@ fn build_inserter(
     initial_data: RecoveryData,
     lec_client: Box<dyn ExecutionCorrectness + Send + Sync>,
 ) -> TreeInserter {
-    let (coordinator_sender, _coordinator_receiver) = mpsc::unbounded();
     let client_commit_timeout_ms = config.state_sync.client_commit_timeout_ms;
+    let (consensus_notifier, _consensus_listener) =
+        consensus_notifications::new_consensus_notifier_listener_pair(client_commit_timeout_ms);
 
     let state_computer = Arc::new(ExecutionProxy::new(
         lec_client,
-        StateSyncClient::new(coordinator_sender, client_commit_timeout_ms),
+        Box::new(consensus_notifier),
     ));
 
     TreeInserter::new_with_store(

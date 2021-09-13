@@ -5,11 +5,6 @@ use crate::{
     block_storage::BlockStore,
     counters,
     error::{error_kind, DbError},
-    experimental::{
-        commit_phase::{CommitChannelType, CommitPhase},
-        execution_phase::{ExecutionChannelType, ExecutionPhase, ResetAck},
-        ordering_state_computer::OrderingStateComputer,
-    },
     liveness::{
         leader_reputation::{ActiveInactiveHeuristic, DiemDBBackend, LeaderReputation},
         proposal_generator::ProposalGenerator,
@@ -41,9 +36,9 @@ use diem_types::{
     account_address::AccountAddress,
     epoch_change::EpochChangeProof,
     epoch_state::EpochState,
-    on_chain_config::{OnChainConfigPayload, ValidatorSet},
+    on_chain_config::{OnChainConfigPayload, OnChainConsensusConfig, ValidatorSet},
 };
-use futures::{channel::oneshot, select, SinkExt, StreamExt};
+use futures::{select, SinkExt, StreamExt};
 use network::protocols::network::Event;
 use safety_rules::SafetyRulesManager;
 use std::{
@@ -292,115 +287,13 @@ impl EpochManager {
         Ok(())
     }
 
-    fn prepare_decoupled_execution(
+    // TODO: prepare_decoupled_execution
+    async fn start_round_manager(
         &mut self,
-        epoch: u64,
         recovery_data: RecoveryData,
         epoch_state: EpochState,
-        round_state: RoundState,
-        proposer_election: Box<dyn ProposerElection + Send + Sync>,
-        safety_rules_container: Arc<Mutex<MetricsSafetyRules>>,
-        network_sender: NetworkSender,
-    ) -> anyhow::Result<(RoundManager, ExecutionPhase, CommitPhase)> {
-        let (execution_phase_tx, execution_phase_rx) = channel::new::<ExecutionChannelType>(
-            self.config.channel_size,
-            &counters::DECOUPLED_EXECUTION__EXECUTION_PHASE_CHANNEL,
-        );
-
-        let (execution_phase_reset_tx, execution_phase_reset_rx) =
-            channel::new::<oneshot::Sender<ResetAck>>(
-                1,
-                &counters::DECOUPLED_EXECUTION__EXECUTION_PHASE_RESET_CHANNEL,
-            );
-
-        let (commit_phase_reset_tx, commit_phase_reset_rx) =
-            channel::new::<oneshot::Sender<ResetAck>>(
-                1,
-                &counters::DECOUPLED_EXECUTION__COMMIT_PHASE_RESET_CHANNEL,
-            );
-
-        let state_computer: Arc<dyn StateComputer> = Arc::new(OrderingStateComputer::new(
-            execution_phase_tx,
-            self.commit_state_computer.clone(),
-            execution_phase_reset_tx,
-        ));
-
-        info!(epoch = epoch, "Create BlockStore");
-        let block_store = Arc::new(BlockStore::new(
-            Arc::clone(&self.storage),
-            recovery_data,
-            state_computer.clone(),
-            self.config.max_pruned_blocks_in_mem,
-            Arc::clone(&self.time_service),
-        ));
-
-        info!(epoch = epoch, "Create ProposalGenerator");
-        // txn manager is required both by proposal generator (to pull the proposers)
-        // and by event processor (to update their status).
-        let proposal_generator = ProposalGenerator::new(
-            self.author,
-            block_store.clone(),
-            self.txn_manager.clone(),
-            self.time_service.clone(),
-            self.config.max_block_size,
-        );
-
-        let (commit_phase_tx, commit_phase_rx) = channel::new::<CommitChannelType>(
-            self.config.channel_size,
-            &counters::DECOUPLED_EXECUTION__COMMIT_PHASE_CHANNEL,
-        );
-
-        let execution_phase = ExecutionPhase::new(
-            execution_phase_rx,
-            self.commit_state_computer.clone(),
-            commit_phase_tx,
-            execution_phase_reset_rx,
-            commit_phase_reset_tx,
-        );
-
-        let (commit_msg_tx, commit_msg_rx) = channel::new::<VerifiedEvent>(
-            self.config.channel_size,
-            &counters::DECOUPLED_EXECUTION__COMMIT_MESSAGE_CHANNEL,
-        );
-
-        // TODO: reset the previous commit phase
-
-        self.commit_msg_tx = Some(commit_msg_tx);
-
-        self.back_pressure
-            .store(0, std::sync::atomic::Ordering::SeqCst);
-
-        let commit_phase = CommitPhase::new(
-            commit_phase_rx,
-            self.commit_state_computer.clone(),
-            commit_msg_rx,
-            epoch_state.verifier.clone(),
-            Arc::clone(&safety_rules_container),
-            self.author,
-            self.back_pressure.clone(),
-            network_sender.clone(),
-            commit_phase_reset_rx,
-        );
-
-        let round_manager = RoundManager::new_with_decoupled_execution(
-            epoch_state,
-            block_store,
-            round_state,
-            proposer_election,
-            proposal_generator,
-            safety_rules_container,
-            network_sender,
-            self.txn_manager.clone(),
-            self.storage.clone(),
-            self.config.sync_only,
-            self.back_pressure.clone(),
-            self.config.back_pressure_limit,
-        );
-
-        Ok((round_manager, execution_phase, commit_phase))
-    }
-
-    async fn start_round_manager(&mut self, recovery_data: RecoveryData, epoch_state: EpochState) {
+        onchain_config: OnChainConsensusConfig,
+    ) {
         // Release the previous RoundManager, especially the SafetyRule client
         self.processor = None;
         let epoch = epoch_state.epoch;
@@ -441,24 +334,8 @@ impl EpochManager {
 
         let safety_rules_container = Arc::new(Mutex::new(safety_rules));
 
-        let mut processor = if self.config.decoupled_execution {
-            let (round_manager, execution_phase, commit_phase) = self
-                .prepare_decoupled_execution(
-                    epoch,
-                    recovery_data,
-                    epoch_state,
-                    round_state,
-                    proposer_election,
-                    safety_rules_container.clone(),
-                    network_sender,
-                )
-                .unwrap();
-
-            tokio::spawn(execution_phase.start());
-            tokio::spawn(commit_phase.start());
-
-            round_manager
-        } else {
+        // TODO: prepare decoupled execution
+        let mut processor = {
             info!(epoch = epoch, "Create BlockStore");
             let block_store = Arc::new(BlockStore::new(
                 Arc::clone(&self.storage),
@@ -490,6 +367,7 @@ impl EpochManager {
                 self.txn_manager.clone(),
                 self.storage.clone(),
                 self.config.sync_only,
+                onchain_config,
             )
         };
 
@@ -506,6 +384,7 @@ impl EpochManager {
         &mut self,
         ledger_recovery_data: LedgerRecoveryData,
         epoch_state: EpochState,
+        onchain_config: OnChainConsensusConfig,
     ) {
         let epoch = epoch_state.epoch;
         let network_sender = NetworkSender::new(
@@ -523,6 +402,7 @@ impl EpochManager {
             self.storage.clone(),
             self.commit_state_computer.clone(),
             ledger_recovery_data.commit_round(),
+            onchain_config,
         )));
         info!(epoch = epoch, "SyncProcessor started");
     }
@@ -535,13 +415,15 @@ impl EpochManager {
             epoch: payload.epoch(),
             verifier: (&validator_set).into(),
         };
+        let onchain_config: OnChainConsensusConfig = payload.get().unwrap_or_default();
 
         match self.storage.start() {
             LivenessStorageData::RecoveryData(initial_data) => {
-                self.start_round_manager(initial_data, epoch_state).await
+                self.start_round_manager(initial_data, epoch_state, onchain_config)
+                    .await
             }
             LivenessStorageData::LedgerRecoveryData(ledger_recovery_data) => {
-                self.start_recovery_manager(ledger_recovery_data, epoch_state)
+                self.start_recovery_manager(ledger_recovery_data, epoch_state, onchain_config)
                     .await
             }
         }
@@ -644,13 +526,17 @@ impl EpochManager {
                     VerifiedEvent::ProposalMsg(proposal) => p.process_proposal_msg(*proposal).await,
                     VerifiedEvent::VoteMsg(vote) => p.process_vote_msg(*vote).await,
                     VerifiedEvent::SyncInfo(sync_info) => p.sync_up(&sync_info, peer_id).await,
-                    _ => {
-                        unimplemented!()
+                    VerifiedEvent::CommitVote(_) | VerifiedEvent::CommitDecision(_) => {
+                        return Err(anyhow!(
+                            "Ignoring commit vote/decision message during recovery"
+                        ));
                     }
                 }?;
                 let epoch_state = p.epoch_state().clone();
+                let onchain_config = p.onchain_config().clone();
                 info!("Recovered from SyncProcessor");
-                self.start_round_manager(recovery_data, epoch_state).await;
+                self.start_round_manager(recovery_data, epoch_state, onchain_config)
+                    .await;
                 Ok(())
             }
             RoundProcessor::Normal(p) => match event {

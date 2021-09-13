@@ -13,7 +13,6 @@ use codespan_reporting::{
 };
 use ir_to_bytecode_syntax::syntax::{self, ParseError};
 use move_command_line_common::character_sets::is_permitted_char;
-use move_core_types::account_address::AccountAddress;
 use move_ir_types::{ast, location::*};
 use move_symbol_pool::Symbol;
 
@@ -56,36 +55,28 @@ pub fn parse_module(file_name: Symbol, modules_str: &str) -> Result<ast::ModuleD
     syntax::parse_module_string(file_name, modules_str).or_else(|e| handle_error(e, modules_str))
 }
 
-/// Given the raw input of a file, creates a single `Cmd_` struct
-/// Fails with `Err(_)` if the text cannot be parsed
-pub fn parse_cmd_(
-    file_name: Symbol,
-    cmd_str: &str,
-    _sender_address: AccountAddress,
-) -> Result<ast::Cmd_> {
-    verify_string(cmd_str)?;
-    syntax::parse_cmd_string(file_name, cmd_str).or_else(|e| handle_error(e, cmd_str))
-}
-
 fn handle_error<T>(e: syntax::ParseError<Loc, anyhow::Error>, code_str: &str) -> Result<T> {
-    let msg = match &e {
-        ParseError::InvalidToken { location } => {
-            let mut files = SimpleFiles::new();
-            let id = files.add(location.file(), code_str.to_string());
-            let lbl = Label::primary(id, location.usize_range()).with_message("Invalid Token");
-            let error = Diagnostic::error()
-                .with_message("Parser Error")
-                .with_labels(vec![lbl]);
-            let writer = &mut StandardStream::stderr(ColorChoice::Auto);
-            emit(writer, &Config::default(), &files, &error).unwrap();
-            "Invalid Token".to_string()
+    let location = match &e {
+        ParseError::InvalidToken { location } => location,
+        ParseError::User { location, .. } => location,
+    };
+    let mut files = SimpleFiles::new();
+    let id = files.add(location.file(), code_str.to_string());
+    let lbl = match &e {
+        ParseError::InvalidToken { .. } => {
+            Label::primary(id, location.usize_range()).with_message("Invalid Token")
         }
-        ParseError::User { error } => {
-            println!("{}", error);
-            format!("{}", error)
+        ParseError::User { error, .. } => {
+            Label::primary(id, location.usize_range()).with_message(format!("{}", error))
         }
     };
-    bail!("ParserError: {}", msg)
+    let message = lbl.message.clone();
+    let error = Diagnostic::error()
+        .with_message("Parser Error")
+        .with_labels(vec![lbl]);
+    let writer = &mut StandardStream::stderr(ColorChoice::Auto);
+    emit(writer, &Config::default(), &files, &error).unwrap();
+    bail!("ParserError: {}", message)
 }
 
 #[cfg(test)]

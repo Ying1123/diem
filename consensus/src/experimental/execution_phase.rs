@@ -2,123 +2,73 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{
-    experimental::{commit_phase::CommitChannelType, errors::Error},
-    state_replication::{StateComputer, StateComputerCommitCallBackType},
+    experimental::pipeline_phase::{ResponseWithInstruction, StatelessPipeline},
+    state_replication::StateComputer,
 };
-use channel::{Receiver, Sender};
-use consensus_types::{block::Block, executed_block::ExecutedBlock};
-use diem_types::ledger_info::LedgerInfoWithSignatures;
+use anyhow::Result;
+use async_trait::async_trait;
+use consensus_types::executed_block::ExecutedBlock;
 use executor_types::Error as ExecutionError;
-use futures::{channel::oneshot, select, FutureExt, SinkExt, StreamExt};
-use std::sync::Arc;
+use std::{
+    fmt::{Debug, Display, Formatter},
+    sync::Arc,
+};
 
 /// [ This class is used when consensus.decoupled = true ]
 /// ExecutionPhase is a singleton that receives ordered blocks from
-/// the ordering state computer and execute them. After the execution is done,
-/// ExecutionPhase sends the ordered blocks to the commit phase.
+/// the buffer manager and execute them. After the execution is done,
+/// ExecutionPhase sends the ordered blocks back to the buffer manager.
 ///
 
-pub type ResetAck = ();
-pub fn reset_ack_new() -> ResetAck {}
+pub struct ExecutionRequest {
+    pub ordered_blocks: Vec<ExecutedBlock>,
+}
 
-pub struct ExecutionChannelType(
-    pub Vec<Block>,
-    pub LedgerInfoWithSignatures,
-    pub StateComputerCommitCallBackType,
-);
-
-impl std::fmt::Debug for ExecutionChannelType {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+impl Debug for ExecutionRequest {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         write!(f, "{}", self)
     }
 }
 
-impl std::fmt::Display for ExecutionChannelType {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "ExecutionChannelType({:?}, {})", self.0, self.1)
+impl Display for ExecutionRequest {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
+        write!(f, "ExecutionRequest({:?})", self.ordered_blocks)
     }
+}
+
+pub struct ExecutionResponse {
+    pub inner: Result<Vec<ExecutedBlock>, ExecutionError>,
 }
 
 pub struct ExecutionPhase {
-    executor_channel_rx: Receiver<ExecutionChannelType>,
     execution_proxy: Arc<dyn StateComputer>,
-    commit_channel_tx: Sender<CommitChannelType>,
-    reset_event_channel_rx: Receiver<oneshot::Sender<ResetAck>>,
-    commit_phase_reset_event_tx: Sender<oneshot::Sender<ResetAck>>,
 }
 
 impl ExecutionPhase {
-    pub fn new(
-        executor_channel_rx: Receiver<ExecutionChannelType>,
-        execution_proxy: Arc<dyn StateComputer>,
-        commit_channel_tx: Sender<CommitChannelType>,
-        reset_event_channel_rx: Receiver<oneshot::Sender<ResetAck>>,
-        commit_phase_reset_event_tx: Sender<oneshot::Sender<ResetAck>>,
-    ) -> Self {
-        Self {
-            executor_channel_rx,
-            execution_proxy,
-            commit_channel_tx,
-            reset_event_channel_rx,
-            commit_phase_reset_event_tx,
-        }
+    pub fn new(execution_proxy: Arc<dyn StateComputer>) -> Self {
+        Self { execution_proxy }
     }
+}
 
-    pub async fn process_reset_event(
-        &mut self,
-        reset_event_callback: oneshot::Sender<ResetAck>,
-    ) -> anyhow::Result<()> {
-        // reset the execution phase
+#[async_trait]
+impl StatelessPipeline for ExecutionPhase {
+    type Request = ExecutionRequest;
+    type Response = ExecutionResponse;
+    async fn process(&self, req: ExecutionRequest) -> ResponseWithInstruction<ExecutionResponse> {
+        let ExecutionRequest { ordered_blocks } = req;
 
-        // notify the commit phase
-        let (tx, rx) = oneshot::channel::<ResetAck>();
-        self.commit_phase_reset_event_tx.send(tx).await?;
-        rx.await?;
+        // execute the blocks with execution_correctness_client
+        let resp_inner = ordered_blocks
+            .iter()
+            .map(|b| {
+                let state_compute_result =
+                    self.execution_proxy.compute(b.block(), b.parent_id())?;
+                Ok(ExecutedBlock::new(b.block().clone(), state_compute_result))
+            })
+            .collect::<Result<Vec<ExecutedBlock>, ExecutionError>>();
 
-        // exhaust the executor channel
-        while self.executor_channel_rx.next().now_or_never().is_some() {}
+        // TODO: empty the request channel non-blockingly as they will also fail
 
-        // activate the callback
-        reset_event_callback
-            .send(reset_ack_new())
-            .map_err(|_| Error::ResetDropped)?;
-
-        Ok(())
-    }
-
-    pub async fn start(mut self) {
-        // main loop
-        loop {
-            select! {
-                ExecutionChannelType(vecblock, ledger_info, callback) = self.executor_channel_rx.select_next_some() => {
-                    // execute the blocks with execution_correctness_client
-                    let executed_blocks: Vec<ExecutedBlock> = vecblock
-                        .into_iter()
-                        .map(|b| {
-                            let state_compute_result =
-                                self.execution_proxy.compute(&b, b.parent_id()).unwrap();
-                            ExecutedBlock::new(b, state_compute_result)
-                        })
-                        .collect();
-                    // TODO: add error handling. Err(Error::BlockNotFound(parent_block_id))
-
-                    // pass the executed blocks into the commit phase
-                    self.commit_channel_tx
-                        .send(CommitChannelType(executed_blocks, ledger_info, callback))
-                        .await
-                        .map_err(|e| ExecutionError::InternalError {
-                            error: e.to_string(),
-                        })
-                        .unwrap();
-                }
-                reset_event_callback = self.reset_event_channel_rx.select_next_some() => {
-                    self.process_reset_event(reset_event_callback).await.map_err(|e| ExecutionError::InternalError {
-                        error: e.to_string(),
-                    })
-                    .unwrap();
-                }
-                complete => break,
-            };
-        }
+        ResponseWithInstruction::from(ExecutionResponse { inner: resp_inner })
     }
 }

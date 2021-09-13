@@ -7,8 +7,12 @@ use crate::{
 };
 use anyhow::Result;
 use consensus_types::safety_data::SafetyData;
-use diem_config::config::{
-    Identity, NodeConfig, OnDiskStorageConfig, SafetyRulesService, SecureBackend, WaypointConfig,
+use diem_config::{
+    config::{
+        DiscoveryMethod, Identity, NetworkConfig, NodeConfig, OnDiskStorageConfig,
+        SafetyRulesService, SecureBackend, WaypointConfig,
+    },
+    network_id::NetworkId,
 };
 use diem_crypto::{
     ed25519::{Ed25519PrivateKey, Ed25519PublicKey},
@@ -27,6 +31,7 @@ use diem_types::{
     network_address::encrypted::{
         Key as NetworkAddressEncryptionKey, KeyVersion as NetworkAddressEncryptionKeyVersion,
     },
+    on_chain_config::{ConsensusConfigV1, OnChainConsensusConfig, VMPublishingOption},
     transaction::{authenticator::AuthenticationKey, Transaction},
     waypoint::Waypoint,
 };
@@ -130,14 +135,14 @@ pub struct RootKeys {
 }
 
 impl RootKeys {
-    pub fn generate<R>(rng: &mut R) -> Self
+    pub fn generate<R>(mut rng: R) -> Self
     where
         R: ::rand::RngCore + ::rand::CryptoRng,
     {
         // TODO use distinct keys for diem root and treasury
         // let root_key = Ed25519PrivateKey::generate(rng);
         // let treasury_compliance_key = Ed25519PrivateKey::generate(rng);
-        let key = Ed25519PrivateKey::generate(rng).to_bytes();
+        let key = Ed25519PrivateKey::generate(&mut rng).to_bytes();
         let root_key = Ed25519PrivateKey::try_from(key.as_ref()).unwrap();
         let treasury_compliance_key = Ed25519PrivateKey::try_from(key.as_ref()).unwrap();
 
@@ -160,6 +165,7 @@ pub struct ValidatorBuilder {
     move_modules: Vec<Vec<u8>>,
     num_validators: NonZeroUsize,
     randomize_first_validator_ports: bool,
+    publishing_option: Option<VMPublishingOption>,
     template: NodeConfig,
 }
 
@@ -170,6 +176,7 @@ impl ValidatorBuilder {
             move_modules,
             num_validators: NonZeroUsize::new(1).unwrap(),
             randomize_first_validator_ports: true,
+            publishing_option: None,
             template: NodeConfig::default_for_validator(),
         }
     }
@@ -184,15 +191,23 @@ impl ValidatorBuilder {
         self
     }
 
+    pub fn publishing_option(mut self, publishing_option: VMPublishingOption) -> Self {
+        self.publishing_option = Some(publishing_option);
+        self
+    }
+
     pub fn template(mut self, template: NodeConfig) -> Self {
         self.template = template;
         self
     }
 
-    pub fn build(mut self) -> Result<(RootKeys, Vec<ValidatorConfig>)> {
-        // TODO Pass this in
-        let mut rng = rand::rngs::OsRng;
-
+    pub fn build<R>(
+        mut self,
+        mut rng: R,
+    ) -> Result<(RootKeys, Transaction, Waypoint, Vec<ValidatorConfig>)>
+    where
+        R: ::rand::RngCore + ::rand::CryptoRng,
+    {
         // Canonicalize the config directory path
         self.config_directory = self.config_directory.canonicalize()?;
 
@@ -218,6 +233,7 @@ impl ValidatorBuilder {
             &mut genesis_storage,
             &root_keys,
             &validators,
+            self.publishing_option,
             self.move_modules,
         )?;
 
@@ -244,7 +260,7 @@ impl ValidatorBuilder {
             validator.save_config()?;
         }
 
-        Ok((root_keys, validators))
+        Ok((root_keys, genesis, waypoint, validators))
     }
 
     //
@@ -254,7 +270,7 @@ impl ValidatorBuilder {
     fn initialize_validator_config<R>(
         &self,
         index: usize,
-        rng: &mut R,
+        rng: R,
         validator_network_address_encryption_key: NetworkAddressEncryptionKey,
         validator_network_address_encryption_key_version: NetworkAddressEncryptionKeyVersion,
     ) -> Result<ValidatorConfig>
@@ -278,13 +294,8 @@ impl ValidatorBuilder {
 
         validator.config.set_data_dir(validator.directory.clone());
         let mut config = &mut validator.config;
-        if index > 0 || self.randomize_first_validator_ports {
-            config.randomize_ports();
-        }
-
         // Setup the network configs
         let validator_network = config.validator_network.as_mut().unwrap();
-        let fullnode_network = &mut config.full_node_networks[0];
 
         let validator_identity = validator_network.identity_from_storage();
         validator_network.identity = Identity::from_storage(
@@ -296,18 +307,53 @@ impl ValidatorBuilder {
             validator.storage_config.clone(),
         ));
 
-        let fullnode_identity = fullnode_network.identity_from_storage();
-        fullnode_network.identity = Identity::from_storage(
-            fullnode_identity.key_name,
-            fullnode_identity.peer_id_name,
-            SecureBackend::OnDiskStorage(validator.storage_config.clone()),
-        );
+        // By default we don't start a swarm with VFNs, so make sure the public fullnode endpoint
+        // really is publicly accessable
+
+        let fullnode_network_listen_address =
+            if let Some(template_fullnode_config) = config.full_node_networks.first() {
+                template_fullnode_config.listen_address.clone()
+            } else {
+                diem_config::utils::get_available_port_in_multiaddr(true)
+            };
+        let fullnode_network = NetworkConfig {
+            listen_address: fullnode_network_listen_address,
+            network_id: NetworkId::Public,
+            max_outbound_connections: 0,
+            discovery_method: DiscoveryMethod::Onchain,
+            identity: Identity::from_storage(
+                FULLNODE_NETWORK_KEY.to_owned(),
+                OWNER_ACCOUNT.to_owned(),
+                SecureBackend::OnDiskStorage(validator.storage_config.clone()),
+            ),
+
+            ..Default::default()
+        };
+
+        let vfn_network = NetworkConfig {
+            listen_address: diem_config::utils::get_available_port_in_multiaddr(true),
+            network_id: NetworkId::Private("vfn".to_owned()),
+            max_outbound_connections: 0,
+            identity: Identity::from_storage(
+                FULLNODE_NETWORK_KEY.to_owned(),
+                OWNER_ACCOUNT.to_owned(),
+                SecureBackend::OnDiskStorage(validator.storage_config.clone()),
+            ),
+
+            ..Default::default()
+        };
+
+        config.full_node_networks = vec![fullnode_network, vfn_network];
 
         // Setup consensus and execution configs
         config.consensus.safety_rules.service = SafetyRulesService::Thread;
         config.consensus.safety_rules.backend =
             SecureBackend::OnDiskStorage(validator.storage_config.clone());
         config.execution.backend = SecureBackend::OnDiskStorage(validator.storage_config.clone());
+
+        if index > 0 || self.randomize_first_validator_ports {
+            config.randomize_ports();
+        }
 
         Ok(validator)
     }
@@ -321,7 +367,7 @@ impl ValidatorBuilder {
 
     fn initialize_validator_storage<R>(
         validator: &ValidatorConfig,
-        rng: &mut R,
+        mut rng: R,
         validator_network_address_encryption_key: NetworkAddressEncryptionKey,
         validator_network_address_encryption_key_version: NetworkAddressEncryptionKeyVersion,
     ) -> Result<()>
@@ -331,22 +377,22 @@ impl ValidatorBuilder {
         let mut storage = validator.storage();
 
         // Set owner key and account address
-        storage.import_private_key(OWNER_KEY, Ed25519PrivateKey::generate(rng))?;
+        storage.import_private_key(OWNER_KEY, Ed25519PrivateKey::generate(&mut rng))?;
         let owner_address =
             diem_config::utils::validator_owner_account_from_name(validator.owner().as_bytes());
         storage.set(OWNER_ACCOUNT, owner_address)?;
 
         // Set operator key and account address
-        let operator_key = Ed25519PrivateKey::generate(rng);
+        let operator_key = Ed25519PrivateKey::generate(&mut rng);
         let operator_address =
             AuthenticationKey::ed25519(&Ed25519PublicKey::from(&operator_key)).derived_address();
         storage.set(OPERATOR_ACCOUNT, operator_address)?;
         storage.import_private_key(OPERATOR_KEY, operator_key)?;
 
-        storage.import_private_key(CONSENSUS_KEY, Ed25519PrivateKey::generate(rng))?;
-        storage.import_private_key(EXECUTION_KEY, Ed25519PrivateKey::generate(rng))?;
-        storage.import_private_key(FULLNODE_NETWORK_KEY, Ed25519PrivateKey::generate(rng))?;
-        storage.import_private_key(VALIDATOR_NETWORK_KEY, Ed25519PrivateKey::generate(rng))?;
+        storage.import_private_key(CONSENSUS_KEY, Ed25519PrivateKey::generate(&mut rng))?;
+        storage.import_private_key(EXECUTION_KEY, Ed25519PrivateKey::generate(&mut rng))?;
+        storage.import_private_key(FULLNODE_NETWORK_KEY, Ed25519PrivateKey::generate(&mut rng))?;
+        storage.import_private_key(VALIDATOR_NETWORK_KEY, Ed25519PrivateKey::generate(&mut rng))?;
 
         // Initialize all other data in storage
         storage.set(SAFETY_DATA, SafetyData::new(0, 0, 0, 0, None))?;
@@ -366,6 +412,7 @@ impl ValidatorBuilder {
         genesis_storage: &mut OnDiskStorage,
         root_keys: &RootKeys,
         validators: &[ValidatorConfig],
+        publishing_option: Option<VMPublishingOption>,
         move_modules: Vec<Vec<u8>>,
     ) -> Result<(Transaction, Waypoint)> {
         let mut genesis_builder = GenesisBuilder::new(genesis_storage);
@@ -416,7 +463,11 @@ impl ValidatorBuilder {
         }
 
         // Create Genesis and Genesis Waypoint
-        let genesis = genesis_builder.build(ChainId::test())?;
+        let genesis = genesis_builder.build(
+            ChainId::test(),
+            publishing_option,
+            OnChainConsensusConfig::V1(ConsensusConfigV1 { two_chain: true }),
+        )?;
         let waypoint = create_genesis_waypoint(&genesis)?;
 
         Ok((genesis, waypoint))

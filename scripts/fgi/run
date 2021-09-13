@@ -2,18 +2,26 @@
 # Copyright (c) The Diem Core Contributors
 # SPDX-License-Identifier: Apache-2.0
 
-import argparse, json, tempfile, time
-import getpass, os, subprocess, sys
+import argparse
+import getpass
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import time
 
 from kube import (
     kube_init_context,
     kube_select_cluster,
+    kube_ensure_cluster,
     get_cluster_context,
     kube_wait_job,
     create_forge_job,
 )
 
 TAG = ""
+BASE_TAG = ""
 WORKSPACE = ""
 DEFL_TIMEOUT_SECS = 2700  # Default timeout is 45 mins
 USER = getpass.getuser()  # Use the current user for naming
@@ -57,6 +65,11 @@ def build_argparser():
         action="store_true",
         help="Run Forge tests locally instead of on a kubernetes cluster",
     )
+    parser.add_argument(
+        "--base-image-tag",
+        "-B",
+        help="Base image tag to use in kubernetes Forge test"
+    )
     return parser.parse_known_args()
 
 
@@ -78,6 +91,7 @@ args, forge_args = build_argparser()
 # build and push the images to be used, since an image tag
 # was not specified explicitly
 TAG = args.tag
+BASE_TAG = args.base_image_tag
 if not args.tag:
     if args.pr:  # codebuild using a PR
         ret = subprocess.call(
@@ -93,7 +107,8 @@ if not args.tag:
         print(
             f"**TIP Use ./scripts/fgi -T {TAG} <...> to restart this run with the same tag without rebuilding it"
         )
-
+if not args.base_image_tag:
+    BASE_TAG = "devnet"
 # ================ Test setup ================
 print(f"""
     {HEADER}______{OKBLUE}____  {OKGREEN}____  {WARNING}______{FAIL}______
@@ -106,7 +121,7 @@ print(f"""
 
 if args.local_swarm:
     print("Running Forge on backend: local swarm")
-    ret = subprocess.call(["cargo", "run", "-p", "forge", "--", "--local-swarm"])
+    ret = subprocess.call(["cargo", "run", "-p", "forge-cli", "--", "test", "local-swarm"])
     sys.exit(ret)
 
 print("Running Forge on backend: kubernetes testnet")
@@ -129,13 +144,18 @@ if not args.workspace:
     if not workspace:
         print(f"{FAIL}Failed to select forge testnet cluster{RESTORE}")
         sys.exit(1)
+else:
+    ret = kube_ensure_cluster([workspace])
+    if not ret:
+        print(f"{FAIL}Failed to acquire specified forge testnet cluster {workspace}{RESTORE}")
+        sys.exit(1)
 context = get_cluster_context(workspace)
 print(f"Running experiments on cluster: {workspace}")
 grafana_url = get_grafana_url(workspace)
 print()
 
 job_name, template = create_forge_job(
-    context, USER, TAG, args.timeout_secs, args.env, forge_args
+    context, USER, TAG, BASE_TAG, args.timeout_secs, args.env, forge_args
 )
 if not template:
     print(f"{FAIL}Failed to create forge job template{RESTORE}")
@@ -163,17 +183,18 @@ delta_ms = 1000
 start_ts_ms = int(time.time() * 1000) - delta_ms
 print("\n**********")
 print(
-    f"{OKBLUE}Auto refresh Dashboard:{RESTORE} {grafana_url}/d/overview/overview?from={start_ts_ms}&to=now&refresh=10s&orgId=1"
+    f"{OKBLUE}Auto refresh Dashboard:{RESTORE} {grafana_url}/d/overview/overview?from={start_ts_ms}&to=now&refresh"
+    f"=10s&orgId=1 "
 )
 print("**********")
 
-print(f"\nLog output: {OUTPUT_TEE}")
 print("==========begin-pod-logs==========")
 subprocess.call(
     f"kubectl --context={context} logs -f -l job-name={job_name} | tee {OUTPUT_TEE}",
     shell=True,
 )
 print("==========end-pod-logs==========")
+print(f"\nLog output: {OUTPUT_TEE}")
 
 try:
     job_status = json.loads(

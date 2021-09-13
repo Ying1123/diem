@@ -13,6 +13,7 @@ module DiemFramework::Genesis {
     use DiemFramework::DiemAccount;
     use DiemFramework::DiemBlock;
     use DiemFramework::DiemConfig;
+    use DiemFramework::DiemConsensusConfig;
     use DiemFramework::DiemSystem;
     use DiemFramework::DiemTimestamp;
     use DiemFramework::DiemTransactionPublishingOption;
@@ -36,6 +37,7 @@ module DiemFramework::Genesis {
         native_schedule: vector<u8>,
         chain_id: u8,
         initial_diem_version: u64,
+        consensus_config: vector<u8>,
     ) {
         initialize_internal(
             &dr_account,
@@ -48,6 +50,7 @@ module DiemFramework::Genesis {
             native_schedule,
             chain_id,
             initial_diem_version,
+            consensus_config,
         )
     }
 
@@ -63,6 +66,7 @@ module DiemFramework::Genesis {
         native_schedule: vector<u8>,
         chain_id: u8,
         initial_diem_version: u64,
+        consensus_config: vector<u8>,
     ) {
         DiemAccount::initialize(dr_account, x"00000000000000000000000000000000");
 
@@ -70,6 +74,9 @@ module DiemFramework::Genesis {
 
         // On-chain config setup
         DiemConfig::initialize(dr_account);
+
+        // Consensus config setup
+        DiemConsensusConfig::initialize(dr_account);
 
         // Currency setup
         Diem::initialize(dr_account);
@@ -108,6 +115,8 @@ module DiemFramework::Genesis {
             instruction_schedule,
             native_schedule,
         );
+
+        DiemConsensusConfig::set(dr_account, consensus_config);
 
         // After we have called this function, all invariants which are guarded by
         // `DiemTimestamp::is_operating() ==> ...` will become active and a verification condition.
@@ -232,6 +241,7 @@ module DiemFramework::Genesis {
             x"", // native schedule not needed for unit tests
             4u8, // TESTING chain ID
             0,
+            Vector::empty(),
         )
     }
 }

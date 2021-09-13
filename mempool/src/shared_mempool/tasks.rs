@@ -10,10 +10,9 @@ use crate::{
     network::MempoolSyncMsg,
     shared_mempool::types::{
         notify_subscribers, ScheduledBroadcast, SharedMempool, SharedMempoolNotification,
-        SubmissionStatusBundle,
+        SubmissionStatusBundle, TransactionSummary,
     },
-    CommitNotification, CommitResponse, CommittedTransaction, ConsensusRequest, ConsensusResponse,
-    SubmissionStatus,
+    ConsensusRequest, ConsensusResponse, SubmissionStatus,
 };
 use anyhow::Result;
 use diem_config::config::PeerNetworkId;
@@ -222,9 +221,9 @@ where
         .into_iter()
         .enumerate()
         .filter_map(|(idx, t)| {
-            if let Ok(sequence_number) = seq_numbers[idx] {
-                if t.sequence_number() >= sequence_number {
-                    return Some((t, sequence_number));
+            if let Ok(crsn_or_seqno) = seq_numbers[idx] {
+                if t.sequence_number() >= crsn_or_seqno.min_seq() {
+                    return Some((t, crsn_or_seqno));
                 } else {
                     statuses.push((
                         t,
@@ -260,7 +259,7 @@ where
 
     {
         let mut mempool = smp.mempool.lock();
-        for (idx, (transaction, sequence_number)) in transactions.into_iter().enumerate() {
+        for (idx, (transaction, crsn_or_seqno)) in transactions.into_iter().enumerate() {
             if let Ok(validation_result) = &validation_results[idx] {
                 match validation_result.status() {
                     None => {
@@ -271,7 +270,7 @@ where
                             transaction.clone(),
                             gas_amount,
                             ranking_score,
-                            sequence_number,
+                            crsn_or_seqno,
                             timeline_state,
                             governance_role,
                         );
@@ -339,32 +338,6 @@ fn log_txn_process_results(results: &[SubmissionStatusBundle], sender: Option<Pe
 // intra-node communication handlers //
 // ================================= //
 
-pub(crate) async fn process_state_sync_request(
-    mempool: Arc<Mutex<CoreMempool>>,
-    req: CommitNotification,
-) {
-    let start_time = Instant::now();
-    debug!(
-        LogSchema::event_log(LogEntry::StateSyncCommit, LogEvent::Received).state_sync_msg(&req)
-    );
-    counters::mempool_service_transactions(
-        counters::COMMIT_STATE_SYNC_LABEL,
-        req.transactions.len(),
-    );
-    commit_txns(&mempool, req.transactions, req.block_timestamp_usecs, false).await;
-    let result = if req.callback.send(Ok(CommitResponse::success())).is_err() {
-        error!(LogSchema::event_log(
-            LogEntry::StateSyncCommit,
-            LogEvent::CallbackFail
-        ));
-        counters::REQUEST_FAIL_LABEL
-    } else {
-        counters::REQUEST_SUCCESS_LABEL
-    };
-    let latency = start_time.elapsed();
-    counters::mempool_service_latency(counters::COMMIT_STATE_SYNC_LABEL, result, latency);
-}
-
 pub(crate) async fn process_consensus_request(mempool: &Mutex<CoreMempool>, req: ConsensusRequest) {
     // Start latency timer
     let start_time = Instant::now();
@@ -423,9 +396,9 @@ pub(crate) async fn process_consensus_request(mempool: &Mutex<CoreMempool>, req:
     counters::mempool_service_latency(counter_label, result, latency);
 }
 
-async fn commit_txns(
+pub async fn commit_txns(
     mempool: &Mutex<CoreMempool>,
-    transactions: Vec<CommittedTransaction>,
+    transactions: Vec<TransactionSummary>,
     block_timestamp_usecs: u64,
     is_rejected: bool,
 ) {

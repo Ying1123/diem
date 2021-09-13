@@ -10,11 +10,13 @@ use crate::{
     options::ProverOptions,
     usage_analysis,
 };
+use itertools::Itertools;
 use log::debug;
 use move_model::{
     model::{FunId, FunctionEnv, GlobalEnv, GlobalId, ModuleEnv, QualifiedId, VerificationScope},
     pragmas::{
-        DELEGATE_INVARIANTS_TO_CALLER_PRAGMA, DISABLE_INVARIANTS_IN_BODY_PRAGMA, VERIFY_PRAGMA,
+        CONDITION_SUSPENDABLE_PROP, DELEGATE_INVARIANTS_TO_CALLER_PRAGMA,
+        DISABLE_INVARIANTS_IN_BODY_PRAGMA, VERIFY_PRAGMA,
     },
 };
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
@@ -44,18 +46,21 @@ pub struct InvariantAnalysisData {
     pub target_fun_ids: BTreeSet<QualifiedId<FunId>>,
     /// Functions in dependent modules that are transitively called by functions in target module.
     pub dep_fun_ids: BTreeSet<QualifiedId<FunId>>,
-    /// Invariants that appear in target module (?) or dependencies
-    /// Functions where invariants are disabled in body
+    /// functions where invariants are disabled by pragma disable_invariants_in_body
     pub disabled_inv_fun_set: BTreeSet<QualifiedId<FunId>>,
-    /// Functions where invariants are disabled in a transitive caller (or by pragma)
+    /// Functions where invariants are disabled in a transitive caller, or by
+    /// pragma delegate_invariant_to_caller
     pub non_inv_fun_set: BTreeSet<QualifiedId<FunId>>,
-    /// global invariants in the target module
+    /// global and update invariants in the target module
     pub target_invariants: BTreeSet<GlobalId>,
     /// Maps invariant ID to set of functions that modify the invariant
+    /// Does not include update invariants
     pub funs_that_modify_inv: BTreeMap<GlobalId, BTreeSet<QualifiedId<FunId>>>,
     /// Maps function to the set of invariants that it modifies
+    /// Does not include update invariants
     pub invs_modified_by_fun: BTreeMap<QualifiedId<FunId>, BTreeSet<GlobalId>>,
     /// Functions that modify some invariant in the target
+    /// Does not include update invariants
     pub funs_that_modify_some_inv: BTreeSet<QualifiedId<FunId>>,
     /// functions that are in non_inv_fun_set and M[I] for some I.
     /// We have to verify the callers, which may be in friend modules.
@@ -86,6 +91,8 @@ fn get_target_invariants(
 }
 
 /// Computes and returns the set of disabled invariants for each function in disabled_inv_fun_set
+/// Disabled invariants for a function are the invariants modified (directly or indirectly) by the fun
+/// that are also declared to be suspendable via "invariant [suspendable] ..."
 fn compute_disabled_invs_for_fun(
     global_env: &GlobalEnv,
     disabled_inv_fun_set: &BTreeSet<QualifiedId<FunId>>,
@@ -96,14 +103,37 @@ fn compute_disabled_invs_for_fun(
     for module_env in global_env.get_modules() {
         for fun_env in module_env.get_functions() {
             let fun_id = fun_env.get_qualified_id();
+            // If function disables invariants, get the set of invariants modified in the function
+            // and keep only those that are declared to be suspendable
             if disabled_inv_fun_set.contains(&fun_id) {
                 if let Some(modified_invs) = invs_modified_by_fun.get(&fun_id) {
-                    disabled_invs_for_fun.insert(fun_id, modified_invs.clone());
+                    let disabled_invs: BTreeSet<GlobalId> = modified_invs
+                        .iter()
+                        .filter(|inv_id| {
+                            global_env
+                                .is_property_true(
+                                    &global_env
+                                        .get_global_invariant(**inv_id)
+                                        .unwrap()
+                                        .properties,
+                                    CONDITION_SUSPENDABLE_PROP,
+                                )
+                                .unwrap_or(false)
+                        })
+                        .cloned()
+                        .collect();
+                    debug_print_inv_set(
+                        global_env,
+                        &disabled_invs,
+                        "$$$$$$$$$$$$$$$$\ncompute_disabled_invs_for_fun",
+                    );
+                    disabled_invs_for_fun.insert(fun_id, disabled_invs.clone());
                 }
             }
         }
     }
-    // Compute least fixed point of disable_invs_for_fun.  Starts with disabled inv functions and
+
+    // Compute a least fixed point of disable_invs_for_fun.  Starts with disabled inv functions and
     // all invariants that they modify. Then propagate those to called functions.  They're not top-sorted
     // (which may not be good enough for recursion, in this case, I'm not sure).  So fun_ids go back
     // into the worklist until the disable_inv_set for each fun converges (worklist will be empty).
@@ -148,22 +178,78 @@ fn check_legal_disabled_invariants(
     let global_env = fun_env.module_env.env;
     let fun_id = fun_env.get_qualified_id();
     if non_inv_fun_set.contains(&fun_id) && funs_that_modify_some_inv.contains(&fun_id) {
-        // function is public or script, which means we don't know whether invariants hold
-        // or not at the call site
-        if fun_env.has_unknown_callers() {
+        if disabled_inv_fun_set.contains(&fun_id) {
             global_env.error(
                 &fun_env.get_loc(),
-                "Public or script functions must not be called when invariants are disabled \
-                 in a transitive caller or there is a pragma delegate_invariants_to_caller",
+                "Functions must not have a disable invariant pragma when invariants are \
+                 disabled in a transitive caller or there is a \
+                 pragma delegate_invariants_to_caller",
             );
-        } else if disabled_inv_fun_set.contains(&fun_id) {
-            global_env.error(
-                &fun_env.get_loc(),
-                "Functions must not have a disable invariant pragma when invariants are disabled \
-                 in a transitive caller or there is a pragma delegate_invariants_to_caller",
+        } else if fun_env.has_unknown_callers() {
+            if is_fun_delegating(fun_env) {
+                global_env.error(
+                    &fun_env.get_loc(),
+                    "Public or script functions cannot delegate invariants",
+                )
+            } else {
+                global_env.error_with_notes(
+                    &fun_env.get_loc(),
+                    "Public or script functions cannot be transitively called by \
+                      functions disabling or delegating invariants",
+                    compute_non_inv_cause_chain(fun_env),
+                )
+            }
+        }
+    }
+}
+
+/// Compute the chain of calls which leads to an implicit non-inv function.
+fn compute_non_inv_cause_chain(fun_env: &FunctionEnv<'_>) -> Vec<String> {
+    let global_env = fun_env.module_env.env;
+    let mut worklist: BTreeSet<Vec<QualifiedId<FunId>>> = fun_env
+        .get_calling_functions()
+        .into_iter()
+        .map(|id| vec![id])
+        .collect();
+    let mut done = BTreeSet::new();
+    let mut result = vec![];
+    while let Some(caller_list) = worklist.iter().cloned().next() {
+        worklist.remove(&caller_list);
+        let caller_id = *caller_list.iter().last().unwrap();
+        done.insert(caller_id);
+        let caller_env = global_env.get_function_qid(caller_id);
+        let display_chain = || {
+            vec![fun_env.get_qualified_id()]
+                .into_iter()
+                .chain(caller_list.iter().cloned())
+                .map(|id| global_env.get_function_qid(id).get_full_name_str())
+                .join(" <- ")
+        };
+        if is_fun_disabled(&caller_env) {
+            result.push(format!("disabled by {}", display_chain()));
+        } else if is_fun_delegating(&caller_env) {
+            result.push(format!("delegated by {}", display_chain()));
+        } else {
+            worklist.extend(
+                caller_env
+                    .get_calling_functions()
+                    .into_iter()
+                    .filter_map(|id| {
+                        if done.contains(&id) {
+                            None
+                        } else {
+                            let mut new_caller_list = caller_list.clone();
+                            new_caller_list.push(id);
+                            Some(new_caller_list)
+                        }
+                    }),
             );
         }
     }
+    if result.is_empty() {
+        result.push("cannot determine disabling reason (bug?)".to_owned())
+    }
+    result
 }
 
 // Using pragmas, find functions called from a context where invariant
@@ -184,12 +270,12 @@ fn compute_disabled_and_non_inv_fun_sets(
     let mut worklist = vec![];
     for module_env in global_env.get_modules() {
         for fun_env in module_env.get_functions() {
-            if fun_env.is_pragma_true(DISABLE_INVARIANTS_IN_BODY_PRAGMA, || false) {
+            if is_fun_disabled(&fun_env) {
                 let fun_id = fun_env.get_qualified_id();
                 disabled_inv_fun_set.insert(fun_id);
                 worklist.push(fun_id);
             }
-            if fun_env.is_pragma_true(DELEGATE_INVARIANTS_TO_CALLER_PRAGMA, || false) {
+            if is_fun_delegating(&fun_env) {
                 let fun_id = fun_env.get_qualified_id();
                 if non_inv_fun_set.insert(fun_id) {
                     // Add to work_list only if fun_id is not in non_inv_fun_set (may have inferred
@@ -212,6 +298,14 @@ fn compute_disabled_and_non_inv_fun_sets(
         }
     }
     (disabled_inv_fun_set, non_inv_fun_set)
+}
+
+fn is_fun_disabled(fun_env: &FunctionEnv<'_>) -> bool {
+    fun_env.is_pragma_true(DISABLE_INVARIANTS_IN_BODY_PRAGMA, || false)
+}
+
+fn is_fun_delegating(fun_env: &FunctionEnv<'_>) -> bool {
+    fun_env.is_pragma_true(DELEGATE_INVARIANTS_TO_CALLER_PRAGMA, || false)
 }
 
 /// Collect all functions that are defined in the target module, or called transitively
@@ -237,6 +331,7 @@ fn compute_dep_fun_ids(
 /// Compute a map from each invariant to the set of functions that modify state
 /// appearing in the invariant. Return that, and a second value that is the union
 /// of functions over all invariants in the first map.
+/// This is not applied to update invariants?
 fn compute_funs_that_modify_inv(
     global_env: &GlobalEnv,
     target_invariants: &BTreeSet<GlobalId>,
@@ -268,8 +363,9 @@ fn compute_funs_that_modify_inv(
             for fun_env in module_env.get_functions() {
                 // Get all memory modified by this function.
                 let fun_target = targets.get_target(&fun_env, &variant);
-                let modified_memory = usage_analysis::get_modified_memory_inst(&fun_target);
+                let modified_memory = &usage_analysis::get_memory_usage(&fun_target).modified.all;
                 // Add functions to set if it modifies mem used in invariant
+                // TODO: This should be using unification.
                 if !modified_memory.is_disjoint(&inv_mem_use) {
                     let fun_id = fun_env.get_qualified_id();
                     fun_id_set.insert(fun_id);
@@ -477,7 +573,7 @@ impl FunctionTargetProcessor for VerificationAnalysisProcessorV2 {
         let global_env = fun_env.module_env.env;
         let fun_id = fun_env.get_qualified_id();
         let variant = data.variant.clone();
-        // When we are called, the data of this function is removed from targets so it can
+        // When this is called, the data of this function is removed from targets so it can
         // be mutated, as per pipeline processor design. We put it back temporarily to have
         // a unique model of targets.
         targets.insert_target_data(&fun_id, variant.clone(), data);
@@ -588,7 +684,7 @@ impl FunctionTargetProcessor for VerificationAnalysisProcessorV2 {
         let disabled_invs_for_fun =
             compute_disabled_invs_for_fun(global_env, &disabled_inv_fun_set, &invs_modified_by_fun);
 
-        // Check for illegal combinations
+        // Check for public or script functions that are in non_inv_fun_set
         for module_env in global_env.get_modules() {
             for fun_env in module_env.get_functions() {
                 check_legal_disabled_invariants(
@@ -614,7 +710,7 @@ impl FunctionTargetProcessor for VerificationAnalysisProcessorV2 {
         };
 
         // Note: To print verbose debugging info, use
-        // debug_print_invariant_analysis_data(&global_env, &inv_ana_data);
+        debug_print_invariant_analysis_data(global_env, &inv_ana_data);
 
         global_env.set_extension(inv_ana_data);
     }

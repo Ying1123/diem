@@ -13,7 +13,7 @@ use move_binary_format::{
     file_format::{
         AbilitySet, Bytecode, CompiledModule, CompiledScript, Constant, ConstantPoolIndex,
         FieldHandleIndex, FieldInstantiationIndex, FunctionDefinition, FunctionDefinitionIndex,
-        FunctionHandleIndex, FunctionInstantiationIndex, Signature, SignatureToken,
+        FunctionHandleIndex, FunctionInstantiationIndex, Signature, SignatureIndex, SignatureToken,
         StructDefInstantiationIndex, StructDefinition, StructDefinitionIndex,
         StructFieldInformation, TableIndex,
     },
@@ -1300,6 +1300,18 @@ impl<'a> Resolver<'a> {
         self.loader.type_to_type_layout(ty)
     }
 
+    //
+    // Type resolution
+    //
+
+    pub(crate) fn single_type_at(&self, idx: SignatureIndex) -> &Type {
+        match &self.binary {
+            BinaryType::Module(module) => module.single_type_at(idx),
+            BinaryType::Script(script) => script.single_type_at(idx),
+        }
+    }
+
+    // get the loader
     pub(crate) fn loader(&self) -> &Loader {
         self.loader
     }
@@ -1348,6 +1360,12 @@ pub(crate) struct Module {
     // struct name to index into the Loader type list
     // This allows a direct access from struct name to `Struct`
     struct_map: HashMap<Identifier, usize>,
+
+    // a map of single-token signature indices to type.
+    // Single-token signatures are usually indexed by the `SignatureIndex` in bytecode. For example,
+    // `VecMutBorrow(SignatureIndex)`, the `SignatureIndex` maps to a single `SignatureToken`, and
+    // hence, a single type.
+    single_signature_token_map: BTreeMap<SignatureIndex, Type>,
 }
 
 impl Module {
@@ -1366,6 +1384,7 @@ impl Module {
         let mut field_instantiations: Vec<FieldInstantiation> = vec![];
         let mut function_map = HashMap::new();
         let mut struct_map = HashMap::new();
+        let mut single_signature_token_map = BTreeMap::new();
 
         let mut create = || {
             for struct_handle in module.struct_handles() {
@@ -1450,6 +1469,40 @@ impl Module {
                 let idx = function_refs[func_def.function.0 as usize];
                 let name = module.identifier_at(module.function_handle_at(func_def.function).name);
                 function_map.insert(name.to_owned(), idx);
+
+                if let Some(code_unit) = &func_def.code {
+                    for bc in &code_unit.code {
+                        match bc {
+                            Bytecode::VecPack(si, _)
+                            | Bytecode::VecLen(si)
+                            | Bytecode::VecImmBorrow(si)
+                            | Bytecode::VecMutBorrow(si)
+                            | Bytecode::VecPushBack(si)
+                            | Bytecode::VecPopBack(si)
+                            | Bytecode::VecUnpack(si, _)
+                            | Bytecode::VecSwap(si) => {
+                                if !single_signature_token_map.contains_key(si) {
+                                    let ty = match module.signature_at(*si).0.get(0) {
+                                        None => {
+                                            return Err(PartialVMError::new(
+                                                StatusCode::VERIFIER_INVARIANT_VIOLATION,
+                                            )
+                                            .with_message(
+                                                "the type argument for vector-related bytecode \
+                                                expects one and only one signature token"
+                                                    .to_owned(),
+                                            ));
+                                        }
+                                        Some(sig_token) => sig_token,
+                                    };
+                                    single_signature_token_map
+                                        .insert(*si, cache.make_type_while_loading(&module, ty)?);
+                                }
+                            }
+                            _ => {}
+                        }
+                    }
+                }
             }
 
             for func_inst in module.function_instantiations() {
@@ -1494,6 +1547,7 @@ impl Module {
                 field_instantiations,
                 function_map,
                 struct_map,
+                single_signature_token_map,
             }),
             Err(err) => Err((err, module)),
         }
@@ -1534,6 +1588,10 @@ impl Module {
     fn field_instantiation_offset(&self, idx: FieldInstantiationIndex) -> usize {
         self.field_instantiations[idx.0 as usize].offset
     }
+
+    fn single_type_at(&self, idx: SignatureIndex) -> &Type {
+        self.single_signature_token_map.get(&idx).unwrap()
+    }
 }
 
 // A Script is very similar to a `CompiledScript` but data is "transformed" to a representation
@@ -1560,6 +1618,9 @@ struct Script {
 
     // parameters of main
     parameter_tys: Vec<Type>,
+
+    // a map of single-token signature indices to type
+    single_signature_token_map: BTreeMap<SignatureIndex, Type>,
 }
 
 impl Script {
@@ -1652,6 +1713,44 @@ impl Script {
             name,
         });
 
+        let mut single_signature_token_map = BTreeMap::new();
+        for bc in &script.code.code {
+            match bc {
+                Bytecode::VecPack(si, _)
+                | Bytecode::VecLen(si)
+                | Bytecode::VecImmBorrow(si)
+                | Bytecode::VecMutBorrow(si)
+                | Bytecode::VecPushBack(si)
+                | Bytecode::VecPopBack(si)
+                | Bytecode::VecUnpack(si, _)
+                | Bytecode::VecSwap(si) => {
+                    if !single_signature_token_map.contains_key(si) {
+                        let ty = match script.signature_at(*si).0.get(0) {
+                            None => {
+                                return Err(PartialVMError::new(
+                                    StatusCode::VERIFIER_INVARIANT_VIOLATION,
+                                )
+                                .with_message(
+                                    "the type argument for vector-related bytecode \
+                                                expects one and only one signature token"
+                                        .to_owned(),
+                                )
+                                .finish(Location::Script));
+                            }
+                            Some(sig_token) => sig_token,
+                        };
+                        single_signature_token_map.insert(
+                            *si,
+                            cache
+                                .make_type(BinaryIndexedView::Script(&script), ty)
+                                .map_err(|e| e.finish(Location::Script))?,
+                        );
+                    }
+                }
+                _ => {}
+            }
+        }
+
         Ok(Self {
             script,
             struct_refs,
@@ -1659,6 +1758,7 @@ impl Script {
             function_instantiations,
             main,
             parameter_tys,
+            single_signature_token_map,
         })
     }
 
@@ -1672,6 +1772,10 @@ impl Script {
 
     fn function_instantiation_at(&self, idx: u16) -> &FunctionInstantiation {
         &self.function_instantiations[idx as usize]
+    }
+
+    fn single_type_at(&self, idx: SignatureIndex) -> &Type {
+        self.single_signature_token_map.get(&idx).unwrap()
     }
 }
 

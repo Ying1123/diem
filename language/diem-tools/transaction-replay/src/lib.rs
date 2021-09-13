@@ -24,7 +24,7 @@ use diem_vm::{
 use move_binary_format::{errors::VMResult, file_format::CompiledModule};
 use move_cli::sandbox::utils::on_disk_state_view::OnDiskStateView;
 use move_core_types::{effects::ChangeSet as MoveChanges, language_storage::TypeTag};
-use move_lang::{compiled_unit::CompiledUnit, Compiler, Flags};
+use move_lang::{compiled_unit::AnnotatedCompiledUnit, Compiler, Flags};
 use move_vm_runtime::{move_vm::MoveVM, session::Session};
 use move_vm_test_utils::DeltaStorage;
 use move_vm_types::gas_schedule::GasStatus;
@@ -408,6 +408,7 @@ fn compile_move_script(file_path: &str) -> Result<Vec<u8>> {
     let targets = &vec![cur_path];
     let (files, units_or_diags) = Compiler::new(targets, &diem_framework::diem_stdlib_files())
         .set_flags(Flags::empty().set_sources_shadow_deps(false))
+        .set_named_address_values(diem_framework::diem_framework_named_addresses())
         .build()?;
     let unit = match units_or_diags {
         Err(diags) => {
@@ -428,10 +429,8 @@ fn compile_move_script(file_path: &str) -> Result<Vec<u8>> {
             units.pop().unwrap()
         }
     };
-    let mut out = vec![];
     match unit {
-        CompiledUnit::Script { script, .. } => script.serialize(&mut out)?,
+        AnnotatedCompiledUnit::Script(_) => Ok(unit.into_compiled_unit().serialize()),
         _ => bail!("Unexpected module"),
-    };
-    Ok(out)
+    }
 }

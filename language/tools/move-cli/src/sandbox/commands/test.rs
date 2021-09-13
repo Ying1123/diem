@@ -19,6 +19,7 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
+use tempfile::tempdir;
 
 /// Basic datatest testing framework for the CLI. The `run_one` entrypoint expects
 /// an `args.txt` file with arguments that the `move` binary understands (one set
@@ -107,29 +108,68 @@ fn collect_coverage(
 pub fn run_one(
     args_path: &Path,
     cli_binary: &str,
+    use_temp_dir: bool,
     track_cov: bool,
 ) -> anyhow::Result<Option<ExecCoverageMapWithModules>> {
+    fn simple_copy_dir(dst: &Path, src: &Path) -> io::Result<()> {
+        for entry in fs::read_dir(src)? {
+            let src_entry = entry?;
+            let src_entry_path = src_entry.path();
+            let dst_entry_path = dst.join(src_entry.file_name());
+            if src_entry_path.is_dir() {
+                fs::create_dir(&dst_entry_path)?;
+                simple_copy_dir(&dst_entry_path, &src_entry_path)?;
+            } else {
+                fs::copy(&src_entry_path, &dst_entry_path)?;
+            }
+        }
+        Ok(())
+    }
+
     let args_file = io::BufReader::new(File::open(args_path)?).lines();
+    let cli_binary_path = Path::new(cli_binary).canonicalize()?;
+
     // path where we will run the binary
     let exe_dir = args_path.parent().unwrap();
-    let cli_binary_path = Path::new(cli_binary).canonicalize()?;
-    let storage_dir = Path::new(exe_dir).join(DEFAULT_STORAGE_DIR);
-    let build_output = Path::new(exe_dir).join(DEFAULT_BUILD_DIR);
+    let temp_dir = if use_temp_dir {
+        // symlink everything in the exe_dir into the temp_dir
+        let dir = tempdir()?;
+        simple_copy_dir(dir.path(), exe_dir)?;
+        Some(dir)
+    } else {
+        None
+    };
+    let wks_dir = temp_dir.as_ref().map_or(exe_dir, |t| t.path());
+
+    let storage_dir = wks_dir.join(DEFAULT_STORAGE_DIR);
+    let build_output = wks_dir.join(DEFAULT_BUILD_DIR);
+
+    // template for preparing a cli command
+    let cli_command_template = || {
+        let mut command = Command::new(cli_binary_path.clone());
+        if let Some(work_dir) = temp_dir.as_ref() {
+            command.current_dir(work_dir.path());
+        } else {
+            command.current_dir(exe_dir);
+        }
+        command
+    };
+
     if storage_dir.exists() || build_output.exists() {
         // need to clean before testing
-        Command::new(cli_binary_path.clone())
-            .current_dir(exe_dir)
+        cli_command_template()
             .arg("sandbox")
             .arg("clean")
             .output()?;
     }
     let mut output = "".to_string();
 
-    // for tracing file path: always use the absolute path so we do not need to worry about where
-    // the VM is executed.
-    let trace_file = env::current_dir()?
-        .join(&build_output)
-        .join(DEFAULT_TRACE_FILE);
+    // always use the absolute path for the trace file as we may change dirs in the process
+    let trace_file = if track_cov {
+        Some(wks_dir.canonicalize()?.join(DEFAULT_TRACE_FILE))
+    } else {
+        None
+    };
 
     // Disable colors in error reporting from the Move compiler
     env::set_var(COLOR_MODE_ENV_VAR, "NONE");
@@ -146,73 +186,84 @@ pub fn run_one(
         }
 
         // enable tracing in the VM by setting the env var.
-        if track_cov {
-            env::set_var(MOVE_VM_TRACING_ENV_VAR_NAME, trace_file.as_os_str());
-        } else if env::var_os(MOVE_VM_TRACING_ENV_VAR_NAME).is_some() {
-            // this check prevents cascading the coverage tracking flag.
-            // in particular, if
-            //   1. we run with move-cli test <path-to-args-A.txt> --track-cov, and
-            //   2. in this <args-A.txt>, there is another command: test <args-B.txt>
-            // then, when running <args-B.txt>, coverage will not be tracked nor printed
-            env::remove_var(MOVE_VM_TRACING_ENV_VAR_NAME);
+        match &trace_file {
+            None => {
+                // this check prevents cascading the coverage tracking flag.
+                // in particular, if
+                //   1. we run with move-cli test <path-to-args-A.txt> --track-cov, and
+                //   2. in this <args-A.txt>, there is another command: test <args-B.txt>
+                // then, when running <args-B.txt>, coverage will not be tracked nor printed
+                env::remove_var(MOVE_VM_TRACING_ENV_VAR_NAME);
+            }
+            Some(path) => env::set_var(MOVE_VM_TRACING_ENV_VAR_NAME, path.as_os_str()),
         }
 
-        let cmd_output = Command::new(cli_binary_path.clone())
-            .current_dir(exe_dir)
-            .args(args_iter)
-            .output()?;
+        let cmd_output = cli_command_template().args(args_iter).output()?;
         output += &format!("Command `{}`:\n", args_line);
         output += std::str::from_utf8(&cmd_output.stdout)?;
         output += std::str::from_utf8(&cmd_output.stderr)?;
     }
 
     // collect coverage information
-    let cov_info = if track_cov && trace_file.exists() {
-        if !trace_file.exists() {
-            eprintln!(
-                "Trace file {:?} not found: coverage is only available with at least one `run` \
-                command in the args.txt (after a `clean`, if there is one)",
-                trace_file
-            );
-            None
-        } else {
-            Some(collect_coverage(&trace_file, &build_output, &storage_dir)?)
+    let cov_info = match &trace_file {
+        None => None,
+        Some(trace_path) => {
+            if trace_path.exists() {
+                Some(collect_coverage(trace_path, &build_output, &storage_dir)?)
+            } else {
+                eprintln!(
+                    "Trace file {:?} not found: coverage is only available with at least one `run` \
+                    command in the args.txt (after a `clean`, if there is one)",
+                    trace_path
+                );
+                None
+            }
         }
-    } else {
-        None
     };
 
     // post-test cleanup and cleanup checks
     // check that the test command didn't create a src dir
-
     let run_move_clean = !read_bool_env_var(NO_MOVE_CLEAN);
     if run_move_clean {
-        // run `move clean` to ensure that temporary state is cleaned up
-        Command::new(cli_binary_path)
-            .current_dir(exe_dir)
+        // run the clean command to ensure that temporary state is cleaned up
+        cli_command_template()
             .arg("sandbox")
             .arg("clean")
             .output()?;
-        // check that storage was deleted
+
+        // check that build and storage was deleted
         assert!(
             !storage_dir.exists(),
             "`move clean` failed to eliminate {} directory",
             DEFAULT_STORAGE_DIR
         );
         assert!(
-            !storage_dir.exists(),
+            !build_output.exists(),
             "`move clean` failed to eliminate {} directory",
             DEFAULT_BUILD_DIR
         );
+
+        // clean the trace file as well if it exists
+        if let Some(trace_path) = &trace_file {
+            if trace_path.exists() {
+                fs::remove_file(trace_path)?;
+            }
+        }
     }
 
+    // release the temporary workspace explicitly
+    if let Some(t) = temp_dir {
+        t.close()?;
+    }
+
+    // compare output and exp_file
     let update_baseline = read_env_update_baseline();
     let exp_path = args_path.with_extension(EXP_EXT);
     if update_baseline {
         fs::write(exp_path, &output)?;
         return Ok(cov_info);
     }
-    // compare output and exp_file
+
     let expected_output = fs::read_to_string(exp_path).unwrap_or_else(|_| "".to_string());
     if expected_output != output {
         anyhow::bail!(
@@ -224,7 +275,12 @@ pub fn run_one(
     }
 }
 
-pub fn run_all(args_path: &str, cli_binary: &str, track_cov: bool) -> anyhow::Result<()> {
+pub fn run_all(
+    args_path: &str,
+    cli_binary: &str,
+    use_temp_dir: bool,
+    track_cov: bool,
+) -> anyhow::Result<()> {
     let mut test_total: u64 = 0;
     let mut test_passed: u64 = 0;
     let mut cov_info = ExecCoverageMapWithModules::empty();
@@ -233,7 +289,7 @@ pub fn run_all(args_path: &str, cli_binary: &str, track_cov: bool) -> anyhow::Re
     for entry in find_filenames(&[args_path.to_owned()], |fpath| {
         fpath.file_name().expect("unexpected file entry path") == TEST_ARGS_FILENAME
     })? {
-        match run_one(Path::new(&entry), cli_binary, track_cov) {
+        match run_one(Path::new(&entry), cli_binary, use_temp_dir, track_cov) {
             Ok(cov_opt) => {
                 test_passed = test_passed.checked_add(1).unwrap();
                 if let Some(cov) = cov_opt {

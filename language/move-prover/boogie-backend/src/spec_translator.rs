@@ -28,7 +28,6 @@ use crate::{
     options::BoogieOptions,
 };
 use bytecode::mono_analysis::MonoInfo;
-use codespan_reporting::diagnostic::Severity;
 use move_model::{
     ast::{Exp, MemoryLabel, QuantKind, SpecFunDecl, SpecVarDecl, TempIndex},
     model::{QualifiedInstId, SpecVarId},
@@ -743,7 +742,7 @@ impl<'env> SpecTranslator<'env> {
             Operation::ContainsVec => {
                 self.translate_primitive_inst_call(node_id, "$ContainsVec", args)
             }
-            Operation::RangeVec => self.translate_primitive_call("$RangeVec", args),
+            Operation::RangeVec => self.translate_primitive_inst_call(node_id, "$RangeVec", args),
             Operation::InRangeVec => self.translate_primitive_call("InRangeVec", args),
             Operation::InRangeRange => self.translate_primitive_call("$InRange", args),
             Operation::MaxU8 => emit!(self.writer, "$MAX_U8"),
@@ -1035,7 +1034,7 @@ impl<'env> SpecTranslator<'env> {
 
     fn translate_quant(
         &self,
-        node_id: NodeId,
+        _node_id: NodeId,
         kind: QuantKind,
         ranges: &[(LocalVarDecl, Exp)],
         triggers: &[Vec<Exp>],
@@ -1054,17 +1053,6 @@ impl<'env> SpecTranslator<'env> {
                     self.translate_exp(range);
                     emit!(self.writer, "; ");
                     range_tmps.insert(var.name, range_tmp);
-                }
-                Type::TypeDomain(bt) => {
-                    if matches!(bt.as_ref(), Type::Primitive(PrimitiveType::TypeValue)) {
-                        self.env.diag(
-                            Severity::Error,
-                            &self.env.get_node_loc(node_id),
-                            "Type quantification not supported by this backend.",
-                        );
-                        emitln!(self.writer, "true");
-                        return;
-                    }
                 }
                 _ => {}
             }
@@ -1365,6 +1353,26 @@ impl<'env> SpecTranslator<'env> {
                     emit!(self.writer, &check);
                 } else {
                     emit!(self.writer, "true");
+                }
+
+                if let Type::Primitive(PrimitiveType::Signer) = ty {
+                    let name = &format!("$t{}", idx);
+                    let target = if ty.is_reference() {
+                        format!("$Dereference({})", name)
+                    } else {
+                        name.to_owned()
+                    };
+                    emit!(
+                        self.writer,
+                        &format!(" && $1_Signer_is_txn_signer({})", target)
+                    );
+                    emit!(
+                        self.writer,
+                        &format!(
+                            " && $1_Signer_is_txn_signer_addr($1_Signer_spec_address_of({}))",
+                            target
+                        )
+                    );
                 }
             }
             ExpData::LocalVar(_, sym) => {

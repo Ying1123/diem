@@ -23,14 +23,19 @@ pub use move_lang::command_line::DEFAULT_OUTPUT_DIR as DEFAULT_BUILD_DIR;
 /// Extension for resource and event files, which are in BCS format
 const BCS_EXTENSION: &str = "bcs";
 
+use crate::sandbox::utils::on_disk_state_view::OnDiskStateView;
 use anyhow::Result;
 use move_core_types::{
     account_address::AccountAddress, errmap::ErrorMapping, identifier::Identifier,
     language_storage::TypeTag, parser, transaction_argument::TransactionArgument,
 };
+use move_lang::shared::{self, AddressBytes};
 use move_vm_runtime::native_functions::NativeFunction;
 use sandbox::utils::mode::{Mode, ModeType};
-use std::{fs, path::Path};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 use structopt::{clap::arg_enum, StructOpt};
 
 type NativeFunctionRecord = (AccountAddress, Identifier, Identifier, NativeFunction);
@@ -42,13 +47,24 @@ type NativeFunctionRecord = (AccountAddress, Identifier, Identifier, NativeFunct
     rename_all = "kebab-case"
 )]
 pub struct Move {
+    /// Named address mapping
+    #[structopt(
+        name = "NAMED_ADDRESSES",
+        short = "a",
+        long = "addresses",
+        global = true,
+        parse(try_from_str = shared::parse_named_address)
+    )]
+    named_addresses: Vec<(String, AddressBytes)>,
+
     /// Directory storing Move resources, events, and module bytecodes produced by module publishing
     /// and script execution.
-    #[structopt(long, default_value = DEFAULT_STORAGE_DIR, global = true)]
-    storage_dir: String,
+    #[structopt(long, default_value = DEFAULT_STORAGE_DIR, parse(from_os_str), global = true)]
+    storage_dir: PathBuf,
     /// Directory storing build artifacts produced by compilation
-    #[structopt(long, short = "d", default_value = DEFAULT_BUILD_DIR, global = true)]
-    build_dir: String,
+    #[structopt(long, default_value = DEFAULT_BUILD_DIR, parse(from_os_str), global = true)]
+    build_dir: PathBuf,
+
     /// Dependency inclusion mode
     #[structopt(
         long,
@@ -56,6 +72,7 @@ pub struct Move {
         global = true,
     )]
     mode: ModeType,
+
     /// Print additional diagnostics
     #[structopt(short = "v", global = true)]
     verbose: bool,
@@ -175,6 +192,10 @@ pub enum SandboxCommand {
         /// a directory path in which all the tests will be executed
         #[structopt(name = "path")]
         path: String,
+        /// Use an ephemeral directory to serve as the testing workspace.
+        /// By default, the directory containing the `args.txt` will be the workspace
+        #[structopt(long = "use-temp-dir")]
+        use_temp_dir: bool,
         /// Show coverage information after tests are done.
         /// By default, coverage will not be tracked nor shown.
         #[structopt(long = "track-cov")]
@@ -199,10 +220,48 @@ pub enum SandboxCommand {
     /// Typecheck and verify the scripts and/or modules under `src`.
     #[structopt(name = "link")]
     Link {
+        /// The source files containing modules to publish
+        #[structopt(
+            name = "PATH_TO_SOURCE_FILE",
+            default_value = DEFAULT_SOURCE_DIR,
+        )]
+        source_files: Vec<String>,
+
         /// If set, fail when attempting to typecheck a module that already exists in global storage
         #[structopt(long = "no-republish")]
         no_republish: bool,
     },
+    /// Generate struct layout bindings for the modules stored on disk under `storage`
+    // TODO: expand this to generate script bindings, docs, errmaps, etc.?
+    #[structopt(name = "generate")]
+    Generate {
+        #[structopt(subcommand)]
+        cmd: GenerateCommand,
+    },
+}
+
+#[derive(StructOpt)]
+pub enum GenerateCommand {
+    /// Generate struct layout bindings for the modules stored on disk under `storage`
+    #[structopt(name = "struct-layouts")]
+    StructLayouts {
+        /// Path to a module stored on disk.
+        #[structopt(long)]
+        module: String,
+        /// If set, generate bindings for the specified struct and type arguments. If unset,
+        /// generate bindings for all closed struct definitions
+        #[structopt(flatten)]
+        options: StructLayoutOptions,
+    },
+}
+#[derive(StructOpt)]
+pub struct StructLayoutOptions {
+    /// Generate layout bindings for this struct
+    #[structopt(long = "struct")]
+    struct_: Option<String>,
+    /// Generate layout bindings for `struct` bound to these type arguments
+    #[structopt(long = "type-args", parse(try_from_str = parser::parse_type_tag), requires="struct")]
+    type_args: Option<Vec<TypeTag>>,
 }
 
 #[derive(StructOpt)]
@@ -280,13 +339,19 @@ fn handle_sandbox_commands(
     mode: &Mode,
     sandbox_command: &SandboxCommand,
 ) -> Result<()> {
+    let additional_named_addresses =
+        shared::verify_and_create_named_address_mapping(move_args.named_addresses.clone())?;
     match sandbox_command {
-        SandboxCommand::Link { no_republish } => {
+        SandboxCommand::Link {
+            source_files,
+            no_republish,
+        } => {
             let state = mode.prepare_state(&move_args.build_dir, &move_args.storage_dir)?;
             base::commands::check(
                 &[state.interface_files_dir()?],
                 !*no_republish,
-                &[DEFAULT_SOURCE_DIR.to_string()],
+                source_files,
+                state.get_named_addresses(additional_named_addresses)?,
                 move_args.verbose,
             )
         }
@@ -304,6 +369,7 @@ fn handle_sandbox_commands(
                 !*no_republish,
                 *ignore_breaking_changes,
                 override_ordering.as_ref().map(|o| o.as_slice()),
+                state.get_named_addresses(additional_named_addresses)?,
                 move_args.verbose,
             )
         }
@@ -326,6 +392,7 @@ fn handle_sandbox_commands(
                 signers,
                 args,
                 type_args.to_vec(),
+                state.get_named_addresses(additional_named_addresses)?,
                 *gas_budget,
                 *dry_run,
                 move_args.verbose,
@@ -333,16 +400,19 @@ fn handle_sandbox_commands(
         }
         SandboxCommand::Test {
             path,
+            use_temp_dir: _,
             track_cov: _,
             create: true,
         } => sandbox::commands::create_test_scaffold(path),
         SandboxCommand::Test {
             path,
+            use_temp_dir,
             track_cov,
             create: false,
         } => sandbox::commands::run_all(
             path,
             &std::env::current_exe()?.to_string_lossy(),
+            *use_temp_dir,
             *track_cov,
         ),
         SandboxCommand::View { file } => {
@@ -367,6 +437,23 @@ fn handle_sandbox_commands(
             let state = mode.prepare_state(&move_args.build_dir, &move_args.storage_dir)?;
             sandbox::commands::doctor(&state)
         }
+        SandboxCommand::Generate { cmd } => {
+            let state = mode.prepare_state(&move_args.build_dir, &move_args.storage_dir)?;
+            handle_generate_commands(cmd, &state)
+        }
+    }
+}
+
+fn handle_generate_commands(cmd: &GenerateCommand, state: &OnDiskStateView) -> Result<()> {
+    match cmd {
+        GenerateCommand::StructLayouts { module, options } => {
+            sandbox::commands::generate::generate_struct_layouts(
+                module,
+                &options.struct_,
+                &options.type_args,
+                state,
+            )
+        }
     }
 }
 
@@ -377,6 +464,8 @@ pub fn run_cli(
     cmd: &Command,
 ) -> Result<()> {
     let mode = Mode::new(move_args.mode);
+    let additional_named_addresses =
+        shared::verify_and_create_named_address_mapping(move_args.named_addresses.clone())?;
 
     match cmd {
         Command::Compile {
@@ -384,22 +473,22 @@ pub fn run_cli(
             no_source_maps,
             check,
         } => {
-            let mode_interface_dir = mode
-                .prepare_state(&move_args.build_dir, &move_args.storage_dir)?
-                .interface_files_dir()?;
+            let state = mode.prepare_state(&move_args.build_dir, &move_args.storage_dir)?;
             if *check {
                 base::commands::check(
-                    &[mode_interface_dir],
+                    &[state.interface_files_dir()?],
                     false,
                     source_files,
+                    state.get_named_addresses(additional_named_addresses)?,
                     move_args.verbose,
                 )
             } else {
                 base::commands::compile(
-                    &[mode_interface_dir],
-                    &move_args.build_dir,
+                    &[state.interface_files_dir()?],
+                    state.build_dir().to_str().unwrap(),
                     false,
                     source_files,
+                    state.get_named_addresses(additional_named_addresses)?,
                     !*no_source_maps,
                     move_args.verbose,
                 )

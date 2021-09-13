@@ -60,7 +60,7 @@ pub fn output(out: &mut dyn Write, abis: &[ScriptABI], local_types: bool) -> Res
     if !script_function_abis.is_empty() {
         emitter.output_script_function_decoder_map(&script_function_abis)?;
     }
-    emitter.output_decoding_helpers(abis)?;
+    emitter.output_decoding_helpers(&common::filter_transaction_scripts(abis))?;
 
     for abi in &tx_script_abis {
         emitter.output_code_constant(abi)?;
@@ -228,6 +228,7 @@ impl ScriptFunctionCall {
                         "TransactionArgument",
                         "TransactionPayload",
                         "ScriptFunction",
+                        "VecBytes",
                     ],
                 ),
                 ("diem_types::account_address", vec!["AccountAddress"]),
@@ -241,6 +242,7 @@ impl ScriptFunctionCall {
                     "Script",
                     "ScriptFunction",
                     "TransactionArgument",
+                    "VecBytes",
                     "TransactionPayload",
                     "ModuleId",
                     "Identifier",
@@ -824,6 +826,7 @@ fn decode_{}_argument(arg: TransactionArgument) -> Option<{}> {{
                         "Bytes".into()
                     }
                 }
+                Vector(type_tag) if type_tag.as_ref() == &U8 => "VecBytes".into(),
                 _ => common::type_not_allowed(type_tag),
             },
 
@@ -841,6 +844,11 @@ fn decode_{}_argument(arg: TransactionArgument) -> Option<{}> {{
             Bool | U8 | U64 | U128 | Address => {}
             Vector(type_tag) => match type_tag.as_ref() {
                 U8 => {}
+                Vector(type_tag) => {
+                    if type_tag.as_ref() != &U8 {
+                        common::type_not_allowed(type_tag)
+                    }
+                }
                 _ => common::type_not_allowed(type_tag),
             },
             Struct(_) | Signer => common::type_not_allowed(type_tag),

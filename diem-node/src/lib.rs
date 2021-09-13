@@ -16,7 +16,7 @@ use diem_metrics::metric_server;
 use diem_time_service::TimeService;
 use diem_types::{
     account_config::diem_root_address, account_state::AccountState, chain_id::ChainId,
-    move_resource::MoveStorage,
+    move_resource::MoveStorage, on_chain_config::VMPublishingOption,
 };
 use diem_vm::DiemVM;
 use diemdb::DiemDB;
@@ -24,10 +24,11 @@ use executor::{db_bootstrapper::maybe_bootstrap, Executor};
 use executor_types::ChunkExecutor;
 use futures::{channel::mpsc::channel, executor::block_on};
 use network_builder::builder::NetworkBuilder;
-use state_sync::bootstrapper::StateSyncBootstrapper;
+use state_sync_v1::bootstrapper::StateSyncBootstrapper;
 use std::{
     boxed::Box,
     convert::TryFrom,
+    io::Write,
     net::ToSocketAddrs,
     path::PathBuf,
     sync::{
@@ -92,7 +93,14 @@ pub fn start(config: &NodeConfig, log_file: Option<PathBuf>) {
     }
 }
 
-pub fn load_test_environment(config_path: Option<PathBuf>, random_ports: bool) {
+pub fn load_test_environment<R>(
+    config_path: Option<PathBuf>,
+    random_ports: bool,
+    publishing_option: Option<VMPublishingOption>,
+    rng: R,
+) where
+    R: ::rand::RngCore + ::rand::CryptoRng,
+{
     // Either allocate a temppath or reuse the passed in path and make sure the directory exists
     let config_temp_path = diem_temppath::TempPath::new();
     let config_path = config_path.unwrap_or_else(|| config_temp_path.as_ref().to_path_buf());
@@ -107,36 +115,42 @@ pub fn load_test_environment(config_path: Option<PathBuf>, random_ports: bool) {
     maybe_config.push("validator_node_template.yaml");
     let template = NodeConfig::load_config(maybe_config)
         .unwrap_or_else(|_| NodeConfig::default_for_validator());
-    let builder = diem_genesis_tool::validator_builder::ValidatorBuilder::new(
+    let mut builder = diem_genesis_tool::validator_builder::ValidatorBuilder::new(
         &config_path,
         diem_framework_releases::current_module_blobs().to_vec(),
     )
     .template(template)
     .randomize_first_validator_ports(random_ports);
-    let test_config =
-        diem_genesis_tool::swarm_config::SwarmConfig::build(&builder, &config_path).unwrap();
+    if let Some(publishing_option) = publishing_option {
+        builder = builder.publishing_option(publishing_option);
+    }
+    let (root_keys, _genesis, genesis_waypoint, validators) = builder.build(rng).unwrap();
+
+    let diem_root_key_path = config_path.join("mint.key");
+    let serialized_keys = bcs::to_bytes(&root_keys.root_key).unwrap();
+    let mut key_file = std::fs::File::create(&diem_root_key_path).unwrap();
+    key_file.write_all(&serialized_keys).unwrap();
 
     // Prepare log file since we cannot automatically route logs to stderr
     let mut log_file = config_path.clone();
     log_file.push("validator.log");
 
     // Build a waypoint file so that clients / docker can grab it easily
-    let mut waypoint_file_path = config_path;
-    waypoint_file_path.push("waypoint.txt");
+    let waypoint_file_path = config_path.join("waypoint.txt");
     std::io::Write::write_all(
         &mut std::fs::File::create(&waypoint_file_path).unwrap(),
-        test_config.waypoint.to_string().as_bytes(),
+        genesis_waypoint.to_string().as_bytes(),
     )
     .unwrap();
 
     // Intentionally leave out instructions on how to connect with different applications
     println!("Completed generating configuration:");
     println!("\tLog file: {:?}", log_file);
-    println!("\tConfig path: {:?}", test_config.config_files[0]);
-    println!("\tDiem root key path: {:?}", test_config.diem_root_key_path);
-    println!("\tWaypoint: {}", test_config.waypoint);
+    println!("\tConfig path: {:?}", validators[0].config_path());
+    println!("\tDiem root key path: {:?}", diem_root_key_path);
+    println!("\tWaypoint: {}", genesis_waypoint);
     // Configure json rpc to bind on 0.0.0.0
-    let mut config = NodeConfig::load(&test_config.config_files[0]).unwrap();
+    let mut config = NodeConfig::load(validators[0].config_path()).unwrap();
     config.json_rpc.address = format!("0.0.0.0:{}", config.json_rpc.address.port())
         .parse()
         .unwrap();
@@ -332,7 +346,7 @@ pub fn setup_environment(node_config: &NodeConfig, logger: Option<Arc<Logger>>) 
 
         // Create the endpoints to connect the Network to State Sync.
         let (state_sync_sender, state_sync_events) =
-            network_builder.add_protocol_handler(state_sync::network::network_endpoint_config());
+            network_builder.add_protocol_handler(state_sync_v1::network::network_endpoint_config());
         state_sync_network_handles.push((
             NodeNetworkId::new(network_id.clone(), idx),
             state_sync_sender,
@@ -375,12 +389,19 @@ pub fn setup_environment(node_config: &NodeConfig, logger: Option<Arc<Logger>>) 
     // TODO set up on-chain discovery network based on UpstreamConfig.fallback_network
     // and pass network handles to mempool/state sync
 
-    // for state sync to send requests to mempool
-    let (state_sync_to_mempool_sender, state_sync_requests) =
-        channel(INTRA_NODE_CHANNEL_BUFFER_SIZE);
+    // For state sync to send notifications to mempool and receive notifications from consensus.
+    let (mempool_notifier, mempool_listener) =
+        mempool_notifications::new_mempool_notifier_listener_pair();
+    let (consensus_notifier, consensus_listener) =
+        consensus_notifications::new_consensus_notifier_listener_pair(
+            node_config.state_sync.client_commit_timeout_ms,
+        );
+
+    // Create state sync bootstrapper
     let state_sync_bootstrapper = StateSyncBootstrapper::bootstrap(
         state_sync_network_handles,
-        state_sync_to_mempool_sender,
+        mempool_notifier,
+        consensus_listener,
         Arc::clone(&db_rw.reader),
         chunk_executor,
         node_config,
@@ -401,7 +422,7 @@ pub fn setup_environment(node_config: &NodeConfig, logger: Option<Arc<Logger>>) 
         mempool_network_handles,
         mp_client_events,
         consensus_requests,
-        state_sync_requests,
+        mempool_listener,
         mempool_reconfig_events,
     );
     debug!("Mempool started in {} ms", instant.elapsed().as_millis());
@@ -410,8 +431,7 @@ pub fn setup_environment(node_config: &NodeConfig, logger: Option<Arc<Logger>>) 
     // network provider -> consensus -> state synchronizer -> network provider.  This has resulted
     // in a deadlock as observed in GitHub issue #749.
     if let Some((consensus_network_sender, consensus_network_events)) = consensus_network_handles {
-        let state_sync_client =
-            state_sync_bootstrapper.create_client(node_config.state_sync.client_commit_timeout_ms);
+        let state_sync_client = state_sync_bootstrapper.create_client();
 
         // Make sure that state synchronizer is caught up at least to its waypoint
         // (in case it's present). There is no sense to start consensus prior to that.
@@ -428,7 +448,7 @@ pub fn setup_environment(node_config: &NodeConfig, logger: Option<Arc<Logger>>) 
             node_config,
             consensus_network_sender,
             consensus_network_events,
-            state_sync_client,
+            Box::new(consensus_notifier),
             consensus_to_mempool_sender,
             diem_db,
             consensus_reconfig_events,

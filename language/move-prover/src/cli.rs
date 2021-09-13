@@ -5,11 +5,15 @@
 
 //! Functionality related to the command line interface of the Move prover.
 
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::{
+    collections::BTreeMap,
+    sync::atomic::{AtomicBool, Ordering},
+};
 
 use anyhow::anyhow;
 use clap::{App, Arg};
 use log::LevelFilter;
+use move_lang::shared::AddressBytes;
 use once_cell::sync::Lazy;
 use serde::{Deserialize, Serialize};
 use simplelog::{
@@ -56,10 +60,10 @@ pub struct Options {
     /// The paths to any dependencies for the Move sources. Those will not be verified but
     /// can be used by `move_sources`.
     pub move_deps: Vec<String>,
+    /// The values assigned to named addresses in the Move code being verified.
+    pub move_named_address_values: Vec<String>,
     /// Whether to run experimental pipeline
     pub experimental_pipeline: bool,
-    /// Whether to use the old polymorphic boogie backend.
-    pub boogie_poly: bool,
     /// BEGIN OF STRUCTURED OPTIONS
     /// Options for the model builder.
     pub model_builder: ModelBuilderOptions,
@@ -88,6 +92,15 @@ impl Default for Options {
             verbosity_level: LevelFilter::Info,
             move_sources: vec![],
             move_deps: vec![],
+            move_named_address_values: vec![
+                // TODO: Remove this and this field when package support has landed
+                "Std=0x1".into(),
+                "DiemFramework=0x1".into(),
+                "DiemRoot=0xA550C18".into(),
+                "CurrencyInfo=0xA550C18".into(),
+                "TreasuryCompliance=0xB1E55ED".into(),
+                "VMReserved=0x0".into(),
+            ],
             model_builder: ModelBuilderOptions::default(),
             prover: ProverOptions::default(),
             backend: BoogieOptions::default(),
@@ -95,7 +108,6 @@ impl Default for Options {
             abigen: AbigenOptions::default(),
             errmapgen: ErrmapOptions::default(),
             experimental_pipeline: false,
-            boogie_poly: false,
         }
     }
 }
@@ -321,13 +333,46 @@ impl Options {
                     ),
             )
             .arg(
-                Arg::with_name("mutas")
-                    .long("mutas")
+                Arg::with_name("mutation-add-sub")
+                    .long("mutation-add-sub")
                     .takes_value(true)
                     .value_name("COUNT")
                     .validator(is_number)
                     .help(
                         "indicates that this program should mutate the indicated plus operation to a minus\
+                        specifically by modifyig the \"nth\" such operation",
+                    ),
+            )
+            .arg(
+                Arg::with_name("mutation-sub-add")
+                    .long("mutation-sub-add")
+                    .takes_value(true)
+                    .value_name("COUNT")
+                    .validator(is_number)
+                    .help(
+                        "indicates that this program should mutate the indicated minus operation to a plus\
+                        specifically by modifyig the \"nth\" such operation",
+                    ),
+            )
+            .arg(
+                Arg::with_name("mutation-mul-div")
+                    .long("mutation-mul-div")
+                    .takes_value(true)
+                    .value_name("COUNT")
+                    .validator(is_number)
+                    .help(
+                        "indicates that this program should mutate the indicated multiplication operation to a divide\
+                        specifically by modifyig the \"nth\" such operation",
+                    ),
+            )
+            .arg(
+                Arg::with_name("mutation-div-mul")
+                    .long("mutation-div-mul")
+                    .takes_value(true)
+                    .value_name("COUNT")
+                    .validator(is_number)
+                    .help(
+                        "indicates that this program should mutate the indicated divide operation to a multiplication\
                         specifically by modifyig the \"nth\" such operation",
                     ),
             )
@@ -341,6 +386,14 @@ impl Options {
                     .value_name("PATH_TO_DEPENDENCY")
                     .help("path to a Move file, or a directory which will be searched for \
                     Move files, containing dependencies which will not be verified")
+            )
+            .arg(
+                Arg::with_name("named-addresses")
+                .long("named-addresses")
+                .short("a")
+                .multiple(true)
+                .takes_value(true)
+                .help("specifies the value(s) of named addresses used in Move files")
             )
             .arg(
                 Arg::with_name("sources")
@@ -412,8 +465,8 @@ impl Options {
                     .help("instructs boogie to log smtlib files for verified functions")
             )
             .arg(
-                Arg::with_name("experimental_pipeline")
-                    .long("experimental_pipeline")
+                Arg::with_name("experimental-pipeline")
+                    .long("experimental-pipeline")
                     .short("e")
                     .help("whether to run experimental pipeline")
             )
@@ -529,12 +582,35 @@ impl Options {
         if matches.occurrences_of("dependencies") > 0 {
             options.move_deps = get_vec("dependencies");
         }
+        if matches.occurrences_of("named-addresses") > 0 {
+            options.move_named_address_values = get_vec("named-addresses");
+        }
         if matches.is_present("mutation") {
             options.prover.mutation = true;
         }
-        if matches.is_present("mutas") {
-            options.prover.mutation_add_sub =
-                matches.value_of("mutas").unwrap().parse::<usize>()?;
+        if matches.is_present("mutation-add-sub") {
+            options.prover.mutation_add_sub = matches
+                .value_of("mutation-add-sub")
+                .unwrap()
+                .parse::<usize>()?;
+        }
+        if matches.is_present("mutation-sub-add") {
+            options.prover.mutation_sub_add = matches
+                .value_of("mutation-sub-add")
+                .unwrap()
+                .parse::<usize>()?;
+        }
+        if matches.is_present("mutation-mul-div") {
+            options.prover.mutation_mul_div = matches
+                .value_of("mutation-mul-div")
+                .unwrap()
+                .parse::<usize>()?;
+        }
+        if matches.is_present("mutation-div-mul") {
+            options.prover.mutation_div_mul = matches
+                .value_of("mutation-div-mul")
+                .unwrap()
+                .parse::<usize>()?;
         }
         if matches.is_present("verify") {
             options.prover.verify_scope = match matches.value_of("verify").unwrap() {
@@ -601,20 +677,13 @@ impl Options {
             options.backend.keep_artifacts = true;
         }
         if matches.is_present("boogie-poly") {
-            options.boogie_poly = true;
-            options.prover.run_mono = false;
-        }
-        if matches.is_present("inv-v1") {
-            options.prover.invariants_v2 = false;
+            options.prover.boogie_poly = true;
         }
         if matches.is_present("seed") {
             options.backend.random_seed = matches.value_of("seed").unwrap().parse::<usize>()?;
         }
-        if matches.is_present("experimental_pipeline") {
+        if matches.is_present("experimental-pipeline") {
             options.experimental_pipeline = true;
-        }
-        if matches.is_present("weak-edges") {
-            options.prover.weak_edges = true;
         }
         if matches.is_present("timeout") {
             options.backend.vc_timeout = matches.value_of("timeout").unwrap().parse::<usize>()?;
@@ -711,4 +780,13 @@ impl Options {
     pub fn enable_debug(&mut self) {
         self.verbosity_level = LevelFilter::Debug;
     }
+}
+
+pub fn named_addresses_for_options(
+    named_address_values: &BTreeMap<String, AddressBytes>,
+) -> Vec<String> {
+    named_address_values
+        .iter()
+        .map(|(name, addr)| format!("{}=0x{:#X}", name, addr))
+        .collect()
 }

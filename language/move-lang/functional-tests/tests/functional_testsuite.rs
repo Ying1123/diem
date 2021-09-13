@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use anyhow::{bail, Result};
-use diem_types::account_address::AccountAddress as DiemAddress;
+use diem_framework::diem_framework_named_addresses;
 use functional_tests::{
     compiler::{Compiler, ScriptOrModule},
     testsuite,
 };
 use move_command_line_common::env::read_bool_env_var;
 use move_lang::{
-    self, compiled_unit::CompiledUnit, diagnostics, Compiler as MoveCompiler, Flags,
+    self, compiled_unit::AnnotatedCompiledUnit, diagnostics, Compiler as MoveCompiler, Flags,
     FullyCompiledProgram, PASS_COMPILATION,
 };
 use once_cell::sync::Lazy;
@@ -39,10 +39,11 @@ impl<'a> MoveSourceCompiler<'a> {
         targets: &[String],
     ) -> anyhow::Result<(
         diagnostics::FilesSourceText,
-        Result<Vec<CompiledUnit>, diagnostics::Diagnostics>,
+        Result<Vec<AnnotatedCompiledUnit>, diagnostics::Diagnostics>,
     )> {
         let (files, comments_and_compiler_res) = MoveCompiler::new(targets, &self.deps)
             .set_pre_compiled_lib(self.pre_compiled_deps)
+            .set_named_address_values(diem_framework_named_addresses())
             .run::<PASS_COMPILATION>()?;
         match comments_and_compiler_res {
             Err(diags) => Ok((files, Err(diags))),
@@ -74,7 +75,6 @@ impl<'a> Compiler for MoveSourceCompiler<'a> {
     fn compile<Logger: FnMut(String)>(
         &mut self,
         _log: Logger,
-        _address: DiemAddress,
         input: &str,
     ) -> Result<ScriptOrModule> {
         let cur_file = NamedTempFile::new()?;
@@ -111,12 +111,14 @@ impl<'a> Compiler for MoveSourceCompiler<'a> {
         };
 
         Ok(match unit {
-            CompiledUnit::Script { script, .. } => ScriptOrModule::Script(None, script),
-            CompiledUnit::Module { module, .. } => {
+            AnnotatedCompiledUnit::Script(annot_script) => {
+                ScriptOrModule::Script(None, annot_script.named_script.script)
+            }
+            AnnotatedCompiledUnit::Module(annot_module) => {
                 cur_file.reopen()?.write_all(input.as_bytes())?;
                 self.temp_files.push(cur_file);
                 self.deps.push(cur_path);
-                ScriptOrModule::Module(module)
+                ScriptOrModule::Module(annot_module.named_module.module)
             }
         })
     }
@@ -131,6 +133,7 @@ static DIEM_PRECOMPILED_STDLIB: Lazy<FullyCompiledProgram> = Lazy::new(|| {
         &diem_framework::diem_stdlib_files(),
         None,
         Flags::empty().set_sources_shadow_deps(false),
+        diem_framework_named_addresses(),
     )
     .unwrap();
     match program_res {

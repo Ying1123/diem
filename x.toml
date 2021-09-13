@@ -4,6 +4,7 @@ version = "0.8.0"
 [system-tests]
 smoke-test = { path = "smoke-test" }
 jsonrpc-integration-tests = { path = "json-rpc/integration-tests" }
+testcases = { path = "testsuite/testcases" }
 
 [cargo.sccache]
 bucket = "ci-artifacts.diem.com"
@@ -178,24 +179,30 @@ members = [
 
     "bytecode-interpreter-testsuite",
     "bytecode-verifier-tests",
+    "bytecode-verifier-transactional-tests",
     "cli",
     "cluster-test",
+    "testcases",
     "diem-documentation-tool",
     "diem-e2e-tests-replay",
     "diem-fuzz",
     "diem-fuzzer",
     "diem-json-rpc-client",
+    "diem-keygen",
+    "diem-parallel-executor", # Will be removed once parallel execution is used in production.
     "diem-proptest-helpers",
     "diem-read-write-set",
     "diem-retrier",
-    "diem-smoke-test-attribute",
     "diem-swarm",
+    "diem-transactional-test-harness",
     "diem-transaction-benchmarks",
     "diem-wallet",
     "diemdb-benchmark",
+    "event-notifications", # Will be removed once the subscription service is plugged in.
     "executor-benchmark",
     "executor-test-helpers",
     "forge",
+    "forge-cli",
     "functional-tests",
     "generate-format",
     "invalid-mutations",
@@ -207,19 +214,26 @@ members = [
     "language-e2e-testsuite",
     "many-keys-stress-test",
     "memsocket",
+    "mirai-dataflow-analysis",
     "module-generation",
     "move-lang-functional-tests",
-    "move-lang-ir-utils",
-    "move-lang-test-utils",
     "move-oncall-trainer",
     "move-prover-test-utils",
+    "move-transactional-test-runner",
     "move-vm-integration-tests",
+    "move-vm-transactional-tests",
+    "mvhashmap", # Will be removed once mvhashmap is used in production.
     "offchain",
     "scratchpad-benchmark",
     "sdk-compatibility",
     "serializer-tests",
+    "shuffle-custom-move-code",
+    "shuffle-custom-node",
+    "shuffle-sample-custom-app",
+    "shuffle-transaction-builder",
     "smoke-test",
     "socket-bench-server",
+    "state-sync-v2", # Will be removed once state sync v2 is plugged into diem-node.
     "test-generation",
     "x",
     "x-core",
@@ -243,8 +257,10 @@ diem_crates_in_language = [
     "diem-framework",
     "diem-framework-releases",
     "diem-events-fetcher",
+    "diem-keygen",
     "diem-read-write-set",
     "diem-validator-interface",
+    "diem-transactional-test-harness",
     "diem-transaction-replay",
     "diem-transaction-benchmarks",
     "diem-writeset-generator",

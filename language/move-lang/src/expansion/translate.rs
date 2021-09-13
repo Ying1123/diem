@@ -5,7 +5,6 @@ use crate::{
     diag,
     diagnostics::Diagnostic,
     expansion::{
-        address_map::build_address_map,
         aliases::{AliasMap, AliasSet},
         ast::{self as E, Address, Fields, ModuleIdent, ModuleIdent_, SpecId},
         byte_string, hex_string,
@@ -18,6 +17,7 @@ use crate::{
     FullyCompiledProgram,
 };
 use move_ir_types::location::*;
+use move_symbol_pool::Symbol;
 use std::{
     collections::{BTreeMap, BTreeSet, VecDeque},
     iter::IntoIterator,
@@ -31,7 +31,6 @@ use super::aliases::{AliasMapBuilder, OldAliasMap};
 
 type ModuleMembers = BTreeMap<Name, ModuleMemberKind>;
 struct Context<'env> {
-    address_mapping: UniqueMap<Name, Option<Spanned<AddressBytes>>>,
     module_members: UniqueMap<ModuleIdent, ModuleMembers>,
     address: Option<Address>,
     aliases: AliasMap,
@@ -43,11 +42,9 @@ struct Context<'env> {
 impl<'env> Context<'env> {
     fn new(
         compilation_env: &'env mut CompilationEnv,
-        address_mapping: UniqueMap<Name, Option<Spanned<AddressBytes>>>,
         module_members: UniqueMap<ModuleIdent, ModuleMembers>,
     ) -> Self {
         Self {
-            address_mapping,
             module_members,
             env: compilation_env,
             address: None,
@@ -98,28 +95,19 @@ pub fn program(
     pre_compiled_lib: Option<&FullyCompiledProgram>,
     prog: P::Program,
 ) -> E::Program {
-    let address_mapping = build_address_map(compilation_env, pre_compiled_lib, &prog);
     let module_members = {
         let mut members = UniqueMap::new();
         all_module_members(
             compilation_env,
-            &address_mapping,
             &mut members,
             true,
             &prog.source_definitions,
         );
-        all_module_members(
-            compilation_env,
-            &address_mapping,
-            &mut members,
-            true,
-            &prog.lib_definitions,
-        );
+        all_module_members(compilation_env, &mut members, true, &prog.lib_definitions);
         if let Some(pre_compiled) = pre_compiled_lib {
             assert!(pre_compiled.parser.source_definitions.is_empty());
             all_module_members(
                 compilation_env,
-                &address_mapping,
                 &mut members,
                 false,
                 &pre_compiled.parser.lib_definitions,
@@ -128,7 +116,7 @@ pub fn program(
         members
     };
 
-    let mut context = Context::new(compilation_env, address_mapping, module_members);
+    let mut context = Context::new(compilation_env, module_members);
 
     let mut module_map = UniqueMap::new();
     let mut scripts = vec![];
@@ -148,14 +136,14 @@ pub fn program(
     }
 
     let mut scripts = {
-        let mut collected: BTreeMap<String, Vec<E::Script>> = BTreeMap::new();
+        let mut collected: BTreeMap<Symbol, Vec<E::Script>> = BTreeMap::new();
         for s in scripts {
             collected
-                .entry(s.function_name.value().to_owned())
+                .entry(s.function_name.value())
                 .or_insert_with(Vec::new)
                 .push(s)
         }
-        let mut keyed: BTreeMap<String, E::Script> = BTreeMap::new();
+        let mut keyed: BTreeMap<Symbol, E::Script> = BTreeMap::new();
         for (n, mut ss) in collected {
             match ss.len() {
                 0 => unreachable!(),
@@ -166,7 +154,10 @@ pub fn program(
                 _ => {
                     for (i, s) in ss.into_iter().enumerate() {
                         let k = format!("{}_{}", n, i);
-                        assert!(keyed.insert(k, s).is_none(), "ICE duplicate script key")
+                        assert!(
+                            keyed.insert(k.into(), s).is_none(),
+                            "ICE duplicate script key"
+                        )
                     }
                 }
             }
@@ -174,10 +165,9 @@ pub fn program(
         keyed
     };
 
-    super::unique_modules_after_mapping::verify(context.env, &context.address_mapping, &module_map);
+    super::unique_modules_after_mapping::verify(context.env, &module_map);
     super::dependency_ordering::verify(context.env, &mut module_map, &mut scripts);
     E::Program {
-        addresses: context.address_mapping,
         modules: module_map,
         scripts,
     }
@@ -200,7 +190,7 @@ fn definition(
             check_valid_address_name(context, &a.addr);
             let addr = address(context, /* suggest_declaration */ false, a.addr);
             for mut m in a.modules {
-                let module_addr = check_module_address(context, a.loc, addr.clone(), &mut m);
+                let module_addr = check_module_address(context, a.loc, addr, &mut m);
                 module(context, module_map, Some(module_addr), m)
             }
         }
@@ -210,36 +200,43 @@ fn definition(
     }
 }
 
-fn unbound_address_error(suggest_declaration: bool, loc: Loc, n: &Name) -> Diagnostic {
-    let mut msg = format!("Unbound address '{}'", n);
+fn address_without_value_error(suggest_declaration: bool, loc: Loc, n: &Name) -> Diagnostic {
+    let mut msg = format!("address '{}' is not assigned a value", n);
     if suggest_declaration {
-        msg = format!("{}. Try declaring it with 'address {};'", msg, n)
+        msg = format!(
+            "{}. Try assigning it a value when calling the compiler",
+            msg,
+        )
     }
-    diag!(NameResolution::UnboundAddress, (loc, msg))
+    diag!(NameResolution::AddressWithoutValue, (loc, msg))
 }
 
 // Access a top level address as declared, not affected by any aliasing/shadowing
 fn address(context: &mut Context, suggest_declaration: bool, ln: P::LeadingNameAccess) -> Address {
-    address_impl(
-        context.env,
-        &context.address_mapping,
-        suggest_declaration,
-        ln,
-    )
+    address_impl(context.env, suggest_declaration, ln)
 }
 
 fn address_impl(
     compilation_env: &mut CompilationEnv,
-    address_mapping: &UniqueMap<Name, Option<Spanned<AddressBytes>>>,
     suggest_declaration: bool,
     sp!(loc, ln_): P::LeadingNameAccess,
 ) -> Address {
     match ln_ {
         P::LeadingNameAccess_::AnonymousAddress(bytes) => Address::Anonymous(sp(loc, bytes)),
         P::LeadingNameAccess_::Name(n) => {
-            if address_mapping.get(&n).is_none() {
-                compilation_env.add_diag(unbound_address_error(suggest_declaration, loc, &n));
+            if n.value.as_str() == ModuleName::SELF_NAME {
+                compilation_env.add_diag(diag!(
+                        NameResolution::ReservedName,
+                        (loc, format!("Invalid named address '{0}'. '{0}' is restricted and cannot be used to name an address", ModuleName::SELF_NAME))
+                ))
+            } else if compilation_env
+                .named_address_mapping()
+                .get(&n.value)
+                .is_none()
+            {
+                compilation_env.add_diag(address_without_value_error(suggest_declaration, loc, &n));
             }
+
             Address::Named(n)
         }
     }
@@ -353,10 +350,7 @@ fn module_(
 
     let name = name;
     let name_loc = name.0.loc;
-    let current_module = sp(
-        name_loc,
-        ModuleIdent_::new(context.cur_address().clone(), name),
-    );
+    let current_module = sp(name_loc, ModuleIdent_::new(*context.cur_address(), name));
 
     let mut new_scope = AliasMapBuilder::new();
     module_self_aliases(&mut new_scope, &current_module);
@@ -438,16 +432,12 @@ fn script_(context: &mut Context, pscript: P::Script) -> E::Script {
     let mut constants = UniqueMap::new();
     for c in pconstants {
         // TODO remove after Self rework
-        check_valid_module_member_name(context, ModuleMemberKind::Constant, c.name.0.clone());
+        check_valid_module_member_name(context, ModuleMemberKind::Constant, c.name.0);
         constant(context, &mut constants, c);
     }
 
     // TODO remove after Self rework
-    check_valid_module_member_name(
-        context,
-        ModuleMemberKind::Function,
-        pfunction.name.0.clone(),
-    );
+    check_valid_module_member_name(context, ModuleMemberKind::Function, pfunction.name.0);
     let (function_name, function) = function_(context, pfunction);
     match &function.visibility {
         Visibility::Public(loc) | Visibility::Script(loc) | Visibility::Friend(loc) => {
@@ -538,7 +528,6 @@ fn attribute_value(
 
 fn all_module_members<'a>(
     compilation_env: &mut CompilationEnv,
-    address_mapping: &UniqueMap<Name, Option<Spanned<AddressBytes>>>,
     members: &mut UniqueMap<ModuleIdent, ModuleMembers>,
     always_add: bool,
     defs: impl IntoIterator<Item = &'a P::Definition>,
@@ -547,12 +536,9 @@ fn all_module_members<'a>(
         match def {
             P::Definition::Module(m) => {
                 let addr = match &m.address {
-                    Some(a) => address_impl(
-                        compilation_env,
-                        address_mapping,
-                        /* suggest_declaration */ true,
-                        a.clone(),
-                    ),
+                    Some(a) => {
+                        address_impl(compilation_env, /* suggest_declaration */ true, *a)
+                    }
                     // Error will be handled when the module is compiled
                     None => Address::Anonymous(sp(m.loc, AddressBytes::DEFAULT_ERROR_BYTES)),
                 };
@@ -561,12 +547,11 @@ fn all_module_members<'a>(
             P::Definition::Address(addr_def) => {
                 let addr = address_impl(
                     compilation_env,
-                    address_mapping,
                     /* suggest_declaration */ false,
-                    addr_def.addr.clone(),
+                    addr_def.addr,
                 );
                 for m in &addr_def.modules {
-                    module_members(members, always_add, addr.clone(), m)
+                    module_members(members, always_add, addr, m)
                 }
             }
             P::Definition::Script(_) => (),
@@ -580,7 +565,7 @@ fn module_members(
     address: Address,
     m: &P::ModuleDefinition,
 ) {
-    let mident = sp(m.name.loc(), ModuleIdent_::new(address, m.name.clone()));
+    let mident = sp(m.name.loc(), ModuleIdent_::new(address, m.name));
     if !always_add && members.contains_key(&mident) {
         return;
     }
@@ -589,13 +574,13 @@ fn module_members(
         use P::{SpecBlockMember_ as SBM, SpecBlockTarget_ as SBT, SpecBlock_ as SB};
         match mem {
             P::ModuleMember::Function(f) => {
-                cur_members.insert(f.name.0.clone(), ModuleMemberKind::Function);
+                cur_members.insert(f.name.0, ModuleMemberKind::Function);
             }
             P::ModuleMember::Constant(c) => {
-                cur_members.insert(c.name.0.clone(), ModuleMemberKind::Constant);
+                cur_members.insert(c.name.0, ModuleMemberKind::Constant);
             }
             P::ModuleMember::Struct(s) => {
-                cur_members.insert(s.name.0.clone(), ModuleMemberKind::Struct);
+                cur_members.insert(s.name.0, ModuleMemberKind::Struct);
             }
             P::ModuleMember::Spec(
                 sp!(
@@ -608,12 +593,12 @@ fn module_members(
                 ),
             ) => match &target.value {
                 SBT::Schema(n, _) => {
-                    cur_members.insert(n.clone(), ModuleMemberKind::Schema);
+                    cur_members.insert(*n, ModuleMemberKind::Schema);
                 }
                 SBT::Module => {
                     for sp!(_, smember_) in members {
                         if let SBM::Function { name, .. } = smember_ {
-                            cur_members.insert(name.0.clone(), ModuleMemberKind::Function);
+                            cur_members.insert(name.0, ModuleMemberKind::Function);
                         }
                     }
                 }
@@ -627,7 +612,7 @@ fn module_members(
 
 fn module_self_aliases(acc: &mut AliasMapBuilder, current_module: &ModuleIdent) {
     let self_name = sp(current_module.loc, ModuleName::SELF_NAME.into());
-    acc.add_implicit_module_alias(self_name, current_module.clone())
+    acc.add_implicit_module_alias(self_name, *current_module)
         .unwrap()
 }
 
@@ -660,17 +645,17 @@ fn aliases_from_member(
             Some(f)
         }
         P::ModuleMember::Function(f) => {
-            let n = f.name.0.clone();
+            let n = f.name.0;
             check_name_and_add_implicit_alias!(ModuleMemberKind::Function, n);
             Some(P::ModuleMember::Function(f))
         }
         P::ModuleMember::Constant(c) => {
-            let n = c.name.0.clone();
+            let n = c.name.0;
             check_name_and_add_implicit_alias!(ModuleMemberKind::Constant, n);
             Some(P::ModuleMember::Constant(c))
         }
         P::ModuleMember::Struct(s) => {
-            let n = s.name.0.clone();
+            let n = s.name.0;
             check_name_and_add_implicit_alias!(ModuleMemberKind::Struct, n);
             Some(P::ModuleMember::Struct(s))
         }
@@ -685,12 +670,12 @@ fn aliases_from_member(
             ) = &s;
             match &target.value {
                 SBT::Schema(n, _) => {
-                    check_name_and_add_implicit_alias!(ModuleMemberKind::Schema, n.clone());
+                    check_name_and_add_implicit_alias!(ModuleMemberKind::Schema, *n);
                 }
                 SBT::Module => {
                     for sp!(_, smember_) in members {
                         if let SBM::Function { name, .. } = smember_ {
-                            let n = name.0.clone();
+                            let n = name.0;
                             check_name_and_add_implicit_alias!(ModuleMemberKind::Function, n);
                         }
                     }
@@ -752,8 +737,8 @@ fn use_(context: &mut Context, acc: &mut AliasMapBuilder, u: P::Use) {
                 .collect::<Vec<_>>();
 
             for (member, alias_opt, member_kind_opt) in sub_uses_kinds {
-                if member.value == ModuleName::SELF_NAME {
-                    add_module_alias!(mident.clone(), alias_opt);
+                if member.value.as_str() == ModuleName::SELF_NAME {
+                    add_module_alias!(mident, alias_opt);
                     continue;
                 }
 
@@ -775,13 +760,13 @@ fn use_(context: &mut Context, acc: &mut AliasMapBuilder, u: P::Use) {
                     Some(m) => m,
                 };
 
-                let alias = alias_opt.unwrap_or_else(|| member.clone());
+                let alias = alias_opt.unwrap_or(member);
 
                 let alias = match check_valid_module_member_alias(context, member_kind, alias) {
                     None => continue,
                     Some(alias) => alias,
                 };
-                if let Err(old_loc) = acc.add_member_alias(alias.clone(), mident.clone(), member) {
+                if let Err(old_loc) = acc.add_member_alias(alias, mident, member) {
                     duplicate_module_member(context, old_loc, alias)
                 }
             }
@@ -1411,12 +1396,12 @@ fn name_access_chain(
         (Access::ApplyPositional, PN::One(n))
         | (Access::ApplyNamed, PN::One(n))
         | (Access::Type, PN::One(n)) => match context.aliases.member_alias_get(&n) {
-            Some((mident, mem)) => EN::ModuleAccess(mident.clone(), mem.clone()),
+            Some((mident, mem)) => EN::ModuleAccess(*mident, *mem),
             None => EN::Name(n),
         },
-        (Access::Term, PN::One(n)) if is_valid_struct_constant_or_schema_name(&n.value) => {
+        (Access::Term, PN::One(n)) if is_valid_struct_constant_or_schema_name(n.value.as_str()) => {
             match context.aliases.member_alias_get(&n) {
-                Some((mident, mem)) => EN::ModuleAccess(mident.clone(), mem.clone()),
+                Some((mident, mem)) => EN::ModuleAccess(*mident, *mem),
                 None => EN::Name(n),
             }
         }
@@ -1436,7 +1421,7 @@ fn name_access_chain(
                 ));
                 return None;
             }
-            Some(mident) => EN::ModuleAccess(mident.clone(), n2),
+            Some(mident) => EN::ModuleAccess(*mident, n2),
         },
         (_, PN::Three(sp!(ident_loc, (ln, n2)), n3)) => {
             let addr = address(context, /* suggest_declaration */ false, ln);
@@ -1461,7 +1446,7 @@ fn name_access_chain_to_module_ident(
                 ));
                 None
             }
-            Some(mident) => Some(mident.clone()),
+            Some(mident) => Some(*mident),
         },
         PN::Two(ln, n) => {
             let pmident_ = P::ModuleIdent_ {
@@ -2111,10 +2096,10 @@ fn unbound_names_exp(unbound: &mut BTreeSet<Name>, sp!(_, e_): &E::Exp) {
         | EE::Name(sp!(_, E::ModuleAccess_::ModuleAccess(..)), _)
         | EE::Unit { .. } => (),
         EE::Copy(v) | EE::Move(v) => {
-            unbound.insert(v.0.clone());
+            unbound.insert(v.0);
         }
         EE::Name(sp!(_, E::ModuleAccess_::Name(n)), _) => {
-            unbound.insert(n.clone());
+            unbound.insert(*n);
         }
         EE::Call(_, _, sp!(_, es_)) => unbound_names_exps(unbound, es_),
         EE::Pack(_, _, es) => unbound_names_exps(unbound, es.iter().map(|(_, _, (_, e))| e)),
@@ -2241,7 +2226,7 @@ fn unbound_names_assign(unbound: &mut BTreeSet<Name>, sp!(_, l_): &E::LValue) {
     use E::LValue_ as EL;
     match l_ {
         EL::Var(sp!(_, E::ModuleAccess_::Name(n)), _) => {
-            unbound.insert(n.clone());
+            unbound.insert(*n);
         }
         EL::Var(sp!(_, E::ModuleAccess_::ModuleAccess(..)), _) => {
             // Qualified vars are not considered in unbound set.
@@ -2275,7 +2260,7 @@ fn check_valid_address_name(context: &mut Context, sp!(_, ln_): &P::LeadingNameA
 }
 
 fn check_valid_local_name(context: &mut Context, v: &Var) {
-    fn is_valid(s: &str) -> bool {
+    fn is_valid(s: Symbol) -> bool {
         s.starts_with('_') || s.starts_with(|c| matches!(c, 'a'..='z'))
     }
     if !is_valid(v.value()) {
@@ -2408,7 +2393,7 @@ pub fn is_valid_struct_constant_or_schema_name(s: &str) -> bool {
 }
 
 fn check_restricted_self_name(context: &mut Context, case: &str, n: &Name) -> Result<(), ()> {
-    if n.value == ModuleName::SELF_NAME {
+    if n.value.as_str() == ModuleName::SELF_NAME {
         context
             .env
             .add_diag(restricted_name_error(case, n.loc, ModuleName::SELF_NAME));
@@ -2422,9 +2407,9 @@ fn check_restricted_names(
     context: &mut Context,
     case: &str,
     sp!(loc, n_): &Name,
-    all_names: &BTreeSet<&str>,
+    all_names: &BTreeSet<Symbol>,
 ) -> Result<(), ()> {
-    if all_names.contains(n_.as_str()) {
+    if all_names.contains(n_) {
         context.env.add_diag(restricted_name_error(case, *loc, n_));
         Err(())
     } else {

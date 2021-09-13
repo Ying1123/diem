@@ -259,7 +259,7 @@ The signer didn't have the required Validator Operator role
 Publishes diem root role. Granted only in genesis.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_grant_diem_root_role">grant_diem_root_role</a>(dr_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_grant_diem_root_role">grant_diem_root_role</a>(dr_account: &signer)
 </code></pre>
 
 
@@ -268,7 +268,7 @@ Publishes diem root role. Granted only in genesis.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_grant_diem_root_role">grant_diem_root_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_grant_diem_root_role">grant_diem_root_role</a>(
     dr_account: &signer,
 ) {
     <a href="DiemTimestamp.md#0x1_DiemTimestamp_assert_genesis">DiemTimestamp::assert_genesis</a>();
@@ -305,7 +305,7 @@ Publishes diem root role. Granted only in genesis.
 Publishes treasury compliance role. Granted only in genesis.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_grant_treasury_compliance_role">grant_treasury_compliance_role</a>(treasury_compliance_account: &signer, dr_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_grant_treasury_compliance_role">grant_treasury_compliance_role</a>(treasury_compliance_account: &signer, dr_account: &signer)
 </code></pre>
 
 
@@ -314,7 +314,7 @@ Publishes treasury compliance role. Granted only in genesis.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_grant_treasury_compliance_role">grant_treasury_compliance_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_grant_treasury_compliance_role">grant_treasury_compliance_role</a>(
     treasury_compliance_account: &signer,
     dr_account: &signer,
 ) <b>acquires</b> <a href="Roles.md#0x1_Roles_RoleId">RoleId</a> {
@@ -353,7 +353,7 @@ Publishes a DesignatedDealer <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a
 The <code>creating_account</code> must be treasury compliance.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_designated_dealer_role">new_designated_dealer_role</a>(creating_account: &signer, new_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_designated_dealer_role">new_designated_dealer_role</a>(creating_account: &signer, new_account: &signer)
 </code></pre>
 
 
@@ -362,7 +362,7 @@ The <code>creating_account</code> must be treasury compliance.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_designated_dealer_role">new_designated_dealer_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_designated_dealer_role">new_designated_dealer_role</a>(
     creating_account: &signer,
     new_account: &signer,
 ) <b>acquires</b> <a href="Roles.md#0x1_Roles_RoleId">RoleId</a> {
@@ -396,7 +396,7 @@ Publish a Validator <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a></code> 
 The <code>creating_account</code> must be diem root.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_role">new_validator_role</a>(creating_account: &signer, new_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_role">new_validator_role</a>(creating_account: &signer, new_account: &signer)
 </code></pre>
 
 
@@ -405,7 +405,7 @@ The <code>creating_account</code> must be diem root.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_role">new_validator_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_role">new_validator_role</a>(
     creating_account: &signer,
     new_account: &signer
 ) <b>acquires</b> <a href="Roles.md#0x1_Roles_RoleId">RoleId</a> {
@@ -439,7 +439,7 @@ Publish a ValidatorOperator <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a>
 The <code>creating_account</code> must be DiemRoot
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_operator_role">new_validator_operator_role</a>(creating_account: &signer, new_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_operator_role">new_validator_operator_role</a>(creating_account: &signer, new_account: &signer)
 </code></pre>
 
 
@@ -448,7 +448,7 @@ The <code>creating_account</code> must be DiemRoot
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_operator_role">new_validator_operator_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_validator_operator_role">new_validator_operator_role</a>(
     creating_account: &signer,
     new_account: &signer,
 ) <b>acquires</b> <a href="Roles.md#0x1_Roles_RoleId">RoleId</a> {
@@ -482,7 +482,7 @@ Publish a ParentVASP <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a></code>
 The <code>creating_account</code> must be TreasuryCompliance
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_parent_vasp_role">new_parent_vasp_role</a>(creating_account: &signer, new_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_parent_vasp_role">new_parent_vasp_role</a>(creating_account: &signer, new_account: &signer)
 </code></pre>
 
 
@@ -491,7 +491,7 @@ The <code>creating_account</code> must be TreasuryCompliance
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_parent_vasp_role">new_parent_vasp_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_parent_vasp_role">new_parent_vasp_role</a>(
     creating_account: &signer,
     new_account: &signer,
 ) <b>acquires</b> <a href="Roles.md#0x1_Roles_RoleId">RoleId</a> {
@@ -525,7 +525,7 @@ Publish a ChildVASP <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a></code> 
 The <code>creating_account</code> must be a ParentVASP
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_child_vasp_role">new_child_vasp_role</a>(creating_account: &signer, new_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_child_vasp_role">new_child_vasp_role</a>(creating_account: &signer, new_account: &signer)
 </code></pre>
 
 
@@ -534,7 +534,7 @@ The <code>creating_account</code> must be a ParentVASP
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Roles.md#0x1_Roles_new_child_vasp_role">new_child_vasp_role</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Roles.md#0x1_Roles_new_child_vasp_role">new_child_vasp_role</a>(
     creating_account: &signer,
     new_account: &signer,
 ) <b>acquires</b> <a href="Roles.md#0x1_Roles_RoleId">RoleId</a> {
@@ -1118,7 +1118,7 @@ Assert that the account has the validator role.
 
 
 <pre><code><b>pragma</b> opaque;
-<b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotValidator">AbortsIfNotValidator</a>{validator_addr: <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_address_of">Signer::address_of</a>(validator_account)};
+<b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotValidator">AbortsIfNotValidator</a>{account: validator_account};
 </code></pre>
 
 
@@ -1161,7 +1161,7 @@ Assert that the account has the validator operator role.
 
 
 <pre><code><b>pragma</b> opaque;
-<b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotValidatorOperator">AbortsIfNotValidatorOperator</a>{validator_operator_addr: <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(validator_operator_account)};
+<b>include</b> <a href="Roles.md#0x1_Roles_AbortsIfNotValidatorOperator">AbortsIfNotValidatorOperator</a>{account: validator_operator_account};
 </code></pre>
 
 
@@ -1355,9 +1355,8 @@ The DiemRoot role is globally unique [[B1]][ROLE], and is published at DIEM_ROOT
 In other words, a <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a></code> with <code><a href="Roles.md#0x1_Roles_DIEM_ROOT_ROLE_ID">DIEM_ROOT_ROLE_ID</a></code> uniquely exists at <code>DIEM_ROOT_ADDRESS</code>.
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">spec_has_diem_root_role_addr</a>(addr):
-  addr == @DiemRoot;
-<b>invariant</b> [<b>global</b>, isolated]
+<pre><code><b>invariant</b> <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">spec_has_diem_root_role_addr</a>(addr): addr == @DiemRoot;
+<b>invariant</b> [suspendable]
     <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">spec_has_diem_root_role_addr</a>(@DiemRoot);
 </code></pre>
 
@@ -1366,67 +1365,66 @@ The TreasuryCompliance role is globally unique [[B2]][ROLE], and is published at
 In other words, a <code><a href="Roles.md#0x1_Roles_RoleId">RoleId</a></code> with <code><a href="Roles.md#0x1_Roles_TREASURY_COMPLIANCE_ROLE_ID">TREASURY_COMPLIANCE_ROLE_ID</a></code> uniquely exists at <code>TREASURY_COMPLIANCE_ADDRESS</code>.
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(addr):
+<pre><code><b>invariant</b> <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(addr):
   addr == @TreasuryCompliance;
-<b>invariant</b> [<b>global</b>, isolated]
-    <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt;
-        <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(@TreasuryCompliance);
+<b>invariant</b> [suspendable]
+    <a href="DiemTimestamp.md#0x1_DiemTimestamp_is_operating">DiemTimestamp::is_operating</a>() ==&gt; <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(@TreasuryCompliance);
 </code></pre>
 
 
 DiemRoot cannot have balances [[D1]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">spec_has_diem_root_role_addr</a>(addr):
-    !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">spec_has_diem_root_role_addr</a>(addr): !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
 TreasuryCompliance cannot have balances [[D2]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(addr):
-    !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(addr): !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
 Validator cannot have balances [[D3]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_validator_role_addr">spec_has_validator_role_addr</a>(addr):
-    !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_validator_role_addr">spec_has_validator_role_addr</a>(addr): !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
 ValidatorOperator cannot have balances [[D4]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_validator_operator_role_addr">spec_has_validator_operator_role_addr</a>(addr):
-    !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_validator_operator_role_addr">spec_has_validator_operator_role_addr</a>(addr): !<a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
 DesignatedDealer have balances [[D5]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">spec_has_designated_dealer_role_addr</a>(addr):
-    <a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">spec_has_designated_dealer_role_addr</a>(addr): <a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
 ParentVASP have balances [[D6]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">spec_has_parent_VASP_role_addr</a>(addr):
-    <a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">spec_has_parent_VASP_role_addr</a>(addr): <a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
 ChildVASP have balances [[D7]][ROLE].
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated] <b>forall</b> addr: address <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_child_VASP_role_addr">spec_has_child_VASP_role_addr</a>(addr):
-    <a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
+<pre><code><b>invariant</b> <b>forall</b> addr: address
+    <b>where</b> <a href="Roles.md#0x1_Roles_spec_has_child_VASP_role_addr">spec_has_child_VASP_role_addr</a>(addr): <a href="Roles.md#0x1_Roles_spec_can_hold_balance_addr">spec_can_hold_balance_addr</a>(addr);
 </code></pre>
 
 
@@ -1480,6 +1478,14 @@ ChildVASP have balances [[D7]][ROLE].
     <a href="Roles.md#0x1_Roles_spec_has_parent_VASP_role_addr">spec_has_parent_VASP_role_addr</a>(addr) ||
         <a href="Roles.md#0x1_Roles_spec_has_child_VASP_role_addr">spec_has_child_VASP_role_addr</a>(addr) ||
         <a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">spec_has_designated_dealer_role_addr</a>(addr)
+}
+<a name="0x1_Roles_spec_signed_by_treasury_compliance_role"></a>
+<b>fun</b> <a href="Roles.md#0x1_Roles_spec_signed_by_treasury_compliance_role">spec_signed_by_treasury_compliance_role</a>(): bool {
+    <b>exists</b> a: address: <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_is_txn_signer_addr">Signer::is_txn_signer_addr</a>(a) && <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">spec_has_treasury_compliance_role_addr</a>(a)
+}
+<a name="0x1_Roles_spec_signed_by_diem_root_role"></a>
+<b>fun</b> <a href="Roles.md#0x1_Roles_spec_signed_by_diem_root_role">spec_signed_by_diem_root_role</a>(): bool {
+    <b>exists</b> a: address: <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_is_txn_signer_addr">Signer::is_txn_signer_addr</a>(a) && <a href="Roles.md#0x1_Roles_spec_has_diem_root_role_addr">spec_has_diem_root_role_addr</a>(a)
 }
 </code></pre>
 
@@ -1606,9 +1612,10 @@ ChildVASP have balances [[D7]][ROLE].
 
 
 <pre><code><b>schema</b> <a href="Roles.md#0x1_Roles_AbortsIfNotValidator">AbortsIfNotValidator</a> {
-    validator_addr: address;
-    <b>aborts_if</b> !<b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(validator_addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_NOT_PUBLISHED">Errors::NOT_PUBLISHED</a>;
-    <b>aborts_if</b> <b>global</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(validator_addr).role_id != <a href="Roles.md#0x1_Roles_VALIDATOR_ROLE_ID">VALIDATOR_ROLE_ID</a> <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_REQUIRES_ROLE">Errors::REQUIRES_ROLE</a>;
+    account: signer;
+    <b>let</b> addr = <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(account);
+    <b>aborts_if</b> !<b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_NOT_PUBLISHED">Errors::NOT_PUBLISHED</a>;
+    <b>aborts_if</b> <b>global</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(addr).role_id != <a href="Roles.md#0x1_Roles_VALIDATOR_ROLE_ID">VALIDATOR_ROLE_ID</a> <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_REQUIRES_ROLE">Errors::REQUIRES_ROLE</a>;
 }
 </code></pre>
 
@@ -1619,9 +1626,10 @@ ChildVASP have balances [[D7]][ROLE].
 
 
 <pre><code><b>schema</b> <a href="Roles.md#0x1_Roles_AbortsIfNotValidatorOperator">AbortsIfNotValidatorOperator</a> {
-    validator_operator_addr: address;
-    <b>aborts_if</b> !<b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(validator_operator_addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_NOT_PUBLISHED">Errors::NOT_PUBLISHED</a>;
-    <b>aborts_if</b> <b>global</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(validator_operator_addr).role_id != <a href="Roles.md#0x1_Roles_VALIDATOR_OPERATOR_ROLE_ID">VALIDATOR_OPERATOR_ROLE_ID</a>
+    account: signer;
+    <b>let</b> addr = <a href="../../../../../../move-stdlib/docs/Signer.md#0x1_Signer_spec_address_of">Signer::spec_address_of</a>(account);
+    <b>aborts_if</b> !<b>exists</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_NOT_PUBLISHED">Errors::NOT_PUBLISHED</a>;
+    <b>aborts_if</b> <b>global</b>&lt;<a href="Roles.md#0x1_Roles_RoleId">RoleId</a>&gt;(addr).role_id != <a href="Roles.md#0x1_Roles_VALIDATOR_OPERATOR_ROLE_ID">VALIDATOR_OPERATOR_ROLE_ID</a>
         <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_REQUIRES_ROLE">Errors::REQUIRES_ROLE</a>;
 }
 </code></pre>

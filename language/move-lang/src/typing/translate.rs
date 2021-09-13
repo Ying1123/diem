@@ -16,7 +16,8 @@ use crate::{
     FullyCompiledProgram,
 };
 use move_ir_types::location::*;
-use std::collections::{BTreeMap, VecDeque};
+use move_symbol_pool::Symbol;
+use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 //**************************************************************************************************
 // Entry
@@ -29,7 +30,6 @@ pub fn program(
 ) -> T::Program {
     let mut context = Context::new(compilation_env, pre_compiled_lib, &prog);
     let N::Program {
-        addresses,
         modules: nmodules,
         scripts: nscripts,
     } = prog;
@@ -39,11 +39,7 @@ pub fn program(
     assert!(context.constraints.is_empty());
     recursive_structs::modules(context.env, &modules);
     infinite_instantiations::modules(context.env, &modules);
-    T::Program {
-        addresses,
-        modules,
-        scripts,
-    }
+    T::Program { modules, scripts }
 }
 
 fn modules(
@@ -88,8 +84,8 @@ fn module(
 
 fn scripts(
     context: &mut Context,
-    nscripts: BTreeMap<String, N::Script>,
-) -> BTreeMap<String, T::Script> {
+    nscripts: BTreeMap<Symbol, N::Script>,
+) -> BTreeMap<Symbol, T::Script> {
     nscripts
         .into_iter()
         .map(|(n, s)| (n, script(context, s)))
@@ -108,7 +104,7 @@ fn script(context: &mut Context, nscript: N::Script) -> T::Script {
     } = nscript;
     context.bind_script_constants(&nconstants);
     let constants = nconstants.map(|name, c| constant(context, name, c));
-    let function = function(context, function_name.clone(), nfunction, true);
+    let function = function(context, function_name, nfunction, true);
     context.current_script_constants = None;
     T::Script {
         attributes,
@@ -125,7 +121,7 @@ fn check_primitive_script_arg(
     seen_non_signer: &mut bool,
     ty: &Type,
 ) {
-    let current_function = context.current_function.clone().unwrap();
+    let current_function = context.current_function.unwrap();
     let mk_msg = move || {
         format!(
             "Invalid parameter for script function '{}'",
@@ -229,7 +225,7 @@ fn function_signature(context: &mut Context, sig: &N::FunctionSignature) {
             "Invalid parameter type",
             param_ty.clone(),
         );
-        if let Err((param, prev_loc)) = declared.add(param.clone(), ()) {
+        if let Err((param, prev_loc)) = declared.add(*param, ()) {
             let msg = format!("Duplicate parameter with name '{}'", param);
             context.env.add_diag(diag!(
                 Declarations::DuplicateItem,
@@ -237,7 +233,7 @@ fn function_signature(context: &mut Context, sig: &N::FunctionSignature) {
                 (prev_loc, "Previously declared here"),
             ))
         }
-        context.declare_local(param.clone(), Some(param_ty));
+        context.declare_local(*param, Some(param_ty));
     }
     context.return_type = Some(core::instantiate(context, sig.return_type.clone()));
     core::solve_constraints(context);
@@ -574,61 +570,114 @@ fn struct_def(context: &mut Context, s: &mut N::StructDefinition) {
     }
     core::solve_constraints(context);
 
-    let type_params: BTreeMap<_, _> = s
-        .type_parameters
-        .iter()
-        .map(|sp| {
-            let loc = sp.param.user_specified_name.loc;
-            (sp.param.id, (sp.is_phantom, loc))
-        })
-        .collect();
-
     for (_field_loc, _field_, idx_ty) in field_map.iter_mut() {
         expand::type_(context, &mut idx_ty.1);
-        check_phantom_params(
+    }
+
+    check_type_params_usage(context, &s.type_parameters, field_map);
+}
+
+fn check_type_params_usage(
+    context: &mut Context,
+    type_parameters: &[N::StructTypeParameter],
+    field_map: &Fields<Type>,
+) {
+    let has_unresolved = field_map
+        .iter()
+        .any(|(_, _, ty)| has_unresolved_error_type(&ty.1));
+
+    if has_unresolved {
+        return;
+    }
+
+    // true = used at least once in non-phantom pos
+    // false = only used in phantom pos
+    // not in the map = never used
+    let mut non_phantom_use: BTreeMap<TParamID, bool> = BTreeMap::new();
+    let phantom_params: BTreeSet<TParamID> = type_parameters
+        .iter()
+        .filter(|ty_param| ty_param.is_phantom)
+        .map(|param| param.param.id)
+        .collect();
+    for (_, _, idx_ty) in field_map.iter() {
+        visit_type_params(
             context,
-            &type_params,
             &idx_ty.1,
-            Some(NonPhantomPos::FieldType),
+            ParamPos::FIELD,
+            &mut |context, loc, param, pos| {
+                let param_is_phantom = phantom_params.contains(&param.id);
+                match (pos, param_is_phantom) {
+                    (ParamPos::NonPhantom(non_phantom_pos), true) => {
+                        invalid_phantom_use_error(context, non_phantom_pos, param, loc);
+                    }
+                    (_, false) => {
+                        let used_in_non_phantom_pos =
+                            non_phantom_use.entry(param.id).or_insert(false);
+                        *used_in_non_phantom_pos |= !pos.is_phantom();
+                    }
+                    _ => {}
+                }
+            },
         );
+    }
+    for ty_param in type_parameters {
+        if !ty_param.is_phantom {
+            check_non_phantom_param_usage(
+                context,
+                &ty_param.param,
+                non_phantom_use.get(&ty_param.param.id).copied(),
+            );
+        }
     }
 }
 
+#[derive(Clone, Copy)]
+enum ParamPos {
+    Phantom,
+    NonPhantom(NonPhantomPos),
+}
+
+impl ParamPos {
+    const FIELD: ParamPos = ParamPos::NonPhantom(NonPhantomPos::FieldType);
+
+    /// Returns `true` if the param_pos is [`Phantom`].
+    fn is_phantom(&self) -> bool {
+        matches!(self, Self::Phantom)
+    }
+}
+
+#[derive(Clone, Copy)]
 enum NonPhantomPos {
     FieldType,
     TypeArg,
 }
 
-fn check_phantom_params(
+fn visit_type_params(
     context: &mut Context,
-    type_parameters: &BTreeMap<TParamID, (bool, Loc)>,
     ty: &Type,
-    non_phantom_pos: Option<NonPhantomPos>,
+    param_pos: ParamPos,
+    f: &mut impl FnMut(&mut Context, Loc, &TParam, ParamPos),
 ) {
-    use NonPhantomPos::*;
-
     match &ty.value {
         Type_::Param(param) => {
-            // Don't bother checking unbound type parameters as it should fail somewhere else
-            match (type_parameters.get(&param.id), non_phantom_pos) {
-                (Some(&(is_phantom, param_decl_loc)), Some(non_phantom_pos)) if is_phantom => {
-                    invalid_phantom_use_error(
-                        context,
-                        non_phantom_pos,
-                        param_decl_loc,
-                        param,
-                        ty.loc,
-                    );
-                }
-                _ => {}
-            }
+            f(context, ty.loc, param, param_pos);
+        }
+        // References cannot appear in structs, but we still report them as a non-phantom position
+        // for full information.
+        Type_::Ref(_, ty) => {
+            visit_type_params(context, ty, ParamPos::NonPhantom(NonPhantomPos::TypeArg), f)
         }
         Type_::Apply(_, n, ty_args) => match &n.value {
             // Tuples cannot appear in structs, but we still report them as a non-phantom position
             // for full information.
             TypeName_::Builtin(_) | TypeName_::Multiple(_) => {
                 for ty_arg in ty_args {
-                    check_phantom_params(context, type_parameters, ty_arg, Some(TypeArg));
+                    visit_type_params(
+                        context,
+                        ty_arg,
+                        ParamPos::NonPhantom(NonPhantomPos::TypeArg),
+                        f,
+                    );
                 }
             }
             TypeName_::ModuleType(m, n) => {
@@ -637,47 +686,79 @@ fn check_phantom_params(
                     .iter()
                     .map(|param| param.is_phantom)
                     .collect();
-                // Length of params and args may be different, but we can still report errors
-                // for parameters with information.
+                // Length of params and args may be different but we can still report errors
+                // for parameters with information
                 for (is_phantom, ty_arg) in param_is_phantom.into_iter().zip(ty_args) {
-                    check_phantom_params(
-                        context,
-                        type_parameters,
-                        ty_arg,
-                        (!is_phantom).then(|| TypeArg),
-                    );
+                    let pos = if is_phantom {
+                        ParamPos::Phantom
+                    } else {
+                        ParamPos::NonPhantom(NonPhantomPos::TypeArg)
+                    };
+                    visit_type_params(context, ty_arg, pos, f);
                 }
             }
         },
-        // References cannot appear in structs, but we still report them as a non-phantom position
-        // for full information.
-        Type_::Ref(_, inner) => {
-            check_phantom_params(context, type_parameters, inner, Some(TypeArg))
-        }
-        Type_::Var(_) | Type_::Anything | Type_::Unit | Type_::UnresolvedError => {}
+        Type_::Var(_) | Type_::Anything | Type_::UnresolvedError => {}
+        Type_::Unit => {}
     }
 }
 
 fn invalid_phantom_use_error(
     context: &mut Context,
     non_phantom_pos: NonPhantomPos,
-    param_decl_loc: Loc,
     param: &TParam,
     ty_loc: Loc,
 ) {
     let msg = match non_phantom_pos {
         NonPhantomPos::FieldType => "Phantom type parameter cannot be used as a field type",
         NonPhantomPos::TypeArg => {
-            "Phantom type parameter cannot be used as an argument to a parameter not declared as \
-             phantom"
+            "Phantom type parameter cannot be used as an argument to a non-phantom parameter"
         }
     };
     let decl_msg = format!("'{}' declared here as phantom", &param.user_specified_name);
     context.env.add_diag(diag!(
         Declarations::InvalidPhantomUse,
         (ty_loc, msg),
-        (param_decl_loc, decl_msg),
+        (param.user_specified_name.loc, decl_msg),
     ));
+}
+
+fn check_non_phantom_param_usage(
+    context: &mut Context,
+    param: &N::TParam,
+    param_usage: Option<bool>,
+) {
+    let name = &param.user_specified_name;
+    match param_usage {
+        None => {
+            let msg = format!(
+                "Unused type parameter '{}'. Consider declaring it as phantom",
+                name
+            );
+            context
+                .env
+                .add_diag(diag!(UnusedItem::StructTypeParam, (name.loc, msg)))
+        }
+        Some(false) => {
+            let msg = format!(
+                "The parameter '{}' is only used as an argument to phantom parameters. Consider adding a phantom declaration here",
+                name
+            );
+            context
+                .env
+                .add_diag(diag!(Declarations::InvalidNonPhantomUse, (name.loc, msg)))
+        }
+        Some(true) => {}
+    }
+}
+
+fn has_unresolved_error_type(ty: &Type) -> bool {
+    match &ty.value {
+        Type_::UnresolvedError => true,
+        Type_::Ref(_, ty) => has_unresolved_error_type(ty),
+        Type_::Apply(_, _, ty_args) => ty_args.iter().any(has_unresolved_error_type),
+        Type_::Param(_) | Type_::Var(_) | Type_::Anything | Type_::Unit => false,
+    }
 }
 
 //**************************************************************************************************
@@ -1494,14 +1575,14 @@ fn lvalue_expected_types(_context: &mut Context, sp!(loc, b_): &T::LValue) -> Op
         L::Ignore => None,
         L::Var(_, ty) => Some(*ty.clone()),
         L::BorrowUnpack(mut_, m, s, tys, _) => {
-            let tn = sp(loc, N::TypeName_::ModuleType(m.clone(), s.clone()));
+            let tn = sp(loc, N::TypeName_::ModuleType(*m, *s));
             Some(sp(
                 loc,
                 Ref(*mut_, Box::new(sp(loc, Apply(None, tn, tys.clone())))),
             ))
         }
         L::Unpack(m, s, tys, _) => {
-            let tn = sp(loc, N::TypeName_::ModuleType(m.clone(), s.clone()));
+            let tn = sp(loc, N::TypeName_::ModuleType(*m, *s));
             Some(sp(loc, Apply(None, tn, tys.clone())))
         }
     }
@@ -1607,7 +1688,7 @@ fn lvalue(
         NL::Var(var) => {
             let var_ty = match case {
                 C::Bind => {
-                    context.declare_local(var.clone(), Some(ty.clone()));
+                    context.declare_local(var, Some(ty.clone()));
                     ty
                 }
                 C::Assign => {
@@ -1622,7 +1703,7 @@ fn lvalue(
                     var_ty
                 }
             };
-            if let Err((var, prev_loc)) = seen_locals.add(var.clone(), ()) {
+            if let Err((var, prev_loc)) = seen_locals.add(var, ()) {
                 let (primary, secondary) = match case {
                     C::Bind => {
                         let msg = format!(
@@ -1944,7 +2025,7 @@ fn exp_dotted_to_owned_value(
             let name = match &edot {
                 sp!(_, ExpDotted_::Exp(_)) => panic!("ICE covered above"),
                 sp!(_, ExpDotted_::TmpBorrow(_, _)) => panic!("ICE why is this here?"),
-                sp!(_, ExpDotted_::Dot(_, name, _)) => name.clone(),
+                sp!(_, ExpDotted_::Dot(_, name, _)) => *name,
             };
             let eborrow = exp_dotted_to_borrow(context, eloc, false, edot);
             context.add_implicit_copyable_constraint(

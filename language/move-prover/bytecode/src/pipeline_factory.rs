@@ -8,8 +8,8 @@ use crate::{
     debug_instrumentation::DebugInstrumenter,
     eliminate_imm_refs::EliminateImmRefsProcessor,
     function_target_pipeline::{FunctionTargetPipeline, FunctionTargetProcessor},
+    global_invariant_analysis::GlobalInvariantAnalysisProcessor,
     global_invariant_instrumentation::GlobalInvariantInstrumentationProcessor,
-    global_invariant_instrumentation_v2::GlobalInvariantInstrumentationProcessorV2,
     inconsistency_check::InconsistencyCheckInstrumenter,
     livevar_analysis::LiveVarAnalysisProcessor,
     loop_analysis::LoopAnalysisProcessor,
@@ -22,7 +22,6 @@ use crate::{
     spec_instrumentation::SpecInstrumentationProcessor,
     usage_analysis::UsageProcessor,
     verification_analysis::VerificationAnalysisProcessor,
-    verification_analysis_v2::VerificationAnalysisProcessorV2,
 };
 
 pub fn default_pipeline_with_options(options: &ProverOptions) -> FunctionTargetPipeline {
@@ -38,27 +37,30 @@ pub fn default_pipeline_with_options(options: &ProverOptions) -> FunctionTargetP
         MemoryInstrumentationProcessor::new(),
         CleanAndOptimizeProcessor::new(),
         UsageProcessor::new(),
-        if options.invariants_v2 {
-            VerificationAnalysisProcessorV2::new()
-        } else {
-            VerificationAnalysisProcessor::new()
-        },
+        VerificationAnalysisProcessor::new(),
         LoopAnalysisProcessor::new(),
         // spec instrumentation
         SpecInstrumentationProcessor::new(),
         DataInvariantInstrumentationProcessor::new(),
-        if options.invariants_v2 {
-            GlobalInvariantInstrumentationProcessorV2::new()
-        } else {
-            GlobalInvariantInstrumentationProcessor::new()
-        },
+        GlobalInvariantAnalysisProcessor::new(),
+        GlobalInvariantInstrumentationProcessor::new(),
     ];
+
     if options.mutation {
-        processors.insert(0, MutationTester::new()); // pass which may do nothing
+        // pass which may do nothing
+        processors.push(MutationTester::new());
     }
-    if options.run_mono {
+
+    // run monomorphization when the backend does not have mono support.else
+    //
+    // TODO: not running the MonoAnalysisProcessor does not break the
+    // transformation pipeline but will output a bpl file that is uncompilable
+    // in Boogie. Solving this issue will require some deep understanding of
+    // the mono backend on both sides, which we defer to a later stage.
+    if !options.boogie_poly {
         processors.push(MonoAnalysisProcessor::new());
     }
+
     // inconsistency check instrumentation should be the last one in the pipeline
     if options.check_inconsistency {
         processors.push(InconsistencyCheckInstrumenter::new());
@@ -77,5 +79,31 @@ pub fn default_pipeline() -> FunctionTargetPipeline {
 
 pub fn experimental_pipeline() -> FunctionTargetPipeline {
     // Enter your pipeline here
-    unimplemented!("No experimental pipeline set");
+    let processors: Vec<Box<dyn FunctionTargetProcessor>> = vec![
+        DebugInstrumenter::new(),
+        // transformation and analysis
+        EliminateImmRefsProcessor::new(),
+        MutRefInstrumenter::new(),
+        ReachingDefProcessor::new(),
+        LiveVarAnalysisProcessor::new(),
+        BorrowAnalysisProcessor::new(),
+        MemoryInstrumentationProcessor::new(),
+        CleanAndOptimizeProcessor::new(),
+        UsageProcessor::new(),
+        VerificationAnalysisProcessor::new(),
+        LoopAnalysisProcessor::new(),
+        // spec instrumentation
+        SpecInstrumentationProcessor::new(),
+        DataInvariantInstrumentationProcessor::new(),
+        GlobalInvariantAnalysisProcessor::new(),
+        GlobalInvariantInstrumentationProcessor::new(),
+        // optimization
+        MonoAnalysisProcessor::new(),
+    ];
+
+    let mut res = FunctionTargetPipeline::default();
+    for p in processors {
+        res.add_processor(p);
+    }
+    res
 }

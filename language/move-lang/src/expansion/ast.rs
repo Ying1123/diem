@@ -2,8 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{
-    diag,
-    diagnostics::Diagnostic,
     parser::ast::{
         Ability, Ability_, BinOp, ConstantName, Field, FunctionName, ModuleName, QuantKind,
         SpecApplyPattern, StructName, UnaryOp, Var, Visibility,
@@ -11,6 +9,7 @@ use crate::{
     shared::{ast_debug::*, unique_map::UniqueMap, unique_set::UniqueSet, *},
 };
 use move_ir_types::location::*;
+use move_symbol_pool::Symbol;
 use std::{
     collections::{BTreeMap, BTreeSet, VecDeque},
     fmt,
@@ -24,9 +23,8 @@ use std::{
 #[derive(Debug, Clone)]
 pub struct Program {
     // Map of declared named addresses, and their values if specified
-    pub addresses: UniqueMap<Name, Option<Spanned<AddressBytes>>>,
     pub modules: UniqueMap<ModuleIdent, ModuleDefinition>,
-    pub scripts: BTreeMap<String, Script>,
+    pub scripts: BTreeMap<Symbol, Script>,
 }
 
 //**************************************************************************************************
@@ -78,12 +76,12 @@ pub struct Script {
 // Modules
 //**************************************************************************************************
 
-#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Address {
     Anonymous(Spanned<AddressBytes>),
     Named(Name),
 }
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ModuleIdent_ {
     pub address: Address,
     pub module: ModuleName,
@@ -460,36 +458,15 @@ impl Address {
         Self::Anonymous(sp(loc, AddressBytes::new(address)))
     }
 
-    pub fn into_addr_bytes_opt(
-        self,
-        addresses: &UniqueMap<Name, AddressBytes>,
-    ) -> Option<AddressBytes> {
+    pub fn into_addr_bytes(self, addresses: &BTreeMap<Symbol, AddressBytes>) -> AddressBytes {
         match self {
-            Self::Anonymous(sp!(_, bytes)) => Some(bytes),
-            Self::Named(n) => addresses.get(&n).cloned(),
-        }
-    }
-
-    pub fn into_addr_bytes(
-        self,
-        addresses: &UniqueMap<Name, AddressBytes>,
-        loc: Loc,
-        case: &str,
-    ) -> Result<AddressBytes, Diagnostic> {
-        match self {
-            Self::Anonymous(sp!(_, bytes)) => Ok(bytes),
-            Self::Named(n) => match addresses.get(&n) {
-                Some(a) => Ok(*a),
-                None => {
-                    let unable_msg = format!("Unable to fully compile and resolve {}", case);
-                    let addr_msg = format!("No value specified for address '{}'", n);
-                    Err(diag!(
-                        BytecodeGeneration::UnassignedAddress,
-                        (loc, unable_msg),
-                        (n.loc, addr_msg)
-                    ))
-                }
-            },
+            Self::Anonymous(sp!(_, bytes)) => bytes,
+            Self::Named(n) => *addresses.get(&n.value).unwrap_or_else(|| {
+                panic!(
+                    "ICE no value found for address '{}' after expansion",
+                    n.value
+                )
+            }),
         }
     }
 }
@@ -729,19 +706,7 @@ impl fmt::Display for SpecId {
 
 impl AstDebug for Program {
     fn ast_debug(&self, w: &mut AstWriter) {
-        let Program {
-            addresses,
-            modules,
-            scripts,
-        } = self;
-        for (_, addr, bytes) in addresses {
-            w.write(&format!("address {}", addr));
-            if let Some(bytes) = bytes {
-                w.write(&format!(" = {}", bytes))
-            }
-            w.writeln(";");
-        }
-
+        let Program { modules, scripts } = self;
         for (m, mdef) in modules.key_cloned_iter() {
             w.write(&format!("module {}", m));
             w.block(|w| mdef.ast_debug(w));
@@ -823,7 +788,7 @@ impl AstDebug for Script {
             cdef.ast_debug(w);
             w.new_line();
         }
-        (function_name.clone(), function).ast_debug(w);
+        (*function_name, function).ast_debug(w);
         for spec in specs {
             spec.ast_debug(w);
             w.new_line();

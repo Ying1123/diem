@@ -17,7 +17,15 @@
   }
 }
 
+\newenvironment{Figure}{
+  \begin{figure}[ht!b!]
+} {
+  \end{figure}
+}
+
 \newcommand{\MVP}[0]{\textsf{MVP}}
+
+
 
 
 % Source Transformation
@@ -26,6 +34,10 @@
 
 
 %%%% Code
+
+%\usepackage[charter]{mathdesign}
+%\def\rmdefault{bch}
+%\def\ttdefault{blg}
 
 \lstdefinestyle{MoveStyle}{
   basicstyle=\ttfamily,
@@ -57,6 +69,7 @@
     exists,
     false,
     forall,
+    friend,
     fun,
     global,
     has,
@@ -89,7 +102,6 @@
     store,
     struct,
     true,
-    u64,
     update,
     use,
     with,
@@ -109,7 +121,7 @@
   \lstset{
     language=Move,
     style=MoveStyle,
-    basicstyle=\footnotesize\ttfamily,
+    basicstyle=\small\ttfamily,
   }
 }{
 }
@@ -122,7 +134,7 @@
   \lstset{
     language=Move,
     style=MoveStyle,
-    basicstyle=\footnotesize\ttfamily,
+    basicstyle=\small\ttfamily,
     numbers=left,
     numberstyle=\scriptsize\color{gray},
     frame=single,

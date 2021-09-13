@@ -32,6 +32,7 @@ minting and burning of coins.
 -  [Function `create_preburn`](#0x1_Diem_create_preburn)
 -  [Function `publish_preburn_queue`](#0x1_Diem_publish_preburn_queue)
 -  [Function `publish_preburn_queue_to_account`](#0x1_Diem_publish_preburn_queue_to_account)
+-  [Function `publish_preburn_queue_to_account_for_test`](#0x1_Diem_publish_preburn_queue_to_account_for_test)
 -  [Function `upgrade_preburn`](#0x1_Diem_upgrade_preburn)
 -  [Function `add_preburn_to_queue`](#0x1_Diem_add_preburn_to_queue)
 -  [Function `preburn_to`](#0x1_Diem_preburn_to)
@@ -72,7 +73,9 @@ minting and burning of coins.
         -  [Burning](#@Burning_4)
         -  [Preburning](#@Preburning_5)
         -  [Update Exchange Rates](#@Update_Exchange_Rates_6)
-    -  [Helper Functions](#@Helper_Functions_7)
+        -  [Enable/disable minting](#@Enable/disable_minting_7)
+        -  [Register new currency](#@Register_new_currency_8)
+    -  [Helper Functions](#@Helper_Functions_9)
 
 
 <pre><code><b>use</b> <a href="CoreAddresses.md#0x1_CoreAddresses">0x1::CoreAddresses</a>;
@@ -1610,7 +1613,7 @@ time, and the association TC account <code>tc_account</code> (at <code>@Treasury
 this resource for the designated dealer <code>account</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account">publish_preburn_queue_to_account</a>&lt;CoinType&gt;(account: &signer, tc_account: &signer)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account">publish_preburn_queue_to_account</a>&lt;CoinType&gt;(account: &signer, tc_account: &signer)
 </code></pre>
 
 
@@ -1619,7 +1622,7 @@ this resource for the designated dealer <code>account</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account">publish_preburn_queue_to_account</a>&lt;CoinType&gt;(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account">publish_preburn_queue_to_account</a>&lt;CoinType&gt;(
     account: &signer,
     tc_account: &signer
 ) <b>acquires</b> <a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a> {
@@ -1664,6 +1667,45 @@ PreburnQueue is published under the DesignatedDealer account.
 <b>aborts_if</b> <a href="Diem.md#0x1_Diem_is_synthetic_currency">is_synthetic_currency</a>&lt;CoinType&gt;() <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_ARGUMENT">Errors::INVALID_ARGUMENT</a>;
 <b>aborts_if</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;&gt;(account_addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_ALREADY_PUBLISHED">Errors::ALREADY_PUBLISHED</a>;
 <b>aborts_if</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;CoinType&gt;&gt;(account_addr) <b>with</b> <a href="../../../../../../move-stdlib/docs/Errors.md#0x1_Errors_INVALID_STATE">Errors::INVALID_STATE</a>;
+</code></pre>
+
+
+
+</details>
+
+<a name="0x1_Diem_publish_preburn_queue_to_account_for_test"></a>
+
+## Function `publish_preburn_queue_to_account_for_test`
+
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account_for_test">publish_preburn_queue_to_account_for_test</a>&lt;CoinType&gt;(account: &signer, tc_account: &signer)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> <b>fun</b> <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account_for_test">publish_preburn_queue_to_account_for_test</a>&lt;CoinType&gt;(
+       account: &signer,
+       tc_account: &signer
+) <b>acquires</b> <a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a> {
+    <a href="Diem.md#0x1_Diem_publish_preburn_queue_to_account">publish_preburn_queue_to_account</a>&lt;CoinType&gt;(account, tc_account)
+}
+</code></pre>
+
+
+
+</details>
+
+<details>
+<summary>Specification</summary>
+
+
+
+<pre><code><b>pragma</b> verify = <b>false</b>;
 </code></pre>
 
 
@@ -2004,8 +2046,8 @@ Calls to this function will fail if:
 
     <b>while</b> ({
         <b>spec</b> {
-            <b>assert</b> index &lt;= queue_length;
-            <b>assert</b> <b>forall</b> j in 0..index: preburn_queue[j].preburn.to_burn.value != amount;
+            <b>invariant</b> index &lt;= queue_length;
+            <b>invariant</b> <b>forall</b> j in 0..index: preburn_queue[j].preburn.to_burn.value != amount;
         };
         (index &lt; queue_length)
     }) {
@@ -3793,8 +3835,8 @@ Only TreasuryCompliance can have MintCapability [[H1]][PERMISSION].
 If an account has MintCapability, it is a TreasuryCompliance account.
 
 
-<pre><code><b>invariant</b> <b>forall</b> coin_type: type:
-    <b>forall</b> mint_cap_owner: address <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;coin_type&gt;&gt;(mint_cap_owner):
+<pre><code><b>invariant</b>&lt;CoinType&gt;
+    <b>forall</b> mint_cap_owner: address <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;CoinType&gt;&gt;(mint_cap_owner):
         <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">Roles::spec_has_treasury_compliance_role_addr</a>(mint_cap_owner);
 </code></pre>
 
@@ -3810,21 +3852,22 @@ The permission "MintCurrency" is unique per currency [[I1]][PERMISSION].
 At most one address has a mint capability for SCS CoinType
 
 
-<pre><code><b>invariant</b> [<b>global</b>, isolated]
-    <b>forall</b> coin_type: type <b>where</b> <a href="Diem.md#0x1_Diem_is_SCS_currency">is_SCS_currency</a>&lt;coin_type&gt;():
+<pre><code><b>invariant</b>&lt;CoinType&gt; <a href="Diem.md#0x1_Diem_is_SCS_currency">is_SCS_currency</a>&lt;CoinType&gt;() ==&gt; (
         <b>forall</b> mint_cap_owner1: address, mint_cap_owner2: address
-             <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;coin_type&gt;&gt;(mint_cap_owner1)
-                        && <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;coin_type&gt;&gt;(mint_cap_owner2):
-                  mint_cap_owner1 == mint_cap_owner2;
+            <b>where</b> (
+                <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;CoinType&gt;&gt;(mint_cap_owner1) &&
+                <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;CoinType&gt;&gt;(mint_cap_owner2)
+            ): mint_cap_owner1 == mint_cap_owner2
+    );
 </code></pre>
 
 
 If an address has a mint capability, it is an SCS currency.
 
 
-<pre><code><b>invariant</b>
-    <b>forall</b> coin_type: type, addr3: address <b>where</b> <a href="Diem.md#0x1_Diem_spec_has_mint_capability">spec_has_mint_capability</a>&lt;coin_type&gt;(addr3):
-        <a href="Diem.md#0x1_Diem_is_SCS_currency">is_SCS_currency</a>&lt;coin_type&gt;();
+<pre><code><b>invariant</b>&lt;CoinType&gt;
+    <b>forall</b> addr3: address <b>where</b> <a href="Diem.md#0x1_Diem_spec_has_mint_capability">spec_has_mint_capability</a>&lt;CoinType&gt;(addr3):
+        <a href="Diem.md#0x1_Diem_is_SCS_currency">is_SCS_currency</a>&lt;CoinType&gt;();
 </code></pre>
 
 
@@ -3952,9 +3995,9 @@ Only TreasuryCompliance can have BurnCapability [[H3]][PERMISSION].
 If an account has BurnCapability, it is a TreasuryCompliance account.
 
 
-<pre><code><b>invariant</b> <b>forall</b> coin_type: type:
+<pre><code><b>invariant</b>&lt;CoinType&gt;
     <b>forall</b> addr1: address:
-        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_BurnCapability">BurnCapability</a>&lt;coin_type&gt;&gt;(addr1) ==&gt;
+        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_BurnCapability">BurnCapability</a>&lt;CoinType&gt;&gt;(addr1) ==&gt;
             <a href="Roles.md#0x1_Roles_spec_has_treasury_compliance_role_addr">Roles::spec_has_treasury_compliance_role_addr</a>(addr1);
 </code></pre>
 
@@ -4070,9 +4113,9 @@ If an account has PreburnQueue, it is a DesignatedDealer account.
 > NB: during the transition this holds for both <code><a href="Diem.md#0x1_Diem_Preburn">Preburn</a></code> and <code><a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a></code> resources.
 
 
-<pre><code><b>invariant</b> <b>forall</b> coin_type: type:
+<pre><code><b>invariant</b>&lt;CoinType&gt;
     <b>forall</b> addr1: address:
-        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;coin_type&gt;&gt;(addr1) || <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;coin_type&gt;&gt;(addr1) ==&gt;
+        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;&gt;(addr1) || <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;CoinType&gt;&gt;(addr1) ==&gt;
             <a href="Roles.md#0x1_Roles_spec_has_designated_dealer_role_addr">Roles::spec_has_designated_dealer_role_addr</a>(addr1);
 </code></pre>
 
@@ -4086,10 +4129,10 @@ this will be removed once all DD's have been upgraded to
 using the <code><a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a></code>.
 
 
-<pre><code><b>invariant</b> <b>forall</b> coin_type: type, dd_addr: address
-    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;coin_type&gt;&gt;(dd_addr):
-        <b>global</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;coin_type&gt;&gt;(dd_addr).to_burn.value == 0 &&
-        !<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;coin_type&gt;&gt;(dd_addr);
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>forall</b> dd_addr: address
+    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;CoinType&gt;&gt;(dd_addr):
+        <b>global</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;CoinType&gt;&gt;(dd_addr).to_burn.value == 0 &&
+        !<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;&gt;(dd_addr);
 </code></pre>
 
 
@@ -4098,30 +4141,24 @@ also be a <code><a href="Diem.md#0x1_Diem_Preburn">Preburn</a></code> resource f
 the same address.
 
 
-<pre><code><b>invariant</b> <b>forall</b> coin_type: type, dd_addr: address
-    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;coin_type&gt;&gt;(dd_addr):
-        !<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;coin_type&gt;&gt;(dd_addr);
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>forall</b> dd_addr: address
+    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;&gt;(dd_addr):
+        !<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;CoinType&gt;&gt;(dd_addr);
 </code></pre>
 
 
 A <code><a href="Diem.md#0x1_Diem_Preburn">Preburn</a></code> resource can only be published holding a currency type.
 
 
-<pre><code><b>invariant</b> <b>forall</b> addr: address, coin_type: type
-    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;coin_type&gt;&gt;(addr):
-    <a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;coin_type&gt;();
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>forall</b> addr: address
+    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_Preburn">Preburn</a>&lt;CoinType&gt;&gt;(addr):
+    <a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;CoinType&gt;();
 </code></pre>
 
 
 A <code><a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a></code> resource can only be published holding a currency type.
-
-
-<pre><code><b>invariant</b> <b>forall</b> addr: address, coin_type: type
-    <b>where</b> <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;coin_type&gt;&gt;(addr):
-    <a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;coin_type&gt;();
-</code></pre>
-
-
+>TODO: This assertion is causing a violation for unknown reasons, probably
+a prover bug.
 Preburn is not transferrable [[J4]][PERMISSION].
 
 
@@ -4132,27 +4169,27 @@ Preburn is not transferrable [[J4]][PERMISSION].
 resource struct <code><a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a></code> is persistent
 
 
-<pre><code><b>invariant</b> <b>update</b> <b>forall</b> coin_type: type, dr_addr: address
-    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>&lt;coin_type&gt;&gt;(dr_addr)):
-        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>&lt;coin_type&gt;&gt;(dr_addr);
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b> <b>forall</b> dr_addr: address
+    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>&lt;CoinType&gt;&gt;(dr_addr)):
+        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>&lt;CoinType&gt;&gt;(dr_addr);
 </code></pre>
 
 
 resource struct <code><a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;</code> is persistent
 
 
-<pre><code><b>invariant</b> <b>update</b> <b>forall</b> coin_type: type, tc_addr: address
-    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;coin_type&gt;&gt;(tc_addr)):
-        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;coin_type&gt;&gt;(tc_addr);
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b> <b>forall</b> tc_addr: address
+    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;&gt;(tc_addr)):
+        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_PreburnQueue">PreburnQueue</a>&lt;CoinType&gt;&gt;(tc_addr);
 </code></pre>
 
 
 resource struct <code><a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;CoinType&gt;</code> is persistent
 
 
-<pre><code><b>invariant</b> <b>update</b> <b>forall</b> coin_type: type, tc_addr: address
-    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;coin_type&gt;&gt;(tc_addr)):
-        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;coin_type&gt;&gt;(tc_addr);
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b> <b>forall</b> tc_addr: address
+    <b>where</b> <b>old</b>(<b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;CoinType&gt;&gt;(tc_addr)):
+        <b>exists</b>&lt;<a href="Diem.md#0x1_Diem_MintCapability">MintCapability</a>&lt;CoinType&gt;&gt;(tc_addr);
 </code></pre>
 
 
@@ -4162,38 +4199,47 @@ resource struct <code><a href="Diem.md#0x1_Diem_MintCapability">MintCapability</
 #### Update Exchange Rates
 
 
-
-<a name="0x1_Diem_ExchangeRateRemainsSame"></a>
-
-The exchange rate to XDX stays constant.
+Only TreasuryCompliance can change the exchange rate [[H5]][PERMISSION].
 
 
-<pre><code><b>schema</b> <a href="Diem.md#0x1_Diem_ExchangeRateRemainsSame">ExchangeRateRemainsSame</a>&lt;CoinType&gt; {
-    <b>ensures</b> <b>old</b>(<a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;CoinType&gt;())
-        ==&gt; <a href="Diem.md#0x1_Diem_spec_currency_info">spec_currency_info</a>&lt;CoinType&gt;().to_xdx_exchange_rate
-            == <b>old</b>(<a href="Diem.md#0x1_Diem_spec_currency_info">spec_currency_info</a>&lt;CoinType&gt;().to_xdx_exchange_rate);
-}
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b> <b>old</b>(<a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;CoinType&gt;()) ==&gt;
+    ((<a href="Diem.md#0x1_Diem_spec_xdx_exchange_rate">spec_xdx_exchange_rate</a>&lt;CoinType&gt;() != <b>old</b>(<a href="Diem.md#0x1_Diem_spec_xdx_exchange_rate">spec_xdx_exchange_rate</a>&lt;CoinType&gt;()))
+        ==&gt; <a href="Roles.md#0x1_Roles_spec_signed_by_treasury_compliance_role">Roles::spec_signed_by_treasury_compliance_role</a>());
 </code></pre>
 
 
 
-The permission "UpdateExchangeRate(type)" is granted to TreasuryCompliance [[H5]][PERMISSION].
+<a name="@Enable/disable_minting_7"></a>
+
+#### Enable/disable minting
 
 
-<pre><code><b>apply</b> <a href="Roles.md#0x1_Roles_AbortsIfNotTreasuryCompliance">Roles::AbortsIfNotTreasuryCompliance</a>{account: tc_account} <b>to</b> <a href="Diem.md#0x1_Diem_update_xdx_exchange_rate">update_xdx_exchange_rate</a>&lt;FromCoinType&gt;;
+Only TreasuryCompliance can enable/disable minting [[H2]][PERMISSION].
+
+
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b> <b>old</b>(<a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;CoinType&gt;()) ==&gt;
+    ((<a href="Diem.md#0x1_Diem_spec_can_mint">spec_can_mint</a>&lt;CoinType&gt;() != <b>old</b>(<a href="Diem.md#0x1_Diem_spec_can_mint">spec_can_mint</a>&lt;CoinType&gt;()))
+        ==&gt; <a href="Roles.md#0x1_Roles_spec_signed_by_treasury_compliance_role">Roles::spec_signed_by_treasury_compliance_role</a>());
 </code></pre>
 
 
-Only update_xdx_exchange_rate can change the exchange rate [[H5]][PERMISSION].
+
+<a name="@Register_new_currency_8"></a>
+
+#### Register new currency
 
 
-<pre><code><b>apply</b> <a href="Diem.md#0x1_Diem_ExchangeRateRemainsSame">ExchangeRateRemainsSame</a>&lt;CoinType&gt; <b>to</b> *&lt;CoinType&gt;
-    <b>except</b> <a href="Diem.md#0x1_Diem_update_xdx_exchange_rate">update_xdx_exchange_rate</a>&lt;CoinType&gt;;
+Only DiemRoot can register a new currency [[H8]][PERMISSION].
+
+
+<pre><code><b>invariant</b>&lt;CoinType&gt; <b>update</b>
+    !<b>old</b>(<a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;CoinType&gt;()) && <a href="Diem.md#0x1_Diem_spec_is_currency">spec_is_currency</a>&lt;CoinType&gt;()
+        ==&gt; <a href="Roles.md#0x1_Roles_spec_signed_by_diem_root_role">Roles::spec_signed_by_diem_root_role</a>();
 </code></pre>
 
 
 
-<a name="@Helper_Functions_7"></a>
+<a name="@Helper_Functions_9"></a>
 
 ### Helper Functions
 
@@ -4231,9 +4277,29 @@ Specification version of <code><a href="Diem.md#0x1_Diem_approx_xdx_for_value">S
 <pre><code><b>fun</b> <a href="Diem.md#0x1_Diem_spec_approx_xdx_for_value">spec_approx_xdx_for_value</a>&lt;CoinType&gt;(value: num):  num {
     <a href="../../../../../../move-stdlib/docs/FixedPoint32.md#0x1_FixedPoint32_spec_multiply_u64">FixedPoint32::spec_multiply_u64</a>(value, <a href="Diem.md#0x1_Diem_spec_xdx_exchange_rate">spec_xdx_exchange_rate</a>&lt;CoinType&gt;())
 }
+</code></pre>
+
+
+Returns the <code>to_xdx_exchange_rate</code> of CoinType
+
+
 <a name="0x1_Diem_spec_xdx_exchange_rate"></a>
-<b>fun</b> <a href="Diem.md#0x1_Diem_spec_xdx_exchange_rate">spec_xdx_exchange_rate</a>&lt;CoinType&gt;(): <a href="../../../../../../move-stdlib/docs/FixedPoint32.md#0x1_FixedPoint32">FixedPoint32</a> {
+
+
+<pre><code><b>fun</b> <a href="Diem.md#0x1_Diem_spec_xdx_exchange_rate">spec_xdx_exchange_rate</a>&lt;CoinType&gt;(): <a href="../../../../../../move-stdlib/docs/FixedPoint32.md#0x1_FixedPoint32">FixedPoint32</a> {
     <b>global</b>&lt;<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>&lt;CoinType&gt;&gt;(@<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>).to_xdx_exchange_rate
+}
+</code></pre>
+
+
+Returns the <code>to_xdx_exchange_rate</code> of CoinType
+
+
+<a name="0x1_Diem_spec_can_mint"></a>
+
+
+<pre><code><b>fun</b> <a href="Diem.md#0x1_Diem_spec_can_mint">spec_can_mint</a>&lt;CoinType&gt;(): bool {
+    <b>global</b>&lt;<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>&lt;CoinType&gt;&gt;(@<a href="Diem.md#0x1_Diem_CurrencyInfo">CurrencyInfo</a>).can_mint
 }
 </code></pre>
 

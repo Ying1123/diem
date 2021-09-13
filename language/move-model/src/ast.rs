@@ -79,10 +79,10 @@ pub enum ConditionKind {
     StructInvariant,
     FunctionInvariant,
     LoopInvariant,
-    GlobalInvariant(Vec<Type>),
-    GlobalInvariantUpdate(Vec<Type>),
-    SchemaInvariant(Vec<Type>),
-    Axiom(Vec<Type>),
+    GlobalInvariant(Vec<Symbol>),
+    GlobalInvariantUpdate(Vec<Symbol>),
+    SchemaInvariant,
+    Axiom(Vec<Symbol>),
 }
 
 impl ConditionKind {
@@ -91,7 +91,13 @@ impl ConditionKind {
         use ConditionKind::*;
         matches!(
             self,
-            Assert | Assume | Emits | Ensures | GlobalInvariantUpdate(..) | LetPost(..)
+            LetPost(..)
+                | Assert
+                | Assume
+                | Emits
+                | Ensures
+                | LoopInvariant
+                | GlobalInvariantUpdate(..)
         )
     }
 
@@ -140,16 +146,13 @@ impl ConditionKind {
 
 impl std::fmt::Display for ConditionKind {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        fn display_ty_locals(f: &mut Formatter<'_>, ty_locals: &[Type]) -> std::fmt::Result {
-            if !ty_locals.is_empty() {
-                write!(f, "<")?;
-                for (i, ty) in ty_locals.iter().enumerate() {
-                    if i != 0 {
-                        write!(f, ", ")?;
-                    }
-                    write!(f, "{:?}", ty)?;
-                }
-                write!(f, ">")?;
+        fn display_ty_params(f: &mut Formatter<'_>, ty_params: &[Symbol]) -> std::fmt::Result {
+            if !ty_params.is_empty() {
+                write!(
+                    f,
+                    "<{}>",
+                    (0..ty_params.len()).map(|i| format!("#{}", i)).join(", ")
+                )?;
             }
             Ok(())
         }
@@ -169,22 +172,21 @@ impl std::fmt::Display for ConditionKind {
             Ensures => write!(f, "ensures"),
             Requires => write!(f, "requires"),
             StructInvariant | FunctionInvariant | LoopInvariant => write!(f, "invariant"),
-            GlobalInvariant(ty_locals) => {
+            GlobalInvariant(ty_params) => {
                 write!(f, "invariant")?;
-                display_ty_locals(f, ty_locals)
+                display_ty_params(f, ty_params)
             }
-            GlobalInvariantUpdate(ty_locals) => {
+            GlobalInvariantUpdate(ty_params) => {
                 write!(f, "invariant")?;
-                display_ty_locals(f, ty_locals)?;
+                display_ty_params(f, ty_params)?;
                 write!(f, " update")
             }
-            SchemaInvariant(ty_locals) => {
-                write!(f, "invariant")?;
-                display_ty_locals(f, ty_locals)
+            SchemaInvariant => {
+                write!(f, "invariant")
             }
-            Axiom(ty_locals) => {
+            Axiom(ty_params) => {
                 write!(f, "axiom")?;
-                display_ty_locals(f, ty_locals)
+                display_ty_params(f, ty_params)
             }
         }
     }
@@ -642,7 +644,8 @@ impl ExpData {
                 t.visit_pre_post(visitor);
                 e.visit_pre_post(visitor);
             }
-            _ => {}
+            // Explicitly list all enum variants
+            Value(..) | LocalVar(..) | Temporary(..) | SpecVar(..) | Invalid(..) => {}
         }
         visitor(true, self);
     }

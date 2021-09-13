@@ -1193,37 +1193,32 @@ fn load_function_def(cursor: &mut VersionedCursor) -> BinaryLoaderResult<Functio
         PartialVMError::new(StatusCode::MALFORMED).with_message("Unexpected EOF".to_string())
     })?;
 
-    let (visibility, mut extra_flags) = match cursor.version() {
-        VERSION_1 => {
-            let is_public_bit = Visibility::Public as u8;
-            let vis = if (flags & is_public_bit) != 0 {
-                flags ^= is_public_bit;
-                Visibility::Public
-            } else {
-                Visibility::Private
-            };
-            (vis, flags)
-        }
-        VERSION_2 | VERSION_3 => {
-            // NOTE: changes compared with VERSION_1
-            // - in VERSION_1: the flags is a byte compositing both the visibility info and whether
-            //                 the function is a native function
-            // - in VERSION_2: the flags only represent the visibility info and we need to advance
-            //                 the cursor to read up the next byte as flags
-            let vis = flags.try_into().map_err(|_| {
-                PartialVMError::new(StatusCode::MALFORMED)
-                    .with_message("Invalid visibility byte".to_string())
-            })?;
-            let extra_flags = cursor.read_u8().map_err(|_| {
-                PartialVMError::new(StatusCode::MALFORMED)
-                    .with_message("Unexpected EOF".to_string())
-            })?;
-            (vis, extra_flags)
-        }
-        _ => {
-            return Err(PartialVMError::new(StatusCode::UNREACHABLE)
-                .with_message(String::from("Invalid bytecode version")))
-        }
+    // NOTE: changes compared with VERSION_1
+    // - in VERSION_1: the flags is a byte compositing both the visibility info and whether
+    //                 the function is a native function
+    // - in VERSION_2 onwards: the flags only represent the visibility info and we need to
+    //                 advance the cursor to read up the next byte as flags
+    let (visibility, mut extra_flags) = if cursor.version() == VERSION_1 {
+        let is_public_bit = Visibility::Public as u8;
+        let vis = if (flags & is_public_bit) != 0 {
+            flags ^= is_public_bit;
+            Visibility::Public
+        } else {
+            Visibility::Private
+        };
+        (vis, flags)
+    } else if cursor.version() <= VERSION_MAX {
+        let vis = flags.try_into().map_err(|_| {
+            PartialVMError::new(StatusCode::MALFORMED)
+                .with_message("Invalid visibility byte".to_string())
+        })?;
+        let extra_flags = cursor.read_u8().map_err(|_| {
+            PartialVMError::new(StatusCode::MALFORMED).with_message("Unexpected EOF".to_string())
+        })?;
+        (vis, extra_flags)
+    } else {
+        return Err(PartialVMError::new(StatusCode::UNREACHABLE)
+            .with_message(String::from("Invalid bytecode version")));
     };
 
     let acquires_global_resources = load_struct_definition_indices(cursor)?;
@@ -1281,7 +1276,30 @@ fn load_code(cursor: &mut VersionedCursor, code: &mut Vec<Bytecode>) -> BinaryLo
         let byte = cursor.read_u8().map_err(|_| {
             PartialVMError::new(StatusCode::MALFORMED).with_message("Unexpected EOF".to_string())
         })?;
-        let bytecode = match Opcodes::from_u8(byte)? {
+        let opcode = Opcodes::from_u8(byte)?;
+        // version checking
+        match opcode {
+            Opcodes::VEC_PACK
+            | Opcodes::VEC_LEN
+            | Opcodes::VEC_IMM_BORROW
+            | Opcodes::VEC_MUT_BORROW
+            | Opcodes::VEC_PUSH_BACK
+            | Opcodes::VEC_POP_BACK
+            | Opcodes::VEC_UNPACK
+            | Opcodes::VEC_SWAP => {
+                if cursor.version() < VERSION_3 {
+                    return Err(
+                        PartialVMError::new(StatusCode::MALFORMED).with_message(format!(
+                            "Vector operations not available before bytecode version {}",
+                            VERSION_3
+                        )),
+                    );
+                }
+            }
+            _ => {}
+        };
+        // conversion
+        let bytecode = match opcode {
             Opcodes::POP => Bytecode::Pop,
             Opcodes::RET => Bytecode::Ret,
             Opcodes::BR_TRUE => Bytecode::BrTrue(load_bytecode_index(cursor)?),
@@ -1369,6 +1387,18 @@ fn load_code(cursor: &mut VersionedCursor, code: &mut Vec<Bytecode>) -> BinaryLo
                 Bytecode::MoveToGeneric(load_struct_def_inst_index(cursor)?)
             }
             Opcodes::FREEZE_REF => Bytecode::FreezeRef,
+            Opcodes::VEC_PACK => {
+                Bytecode::VecPack(load_signature_index(cursor)?, read_u64_internal(cursor)?)
+            }
+            Opcodes::VEC_LEN => Bytecode::VecLen(load_signature_index(cursor)?),
+            Opcodes::VEC_IMM_BORROW => Bytecode::VecImmBorrow(load_signature_index(cursor)?),
+            Opcodes::VEC_MUT_BORROW => Bytecode::VecMutBorrow(load_signature_index(cursor)?),
+            Opcodes::VEC_PUSH_BACK => Bytecode::VecPushBack(load_signature_index(cursor)?),
+            Opcodes::VEC_POP_BACK => Bytecode::VecPopBack(load_signature_index(cursor)?),
+            Opcodes::VEC_UNPACK => {
+                Bytecode::VecUnpack(load_signature_index(cursor)?, read_u64_internal(cursor)?)
+            }
+            Opcodes::VEC_SWAP => Bytecode::VecSwap(load_signature_index(cursor)?),
         };
         code.push(bytecode);
     }
@@ -1531,6 +1561,14 @@ impl Opcodes {
             0x3D => Ok(Opcodes::IMM_BORROW_GLOBAL_GENERIC),
             0x3E => Ok(Opcodes::MOVE_FROM_GENERIC),
             0x3F => Ok(Opcodes::MOVE_TO_GENERIC),
+            0x40 => Ok(Opcodes::VEC_PACK),
+            0x41 => Ok(Opcodes::VEC_LEN),
+            0x42 => Ok(Opcodes::VEC_IMM_BORROW),
+            0x43 => Ok(Opcodes::VEC_MUT_BORROW),
+            0x44 => Ok(Opcodes::VEC_PUSH_BACK),
+            0x45 => Ok(Opcodes::VEC_POP_BACK),
+            0x46 => Ok(Opcodes::VEC_UNPACK),
+            0x47 => Ok(Opcodes::VEC_SWAP),
             _ => Err(PartialVMError::new(StatusCode::UNKNOWN_OPCODE)),
         }
     }

@@ -15,7 +15,10 @@ use diem_config::{
     network_id::{NetworkContext, NetworkId, NodeNetworkId},
 };
 use diem_infallible::{Mutex, MutexGuard, RwLock};
-use diem_types::{account_address::AccountAddress, transaction::GovernanceRole, PeerId};
+use diem_types::{
+    account_address::AccountAddress, account_config::AccountSequenceInfo,
+    transaction::GovernanceRole, PeerId,
+};
 use enum_dispatch::enum_dispatch;
 use futures::{
     channel::mpsc::{self, unbounded, UnboundedReceiver},
@@ -368,7 +371,7 @@ impl Node {
                 transaction.clone(),
                 0,
                 transaction.gas_unit_price(),
-                0,
+                AccountSequenceInfo::Sequential(0),
                 TimelineState::NotReady,
                 GovernanceRole::NonGovernanceRole,
             );
@@ -591,7 +594,8 @@ fn start_node_mempool(
     let (sender, subscriber) = unbounded();
     let (_ac_endpoint_sender, ac_endpoint_receiver) = mpsc::channel(1_024);
     let (_consensus_sender, consensus_events) = mpsc::channel(1_024);
-    let (_state_sync_sender, state_sync_events) = mpsc::channel(1_024);
+    let (_mempool_notifier, mempool_listener) =
+        mempool_notifications::new_mempool_notifier_listener_pair();
     let (_reconfig_events, reconfig_events_receiver) = diem_channel::new(QueueStyle::LIFO, 1, None);
 
     let runtime = Builder::new_multi_thread()
@@ -606,7 +610,7 @@ fn start_node_mempool(
         network_handles,
         ac_endpoint_receiver,
         consensus_events,
-        state_sync_events,
+        mempool_listener,
         reconfig_events_receiver,
         Arc::new(MockDbReader),
         Arc::new(RwLock::new(MockVMValidator)),

@@ -10,7 +10,8 @@ use bytecode::{
     function_target_pipeline::{
         FunctionTargetPipeline, FunctionTargetsHolder, ProcessorResultDisplay,
     },
-    global_invariant_instrumentation_v2::GlobalInvariantInstrumentationProcessorV2,
+    global_invariant_analysis::GlobalInvariantAnalysisProcessor,
+    global_invariant_instrumentation::GlobalInvariantInstrumentationProcessor,
     livevar_analysis::LiveVarAnalysisProcessor,
     memory_instrumentation::MemoryInstrumentationProcessor,
     mono_analysis::MonoAnalysisProcessor,
@@ -21,11 +22,11 @@ use bytecode::{
     read_write_set_analysis::ReadWriteSetProcessor,
     spec_instrumentation::SpecInstrumentationProcessor,
     usage_analysis::UsageProcessor,
-    verification_analysis_v2::VerificationAnalysisProcessorV2,
+    verification_analysis::VerificationAnalysisProcessor,
 };
 use codespan_reporting::{diagnostic::Severity, term::termcolor::Buffer};
 use move_command_line_common::testing::EXP_EXT;
-use move_model::{model::GlobalEnv, run_model_builder};
+use move_model::{model::GlobalEnv, options::ModelBuilderOptions, run_model_builder_with_options};
 use move_prover_test_utils::{baseline_test::verify_or_update_baseline, extract_test_directives};
 use std::path::Path;
 
@@ -99,6 +100,19 @@ fn get_tested_transformation_pipeline(
             pipeline.add_processor(CleanAndOptimizeProcessor::new());
             Ok(Some(pipeline))
         }
+        "verification_analysis" => {
+            let mut pipeline = FunctionTargetPipeline::default();
+            pipeline.add_processor(EliminateImmRefsProcessor::new());
+            pipeline.add_processor(MutRefInstrumenter::new());
+            pipeline.add_processor(ReachingDefProcessor::new());
+            pipeline.add_processor(LiveVarAnalysisProcessor::new());
+            pipeline.add_processor(BorrowAnalysisProcessor::new());
+            pipeline.add_processor(MemoryInstrumentationProcessor::new());
+            pipeline.add_processor(CleanAndOptimizeProcessor::new());
+            pipeline.add_processor(UsageProcessor::new());
+            pipeline.add_processor(VerificationAnalysisProcessor::new());
+            Ok(Some(pipeline))
+        }
         "spec_instrumentation" => {
             let mut pipeline = FunctionTargetPipeline::default();
             pipeline.add_processor(EliminateImmRefsProcessor::new());
@@ -109,7 +123,7 @@ fn get_tested_transformation_pipeline(
             pipeline.add_processor(MemoryInstrumentationProcessor::new());
             pipeline.add_processor(CleanAndOptimizeProcessor::new());
             pipeline.add_processor(UsageProcessor::new());
-            pipeline.add_processor(VerificationAnalysisProcessorV2::new());
+            pipeline.add_processor(VerificationAnalysisProcessor::new());
             pipeline.add_processor(SpecInstrumentationProcessor::new());
             Ok(Some(pipeline))
         }
@@ -123,9 +137,25 @@ fn get_tested_transformation_pipeline(
             pipeline.add_processor(MemoryInstrumentationProcessor::new());
             pipeline.add_processor(CleanAndOptimizeProcessor::new());
             pipeline.add_processor(UsageProcessor::new());
-            pipeline.add_processor(VerificationAnalysisProcessorV2::new());
+            pipeline.add_processor(VerificationAnalysisProcessor::new());
             pipeline.add_processor(SpecInstrumentationProcessor::new());
             pipeline.add_processor(DataInvariantInstrumentationProcessor::new());
+            Ok(Some(pipeline))
+        }
+        "global_invariant_analysis" => {
+            let mut pipeline = FunctionTargetPipeline::default();
+            pipeline.add_processor(EliminateImmRefsProcessor::new());
+            pipeline.add_processor(MutRefInstrumenter::new());
+            pipeline.add_processor(ReachingDefProcessor::new());
+            pipeline.add_processor(LiveVarAnalysisProcessor::new());
+            pipeline.add_processor(BorrowAnalysisProcessor::new());
+            pipeline.add_processor(MemoryInstrumentationProcessor::new());
+            pipeline.add_processor(CleanAndOptimizeProcessor::new());
+            pipeline.add_processor(UsageProcessor::new());
+            pipeline.add_processor(VerificationAnalysisProcessor::new());
+            pipeline.add_processor(SpecInstrumentationProcessor::new());
+            pipeline.add_processor(DataInvariantInstrumentationProcessor::new());
+            pipeline.add_processor(GlobalInvariantAnalysisProcessor::new());
             Ok(Some(pipeline))
         }
         "global_invariant_instrumentation" => {
@@ -138,10 +168,11 @@ fn get_tested_transformation_pipeline(
             pipeline.add_processor(MemoryInstrumentationProcessor::new());
             pipeline.add_processor(CleanAndOptimizeProcessor::new());
             pipeline.add_processor(UsageProcessor::new());
-            pipeline.add_processor(VerificationAnalysisProcessorV2::new());
+            pipeline.add_processor(VerificationAnalysisProcessor::new());
             pipeline.add_processor(SpecInstrumentationProcessor::new());
             pipeline.add_processor(DataInvariantInstrumentationProcessor::new());
-            pipeline.add_processor(GlobalInvariantInstrumentationProcessorV2::new());
+            pipeline.add_processor(GlobalInvariantAnalysisProcessor::new());
+            pipeline.add_processor(GlobalInvariantInstrumentationProcessor::new());
             Ok(Some(pipeline))
         }
         "read_write_set" => {
@@ -152,7 +183,7 @@ fn get_tested_transformation_pipeline(
         "mono_analysis" => {
             let mut pipeline = FunctionTargetPipeline::default();
             pipeline.add_processor(UsageProcessor::new());
-            pipeline.add_processor(VerificationAnalysisProcessorV2::new());
+            pipeline.add_processor(VerificationAnalysisProcessor::new());
             pipeline.add_processor(SpecInstrumentationProcessor::new());
             pipeline.add_processor(MonoAnalysisProcessor::new());
             Ok(Some(pipeline))
@@ -173,7 +204,12 @@ fn get_tested_transformation_pipeline(
 fn test_runner(path: &Path) -> datatest_stable::Result<()> {
     let mut sources = extract_test_directives(path, "// dep:")?;
     sources.push(path.to_string_lossy().to_string());
-    let env: GlobalEnv = run_model_builder(&sources, &[])?;
+    let env: GlobalEnv = run_model_builder_with_options(
+        &sources,
+        &[],
+        ModelBuilderOptions::default(),
+        move_stdlib::move_stdlib_named_addresses(),
+    )?;
     let out = if env.has_errors() {
         let mut error_writer = Buffer::no_color();
         env.report_diag(&mut error_writer, Severity::Error);

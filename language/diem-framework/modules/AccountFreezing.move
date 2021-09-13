@@ -180,6 +180,10 @@ module DiemFramework::AccountFreezing {
         aborts_if spec_account_is_frozen(account) with Errors::INVALID_STATE;
     }
 
+    #[test_only]
+    public fun create_for_test(account: &signer) {
+        create(account)
+    }
 
     // =================================================================
     // Module Specification
@@ -189,7 +193,7 @@ module DiemFramework::AccountFreezing {
     /// # Initialization
     spec module {
         /// `FreezeEventsHolder` always exists after genesis.
-        invariant DiemTimestamp::is_operating() ==>
+        invariant [suspendable] DiemTimestamp::is_operating() ==>
             exists<FreezeEventsHolder>(@DiemRoot);
     }
 
@@ -197,30 +201,24 @@ module DiemFramework::AccountFreezing {
     spec module {
         /// The account of DiemRoot is not freezable [[F1]][ROLE].
         /// After genesis, FreezingBit of DiemRoot is always false.
-        invariant DiemTimestamp::is_operating() ==>
+        invariant [suspendable] DiemTimestamp::is_operating() ==>
             spec_account_is_not_frozen(@DiemRoot);
 
         /// The account of TreasuryCompliance is not freezable [[F2]][ROLE].
         /// After genesis, FreezingBit of TreasuryCompliance is always false.
-        invariant DiemTimestamp::is_operating() ==>
+        invariant [suspendable] DiemTimestamp::is_operating() ==>
             spec_account_is_not_frozen(@TreasuryCompliance);
 
         /// resource struct FreezingBit persists
         invariant update forall addr: address where old(exists<FreezingBit>(addr)): exists<FreezingBit>(addr);
 
         /// resource struct FreezeEventsHolder is there forever after initialization
-        invariant update DiemTimestamp::is_operating() ==> exists<FreezeEventsHolder>(@DiemRoot);
+        invariant [suspendable] DiemTimestamp::is_operating() ==> exists<FreezeEventsHolder>(@DiemRoot);
 
-        /// The permission "{Freeze,Unfreeze}Account" is granted to TreasuryCompliance only [[H7]][PERMISSION].
-        apply Roles::AbortsIfNotTreasuryCompliance to freeze_account, unfreeze_account;
-
-        /// Only (un)freeze functions can change the freezing bits of accounts [[H7]][PERMISSION].
-        apply FreezingBitRemainsSame to * except freeze_account, unfreeze_account;
-    }
-
-    spec schema FreezingBitRemainsSame {
-        ensures forall addr: address where old(exists<FreezingBit>(addr)):
-            global<FreezingBit>(addr).is_frozen == old(global<FreezingBit>(addr).is_frozen);
+        /// Only TreasuryCompliance can change the freezing bits of accounts [[H7]][PERMISSION].
+        invariant update forall addr: address where old(exists<FreezingBit>(addr)):
+            global<FreezingBit>(addr).is_frozen != old(global<FreezingBit>(addr).is_frozen)
+                ==> Roles::spec_signed_by_treasury_compliance_role();
     }
 
     /// # Helper Functions

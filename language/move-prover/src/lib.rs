@@ -19,8 +19,15 @@ use docgen::Docgen;
 use errmapgen::ErrmapGen;
 #[allow(unused_imports)]
 use log::{debug, info, warn};
-use move_model::{code_writer::CodeWriter, model::GlobalEnv, run_model_builder_with_options};
-use std::{fs, path::PathBuf, time::Instant};
+use move_model::{
+    code_writer::CodeWriter, model::GlobalEnv, parse_addresses_from_options,
+    run_model_builder_with_options,
+};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+    time::Instant,
+};
 
 pub mod cli;
 
@@ -37,16 +44,27 @@ pub fn run_move_prover<W: WriteColor>(
     options: Options,
 ) -> anyhow::Result<()> {
     let now = Instant::now();
-
     // Run the model builder.
     let env = run_model_builder_with_options(
         &options.move_sources,
         &options.move_deps,
         options.model_builder.clone(),
+        parse_addresses_from_options(options.move_named_address_values.clone())?,
     )?;
+    run_move_prover_with_model(&env, error_writer, options, Some(now))
+}
+
+pub fn run_move_prover_with_model<W: WriteColor>(
+    env: &GlobalEnv,
+    error_writer: &mut W,
+    options: Options,
+    timer: Option<Instant>,
+) -> anyhow::Result<()> {
+    let now = timer.unwrap_or_else(Instant::now);
+
     let build_duration = now.elapsed();
     check_errors(
-        &env,
+        env,
         &options,
         error_writer,
         "exiting with model building errors",
@@ -59,19 +77,25 @@ pub fn run_move_prover<W: WriteColor>(
 
     // Until this point, prover and docgen have same code. Here we part ways.
     if options.run_docgen {
-        return run_docgen(&env, &options, error_writer, now);
+        return run_docgen(env, &options, error_writer, now);
     }
     // Same for ABI generator.
     if options.run_abigen {
-        return run_abigen(&env, &options, now);
+        return run_abigen(env, &options, now);
     }
     // Same for the error map generator
     if options.run_errmapgen {
-        return Ok(run_errmapgen(&env, &options, now));
+        return {
+            run_errmapgen(env, &options, now);
+            Ok(())
+        };
     }
     // Same for read/write set analysis
     if options.run_read_write_set {
-        return Ok(run_read_write_set(&env, &options, now));
+        return {
+            run_read_write_set(env, &options, now);
+            Ok(())
+        };
     }
 
     // Check correct backend versions.
@@ -79,10 +103,10 @@ pub fn run_move_prover<W: WriteColor>(
 
     // Create and process bytecode
     let now = Instant::now();
-    let targets = create_and_process_bytecode(&options, &env);
+    let targets = create_and_process_bytecode(&options, env);
     let trafo_duration = now.elapsed();
     check_errors(
-        &env,
+        env,
         &options,
         error_writer,
         "exiting with bytecode transformation errors",
@@ -90,10 +114,10 @@ pub fn run_move_prover<W: WriteColor>(
 
     // Generate boogie code
     let now = Instant::now();
-    let code_writer = generate_boogie(&env, &options, &targets)?;
+    let code_writer = generate_boogie(env, &options, &targets)?;
     let gen_duration = now.elapsed();
     check_errors(
-        &env,
+        env,
         &options,
         error_writer,
         "exiting with boogie generation errors",
@@ -101,7 +125,7 @@ pub fn run_move_prover<W: WriteColor>(
 
     // Verify boogie code.
     let now = Instant::now();
-    verify_boogie(&env, &options, &targets, code_writer)?;
+    verify_boogie(env, &options, &targets, code_writer)?;
     let verify_duration = now.elapsed();
 
     // Report durations.
@@ -113,7 +137,7 @@ pub fn run_move_prover<W: WriteColor>(
         verify_duration.as_secs_f64()
     );
     check_errors(
-        &env,
+        env,
         &options,
         error_writer,
         "exiting with boogie verification errors",
@@ -171,18 +195,18 @@ pub fn verify_boogie(
 /// Create bytecode and process it.
 pub fn create_and_process_bytecode(options: &Options, env: &GlobalEnv) -> FunctionTargetsHolder {
     let mut targets = FunctionTargetsHolder::default();
+    let output_dir = Path::new(&options.output_path)
+        .parent()
+        .expect("expect the parent directory of the output path to exist");
+    let output_prefix = options.move_sources.get(0).map_or("bytecode", |s| {
+        Path::new(s).file_name().unwrap().to_str().unwrap()
+    });
 
     // Add function targets for all functions in the environment.
     for module_env in env.get_modules() {
         if options.prover.dump_bytecode {
-            let output_file = options
-                .move_sources
-                .get(0)
-                .cloned()
-                .unwrap_or_else(|| "bytecode".to_string())
-                .replace(".move", ".mv.disas");
-            fs::write(&output_file, &module_env.disassemble())
-                .expect("dumping disassembled module");
+            let dump_file = output_dir.join(format!("{}.mv.disas", output_prefix));
+            fs::write(&dump_file, &module_env.disassemble()).expect("dumping disassembled module");
         }
         for func_env in module_env.get_functions() {
             targets.add_target(&func_env)
@@ -197,16 +221,16 @@ pub fn create_and_process_bytecode(options: &Options, env: &GlobalEnv) -> Functi
     };
 
     if options.prover.dump_bytecode {
-        let dump_file = options
-            .move_sources
-            .get(0)
-            .cloned()
-            .unwrap_or_else(|| "bytecode".to_string())
-            .replace(".move", "");
-        pipeline.run_with_dump(env, &mut targets, &dump_file, options.prover.dump_cfg)
+        let dump_file_base = output_dir
+            .join(output_prefix)
+            .into_os_string()
+            .into_string()
+            .unwrap();
+        pipeline.run_with_dump(env, &mut targets, &dump_file_base, options.prover.dump_cfg)
     } else {
         pipeline.run(env, &mut targets);
     }
+
     targets
 }
 

@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use crate::{Factory, Result, Swarm, Version};
+use anyhow::Context;
+use rand::rngs::StdRng;
 use std::{
     collections::HashMap,
     num::NonZeroUsize,
@@ -23,11 +25,19 @@ pub struct LocalVersion {
 }
 
 impl LocalVersion {
-    fn bin(&self) -> &Path {
+    pub fn new(revision: String, bin: PathBuf, version: Version) -> Self {
+        Self {
+            revision,
+            bin,
+            version,
+        }
+    }
+
+    pub fn bin(&self) -> &Path {
         &self.bin
     }
 
-    fn version(&self) -> Version {
+    pub fn version(&self) -> Version {
         self.version.clone()
     }
 }
@@ -105,6 +115,42 @@ impl LocalFactory {
         let upstream_main = cargo::git_get_upstream_remote().map(|r| format!("{}/main", r))?;
         Self::with_revision_and_workspace(&upstream_main)
     }
+
+    /// Create a LocalFactory with a diem-node version built at merge-base of upstream/main and the
+    /// current workspace, suitable for compatibility testing.
+    pub fn with_upstream_merge_base_and_workspace() -> Result<Self> {
+        let upstream_main = cargo::git_get_upstream_remote().map(|r| format!("{}/main", r))?;
+        let merge_base = cargo::git_merge_base(upstream_main)?;
+        Self::with_revision_and_workspace(&merge_base)
+    }
+
+    pub fn new_swarm<R>(&self, rng: R, number_of_validators: NonZeroUsize) -> Result<LocalSwarm>
+    where
+        R: ::rand::RngCore + ::rand::CryptoRng,
+    {
+        let version = self.versions.keys().max().unwrap();
+        self.new_swarm_with_version(rng, number_of_validators, version)
+    }
+
+    pub fn new_swarm_with_version<R>(
+        &self,
+        rng: R,
+        number_of_validators: NonZeroUsize,
+        version: &Version,
+    ) -> Result<LocalSwarm>
+    where
+        R: ::rand::RngCore + ::rand::CryptoRng,
+    {
+        let mut swarm = LocalSwarm::builder(self.versions.clone())
+            .number_of_validators(number_of_validators)
+            .initial_version(version.clone())
+            .build(rng)?;
+        swarm
+            .launch()
+            .with_context(|| format!("Swarm logs can be found here: {}", swarm.logs_location()))?;
+
+        Ok(swarm)
+    }
 }
 
 impl Factory for LocalFactory {
@@ -112,12 +158,13 @@ impl Factory for LocalFactory {
         Box::new(self.versions.keys().cloned())
     }
 
-    fn launch_swarm(&self, node_num: NonZeroUsize, version: &Version) -> Result<Box<dyn Swarm>> {
-        let mut swarm = LocalSwarm::builder(self.versions.clone())
-            .number_of_validators(node_num)
-            .initial_version(version.clone())
-            .build()?;
-        swarm.launch()?;
+    fn launch_swarm(
+        &self,
+        rng: &mut StdRng,
+        node_num: NonZeroUsize,
+        version: &Version,
+    ) -> Result<Box<dyn Swarm>> {
+        let swarm = self.new_swarm_with_version(rng, node_num, version)?;
 
         Ok(Box::new(swarm))
     }

@@ -1,43 +1,33 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
+// Defines Forge Tests
 pub mod event_fetcher;
+pub mod fullnode;
+pub mod replay_tooling;
+pub mod scripts_and_modules;
 pub mod transaction;
 pub mod verifying_client;
 
+// Converted to local Forge backend
 #[cfg(test)]
 mod client;
-
 #[cfg(test)]
 mod consensus;
-
 #[cfg(test)]
 mod full_nodes;
-
 #[cfg(test)]
 mod genesis;
-
 #[cfg(test)]
 mod key_manager;
-
 #[cfg(test)]
 mod network;
-
 #[cfg(test)]
 mod operational_tooling;
-
 #[cfg(test)]
 mod release_flow;
-
-#[cfg(test)]
-mod replay_tooling;
-
-#[cfg(test)]
-mod scripts_and_modules;
-
 #[cfg(test)]
 mod state_sync;
-
 #[cfg(test)]
 mod storage;
 

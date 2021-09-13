@@ -127,12 +127,12 @@ codes!(
         InvalidFriendDeclaration:
             { msg: "invalid 'friend' declaration", severity: NonblockingError },
         InvalidAcquiresItem: { msg: "invalid 'acquires' item", severity: NonblockingError },
-        InvalidPhantomUse:
-            { msg: "invalid phantom type parameter usage", severity: NonblockingError },
+        InvalidPhantomUse: { msg: "invalid phantom type parameter usage", severity: NonblockingError },
+        InvalidNonPhantomUse: { msg: "invalid non-phantom type parameter usage", severity: Warning },
     ],
     // errors name resolution, mostly expansion/translate and naming/translate
     NameResolution: [
-        UnboundAddress: { msg: "unbound address", severity: BlockingError },
+        AddressWithoutValue: { msg: "address with no value", severity: NonblockingError },
         UnboundModule: { msg: "unbound module", severity: BlockingError },
         UnboundModuleMember: { msg: "unbound module member", severity: BlockingError },
         UnboundType: { msg: "unbound type", severity: BlockingError },
@@ -142,6 +142,7 @@ codes!(
         TooFewTypeArguments: { msg: "too few type arguments", severity: BlockingError },
         UnboundVariable: { msg: "unbound variable", severity: BlockingError },
         UnboundField: { msg: "unbound field", severity: BlockingError },
+        ReservedName: { msg: "Invalid use of reserved name", severity: BlockingError },
     ],
     // errors for typing rules. mostly typing/translate
     TypeSafety: [
@@ -193,7 +194,6 @@ codes!(
     ],
     BytecodeGeneration: [
         UnfoldableConstant: { msg: "cannot compute constant value", severity: NonblockingError },
-        UnassignedAddress: { msg: "unassigned named address", severity: NonblockingError },
     ],
     // errors for any unused code or items
     UnusedItem: [
@@ -202,6 +202,7 @@ codes!(
         Assignment: { msg: "unused assignment", severity: Warning },
         TrailingSemi: { msg: "unnecessary trailing semicolon", severity: Warning },
         DeadCode: { msg: "dead or unreachable code", severity: Warning },
+        StructTypeParam: { msg: "unused struct type parameter", severity: Warning }
     ],
     Attributes: [
         Duplicate: { msg: "invalid duplicate attribute", severity: NonblockingError },

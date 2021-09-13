@@ -8,7 +8,8 @@ use move_binary_format::{access::ModuleAccess, file_format::CompiledModule};
 use move_command_line_common::files::{
     extension_equals, find_filenames, MOVE_COMPILED_EXTENSION, MOVE_EXTENSION,
 };
-use move_lang::{compiled_unit::CompiledUnit, Compiler};
+use move_lang::{compiled_unit::AnnotatedCompiledUnit, shared::AddressBytes, Compiler};
+use move_symbol_pool::Symbol;
 use once_cell::sync::Lazy;
 use sha2::{Digest, Sha256};
 use std::{
@@ -50,6 +51,22 @@ pub fn diem_stdlib_files() -> Vec<String> {
     files
 }
 
+// TODO: This will be declared in the package once those are in
+pub fn diem_framework_named_addresses() -> BTreeMap<String, AddressBytes> {
+    let mapping = [
+        ("Std", "0x1"),
+        ("DiemFramework", "0x1"),
+        ("DiemRoot", "0xA550C18"),
+        ("CurrencyInfo", "0xA550C18"),
+        ("TreasuryCompliance", "0xB1E55ED"),
+        ("VMReserved", "0x0"),
+    ];
+    mapping
+        .iter()
+        .map(|(name, addr)| (name.to_string(), AddressBytes::parse_str(addr).unwrap()))
+        .collect()
+}
+
 pub fn stdlib_bytecode_files() -> Vec<String> {
     let path = path_in_crate(COMPILED_OUTPUT_PATH);
     let names = diem_stdlib_files();
@@ -86,21 +103,22 @@ pub fn stdlib_bytecode_files() -> Vec<String> {
     res
 }
 
-pub(crate) fn build_stdlib() -> BTreeMap<String, CompiledModule> {
+pub(crate) fn build_stdlib() -> BTreeMap<Symbol, CompiledModule> {
     let (_files, compiled_units) = Compiler::new(&diem_stdlib_files(), &[])
+        .set_named_address_values(diem_framework_named_addresses())
         .build_and_report()
         .unwrap();
     let mut modules = BTreeMap::new();
     for compiled_unit in compiled_units {
-        let name = compiled_unit.name();
         match compiled_unit {
-            CompiledUnit::Module { module, .. } => {
-                verify_module(&module).expect("stdlib module failed to verify");
-                dependencies::verify_module(&module, modules.values())
+            AnnotatedCompiledUnit::Module(annot_unit) => {
+                verify_module(&annot_unit.named_module.module)
+                    .expect("stdlib module failed to verify");
+                dependencies::verify_module(&annot_unit.named_module.module, modules.values())
                     .expect("stdlib module dependency failed to verify");
-                modules.insert(name, module);
+                modules.insert(annot_unit.named_module.name, annot_unit.named_module.module);
             }
-            CompiledUnit::Script { .. } => panic!("Unexpected Script in stdlib"),
+            AnnotatedCompiledUnit::Script(_) => panic!("Unexpected Script in stdlib"),
         }
     }
     let modules_by_id: BTreeMap<_, _> = modules

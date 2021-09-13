@@ -1,7 +1,10 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::{common::Round, quorum_cert::QuorumCert, timeout_certificate::TimeoutCertificate};
+use crate::{
+    common::Round, quorum_cert::QuorumCert, timeout_2chain::TwoChainTimeoutCertificate,
+    timeout_certificate::TimeoutCertificate,
+};
 use anyhow::{ensure, Context};
 use diem_types::{
     block_info::BlockInfo, ledger_info::LedgerInfoWithSignatures,
@@ -23,6 +26,8 @@ pub struct SyncInfo {
     highest_ledger_info: Option<LedgerInfoWithSignatures>,
     /// Optional highest timeout certificate if available.
     highest_timeout_cert: Option<TimeoutCertificate>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    highest_2chain_timeout_cert: Option<TwoChainTimeoutCertificate>,
 }
 
 // this is required by structured log
@@ -44,7 +49,7 @@ impl Display for SyncInfo {
             self.highest_certified_round(),
             self.highest_ordered_round(),
             htc_repr,
-            self.highest_ledger_info_round(),
+            self.highest_ledger_info(),
         )
     }
 }
@@ -55,20 +60,29 @@ impl SyncInfo {
         highest_ordered_cert: QuorumCert,
         highest_ledger_info: Option<LedgerInfoWithSignatures>,
         highest_timeout_cert: Option<TimeoutCertificate>,
+        highest_2chain_timeout_cert: Option<TwoChainTimeoutCertificate>,
     ) -> Self {
         // No need to include HTC if it's lower than HQC
         let highest_timeout_cert = highest_timeout_cert
             .filter(|tc| tc.round() > highest_quorum_cert.certified_block().round());
 
+        let highest_2chain_timeout_cert = highest_2chain_timeout_cert
+            .filter(|tc| tc.round() > highest_quorum_cert.certified_block().round());
+
         let highest_ordered_cert =
             Some(highest_ordered_cert).filter(|hoc| hoc != &highest_quorum_cert);
-        let highest_ledger_info = highest_ledger_info.filter(|hli| hli.commit_info().round() > 0);
+
+        assert!(
+            highest_timeout_cert.is_none() || highest_2chain_timeout_cert.is_none(),
+            "Only one timeout cert should be carried"
+        );
 
         Self {
             highest_quorum_cert,
             highest_ordered_cert,
             highest_ledger_info,
             highest_timeout_cert,
+            highest_2chain_timeout_cert,
         }
     }
 
@@ -76,12 +90,14 @@ impl SyncInfo {
         highest_quorum_cert: QuorumCert,
         highest_ordered_cert: QuorumCert,
         highest_timeout_cert: Option<TimeoutCertificate>,
+        highest_2chain_timeout_cert: Option<TwoChainTimeoutCertificate>,
     ) -> Self {
         Self::new_decoupled(
             highest_quorum_cert,
             highest_ordered_cert,
             None,
             highest_timeout_cert,
+            highest_2chain_timeout_cert,
         )
     }
 
@@ -109,13 +125,22 @@ impl SyncInfo {
         self.highest_timeout_cert.as_ref()
     }
 
+    /// Highest 2-chain timeout certificate
+    pub fn highest_2chain_timeout_cert(&self) -> Option<&TwoChainTimeoutCertificate> {
+        self.highest_2chain_timeout_cert.as_ref()
+    }
+
     pub fn highest_certified_round(&self) -> Round {
         self.highest_quorum_cert.certified_block().round()
     }
 
     pub fn highest_timeout_round(&self) -> Round {
-        self.highest_timeout_certificate()
-            .map_or(0, |tc| tc.round())
+        std::cmp::max(
+            self.highest_timeout_certificate()
+                .map_or(0, |tc| tc.round()),
+            self.highest_2chain_timeout_cert()
+                .map_or(0, |tc| tc.round()),
+        )
     }
 
     pub fn highest_ordered_round(&self) -> Round {
@@ -150,7 +175,7 @@ impl SyncInfo {
         ensure!(
             self.highest_ordered_cert().certified_block().round()
                 >= self.highest_ledger_info_round(),
-            "HOC has lower round than HCD"
+            "HOC has lower round than HLI"
         );
 
         ensure!(
@@ -161,6 +186,11 @@ impl SyncInfo {
         ensure!(
             *self.highest_ledger_info().commit_info() != BlockInfo::empty(),
             "HLI has empty commit info"
+        );
+
+        ensure!(
+            self.highest_timeout_cert.is_none() || self.highest_2chain_timeout_cert.is_none(),
+            "Only One timeout cert should be carried"
         );
 
         self.highest_quorum_cert
@@ -178,7 +208,16 @@ impl SyncInfo {
             })
             .and_then(|_| {
                 if let Some(hli) = self.highest_ledger_info.as_ref() {
-                    hli.verify_signatures(validator)?;
+                    // we do not verify genesis ledger info
+                    if hli.commit_info().round() > 0 {
+                        hli.verify_signatures(validator)?;
+                    }
+                }
+                Ok(())
+            })
+            .and_then(|_| {
+                if let Some(tc) = &self.highest_2chain_timeout_cert {
+                    tc.verify(validator)?;
                 }
                 Ok(())
             })

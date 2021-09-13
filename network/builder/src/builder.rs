@@ -28,6 +28,7 @@ use diem_secure_storage::Storage;
 use diem_time_service::TimeService;
 use diem_types::{chain_id::ChainId, network_address::NetworkAddress};
 use network::{
+    application::storage::PeerMetadataStorage,
     connectivity_manager::{builder::ConnectivityManagerBuilder, ConnectivityRequest},
     logging::NetworkSchema,
     peer_manager::{
@@ -70,6 +71,7 @@ pub struct NetworkBuilder {
     connectivity_manager_builder: Option<ConnectivityManagerBuilder>,
     health_checker_builder: Option<HealthCheckerBuilder>,
     peer_manager_builder: PeerManagerBuilder,
+    peer_metadata_storage: Arc<PeerMetadataStorage>,
 
     // (StateSync) ReconfigSubscriptions required by internal Network components.
     reconfig_subscriptions: Vec<ReconfigSubscription>,
@@ -93,6 +95,7 @@ impl NetworkBuilder {
         inbound_rate_limit_config: Option<RateLimitConfig>,
         outbound_rate_limit_config: Option<RateLimitConfig>,
     ) -> Self {
+        let peer_metadata_storage = Arc::new(PeerMetadataStorage::new());
         // A network cannot exist without a PeerManager
         // TODO:  construct this in create and pass it to new() as a parameter. The complication is manual construction of NetworkBuilder in various tests.
         let peer_manager_builder = PeerManagerBuilder::create(
@@ -100,6 +103,7 @@ impl NetworkBuilder {
             network_context.clone(),
             time_service.clone(),
             listen_address,
+            peer_metadata_storage.clone(),
             trusted_peers,
             authentication_mode,
             network_channel_size,
@@ -121,6 +125,7 @@ impl NetworkBuilder {
             health_checker_builder: None,
             peer_manager_builder,
             reconfig_subscriptions: vec![],
+            peer_metadata_storage,
         }
     }
 
@@ -410,7 +415,6 @@ impl NetworkBuilder {
         // Initialize and start HealthChecker.
         let (hc_network_tx, hc_network_rx) =
             self.add_protocol_handler(health_checker::network_endpoint_config());
-
         self.health_checker_builder = Some(HealthCheckerBuilder::new(
             self.network_context(),
             self.time_service.clone(),
@@ -419,6 +423,7 @@ impl NetworkBuilder {
             ping_failures_tolerated,
             hc_network_tx,
             hc_network_rx,
+            self.peer_metadata_storage.clone(),
         ));
         debug!(
             NetworkSchema::new(&self.network_context),

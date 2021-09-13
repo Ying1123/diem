@@ -625,7 +625,6 @@ impl ClientProxy {
             );
 
             let compiler = Compiler {
-                address: diem_types::account_config::CORE_CODE_ADDRESS,
                 deps: diem_framework_releases::current_modules().iter().collect(),
             };
             compiler
@@ -935,6 +934,9 @@ impl ClientProxy {
         );
         for dep in &space_delim_strings[2..] {
             args.push_str(&format!(" -d {}", dep));
+        }
+        for (name, addr) in diem_framework::diem_framework_named_addresses() {
+            args.push_str(&format!(" -a {}=0x{:#X}", name, addr));
         }
 
         let status = Command::new("cargo")

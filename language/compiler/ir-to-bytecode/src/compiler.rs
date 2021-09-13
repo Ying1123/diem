@@ -1,15 +1,10 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use crate::{
-    context::{CompiledDependency, Context, MaterializedPools, TABLE_MAX_SIZE},
-    errors::*,
-};
+use crate::context::{CompiledDependency, Context, MaterializedPools, TABLE_MAX_SIZE};
 use anyhow::{bail, format_err, Result};
 use bytecode_source_map::source_map::SourceMap;
 use move_binary_format::{
-    check_bounds::BoundsChecker,
-    errors::Location as VMErrorLocation,
     file_format::{
         Ability, AbilitySet, Bytecode, CodeOffset, CodeUnit, CompiledModule, CompiledScript,
         Constant, FieldDefinition, FunctionDefinition, FunctionSignature, ModuleHandle, Signature,
@@ -19,13 +14,9 @@ use move_binary_format::{
     },
     file_format_common::VERSION_MAX,
 };
-use move_core_types::{
-    account_address::AccountAddress,
-    value::{MoveTypeLayout, MoveValue},
-};
+use move_core_types::value::{MoveTypeLayout, MoveValue};
 use move_ir_types::{
     ast::{self, Bytecode as IRBytecode, Bytecode_ as IRBytecode_, *},
-    location::*,
     sp,
 };
 use std::{
@@ -38,13 +29,13 @@ use std::{
 
 macro_rules! record_src_loc {
     (local: $context:expr, $var:expr) => {{
-        let source_name = ($var.value.clone().into_inner(), $var.loc);
+        let source_name = ($var.value.0.as_str().to_owned(), $var.loc);
         $context
             .source_map
             .add_local_mapping($context.current_function_definition_index(), source_name)?;
     }};
     (parameter: $context:expr, $var:expr) => {{
-        let source_name = ($var.value.clone().into_inner(), $var.loc);
+        let source_name = ($var.value.0.as_str().to_owned(), $var.loc);
         $context
             .source_map
             .add_parameter_mapping($context.current_function_definition_index(), source_name)?;
@@ -56,7 +47,7 @@ macro_rules! record_src_loc {
     }};
     (function_type_formals: $context:expr, $var:expr) => {
         for (ty_var, _) in $var.iter() {
-            let source_name = (ty_var.value.clone().into_inner(), ty_var.loc);
+            let source_name = (ty_var.value.0.as_str().to_owned(), ty_var.loc);
             $context.source_map.add_function_type_parameter_mapping(
                 $context.current_function_definition_index(),
                 source_name,
@@ -72,7 +63,7 @@ macro_rules! record_src_loc {
     }};
     (struct_type_formals: $context:expr, $var:expr) => {
         for (_, ty_var, _) in $var.iter() {
-            let source_name = (ty_var.value.clone().into_inner(), ty_var.loc);
+            let source_name = (ty_var.value.0.as_str().to_owned(), ty_var.loc);
             $context.source_map.add_struct_type_parameter_mapping(
                 $context.current_struct_definition_index(),
                 source_name,
@@ -317,7 +308,7 @@ impl FunctionFrame {
 
     // Manage the stack info for the function
     fn push(&mut self) -> Result<()> {
-        if self.cur_stack_depth == i64::max_value() {
+        if self.cur_stack_depth == i64::MAX {
             bail!("ICE Stack depth accounting overflow. The compiler can only support a maximum stack depth of up to i64::max_value")
         }
         self.cur_stack_depth += 1;
@@ -326,7 +317,7 @@ impl FunctionFrame {
     }
 
     fn pop(&mut self) -> Result<()> {
-        if self.cur_stack_depth == i64::min_value() {
+        if self.cur_stack_depth == i64::MIN {
             bail!("ICE Stack depth accounting underflow. The compiler can only support a minimum stack depth of up to i64::min_value")
         }
         self.cur_stack_depth -= 1;
@@ -410,20 +401,18 @@ impl FunctionFrame {
 
 /// Compile a transaction script.
 pub fn compile_script<'a>(
-    address: Option<AccountAddress>,
     script: Script,
     dependencies: impl IntoIterator<Item = &'a CompiledModule>,
-) -> Result<(CompiledScript, SourceMap<Loc>)> {
+) -> Result<(CompiledScript, SourceMap)> {
     let mut context = Context::new(HashMap::new(), None)?;
     for dep in dependencies {
         context.add_compiled_dependency(dep)?;
     }
 
-    compile_imports(&mut context, address, script.imports.clone())?;
+    compile_imports(&mut context, script.imports.clone())?;
     // Add explicit handles/dependency declarations to `dependencies`
     compile_explicit_dependency_declarations(
         &mut context,
-        None,
         script.imports,
         script.explicit_dependency_declarations,
     )?;
@@ -477,43 +466,32 @@ pub fn compile_script<'a>(
         parameters: parameters_sig_idx,
         code,
     };
-    match BoundsChecker::verify_script(&script) {
-        Ok(()) => Ok((script, source_map)),
-        Err(e) => Err(InternalCompilerError::BoundsCheckErrors(
-            e.finish(VMErrorLocation::Undefined),
-        )
-        .into()),
-    }
+    Ok((script, source_map))
 }
 
 /// Compile a module.
 pub fn compile_module<'a>(
-    address: AccountAddress,
     module: ModuleDefinition,
     dependencies: impl IntoIterator<Item = &'a CompiledModule>,
-) -> Result<(CompiledModule, SourceMap<Loc>)> {
-    let current_module = QualifiedModuleIdent {
-        address,
-        name: module.name,
-    };
-    let mut context = Context::new(HashMap::new(), Some(current_module.clone()))?;
+) -> Result<(CompiledModule, SourceMap)> {
+    let current_module = module.identifier;
+    let mut context = Context::new(HashMap::new(), Some(current_module))?;
     for dep in dependencies {
         context.add_compiled_dependency(dep)?;
     }
 
     // Compile friends
-    let friend_decls = compile_friends(&mut context, Some(address), module.friends)?;
+    let friend_decls = compile_friends(&mut context, module.friends)?;
 
     // Compile imports
-    let self_name = ModuleName::new(ModuleName::self_name().into());
-    let self_module_handle_idx = context.declare_import(current_module, self_name.clone())?;
+    let self_name = ModuleName::module_self();
+    let self_module_handle_idx = context.declare_import(current_module, self_name)?;
     // Explicitly declare all imports as they will be included even if not used
-    compile_imports(&mut context, Some(address), module.imports.clone())?;
+    compile_imports(&mut context, module.imports.clone())?;
 
     // Add explicit handles/dependency declarations to `dependencies`
     compile_explicit_dependency_declarations(
         &mut context,
-        Some(address),
         module.imports,
         module.explicit_dependency_declarations,
     )?;
@@ -522,7 +500,7 @@ pub fn compile_module<'a>(
     for s in &module.structs {
         let abilities = abilities(&s.value.abilities);
         let ident = QualifiedStructIdent {
-            module: self_name.clone(),
+            module: self_name,
             name: s.value.name.clone(),
         };
         let type_parameters = struct_type_parameters(&s.value.type_formals);
@@ -538,7 +516,7 @@ pub fn compile_module<'a>(
 
     for (name, function) in &module.functions {
         let sig = function_signature(&mut context, &function.value.signature)?;
-        context.declare_function(self_name.clone(), name.clone(), sig)?;
+        context.declare_function(self_name, name.clone(), sig)?;
     }
 
     // Compile definitions
@@ -580,13 +558,7 @@ pub fn compile_module<'a>(
         struct_defs,
         function_defs,
     };
-    match BoundsChecker::verify_module(&module) {
-        Ok(()) => Ok((module, source_map)),
-        Err(e) => Err(InternalCompilerError::BoundsCheckErrors(
-            e.finish(VMErrorLocation::Undefined),
-        )
-        .into()),
-    }
+    Ok((module, source_map))
 }
 
 // Note: DO NOT try to recover from this function as it zeros out the `outer_contexts` dependencies
@@ -594,7 +566,6 @@ pub fn compile_module<'a>(
 // Any `Error` should stop compilation in the caller
 fn compile_explicit_dependency_declarations(
     outer_context: &mut Context,
-    address_opt: Option<AccountAddress>,
     imports: Vec<ImportDefinition>,
     dependencies: Vec<ModuleDependency>,
 ) -> Result<()> {
@@ -606,8 +577,8 @@ fn compile_explicit_dependency_declarations(
             functions,
         } = dependency;
         let current_module = outer_context.module_ident(&mname)?;
-        let mut context = Context::new(dependencies_acc, Some(current_module.clone()))?;
-        compile_imports(&mut context, address_opt, imports.clone())?;
+        let mut context = Context::new(dependencies_acc, Some(*current_module))?;
+        compile_imports(&mut context, imports.clone())?;
         let self_module_handle_idx = context.module_handle_index(&mname)?;
         for struct_dep in structs {
             let StructDependency {
@@ -615,7 +586,7 @@ fn compile_explicit_dependency_declarations(
                 name,
                 type_formals: tys,
             } = struct_dep;
-            let sname = QualifiedStructIdent::new(mname.clone(), name);
+            let sname = QualifiedStructIdent::new(mname, name);
             let ability_set = abilities(&abs);
             let kinds = struct_type_parameters(&tys);
             context.declare_struct_handle_index(sname, ability_set, kinds)?;
@@ -623,7 +594,7 @@ fn compile_explicit_dependency_declarations(
         for function_dep in functions {
             let FunctionDependency { name, signature } = function_dep;
             let sig = function_signature(&mut context, &signature)?;
-            context.declare_function(mname.clone(), name, sig)?;
+            context.declare_function(mname, name, sig)?;
         }
 
         let (
@@ -661,12 +632,9 @@ fn compile_explicit_dependency_declarations(
             struct_defs: vec![],
             function_defs: vec![],
         };
-        BoundsChecker::verify_module(&compiled_module).map_err(|e| {
-            InternalCompilerError::BoundsCheckErrors(e.finish(VMErrorLocation::Undefined))
-        })?;
         dependencies_acc = compiled_deps;
         dependencies_acc.insert(
-            current_module.clone(),
+            *current_module,
             CompiledDependency::stored(compiled_module)?,
         );
     }
@@ -676,46 +644,19 @@ fn compile_explicit_dependency_declarations(
 
 fn compile_friends(
     context: &mut Context,
-    address_opt: Option<AccountAddress>,
     friends: Vec<ast::ModuleIdent>,
 ) -> Result<Vec<ModuleHandle>> {
     let mut friend_decls = vec![];
     for friend in friends {
-        let ident = match (address_opt, friend) {
-            (Some(address), ModuleIdent::Transaction(name)) => {
-                QualifiedModuleIdent { name, address }
-            }
-            (None, ModuleIdent::Transaction(name)) => bail!(
-                "Invalid friend '{}'. No address specified for script so cannot resolve friend",
-                name
-            ),
-            (_, ModuleIdent::Qualified(id)) => id,
-        };
-        let handle = context.declare_friend(ident)?;
-        friend_decls.push(handle);
+        friend_decls.push(context.declare_friend(friend)?);
     }
     Ok(friend_decls)
 }
 
-fn compile_imports(
-    context: &mut Context,
-    address_opt: Option<AccountAddress>,
-    imports: Vec<ImportDefinition>,
-) -> Result<()> {
-    for import in imports {
-        let ident = match (address_opt, import.ident) {
-            (Some(address), ModuleIdent::Transaction(name)) => {
-                QualifiedModuleIdent { name, address }
-            }
-            (None, ModuleIdent::Transaction(name)) => bail!(
-                "Invalid import '{}'. No address specified for script so cannot resolve import",
-                name
-            ),
-            (_, ModuleIdent::Qualified(id)) => id,
-        };
-        context.declare_import(ident, import.alias)?;
-    }
-    Ok(())
+fn compile_imports(context: &mut Context, imports: Vec<ImportDefinition>) -> Result<()> {
+    Ok(for import in imports {
+        context.declare_import(import.ident, import.alias)?;
+    })
 }
 
 fn type_parameter_indexes<'a>(
@@ -859,7 +800,7 @@ fn compile_structs(
     let mut struct_defs = vec![];
     for s in structs {
         let sident = QualifiedStructIdent {
-            module: self_name.clone(),
+            module: *self_name,
             name: s.value.name.clone(),
         };
         let sh_idx = context.struct_handle_index(sident.clone())?;
@@ -888,7 +829,7 @@ fn compile_fields(
         StructDefinitionFields::Move { fields } => {
             let mut decl_fields = vec![];
             for (decl_order, (f, ty)) in fields.into_iter().enumerate() {
-                let name = context.identifier_index(f.value.as_inner())?;
+                let name = context.identifier_index(f.value.0)?;
                 record_src_loc!(field: context, sd_idx, f);
                 let sig_token = compile_type(context, type_parameters, &ty)?;
                 context.declare_field(sh_idx, sd_idx, f.value, sig_token.clone(), decl_order);
@@ -975,7 +916,7 @@ fn compile_function(
         function_type_formals: context,
         &ast_function.value.signature.type_formals
     );
-    let fh_idx = context.function_handle(self_name.clone(), name)?.1;
+    let fh_idx = context.function_handle(*self_name, name)?.1;
 
     let ast_function = ast_function.value;
 
@@ -1402,7 +1343,7 @@ fn compile_expression(
             let type_actuals_id = context.signature_index(tokens)?;
             let def_idx = context.struct_definition_index(&name)?;
 
-            let self_name = ModuleName::new(ModuleName::self_name().into());
+            let self_name = ModuleName::module_self();
             let ident = QualifiedStructIdent {
                 module: self_name,
                 name: name.clone(),
@@ -1652,7 +1593,7 @@ fn compile_call(
                     function_frame.pop()?;
                     function_frame.push()?;
 
-                    let self_name = ModuleName::new(ModuleName::self_name().into());
+                    let self_name = ModuleName::module_self();
                     let ident = QualifiedStructIdent {
                         module: self_name,
                         name,
@@ -1682,7 +1623,7 @@ fn compile_call(
                     function_frame.pop()?; // pop the address
                     function_frame.push()?; // push the return value
 
-                    let self_name = ModuleName::new(ModuleName::self_name().into());
+                    let self_name = ModuleName::module_self();
                     let ident = QualifiedStructIdent {
                         module: self_name,
                         name,
@@ -1705,7 +1646,94 @@ fn compile_call(
                             context.struct_instantiation_index(def_idx, type_actuals_id)?;
                         push_instr!(call.loc, Bytecode::MoveToGeneric(si_idx));
                     }
-                    function_frame.push()?;
+                    function_frame.pop()?; // pop the address
+                    function_frame.pop()?; // pop the value to be moved
+                    vec_deque![]
+                }
+                Builtin::VecPack(tys, num) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecPack(type_actuals_id, num));
+
+                    for _ in 0..num {
+                        function_frame.pop()?;
+                    }
+                    function_frame.push()?; // push the return value
+
+                    // NOTE: we do actually infer the type here because we want to allow the type
+                    // actuals to have multiple tokens in order to test our bytecode verifier passes
+                    vec_deque![InferredType::Anything]
+                }
+                Builtin::VecLen(tys) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecLen(type_actuals_id));
+
+                    function_frame.pop()?; // pop the vector ref
+                    function_frame.push()?; // push the return value
+                    vec_deque![InferredType::U64]
+                }
+                Builtin::VecImmBorrow(tys) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecImmBorrow(type_actuals_id));
+
+                    function_frame.pop()?; // pop the vector ref
+                    function_frame.pop()?; // pop the index
+                    function_frame.push()?; // push the return value
+
+                    // NOTE: similar to VecEmpty, we do actually infer the type here
+                    vec_deque![InferredType::Anything]
+                }
+                Builtin::VecMutBorrow(tys) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecMutBorrow(type_actuals_id));
+
+                    function_frame.pop()?; // pop the vector ref
+                    function_frame.pop()?; // pop the index
+                    function_frame.push()?; // push the return value
+
+                    // NOTE: similar to VecEmpty, we do actually infer the type here
+                    vec_deque![InferredType::Anything]
+                }
+                Builtin::VecPushBack(tys) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecPushBack(type_actuals_id));
+
+                    function_frame.pop()?; // pop the vector ref
+                    function_frame.pop()?; // pop the value
+                    vec_deque![]
+                }
+                Builtin::VecPopBack(tys) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecPopBack(type_actuals_id));
+
+                    function_frame.pop()?; // pop the vector ref
+                    function_frame.push()?; // push the value
+                    vec_deque![InferredType::Anything]
+                }
+                Builtin::VecUnpack(tys, num) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecUnpack(type_actuals_id, num));
+
+                    function_frame.pop()?; // pop the vector ref
+                    for _ in 0..num {
+                        function_frame.push()?;
+                    }
+                    vec_deque![]
+                }
+                Builtin::VecSwap(tys) => {
+                    let tokens = compile_types(context, function_frame.type_parameters(), &tys)?;
+                    let type_actuals_id = context.signature_index(Signature(tokens))?;
+                    push_instr!(call.loc, Bytecode::VecSwap(type_actuals_id));
+
+                    function_frame.pop()?; // pop the vector ref
+                    function_frame.pop()?; // pop the first index
+                    function_frame.pop()?; // pop the second index
                     vec_deque![]
                 }
                 Builtin::Freeze => {
@@ -1754,7 +1782,7 @@ fn compile_call(
             let subst = &make_type_argument_subst(&ty_args)?;
             let tokens = Signature(ty_arg_tokens);
             let type_actuals_id = context.signature_index(tokens)?;
-            let fh_idx = context.function_handle(module.clone(), name.clone())?.1;
+            let fh_idx = context.function_handle(module, name.clone())?.1;
             let fcall = if type_actuals.is_empty() {
                 Bytecode::Call(fh_idx)
             } else {

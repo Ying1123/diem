@@ -38,7 +38,7 @@ with open('result.csv', mode='w') as result_file:
 				result_map[(func, option)] = "unknown"
 			elif exists("error", ls):
 				result_map[(func, option)] = "fail"
-			elif exists("unsat", ls[-1:]):
+			elif exists("unsat", ls):
 				result_map[(func, option)] = str(time)
 			else:
 				result_map[(func, option)] = "fail"

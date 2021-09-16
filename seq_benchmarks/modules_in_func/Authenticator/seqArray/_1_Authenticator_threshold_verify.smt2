@@ -4,6 +4,7 @@
 (set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
+(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -12,8 +13,8 @@
 (declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_4603 0)) ((($Mutation_4603 (|l#$Mutation_4603| T@$Location) (|p#$Mutation_4603| (Seq Int)) (|v#$Mutation_4603| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_10772 0)) ((($Mutation_10772 (|l#$Mutation_10772| T@$Location) (|p#$Mutation_10772| (Seq Int)) (|v#$Mutation_10772| (Seq Int)) ) ) ))
-(declare-datatypes ((T@$Mutation_10026 0)) ((($Mutation_10026 (|l#$Mutation_10026| T@$Location) (|p#$Mutation_10026| (Seq Int)) (|v#$Mutation_10026| (Seq (Seq Int))) ) ) ))
+(declare-datatypes ((T@$Mutation_10791 0)) ((($Mutation_10791 (|l#$Mutation_10791| T@$Location) (|p#$Mutation_10791| (Seq Int)) (|v#$Mutation_10791| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_10045 0)) ((($Mutation_10045 (|l#$Mutation_10045| T@$Location) (|p#$Mutation_10045| (Seq Int)) (|v#$Mutation_10045| (Seq (Seq Int))) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -41,7 +42,7 @@
 (declare-fun |$1_BCS_serialize'u8'| (Int) (Seq Int))
 (declare-fun |$IsValid'$1_Authenticator_MultiEd25519PublicKey'| (T@$1_Authenticator_MultiEd25519PublicKey) Bool)
 (declare-fun ReverseVec_4456 ((Seq Int)) (Seq Int))
-(declare-fun ReverseVec_7636 ((Seq (Seq Int))) (Seq (Seq Int)))
+(declare-fun ReverseVec_7654 ((Seq (Seq Int))) (Seq (Seq Int)))
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
 (assert (= $MAX_U8 255))
 (assert (= $MAX_U64 18446744073709551615))
@@ -140,28 +141,28 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |Authenticatorbpl.1044:15|
+ :qid |Authenticatorbpl.1048:15|
  :skolemid |27|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |Authenticatorbpl.1047:15|
+ :qid |Authenticatorbpl.1051:15|
  :skolemid |28|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((v1@@1 Int) (v2@@1 Int) ) (! (= (= v1@@1 v2@@1) (= (|$1_BCS_serialize'u8'| v1@@1) (|$1_BCS_serialize'u8'| v2@@1)))
- :qid |Authenticatorbpl.1074:15|
+ :qid |Authenticatorbpl.1078:15|
  :skolemid |29|
  :pattern ( (|$1_BCS_serialize'u8'| v1@@1) (|$1_BCS_serialize'u8'| v2@@1))
 )))
 (assert (forall ((v@@8 Int) ) (! (let ((r@@0 (|$1_BCS_serialize'u8'| v@@8)))
  (and (|$IsValid'vec'u8''| r@@0) (> (seq.len r@@0) 0)))
- :qid |Authenticatorbpl.1079:15|
+ :qid |Authenticatorbpl.1083:15|
  :skolemid |30|
  :pattern ( (|$1_BCS_serialize'u8'| v@@8))
 )))
 (assert (forall ((s T@$1_Authenticator_MultiEd25519PublicKey) ) (! (= (|$IsValid'$1_Authenticator_MultiEd25519PublicKey'| s)  (and (|$IsValid'vec'vec'u8'''| (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| s)) (|$IsValid'u8'| (|$threshold#$1_Authenticator_MultiEd25519PublicKey| s))))
- :qid |Authenticatorbpl.1121:59|
+ :qid |Authenticatorbpl.1125:59|
  :skolemid |31|
  :pattern ( (|$IsValid'$1_Authenticator_MultiEd25519PublicKey'| s))
 )))
@@ -175,7 +176,7 @@
  :skolemid |1|
  :pattern ( (ReverseVec_4456 v@@9))
 )))
-(assert (forall ((v@@10 (Seq (Seq Int))) ) (! (let ((r@@2 (ReverseVec_7636 v@@10)))
+(assert (forall ((v@@10 (Seq (Seq Int))) ) (! (let ((r@@2 (ReverseVec_7654 v@@10)))
  (and (= (seq.len r@@2) (seq.len v@@10)) (forall ((i@@7 Int) ) (!  (=> (and (>= i@@7 0) (< i@@7 (seq.len r@@2))) (= (seq.nth r@@2 i@@7) (seq.nth v@@10 (- (- (seq.len v@@10) i@@7) 1))))
  :qid |Authenticatorbpl.67:18|
  :skolemid |0|
@@ -183,7 +184,7 @@
 ))))
  :qid |Authenticatorbpl.64:32|
  :skolemid |1|
- :pattern ( (ReverseVec_7636 v@@10))
+ :pattern ( (ReverseVec_7654 v@@10))
 )))
 (assert (forall ((|l#0| Bool) (i@@8 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@8) |l#0|)
  :qid |Authenticatorbpl.250:54|
@@ -196,7 +197,7 @@
 (push 1)
 (set-info :boogie-vc-id $1_Authenticator_threshold$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 18706) true)
+ (=> (= (ControlFlow 0 0) 18726) true)
 ))
 (check-sat)
 (pop 1)

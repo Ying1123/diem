@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_strings/_1_DiemBlock_initialize_block_metadata_verify.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_strings/_1_DiemBlock_initialize_block_metadata_verify.smt2:1418.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_strings/_1_DiemBlock_initialize_block_metadata_verify.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_strings/_1_DiemBlock_initialize_block_metadata_verify.smt2:1376.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

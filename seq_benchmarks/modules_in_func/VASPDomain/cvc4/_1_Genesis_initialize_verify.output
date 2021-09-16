@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/cvc4/_1_Genesis_initialize_verify.smt2:411.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/cvc4/_1_Genesis_initialize_verify.smt2:1470.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/cvc4/_1_Genesis_initialize_verify.smt2:1477.19: unterminated |quoted| symbol")

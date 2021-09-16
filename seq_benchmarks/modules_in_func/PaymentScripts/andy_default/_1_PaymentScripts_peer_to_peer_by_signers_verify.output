@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/PaymentScripts/andy_default/_1_PaymentScripts_peer_to_peer_by_signers_verify.smt2:444.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/PaymentScripts/andy_default/_1_PaymentScripts_peer_to_peer_by_signers_verify.smt2:1624.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")
+/home/ying/diem/seq_benchmarks/modules_in_func/PaymentScripts/andy_default/_1_PaymentScripts_peer_to_peer_by_signers_verify.smt2:359.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/PaymentScripts/andy_default/_1_PaymentScripts_peer_to_peer_by_signers_verify.smt2:1296.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

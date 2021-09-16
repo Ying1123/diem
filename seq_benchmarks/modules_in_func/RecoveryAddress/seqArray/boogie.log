@@ -8,6 +8,7 @@
 /proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
 /proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -18,39 +19,18 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.315 s, 14 proof obligations]  verified
+  [0.333 s, 20 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.087 s, 14 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [2.661 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [2.637 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [2.794 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [2.898 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.996 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [3.008 s, 34 proof obligations]  verified
+  [0.107 s, 17 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_publish$verify ...
-  [0.425 s, 13 proof obligations]  verified
+  [0.176 s, 13 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_rotate_authentication_key$verify ...
-  [0.804 s, 14 proof obligations]  verified
+  [0.465 s, 14 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_add_rotation_capability$verify ...
-  [0.627 s, 11 proof obligations]  verified
+  [0.371 s, 11 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.188 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 12 verified, 0 errors
+Boogie program verifier finished with 5 verified, 0 errors

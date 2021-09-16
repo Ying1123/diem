@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountCreationScripts/seqArray/_1_AccountCreationScripts_create_designated_dealer_verify_instantiated_0.smt2:457.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountCreationScripts/seqArray/_1_AccountCreationScripts_create_designated_dealer_verify_instantiated_0.smt2:1710.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountCreationScripts/seqArray/_1_AccountCreationScripts_create_designated_dealer_verify_instantiated_0.smt2:436.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountCreationScripts/seqArray/_1_AccountCreationScripts_create_designated_dealer_verify_instantiated_0.smt2:1661.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

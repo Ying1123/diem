@@ -8,6 +8,7 @@
 /proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
 /proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -18,12 +19,84 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.227 s, 9 proof obligations]  verified
+  [0.300 s, 35 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify ...
+  [0.567 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_0 ...
+  [0.583 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_1 ...
+  [0.592 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify ...
+  [0.797 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_0 ...
+  [0.842 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_1 ...
+  [0.834 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify ...
+  [0.610 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_0 ...
+  [0.593 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_1 ...
+  [0.630 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify ...
+  [0.675 s, 36 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_0 ...
+  [0.704 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_1 ...
+  [0.722 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify ...
+  [0.341 s, 32 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_0 ...
+  [0.423 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_1 ...
+  [0.446 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify ...
+  [0.222 s, 25 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_0 ...
+  [0.215 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_1 ...
+  [0.188 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify ...
+  [0.655 s, 27 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_0 ...
+  [0.668 s, 28 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_1 ...
+  [0.731 s, 28 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify ...
+  [0.342 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
+  [0.407 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
+  [0.487 s, 16 proof obligations]  verified
 
 Verifying $1_XUS_initialize$verify ...
-  [0.354 s, 30 proof obligations]  verified
+  [0.994 s, 30 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.227 s, 0 proof obligations]  verified
+Verifying $1_Genesis_initialize_internal$verify ...
+  [2.834 s, 28 proof obligations]  verified
 
-Boogie program verifier finished with 3 verified, 0 errors
+Boogie program verifier finished with 27 verified, 0 errors

@@ -14,45 +14,45 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.240 s, 8 proof obligations]  verified
+  [0.202 s, 35 proof obligations]  verified
 
 Verifying $1_TransactionFee_initialize$verify ...
-  [0.065 s, 10 proof obligations]  verified
+  [0.072 s, 10 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
-  [0.062 s, 1 proof obligation]  verified
+  [0.040 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
-  [0.053 s, 1 proof obligation]  verified
+  [0.064 s, 1 proof obligation]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
-  [0.042 s, 0 proof obligations]  verified
+  [0.047 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify ...
-  [0.145 s, 18 proof obligations]  verified
+  [0.148 s, 17 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify_instantiated_0 ...
-  [0.141 s, 18 proof obligations]  verified
+  [0.161 s, 18 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify_instantiated_1 ...
-  [0.114 s, 17 proof obligations]  verified
+  [0.144 s, 17 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_coin_initialized$verify ...
-  [0.029 s, 0 proof obligations]  verified
+  [0.027 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_coin_initialized$verify_instantiated_0 ...
-  [0.032 s, 0 proof obligations]  verified
+  [0.034 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_initialized$verify ...
-  [0.035 s, 0 proof obligations]  verified
+  [0.034 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify ...
-  [0.048 s, 7 proof obligations]  verified
+  [0.039 s, 6 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify_instantiated_0 ...
-  [0.050 s, 7 proof obligations]  verified
+  [0.044 s, 7 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.218 s, 0 proof obligations]  verified
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.524 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 14 verified, 0 errors

@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray/_1_Genesis_initialize_verify.smt2:430.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray/_1_Genesis_initialize_verify.smt2:1533.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat

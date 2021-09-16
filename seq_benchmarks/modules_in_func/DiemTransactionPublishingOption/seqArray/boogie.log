@@ -8,6 +8,7 @@
 /proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
 /proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -18,33 +19,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.234 s, 8 proof obligations]  verified
+  [0.291 s, 35 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_initialize$verify ...
-  [0.040 s, 16 proof obligations]  verified
+  [0.127 s, 20 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_halt_all_transactions$verify ...
-  [0.007 s, 1 proof obligation]  verified
+  [0.044 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_module_allowed$verify ...
-  [0.018 s, 4 proof obligations]  verified
-
-Verifying $1_DiemTransactionPublishingOption_is_script_allowed$verify ...
   [0.038 s, 4 proof obligations]  verified
 
+Verifying $1_DiemTransactionPublishingOption_is_script_allowed$verify ...
+  [0.056 s, 4 proof obligations]  verified
+
 Verifying $1_DiemTransactionPublishingOption_resume_transactions$verify ...
-  [0.014 s, 1 proof obligation]  verified
+  [0.033 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_module$verify ...
-  [0.041 s, 9 proof obligations]  verified
+  [0.125 s, 14 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_script$verify ...
-  [0.041 s, 9 proof obligations]  verified
+  [0.144 s, 14 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_transactions_halted$verify ...
-  [0.006 s, 1 proof obligation]  verified
+  [0.008 s, 1 proof obligation]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.199 s, 0 proof obligations]  verified
+Verifying $1_Genesis_initialize_internal$verify ...
+  [2.428 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 10 verified, 0 errors

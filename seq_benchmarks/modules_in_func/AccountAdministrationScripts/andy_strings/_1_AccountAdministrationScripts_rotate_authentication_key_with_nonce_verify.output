@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/_1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_verify.smt2:458.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/_1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_verify.smt2:1663.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/_1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/_1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_verify.smt2:1491.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

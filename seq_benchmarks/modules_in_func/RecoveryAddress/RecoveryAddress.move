@@ -106,8 +106,8 @@ module DiemFramework::RecoveryAddress {
         let len = Vector::length(caps);
         while ({
             spec {
-                assert i <= len;
-                assert forall j in 0..i: caps[j].account_address != to_recover;
+                invariant i <= len;
+                invariant forall j in 0..i: caps[j].account_address != to_recover;
             };
             (i < len)
         })
@@ -197,10 +197,11 @@ module DiemFramework::RecoveryAddress {
 
     spec module {
         /// A RecoveryAddress has its own `KeyRotationCapability`.
-        invariant [global, isolated]
-            forall addr1: address where spec_is_recovery_address(addr1):
-                len(spec_get_rotation_caps(addr1)) > 0 &&
-                spec_get_rotation_caps(addr1)[0].account_address == addr1;
+        invariant forall addr: address
+            where spec_is_recovery_address(addr): (
+                len(spec_get_rotation_caps(addr)) > 0 &&
+                spec_get_rotation_caps(addr)[0].account_address == addr
+            );
     }
 
     /// # Persistence of Resource
@@ -232,9 +233,8 @@ module DiemFramework::RecoveryAddress {
 
     spec module {
         /// Only VASPs can hold `RecoverAddress` resources.
-        invariant [global, isolated]
-            forall recovery_addr: address where spec_is_recovery_address(recovery_addr):
-                VASP::is_vasp(recovery_addr);
+        invariant forall addr: address
+            where spec_is_recovery_address(addr): VASP::is_vasp(addr);
     }
 
     /// # Helper Functions

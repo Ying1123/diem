@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/_1_DiemId_has_diem_id_domain_verify.smt2:422.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/_1_DiemId_has_diem_id_domain_verify.smt2:1509.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/_1_DiemId_has_diem_id_domain_verify.smt2:213.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/seqArray/_1_DiemId_has_diem_id_domain_verify.smt2:817.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

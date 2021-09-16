@@ -3,284 +3,311 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Diem/seqArray_array/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/Diem/seqArray_array/Diem.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
-
-Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.279 s, 17 proof obligations]  verified
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.135 s, 9 proof obligations]  verified
-
-Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.081 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.076 s, 18 proof obligations]  verified
-
-Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.067 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.075 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.061 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_role$verify ...
-  [0.077 s, 20 proof obligations]  verified
+  [0.200 s, 25 proof obligations]  verified
 
 Verifying $1_Diem_initialize$verify ...
-  [0.067 s, 18 proof obligations]  verified
+  [0.085 s, 18 proof obligations]  verified
 
 Verifying $1_Diem_value$verify ...
-  [0.013 s, 11 proof obligations]  verified
+  [0.032 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_currency_code$verify ...
-  [0.032 s, 15 proof obligations]  verified
+  [0.036 s, 14 proof obligations]  verified
 
 Verifying $1_Diem_currency_code$verify_instantiated_0 ...
-  [0.050 s, 15 proof obligations]  verified
+  [0.033 s, 14 proof obligations]  verified
 
 Verifying $1_Diem_currency_code$verify_instantiated_1 ...
-  [0.034 s, 15 proof obligations]  verified
+  [0.040 s, 14 proof obligations]  verified
 
 Verifying $1_Diem_add_preburn_to_queue$verify ...
-  [0.223 s, 28 proof obligations]  verified
+  [0.068 s, 26 proof obligations]  verified
 
 Verifying $1_Diem_approx_xdx_for_coin$verify ...
-  [0.027 s, 11 proof obligations]  verified
+  [0.034 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_approx_xdx_for_coin$verify_instantiated_0 ...
-  [0.021 s, 11 proof obligations]  verified
+  [0.043 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_approx_xdx_for_coin$verify_instantiated_1 ...
-  [0.032 s, 11 proof obligations]  verified
+  [0.038 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_approx_xdx_for_value$verify ...
-  [0.052 s, 16 proof obligations]  verified
+  [0.041 s, 15 proof obligations]  verified
 
 Verifying $1_Diem_approx_xdx_for_value$verify_instantiated_0 ...
-  [0.030 s, 16 proof obligations]  verified
+  [0.042 s, 15 proof obligations]  verified
 
 Verifying $1_Diem_approx_xdx_for_value$verify_instantiated_1 ...
-  [0.032 s, 16 proof obligations]  verified
+  [0.047 s, 15 proof obligations]  verified
 
 Verifying $1_Diem_assert_is_SCS_currency$verify ...
-  [0.028 s, 11 proof obligations]  verified
+  [0.042 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_assert_is_SCS_currency$verify_instantiated_0 ...
-  [0.031 s, 11 proof obligations]  verified
+  [0.039 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_assert_is_SCS_currency$verify_instantiated_1 ...
-  [0.029 s, 11 proof obligations]  verified
+  [0.040 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_assert_is_currency$verify ...
-  [0.027 s, 14 proof obligations]  verified
-
-Verifying $1_Diem_assert_is_currency$verify_instantiated_0 ...
-  [0.019 s, 14 proof obligations]  verified
-
-Verifying $1_Diem_assert_is_currency$verify_instantiated_1 ...
-  [0.022 s, 14 proof obligations]  verified
+  [0.044 s, 13 proof obligations]  verified
 
 Verifying $1_Diem_burn$verify ...
-  [0.610 s, 24 proof obligations]  verified
+  [0.124 s, 23 proof obligations]  verified
 
 Verifying $1_Diem_burn$verify_instantiated_0 ...
-  [0.620 s, 24 proof obligations]  verified
+  [0.107 s, 23 proof obligations]  verified
 
 Verifying $1_Diem_burn$verify_instantiated_1 ...
-  [0.630 s, 24 proof obligations]  verified
+  [0.131 s, 23 proof obligations]  verified
 
 Verifying $1_Diem_burn_now$verify ...
-  [1.776 s, 21 proof obligations]  verified
+  [0.213 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_burn_now$verify_instantiated_0 ...
-  [1.576 s, 21 proof obligations]  verified
+  [0.157 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_burn_now$verify_instantiated_1 ...
-  [1.432 s, 21 proof obligations]  verified
+  [0.152 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_capability$verify ...
-  [0.518 s, 23 proof obligations]  verified
+  [0.131 s, 22 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_capability$verify_instantiated_0 ...
-  [0.499 s, 23 proof obligations]  verified
+  [0.101 s, 22 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_capability$verify_instantiated_1 ...
-  [0.493 s, 23 proof obligations]  verified
+  [0.089 s, 22 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_resource_cap$verify ...
-  [0.730 s, 38 proof obligations]  verified
+  [0.081 s, 43 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_0 ...
-  [0.715 s, 38 proof obligations]  verified
+  [0.077 s, 46 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_1 ...
-  [0.714 s, 38 proof obligations]  verified
+  [0.097 s, 46 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn$verify ...
-  [0.598 s, 28 proof obligations]  verified
+  [0.109 s, 27 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn$verify_instantiated_0 ...
-  [0.597 s, 28 proof obligations]  verified
+  [0.106 s, 27 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn$verify_instantiated_1 ...
-  [0.591 s, 28 proof obligations]  verified
+  [0.107 s, 27 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn_with_capability$verify ...
-  [0.631 s, 38 proof obligations]  verified
+  [0.102 s, 41 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_0 ...
-  [0.651 s, 38 proof obligations]  verified
+  [0.103 s, 43 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_1 ...
-  [0.600 s, 38 proof obligations]  verified
+  [0.112 s, 43 proof obligations]  verified
 
 Verifying $1_Diem_create_preburn$verify ...
-  [0.051 s, 17 proof obligations]  verified
+  [0.058 s, 16 proof obligations]  verified
 
 Verifying $1_Diem_create_preburn$verify_instantiated_0 ...
-  [0.039 s, 17 proof obligations]  verified
+  [0.051 s, 16 proof obligations]  verified
 
 Verifying $1_Diem_create_preburn$verify_instantiated_1 ...
-  [0.067 s, 17 proof obligations]  verified
+  [0.061 s, 16 proof obligations]  verified
 
 Verifying $1_Diem_deposit$verify ...
-  [0.062 s, 15 proof obligations]  verified
+  [0.043 s, 14 proof obligations]  verified
 
 Verifying $1_Diem_destroy_zero$verify ...
-  [0.042 s, 14 proof obligations]  verified
+  [0.034 s, 13 proof obligations]  verified
 
 Verifying $1_Diem_fractional_part$verify ...
-  [0.024 s, 11 proof obligations]  verified
+  [0.036 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_fractional_part$verify_instantiated_0 ...
-  [0.019 s, 11 proof obligations]  verified
+  [0.041 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_fractional_part$verify_instantiated_1 ...
-  [0.029 s, 11 proof obligations]  verified
+  [0.035 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_is_SCS_currency$verify ...
-  [0.027 s, 11 proof obligations]  verified
+  [0.032 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_is_SCS_currency$verify_instantiated_0 ...
-  [0.039 s, 11 proof obligations]  verified
+  [0.035 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_is_SCS_currency$verify_instantiated_1 ...
-  [0.024 s, 11 proof obligations]  verified
+  [0.039 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_is_currency$verify ...
-  [0.022 s, 11 proof obligations]  verified
-
-Verifying $1_Diem_is_currency$verify_instantiated_0 ...
-  [0.015 s, 11 proof obligations]  verified
-
-Verifying $1_Diem_is_currency$verify_instantiated_1 ...
-  [0.019 s, 11 proof obligations]  verified
+  [0.036 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_is_synthetic_currency$verify ...
-  [0.022 s, 11 proof obligations]  verified
-
-Verifying $1_Diem_is_synthetic_currency$verify_instantiated_0 ...
-  [0.032 s, 11 proof obligations]  verified
-
-Verifying $1_Diem_is_synthetic_currency$verify_instantiated_1 ...
-  [0.024 s, 11 proof obligations]  verified
+  [0.038 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_join$verify ...
-  [0.020 s, 15 proof obligations]  verified
+  [0.035 s, 14 proof obligations]  verified
 
 Verifying $1_Diem_market_cap$verify ...
-  [0.024 s, 11 proof obligations]  verified
+  [0.038 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_market_cap$verify_instantiated_0 ...
-  [0.086 s, 11 proof obligations]  verified
+  [0.042 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_market_cap$verify_instantiated_1 ...
-  [0.018 s, 11 proof obligations]  verified
+  [0.038 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_mint$verify ...
-  [0.120 s, 21 proof obligations]  verified
+  [0.056 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_mint$verify_instantiated_0 ...
-  [0.086 s, 21 proof obligations]  verified
+  [0.060 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_mint$verify_instantiated_1 ...
-  [0.110 s, 21 proof obligations]  verified
+  [0.068 s, 20 proof obligations]  verified
 
 Verifying $1_Diem_mint_with_capability$verify ...
-  [0.490 s, 36 proof obligations]  verified
+  [0.090 s, 39 proof obligations]  verified
 
 Verifying $1_Diem_mint_with_capability$verify_instantiated_0 ...
-  [0.497 s, 36 proof obligations]  verified
+  [0.083 s, 41 proof obligations]  verified
 
 Verifying $1_Diem_mint_with_capability$verify_instantiated_1 ...
-  [0.548 s, 36 proof obligations]  verified
+  [0.086 s, 41 proof obligations]  verified
 
 Verifying $1_Diem_preburn_to$verify ...
-  [1.110 s, 32 proof obligations]  verified
+  [0.148 s, 31 proof obligations]  verified
 
 Verifying $1_Diem_preburn_to$verify_instantiated_0 ...
-  [1.069 s, 32 proof obligations]  verified
+  [0.132 s, 31 proof obligations]  verified
 
 Verifying $1_Diem_preburn_to$verify_instantiated_1 ...
-  [1.146 s, 32 proof obligations]  verified
+  [0.147 s, 31 proof obligations]  verified
 
 Verifying $1_Diem_preburn_value$verify ...
-  [0.035 s, 11 proof obligations]  verified
+  [0.038 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_preburn_value$verify_instantiated_0 ...
-  [0.022 s, 11 proof obligations]  verified
+  [0.036 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_preburn_value$verify_instantiated_1 ...
-  [0.024 s, 11 proof obligations]  verified
+  [0.034 s, 10 proof obligations]  verified
 
 Verifying $1_Diem_preburn_with_resource$verify ...
-  [0.697 s, 33 proof obligations]  verified
+  [0.085 s, 36 proof obligations]  verified
 
 Verifying $1_Diem_preburn_with_resource$verify_instantiated_0 ...
-  [0.680 s, 33 proof obligations]  verified
+  [0.087 s, 38 proof obligations]  verified
 
 Verifying $1_Diem_preburn_with_resource$verify_instantiated_1 ...
-  [0.697 s, 33 proof obligations]  verified
+  [0.081 s, 38 proof obligations]  verified
 
 Verifying $1_Diem_publish_burn_capability$verify ...
-  [0.101 s, 18 proof obligations]  verified
+  [0.065 s, 17 proof obligations]  verified
 
 Verifying $1_Diem_publish_burn_capability$verify_instantiated_0 ...
-  [0.102 s, 18 proof obligations]  verified
+  [0.050 s, 17 proof obligations]  verified
 
 Verifying $1_Diem_publish_burn_capability$verify_instantiated_1 ...
-  [0.076 s, 18 proof obligations]  verified
+  [0.064 s, 17 proof obligations]  verified
 
 Verifying $1_Diem_publish_preburn_queue$verify ...
-  [0.167 s, 30 proof obligations]  verified
-
-Verifying $1_Diem_publish_preburn_queue$verify_instantiated_0 ...
-  [0.162 s, 30 proof obligations]  verified
-
-Verifying $1_Diem_publish_preburn_queue$verify_instantiated_1 ...
-  [0.144 s, 30 proof obligations]  verified
+  [0.068 s, 28 proof obligations]  verified
 
 Verifying $1_Diem_publish_preburn_queue_to_account$verify ...
-  [0.078 s, 31 proof obligations]  verified
-
-Verifying $1_Diem_publish_preburn_queue_to_account$verify_instantiated_0 ...
-  [0.095 s, 31 proof obligations]  verified
-
-Verifying $1_Diem_publish_preburn_queue_to_account$verify_instantiated_1 ...
-  [0.067 s, 31 proof obligations]  verified
+  [0.071 s, 30 proof obligations]  verified
 
 Verifying $1_Diem_register_SCS_currency$verify ...
-  [32.700 s, 40 proof obligations]  verified
+  [0.118 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_register_SCS_currency$verify_instantiated_0 ...
+  [0.121 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_register_SCS_currency$verify_instantiated_1 ...
+  [0.135 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_scaling_factor$verify ...
+  [0.034 s, 10 proof obligations]  verified
+
+Verifying $1_Diem_scaling_factor$verify_instantiated_0 ...
+  [0.031 s, 10 proof obligations]  verified
+
+Verifying $1_Diem_scaling_factor$verify_instantiated_1 ...
+  [0.040 s, 10 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify ...
+  [0.095 s, 32 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_0 ...
+  [0.099 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_1 ...
+  [0.108 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_remove_burn_capability$verify ...
+  [0.034 s, 13 proof obligations]  verified
+
+Verifying $1_Diem_remove_preburn_from_queue$verify ...
+  [0.074 s, 31 proof obligations]  verified
+
+Verifying $1_Diem_split$verify ...
+  [0.032 s, 15 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify ...
+  [0.054 s, 25 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_0 ...
+  [0.059 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_1 ...
+  [0.053 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify ...
+  [0.070 s, 27 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_0 ...
+  [0.062 s, 28 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_1 ...
+  [0.069 s, 28 proof obligations]  verified
+
+Verifying $1_Diem_xdx_exchange_rate$verify ...
+  [0.032 s, 14 proof obligations]  verified
+
+Verifying $1_Diem_xdx_exchange_rate$verify_instantiated_0 ...
+  [0.032 s, 14 proof obligations]  verified
+
+Verifying $1_Diem_xdx_exchange_rate$verify_instantiated_1 ...
+  [0.032 s, 14 proof obligations]  verified
+
+Verifying $1_Diem_upgrade_preburn$verify ...
+  [0.064 s, 30 proof obligations]  verified
+
+Verifying $1_Diem_upgrade_preburn$verify_instantiated_0 ...
+  [0.063 s, 30 proof obligations]  verified
+
+Verifying $1_Diem_upgrade_preburn$verify_instantiated_1 ...
+  [0.067 s, 30 proof obligations]  verified
+
+Verifying $1_Diem_withdraw$verify ...
+  [0.033 s, 15 proof obligations]  verified
+
+Verifying $1_Diem_withdraw_all$verify ...
+  [0.031 s, 14 proof obligations]  verified
+
+Verifying $1_Diem_zero$verify ...
+  [0.032 s, 10 proof obligations]  verified
+
+Boogie program verifier finished with 99 verified, 0 errors

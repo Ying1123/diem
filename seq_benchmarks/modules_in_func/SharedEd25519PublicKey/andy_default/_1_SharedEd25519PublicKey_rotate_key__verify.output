@@ -1,3 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_SharedEd25519PublicKey_rotate_key__verify.smt2:406.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_SharedEd25519PublicKey_rotate_key__verify.smt2:1437.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_SharedEd25519PublicKey_rotate_key__verify.smt2:126.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/andy_default/_1_SharedEd25519PublicKey_rotate_key__verify.smt2:469.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

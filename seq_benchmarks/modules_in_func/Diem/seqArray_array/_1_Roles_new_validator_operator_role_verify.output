@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/Diem/seqArray_array/_1_Roles_new_validator_operator_role_verify.smt2:523.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/Diem/seqArray_array/_1_Roles_new_validator_operator_role_verify.smt2:1929.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat

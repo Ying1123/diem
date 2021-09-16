@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray/_1_Roles_new_parent_vasp_role_verify.smt2:416.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray/_1_Roles_new_parent_vasp_role_verify.smt2:1444.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat

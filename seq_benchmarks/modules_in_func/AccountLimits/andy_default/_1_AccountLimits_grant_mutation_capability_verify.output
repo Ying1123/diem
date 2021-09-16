@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/andy_default/_1_AccountLimits_grant_mutation_capability_verify.smt2:414.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/andy_default/_1_AccountLimits_grant_mutation_capability_verify.smt2:1442.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/andy_default/_1_AccountLimits_grant_mutation_capability_verify.smt2:364.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/andy_default/_1_AccountLimits_grant_mutation_capability_verify.smt2:1283.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

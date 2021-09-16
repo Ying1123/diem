@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DesignatedDealer/andy_default/_1_DesignatedDealer_add_currency_verify.smt2:440.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DesignatedDealer/andy_default/_1_DesignatedDealer_add_currency_verify.smt2:1559.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DesignatedDealer/andy_default/_1_DesignatedDealer_add_currency_verify.smt2:296.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DesignatedDealer/andy_default/_1_DesignatedDealer_add_currency_verify.smt2:1122.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

@@ -3,24 +3,100 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/z3
-/proverOpt:SOLVER=Z3
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/XUS.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/z3
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.165 s, 9 proof obligations]  verified
+  [0.288 s, 35 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify ...
+  [0.455 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_0 ...
+  [0.492 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_1 ...
+  [0.506 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify ...
+  [0.681 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_0 ...
+  [0.712 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_1 ...
+  [0.697 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify ...
+  [0.519 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_0 ...
+  [0.510 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_1 ...
+  [0.544 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify ...
+  [0.551 s, 36 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_0 ...
+  [0.605 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_1 ...
+  [0.624 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify ...
+  [0.306 s, 32 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_0 ...
+  [0.374 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_1 ...
+  [0.365 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify ...
+  [0.193 s, 25 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_0 ...
+  [0.195 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_1 ...
+  [0.170 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify ...
+  [0.565 s, 27 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_0 ...
+  [0.568 s, 28 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_1 ...
+  [0.621 s, 28 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify ...
+  [0.300 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
+  [0.353 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
+  [0.413 s, 16 proof obligations]  verified
 
 Verifying $1_XUS_initialize$verify ...
-  [40.104 s, 30 proof obligations]  timed out
-/home/ying/diem/seq_benchmarks/modules_in_func/XUS/z3/XUS.bpl(8833,27): Verification of '$1_XUS_initialize$verify' timed out after 40 seconds
+  [0.861 s, 30 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [18.732 s, 0 proof obligations]  verified
+Verifying $1_Genesis_initialize_internal$verify ...
+  [2.411 s, 28 proof obligations]  verified
 
-Boogie program verifier finished with 2 verified, 0 errors, 1 time out
+Boogie program verifier finished with 27 verified, 0 errors

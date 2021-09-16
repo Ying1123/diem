@@ -8,6 +8,7 @@
 /proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
 /proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -18,21 +19,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [39.958 s, 18 proof obligations]  verified
+  [5.999 s, 19 proof obligations]  verified
 
 Verifying $1_VASPDomain_create_vasp_domain$verify ...
-  [0.990 s, 5 proof obligations]  verified
+  [0.094 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domain$verify ...
-  [0.102 s, 5 proof obligations]  verified
+  [0.080 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domains$verify ...
-  [0.006 s, 2 proof obligations]  verified
+  [0.008 s, 2 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domain_manager$verify ...
-  [0.034 s, 8 proof obligations]  verified
+  [0.046 s, 8 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domains$verify ...
-  [0.067 s, 9 proof obligations]  verified
+  [0.066 s, 9 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

@@ -4,8 +4,11 @@
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_default/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,15 +19,114 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.218 s, 8 proof obligations]  verified
+  [0.311 s, 35 proof obligations]  verified
 
-Verifying $1_DiemVersion_initialize$verify ...
-  [0.034 s, 16 proof obligations]  verified
+Verifying $1_DiemConfig_set$verify ...
+  [0.090 s, 13 proof obligations]  verified
+
+Verifying $1_DiemConfig_set$verify_instantiated_0 ...
+  [0.092 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_set$verify_instantiated_1 ...
+  [0.103 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_set$verify_instantiated_2 ...
+  [0.114 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_set$verify_instantiated_3 ...
+  [0.098 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify ...
+  [0.105 s, 16 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
+  [0.108 s, 17 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
+  [0.111 s, 17 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
+  [0.113 s, 17 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
+  [0.117 s, 17 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify ...
+  [0.096 s, 12 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_0 ...
+  [0.099 s, 13 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_1 ...
+  [0.106 s, 13 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_2 ...
+  [0.103 s, 13 proof obligations]  verified
+
+Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_3 ...
+  [0.101 s, 13 proof obligations]  verified
+
+Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify ...
+  [0.238 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_0 ...
+  [0.241 s, 15 proof obligations]  verified
+
+Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_1 ...
+  [0.288 s, 15 proof obligations]  verified
+
+Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_2 ...
+  [0.298 s, 15 proof obligations]  verified
+
+Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_3 ...
+  [0.283 s, 15 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify ...
+  [2.365 s, 37 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
+  [2.520 s, 37 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
+  [2.433 s, 37 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_designated_dealer$verify ...
+  [2.296 s, 40 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
+  [2.204 s, 40 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
+  [2.255 s, 40 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_diem_root_account$verify ...
+  [1.009 s, 36 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
+  [3.175 s, 38 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
+  [2.651 s, 38 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
+  [2.812 s, 38 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
+  [1.065 s, 39 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_validator_account$verify ...
+  [1.120 s, 24 proof obligations]  verified
+
+Verifying $1_DiemAccount_create_validator_operator_account$verify ...
+  [0.288 s, 22 proof obligations]  verified
 
 Verifying $1_DiemVersion_set$verify ...
-  [0.039 s, 13 proof obligations]  verified
+  [0.216 s, 21 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.205 s, 0 proof obligations]  verified
+Verifying $1_DiemVersion_initialize$verify ...
+  [0.208 s, 23 proof obligations]  verified
 
-Boogie program verifier finished with 4 verified, 0 errors
+Verifying $1_Genesis_initialize_internal$verify ...
+  [2.352 s, 28 proof obligations]  verified
+
+Boogie program verifier finished with 37 verified, 0 errors

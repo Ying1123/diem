@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/seqArray/_1_SlidingNonce_publish_verify.smt2:54.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/seqArray/_1_SlidingNonce_publish_verify.smt2:183.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/seqArray/_1_SlidingNonce_publish_verify.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/seqArray/_1_SlidingNonce_publish_verify.smt2:1381.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

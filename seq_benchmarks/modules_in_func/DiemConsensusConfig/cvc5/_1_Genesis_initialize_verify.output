@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/cvc5/_1_Genesis_initialize_verify.smt2:410.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/cvc5/_1_Genesis_initialize_verify.smt2:1452.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat

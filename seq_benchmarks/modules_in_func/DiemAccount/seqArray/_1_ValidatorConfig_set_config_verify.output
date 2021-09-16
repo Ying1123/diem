@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray/_1_ValidatorConfig_set_config_verify.smt2:517.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray/_1_ValidatorConfig_set_config_verify.smt2:1785.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray/_1_ValidatorConfig_set_config_verify.smt2:543.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray/_1_ValidatorConfig_set_config_verify.smt2:1860.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

@@ -3,24 +3,34 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Authenticator/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/z3
-/proverOpt:SOLVER=Z3
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/Authenticator/z3/Authenticator.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/z3
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Authenticator_create_multi_ed25519$verify ...
-  [0.125 s, 0 proof obligations]  verified
+  [0.146 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_public_keys$verify ...
-  [0.017 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_threshold$verify ...
-  [0.014 s, 0 proof obligations]  verified
+  [0.001 s, 0 proof obligations]  verified
 
 Verifying $1_Authenticator_ed25519_authentication_key$verify ...
-  [0.025 s, 1 proof obligation]  verified
+  [0.010 s, 1 proof obligation]  verified
+
+Verifying $1_Authenticator_multi_ed25519_authentication_key$verify ...
+  [0.037 s, 2 proof obligations]  verified
+
+Boogie program verifier finished with 5 verified, 0 errors

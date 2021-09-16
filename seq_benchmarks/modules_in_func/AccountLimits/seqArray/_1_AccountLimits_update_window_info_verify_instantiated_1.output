@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray/_1_AccountLimits_update_window_info_verify_instantiated_1.smt2:416.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray/_1_AccountLimits_update_window_info_verify_instantiated_1.smt2:1444.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray/_1_AccountLimits_update_window_info_verify_instantiated_1.smt2:364.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/seqArray/_1_AccountLimits_update_window_info_verify_instantiated_1.smt2:1283.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

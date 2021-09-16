@@ -1029,6 +1029,10 @@ function {:inline} $1_Signer_spec_address_of(signer: $signer): int
     $addr#$signer(signer)
 }
 
+function {:inline} $1_Signer_is_txn_signer(s: $signer): bool;
+
+function {:inline} $1_Signer_is_txn_signer_addr(a: int): bool;
+
 
 // ==================================================================================
 // Native signature
@@ -1204,9 +1208,6 @@ procedure {:timeLimit 40} $1_Authenticator_create_multi_ed25519$verify(_$t0: Vec
     $t13 := 0;
     assume $IsValid'u64'($t13);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:32+41
-    // >> opaque call: $t13 := Errors::invalid_argument($t12)
-
     // $t14 := opaque begin: Errors::invalid_argument($t13) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:32+41
 
     // assume WellFormed($t14) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:43:32+41
@@ -1260,9 +1261,6 @@ L0:
     $t17 := 1;
     assume $IsValid'u64'($t17);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/Authenticator.move:46:13+56
-    // >> opaque call: $t17 := Errors::invalid_argument($t16)
-
     // $t18 := opaque begin: Errors::invalid_argument($t17) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:46:13+56
 
     // assume WellFormed($t18) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:46:13+56
@@ -1311,9 +1309,6 @@ L2:
     assume {:print "$at(6,2226,2255)"} true;
     $t21 := 2;
     assume $IsValid'u64'($t21);
-
-    // nop at /home/ying/diem/language/diem-framework/modules/Authenticator.move:51:13+55
-    // >> opaque call: $t21 := Errors::invalid_argument($t20)
 
     // $t22 := opaque begin: Errors::invalid_argument($t21) at /home/ying/diem/language/diem-framework/modules/Authenticator.move:51:13+55
 

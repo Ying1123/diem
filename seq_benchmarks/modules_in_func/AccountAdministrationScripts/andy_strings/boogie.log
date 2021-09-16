@@ -5,8 +5,10 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,34 +18,49 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
+Verifying $1_AccountAdministrationScripts_force_expire$verify ...
+  [0.264 s, 0 proof obligations]  verified
+
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
-  [0.406 s, 8 proof obligations]  verified
+  [0.152 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
-  [0.103 s, 8 proof obligations]  verified
+  [0.193 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_0 ...
-  [0.097 s, 8 proof obligations]  verified
+  [0.168 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_1 ...
-  [0.111 s, 8 proof obligations]  verified
+  [0.181 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
-  [0.252 s, 9 proof obligations]  verified
+  [0.202 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
-  [0.149 s, 11 proof obligations]  verified
+  [0.137 s, 11 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
-  [0.078 s, 7 proof obligations]  verified
+  [0.086 s, 8 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_opt_in_to_crsn$verify ...
+  [0.080 s, 6 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
-  [0.151 s, 10 proof obligations]  verified
+  [0.144 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
-  [0.259 s, 10 proof obligations]  verified
+  [0.198 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
-  [0.225 s, 10 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.189 s, 10 proof obligations]  verified
 
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_recovery_address$verify ...
+  [0.515 s, 16 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_dual_attestation_info$verify ...
+  [1.094 s, 15 proof obligations]  verified
+
+Verifying $1_AccountAdministrationScripts_rotate_shared_ed25519_public_key$verify ...
+  [0.131 s, 7 proof obligations]  verified
+
+Boogie program verifier finished with 15 verified, 0 errors

@@ -875,6 +875,10 @@ function {:inline} $1_Signer_spec_address_of(signer: $signer): int
     $addr#$signer(signer)
 }
 
+function {:inline} $1_Signer_is_txn_signer(s: $signer): bool;
+
+function {:inline} $1_Signer_is_txn_signer_addr(a: int): bool;
+
 
 // ==================================================================================
 // Native signature
@@ -928,16 +932,7 @@ procedure {:inline 1} $InitEventStore() {
 // Given Types for Type Parameters
 
 
-// axiom at /home/ying/diem/language/move-stdlib/modules/Signer.move:28:9+53
-axiom (forall s: $signer :: $IsValid'signer'(s) ==> ($1_Signer_is_signer($1_Signer_spec_address_of(s))));
-
-// spec fun at /home/ying/diem/language/move-stdlib/modules/Signer.move:25:10+35
-function {:inline} $1_Signer_is_signer(addr: int): bool;
-axiom (forall addr: int ::
-(var $$res := $1_Signer_is_signer(addr);
-$IsValid'bool'($$res)));
-
-// fun CoreAddresses::assert_currency_info [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:79:5+160
+// fun CoreAddresses::assert_currency_info [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:69:5+160
 procedure {:timeLimit 40} $1_CoreAddresses_assert_currency_info$verify(_$t0: $signer) returns ()
 {
     // declare local variables
@@ -958,106 +953,100 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_currency_info$verify(_$t0: $si
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:79:5+160
-    assume {:print "$at(8,2960,3120)"} true;
-    assume $IsValid'signer'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:69:5+160
+    assume {:print "$at(9,2778,2938)"} true;
+    assume $IsValid'signer'($t0) && $1_Signer_is_txn_signer($t0) && $1_Signer_is_txn_signer_addr($1_Signer_spec_address_of($t0));
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:79:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:69:5+1
     assume {:print "$track_local(2,0,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:16+27
-    // >> opaque call: $t3 := Signer::address_of($t0)
-    assume {:print "$at(8,3027,3054)"} true;
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:16+27
+    assume {:print "$at(9,2845,2872)"} true;
 
-    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:16+27
-
-    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:16+27
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:16+27
     assume $IsValid'address'($t3);
 
-    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:16+27
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:16+27
     assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
 
-    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:16+27
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:16+27
 
-    // $t4 := 0xa550c18 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:47+13
+    // $t4 := 0xa550c18 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:47+13
     $t4 := 173345816;
     assume $IsValid'address'($t4);
 
-    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:44+2
+    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:44+2
     $t5 := $IsEqual'address'($t3, $t4);
 
-    // $t6 := 3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:87+14
+    // $t6 := 3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:87+14
     $t6 := 3;
     assume $IsValid'u64'($t6);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:62+40
-    // >> opaque call: $t7 := Errors::requires_address($t6)
+    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:62+40
 
-    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:62+40
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:62+40
+    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:62+40
     assume $IsValid'u64'($t7);
 
-    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:62+40
+    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:62+40
     assume $IsEqual'u64'($t7, 2);
 
-    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:62+40
+    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:62+40
 
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
     assume {:print "$track_local(2,0,2):", $t7} $t7 == $t7;
 
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
     assume {:print "$track_local(2,0,1):", $t5} $t5 == $t5;
 
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
+    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
     if ($t5) { goto L0; } else { goto L1; }
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
+    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
 L1:
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
-    assume {:print "$at(8,3020,3114)"} true;
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
+    assume {:print "$at(9,2838,2932)"} true;
     assume {:print "$track_abort(2,0):", $t7} $t7 == $t7;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+94
+    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:70:9+94
 L0:
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:81:5+1
-    assume {:print "$at(8,3119,3120)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:71:5+1
+    assume {:print "$at(9,2937,2938)"} true;
 L2:
 
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:90:9+90
-    assume {:print "$at(8,3390,3480)"} true;
-    assert {:msg "assert_failed(8,3390,3480): function does not abort under this condition"}
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+90
+    assume {:print "$at(9,3208,3298)"} true;
+    assert {:msg "assert_failed(9,3208,3298): function does not abort under this condition"}
       !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
 
-    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:90:9+90
+    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:80:9+90
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:81:5+1
-    assume {:print "$at(8,3119,3120)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:71:5+1
+    assume {:print "$at(9,2937,2938)"} true;
 L3:
 
-    // assert Neq<address>(Signer::spec_address_of[]($t0), a550c18) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:82:5+97
-    assume {:print "$at(8,3125,3222)"} true;
-    assert {:msg "assert_failed(8,3125,3222): abort not covered by any of the `aborts_if` clauses"}
+    // assert Neq<address>(Signer::spec_address_of[]($t0), a550c18) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:72:5+97
+    assume {:print "$at(9,2943,3040)"} true;
+    assert {:msg "assert_failed(9,2943,3040): abort not covered by any of the `aborts_if` clauses"}
       !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
 
-    // assert And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:82:5+97
-    assert {:msg "assert_failed(8,3125,3222): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+    // assert And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:72:5+97
+    assert {:msg "assert_failed(9,2943,3040): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
       (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t7));
 
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:82:5+97
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:72:5+97
     $abort_code := $t7;
     $abort_flag := true;
     return;
 
 }
 
-// fun CoreAddresses::assert_diem_root [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:30:5+148
+// fun CoreAddresses::assert_diem_root [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:20:5+148
 procedure {:timeLimit 40} $1_CoreAddresses_assert_diem_root$verify(_$t0: $signer) returns ()
 {
     // declare local variables
@@ -1078,106 +1067,100 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_diem_root$verify(_$t0: $signer
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:30:5+148
-    assume {:print "$at(8,1153,1301)"} true;
-    assume $IsValid'signer'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:20:5+148
+    assume {:print "$at(9,971,1119)"} true;
+    assume $IsValid'signer'($t0) && $1_Signer_is_txn_signer($t0) && $1_Signer_is_txn_signer_addr($1_Signer_spec_address_of($t0));
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:30:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:20:5+1
     assume {:print "$track_local(2,1,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:16+27
-    // >> opaque call: $t3 := Signer::address_of($t0)
-    assume {:print "$at(8,1216,1243)"} true;
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:16+27
+    assume {:print "$at(9,1034,1061)"} true;
 
-    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:16+27
-
-    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:16+27
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:16+27
     assume $IsValid'address'($t3);
 
-    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:16+27
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:16+27
     assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
 
-    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:16+27
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:16+27
 
-    // $t4 := 0xa550c18 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:47+9
+    // $t4 := 0xa550c18 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:47+9
     $t4 := 173345816;
     assume $IsValid'address'($t4);
 
-    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:44+2
+    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:44+2
     $t5 := $IsEqual'address'($t3, $t4);
 
-    // $t6 := 0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:83+10
+    // $t6 := 0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:83+10
     $t6 := 0;
     assume $IsValid'u64'($t6);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:58+36
-    // >> opaque call: $t7 := Errors::requires_address($t6)
+    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:58+36
 
-    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:58+36
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:58+36
+    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:58+36
     assume $IsValid'u64'($t7);
 
-    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:58+36
+    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:58+36
     assume $IsEqual'u64'($t7, 2);
 
-    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:58+36
+    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:58+36
 
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
     assume {:print "$track_local(2,1,2):", $t7} $t7 == $t7;
 
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
     assume {:print "$track_local(2,1,1):", $t5} $t5 == $t5;
 
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
     if ($t5) { goto L0; } else { goto L1; }
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
 L1:
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
-    assume {:print "$at(8,1209,1295)"} true;
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
+    assume {:print "$at(9,1027,1113)"} true;
     assume {:print "$track_abort(2,1):", $t7} $t7 == $t7;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:21:9+86
 L0:
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:32:5+1
-    assume {:print "$at(8,1300,1301)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:22:5+1
+    assume {:print "$at(9,1118,1119)"} true;
 L2:
 
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
-    assume {:print "$at(8,1561,1647)"} true;
-    assert {:msg "assert_failed(8,1561,1647): function does not abort under this condition"}
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), a550c18)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
+    assume {:print "$at(9,1379,1465)"} true;
+    assert {:msg "assert_failed(9,1379,1465): function does not abort under this condition"}
       !!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
 
-    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:9+86
+    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:31:9+86
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:32:5+1
-    assume {:print "$at(8,1300,1301)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:22:5+1
+    assume {:print "$at(9,1118,1119)"} true;
 L3:
 
-    // assert Neq<address>(Signer::spec_address_of[]($t0), a550c18) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:33:5+89
-    assume {:print "$at(8,1306,1395)"} true;
-    assert {:msg "assert_failed(8,1306,1395): abort not covered by any of the `aborts_if` clauses"}
+    // assert Neq<address>(Signer::spec_address_of[]($t0), a550c18) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:23:5+89
+    assume {:print "$at(9,1124,1213)"} true;
+    assert {:msg "assert_failed(9,1124,1213): abort not covered by any of the `aborts_if` clauses"}
       !$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816);
 
-    // assert And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:33:5+89
-    assert {:msg "assert_failed(8,1306,1395): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+    // assert And(Neq<address>(Signer::spec_address_of[]($t0), a550c18), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:23:5+89
+    assert {:msg "assert_failed(9,1124,1213): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
       (!$IsEqual'address'($1_Signer_spec_address_of($t0), 173345816) && $IsEqual'num'(2, $t7));
 
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:33:5+89
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:23:5+89
     $abort_code := $t7;
     $abort_flag := true;
     return;
 
 }
 
-// fun CoreAddresses::assert_treasury_compliance [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:45:5+212
+// fun CoreAddresses::assert_treasury_compliance [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:35:5+212
 procedure {:timeLimit 40} $1_CoreAddresses_assert_treasury_compliance$verify(_$t0: $signer) returns ()
 {
     // declare local variables
@@ -1198,108 +1181,102 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_treasury_compliance$verify(_$t
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:45:5+212
-    assume {:print "$at(8,1727,1939)"} true;
-    assume $IsValid'signer'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:35:5+212
+    assume {:print "$at(9,1545,1757)"} true;
+    assume $IsValid'signer'($t0) && $1_Signer_is_txn_signer($t0) && $1_Signer_is_txn_signer_addr($1_Signer_spec_address_of($t0));
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:45:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:35:5+1
     assume {:print "$track_local(2,2,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:13+27
-    // >> opaque call: $t3 := Signer::address_of($t0)
-    assume {:print "$at(8,1813,1840)"} true;
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:37:13+27
+    assume {:print "$at(9,1631,1658)"} true;
 
-    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:13+27
-
-    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:13+27
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:37:13+27
     assume $IsValid'address'($t3);
 
-    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:13+27
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:37:13+27
     assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
 
-    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:13+27
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:37:13+27
 
-    // $t4 := 0xb1e55ed at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:44+19
+    // $t4 := 0xb1e55ed at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:37:44+19
     $t4 := 186537453;
     assume $IsValid'address'($t4);
 
-    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:47:41+2
+    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:37:41+2
     $t5 := $IsEqual'address'($t3, $t4);
 
-    // $t6 := 1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:48:38+20
-    assume {:print "$at(8,1902,1922)"} true;
+    // $t6 := 1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:38:38+20
+    assume {:print "$at(9,1720,1740)"} true;
     $t6 := 1;
     assume $IsValid'u64'($t6);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:48:13+46
-    // >> opaque call: $t7 := Errors::requires_address($t6)
+    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:38:13+46
 
-    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:48:13+46
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:48:13+46
+    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:38:13+46
     assume $IsValid'u64'($t7);
 
-    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:48:13+46
+    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:38:13+46
     assume $IsEqual'u64'($t7, 2);
 
-    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:48:13+46
+    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:38:13+46
 
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
-    assume {:print "$at(8,1793,1933)"} true;
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
+    assume {:print "$at(9,1611,1751)"} true;
     assume {:print "$track_local(2,2,2):", $t7} $t7 == $t7;
 
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
     assume {:print "$track_local(2,2,1):", $t5} $t5 == $t5;
 
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
+    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
     if ($t5) { goto L0; } else { goto L1; }
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
+    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
 L1:
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
-    assume {:print "$at(8,1793,1933)"} true;
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
+    assume {:print "$at(9,1611,1751)"} true;
     assume {:print "$track_abort(2,2):", $t7} $t7 == $t7;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:46:9+140
+    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:36:9+140
 L0:
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:50:5+1
-    assume {:print "$at(8,1938,1939)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:40:5+1
+    assume {:print "$at(9,1756,1757)"} true;
 L2:
 
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
-    assume {:print "$at(8,2239,2347)"} true;
-    assert {:msg "assert_failed(8,2239,2347): function does not abort under this condition"}
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:49:9+108
+    assume {:print "$at(9,2057,2165)"} true;
+    assert {:msg "assert_failed(9,2057,2165): function does not abort under this condition"}
       !!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
 
-    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:59:9+108
+    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:49:9+108
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:50:5+1
-    assume {:print "$at(8,1938,1939)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:40:5+1
+    assume {:print "$at(9,1756,1757)"} true;
 L3:
 
-    // assert Neq<address>(Signer::spec_address_of[]($t0), b1e55ed) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:51:5+109
-    assume {:print "$at(8,1944,2053)"} true;
-    assert {:msg "assert_failed(8,1944,2053): abort not covered by any of the `aborts_if` clauses"}
+    // assert Neq<address>(Signer::spec_address_of[]($t0), b1e55ed) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:5+109
+    assume {:print "$at(9,1762,1871)"} true;
+    assert {:msg "assert_failed(9,1762,1871): abort not covered by any of the `aborts_if` clauses"}
       !$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453);
 
-    // assert And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:51:5+109
-    assert {:msg "assert_failed(8,1944,2053): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+    // assert And(Neq<address>(Signer::spec_address_of[]($t0), b1e55ed), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:5+109
+    assert {:msg "assert_failed(9,1762,1871): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
       (!$IsEqual'address'($1_Signer_spec_address_of($t0), 186537453) && $IsEqual'num'(2, $t7));
 
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:51:5+109
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:41:5+109
     $abort_code := $t7;
     $abort_flag := true;
     return;
 
 }
 
-// fun CoreAddresses::assert_vm [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:64:5+136
+// fun CoreAddresses::assert_vm [verification] at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:54:5+136
 procedure {:timeLimit 40} $1_CoreAddresses_assert_vm$verify(_$t0: $signer) returns ()
 {
     // declare local variables
@@ -1320,99 +1297,93 @@ procedure {:timeLimit 40} $1_CoreAddresses_assert_vm$verify(_$t0: $signer) retur
     call $InitVerification();
 
     // bytecode translation starts here
-    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:64:5+136
-    assume {:print "$at(8,2419,2555)"} true;
-    assume $IsValid'signer'($t0);
+    // assume WellFormed($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:54:5+136
+    assume {:print "$at(9,2237,2373)"} true;
+    assume $IsValid'signer'($t0) && $1_Signer_is_txn_signer($t0) && $1_Signer_is_txn_signer_addr($1_Signer_spec_address_of($t0));
 
-    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:64:5+1
+    // trace_local[account]($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:54:5+1
     assume {:print "$track_local(2,3,0):", $t0} $t0 == $t0;
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:16+27
-    // >> opaque call: $t3 := Signer::address_of($t0)
-    assume {:print "$at(8,2475,2502)"} true;
+    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:16+27
+    assume {:print "$at(9,2293,2320)"} true;
 
-    // $t3 := opaque begin: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:16+27
-
-    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:16+27
+    // assume WellFormed($t3) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:16+27
     assume $IsValid'address'($t3);
 
-    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:16+27
+    // assume Eq<address>($t3, Signer::spec_address_of($t0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:16+27
     assume $IsEqual'address'($t3, $1_Signer_spec_address_of($t0));
 
-    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:16+27
+    // $t3 := opaque end: Signer::address_of($t0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:16+27
 
-    // $t4 := 0x0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:47+11
+    // $t4 := 0x0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:47+11
     $t4 := 0;
     assume $IsValid'address'($t4);
 
-    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:44+2
+    // $t5 := ==($t3, $t4) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:44+2
     $t5 := $IsEqual'address'($t3, $t4);
 
-    // $t6 := 2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:85+3
+    // $t6 := 2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:85+3
     $t6 := 2;
     assume $IsValid'u64'($t6);
 
-    // nop at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:60+29
-    // >> opaque call: $t7 := Errors::requires_address($t6)
+    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:60+29
 
-    // $t7 := opaque begin: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:60+29
-
-    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:60+29
+    // assume WellFormed($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:60+29
     assume $IsValid'u64'($t7);
 
-    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:60+29
+    // assume Eq<u64>($t7, 2) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:60+29
     assume $IsEqual'u64'($t7, 2);
 
-    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:60+29
+    // $t7 := opaque end: Errors::requires_address($t6) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:60+29
 
-    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
+    // trace_local[tmp#$2]($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
     assume {:print "$track_local(2,3,2):", $t7} $t7 == $t7;
 
-    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
+    // trace_local[tmp#$1]($t5) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
     assume {:print "$track_local(2,3,1):", $t5} $t5 == $t5;
 
-    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
+    // if ($t5) goto L0 else goto L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
     if ($t5) { goto L0; } else { goto L1; }
 
-    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
+    // label L1 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
 L1:
 
-    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
-    assume {:print "$at(8,2468,2549)"} true;
+    // trace_abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
+    assume {:print "$at(9,2286,2367)"} true;
     assume {:print "$track_abort(2,3):", $t7} $t7 == $t7;
 
-    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
+    // goto L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
     goto L3;
 
-    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+81
+    // label L0 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:55:9+81
 L0:
 
-    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:66:5+1
-    assume {:print "$at(8,2554,2555)"} true;
+    // label L2 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:56:5+1
+    assume {:print "$at(9,2372,2373)"} true;
 L2:
 
-    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), 0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:75:9+88
-    assume {:print "$at(8,2798,2886)"} true;
-    assert {:msg "assert_failed(8,2798,2886): function does not abort under this condition"}
+    // assert Not(Neq<address>(Signer::spec_address_of[]($t0), 0)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+88
+    assume {:print "$at(9,2616,2704)"} true;
+    assert {:msg "assert_failed(9,2616,2704): function does not abort under this condition"}
       !!$IsEqual'address'($1_Signer_spec_address_of($t0), 0);
 
-    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:75:9+88
+    // return () at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:65:9+88
     return;
 
-    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:66:5+1
-    assume {:print "$at(8,2554,2555)"} true;
+    // label L3 at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:56:5+1
+    assume {:print "$at(9,2372,2373)"} true;
 L3:
 
-    // assert Neq<address>(Signer::spec_address_of[]($t0), 0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:67:5+76
-    assume {:print "$at(8,2560,2636)"} true;
-    assert {:msg "assert_failed(8,2560,2636): abort not covered by any of the `aborts_if` clauses"}
+    // assert Neq<address>(Signer::spec_address_of[]($t0), 0) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:57:5+76
+    assume {:print "$at(9,2378,2454)"} true;
+    assert {:msg "assert_failed(9,2378,2454): abort not covered by any of the `aborts_if` clauses"}
       !$IsEqual'address'($1_Signer_spec_address_of($t0), 0);
 
-    // assert And(Neq<address>(Signer::spec_address_of[]($t0), 0), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:67:5+76
-    assert {:msg "assert_failed(8,2560,2636): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
+    // assert And(Neq<address>(Signer::spec_address_of[]($t0), 0), Eq(2, $t7)) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:57:5+76
+    assert {:msg "assert_failed(9,2378,2454): abort code not covered by any of the `aborts_if` or `aborts_with` clauses"}
       (!$IsEqual'address'($1_Signer_spec_address_of($t0), 0) && $IsEqual'num'(2, $t7));
 
-    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:67:5+76
+    // abort($t7) at /home/ying/diem/language/diem-framework/modules/CoreAddresses.move:57:5+76
     $abort_code := $t7;
     $abort_flag := true;
     return;

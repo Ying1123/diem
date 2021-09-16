@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_dual_attestation_limit_verify.smt2:501.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_dual_attestation_limit_verify.smt2:1802.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_dual_attestation_limit_verify.smt2:1936.26: Cannot bind $t3@@0 to symbol of type Int, maybe the symbol has already been defined?")
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_dual_attestation_limit_verify.smt2:484.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_dual_attestation_limit_verify.smt2:1756.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

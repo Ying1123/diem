@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/seqArray/_1_TransactionFee_is_coin_initialized_verify_instantiated_0.smt2:447.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/seqArray/_1_TransactionFee_is_coin_initialized_verify_instantiated_0.smt2:1532.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/seqArray/_1_TransactionFee_is_coin_initialized_verify_instantiated_0.smt2:437.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/seqArray/_1_TransactionFee_is_coin_initialized_verify_instantiated_0.smt2:1447.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

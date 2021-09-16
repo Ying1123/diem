@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/cvc4/_1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/cvc4/_1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure_verify.smt2:1476.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/cvc4/_1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure_verify.smt2:1594.77: Cannot bind $1_ValidatorConfig_ValidatorConfig_$memory@2 to symbol of type T@$Memory_108065, maybe the symbol has already been defined?")

@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/seqArray/_1_AccountAdministrationScripts_add_recovery_rotation_capability_verify.smt2:459.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/seqArray/_1_AccountAdministrationScripts_add_recovery_rotation_capability_verify.smt2:1664.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/seqArray/_1_AccountAdministrationScripts_add_recovery_rotation_capability_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/seqArray/_1_AccountAdministrationScripts_add_recovery_rotation_capability_verify.smt2:1491.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

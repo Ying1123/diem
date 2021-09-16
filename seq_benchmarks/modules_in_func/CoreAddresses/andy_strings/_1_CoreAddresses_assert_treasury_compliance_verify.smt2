@@ -1,8 +1,10 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
 (set-option :strings-exp true)
+(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
+(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -10,7 +12,7 @@
 (declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
 (declare-datatypes ((T@$Mutation_3439 0)) ((($Mutation_3439 (|l#$Mutation_3439| T@$Location) (|p#$Mutation_3439| (Seq Int)) (|v#$Mutation_3439| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_7397 0)) ((($Mutation_7397 (|l#$Mutation_7397| T@$Location) (|p#$Mutation_7397| (Seq Int)) (|v#$Mutation_7397| (Seq Int)) ) ) ))
+(declare-datatypes ((T@$Mutation_7418 0)) ((($Mutation_7418 (|l#$Mutation_7418| T@$Location) (|p#$Mutation_7418| (Seq Int)) (|v#$Mutation_7418| (Seq Int)) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -33,7 +35,6 @@
 (declare-fun $1_Hash_sha3 ((Seq Int)) (Seq Int))
 (declare-fun $1_Signature_$ed25519_validate_pubkey ((Seq Int)) Bool)
 (declare-fun $1_Signature_$ed25519_verify ((Seq Int) (Seq Int) (Seq Int)) Bool)
-(declare-fun $1_Signer_is_signer (Int) Bool)
 (declare-fun ReverseVec_3292 ((Seq Int)) (Seq Int))
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
 (assert (= $MAX_U8 255))
@@ -113,22 +114,14 @@
  :pattern ( ($1_Hash_sha3 v1@@0) ($1_Hash_sha3 v2@@0))
 )))
 (assert (forall ((k1 (Seq Int)) (k2 (Seq Int)) ) (!  (=> (= k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |CoreAddressesbpl.864:15|
+ :qid |CoreAddressesbpl.868:15|
  :skolemid |22|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
 (assert (forall ((s1 (Seq Int)) (s2 (Seq Int)) (k1@@0 (Seq Int)) (k2@@0 (Seq Int)) (m1 (Seq Int)) (m2 (Seq Int)) ) (!  (=> (and (and (= s1 s2) (= k1@@0 k2@@0)) (= m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |CoreAddressesbpl.867:15|
+ :qid |CoreAddressesbpl.871:15|
  :skolemid |23|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
-)))
-(assert (forall ((s T@$signer) ) (!  (=> (|$IsValid'address'| (|$addr#$signer| s)) ($1_Signer_is_signer (|$addr#$signer| s)))
- :qid |CoreAddressesbpl.906:15|
- :skolemid |24|
-)))
-(assert (forall ((addr Int) ) (! true
- :qid |CoreAddressesbpl.910:15|
- :skolemid |25|
 )))
 (assert (forall ((v@@6 (Seq Int)) ) (! (let ((r@@0 (ReverseVec_3292 v@@6)))
  (and (= (seq.len r@@0) (seq.len v@@6)) (forall ((i@@3 Int) ) (!  (=> (and (>= i@@3 0) (< i@@3 (seq.len r@@0))) (= (seq.nth r@@0 i@@3) (seq.nth v@@6 (- (- (seq.len v@@6) i@@3) 1))))
@@ -142,13 +135,15 @@
 )))
 (assert (forall ((|l#0| Bool) (i@@4 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4) |l#0|)
  :qid |CoreAddressesbpl.250:54|
- :skolemid |26|
+ :skolemid |24|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@4))
 )))
 (declare-fun ControlFlow (Int Int) Int)
 (declare-fun $t5@0 () Bool)
 (declare-fun $t7 () Int)
 (declare-fun _$t0 () T@$signer)
+(declare-fun $1_Signer_is_txn_signer (T@$signer) Bool)
+(declare-fun $1_Signer_is_txn_signer_addr (Int) Bool)
 (declare-fun $t3 () Int)
 ; Valid
 (declare-fun $t5@0@@0 () Bool)
@@ -163,10 +158,10 @@
 (push 1)
 (set-info :boogie-vc-id $1_CoreAddresses_assert_treasury_compliance$verify)
 (assert (not
- (=> (= (ControlFlow 0 0) 11278) (let ((anon4_Else_correct@@1  (=> (and (not $t5@0@@1) (= $t7@@1 $t7@@1)) (and (=> (= (ControlFlow 0 10622) (- 0 11422)) (not (= (|$addr#$signer| _$t0@@1) 186537453))) (=> (not (= (|$addr#$signer| _$t0@@1) 186537453)) (=> (= (ControlFlow 0 10622) (- 0 11431)) (and (not (= (|$addr#$signer| _$t0@@1) 186537453)) (= 2 $t7@@1))))))))
-(let ((anon4_Then_correct@@1  (=> (and $t5@0@@1 (= (ControlFlow 0 10642) (- 0 11395))) (not (not (= (|$addr#$signer| _$t0@@1) 186537453))))))
-(let ((anon0$1_correct@@1  (=> (|$IsValid'address'| (|$addr#$signer| _$t0@@1)) (=> (and (= _$t0@@1 _$t0@@1) (|$IsValid'address'| $t3@@1)) (=> (and (and (and (= $t3@@1 (|$addr#$signer| _$t0@@1)) (|$IsValid'address'| 186537453)) (and (= $t5@0@@1 (= $t3@@1 186537453)) (|$IsValid'u64'| 1))) (and (and (|$IsValid'u64'| $t7@@1) (= $t7@@1 2)) (and (= $t7@@1 $t7@@1) (= $t5@0@@1 $t5@0@@1)))) (and (=> (= (ControlFlow 0 10574) 10642) anon4_Then_correct@@1) (=> (= (ControlFlow 0 10574) 10622) anon4_Else_correct@@1)))))))
-(let ((anon0_correct@@1  (=> (= (ControlFlow 0 11278) 10574) anon0$1_correct@@1)))
+ (=> (= (ControlFlow 0 0) 11422) (let ((anon4_Else_correct@@1  (=> (and (not $t5@0@@1) (= $t7@@1 $t7@@1)) (and (=> (= (ControlFlow 0 10724) (- 0 11578)) (not (= (|$addr#$signer| _$t0@@1) 186537453))) (=> (not (= (|$addr#$signer| _$t0@@1) 186537453)) (=> (= (ControlFlow 0 10724) (- 0 11587)) (and (not (= (|$addr#$signer| _$t0@@1) 186537453)) (= 2 $t7@@1))))))))
+(let ((anon4_Then_correct@@1  (=> (and $t5@0@@1 (= (ControlFlow 0 10744) (- 0 11551))) (not (not (= (|$addr#$signer| _$t0@@1) 186537453))))))
+(let ((anon0$1_correct@@1  (=> (and (and (and (and (|$IsValid'address'| (|$addr#$signer| _$t0@@1)) ($1_Signer_is_txn_signer _$t0@@1)) ($1_Signer_is_txn_signer_addr (|$addr#$signer| _$t0@@1))) (and (= _$t0@@1 _$t0@@1) (|$IsValid'address'| $t3@@1))) (and (and (and (= $t3@@1 (|$addr#$signer| _$t0@@1)) (|$IsValid'address'| 186537453)) (and (= $t5@0@@1 (= $t3@@1 186537453)) (|$IsValid'u64'| 1))) (and (and (|$IsValid'u64'| $t7@@1) (= $t7@@1 2)) (and (= $t7@@1 $t7@@1) (= $t5@0@@1 $t5@0@@1))))) (and (=> (= (ControlFlow 0 10676) 10744) anon4_Then_correct@@1) (=> (= (ControlFlow 0 10676) 10724) anon4_Else_correct@@1)))))
+(let ((anon0_correct@@1  (=> (= (ControlFlow 0 11422) 10676) anon0$1_correct@@1)))
 anon0_correct@@1)))))
 ))
 (check-sat)

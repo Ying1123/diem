@@ -3,19 +3,37 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/z3
-/proverOpt:SOLVER=Z3
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/VASPDomain.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/z3
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [40.296 s, 18 proof obligations]  timed out
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/z3/VASPDomain.bpl(9131,27): Verification of '$1_VASPDomain_add_vasp_domain$verify' timed out after 40 seconds
+  [5.842 s, 19 proof obligations]  verified
 
 Verifying $1_VASPDomain_create_vasp_domain$verify ...
-  [0.135 s, 5 proof obligations]  verified
+  [0.088 s, 5 proof obligations]  verified
+
+Verifying $1_VASPDomain_has_vasp_domain$verify ...
+  [0.080 s, 5 proof obligations]  verified
+
+Verifying $1_VASPDomain_has_vasp_domains$verify ...
+  [0.008 s, 2 proof obligations]  verified
+
+Verifying $1_VASPDomain_publish_vasp_domain_manager$verify ...
+  [0.045 s, 8 proof obligations]  verified
+
+Verifying $1_VASPDomain_publish_vasp_domains$verify ...
+  [0.065 s, 9 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

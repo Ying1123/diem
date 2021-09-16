@@ -5,8 +5,10 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -17,6 +19,24 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemId_tc_domain_manager_exists$verify ...
-  [0.196 s, 2 proof obligations]  verified
+  [0.180 s, 2 proof obligations]  verified
+
+Verifying $1_DiemId_add_diem_id_domain$verify ...
+  [5.077 s, 18 proof obligations]  verified
+
+Verifying $1_DiemId_create_diem_id_domain$verify ...
+  [0.101 s, 5 proof obligations]  verified
+
+Verifying $1_DiemId_has_diem_id_domain$verify ...
+  [0.068 s, 5 proof obligations]  verified
+
+Verifying $1_DiemId_has_diem_id_domains$verify ...
+  [0.007 s, 2 proof obligations]  verified
+
+Verifying $1_DiemId_publish_diem_id_domain_manager$verify ...
+  [0.074 s, 8 proof obligations]  verified
+
+Verifying $1_DiemId_publish_diem_id_domains$verify ...
+  [0.069 s, 9 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

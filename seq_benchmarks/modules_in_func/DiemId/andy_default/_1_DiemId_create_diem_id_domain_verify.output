@@ -1,3 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_default/_1_DiemId_create_diem_id_domain_verify.smt2:420.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_default/_1_DiemId_create_diem_id_domain_verify.smt2:1507.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_default/_1_DiemId_create_diem_id_domain_verify.smt2:213.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_default/_1_DiemId_create_diem_id_domain_verify.smt2:817.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

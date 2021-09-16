@@ -5,8 +5,10 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:no-dt-share-sel
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -14,48 +16,17 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/TransactionFee.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
-
-Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.215 s, 8 proof obligations]  verified
-
-Verifying $1_TransactionFee_initialize$verify ...
-  [0.056 s, 10 proof obligations]  verified
-
-Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
-  [0.029 s, 1 proof obligation]  verified
-
-Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
-  [0.033 s, 1 proof obligation]  verified
-
-Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
-  [0.012 s, 0 proof obligations]  verified
-
-Verifying $1_TransactionFee_burn_fees$verify ...
-  [0.638 s, 18 proof obligations]  verified
-
-Verifying $1_TransactionFee_burn_fees$verify_instantiated_0 ...
-  [0.686 s, 18 proof obligations]  verified
-
-Verifying $1_TransactionFee_burn_fees$verify_instantiated_1 ...
-  [0.145 s, 17 proof obligations]  verified
-
-Verifying $1_TransactionFee_is_coin_initialized$verify ...
-  [0.024 s, 0 proof obligations]  verified
-
-Verifying $1_TransactionFee_is_coin_initialized$verify_instantiated_0 ...
-  [0.003 s, 0 proof obligations]  verified
-
-Verifying $1_TransactionFee_is_initialized$verify ...
-  [0.003 s, 0 proof obligations]  verified
-
-Verifying $1_TransactionFee_pay_fee$verify ...
-  [0.059 s, 7 proof obligations]  verified
-
-Verifying $1_TransactionFee_pay_fee$verify_instantiated_0 ...
-  [0.073 s, 7 proof obligations]  verified
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.158 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 14 verified, 0 errors
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'

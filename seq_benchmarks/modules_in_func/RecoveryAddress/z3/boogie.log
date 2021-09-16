@@ -3,42 +3,21 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/z3
-/proverOpt:SOLVER=Z3
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel
+/proverOpt:O:ee-mode=central
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/z3/RecoveryAddress.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/z3
-
-Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.166 s, 14 proof obligations]  verified
-
-Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.049 s, 14 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [0.520 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [0.681 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [0.855 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [0.555 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [0.704 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [1.274 s, 34 proof obligations]  verified
-
-Verifying $1_RecoveryAddress_publish$verify ...
-  [0.062 s, 13 proof obligations]  verified
-
-Verifying $1_RecoveryAddress_rotate_authentication_key$verify ...
-  [19.743 s, 14 proof obligations]  verified
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'

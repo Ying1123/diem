@@ -3,9 +3,12 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Genesis/cvc4/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -13,15 +16,15 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/Genesis/cvc4/Genesis.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/cvc4
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Genesis_initialize$verify ...
-  [0.431 s, 0 proof obligations]  verified
+  [0.436 s, 0 proof obligations]  verified
 
 Verifying $1_Genesis_create_initialize_owners_operators$verify ...
-  [0.086 s, 0 proof obligations]  verified
+  [0.105 s, 0 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [0.161 s, 0 proof obligations]  verified
+  [2.079 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 3 verified, 0 errors

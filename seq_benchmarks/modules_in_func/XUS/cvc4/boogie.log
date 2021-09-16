@@ -3,9 +3,12 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/XUS/cvc4/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -13,45 +16,87 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/XUS/cvc4/XUS.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/cvc4
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.231 s, 9 proof obligations]  verified
-Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+  [0.290 s, 35 proof obligations]  verified
 
+Verifying $1_Diem_burn_with_resource_cap$verify ...
+  [0.463 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_0 ...
+  [0.469 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_1 ...
+  [0.503 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify ...
+  [0.679 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_0 ...
+  [0.702 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_1 ...
+  [0.701 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify ...
+  [0.511 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_0 ...
+  [0.516 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_1 ...
+  [0.543 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify ...
+  [0.578 s, 36 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_0 ...
+  [0.609 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_1 ...
+  [0.621 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify ...
+  [0.298 s, 32 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_0 ...
+  [0.377 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_1 ...
+  [0.364 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify ...
+  [0.196 s, 25 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_0 ...
+  [0.194 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_1 ...
+  [0.167 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify ...
+  [0.566 s, 27 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_0 ...
+  [0.575 s, 28 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_1 ...
+  [0.616 s, 28 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify ...
+  [0.302 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
+  [0.352 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
+  [0.415 s, 16 proof obligations]  verified
 
 Verifying $1_XUS_initialize$verify ...
-  [0.216 s, 30 proof obligations]  inconclusive
-/home/ying/diem/seq_benchmarks/modules_in_func/XUS/cvc4/XUS.bpl(8833,27): Verification inconclusive ($1_XUS_initialize$verify)
-Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe)
- ---> System.IO.IOException: Broken pipe
-   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
-   at System.IO.FileStream.FlushWriteBuffer()
-   at System.IO.FileStream.FlushInternalBuffer()
-   at System.IO.FileStream.Flush(Boolean flushToDisk)
-   at System.IO.FileStream.Flush()
-   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
-   at System.IO.StreamWriter.WriteLine(String value)
-   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendThisVC(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 202
-   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 556
-   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
-   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
-   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
-   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
-   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
-   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
-   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
-   at System.Threading.Tasks.Task.InnerInvoke()
-   at System.Threading.Tasks.Task.<>c.<.cctor>b__277_0(Object obj)
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
---- End of stack trace from previous location ---
-   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
-   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
-   --- End of inner exception stack trace ---
-   at System.AggregateException.Handle(Func`2 predicate)
-   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
-   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
-   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
-timeout: the monitored command dumped core
+  [0.870 s, 30 proof obligations]  verified
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [2.431 s, 28 proof obligations]  verified
+
+Boogie program verifier finished with 27 verified, 0 errors

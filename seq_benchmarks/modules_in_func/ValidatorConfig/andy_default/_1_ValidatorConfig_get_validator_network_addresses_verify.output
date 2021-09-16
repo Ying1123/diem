@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_get_validator_network_addresses_verify.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_get_validator_network_addresses_verify.smt2:1421.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_get_validator_network_addresses_verify.smt2:1608.52: Cannot bind _$t0@@11 to symbol of type T@$1_ValidatorConfig_Config, maybe the symbol has already been defined?")
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_get_validator_network_addresses_verify.smt2:210.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_get_validator_network_addresses_verify.smt2:794.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -3,88 +3,92 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/seqArray_array/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/seqArray_array/TreasuryComplianceScripts.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
-
-Verifying $1_Genesis_initialize$verify ...
-  [0.415 s, 0 proof obligations]  verified
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify ...
-  [2.586 s, 41 proof obligations]  verified
+  [0.542 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
-  [2.630 s, 41 proof obligations]  verified
+  [0.439 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_1 ...
-  [2.753 s, 41 proof obligations]  verified
+  [0.431 s, 41 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
-  [0.075 s, 0 proof obligations]  verified
+  [0.049 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_0 ...
-  [0.010 s, 0 proof obligations]  verified
+  [0.044 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_1 ...
-  [0.005 s, 0 proof obligations]  verified
+  [0.042 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
-  [0.962 s, 12 proof obligations]  verified
+  [0.105 s, 12 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
-  [0.170 s, 1 proof obligation]  verified
+  [0.081 s, 1 proof obligation]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
-  [3.627 s, 36 proof obligations]  verified
+  [0.737 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_0 ...
-  [6.192 s, 36 proof obligations]  verified
+  [0.600 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_1 ...
-  [5.023 s, 36 proof obligations]  verified
+  [0.617 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
-  [0.102 s, 0 proof obligations]  verified
+  [0.050 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
-  [0.013 s, 0 proof obligations]  verified
+  [0.050 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
-  [0.029 s, 0 proof obligations]  verified
+  [0.065 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_0 ...
-  [0.031 s, 0 proof obligations]  verified
+  [0.058 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_1 ...
-  [0.029 s, 0 proof obligations]  verified
+  [0.059 s, 0 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
-  [0.790 s, 18 proof obligations]  verified
+  [0.125 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_0 ...
-  [0.733 s, 18 proof obligations]  verified
+  [0.122 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_1 ...
-  [0.735 s, 18 proof obligations]  verified
+  [0.113 s, 18 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify ...
-  [3.651 s, 30 proof obligations]  verified
+  [0.422 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify_instantiated_0 ...
-  [3.376 s, 30 proof obligations]  verified
+  [0.422 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify_instantiated_1 ...
-  [3.433 s, 30 proof obligations]  verified
+  [0.436 s, 36 proof obligations]  verified
 
 Verifying $1_TreasuryComplianceScripts_update_dual_attestation_limit$verify ...
-  [0.099 s, 0 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.047 s, 0 proof obligations]  verified
 
+Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify ...
+  [0.075 s, 17 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify_instantiated_0 ...
+  [0.093 s, 17 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify_instantiated_1 ...
+  [0.094 s, 17 proof obligations]  verified
+
+Boogie program verifier finished with 26 verified, 0 errors

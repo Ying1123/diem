@@ -8,6 +8,7 @@
 /proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
 /proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -17,64 +18,40 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
-Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.258 s, 17 proof obligations]  verified
-
 Verifying $1_Roles_grant_role$verify ...
-  [0.078 s, 9 proof obligations]  verified
-
-Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.100 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.100 s, 18 proof obligations]  verified
-
-Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.111 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.101 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.088 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_role$verify ...
-  [0.085 s, 20 proof obligations]  verified
+  [0.364 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.016 s, 5 proof obligations]  verified
+  [0.022 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.120 s, 15 proof obligations]  verified
+  [0.097 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.024 s, 2 proof obligations]  verified
+  [0.016 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.021 s, 6 proof obligations]  verified
+  [0.018 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
-  [0.004 s, 2 proof obligations]  verified
+  [0.003 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_operator$verify ...
-  [0.027 s, 6 proof obligations]  verified
+  [0.019 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.004 s, 2 proof obligations]  verified
+  [0.003 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
-  [0.020 s, 4 proof obligations]  verified
+  [0.014 s, 3 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.141 s, 13 proof obligations]  verified
+  [0.154 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.191 s, 16 proof obligations]  verified
+  [0.146 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.182 s, 18 proof obligations]  verified
+  [0.226 s, 21 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.192 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 20 verified, 0 errors
+Boogie program verifier finished with 12 verified, 0 errors

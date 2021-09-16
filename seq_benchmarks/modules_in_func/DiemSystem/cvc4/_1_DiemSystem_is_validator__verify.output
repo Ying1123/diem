@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/cvc4/_1_DiemSystem_is_validator__verify.smt2:406.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/cvc4/_1_DiemSystem_is_validator__verify.smt2:1447.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/cvc4/_1_DiemSystem_is_validator__verify.smt2:1514.33: Cannot bind _$t0@@2 to symbol of type T@$signer, maybe the symbol has already been defined?")

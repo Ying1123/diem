@@ -42,15 +42,15 @@ find $bm_dir -type f -print0 | while read -d $'\0' file; do
 			if [ "$option" = "z3" ] || [ "$option" = "baseline" ]; then
 				timeout 60 $z3 $file > $predir/$filename.output 2>&1
 			elif [ "$option" = "cvc4" ]; then
-				timeout 60 $cvc4 $file --incremental --pre-skolem-quant --no-dt-share-sel > $predir/$filename.output 2>&1
+				timeout 60 $cvc4 $file --incremental --pre-skolem-quant --no-dt-share-sel --ee-mode=central > $predir/$filename.output 2>&1
 			elif [ "$option" = "cvc5" ]; then
-				timeout 60 $cvc5_master $file --incremental --pre-skolem-quant --no-dt-share-sel > $predir/$filename.output 2>&1
+				timeout 60 $cvc5_master $file --incremental --pre-skolem-quant --no-dt-share-sel --ee-mode=central > $predir/$filename.output 2>&1
 			elif [ "$option" = "andy_default" ] || [ "$option" = "seqArray_array" ]; then
-				timeout 60 $cvc5_seqArray $file --incremental --pre-skolem-quant --no-dt-share-sel > $predir/$filename.output 2>&1
+				timeout 60 $cvc5_seqArray $file --incremental --pre-skolem-quant --no-dt-share-sel --ee-mode=central > $predir/$filename.output 2>&1
 			elif [ "$option" = "andy_strings" ]; then
-				timeout 60 $cvc5_seqArray $file --incremental --pre-skolem-quant --no-dt-share-sel --strings-exp > $predir/$filename.output 2>&1
+				timeout 60 $cvc5_seqArray $file --incremental --pre-skolem-quant --no-dt-share-sel --ee-mode=central --strings-exp > $predir/$filename.output 2>&1
 			elif [ "$option" = "seqArray" ]; then
-				timeout 60 $cvc5_seqArray $file --incremental --pre-skolem-quant --no-dt-share-sel --strings-exp --strings-seq-update=eager > $predir/$filename.output 2>&1
+				timeout 60 $cvc5_seqArray $file --incremental --pre-skolem-quant --no-dt-share-sel --ee-mode=central --strings-exp --strings-seq-update=eager > $predir/$filename.output 2>&1
 			else
 				echo "unknown option $option"
 			fi

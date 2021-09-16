@@ -3,9 +3,12 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/CoreAddresses/cvc5/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -13,18 +16,18 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/CoreAddresses/cvc5/CoreAddresses.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_CoreAddresses_assert_currency_info$verify ...
-  [0.131 s, 3 proof obligations]  verified
+  [0.140 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_diem_root$verify ...
-  [0.009 s, 3 proof obligations]  verified
+  [0.007 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_treasury_compliance$verify ...
-  [0.006 s, 3 proof obligations]  verified
+  [0.005 s, 3 proof obligations]  verified
 
 Verifying $1_CoreAddresses_assert_vm$verify ...
-  [0.005 s, 3 proof obligations]  verified
+  [0.004 s, 3 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

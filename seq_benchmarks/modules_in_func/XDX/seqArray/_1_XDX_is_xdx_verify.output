@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/XDX/seqArray/_1_XDX_is_xdx_verify.smt2:424.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/XDX/seqArray/_1_XDX_is_xdx_verify.smt2:1496.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/XDX/seqArray/_1_XDX_is_xdx_verify.smt2:471.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/XDX/seqArray/_1_XDX_is_xdx_verify.smt2:1601.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

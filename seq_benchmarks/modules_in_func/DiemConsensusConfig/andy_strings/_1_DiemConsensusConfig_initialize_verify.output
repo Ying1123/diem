@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/_1_DiemConsensusConfig_initialize_verify.smt2:411.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/_1_DiemConsensusConfig_initialize_verify.smt2:1453.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/_1_DiemConsensusConfig_initialize_verify.smt2:457.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConsensusConfig/andy_strings/_1_DiemConsensusConfig_initialize_verify.smt2:1641.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

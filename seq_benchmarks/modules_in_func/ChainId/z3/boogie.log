@@ -3,26 +3,31 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/ChainId/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/z3
-/proverOpt:SOLVER=Z3
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:strings-exp=true
+/proverOpt:O:strings-seq-update=eager
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:dt-share-sel=false
+/proverOpt:O:ee-mode=central
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/ChainId/z3/ChainId.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/bin/z3
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.154 s, 8 proof obligations]  verified
-
-Verifying $1_ChainId_initialize$verify ...
-  [0.040 s, 8 proof obligations]  verified
+  [0.276 s, 35 proof obligations]  verified
 
 Verifying $1_ChainId_get$verify ...
-  [0.021 s, 0 proof obligations]  verified
+  [0.008 s, 0 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.212 s, 0 proof obligations]  verified
+Verifying $1_ChainId_initialize$verify ...
+  [0.051 s, 8 proof obligations]  verified
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [2.130 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

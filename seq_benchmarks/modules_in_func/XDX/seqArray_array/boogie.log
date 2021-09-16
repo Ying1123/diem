@@ -3,37 +3,107 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/XDX/seqArray_array/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/XDX/seqArray_array/XDX.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.266 s, 10 proof obligations]  verified
+  [0.216 s, 35 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify ...
+  [0.108 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_0 ...
+  [0.095 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_1 ...
+  [0.100 s, 46 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify ...
+  [0.122 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_0 ...
+  [0.112 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_1 ...
+  [0.112 s, 43 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify ...
+  [0.083 s, 39 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_0 ...
+  [0.089 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_mint_with_capability$verify_instantiated_1 ...
+  [0.083 s, 41 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify ...
+  [0.086 s, 36 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_0 ...
+  [0.083 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_preburn_with_resource$verify_instantiated_1 ...
+  [0.089 s, 38 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify ...
+  [0.114 s, 32 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_0 ...
+  [0.109 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_register_currency$verify_instantiated_1 ...
+  [0.119 s, 33 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify ...
+  [0.060 s, 25 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_0 ...
+  [0.068 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_minting_ability$verify_instantiated_1 ...
+  [0.077 s, 26 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify ...
+  [0.081 s, 27 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_0 ...
+  [0.088 s, 28 proof obligations]  verified
+
+Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_1 ...
+  [0.082 s, 28 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify ...
+  [0.072 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
+  [0.078 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
+  [0.073 s, 16 proof obligations]  verified
 
 Verifying $1_XDX_initialize$verify ...
-  [13.795 s, 29 proof obligations]  verified
+  [0.173 s, 29 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify ...
-  [0.187 s, 4 proof obligations]  verified
+  [0.044 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify_instantiated_0 ...
-  [0.085 s, 4 proof obligations]  verified
+  [0.041 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify_instantiated_1 ...
-  [0.064 s, 4 proof obligations]  verified
+  [0.040 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_reserve_address$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.035 s, 0 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.170 s, 0 proof obligations]  verified
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.590 s, 28 proof obligations]  verified
 
-Boogie program verifier finished with 7 verified, 0 errors
+Boogie program verifier finished with 31 verified, 0 errors

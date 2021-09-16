@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_strings/_1_DiemTimestamp_update_global_time_verify.smt2:402.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_strings/_1_DiemTimestamp_update_global_time_verify.smt2:1417.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_strings/_1_DiemTimestamp_update_global_time_verify.smt2:483.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_strings/_1_DiemTimestamp_update_global_time_verify.smt2:1678.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

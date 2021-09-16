@@ -3,52 +3,29 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel=true
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/RecoveryAddress.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.313 s, 14 proof obligations]  verified
+  [0.186 s, 20 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
-  [0.057 s, 14 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [2.262 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [2.248 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [2.489 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [2.074 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.061 s, 34 proof obligations]  verified
-
-Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [2.107 s, 34 proof obligations]  verified
+  [0.039 s, 17 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_publish$verify ...
-  [0.331 s, 13 proof obligations]  verified
+  [0.037 s, 13 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_rotate_authentication_key$verify ...
-  [0.650 s, 14 proof obligations]  verified
+  [0.072 s, 14 proof obligations]  verified
 
 Verifying $1_RecoveryAddress_add_rotation_capability$verify ...
-  [2.772 s, 11 proof obligations]  verified
+  [0.055 s, 11 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.159 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 12 verified, 0 errors
+Boogie program verifier finished with 5 verified, 0 errors

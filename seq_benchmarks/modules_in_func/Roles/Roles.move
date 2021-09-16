@@ -12,6 +12,9 @@ module DiemFramework::Roles {
     use Std::Signer;
     friend DiemFramework::DiemAccount;
 
+    #[test_only]
+    friend DiemFramework::RolesTests;
+
     /// A `RoleId` resource was in an unexpected state
     const EROLE_ID: u64 = 0;
     /// The signer didn't have the required Diem Root role
@@ -55,7 +58,7 @@ module DiemFramework::Roles {
     // Role Granting
 
     /// Publishes diem root role. Granted only in genesis.
-    public fun grant_diem_root_role(
+    public(friend) fun grant_diem_root_role(
         dr_account: &signer,
     ) {
         DiemTimestamp::assert_genesis();
@@ -72,7 +75,7 @@ module DiemFramework::Roles {
     }
 
     /// Publishes treasury compliance role. Granted only in genesis.
-    public fun grant_treasury_compliance_role(
+    public(friend) fun grant_treasury_compliance_role(
         treasury_compliance_account: &signer,
         dr_account: &signer,
     ) acquires RoleId {
@@ -91,7 +94,7 @@ module DiemFramework::Roles {
 
     /// Publishes a DesignatedDealer `RoleId` under `new_account`.
     /// The `creating_account` must be treasury compliance.
-    public fun new_designated_dealer_role(
+    public(friend) fun new_designated_dealer_role(
         creating_account: &signer,
         new_account: &signer,
     ) acquires RoleId {
@@ -105,7 +108,7 @@ module DiemFramework::Roles {
 
     /// Publish a Validator `RoleId` under `new_account`.
     /// The `creating_account` must be diem root.
-    public fun new_validator_role(
+    public(friend) fun new_validator_role(
         creating_account: &signer,
         new_account: &signer
     ) acquires RoleId {
@@ -119,7 +122,7 @@ module DiemFramework::Roles {
 
     /// Publish a ValidatorOperator `RoleId` under `new_account`.
     /// The `creating_account` must be DiemRoot
-    public fun new_validator_operator_role(
+    public(friend) fun new_validator_operator_role(
         creating_account: &signer,
         new_account: &signer,
     ) acquires RoleId {
@@ -133,7 +136,7 @@ module DiemFramework::Roles {
 
     /// Publish a ParentVASP `RoleId` under `new_account`.
     /// The `creating_account` must be TreasuryCompliance
-    public fun new_parent_vasp_role(
+    public(friend) fun new_parent_vasp_role(
         creating_account: &signer,
         new_account: &signer,
     ) acquires RoleId {
@@ -147,7 +150,7 @@ module DiemFramework::Roles {
 
     /// Publish a ChildVASP `RoleId` under `new_account`.
     /// The `creating_account` must be a ParentVASP
-    public fun new_child_vasp_role(
+    public(friend) fun new_child_vasp_role(
         creating_account: &signer,
         new_account: &signer,
     ) acquires RoleId {
@@ -318,7 +321,7 @@ module DiemFramework::Roles {
     }
     spec assert_validator {
         pragma opaque;
-        include AbortsIfNotValidator{validator_addr: Signer::address_of(validator_account)};
+        include AbortsIfNotValidator{account: validator_account};
     }
 
     /// Assert that the account has the validator operator role.
@@ -332,7 +335,7 @@ module DiemFramework::Roles {
     }
     spec assert_validator_operator {
         pragma opaque;
-        include AbortsIfNotValidatorOperator{validator_operator_addr: Signer::spec_address_of(validator_operator_account)};
+        include AbortsIfNotValidatorOperator{account: validator_operator_account};
     }
 
     /// Assert that the account has either the parent vasp or designated dealer role.
@@ -426,48 +429,46 @@ module DiemFramework::Roles {
 
         /// The DiemRoot role is globally unique [[B1]][ROLE], and is published at DIEM_ROOT_ADDRESS [[C1]][ROLE].
         /// In other words, a `RoleId` with `DIEM_ROOT_ROLE_ID` uniquely exists at `DIEM_ROOT_ADDRESS`.
-        invariant [global, isolated] forall addr: address where spec_has_diem_root_role_addr(addr):
-          addr == @DiemRoot;
-        invariant [global, isolated]
+        invariant forall addr: address where spec_has_diem_root_role_addr(addr): addr == @DiemRoot;
+        invariant [suspendable]
             DiemTimestamp::is_operating() ==> spec_has_diem_root_role_addr(@DiemRoot);
 
         /// The TreasuryCompliance role is globally unique [[B2]][ROLE], and is published at TREASURY_COMPLIANCE_ADDRESS [[C2]][ROLE].
         /// In other words, a `RoleId` with `TREASURY_COMPLIANCE_ROLE_ID` uniquely exists at `TREASURY_COMPLIANCE_ADDRESS`.
-        invariant [global, isolated] forall addr: address where spec_has_treasury_compliance_role_addr(addr):
+        invariant forall addr: address where spec_has_treasury_compliance_role_addr(addr):
           addr == @TreasuryCompliance;
-        invariant [global, isolated]
-            DiemTimestamp::is_operating() ==>
-                spec_has_treasury_compliance_role_addr(@TreasuryCompliance);
+        invariant [suspendable]
+            DiemTimestamp::is_operating() ==> spec_has_treasury_compliance_role_addr(@TreasuryCompliance);
 
         // TODO: These specs really just repeat what's in spec_can_hold_balance_addr. It's nice to
         // be able to link to DIP-2, but can we do that with less verbose specs?
         /// DiemRoot cannot have balances [[D1]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_diem_root_role_addr(addr):
-            !spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_diem_root_role_addr(addr): !spec_can_hold_balance_addr(addr);
 
         /// TreasuryCompliance cannot have balances [[D2]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_treasury_compliance_role_addr(addr):
-            !spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_treasury_compliance_role_addr(addr): !spec_can_hold_balance_addr(addr);
 
         /// Validator cannot have balances [[D3]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_validator_role_addr(addr):
-            !spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_validator_role_addr(addr): !spec_can_hold_balance_addr(addr);
 
         /// ValidatorOperator cannot have balances [[D4]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_validator_operator_role_addr(addr):
-            !spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_validator_operator_role_addr(addr): !spec_can_hold_balance_addr(addr);
 
         /// DesignatedDealer have balances [[D5]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_designated_dealer_role_addr(addr):
-            spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_designated_dealer_role_addr(addr): spec_can_hold_balance_addr(addr);
 
         /// ParentVASP have balances [[D6]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_parent_VASP_role_addr(addr):
-            spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_parent_VASP_role_addr(addr): spec_can_hold_balance_addr(addr);
 
         /// ChildVASP have balances [[D7]][ROLE].
-        invariant [global, isolated] forall addr: address where spec_has_child_VASP_role_addr(addr):
-            spec_can_hold_balance_addr(addr);
+        invariant forall addr: address
+            where spec_has_child_VASP_role_addr(addr): spec_can_hold_balance_addr(addr);
     }
 
     /// # Helper Functions and Schemas
@@ -513,6 +514,14 @@ module DiemFramework::Roles {
             spec_has_parent_VASP_role_addr(addr) ||
                 spec_has_child_VASP_role_addr(addr) ||
                 spec_has_designated_dealer_role_addr(addr)
+        }
+
+        fun spec_signed_by_treasury_compliance_role(): bool {
+            exists a: address: Signer::is_txn_signer_addr(a) && spec_has_treasury_compliance_role_addr(a)
+        }
+
+        fun spec_signed_by_diem_root_role(): bool {
+            exists a: address: Signer::is_txn_signer_addr(a) && spec_has_diem_root_role_addr(a)
         }
     }
 
@@ -577,15 +586,19 @@ module DiemFramework::Roles {
     }
 
     spec schema AbortsIfNotValidator {
-        validator_addr: address;
-        aborts_if !exists<RoleId>(validator_addr) with Errors::NOT_PUBLISHED;
-        aborts_if global<RoleId>(validator_addr).role_id != VALIDATOR_ROLE_ID with Errors::REQUIRES_ROLE;
+        account: signer;
+        let addr = Signer::spec_address_of(account);
+        //validator_addr: address;
+        aborts_if !exists<RoleId>(addr) with Errors::NOT_PUBLISHED;
+        aborts_if global<RoleId>(addr).role_id != VALIDATOR_ROLE_ID with Errors::REQUIRES_ROLE;
     }
 
     spec schema AbortsIfNotValidatorOperator {
-        validator_operator_addr: address;
-        aborts_if !exists<RoleId>(validator_operator_addr) with Errors::NOT_PUBLISHED;
-        aborts_if global<RoleId>(validator_operator_addr).role_id != VALIDATOR_OPERATOR_ROLE_ID
+        account: signer;
+        let addr = Signer::spec_address_of(account);
+        //validator_operator_addr: address;
+        aborts_if !exists<RoleId>(addr) with Errors::NOT_PUBLISHED;
+        aborts_if global<RoleId>(addr).role_id != VALIDATOR_OPERATOR_ROLE_ID
             with Errors::REQUIRES_ROLE;
     }
 }

@@ -10,15 +10,15 @@
 (declare-fun tickleBool (Bool) Bool)
 (assert (and (tickleBool true) (tickleBool false)))
 (declare-sort |T@[Int]Int| 0)
-(declare-datatypes ((T@Vec_5838 0)) (((Vec_5838 (|v#Vec_5838| |T@[Int]Int|) (|l#Vec_5838| Int) ) ) ))
-(declare-sort |T@[Int]Vec_5838| 0)
-(declare-datatypes ((T@Vec_8972 0)) (((Vec_8972 (|v#Vec_8972| |T@[Int]Vec_5838|) (|l#Vec_8972| Int) ) ) ))
-(declare-datatypes ((T@$1_Authenticator_MultiEd25519PublicKey 0)) ((($1_Authenticator_MultiEd25519PublicKey (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| T@Vec_8972) (|$threshold#$1_Authenticator_MultiEd25519PublicKey| Int) ) ) ))
+(declare-datatypes ((T@Vec_5856 0)) (((Vec_5856 (|v#Vec_5856| |T@[Int]Int|) (|l#Vec_5856| Int) ) ) ))
+(declare-sort |T@[Int]Vec_5856| 0)
+(declare-datatypes ((T@Vec_8991 0)) (((Vec_8991 (|v#Vec_8991| |T@[Int]Vec_5856|) (|l#Vec_8991| Int) ) ) ))
+(declare-datatypes ((T@$1_Authenticator_MultiEd25519PublicKey 0)) ((($1_Authenticator_MultiEd25519PublicKey (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| T@Vec_8991) (|$threshold#$1_Authenticator_MultiEd25519PublicKey| Int) ) ) ))
 (declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_4801 0)) ((($Mutation_4801 (|l#$Mutation_4801| T@$Location) (|p#$Mutation_4801| T@Vec_5838) (|v#$Mutation_4801| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_11687 0)) ((($Mutation_11687 (|l#$Mutation_11687| T@$Location) (|p#$Mutation_11687| T@Vec_5838) (|v#$Mutation_11687| T@Vec_5838) ) ) ))
-(declare-datatypes ((T@$Mutation_10599 0)) ((($Mutation_10599 (|l#$Mutation_10599| T@$Location) (|p#$Mutation_10599| T@Vec_5838) (|v#$Mutation_10599| T@Vec_8972) ) ) ))
+(declare-datatypes ((T@$Mutation_4801 0)) ((($Mutation_4801 (|l#$Mutation_4801| T@$Location) (|p#$Mutation_4801| T@Vec_5856) (|v#$Mutation_4801| Int) ) ) ))
+(declare-datatypes ((T@$Mutation_11706 0)) ((($Mutation_11706 (|l#$Mutation_11706| T@$Location) (|p#$Mutation_11706| T@Vec_5856) (|v#$Mutation_11706| T@Vec_5856) ) ) ))
+(declare-datatypes ((T@$Mutation_10618 0)) ((($Mutation_10618 (|l#$Mutation_10618| T@$Location) (|p#$Mutation_10618| T@Vec_5856) (|v#$Mutation_10618| T@Vec_8991) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -35,28 +35,28 @@
 (declare-fun $EXEC_FAILURE_CODE () Int)
 (declare-fun $shl (Int Int) Int)
 (declare-fun $shr (Int Int) Int)
-(declare-fun |$IsEqual'vec'vec'u8'''| (T@Vec_8972 T@Vec_8972) Bool)
-(declare-fun InRangeVec_10018 (T@Vec_8972 Int) Bool)
-(declare-fun |$IsEqual'vec'u8''| (T@Vec_5838 T@Vec_5838) Bool)
-(declare-fun |Select__T@[Int]Vec_5838_| (|T@[Int]Vec_5838| Int) T@Vec_5838)
-(declare-fun |$IsValid'vec'vec'u8'''| (T@Vec_8972) Bool)
-(declare-fun |$IsValid'vec'u8''| (T@Vec_5838) Bool)
-(declare-fun |$IndexOfVec'vec'u8''| (T@Vec_8972 T@Vec_5838) Int)
-(declare-fun InRangeVec_4177 (T@Vec_5838 Int) Bool)
+(declare-fun |$IsEqual'vec'vec'u8'''| (T@Vec_8991 T@Vec_8991) Bool)
+(declare-fun InRangeVec_10037 (T@Vec_8991 Int) Bool)
+(declare-fun |$IsEqual'vec'u8''| (T@Vec_5856 T@Vec_5856) Bool)
+(declare-fun |Select__T@[Int]Vec_5856_| (|T@[Int]Vec_5856| Int) T@Vec_5856)
+(declare-fun |$IsValid'vec'vec'u8'''| (T@Vec_8991) Bool)
+(declare-fun |$IsValid'vec'u8''| (T@Vec_5856) Bool)
+(declare-fun |$IndexOfVec'vec'u8''| (T@Vec_8991 T@Vec_5856) Int)
+(declare-fun InRangeVec_4177 (T@Vec_5856 Int) Bool)
 (declare-fun |Select__T@[Int]Int_| (|T@[Int]Int| Int) Int)
-(declare-fun |$IndexOfVec'u8'| (T@Vec_5838 Int) Int)
-(declare-fun $1_Hash_sha2 (T@Vec_5838) T@Vec_5838)
-(declare-fun $1_Hash_sha3 (T@Vec_5838) T@Vec_5838)
-(declare-fun $1_Signature_$ed25519_validate_pubkey (T@Vec_5838) Bool)
-(declare-fun $1_Signature_$ed25519_verify (T@Vec_5838 T@Vec_5838 T@Vec_5838) Bool)
-(declare-fun |$1_BCS_serialize'u8'| (Int) T@Vec_5838)
+(declare-fun |$IndexOfVec'u8'| (T@Vec_5856 Int) Int)
+(declare-fun $1_Hash_sha2 (T@Vec_5856) T@Vec_5856)
+(declare-fun $1_Hash_sha3 (T@Vec_5856) T@Vec_5856)
+(declare-fun $1_Signature_$ed25519_validate_pubkey (T@Vec_5856) Bool)
+(declare-fun $1_Signature_$ed25519_verify (T@Vec_5856 T@Vec_5856 T@Vec_5856) Bool)
+(declare-fun |$1_BCS_serialize'u8'| (Int) T@Vec_5856)
 (declare-fun |$IsValid'$1_Authenticator_MultiEd25519PublicKey'| (T@$1_Authenticator_MultiEd25519PublicKey) Bool)
-(declare-fun IndexOfVec_5838 (T@Vec_5838 Int) Int)
-(declare-fun IndexOfVec_8972 (T@Vec_8972 T@Vec_5838) Int)
+(declare-fun IndexOfVec_5856 (T@Vec_5856 Int) Int)
+(declare-fun IndexOfVec_8991 (T@Vec_8991 T@Vec_5856) Int)
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
-(declare-fun |lambda#2| (Int Int Int |T@[Int]Vec_5838| |T@[Int]Vec_5838| Int T@Vec_5838) |T@[Int]Vec_5838|)
-(declare-fun |lambda#3| (Int Int |T@[Int]Vec_5838| Int Int T@Vec_5838) |T@[Int]Vec_5838|)
-(declare-fun |lambda#4| (Int Int Int |T@[Int]Vec_5838| |T@[Int]Vec_5838| Int T@Vec_5838) |T@[Int]Vec_5838|)
+(declare-fun |lambda#2| (Int Int Int |T@[Int]Vec_5856| |T@[Int]Vec_5856| Int T@Vec_5856) |T@[Int]Vec_5856|)
+(declare-fun |lambda#3| (Int Int |T@[Int]Vec_5856| Int Int T@Vec_5856) |T@[Int]Vec_5856|)
+(declare-fun |lambda#4| (Int Int Int |T@[Int]Vec_5856| |T@[Int]Vec_5856| Int T@Vec_5856) |T@[Int]Vec_5856|)
 (declare-fun |lambda#5| (Int Int Int |T@[Int]Int| |T@[Int]Int| Int Int) |T@[Int]Int|)
 (declare-fun |lambda#6| (Int Int |T@[Int]Int| Int Int Int) |T@[Int]Int|)
 (declare-fun |lambda#7| (Int Int Int |T@[Int]Int| |T@[Int]Int| Int Int) |T@[Int]Int|)
@@ -106,7 +106,7 @@
  :skolemid |16|
  :pattern ( ($shr src1@@0 p@@0))
 )))
-(assert (forall ((v1 T@Vec_8972) (v2 T@Vec_8972) ) (! (= (|$IsEqual'vec'vec'u8'''| v1 v2)  (and (= (|l#Vec_8972| v1) (|l#Vec_8972| v2)) (forall ((i@@0 Int) ) (!  (=> (InRangeVec_10018 v1 i@@0) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v1) i@@0) (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v2) i@@0)))
+(assert (forall ((v1 T@Vec_8991) (v2 T@Vec_8991) ) (! (= (|$IsEqual'vec'vec'u8'''| v1 v2)  (and (= (|l#Vec_8991| v1) (|l#Vec_8991| v2)) (forall ((i@@0 Int) ) (!  (=> (InRangeVec_10037 v1 i@@0) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v1) i@@0) (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v2) i@@0)))
  :qid |Authenticatorbpl.615:13|
  :skolemid |17|
 ))))
@@ -114,7 +114,7 @@
  :skolemid |18|
  :pattern ( (|$IsEqual'vec'vec'u8'''| v1 v2))
 )))
-(assert (forall ((v@@4 T@Vec_8972) ) (! (= (|$IsValid'vec'vec'u8'''| v@@4)  (and (|$IsValid'u64'| (|l#Vec_8972| v@@4)) (forall ((i@@1 Int) ) (!  (=> (InRangeVec_10018 v@@4 i@@1) (|$IsValid'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@4) i@@1)))
+(assert (forall ((v@@4 T@Vec_8991) ) (! (= (|$IsValid'vec'vec'u8'''| v@@4)  (and (|$IsValid'u64'| (|l#Vec_8991| v@@4)) (forall ((i@@1 Int) ) (!  (=> (InRangeVec_10037 v@@4 i@@1) (|$IsValid'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@4) i@@1)))
  :qid |Authenticatorbpl.621:13|
  :skolemid |19|
 ))))
@@ -122,11 +122,11 @@
  :skolemid |20|
  :pattern ( (|$IsValid'vec'vec'u8'''| v@@4))
 )))
-(assert (forall ((v@@5 T@Vec_8972) (e T@Vec_5838) ) (! (let ((i@@2 (|$IndexOfVec'vec'u8''| v@@5 e)))
-(ite  (not (exists ((i@@3 Int) ) (!  (and (and (|$IsValid'u64'| i@@3) (InRangeVec_10018 v@@5 i@@3)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@5) i@@3) e))
+(assert (forall ((v@@5 T@Vec_8991) (e T@Vec_5856) ) (! (let ((i@@2 (|$IndexOfVec'vec'u8''| v@@5 e)))
+(ite  (not (exists ((i@@3 Int) ) (!  (and (and (|$IsValid'u64'| i@@3) (InRangeVec_10037 v@@5 i@@3)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@5) i@@3) e))
  :qid |Authenticatorbpl.626:13|
  :skolemid |21|
-))) (= i@@2 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@2) (InRangeVec_10018 v@@5 i@@2)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@5) i@@2) e)) (forall ((j Int) ) (!  (=> (and (and (|$IsValid'u64'| j) (>= j 0)) (< j i@@2)) (not (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@5) j) e)))
+))) (= i@@2 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@2) (InRangeVec_10037 v@@5 i@@2)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@5) i@@2) e)) (forall ((j Int) ) (!  (=> (and (and (|$IsValid'u64'| j) (>= j 0)) (< j i@@2)) (not (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@5) j) e)))
  :qid |Authenticatorbpl.634:17|
  :skolemid |22|
 )))))
@@ -134,7 +134,7 @@
  :skolemid |23|
  :pattern ( (|$IndexOfVec'vec'u8''| v@@5 e))
 )))
-(assert (forall ((v1@@0 T@Vec_5838) (v2@@0 T@Vec_5838) ) (! (= (|$IsEqual'vec'u8''| v1@@0 v2@@0)  (and (= (|l#Vec_5838| v1@@0) (|l#Vec_5838| v2@@0)) (forall ((i@@4 Int) ) (!  (=> (InRangeVec_4177 v1@@0 i@@4) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v1@@0) i@@4) (|Select__T@[Int]Int_| (|v#Vec_5838| v2@@0) i@@4)))
+(assert (forall ((v1@@0 T@Vec_5856) (v2@@0 T@Vec_5856) ) (! (= (|$IsEqual'vec'u8''| v1@@0 v2@@0)  (and (= (|l#Vec_5856| v1@@0) (|l#Vec_5856| v2@@0)) (forall ((i@@4 Int) ) (!  (=> (InRangeVec_4177 v1@@0 i@@4) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v1@@0) i@@4) (|Select__T@[Int]Int_| (|v#Vec_5856| v2@@0) i@@4)))
  :qid |Authenticatorbpl.796:13|
  :skolemid |24|
 ))))
@@ -142,7 +142,7 @@
  :skolemid |25|
  :pattern ( (|$IsEqual'vec'u8''| v1@@0 v2@@0))
 )))
-(assert (forall ((v@@6 T@Vec_5838) ) (! (= (|$IsValid'vec'u8''| v@@6)  (and (|$IsValid'u64'| (|l#Vec_5838| v@@6)) (forall ((i@@5 Int) ) (!  (=> (InRangeVec_4177 v@@6 i@@5) (|$IsValid'u8'| (|Select__T@[Int]Int_| (|v#Vec_5838| v@@6) i@@5)))
+(assert (forall ((v@@6 T@Vec_5856) ) (! (= (|$IsValid'vec'u8''| v@@6)  (and (|$IsValid'u64'| (|l#Vec_5856| v@@6)) (forall ((i@@5 Int) ) (!  (=> (InRangeVec_4177 v@@6 i@@5) (|$IsValid'u8'| (|Select__T@[Int]Int_| (|v#Vec_5856| v@@6) i@@5)))
  :qid |Authenticatorbpl.802:13|
  :skolemid |26|
 ))))
@@ -150,11 +150,11 @@
  :skolemid |27|
  :pattern ( (|$IsValid'vec'u8''| v@@6))
 )))
-(assert (forall ((v@@7 T@Vec_5838) (e@@0 Int) ) (! (let ((i@@6 (|$IndexOfVec'u8'| v@@7 e@@0)))
-(ite  (not (exists ((i@@7 Int) ) (!  (and (and (|$IsValid'u64'| i@@7) (InRangeVec_4177 v@@7 i@@7)) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@7) i@@7) e@@0))
+(assert (forall ((v@@7 T@Vec_5856) (e@@0 Int) ) (! (let ((i@@6 (|$IndexOfVec'u8'| v@@7 e@@0)))
+(ite  (not (exists ((i@@7 Int) ) (!  (and (and (|$IsValid'u64'| i@@7) (InRangeVec_4177 v@@7 i@@7)) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@7) i@@7) e@@0))
  :qid |Authenticatorbpl.807:13|
  :skolemid |28|
-))) (= i@@6 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@6) (InRangeVec_4177 v@@7 i@@6)) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@7) i@@6) e@@0)) (forall ((j@@0 Int) ) (!  (=> (and (and (|$IsValid'u64'| j@@0) (>= j@@0 0)) (< j@@0 i@@6)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@7) j@@0) e@@0)))
+))) (= i@@6 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@6) (InRangeVec_4177 v@@7 i@@6)) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@7) i@@6) e@@0)) (forall ((j@@0 Int) ) (!  (=> (and (and (|$IsValid'u64'| j@@0) (>= j@@0 0)) (< j@@0 i@@6)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@7) j@@0) e@@0)))
  :qid |Authenticatorbpl.815:17|
  :skolemid |29|
 )))))
@@ -162,95 +162,95 @@
  :skolemid |30|
  :pattern ( (|$IndexOfVec'u8'| v@@7 e@@0))
 )))
-(assert (forall ((v1@@1 T@Vec_5838) (v2@@1 T@Vec_5838) ) (! (= (|$IsEqual'vec'u8''| v1@@1 v2@@1) (|$IsEqual'vec'u8''| ($1_Hash_sha2 v1@@1) ($1_Hash_sha2 v2@@1)))
+(assert (forall ((v1@@1 T@Vec_5856) (v2@@1 T@Vec_5856) ) (! (= (|$IsEqual'vec'u8''| v1@@1 v2@@1) (|$IsEqual'vec'u8''| ($1_Hash_sha2 v1@@1) ($1_Hash_sha2 v2@@1)))
  :qid |Authenticatorbpl.988:15|
  :skolemid |31|
  :pattern ( ($1_Hash_sha2 v1@@1) ($1_Hash_sha2 v2@@1))
 )))
-(assert (forall ((v1@@2 T@Vec_5838) (v2@@2 T@Vec_5838) ) (! (= (|$IsEqual'vec'u8''| v1@@2 v2@@2) (|$IsEqual'vec'u8''| ($1_Hash_sha3 v1@@2) ($1_Hash_sha3 v2@@2)))
+(assert (forall ((v1@@2 T@Vec_5856) (v2@@2 T@Vec_5856) ) (! (= (|$IsEqual'vec'u8''| v1@@2 v2@@2) (|$IsEqual'vec'u8''| ($1_Hash_sha3 v1@@2) ($1_Hash_sha3 v2@@2)))
  :qid |Authenticatorbpl.1004:15|
  :skolemid |32|
  :pattern ( ($1_Hash_sha3 v1@@2) ($1_Hash_sha3 v2@@2))
 )))
-(assert (forall ((k1 T@Vec_5838) (k2 T@Vec_5838) ) (!  (=> (|$IsEqual'vec'u8''| k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |Authenticatorbpl.1071:15|
+(assert (forall ((k1 T@Vec_5856) (k2 T@Vec_5856) ) (!  (=> (|$IsEqual'vec'u8''| k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
+ :qid |Authenticatorbpl.1075:15|
  :skolemid |33|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
-(assert (forall ((s1 T@Vec_5838) (s2 T@Vec_5838) (k1@@0 T@Vec_5838) (k2@@0 T@Vec_5838) (m1 T@Vec_5838) (m2 T@Vec_5838) ) (!  (=> (and (and (|$IsEqual'vec'u8''| s1 s2) (|$IsEqual'vec'u8''| k1@@0 k2@@0)) (|$IsEqual'vec'u8''| m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |Authenticatorbpl.1074:15|
+(assert (forall ((s1 T@Vec_5856) (s2 T@Vec_5856) (k1@@0 T@Vec_5856) (k2@@0 T@Vec_5856) (m1 T@Vec_5856) (m2 T@Vec_5856) ) (!  (=> (and (and (|$IsEqual'vec'u8''| s1 s2) (|$IsEqual'vec'u8''| k1@@0 k2@@0)) (|$IsEqual'vec'u8''| m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
+ :qid |Authenticatorbpl.1078:15|
  :skolemid |34|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((v1@@3 Int) (v2@@3 Int) ) (! (= (= v1@@3 v2@@3) (|$IsEqual'vec'u8''| (|$1_BCS_serialize'u8'| v1@@3) (|$1_BCS_serialize'u8'| v2@@3)))
- :qid |Authenticatorbpl.1101:15|
+ :qid |Authenticatorbpl.1105:15|
  :skolemid |35|
  :pattern ( (|$1_BCS_serialize'u8'| v1@@3) (|$1_BCS_serialize'u8'| v2@@3))
 )))
 (assert (forall ((v@@8 Int) ) (! (let ((r@@0 (|$1_BCS_serialize'u8'| v@@8)))
- (and (|$IsValid'vec'u8''| r@@0) (> (|l#Vec_5838| r@@0) 0)))
- :qid |Authenticatorbpl.1106:15|
+ (and (|$IsValid'vec'u8''| r@@0) (> (|l#Vec_5856| r@@0) 0)))
+ :qid |Authenticatorbpl.1110:15|
  :skolemid |36|
  :pattern ( (|$1_BCS_serialize'u8'| v@@8))
 )))
 (assert (forall ((s T@$1_Authenticator_MultiEd25519PublicKey) ) (! (= (|$IsValid'$1_Authenticator_MultiEd25519PublicKey'| s)  (and (|$IsValid'vec'vec'u8'''| (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| s)) (|$IsValid'u8'| (|$threshold#$1_Authenticator_MultiEd25519PublicKey| s))))
- :qid |Authenticatorbpl.1148:59|
+ :qid |Authenticatorbpl.1152:59|
  :skolemid |37|
  :pattern ( (|$IsValid'$1_Authenticator_MultiEd25519PublicKey'| s))
 )))
-(assert (forall ((v@@9 T@Vec_8972) (i@@8 Int) ) (! (= (InRangeVec_10018 v@@9 i@@8)  (and (>= i@@8 0) (< i@@8 (|l#Vec_8972| v@@9))))
+(assert (forall ((v@@9 T@Vec_8991) (i@@8 Int) ) (! (= (InRangeVec_10037 v@@9 i@@8)  (and (>= i@@8 0) (< i@@8 (|l#Vec_8991| v@@9))))
  :qid |Authenticatorbpl.122:24|
  :skolemid |3|
- :pattern ( (InRangeVec_10018 v@@9 i@@8))
+ :pattern ( (InRangeVec_10037 v@@9 i@@8))
 )))
-(assert (forall ((v@@10 T@Vec_5838) (i@@9 Int) ) (! (= (InRangeVec_4177 v@@10 i@@9)  (and (>= i@@9 0) (< i@@9 (|l#Vec_5838| v@@10))))
+(assert (forall ((v@@10 T@Vec_5856) (i@@9 Int) ) (! (= (InRangeVec_4177 v@@10 i@@9)  (and (>= i@@9 0) (< i@@9 (|l#Vec_5856| v@@10))))
  :qid |Authenticatorbpl.122:24|
  :skolemid |3|
  :pattern ( (InRangeVec_4177 v@@10 i@@9))
 )))
-(assert (forall ((v@@11 T@Vec_5838) (e@@1 Int) ) (! (let ((i@@10 (IndexOfVec_5838 v@@11 e@@1)))
-(ite  (not (exists ((i@@11 Int) ) (!  (and (InRangeVec_4177 v@@11 i@@11) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@11) i@@11) e@@1))
+(assert (forall ((v@@11 T@Vec_5856) (e@@1 Int) ) (! (let ((i@@10 (IndexOfVec_5856 v@@11 e@@1)))
+(ite  (not (exists ((i@@11 Int) ) (!  (and (InRangeVec_4177 v@@11 i@@11) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@11) i@@11) e@@1))
  :qid |Authenticatorbpl.109:13|
  :skolemid |0|
-))) (= i@@10 (- 0 1))  (and (and (InRangeVec_4177 v@@11 i@@10) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@11) i@@10) e@@1)) (forall ((j@@1 Int) ) (!  (=> (and (>= j@@1 0) (< j@@1 i@@10)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@11) j@@1) e@@1)))
+))) (= i@@10 (- 0 1))  (and (and (InRangeVec_4177 v@@11 i@@10) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@11) i@@10) e@@1)) (forall ((j@@1 Int) ) (!  (=> (and (>= j@@1 0) (< j@@1 i@@10)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@11) j@@1) e@@1)))
  :qid |Authenticatorbpl.117:17|
  :skolemid |1|
 )))))
  :qid |Authenticatorbpl.113:32|
  :skolemid |2|
- :pattern ( (IndexOfVec_5838 v@@11 e@@1))
+ :pattern ( (IndexOfVec_5856 v@@11 e@@1))
 )))
-(assert (forall ((v@@12 T@Vec_8972) (e@@2 T@Vec_5838) ) (! (let ((i@@12 (IndexOfVec_8972 v@@12 e@@2)))
-(ite  (not (exists ((i@@13 Int) ) (!  (and (InRangeVec_10018 v@@12 i@@13) (= (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@12) i@@13) e@@2))
+(assert (forall ((v@@12 T@Vec_8991) (e@@2 T@Vec_5856) ) (! (let ((i@@12 (IndexOfVec_8991 v@@12 e@@2)))
+(ite  (not (exists ((i@@13 Int) ) (!  (and (InRangeVec_10037 v@@12 i@@13) (= (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@12) i@@13) e@@2))
  :qid |Authenticatorbpl.109:13|
  :skolemid |0|
-))) (= i@@12 (- 0 1))  (and (and (InRangeVec_10018 v@@12 i@@12) (= (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@12) i@@12) e@@2)) (forall ((j@@2 Int) ) (!  (=> (and (>= j@@2 0) (< j@@2 i@@12)) (not (= (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@12) j@@2) e@@2)))
+))) (= i@@12 (- 0 1))  (and (and (InRangeVec_10037 v@@12 i@@12) (= (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@12) i@@12) e@@2)) (forall ((j@@2 Int) ) (!  (=> (and (>= j@@2 0) (< j@@2 i@@12)) (not (= (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@12) j@@2) e@@2)))
  :qid |Authenticatorbpl.117:17|
  :skolemid |1|
 )))))
  :qid |Authenticatorbpl.113:32|
  :skolemid |2|
- :pattern ( (IndexOfVec_8972 v@@12 e@@2))
+ :pattern ( (IndexOfVec_8991 v@@12 e@@2))
 )))
 (assert (forall ((|l#0| Bool) (i@@14 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@14) |l#0|)
  :qid |Authenticatorbpl.275:54|
  :skolemid |38|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@14))
 )))
-(assert (forall ((|l#0@@0| Int) (|l#1| Int) (|l#2| Int) (|l#3| |T@[Int]Vec_5838|) (|l#4| |T@[Int]Vec_5838|) (|l#5| Int) (|l#6| T@Vec_5838) (i@@15 Int) ) (! (= (|Select__T@[Int]Vec_5838_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15) (ite  (and (>= i@@15 |l#0@@0|) (< i@@15 |l#1|)) (ite (< i@@15 |l#2|) (|Select__T@[Int]Vec_5838_| |l#3| i@@15) (|Select__T@[Int]Vec_5838_| |l#4| (- i@@15 |l#5|))) |l#6|))
+(assert (forall ((|l#0@@0| Int) (|l#1| Int) (|l#2| Int) (|l#3| |T@[Int]Vec_5856|) (|l#4| |T@[Int]Vec_5856|) (|l#5| Int) (|l#6| T@Vec_5856) (i@@15 Int) ) (! (= (|Select__T@[Int]Vec_5856_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15) (ite  (and (>= i@@15 |l#0@@0|) (< i@@15 |l#1|)) (ite (< i@@15 |l#2|) (|Select__T@[Int]Vec_5856_| |l#3| i@@15) (|Select__T@[Int]Vec_5856_| |l#4| (- i@@15 |l#5|))) |l#6|))
  :qid |Authenticatorbpl.73:19|
  :skolemid |39|
- :pattern ( (|Select__T@[Int]Vec_5838_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15))
+ :pattern ( (|Select__T@[Int]Vec_5856_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15))
 )))
-(assert (forall ((|l#0@@1| Int) (|l#1@@0| Int) (|l#2@@0| |T@[Int]Vec_5838|) (|l#3@@0| Int) (|l#4@@0| Int) (|l#5@@0| T@Vec_5838) (i@@16 Int) ) (! (= (|Select__T@[Int]Vec_5838_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16) (ite  (and (<= |l#0@@1| i@@16) (< i@@16 |l#1@@0|)) (|Select__T@[Int]Vec_5838_| |l#2@@0| (- (- |l#3@@0| i@@16) |l#4@@0|)) |l#5@@0|))
+(assert (forall ((|l#0@@1| Int) (|l#1@@0| Int) (|l#2@@0| |T@[Int]Vec_5856|) (|l#3@@0| Int) (|l#4@@0| Int) (|l#5@@0| T@Vec_5856) (i@@16 Int) ) (! (= (|Select__T@[Int]Vec_5856_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16) (ite  (and (<= |l#0@@1| i@@16) (< i@@16 |l#1@@0|)) (|Select__T@[Int]Vec_5856_| |l#2@@0| (- (- |l#3@@0| i@@16) |l#4@@0|)) |l#5@@0|))
  :qid |Authenticatorbpl.82:30|
  :skolemid |40|
- :pattern ( (|Select__T@[Int]Vec_5838_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16))
+ :pattern ( (|Select__T@[Int]Vec_5856_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16))
 )))
-(assert (forall ((|l#0@@2| Int) (|l#1@@1| Int) (|l#2@@1| Int) (|l#3@@1| |T@[Int]Vec_5838|) (|l#4@@1| |T@[Int]Vec_5838|) (|l#5@@1| Int) (|l#6@@0| T@Vec_5838) (j@@3 Int) ) (! (= (|Select__T@[Int]Vec_5838_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3) (ite  (and (>= j@@3 |l#0@@2|) (< j@@3 |l#1@@1|)) (ite (< j@@3 |l#2@@1|) (|Select__T@[Int]Vec_5838_| |l#3@@1| j@@3) (|Select__T@[Int]Vec_5838_| |l#4@@1| (+ j@@3 |l#5@@1|))) |l#6@@0|))
+(assert (forall ((|l#0@@2| Int) (|l#1@@1| Int) (|l#2@@1| Int) (|l#3@@1| |T@[Int]Vec_5856|) (|l#4@@1| |T@[Int]Vec_5856|) (|l#5@@1| Int) (|l#6@@0| T@Vec_5856) (j@@3 Int) ) (! (= (|Select__T@[Int]Vec_5856_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3) (ite  (and (>= j@@3 |l#0@@2|) (< j@@3 |l#1@@1|)) (ite (< j@@3 |l#2@@1|) (|Select__T@[Int]Vec_5856_| |l#3@@1| j@@3) (|Select__T@[Int]Vec_5856_| |l#4@@1| (+ j@@3 |l#5@@1|))) |l#6@@0|))
  :qid |Authenticatorbpl.63:20|
  :skolemid |41|
- :pattern ( (|Select__T@[Int]Vec_5838_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3))
+ :pattern ( (|Select__T@[Int]Vec_5856_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3))
 )))
 (assert (forall ((|l#0@@3| Int) (|l#1@@2| Int) (|l#2@@2| Int) (|l#3@@2| |T@[Int]Int|) (|l#4@@2| |T@[Int]Int|) (|l#5@@2| Int) (|l#6@@1| Int) (i@@17 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#5| |l#0@@3| |l#1@@2| |l#2@@2| |l#3@@2| |l#4@@2| |l#5@@2| |l#6@@1|) i@@17) (ite  (and (>= i@@17 |l#0@@3|) (< i@@17 |l#1@@2|)) (ite (< i@@17 |l#2@@2|) (|Select__T@[Int]Int_| |l#3@@2| i@@17) (|Select__T@[Int]Int_| |l#4@@2| (- i@@17 |l#5@@2|))) |l#6@@1|))
  :qid |Authenticatorbpl.73:19|
@@ -269,31 +269,31 @@
 )))
 ; Valid
 (declare-fun ControlFlow (Int Int) Int)
-(declare-fun call1formal@res@0 () T@Vec_5838)
-(declare-fun $t0@0 () T@Vec_5838)
-(declare-fun |inline$$1_Vector_push_back'u8'$0$m'@1| () T@$Mutation_11687)
-(declare-fun $t1@0 () T@$Mutation_11687)
+(declare-fun call1formal@res@0 () T@Vec_5856)
+(declare-fun $t0@0 () T@Vec_5856)
+(declare-fun |inline$$1_Vector_push_back'u8'$0$m'@1| () T@$Mutation_11706)
+(declare-fun $t1@0 () T@$Mutation_11706)
 (declare-fun |Store__T@[Int]Int_| (|T@[Int]Int| Int Int) |T@[Int]Int|)
 (assert (forall ( ( ?x0 |T@[Int]Int|) ( ?x1 Int) ( ?x2 Int)) (! (= (|Select__T@[Int]Int_| (|Store__T@[Int]Int_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
 (assert (forall ( ( ?x0 |T@[Int]Int|) ( ?x1 Int) ( ?y1 Int) ( ?x2 Int)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]Int_| (|Store__T@[Int]Int_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]Int_| ?x0 ?y1))) :weight 0)))
-(declare-fun _$t0 () T@Vec_5838)
+(declare-fun _$t0 () T@Vec_5856)
 (declare-fun MapConstVec_4406 (Int) |T@[Int]Int|)
 (declare-fun DefaultVecElem_4406 () Int)
-(declare-fun $t1 () T@$Mutation_11687)
+(declare-fun $t1 () T@$Mutation_11706)
 (push 1)
 (set-info :boogie-vc-id $1_Authenticator_ed25519_authentication_key$verify)
 (set-option :timeout 40000)
 (set-option :rlimit 0)
 (assert (not
- (=> (= (ControlFlow 0 0) 21906) (let ((anon7_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= (ControlFlow 0 18925) (- 0 22131))) (not false)))))
+ (=> (= (ControlFlow 0 0) 21926) (let ((anon7_Else_correct  (=> (not false) (=> (and (= call1formal@res@0 call1formal@res@0) (= (ControlFlow 0 18945) (- 0 22151))) (not false)))))
 (let ((anon7_Then_correct true))
-(let ((anon6_Else_correct  (=> (not false) (=> (and (and (= $t0@0 (|v#$Mutation_11687| |inline$$1_Vector_push_back'u8'$0$m'@1|)) (= call1formal@res@0 ($1_Hash_sha3 $t0@0))) (and (|$IsValid'vec'u8''| call1formal@res@0) (= (|l#Vec_5838| call1formal@res@0) 32))) (and (=> (= (ControlFlow 0 18903) 18939) anon7_Then_correct) (=> (= (ControlFlow 0 18903) 18925) anon7_Else_correct))))))
+(let ((anon6_Else_correct  (=> (not false) (=> (and (and (= $t0@0 (|v#$Mutation_11706| |inline$$1_Vector_push_back'u8'$0$m'@1|)) (= call1formal@res@0 ($1_Hash_sha3 $t0@0))) (and (|$IsValid'vec'u8''| call1formal@res@0) (= (|l#Vec_5856| call1formal@res@0) 32))) (and (=> (= (ControlFlow 0 18923) 18959) anon7_Then_correct) (=> (= (ControlFlow 0 18923) 18945) anon7_Else_correct))))))
 (let ((anon6_Then_correct true))
-(let ((|inline$$1_Vector_push_back'u8'$0$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u8'$0$m'@1| ($Mutation_11687 (|l#$Mutation_11687| $t1@0) (|p#$Mutation_11687| $t1@0) (let ((l (|l#Vec_5838| (|v#$Mutation_11687| $t1@0))))
-(Vec_5838 (|Store__T@[Int]Int_| (|v#Vec_5838| (|v#$Mutation_11687| $t1@0)) l 0) (+ l 1))))) (and (=> (= (ControlFlow 0 18881) 18963) anon6_Then_correct) (=> (= (ControlFlow 0 18881) 18903) anon6_Else_correct)))))
-(let ((anon0$1_correct  (=> (|$IsValid'vec'u8''| _$t0) (=> (and (and (= _$t0 _$t0) (= $t1@0 ($Mutation_11687 ($Local 0) (Vec_5838 (MapConstVec_4406 DefaultVecElem_4406) 0) _$t0))) (and (|$IsValid'u8'| 0) (= (ControlFlow 0 18887) 18881))) |inline$$1_Vector_push_back'u8'$0$anon0_correct|))))
-(let ((anon0_correct  (=> (and (= (|l#Vec_5838| (|p#$Mutation_11687| $t1)) 0) (= (ControlFlow 0 18798) 18887)) anon0$1_correct)))
-(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 21906) 18798) anon0_correct)))
+(let ((|inline$$1_Vector_push_back'u8'$0$anon0_correct|  (=> (= |inline$$1_Vector_push_back'u8'$0$m'@1| ($Mutation_11706 (|l#$Mutation_11706| $t1@0) (|p#$Mutation_11706| $t1@0) (let ((l (|l#Vec_5856| (|v#$Mutation_11706| $t1@0))))
+(Vec_5856 (|Store__T@[Int]Int_| (|v#Vec_5856| (|v#$Mutation_11706| $t1@0)) l 0) (+ l 1))))) (and (=> (= (ControlFlow 0 18901) 18983) anon6_Then_correct) (=> (= (ControlFlow 0 18901) 18923) anon6_Else_correct)))))
+(let ((anon0$1_correct  (=> (|$IsValid'vec'u8''| _$t0) (=> (and (and (= _$t0 _$t0) (= $t1@0 ($Mutation_11706 ($Local 0) (Vec_5856 (MapConstVec_4406 DefaultVecElem_4406) 0) _$t0))) (and (|$IsValid'u8'| 0) (= (ControlFlow 0 18907) 18901))) |inline$$1_Vector_push_back'u8'$0$anon0_correct|))))
+(let ((anon0_correct  (=> (and (= (|l#Vec_5856| (|p#$Mutation_11706| $t1)) 0) (= (ControlFlow 0 18818) 18907)) anon0$1_correct)))
+(let ((PreconditionGeneratedEntry_correct  (=> (= (ControlFlow 0 21926) 18818) anon0_correct)))
 PreconditionGeneratedEntry_correct)))))))))
 ))
 (check-sat)
@@ -313,15 +313,15 @@ PreconditionGeneratedEntry_correct)))))))))
 (declare-fun tickleBool (Bool) Bool)
 (assert (and (tickleBool true) (tickleBool false)))
 (declare-sort |T@[Int]Int| 0)
-(declare-datatypes ((T@Vec_5838 0)) (((Vec_5838 (|v#Vec_5838| |T@[Int]Int|) (|l#Vec_5838| Int) ) ) ))
-(declare-sort |T@[Int]Vec_5838| 0)
-(declare-datatypes ((T@Vec_8972 0)) (((Vec_8972 (|v#Vec_8972| |T@[Int]Vec_5838|) (|l#Vec_8972| Int) ) ) ))
-(declare-datatypes ((T@$1_Authenticator_MultiEd25519PublicKey 0)) ((($1_Authenticator_MultiEd25519PublicKey (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| T@Vec_8972) (|$threshold#$1_Authenticator_MultiEd25519PublicKey| Int) ) ) ))
+(declare-datatypes ((T@Vec_5856 0)) (((Vec_5856 (|v#Vec_5856| |T@[Int]Int|) (|l#Vec_5856| Int) ) ) ))
+(declare-sort |T@[Int]Vec_5856| 0)
+(declare-datatypes ((T@Vec_8991 0)) (((Vec_8991 (|v#Vec_8991| |T@[Int]Vec_5856|) (|l#Vec_8991| Int) ) ) ))
+(declare-datatypes ((T@$1_Authenticator_MultiEd25519PublicKey 0)) ((($1_Authenticator_MultiEd25519PublicKey (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| T@Vec_8991) (|$threshold#$1_Authenticator_MultiEd25519PublicKey| Int) ) ) ))
 (declare-datatypes ((T@$signer 0)) ((($signer (|$addr#$signer| Int) ) ) ))
 (declare-datatypes ((T@$Location 0)) ((($Global (|a#$Global| Int) ) ($Local (|i#$Local| Int) ) ($Param (|i#$Param| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_4801 0)) ((($Mutation_4801 (|l#$Mutation_4801| T@$Location) (|p#$Mutation_4801| T@Vec_5838) (|v#$Mutation_4801| Int) ) ) ))
-(declare-datatypes ((T@$Mutation_11687 0)) ((($Mutation_11687 (|l#$Mutation_11687| T@$Location) (|p#$Mutation_11687| T@Vec_5838) (|v#$Mutation_11687| T@Vec_5838) ) ) ))
-(declare-datatypes ((T@$Mutation_10599 0)) ((($Mutation_10599 (|l#$Mutation_10599| T@$Location) (|p#$Mutation_10599| T@Vec_5838) (|v#$Mutation_10599| T@Vec_8972) ) ) ))
+(declare-datatypes ((T@$Mutation_4801 0)) ((($Mutation_4801 (|l#$Mutation_4801| T@$Location) (|p#$Mutation_4801| T@Vec_5856) (|v#$Mutation_4801| Int) ) ) ))
+(declare-datatypes ((T@$Mutation_11706 0)) ((($Mutation_11706 (|l#$Mutation_11706| T@$Location) (|p#$Mutation_11706| T@Vec_5856) (|v#$Mutation_11706| T@Vec_5856) ) ) ))
+(declare-datatypes ((T@$Mutation_10618 0)) ((($Mutation_10618 (|l#$Mutation_10618| T@$Location) (|p#$Mutation_10618| T@Vec_5856) (|v#$Mutation_10618| T@Vec_8991) ) ) ))
 (declare-datatypes ((T@$Range 0)) ((($Range (|lb#$Range| Int) (|ub#$Range| Int) ) ) ))
 (declare-fun $MAX_U8 () Int)
 (declare-fun $MAX_U64 () Int)
@@ -338,28 +338,28 @@ PreconditionGeneratedEntry_correct)))))))))
 (declare-fun $EXEC_FAILURE_CODE () Int)
 (declare-fun $shl (Int Int) Int)
 (declare-fun $shr (Int Int) Int)
-(declare-fun |$IsEqual'vec'vec'u8'''| (T@Vec_8972 T@Vec_8972) Bool)
-(declare-fun InRangeVec_10018 (T@Vec_8972 Int) Bool)
-(declare-fun |$IsEqual'vec'u8''| (T@Vec_5838 T@Vec_5838) Bool)
-(declare-fun |Select__T@[Int]Vec_5838_| (|T@[Int]Vec_5838| Int) T@Vec_5838)
-(declare-fun |$IsValid'vec'vec'u8'''| (T@Vec_8972) Bool)
-(declare-fun |$IsValid'vec'u8''| (T@Vec_5838) Bool)
-(declare-fun |$IndexOfVec'vec'u8''| (T@Vec_8972 T@Vec_5838) Int)
-(declare-fun InRangeVec_4177 (T@Vec_5838 Int) Bool)
+(declare-fun |$IsEqual'vec'vec'u8'''| (T@Vec_8991 T@Vec_8991) Bool)
+(declare-fun InRangeVec_10037 (T@Vec_8991 Int) Bool)
+(declare-fun |$IsEqual'vec'u8''| (T@Vec_5856 T@Vec_5856) Bool)
+(declare-fun |Select__T@[Int]Vec_5856_| (|T@[Int]Vec_5856| Int) T@Vec_5856)
+(declare-fun |$IsValid'vec'vec'u8'''| (T@Vec_8991) Bool)
+(declare-fun |$IsValid'vec'u8''| (T@Vec_5856) Bool)
+(declare-fun |$IndexOfVec'vec'u8''| (T@Vec_8991 T@Vec_5856) Int)
+(declare-fun InRangeVec_4177 (T@Vec_5856 Int) Bool)
 (declare-fun |Select__T@[Int]Int_| (|T@[Int]Int| Int) Int)
-(declare-fun |$IndexOfVec'u8'| (T@Vec_5838 Int) Int)
-(declare-fun $1_Hash_sha2 (T@Vec_5838) T@Vec_5838)
-(declare-fun $1_Hash_sha3 (T@Vec_5838) T@Vec_5838)
-(declare-fun $1_Signature_$ed25519_validate_pubkey (T@Vec_5838) Bool)
-(declare-fun $1_Signature_$ed25519_verify (T@Vec_5838 T@Vec_5838 T@Vec_5838) Bool)
-(declare-fun |$1_BCS_serialize'u8'| (Int) T@Vec_5838)
+(declare-fun |$IndexOfVec'u8'| (T@Vec_5856 Int) Int)
+(declare-fun $1_Hash_sha2 (T@Vec_5856) T@Vec_5856)
+(declare-fun $1_Hash_sha3 (T@Vec_5856) T@Vec_5856)
+(declare-fun $1_Signature_$ed25519_validate_pubkey (T@Vec_5856) Bool)
+(declare-fun $1_Signature_$ed25519_verify (T@Vec_5856 T@Vec_5856 T@Vec_5856) Bool)
+(declare-fun |$1_BCS_serialize'u8'| (Int) T@Vec_5856)
 (declare-fun |$IsValid'$1_Authenticator_MultiEd25519PublicKey'| (T@$1_Authenticator_MultiEd25519PublicKey) Bool)
-(declare-fun IndexOfVec_5838 (T@Vec_5838 Int) Int)
-(declare-fun IndexOfVec_8972 (T@Vec_8972 T@Vec_5838) Int)
+(declare-fun IndexOfVec_5856 (T@Vec_5856 Int) Int)
+(declare-fun IndexOfVec_8991 (T@Vec_8991 T@Vec_5856) Int)
 (declare-fun |Select__T@[Int]Bool_| (|T@[Int]Bool| Int) Bool)
-(declare-fun |lambda#2| (Int Int Int |T@[Int]Vec_5838| |T@[Int]Vec_5838| Int T@Vec_5838) |T@[Int]Vec_5838|)
-(declare-fun |lambda#3| (Int Int |T@[Int]Vec_5838| Int Int T@Vec_5838) |T@[Int]Vec_5838|)
-(declare-fun |lambda#4| (Int Int Int |T@[Int]Vec_5838| |T@[Int]Vec_5838| Int T@Vec_5838) |T@[Int]Vec_5838|)
+(declare-fun |lambda#2| (Int Int Int |T@[Int]Vec_5856| |T@[Int]Vec_5856| Int T@Vec_5856) |T@[Int]Vec_5856|)
+(declare-fun |lambda#3| (Int Int |T@[Int]Vec_5856| Int Int T@Vec_5856) |T@[Int]Vec_5856|)
+(declare-fun |lambda#4| (Int Int Int |T@[Int]Vec_5856| |T@[Int]Vec_5856| Int T@Vec_5856) |T@[Int]Vec_5856|)
 (declare-fun |lambda#5| (Int Int Int |T@[Int]Int| |T@[Int]Int| Int Int) |T@[Int]Int|)
 (declare-fun |lambda#6| (Int Int |T@[Int]Int| Int Int Int) |T@[Int]Int|)
 (declare-fun |lambda#7| (Int Int Int |T@[Int]Int| |T@[Int]Int| Int Int) |T@[Int]Int|)
@@ -409,7 +409,7 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |16|
  :pattern ( ($shr src1@@0 p@@0))
 )))
-(assert (forall ((v1 T@Vec_8972) (v2 T@Vec_8972) ) (! (= (|$IsEqual'vec'vec'u8'''| v1 v2)  (and (= (|l#Vec_8972| v1) (|l#Vec_8972| v2)) (forall ((i@@0 Int) ) (!  (=> (InRangeVec_10018 v1 i@@0) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v1) i@@0) (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v2) i@@0)))
+(assert (forall ((v1 T@Vec_8991) (v2 T@Vec_8991) ) (! (= (|$IsEqual'vec'vec'u8'''| v1 v2)  (and (= (|l#Vec_8991| v1) (|l#Vec_8991| v2)) (forall ((i@@0 Int) ) (!  (=> (InRangeVec_10037 v1 i@@0) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v1) i@@0) (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v2) i@@0)))
  :qid |Authenticatorbpl.615:13|
  :skolemid |17|
 ))))
@@ -417,7 +417,7 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |18|
  :pattern ( (|$IsEqual'vec'vec'u8'''| v1 v2))
 )))
-(assert (forall ((v@@4 T@Vec_8972) ) (! (= (|$IsValid'vec'vec'u8'''| v@@4)  (and (|$IsValid'u64'| (|l#Vec_8972| v@@4)) (forall ((i@@1 Int) ) (!  (=> (InRangeVec_10018 v@@4 i@@1) (|$IsValid'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@4) i@@1)))
+(assert (forall ((v@@4 T@Vec_8991) ) (! (= (|$IsValid'vec'vec'u8'''| v@@4)  (and (|$IsValid'u64'| (|l#Vec_8991| v@@4)) (forall ((i@@1 Int) ) (!  (=> (InRangeVec_10037 v@@4 i@@1) (|$IsValid'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@4) i@@1)))
  :qid |Authenticatorbpl.621:13|
  :skolemid |19|
 ))))
@@ -425,11 +425,11 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |20|
  :pattern ( (|$IsValid'vec'vec'u8'''| v@@4))
 )))
-(assert (forall ((v@@5 T@Vec_8972) (e T@Vec_5838) ) (! (let ((i@@2 (|$IndexOfVec'vec'u8''| v@@5 e)))
-(ite  (not (exists ((i@@3 Int) ) (!  (and (and (|$IsValid'u64'| i@@3) (InRangeVec_10018 v@@5 i@@3)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@5) i@@3) e))
+(assert (forall ((v@@5 T@Vec_8991) (e T@Vec_5856) ) (! (let ((i@@2 (|$IndexOfVec'vec'u8''| v@@5 e)))
+(ite  (not (exists ((i@@3 Int) ) (!  (and (and (|$IsValid'u64'| i@@3) (InRangeVec_10037 v@@5 i@@3)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@5) i@@3) e))
  :qid |Authenticatorbpl.626:13|
  :skolemid |21|
-))) (= i@@2 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@2) (InRangeVec_10018 v@@5 i@@2)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@5) i@@2) e)) (forall ((j Int) ) (!  (=> (and (and (|$IsValid'u64'| j) (>= j 0)) (< j i@@2)) (not (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@5) j) e)))
+))) (= i@@2 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@2) (InRangeVec_10037 v@@5 i@@2)) (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@5) i@@2) e)) (forall ((j Int) ) (!  (=> (and (and (|$IsValid'u64'| j) (>= j 0)) (< j i@@2)) (not (|$IsEqual'vec'u8''| (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@5) j) e)))
  :qid |Authenticatorbpl.634:17|
  :skolemid |22|
 )))))
@@ -437,7 +437,7 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |23|
  :pattern ( (|$IndexOfVec'vec'u8''| v@@5 e))
 )))
-(assert (forall ((v1@@0 T@Vec_5838) (v2@@0 T@Vec_5838) ) (! (= (|$IsEqual'vec'u8''| v1@@0 v2@@0)  (and (= (|l#Vec_5838| v1@@0) (|l#Vec_5838| v2@@0)) (forall ((i@@4 Int) ) (!  (=> (InRangeVec_4177 v1@@0 i@@4) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v1@@0) i@@4) (|Select__T@[Int]Int_| (|v#Vec_5838| v2@@0) i@@4)))
+(assert (forall ((v1@@0 T@Vec_5856) (v2@@0 T@Vec_5856) ) (! (= (|$IsEqual'vec'u8''| v1@@0 v2@@0)  (and (= (|l#Vec_5856| v1@@0) (|l#Vec_5856| v2@@0)) (forall ((i@@4 Int) ) (!  (=> (InRangeVec_4177 v1@@0 i@@4) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v1@@0) i@@4) (|Select__T@[Int]Int_| (|v#Vec_5856| v2@@0) i@@4)))
  :qid |Authenticatorbpl.796:13|
  :skolemid |24|
 ))))
@@ -445,7 +445,7 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |25|
  :pattern ( (|$IsEqual'vec'u8''| v1@@0 v2@@0))
 )))
-(assert (forall ((v@@6 T@Vec_5838) ) (! (= (|$IsValid'vec'u8''| v@@6)  (and (|$IsValid'u64'| (|l#Vec_5838| v@@6)) (forall ((i@@5 Int) ) (!  (=> (InRangeVec_4177 v@@6 i@@5) (|$IsValid'u8'| (|Select__T@[Int]Int_| (|v#Vec_5838| v@@6) i@@5)))
+(assert (forall ((v@@6 T@Vec_5856) ) (! (= (|$IsValid'vec'u8''| v@@6)  (and (|$IsValid'u64'| (|l#Vec_5856| v@@6)) (forall ((i@@5 Int) ) (!  (=> (InRangeVec_4177 v@@6 i@@5) (|$IsValid'u8'| (|Select__T@[Int]Int_| (|v#Vec_5856| v@@6) i@@5)))
  :qid |Authenticatorbpl.802:13|
  :skolemid |26|
 ))))
@@ -453,11 +453,11 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |27|
  :pattern ( (|$IsValid'vec'u8''| v@@6))
 )))
-(assert (forall ((v@@7 T@Vec_5838) (e@@0 Int) ) (! (let ((i@@6 (|$IndexOfVec'u8'| v@@7 e@@0)))
-(ite  (not (exists ((i@@7 Int) ) (!  (and (and (|$IsValid'u64'| i@@7) (InRangeVec_4177 v@@7 i@@7)) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@7) i@@7) e@@0))
+(assert (forall ((v@@7 T@Vec_5856) (e@@0 Int) ) (! (let ((i@@6 (|$IndexOfVec'u8'| v@@7 e@@0)))
+(ite  (not (exists ((i@@7 Int) ) (!  (and (and (|$IsValid'u64'| i@@7) (InRangeVec_4177 v@@7 i@@7)) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@7) i@@7) e@@0))
  :qid |Authenticatorbpl.807:13|
  :skolemid |28|
-))) (= i@@6 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@6) (InRangeVec_4177 v@@7 i@@6)) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@7) i@@6) e@@0)) (forall ((j@@0 Int) ) (!  (=> (and (and (|$IsValid'u64'| j@@0) (>= j@@0 0)) (< j@@0 i@@6)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@7) j@@0) e@@0)))
+))) (= i@@6 (- 0 1))  (and (and (and (|$IsValid'u64'| i@@6) (InRangeVec_4177 v@@7 i@@6)) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@7) i@@6) e@@0)) (forall ((j@@0 Int) ) (!  (=> (and (and (|$IsValid'u64'| j@@0) (>= j@@0 0)) (< j@@0 i@@6)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@7) j@@0) e@@0)))
  :qid |Authenticatorbpl.815:17|
  :skolemid |29|
 )))))
@@ -465,95 +465,95 @@ PreconditionGeneratedEntry_correct)))))))))
  :skolemid |30|
  :pattern ( (|$IndexOfVec'u8'| v@@7 e@@0))
 )))
-(assert (forall ((v1@@1 T@Vec_5838) (v2@@1 T@Vec_5838) ) (! (= (|$IsEqual'vec'u8''| v1@@1 v2@@1) (|$IsEqual'vec'u8''| ($1_Hash_sha2 v1@@1) ($1_Hash_sha2 v2@@1)))
+(assert (forall ((v1@@1 T@Vec_5856) (v2@@1 T@Vec_5856) ) (! (= (|$IsEqual'vec'u8''| v1@@1 v2@@1) (|$IsEqual'vec'u8''| ($1_Hash_sha2 v1@@1) ($1_Hash_sha2 v2@@1)))
  :qid |Authenticatorbpl.988:15|
  :skolemid |31|
  :pattern ( ($1_Hash_sha2 v1@@1) ($1_Hash_sha2 v2@@1))
 )))
-(assert (forall ((v1@@2 T@Vec_5838) (v2@@2 T@Vec_5838) ) (! (= (|$IsEqual'vec'u8''| v1@@2 v2@@2) (|$IsEqual'vec'u8''| ($1_Hash_sha3 v1@@2) ($1_Hash_sha3 v2@@2)))
+(assert (forall ((v1@@2 T@Vec_5856) (v2@@2 T@Vec_5856) ) (! (= (|$IsEqual'vec'u8''| v1@@2 v2@@2) (|$IsEqual'vec'u8''| ($1_Hash_sha3 v1@@2) ($1_Hash_sha3 v2@@2)))
  :qid |Authenticatorbpl.1004:15|
  :skolemid |32|
  :pattern ( ($1_Hash_sha3 v1@@2) ($1_Hash_sha3 v2@@2))
 )))
-(assert (forall ((k1 T@Vec_5838) (k2 T@Vec_5838) ) (!  (=> (|$IsEqual'vec'u8''| k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
- :qid |Authenticatorbpl.1071:15|
+(assert (forall ((k1 T@Vec_5856) (k2 T@Vec_5856) ) (!  (=> (|$IsEqual'vec'u8''| k1 k2) (= ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2)))
+ :qid |Authenticatorbpl.1075:15|
  :skolemid |33|
  :pattern ( ($1_Signature_$ed25519_validate_pubkey k1) ($1_Signature_$ed25519_validate_pubkey k2))
 )))
-(assert (forall ((s1 T@Vec_5838) (s2 T@Vec_5838) (k1@@0 T@Vec_5838) (k2@@0 T@Vec_5838) (m1 T@Vec_5838) (m2 T@Vec_5838) ) (!  (=> (and (and (|$IsEqual'vec'u8''| s1 s2) (|$IsEqual'vec'u8''| k1@@0 k2@@0)) (|$IsEqual'vec'u8''| m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
- :qid |Authenticatorbpl.1074:15|
+(assert (forall ((s1 T@Vec_5856) (s2 T@Vec_5856) (k1@@0 T@Vec_5856) (k2@@0 T@Vec_5856) (m1 T@Vec_5856) (m2 T@Vec_5856) ) (!  (=> (and (and (|$IsEqual'vec'u8''| s1 s2) (|$IsEqual'vec'u8''| k1@@0 k2@@0)) (|$IsEqual'vec'u8''| m1 m2)) (= ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2)))
+ :qid |Authenticatorbpl.1078:15|
  :skolemid |34|
  :pattern ( ($1_Signature_$ed25519_verify s1 k1@@0 m1) ($1_Signature_$ed25519_verify s2 k2@@0 m2))
 )))
 (assert (forall ((v1@@3 Int) (v2@@3 Int) ) (! (= (= v1@@3 v2@@3) (|$IsEqual'vec'u8''| (|$1_BCS_serialize'u8'| v1@@3) (|$1_BCS_serialize'u8'| v2@@3)))
- :qid |Authenticatorbpl.1101:15|
+ :qid |Authenticatorbpl.1105:15|
  :skolemid |35|
  :pattern ( (|$1_BCS_serialize'u8'| v1@@3) (|$1_BCS_serialize'u8'| v2@@3))
 )))
 (assert (forall ((v@@8 Int) ) (! (let ((r@@0 (|$1_BCS_serialize'u8'| v@@8)))
- (and (|$IsValid'vec'u8''| r@@0) (> (|l#Vec_5838| r@@0) 0)))
- :qid |Authenticatorbpl.1106:15|
+ (and (|$IsValid'vec'u8''| r@@0) (> (|l#Vec_5856| r@@0) 0)))
+ :qid |Authenticatorbpl.1110:15|
  :skolemid |36|
  :pattern ( (|$1_BCS_serialize'u8'| v@@8))
 )))
 (assert (forall ((s T@$1_Authenticator_MultiEd25519PublicKey) ) (! (= (|$IsValid'$1_Authenticator_MultiEd25519PublicKey'| s)  (and (|$IsValid'vec'vec'u8'''| (|$public_keys#$1_Authenticator_MultiEd25519PublicKey| s)) (|$IsValid'u8'| (|$threshold#$1_Authenticator_MultiEd25519PublicKey| s))))
- :qid |Authenticatorbpl.1148:59|
+ :qid |Authenticatorbpl.1152:59|
  :skolemid |37|
  :pattern ( (|$IsValid'$1_Authenticator_MultiEd25519PublicKey'| s))
 )))
-(assert (forall ((v@@9 T@Vec_8972) (i@@8 Int) ) (! (= (InRangeVec_10018 v@@9 i@@8)  (and (>= i@@8 0) (< i@@8 (|l#Vec_8972| v@@9))))
+(assert (forall ((v@@9 T@Vec_8991) (i@@8 Int) ) (! (= (InRangeVec_10037 v@@9 i@@8)  (and (>= i@@8 0) (< i@@8 (|l#Vec_8991| v@@9))))
  :qid |Authenticatorbpl.122:24|
  :skolemid |3|
- :pattern ( (InRangeVec_10018 v@@9 i@@8))
+ :pattern ( (InRangeVec_10037 v@@9 i@@8))
 )))
-(assert (forall ((v@@10 T@Vec_5838) (i@@9 Int) ) (! (= (InRangeVec_4177 v@@10 i@@9)  (and (>= i@@9 0) (< i@@9 (|l#Vec_5838| v@@10))))
+(assert (forall ((v@@10 T@Vec_5856) (i@@9 Int) ) (! (= (InRangeVec_4177 v@@10 i@@9)  (and (>= i@@9 0) (< i@@9 (|l#Vec_5856| v@@10))))
  :qid |Authenticatorbpl.122:24|
  :skolemid |3|
  :pattern ( (InRangeVec_4177 v@@10 i@@9))
 )))
-(assert (forall ((v@@11 T@Vec_5838) (e@@1 Int) ) (! (let ((i@@10 (IndexOfVec_5838 v@@11 e@@1)))
-(ite  (not (exists ((i@@11 Int) ) (!  (and (InRangeVec_4177 v@@11 i@@11) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@11) i@@11) e@@1))
+(assert (forall ((v@@11 T@Vec_5856) (e@@1 Int) ) (! (let ((i@@10 (IndexOfVec_5856 v@@11 e@@1)))
+(ite  (not (exists ((i@@11 Int) ) (!  (and (InRangeVec_4177 v@@11 i@@11) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@11) i@@11) e@@1))
  :qid |Authenticatorbpl.109:13|
  :skolemid |0|
-))) (= i@@10 (- 0 1))  (and (and (InRangeVec_4177 v@@11 i@@10) (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@11) i@@10) e@@1)) (forall ((j@@1 Int) ) (!  (=> (and (>= j@@1 0) (< j@@1 i@@10)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5838| v@@11) j@@1) e@@1)))
+))) (= i@@10 (- 0 1))  (and (and (InRangeVec_4177 v@@11 i@@10) (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@11) i@@10) e@@1)) (forall ((j@@1 Int) ) (!  (=> (and (>= j@@1 0) (< j@@1 i@@10)) (not (= (|Select__T@[Int]Int_| (|v#Vec_5856| v@@11) j@@1) e@@1)))
  :qid |Authenticatorbpl.117:17|
  :skolemid |1|
 )))))
  :qid |Authenticatorbpl.113:32|
  :skolemid |2|
- :pattern ( (IndexOfVec_5838 v@@11 e@@1))
+ :pattern ( (IndexOfVec_5856 v@@11 e@@1))
 )))
-(assert (forall ((v@@12 T@Vec_8972) (e@@2 T@Vec_5838) ) (! (let ((i@@12 (IndexOfVec_8972 v@@12 e@@2)))
-(ite  (not (exists ((i@@13 Int) ) (!  (and (InRangeVec_10018 v@@12 i@@13) (= (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@12) i@@13) e@@2))
+(assert (forall ((v@@12 T@Vec_8991) (e@@2 T@Vec_5856) ) (! (let ((i@@12 (IndexOfVec_8991 v@@12 e@@2)))
+(ite  (not (exists ((i@@13 Int) ) (!  (and (InRangeVec_10037 v@@12 i@@13) (= (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@12) i@@13) e@@2))
  :qid |Authenticatorbpl.109:13|
  :skolemid |0|
-))) (= i@@12 (- 0 1))  (and (and (InRangeVec_10018 v@@12 i@@12) (= (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@12) i@@12) e@@2)) (forall ((j@@2 Int) ) (!  (=> (and (>= j@@2 0) (< j@@2 i@@12)) (not (= (|Select__T@[Int]Vec_5838_| (|v#Vec_8972| v@@12) j@@2) e@@2)))
+))) (= i@@12 (- 0 1))  (and (and (InRangeVec_10037 v@@12 i@@12) (= (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@12) i@@12) e@@2)) (forall ((j@@2 Int) ) (!  (=> (and (>= j@@2 0) (< j@@2 i@@12)) (not (= (|Select__T@[Int]Vec_5856_| (|v#Vec_8991| v@@12) j@@2) e@@2)))
  :qid |Authenticatorbpl.117:17|
  :skolemid |1|
 )))))
  :qid |Authenticatorbpl.113:32|
  :skolemid |2|
- :pattern ( (IndexOfVec_8972 v@@12 e@@2))
+ :pattern ( (IndexOfVec_8991 v@@12 e@@2))
 )))
 (assert (forall ((|l#0| Bool) (i@@14 Int) ) (! (= (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@14) |l#0|)
  :qid |Authenticatorbpl.275:54|
  :skolemid |38|
  :pattern ( (|Select__T@[Int]Bool_| (|lambda#0| |l#0|) i@@14))
 )))
-(assert (forall ((|l#0@@0| Int) (|l#1| Int) (|l#2| Int) (|l#3| |T@[Int]Vec_5838|) (|l#4| |T@[Int]Vec_5838|) (|l#5| Int) (|l#6| T@Vec_5838) (i@@15 Int) ) (! (= (|Select__T@[Int]Vec_5838_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15) (ite  (and (>= i@@15 |l#0@@0|) (< i@@15 |l#1|)) (ite (< i@@15 |l#2|) (|Select__T@[Int]Vec_5838_| |l#3| i@@15) (|Select__T@[Int]Vec_5838_| |l#4| (- i@@15 |l#5|))) |l#6|))
+(assert (forall ((|l#0@@0| Int) (|l#1| Int) (|l#2| Int) (|l#3| |T@[Int]Vec_5856|) (|l#4| |T@[Int]Vec_5856|) (|l#5| Int) (|l#6| T@Vec_5856) (i@@15 Int) ) (! (= (|Select__T@[Int]Vec_5856_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15) (ite  (and (>= i@@15 |l#0@@0|) (< i@@15 |l#1|)) (ite (< i@@15 |l#2|) (|Select__T@[Int]Vec_5856_| |l#3| i@@15) (|Select__T@[Int]Vec_5856_| |l#4| (- i@@15 |l#5|))) |l#6|))
  :qid |Authenticatorbpl.73:19|
  :skolemid |39|
- :pattern ( (|Select__T@[Int]Vec_5838_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15))
+ :pattern ( (|Select__T@[Int]Vec_5856_| (|lambda#2| |l#0@@0| |l#1| |l#2| |l#3| |l#4| |l#5| |l#6|) i@@15))
 )))
-(assert (forall ((|l#0@@1| Int) (|l#1@@0| Int) (|l#2@@0| |T@[Int]Vec_5838|) (|l#3@@0| Int) (|l#4@@0| Int) (|l#5@@0| T@Vec_5838) (i@@16 Int) ) (! (= (|Select__T@[Int]Vec_5838_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16) (ite  (and (<= |l#0@@1| i@@16) (< i@@16 |l#1@@0|)) (|Select__T@[Int]Vec_5838_| |l#2@@0| (- (- |l#3@@0| i@@16) |l#4@@0|)) |l#5@@0|))
+(assert (forall ((|l#0@@1| Int) (|l#1@@0| Int) (|l#2@@0| |T@[Int]Vec_5856|) (|l#3@@0| Int) (|l#4@@0| Int) (|l#5@@0| T@Vec_5856) (i@@16 Int) ) (! (= (|Select__T@[Int]Vec_5856_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16) (ite  (and (<= |l#0@@1| i@@16) (< i@@16 |l#1@@0|)) (|Select__T@[Int]Vec_5856_| |l#2@@0| (- (- |l#3@@0| i@@16) |l#4@@0|)) |l#5@@0|))
  :qid |Authenticatorbpl.82:30|
  :skolemid |40|
- :pattern ( (|Select__T@[Int]Vec_5838_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16))
+ :pattern ( (|Select__T@[Int]Vec_5856_| (|lambda#3| |l#0@@1| |l#1@@0| |l#2@@0| |l#3@@0| |l#4@@0| |l#5@@0|) i@@16))
 )))
-(assert (forall ((|l#0@@2| Int) (|l#1@@1| Int) (|l#2@@1| Int) (|l#3@@1| |T@[Int]Vec_5838|) (|l#4@@1| |T@[Int]Vec_5838|) (|l#5@@1| Int) (|l#6@@0| T@Vec_5838) (j@@3 Int) ) (! (= (|Select__T@[Int]Vec_5838_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3) (ite  (and (>= j@@3 |l#0@@2|) (< j@@3 |l#1@@1|)) (ite (< j@@3 |l#2@@1|) (|Select__T@[Int]Vec_5838_| |l#3@@1| j@@3) (|Select__T@[Int]Vec_5838_| |l#4@@1| (+ j@@3 |l#5@@1|))) |l#6@@0|))
+(assert (forall ((|l#0@@2| Int) (|l#1@@1| Int) (|l#2@@1| Int) (|l#3@@1| |T@[Int]Vec_5856|) (|l#4@@1| |T@[Int]Vec_5856|) (|l#5@@1| Int) (|l#6@@0| T@Vec_5856) (j@@3 Int) ) (! (= (|Select__T@[Int]Vec_5856_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3) (ite  (and (>= j@@3 |l#0@@2|) (< j@@3 |l#1@@1|)) (ite (< j@@3 |l#2@@1|) (|Select__T@[Int]Vec_5856_| |l#3@@1| j@@3) (|Select__T@[Int]Vec_5856_| |l#4@@1| (+ j@@3 |l#5@@1|))) |l#6@@0|))
  :qid |Authenticatorbpl.63:20|
  :skolemid |41|
- :pattern ( (|Select__T@[Int]Vec_5838_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3))
+ :pattern ( (|Select__T@[Int]Vec_5856_| (|lambda#4| |l#0@@2| |l#1@@1| |l#2@@1| |l#3@@1| |l#4@@1| |l#5@@1| |l#6@@0|) j@@3))
 )))
 (assert (forall ((|l#0@@3| Int) (|l#1@@2| Int) (|l#2@@2| Int) (|l#3@@2| |T@[Int]Int|) (|l#4@@2| |T@[Int]Int|) (|l#5@@2| Int) (|l#6@@1| Int) (i@@17 Int) ) (! (= (|Select__T@[Int]Int_| (|lambda#5| |l#0@@3| |l#1@@2| |l#2@@2| |l#3@@2| |l#4@@2| |l#5@@2| |l#6@@1|) i@@17) (ite  (and (>= i@@17 |l#0@@3|) (< i@@17 |l#1@@2|)) (ite (< i@@17 |l#2@@2|) (|Select__T@[Int]Int_| |l#3@@2| i@@17) (|Select__T@[Int]Int_| |l#4@@2| (- i@@17 |l#5@@2|))) |l#6@@1|))
  :qid |Authenticatorbpl.73:19|

@@ -1,4 +1,10 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:509.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:1914.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:9.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:9.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:9.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:9.12: To suppress this warning in the future use (set-logic ALL).
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:488.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:1821.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:1821.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:1821.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_compliance_public_key_verify.smt2:1821.12: To suppress this warning in the future use (set-logic ALL).

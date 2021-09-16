@@ -1,3 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/cvc5/_1_NetworkIdentity_remove_identities_verify.smt2:408.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/cvc5/_1_NetworkIdentity_remove_identities_verify.smt2:1486.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)

@@ -13,64 +13,40 @@ Coalescing blocks...
 Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
-Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.182 s, 17 proof obligations]  verified
-
 Verifying $1_Roles_grant_role$verify ...
-  [0.042 s, 9 proof obligations]  verified
-
-Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.062 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.044 s, 18 proof obligations]  verified
-
-Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.054 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.051 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_operator_role$verify ...
-  [0.039 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_role$verify ...
-  [0.051 s, 20 proof obligations]  verified
+  [0.177 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.033 s, 5 proof obligations]  verified
+  [0.029 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.044 s, 15 proof obligations]  verified
+  [0.062 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.029 s, 2 proof obligations]  verified
+  [0.018 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.033 s, 6 proof obligations]  verified
+  [0.041 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
-  [0.025 s, 2 proof obligations]  verified
+  [0.023 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_operator$verify ...
-  [0.034 s, 6 proof obligations]  verified
+  [0.028 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.026 s, 2 proof obligations]  verified
+  [0.021 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
-  [0.038 s, 4 proof obligations]  verified
+  [0.027 s, 3 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.035 s, 13 proof obligations]  verified
+  [0.069 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.043 s, 16 proof obligations]  verified
+  [0.064 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.041 s, 18 proof obligations]  verified
+  [0.078 s, 21 proof obligations]  verified
 
-Verifying $1_Genesis_initialize$verify ...
-  [0.197 s, 0 proof obligations]  verified
-
-Boogie program verifier finished with 20 verified, 0 errors
+Boogie program verifier finished with 12 verified, 0 errors

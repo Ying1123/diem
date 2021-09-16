@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DesignatedDealer/cvc5/_1_DesignatedDealer_add_currency_verify_instantiated_1.smt2:440.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DesignatedDealer/cvc5/_1_DesignatedDealer_add_currency_verify_instantiated_1.smt2:1559.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat

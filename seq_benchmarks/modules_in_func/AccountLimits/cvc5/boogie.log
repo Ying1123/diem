@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/cvc5/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,34 +13,99 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/cvc5/AccountLimits.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.366 s, 25 proof obligations]  verified
+
+Verifying $1_AccountLimits_current_time$verify ...
+  [0.004 s, 0 proof obligations]  verified
+
+Verifying $1_AccountLimits_can_receive_and_update_window$verify ...
+  [0.174 s, 9 proof obligations]  verified
+
+Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_0 ...
+  [0.160 s, 9 proof obligations]  verified
+
+Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_1 ...
+  [0.140 s, 9 proof obligations]  verified
+
+Verifying $1_AccountLimits_can_withdraw_and_update_window$verify ...
+  [0.141 s, 8 proof obligations]  verified
+
+Verifying $1_AccountLimits_can_withdraw_and_update_window$verify_instantiated_0 ...
+  [0.132 s, 8 proof obligations]  verified
+
+Verifying $1_AccountLimits_can_withdraw_and_update_window$verify_instantiated_1 ...
+  [0.142 s, 8 proof obligations]  verified
+
+Verifying $1_AccountLimits_grant_mutation_capability$verify ...
+  [0.040 s, 6 proof obligations]  verified
+
+Verifying $1_AccountLimits_has_limits_published$verify ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_AccountLimits_has_limits_published$verify_instantiated_0 ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_AccountLimits_has_limits_published$verify_instantiated_1 ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_AccountLimits_has_window_published$verify ...
+  [0.007 s, 1 proof obligation]  verified
+
+Verifying $1_AccountLimits_is_unrestricted$verify ...
+  [0.011 s, 2 proof obligations]  verified
+
+Verifying $1_AccountLimits_limits_definition_address$verify ...
+  [0.002 s, 0 proof obligations]  verified
+
+Verifying $1_AccountLimits_publish_window$verify ...
+  [0.112 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_publish_window$verify_instantiated_0 ...
+  [0.111 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_publish_window$verify_instantiated_1 ...
+  [0.108 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_reset_window$verify ...
+  [0.072 s, 5 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_deposit_limits$verify ...
+  [0.202 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_deposit_limits$verify_instantiated_0 ...
+  [0.204 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_deposit_limits$verify_instantiated_1 ...
+  [0.192 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify ...
+  [0.181 s, 12 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
+  [0.242 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
+  [0.284 s, 16 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_window_info$verify ...
+  [0.239 s, 6 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_window_info$verify_instantiated_0 ...
+  [0.232 s, 6 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_window_info$verify_instantiated_1 ...
+  [0.267 s, 6 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_withdrawal_limits$verify ...
+  [0.177 s, 14 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_0 ...
+  [0.221 s, 14 proof obligations]  verified
+
+Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_1 ...
+  [0.208 s, 14 proof obligations]  verified
+
+Boogie program verifier finished with 31 verified, 0 errors

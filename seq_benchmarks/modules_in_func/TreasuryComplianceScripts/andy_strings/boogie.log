@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -16,29 +15,63 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_strings/TreasuryComplianceScripts.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify ...
+  [4.504 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
+  [5.828 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_1 ...
+  [5.852 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
+  [0.091 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_0 ...
+  [0.009 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_1 ...
+  [0.007 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
+  [4.585 s, 12 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
+  [1.249 s, 1 proof obligation]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
+  [10.128 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_0 ...
+  [9.377 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_1 ...
+  [9.423 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
+  [0.093 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
+  [0.016 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
+  [0.027 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_0 ...
+  [0.028 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_1 ...
+  [0.030 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
+  [0.959 s, 18 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_0 ...
+  [0.959 s, 18 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_1 ...
+  [0.937 s, 18 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

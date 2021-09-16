@@ -3,42 +3,93 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/z3/TreasuryComplianceScripts.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify ...
+  [1.968 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_0 ...
+  [3.491 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_preburn$verify_instantiated_1 ...
+  [2.477 s, 41 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify ...
+  [0.046 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_0 ...
+  [0.043 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_minting_ability$verify_instantiated_1 ...
+  [0.043 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_add_vasp_domain$verify ...
+  [40.067 s, 12 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/z3/TreasuryComplianceScripts.bpl(24412,27): Verification of '$1_TreasuryComplianceScripts_add_vasp_domain$verify' timed out after 40 seconds
+
+Verifying $1_TreasuryComplianceScripts_remove_vasp_domain$verify ...
+  [0.323 s, 1 proof obligation]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify ...
+  [2.782 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_0 ...
+  [1.012 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_tiered_mint$verify_instantiated_1 ...
+  [0.827 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_freeze_account$verify ...
+  [0.042 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_unfreeze_account$verify ...
+  [0.044 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify ...
+  [0.064 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_0 ...
+  [0.057 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_txn_fees$verify_instantiated_1 ...
+  [0.057 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify ...
+  [0.178 s, 18 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_0 ...
+  [0.214 s, 18 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_burn_with_amount$verify_instantiated_1 ...
+  [0.272 s, 18 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify ...
+  [0.647 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify_instantiated_0 ...
+  [1.572 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_cancel_burn_with_amount$verify_instantiated_1 ...
+  [0.706 s, 36 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_dual_attestation_limit$verify ...
+  [0.043 s, 0 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify ...
+  [0.079 s, 17 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify_instantiated_0 ...
+  [0.087 s, 17 proof obligations]  verified
+
+Verifying $1_TreasuryComplianceScripts_update_exchange_rate$verify_instantiated_1 ...
+  [0.084 s, 17 proof obligations]  verified
+
+Boogie program verifier finished with 25 verified, 0 errors, 1 time out

@@ -1,10 +1,7 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
-(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
-(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -1605,7 +1602,7 @@
 (declare-fun $t7@@1 () Bool)
 (declare-fun |$1_Diem_MintCapability'$1_XDX_XDX'_$memory| () T@$Memory_125709)
 (declare-fun |$1_Diem_Preburn'$1_XDX_XDX'_$memory| () T@$Memory_131124)
-; Valid
+; Invalid
 (declare-fun _$t4 () (Seq Int))
 (declare-fun |$1_Diem_CurrencyInfo'#0'_$memory| () T@$Memory_125332)
 (declare-fun $t6@@0 () T@$1_FixedPoint32_FixedPoint32)

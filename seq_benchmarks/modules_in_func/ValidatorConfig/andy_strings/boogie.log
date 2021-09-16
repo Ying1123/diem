@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,19 +18,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.373 s, 25 proof obligations]  verified
+  [0.364 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.019 s, 4 proof obligations]  verified
+  [0.026 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.092 s, 15 proof obligations]  verified
+  [0.089 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
-  [0.016 s, 1 proof obligation]  verified
+  [0.021 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.026 s, 5 proof obligations]  verified
+  [0.025 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
   [0.004 s, 1 proof obligation]  verified
@@ -40,18 +39,18 @@ Verifying $1_ValidatorConfig_get_operator$verify ...
   [0.026 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.004 s, 1 proof obligation]  verified
+  [0.003 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
-  [0.011 s, 3 proof obligations]  verified
+  [0.024 s, 3 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.161 s, 16 proof obligations]  verified
+  [0.165 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.142 s, 18 proof obligations]  verified
+  [0.140 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.221 s, 21 proof obligations]  verified
+  [0.231 s, 21 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

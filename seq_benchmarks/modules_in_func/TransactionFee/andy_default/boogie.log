@@ -4,10 +4,8 @@
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -16,17 +14,51 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/TransactionFee.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.286 s, 35 proof obligations]  verified
+
+Verifying $1_TransactionFee_initialize$verify ...
+  [0.112 s, 10 proof obligations]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
+  [0.013 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
+  [0.050 s, 1 proof obligation]  verified
+
+Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
+  [0.016 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify ...
+  [0.654 s, 17 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify_instantiated_0 ...
+  [0.759 s, 18 proof obligations]  verified
+
+Verifying $1_TransactionFee_burn_fees$verify_instantiated_1 ...
+  [0.200 s, 17 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_coin_initialized$verify ...
+  [0.007 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_coin_initialized$verify_instantiated_0 ...
+  [0.002 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_is_initialized$verify ...
+  [0.003 s, 0 proof obligations]  verified
+
+Verifying $1_TransactionFee_pay_fee$verify ...
+  [0.077 s, 6 proof obligations]  verified
+
+Verifying $1_TransactionFee_pay_fee$verify_instantiated_0 ...
+  [0.085 s, 7 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.619 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/TransactionFee.bpl(22701,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
+
+Boogie program verifier finished with 13 verified, 0 errors, 1 inconclusive

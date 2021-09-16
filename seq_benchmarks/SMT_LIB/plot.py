@@ -18,7 +18,7 @@ for line in f_new.readlines():
     name = line[0:-1]
   else:
     new.append(int(line))
-    if int(line) == 10:
+    if int(line) >= 120:
       timeout_new.append(name)
 for line in f_old.readlines():
   i += 1
@@ -35,8 +35,9 @@ for line in f_array.readlines():
 
 #print("new\t", timeout_new)
 #print("array\t", timeout_array)
-print(set(timeout_new) - set(timeout_array))
+#print(set(timeout_new) - set(timeout_array))
 print("lens: {} {} {}".format(len(new), len(old), len(array)))
+
 
 x = np.linspace(0, np.max(np.array(array)), 1000)
 print(np.max(np.array(new)))
@@ -44,4 +45,13 @@ plt.plot(x, x)
 plt.xlabel("array solver")
 plt.ylabel("new solver")
 plt.scatter(np.array(array), np.array(new))
+plt.scatter(np.array(array), np.array(old))
+plt.show()
+
+x = np.linspace(0, 120, 1000)
+print(np.max(np.array(new)))
+plt.plot(x, x)
+plt.xlabel("new solver")
+plt.ylabel("old solver")
+plt.scatter(np.array(new), np.array(old))
 plt.show()

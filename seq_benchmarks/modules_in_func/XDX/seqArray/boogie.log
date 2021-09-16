@@ -19,96 +19,96 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.288 s, 35 proof obligations]  verified
+  [0.293 s, 35 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_resource_cap$verify ...
-  [0.459 s, 43 proof obligations]  verified
+  [0.462 s, 43 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_0 ...
-  [0.486 s, 46 proof obligations]  verified
+  [0.483 s, 46 proof obligations]  verified
 
 Verifying $1_Diem_burn_with_resource_cap$verify_instantiated_1 ...
-  [0.503 s, 46 proof obligations]  verified
+  [0.494 s, 46 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn_with_capability$verify ...
-  [0.666 s, 41 proof obligations]  verified
+  [0.650 s, 41 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_0 ...
-  [0.683 s, 43 proof obligations]  verified
+  [0.667 s, 43 proof obligations]  verified
 
 Verifying $1_Diem_cancel_burn_with_capability$verify_instantiated_1 ...
-  [0.703 s, 43 proof obligations]  verified
+  [0.717 s, 43 proof obligations]  verified
 
 Verifying $1_Diem_mint_with_capability$verify ...
-  [0.486 s, 39 proof obligations]  verified
+  [0.491 s, 39 proof obligations]  verified
 
 Verifying $1_Diem_mint_with_capability$verify_instantiated_0 ...
-  [0.515 s, 41 proof obligations]  verified
+  [0.516 s, 41 proof obligations]  verified
 
 Verifying $1_Diem_mint_with_capability$verify_instantiated_1 ...
-  [0.532 s, 41 proof obligations]  verified
+  [0.515 s, 41 proof obligations]  verified
 
 Verifying $1_Diem_preburn_with_resource$verify ...
-  [0.575 s, 36 proof obligations]  verified
+  [0.576 s, 36 proof obligations]  verified
 
 Verifying $1_Diem_preburn_with_resource$verify_instantiated_0 ...
-  [0.605 s, 38 proof obligations]  verified
+  [0.602 s, 38 proof obligations]  verified
 
 Verifying $1_Diem_preburn_with_resource$verify_instantiated_1 ...
-  [0.607 s, 38 proof obligations]  verified
+  [0.581 s, 38 proof obligations]  verified
 
 Verifying $1_Diem_register_currency$verify ...
-  [0.301 s, 32 proof obligations]  verified
+  [0.303 s, 32 proof obligations]  verified
 
 Verifying $1_Diem_register_currency$verify_instantiated_0 ...
-  [0.374 s, 33 proof obligations]  verified
+  [0.372 s, 33 proof obligations]  verified
 
 Verifying $1_Diem_register_currency$verify_instantiated_1 ...
-  [0.356 s, 33 proof obligations]  verified
+  [0.354 s, 33 proof obligations]  verified
 
 Verifying $1_Diem_update_minting_ability$verify ...
-  [0.194 s, 25 proof obligations]  verified
+  [0.188 s, 25 proof obligations]  verified
 
 Verifying $1_Diem_update_minting_ability$verify_instantiated_0 ...
-  [0.200 s, 26 proof obligations]  verified
+  [0.198 s, 26 proof obligations]  verified
 
 Verifying $1_Diem_update_minting_ability$verify_instantiated_1 ...
-  [0.163 s, 26 proof obligations]  verified
+  [0.167 s, 26 proof obligations]  verified
 
 Verifying $1_Diem_update_xdx_exchange_rate$verify ...
-  [0.557 s, 27 proof obligations]  verified
+  [0.549 s, 27 proof obligations]  verified
 
 Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_0 ...
-  [0.572 s, 28 proof obligations]  verified
+  [0.569 s, 28 proof obligations]  verified
 
 Verifying $1_Diem_update_xdx_exchange_rate$verify_instantiated_1 ...
-  [0.614 s, 28 proof obligations]  verified
+  [0.596 s, 28 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify ...
-  [0.306 s, 12 proof obligations]  verified
+  [0.304 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
-  [0.340 s, 16 proof obligations]  verified
+  [0.341 s, 16 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
-  [0.419 s, 16 proof obligations]  verified
+  [0.415 s, 16 proof obligations]  verified
 
 Verifying $1_XDX_initialize$verify ...
-  [0.862 s, 29 proof obligations]  verified
+  [0.852 s, 29 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify ...
-  [0.087 s, 4 proof obligations]  verified
+  [0.086 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify_instantiated_0 ...
-  [0.028 s, 4 proof obligations]  verified
+  [0.024 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_is_xdx$verify_instantiated_1 ...
-  [0.020 s, 4 proof obligations]  verified
+  [0.021 s, 4 proof obligations]  verified
 
 Verifying $1_XDX_reserve_address$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.392 s, 28 proof obligations]  verified
+  [2.331 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 31 verified, 0 errors

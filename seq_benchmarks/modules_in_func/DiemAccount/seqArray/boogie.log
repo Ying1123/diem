@@ -19,21 +19,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.315 s, 35 proof obligations]  verified
+  [0.322 s, 35 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.247 s, 25 proof obligations]  verified
+  [0.250 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.231 s, 16 proof obligations]  verified
+  [0.220 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.241 s, 18 proof obligations]  verified
+  [0.231 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.264 s, 21 proof obligations]  verified
+  [0.261 s, 21 proof obligations]  verified
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [8.104 s, 19 proof obligations]  verified
+  [8.277 s, 19 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

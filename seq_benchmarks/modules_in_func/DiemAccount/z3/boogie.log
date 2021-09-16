@@ -3,124 +3,31 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/z3/DiemAccount.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.182 s, 35 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.082 s, 25 proof obligations]  verified
+
+Verifying $1_ValidatorConfig_remove_operator$verify ...
+  [0.106 s, 16 proof obligations]  verified
+
+Verifying $1_ValidatorConfig_set_config$verify ...
+  [0.089 s, 18 proof obligations]  verified
+
+Verifying $1_ValidatorConfig_set_operator$verify ...
+  [0.113 s, 21 proof obligations]  verified
+
+Verifying $1_VASPDomain_add_vasp_domain$verify ...
+  [40.059 s, 19 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/z3/DiemAccount.bpl(18092,27): Verification of '$1_VASPDomain_add_vasp_domain$verify' timed out after 40 seconds

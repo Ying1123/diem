@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,21 +18,73 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.329 s, 35 proof obligations]  verified
+  [0.317 s, 35 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.257 s, 25 proof obligations]  verified
+  [0.267 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.234 s, 16 proof obligations]  verified
+  [0.225 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.234 s, 18 proof obligations]  verified
+  [0.224 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.255 s, 21 proof obligations]  verified
+  [0.252 s, 21 proof obligations]  verified
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [8.204 s, 19 proof obligations]  verified
+  [34.502 s, 19 proof obligations]  errors
+assert_failed(36,635,714): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18143,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(3659,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18143,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18341,35): anon33_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(19845,5): inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18364,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18392,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18437,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18460,14): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18462,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18756,9): inline$$1_VASPDomain_create_vasp_domain$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(3362,7): inline$$1_Vector_length'u8'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18766,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(551,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18766,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18801,16): inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18476,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(2009,9): inline$$1_Vector_contains'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18492,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18492,5): anon40_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18525,17): anon41_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(1893,8): inline$$1_Vector_push_back'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18574,5): anon42_Else
+assert_failed(36,771,876): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18143,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(3659,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18143,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18341,35): anon33_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(19845,5): inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18364,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18392,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18437,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18460,14): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18462,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18756,9): inline$$1_VASPDomain_create_vasp_domain$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(3362,7): inline$$1_Vector_length'u8'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18766,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(551,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18766,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18801,16): inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18476,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(2009,9): inline$$1_Vector_contains'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18492,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18492,5): anon40_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18525,17): anon41_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(1893,8): inline$$1_Vector_push_back'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_strings/DiemAccount.bpl(18574,5): anon42_Else
 Prover error: cvc5 interrupted by SIGTERM.
 

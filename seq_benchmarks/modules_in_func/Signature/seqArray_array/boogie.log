@@ -3,8 +3,11 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/Signature/seqArray_array/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/bin/z3
-/proverOpt:SOLVER=Z3
+/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
+/proverOpt:O:pre-skolem-quant=true
+/proverOpt:O:no-dt-share-sel=true
+/proverOpt:O:ee-mode=central
+/proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
 --------------------

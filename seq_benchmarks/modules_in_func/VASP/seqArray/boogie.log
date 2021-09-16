@@ -19,28 +19,28 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASP_has_account_limits$verify ...
-  [0.171 s, 1 proof obligation]  verified
+  [0.162 s, 1 proof obligation]  verified
 
 Verifying $1_VASP_is_child$verify ...
   [0.008 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_is_parent$verify ...
-  [0.007 s, 4 proof obligations]  verified
+  [0.009 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_is_same_vasp$verify ...
-  [0.016 s, 5 proof obligations]  verified
+  [0.018 s, 5 proof obligations]  verified
 
 Verifying $1_VASP_is_vasp$verify ...
-  [0.012 s, 4 proof obligations]  verified
+  [0.010 s, 4 proof obligations]  verified
 
 Verifying $1_VASP_num_children$verify ...
   [0.020 s, 5 proof obligations]  verified
 
 Verifying $1_VASP_parent_address$verify ...
-  [0.022 s, 6 proof obligations]  verified
+  [0.021 s, 6 proof obligations]  verified
 
 Verifying $1_VASP_publish_child_vasp_credential$verify ...
-  [0.172 s, 20 proof obligations]  verified
+  [0.173 s, 20 proof obligations]  verified
 
 Verifying $1_VASP_publish_parent_vasp_credential$verify ...
   [0.097 s, 17 proof obligations]  verified

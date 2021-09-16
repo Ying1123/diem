@@ -1,7 +1,5 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
-(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
 (set-option :ee-mode central)
@@ -802,36 +800,4 @@
 (declare-fun $t9 () T@$Mutation_50608)
 (declare-fun $t31 () T@$Mutation_38341)
 (declare-fun $t34 () T@$Mutation_45908)
-; Valid
-(declare-fun _$t0@@0 () (Seq Int))
-(declare-fun $t4@0 () Int)
-(declare-fun inline$$Le$0$dst@1@@0 () Bool)
-(declare-fun $t8 () Int)
-(declare-fun $t9@0 () T@$1_VASPDomain_VASPDomain)
-(declare-fun |inline$$1_Vector_length'u8'$0$l@1@@0| () Int)
-(push 1)
-(set-info :boogie-vc-id $1_VASPDomain_create_vasp_domain$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 83619) (let ((L3_correct  (and (=> (= (ControlFlow 0 71916) (- 0 83861)) (> (seq.len _$t0@@0) 63)) (=> (> (seq.len _$t0@@0) 63) (=> (= (ControlFlow 0 71916) (- 0 83868)) (and (> (seq.len _$t0@@0) 63) (= 7 $t4@0)))))))
-(let ((anon8_Else_correct  (=> (and (and (not inline$$Le$0$dst@1@@0) (= $t8 $t8)) (and (= $t4@0 $t8) (= (ControlFlow 0 71884) 71916))) L3_correct)))
-(let ((anon8_Then_correct  (=> (and inline$$Le$0$dst@1@@0 (= $t9@0 ($1_VASPDomain_VASPDomain _$t0@@0))) (and (=> (= (ControlFlow 0 71970) (- 0 83790)) (<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $t9@0)) 63)) (=> (<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $t9@0)) 63) (=> (= $t9@0 $t9@0) (and (=> (= (ControlFlow 0 71970) (- 0 83813)) (not (> (seq.len _$t0@@0) 63))) (=> (not (> (seq.len _$t0@@0) 63)) (=> (= (ControlFlow 0 71970) (- 0 83825)) (= $t9@0 ($1_VASPDomain_VASPDomain _$t0@@0)))))))))))
-(let ((anon7_Else$1_correct  (=> (|$IsValid'u64'| 5) (=> (and (and (|$IsValid'u64'| $t8) (= $t8 7)) (and (= $t8 $t8) (= inline$$Le$0$dst@1@@0 inline$$Le$0$dst@1@@0))) (and (=> (= (ControlFlow 0 71868) 71970) anon8_Then_correct) (=> (= (ControlFlow 0 71868) 71884) anon8_Else_correct))))))
-(let ((inline$$Le$0$anon0_correct@@0  (=> (and (= inline$$Le$0$dst@1@@0 (<= |inline$$1_Vector_length'u8'$0$l@1@@0| 63)) (= (ControlFlow 0 71832) 71868)) anon7_Else$1_correct)))
-(let ((anon7_Else_correct  (=> (not false) (=> (and (|$IsValid'u64'| 63) (= (ControlFlow 0 71838) 71832)) inline$$Le$0$anon0_correct@@0))))
-(let ((anon7_Then_correct true))
-(let ((|inline$$1_Vector_length'u8'$0$anon0_correct@@0|  (=> (= |inline$$1_Vector_length'u8'$0$l@1@@0| (seq.len _$t0@@0)) (and (=> (= (ControlFlow 0 71772) 71984) anon7_Then_correct) (=> (= (ControlFlow 0 71772) 71838) anon7_Else_correct)))))
-(let ((anon0$1_correct@@0  (=> (|$IsValid'vec'u8''| _$t0@@0) (=> (and (= _$t0@@0 _$t0@@0) (= (ControlFlow 0 71778) 71772)) |inline$$1_Vector_length'u8'$0$anon0_correct@@0|))))
-(let ((inline$$InitEventStore$0$anon0_correct@@0  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@5 T@$1_Event_EventHandle) ) (! (let ((stream@@5 (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $es) handle@@5)))
- (and (= (|l#Multiset_30205| stream@@5) 0) (forall ((v@@30 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@5) v@@30) 0)
- :qid |VASPDomainbpl.134:13|
- :skolemid |2|
-))))
- :qid |VASPDomainbpl.2012:13|
- :skolemid |54|
-))) (= (ControlFlow 0 71714) 71778)) anon0$1_correct@@0)))
-(let ((anon0_correct@@0  (=> (= (ControlFlow 0 83619) 71714) inline$$InitEventStore$0$anon0_correct@@0)))
-anon0_correct@@0))))))))))))
-))
-(check-sat)
-(pop 1)
-; Valid
+; Undetermined

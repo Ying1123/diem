@@ -1,10 +1,7 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
-(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
-(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -1605,7 +1602,7 @@
 (declare-fun $t7@@1 () Bool)
 (declare-fun |$1_Diem_MintCapability'$1_XDX_XDX'_$memory| () T@$Memory_125709)
 (declare-fun |$1_Diem_Preburn'$1_XDX_XDX'_$memory| () T@$Memory_131124)
-; Valid
+; Invalid
 (declare-fun _$t4 () (Seq Int))
 (declare-fun |$1_Diem_CurrencyInfo'#0'_$memory| () T@$Memory_125332)
 (declare-fun $t6@@0 () T@$1_FixedPoint32_FixedPoint32)
@@ -1914,7 +1911,7 @@
 (declare-fun $t5@@7 () T@$Mutation_167619)
 (declare-fun $t17@@0 () T@$Mutation_100577)
 (declare-fun $t18@@0 () T@$Mutation_105462)
-; Valid
+; Invalid
 (declare-fun $abort_flag@0@@9 () Bool)
 (declare-fun $1_DualAttestation_Credential_$memory@0@@1 () T@$Memory_117094)
 (declare-fun $t21@2 () T@$Mutation_167619)
@@ -1949,7 +1946,7 @@
 (declare-fun $t7@@8 () T@$Mutation_167619)
 (declare-fun $t22@@3 () T@$Mutation_100577)
 (declare-fun $t23@@2 () T@$Mutation_105462)
-; Valid
+; Invalid
 (declare-fun $abort_flag@0@@10 () Bool)
 (declare-fun $t14@0@@1 () T@$Mutation_11233)
 (declare-fun $t13@1 () T@$Mutation_172230)

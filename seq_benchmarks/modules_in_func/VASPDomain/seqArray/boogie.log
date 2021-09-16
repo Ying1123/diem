@@ -19,21 +19,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [5.999 s, 19 proof obligations]  verified
+  [5.778 s, 19 proof obligations]  verified
 
 Verifying $1_VASPDomain_create_vasp_domain$verify ...
-  [0.094 s, 5 proof obligations]  verified
+  [0.086 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domain$verify ...
-  [0.080 s, 5 proof obligations]  verified
+  [0.084 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domains$verify ...
   [0.008 s, 2 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domain_manager$verify ...
-  [0.046 s, 8 proof obligations]  verified
+  [0.045 s, 8 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domains$verify ...
-  [0.066 s, 9 proof obligations]  verified
+  [0.060 s, 9 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

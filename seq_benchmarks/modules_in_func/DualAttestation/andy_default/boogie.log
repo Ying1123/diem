@@ -4,10 +4,8 @@
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_default/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -16,25 +14,75 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_default/DualAttestation.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.281 s, 35 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.250 s, 25 proof obligations]  verified
+
+Verifying $1_DualAttestation_human_name$verify ...
+  [0.016 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_initialize$verify ...
+  [0.100 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify ...
+  [0.078 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_0 ...
+  [0.063 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_1 ...
+  [0.063 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_signature_is_valid$verify ...
+  [0.037 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_base_url$verify ...
+  [0.017 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_compliance_public_key$verify ...
+  [0.013 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_credential_address$verify ...
+  [0.028 s, 3 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_message$verify ...
+  [0.017 s, 1 proof obligation]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify ...
+  [0.034 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_0 ...
+  [0.039 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_1 ...
+  [0.037 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_expiration_date$verify ...
+  [0.012 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_get_cur_microdiem_limit$verify ...
+  [0.027 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_publish_credential$verify ...
+  [0.101 s, 11 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_base_url$verify ...
+  [0.480 s, 12 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
+  [0.464 s, 13 proof obligations]  verified
+
+Verifying $1_DualAttestation_set_microdiem_limit$verify ...
+  [0.116 s, 9 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.637 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_default/DualAttestation.bpl(19770,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
+
+Boogie program verifier finished with 21 verified, 0 errors, 1 inconclusive

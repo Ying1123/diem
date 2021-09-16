@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,25 +13,146 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/bin/cvc4
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.270 s, 35 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.228 s, 25 proof obligations]  verified
+
+Verifying $1_DualAttestation_human_name$verify ...
+  [0.020 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_initialize$verify ...
+  [0.129 s, 9 proof obligations]  error
+assert_failed(22,22047,22505): abort code not covered by any of the `aborts_if` or `aborts_with` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(10862,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2426,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(10862,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11024,34): anon27_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11051,34): anon28_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11051,34): anon28_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11103,17): anon29_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(402,5): inline$$CastU128$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11130,5): anon30_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(7332,5): inline$$1_Diem_scaling_factor'$1_XDX_XDX'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(7338,34): inline$$1_Diem_scaling_factor'$1_XDX_XDX'$0$anon8_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(7367,13): inline$$1_Diem_scaling_factor'$1_XDX_XDX'$0$anon9_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(7369,5): inline$$1_Diem_scaling_factor'$1_XDX_XDX'$0$anon10_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11139,5): anon31_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(403,9): inline$$CastU128$1$anon3_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(403,9): inline$$CastU128$1$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11149,9): anon32_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(11296,1): L5
+
+Verifying $1_DualAttestation_assert_payment_ok$verify ...
+  [0.081 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_0 ...
+  [0.083 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_1 ...
+  [0.121 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_signature_is_valid$verify ...
+  [0.064 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_base_url$verify ...
+  [0.020 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_compliance_public_key$verify ...
+  [0.019 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_credential_address$verify ...
+  [0.015 s, 3 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_message$verify ...
+  [0.019 s, 1 proof obligation]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify ...
+  [0.050 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_0 ...
+  [0.051 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_1 ...
+  [0.047 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_expiration_date$verify ...
+  [0.033 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_get_cur_microdiem_limit$verify ...
+  [0.021 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_publish_credential$verify ...
+  [0.080 s, 11 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_base_url$verify ...
+  [0.160 s, 12 proof obligations]  errors
+assert_failed(22,7901,7921): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15725,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2426,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15725,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15935,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15958,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15960,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15992,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(3278,12): inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16024,5): anon19_Else
+assert_failed(22,6457,6598): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15725,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2426,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15725,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15935,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15958,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15960,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(15992,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(3278,12): inline$$1_Event_emit_event'$1_DualAttestation_BaseUrlRotationEvent'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16024,5): anon19_Else
+
+Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
+  [0.161 s, 13 proof obligations]  errors
+assert_failed(22,10308,10328): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16173,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2426,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16173,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16383,17): anon20_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2318,9): inline$$1_Signature_ed25519_validate_pubkey$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16404,5): anon21_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16432,17): anon22_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16455,14): anon23_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16457,5): anon24_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16489,35): anon25_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(3334,12): inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16521,5): anon26_Else
+assert_failed(22,8722,8912): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16173,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2426,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16173,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16383,17): anon20_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(2318,9): inline$$1_Signature_ed25519_validate_pubkey$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16404,5): anon21_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16432,17): anon22_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16455,14): anon23_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16457,5): anon24_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16489,35): anon25_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(3334,12): inline$$1_Event_emit_event'$1_DualAttestation_ComplianceKeyRotationEvent'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(16521,5): anon26_Else
+
+Verifying $1_DualAttestation_set_microdiem_limit$verify ...
+  [0.094 s, 9 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.798 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc4/DualAttestation.bpl(19770,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
+
+Boogie program verifier finished with 18 verified, 5 errors, 1 inconclusive

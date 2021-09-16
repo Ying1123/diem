@@ -1,10 +1,7 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
-(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
-(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -2074,7 +2071,7 @@
 (declare-fun $t21@@2 () T@$Mutation_10128)
 (declare-fun $t24@@0 () T@$Mutation_10128)
 (declare-fun $t27@@2 () T@$Mutation_10128)
-; Valid
+; Invalid
 (declare-fun inline$$Gt$3$dst@1@@0 () Bool)
 (declare-fun $t15@7@@0 () T@$Mutation_166419)
 (declare-fun |$1_AccountLimits_LimitsDefinition'$1_XUS_XUS'_$memory@1| () T@$Memory_115201)
@@ -2121,7 +2118,7 @@
 (declare-fun $t21@@3 () T@$Mutation_10128)
 (declare-fun $t24@@1 () T@$Mutation_10128)
 (declare-fun $t27@@3 () T@$Mutation_10128)
-; Valid
+; Invalid
 (declare-fun inline$$Gt$3$dst@1@@1 () Bool)
 (declare-fun $t15@7@@1 () T@$Mutation_169581)
 (declare-fun |$1_AccountLimits_LimitsDefinition'$1_XDX_XDX'_$memory@1| () T@$Memory_115275)
@@ -2168,7 +2165,7 @@
 (declare-fun $t21@@4 () T@$Mutation_10128)
 (declare-fun $t24@@2 () T@$Mutation_10128)
 (declare-fun $t27@@4 () T@$Mutation_10128)
-; Valid
+; Invalid
 (declare-fun $t14@0@@2 () Bool)
 (declare-fun |$1_AccountLimits_Window'#0'_$memory@1@@0| () T@$Memory_116863)
 (declare-fun $t10@3 () T@$Mutation_119553)

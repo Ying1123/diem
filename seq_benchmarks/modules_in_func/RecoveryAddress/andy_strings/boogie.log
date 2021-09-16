@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -16,8 +15,15 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/RecoveryAddress.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+
+Verifying $1_VASP_publish_child_vasp_credential$verify ...
+  [0.323 s, 20 proof obligations]  verified
+
+Verifying $1_VASP_publish_parent_vasp_credential$verify ...
+  [0.099 s, 17 proof obligations]  verified
+
+Verifying $1_RecoveryAddress_publish$verify ...
+  [0.248 s, 13 proof obligations]  verified
+Prover error: cvc5 interrupted by SIGTERM.
+

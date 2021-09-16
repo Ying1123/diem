@@ -1,7 +1,5 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
-(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
 (set-option :ee-mode central)
@@ -869,45 +867,6 @@
 (declare-fun $abort_code@0@@2 () Int)
 (declare-fun inline$$1_ValidatorConfig_exists_config$0$$t1@1 () Bool)
 (declare-fun $t9@@1 () Int)
-; Valid
+; Undetermined
 (declare-fun _$t0@@4 () T@$1_ValidatorConfig_Config)
-(declare-fun $t1@0@@0 () (Seq Int))
-; Valid
-(declare-fun $t17 () Bool)
-(declare-fun $t16@@0 () Int)
-(declare-fun $t15@0@@0 () |T@$1_Option_Option'address'|)
-(declare-fun _$t0@@5 () Int)
-(declare-fun $t9@0@@1 () Int)
-(declare-fun $t9@@2 () Int)
-(declare-fun $t12@@1 () Bool)
-(declare-fun $t10@1@@0 () T@$1_ValidatorConfig_ValidatorConfig)
-(declare-fun $t14@@1 () Int)
-(declare-fun $abort_flag@0@@3 () Bool)
-(declare-fun $t11@0@@1 () |T@$1_Option_Option'address'|)
-(declare-fun $abort_code@1@@3 () Int)
-(declare-fun $t10@@1 () T@$1_ValidatorConfig_ValidatorConfig)
-(declare-fun $t10@0@@1 () T@$1_ValidatorConfig_ValidatorConfig)
-(declare-fun $abort_code@0@@3 () Int)
-(declare-fun $t6@0@@0 () Bool)
-(declare-fun $t8@@1 () Int)
-; Valid
-(declare-fun _$t0@@6 () T@$1_ValidatorConfig_Config)
-(declare-fun $t1@0@@1 () (Seq Int))
-(push 1)
-(set-info :boogie-vc-id $1_ValidatorConfig_get_validator_network_addresses$verify)
-(assert (not
- (=> (= (ControlFlow 0 0) 94577) (let ((anon0$1_correct@@6  (=> (|$IsValid'$1_ValidatorConfig_Config'| _$t0@@6) (=> (and (and (= _$t0@@6 _$t0@@6) (= $t1@0@@1 (|$validator_network_addresses#$1_ValidatorConfig_Config| _$t0@@6))) (and (= $t1@0@@1 $t1@0@@1) (= (ControlFlow 0 82449) (- 0 94640)))) (not false)))))
-(let ((inline$$InitEventStore$0$anon0_correct@@6  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@8 T@$1_Event_EventHandle) ) (! (let ((stream@@7 (|Select__T@[$1_Event_EventHandle]Multiset_33654_| (|streams#$EventStore| $es) handle@@8)))
- (and (= (|l#Multiset_33654| stream@@7) 0) (forall ((v@@36 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_33654| stream@@7) v@@36) 0)
- :qid |ValidatorConfigbpl.134:13|
- :skolemid |2|
-))))
- :qid |ValidatorConfigbpl.2192:13|
- :skolemid |59|
-))) (= (ControlFlow 0 82405) 82449)) anon0$1_correct@@6)))
-(let ((anon0_correct@@6  (=> (= (ControlFlow 0 94577) 82405) inline$$InitEventStore$0$anon0_correct@@6)))
-anon0_correct@@6))))
-))
-(check-sat)
-(pop 1)
-; Valid
+(declare-fun _$t0@@4 () T@$1_ValidatorConfig_Config)

@@ -3,25 +3,42 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/z3/DiemTimestamp.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_DiemTimestamp_assert_genesis$verify ...
+  [0.162 s, 3 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_assert_operating$verify ...
+  [0.020 s, 3 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_is_genesis$verify ...
+  [0.020 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTimestamp_is_operating$verify ...
+  [0.020 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTimestamp_now_microseconds$verify ...
+  [0.022 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_now_seconds$verify ...
+  [0.034 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_set_time_has_started$verify ...
+  [0.028 s, 7 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.060 s, 35 proof obligations]  verified
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [40.324 s, 28 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/z3/DiemTimestamp.bpl(13648,27): Verification of '$1_Genesis_initialize_internal$verify' timed out after 40 seconds
+
+Boogie program verifier finished with 8 verified, 0 errors, 1 time out

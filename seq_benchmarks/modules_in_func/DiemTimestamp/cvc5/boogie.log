@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/cvc5/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,12 +13,36 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/cvc5/DiemTimestamp.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_assert_genesis$verify ...
+  [0.200 s, 3 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_assert_operating$verify ...
+  [0.010 s, 3 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_is_genesis$verify ...
+  [0.003 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTimestamp_is_operating$verify ...
+  [0.004 s, 1 proof obligation]  verified
+
+Verifying $1_DiemTimestamp_now_microseconds$verify ...
+  [0.018 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_now_seconds$verify ...
+  [0.026 s, 4 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_set_time_has_started$verify ...
+  [0.030 s, 7 proof obligations]  verified
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.063 s, 35 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.588 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTimestamp/cvc5/DiemTimestamp.bpl(13648,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
+
+Boogie program verifier finished with 8 verified, 0 errors, 1 inconclusive

@@ -3,22 +3,25 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/bin/z3
+
+Verifying $1_NetworkIdentity_get$verify ...
+  [0.175 s, 4 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_add_members_internal$verify ...
+  [40.057 s, 22 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/z3/NetworkIdentity.bpl(5245,27): Verification of '$1_NetworkIdentity_add_members_internal$verify' timed out after 40 seconds
+
+Verifying $1_NetworkIdentity_initialize_network_identity$verify ...
+  [0.288 s, 2 proof obligations]  verified
+
+Verifying $1_NetworkIdentity_initialize_network_identity_event_handle$verify ...
+  [0.027 s, 0 proof obligations]  verified

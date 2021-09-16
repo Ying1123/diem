@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,21 +18,73 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [5.830 s, 19 proof obligations]  verified
+  [30.946 s, 19 proof obligations]  errors
+assert_failed(36,635,714): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(2866,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(2007,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(2866,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3064,35): anon33_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(5235,5): inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3087,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3115,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3160,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3183,14): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3185,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3479,9): inline$$1_VASPDomain_create_vasp_domain$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(1742,7): inline$$1_Vector_length'u8'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3489,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(551,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3489,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3524,16): inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3199,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(1289,9): inline$$1_Vector_contains'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3215,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3215,5): anon40_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3248,17): anon41_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(1173,8): inline$$1_Vector_push_back'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3297,5): anon42_Else
+assert_failed(36,771,876): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(2866,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(2007,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(2866,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3064,35): anon33_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(5235,5): inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3087,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3115,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3160,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3183,14): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3185,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3479,9): inline$$1_VASPDomain_create_vasp_domain$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(1742,7): inline$$1_Vector_length'u8'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3489,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(551,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3489,5): inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3524,16): inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3199,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(1289,9): inline$$1_Vector_contains'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3215,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3215,5): anon40_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3248,17): anon41_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(1173,8): inline$$1_Vector_push_back'$1_VASPDomain_VASPDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/VASPDomain.bpl(3297,5): anon42_Else
 
 Verifying $1_VASPDomain_create_vasp_domain$verify ...
-  [0.087 s, 5 proof obligations]  verified
+  [0.146 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domain$verify ...
-  [0.073 s, 5 proof obligations]  verified
+  [0.083 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domains$verify ...
-  [0.009 s, 2 proof obligations]  verified
+  [0.008 s, 2 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domain_manager$verify ...
-  [0.046 s, 8 proof obligations]  verified
+  [0.064 s, 8 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domains$verify ...
-  [0.065 s, 9 proof obligations]  verified
+  [0.068 s, 9 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

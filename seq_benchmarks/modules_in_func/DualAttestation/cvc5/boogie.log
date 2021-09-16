@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc5/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/CVC4/prod/bin/cvc5
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:no-dt-share-sel
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,25 +13,75 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc5/DualAttestation.bpl
 Coalescing blocks...
 Inlining...
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
-Fatal Error: ProverException: Options to be passed to the prover should have the format: <name>=<value>, got 'no-dt-share-sel'
+[TRACE] Using prover: /home/ying/CVC4/prod/bin/cvc5
+
+Verifying $1_DiemTimestamp_update_global_time$verify ...
+  [0.237 s, 35 proof obligations]  verified
+
+Verifying $1_Roles_grant_role$verify ...
+  [0.205 s, 25 proof obligations]  verified
+
+Verifying $1_DualAttestation_human_name$verify ...
+  [0.012 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_initialize$verify ...
+  [0.061 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify ...
+  [0.072 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_0 ...
+  [0.070 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_payment_ok$verify_instantiated_1 ...
+  [0.090 s, 9 proof obligations]  verified
+
+Verifying $1_DualAttestation_assert_signature_is_valid$verify ...
+  [0.040 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_base_url$verify ...
+  [0.013 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_compliance_public_key$verify ...
+  [0.015 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_credential_address$verify ...
+  [0.014 s, 3 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_message$verify ...
+  [0.020 s, 1 proof obligation]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify ...
+  [0.036 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_0 ...
+  [0.055 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_dual_attestation_required$verify_instantiated_1 ...
+  [0.036 s, 6 proof obligations]  verified
+
+Verifying $1_DualAttestation_expiration_date$verify ...
+  [0.010 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_get_cur_microdiem_limit$verify ...
+  [0.014 s, 4 proof obligations]  verified
+
+Verifying $1_DualAttestation_publish_credential$verify ...
+  [0.094 s, 11 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_base_url$verify ...
+  [0.263 s, 12 proof obligations]  verified
+
+Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
+  [0.292 s, 13 proof obligations]  verified
+
+Verifying $1_DualAttestation_set_microdiem_limit$verify ...
+  [0.076 s, 9 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
+
+Verifying $1_Genesis_initialize_internal$verify ...
+  [0.566 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/cvc5/DualAttestation.bpl(19770,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
+
+Boogie program verifier finished with 21 verified, 0 errors, 1 inconclusive

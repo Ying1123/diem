@@ -1,10 +1,7 @@
 (set-option :print-success false)
 (set-info :smt-lib-version 2.6)
-(set-option :strings-exp true)
-(set-option :strings-seq-update eager)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
-(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -2208,4 +2205,4 @@ PreconditionGeneratedEntry_correct@@0)))))))))))))))))))))))))))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
-; Valid
+; Undetermined

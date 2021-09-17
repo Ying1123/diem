@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/XUS/seqArray/_1_Diem_cancel_burn_with_capability_verify.smt2:471.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/XUS/seqArray/_1_Diem_cancel_burn_with_capability_verify.smt2:1601.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

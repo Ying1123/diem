@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/_1_Genesis_initialize_internal_verify.smt2:423.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/_1_Genesis_initialize_internal_verify.smt2:1445.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/_1_Genesis_initialize_internal_verify.smt2:2582.123: unterminated |quoted| symbol")

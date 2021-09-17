@@ -1,0 +1,7 @@
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_DiemAccount_cancel_burn_verify.smt2:655.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_DiemAccount_cancel_burn_verify.smt2:2449.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_DiemAccount_cancel_burn_verify.smt2:3004.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_DiemAccount_cancel_burn_verify.smt2:3004.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_DiemAccount_cancel_burn_verify.smt2:3004.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_DiemAccount_cancel_burn_verify.smt2:3004.12: To suppress this warning in the future use (set-logic ALL).

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/andy_strings/_1_DiemSystem_is_validator_verify.smt2:490.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemSystem/andy_strings/_1_DiemSystem_is_validator_verify.smt2:1722.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

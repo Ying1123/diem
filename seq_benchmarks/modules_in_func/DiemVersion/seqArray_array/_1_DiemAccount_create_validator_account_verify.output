@@ -1,0 +1,7 @@
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/seqArray_array/_1_DiemAccount_create_validator_account_verify.smt2:588.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/seqArray_array/_1_DiemAccount_create_validator_account_verify.smt2:2212.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/seqArray_array/_1_DiemAccount_create_validator_account_verify.smt2:2590.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/seqArray_array/_1_DiemAccount_create_validator_account_verify.smt2:2590.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/seqArray_array/_1_DiemAccount_create_validator_account_verify.smt2:2590.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/seqArray_array/_1_DiemAccount_create_validator_account_verify.smt2:2590.12: To suppress this warning in the future use (set-logic ALL).

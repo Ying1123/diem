@@ -1,0 +1,3 @@
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/seqArray_array/_1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin_verify.smt2:428.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/seqArray_array/_1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin_verify.smt2:1669.145: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

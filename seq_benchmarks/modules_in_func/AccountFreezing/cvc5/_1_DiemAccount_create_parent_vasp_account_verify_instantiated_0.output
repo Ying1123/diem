@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/cvc5/_1_DiemAccount_create_parent_vasp_account_verify_instantiated_0.smt2:465.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/cvc5/_1_DiemAccount_create_parent_vasp_account_verify_instantiated_0.smt2:1650.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

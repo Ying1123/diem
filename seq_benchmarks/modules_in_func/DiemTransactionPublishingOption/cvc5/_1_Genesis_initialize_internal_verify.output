@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/cvc5/_1_Genesis_initialize_internal_verify.smt2:402.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/cvc5/_1_Genesis_initialize_internal_verify.smt2:1382.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

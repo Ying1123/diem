@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/ChainId/andy_strings/_1_Genesis_initialize_internal_verify.smt2:399.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ChainId/andy_strings/_1_Genesis_initialize_internal_verify.smt2:1374.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/_1_AccountAdministrationScripts_rotate_dual_attestation_info_verify.smt2:407.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountAdministrationScripts/andy_strings/_1_AccountAdministrationScripts_rotate_dual_attestation_info_verify.smt2:1490.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/CRSN/andy_default/_1_CRSN_publish_verify.smt2:56.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/CRSN/andy_default/_1_CRSN_publish_verify.smt2:205.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

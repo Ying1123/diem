@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_strings/_1_DiemAccount_create_designated_dealer_verify_instantiated_0.smt2:482.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/andy_strings/_1_DiemAccount_create_designated_dealer_verify_instantiated_0.smt2:1677.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

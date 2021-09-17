@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/cvc4/_1_DiemAccount_create_designated_dealer_verify.smt2:463.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/cvc4/_1_DiemAccount_create_designated_dealer_verify.smt2:1648.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

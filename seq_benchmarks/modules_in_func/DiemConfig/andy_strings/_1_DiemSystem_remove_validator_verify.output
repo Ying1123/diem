@@ -1,0 +1,19 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/andy_strings/_1_DiemSystem_remove_validator_verify.smt2:425.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/andy_strings/_1_DiemSystem_remove_validator_verify.smt2:1447.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unknown
+(:reason-unknown incomplete)
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+(error "Cannot get value unless model generation is enabled (try --produce-models)")
+cvc5 interrupted by SIGTERM.

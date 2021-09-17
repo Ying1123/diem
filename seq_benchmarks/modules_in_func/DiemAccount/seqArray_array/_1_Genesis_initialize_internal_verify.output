@@ -1,0 +1,3 @@
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_Genesis_initialize_internal_verify.smt2:655.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/seqArray_array/_1_Genesis_initialize_internal_verify.smt2:2443.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

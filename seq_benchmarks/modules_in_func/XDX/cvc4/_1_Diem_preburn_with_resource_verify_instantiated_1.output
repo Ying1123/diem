@@ -1,0 +1,4 @@
+unsupported
+/home/ying/diem/seq_benchmarks/modules_in_func/XDX/cvc4/_1_Diem_preburn_with_resource_verify_instantiated_1.smt2:468.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/XDX/cvc4/_1_Diem_preburn_with_resource_verify_instantiated_1.smt2:1598.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

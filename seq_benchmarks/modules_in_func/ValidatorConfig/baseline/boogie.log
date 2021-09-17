@@ -14,39 +14,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.184 s, 25 proof obligations]  verified
+  [0.177 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.030 s, 4 proof obligations]  verified
+  [0.032 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.055 s, 15 proof obligations]  verified
+  [0.054 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
   [0.022 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.055 s, 5 proof obligations]  verified
+  [0.057 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
   [0.022 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_operator$verify ...
-  [0.030 s, 5 proof obligations]  verified
+  [0.033 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.021 s, 1 proof obligation]  verified
+  [0.020 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
   [0.025 s, 3 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.064 s, 16 proof obligations]  verified
+  [0.068 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.070 s, 18 proof obligations]  verified
+  [0.066 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.075 s, 21 proof obligations]  verified
+  [0.077 s, 21 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

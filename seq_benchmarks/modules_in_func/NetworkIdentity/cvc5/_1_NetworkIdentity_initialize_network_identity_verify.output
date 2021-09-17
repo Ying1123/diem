@@ -1,2 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/cvc5/_1_NetworkIdentity_initialize_network_identity_verify.smt2:358.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)

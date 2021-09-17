@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_exchange_rate_verify_instantiated_1.smt2:482.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_exchange_rate_verify_instantiated_1.smt2:1754.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_default/_1_TreasuryComplianceScripts_update_exchange_rate_verify_instantiated_1.smt2:1839.28: Unexpected token: '<<EOF>>'.")

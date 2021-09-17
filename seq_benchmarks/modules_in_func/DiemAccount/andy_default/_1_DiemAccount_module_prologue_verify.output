@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_default/_1_DiemAccount_module_prologue_verify.smt2:541.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_default/_1_DiemAccount_module_prologue_verify.smt2:1858.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/DiemAccount/andy_default/_1_DiemAccount_module_prologue_verify.smt2:2010.37: Cannot bind $abort_flag@0@@3 to symbol of type Bool, maybe the symbol has already been defined?")

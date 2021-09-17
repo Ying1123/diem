@@ -19,19 +19,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [5.899 s, 19 proof obligations]  verified
+  [5.810 s, 19 proof obligations]  verified
 
 Verifying $1_VASPDomain_create_vasp_domain$verify ...
-  [0.081 s, 5 proof obligations]  verified
+  [0.078 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domain$verify ...
-  [0.079 s, 5 proof obligations]  verified
+  [0.081 s, 5 proof obligations]  verified
 
 Verifying $1_VASPDomain_has_vasp_domains$verify ...
-  [0.009 s, 2 proof obligations]  verified
+  [0.008 s, 2 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domain_manager$verify ...
-  [0.049 s, 8 proof obligations]  verified
+  [0.044 s, 8 proof obligations]  verified
 
 Verifying $1_VASPDomain_publish_vasp_domains$verify ...
   [0.066 s, 9 proof obligations]  verified

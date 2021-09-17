@@ -19,16 +19,16 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_SharedEd25519PublicKey_publish$verify ...
-  [0.234 s, 11 proof obligations]  verified
+  [0.239 s, 11 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_exists_at$verify ...
-  [0.004 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_key$verify ...
-  [0.004 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_rotate_key$verify ...
-  [0.070 s, 8 proof obligations]  verified
+  [0.073 s, 8 proof obligations]  verified
 
 Verifying $1_SharedEd25519PublicKey_rotate_key_$verify ...
   [0.041 s, 6 proof obligations]  verified

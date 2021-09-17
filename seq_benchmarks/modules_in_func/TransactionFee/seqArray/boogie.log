@@ -19,45 +19,45 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.289 s, 35 proof obligations]  verified
+  [0.293 s, 35 proof obligations]  verified
 
 Verifying $1_TransactionFee_initialize$verify ...
-  [0.112 s, 10 proof obligations]  verified
+  [0.113 s, 10 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify ...
-  [0.008 s, 0 proof obligations]  verified
+  [0.014 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_0 ...
-  [0.044 s, 1 proof obligation]  verified
+  [0.052 s, 1 proof obligation]  verified
 
 Verifying $1_TransactionFee_add_txn_fee_currency$verify_instantiated_1 ...
   [0.013 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify ...
-  [0.636 s, 17 proof obligations]  verified
+  [0.640 s, 17 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify_instantiated_0 ...
-  [0.745 s, 18 proof obligations]  verified
+  [0.717 s, 18 proof obligations]  verified
 
 Verifying $1_TransactionFee_burn_fees$verify_instantiated_1 ...
-  [0.195 s, 17 proof obligations]  verified
+  [0.197 s, 17 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_coin_initialized$verify ...
   [0.007 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_coin_initialized$verify_instantiated_0 ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_is_initialized$verify ...
-  [0.002 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify ...
-  [0.079 s, 6 proof obligations]  verified
+  [0.071 s, 6 proof obligations]  verified
 
 Verifying $1_TransactionFee_pay_fee$verify_instantiated_0 ...
-  [0.083 s, 7 proof obligations]  verified
+  [0.081 s, 7 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.275 s, 28 proof obligations]  verified
+  [2.270 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 14 verified, 0 errors

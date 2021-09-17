@@ -14,94 +14,94 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.192 s, 25 proof obligations]  verified
+  [0.201 s, 25 proof obligations]  verified
 
 Verifying $1_AccountLimits_current_time$verify ...
-  [0.037 s, 0 proof obligations]  verified
+  [0.033 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify ...
-  [0.081 s, 9 proof obligations]  verified
+  [0.084 s, 9 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_0 ...
-  [0.092 s, 9 proof obligations]  verified
+  [0.081 s, 9 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_receive_and_update_window$verify_instantiated_1 ...
-  [0.089 s, 9 proof obligations]  verified
+  [0.079 s, 9 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_withdraw_and_update_window$verify ...
-  [0.079 s, 8 proof obligations]  verified
+  [0.069 s, 8 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_withdraw_and_update_window$verify_instantiated_0 ...
-  [0.072 s, 8 proof obligations]  verified
+  [0.066 s, 8 proof obligations]  verified
 
 Verifying $1_AccountLimits_can_withdraw_and_update_window$verify_instantiated_1 ...
-  [0.072 s, 8 proof obligations]  verified
+  [0.070 s, 8 proof obligations]  verified
 
 Verifying $1_AccountLimits_grant_mutation_capability$verify ...
-  [0.042 s, 6 proof obligations]  verified
+  [0.039 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_limits_published$verify ...
-  [0.027 s, 0 proof obligations]  verified
+  [0.025 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_limits_published$verify_instantiated_0 ...
-  [0.032 s, 0 proof obligations]  verified
+  [0.033 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_limits_published$verify_instantiated_1 ...
-  [0.028 s, 0 proof obligations]  verified
+  [0.025 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_has_window_published$verify ...
-  [0.030 s, 1 proof obligation]  verified
+  [0.028 s, 1 proof obligation]  verified
 
 Verifying $1_AccountLimits_is_unrestricted$verify ...
-  [0.030 s, 2 proof obligations]  verified
+  [0.033 s, 2 proof obligations]  verified
 
 Verifying $1_AccountLimits_limits_definition_address$verify ...
-  [0.026 s, 0 proof obligations]  verified
+  [0.025 s, 0 proof obligations]  verified
 
 Verifying $1_AccountLimits_publish_window$verify ...
-  [0.072 s, 12 proof obligations]  verified
+  [0.061 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_publish_window$verify_instantiated_0 ...
-  [0.067 s, 12 proof obligations]  verified
+  [0.066 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_publish_window$verify_instantiated_1 ...
-  [0.072 s, 12 proof obligations]  verified
+  [0.063 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_reset_window$verify ...
-  [0.046 s, 5 proof obligations]  verified
+  [0.049 s, 5 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_deposit_limits$verify ...
-  [0.089 s, 16 proof obligations]  verified
+  [0.087 s, 16 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_deposit_limits$verify_instantiated_0 ...
-  [0.076 s, 16 proof obligations]  verified
+  [0.082 s, 16 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_deposit_limits$verify_instantiated_1 ...
-  [0.076 s, 16 proof obligations]  verified
+  [0.087 s, 16 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify ...
   [0.065 s, 12 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_0 ...
-  [0.071 s, 16 proof obligations]  verified
+  [0.069 s, 16 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_limits_definition$verify_instantiated_1 ...
-  [0.063 s, 16 proof obligations]  verified
+  [0.064 s, 16 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_window_info$verify ...
-  [0.062 s, 6 proof obligations]  verified
+  [0.067 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_window_info$verify_instantiated_0 ...
-  [0.062 s, 6 proof obligations]  verified
+  [0.061 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_window_info$verify_instantiated_1 ...
-  [0.066 s, 6 proof obligations]  verified
+  [0.069 s, 6 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_withdrawal_limits$verify ...
   [0.078 s, 14 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_0 ...
-  [0.072 s, 14 proof obligations]  verified
+  [0.077 s, 14 proof obligations]  verified
 
 Verifying $1_AccountLimits_update_withdrawal_limits$verify_instantiated_1 ...
   [0.078 s, 14 proof obligations]  verified

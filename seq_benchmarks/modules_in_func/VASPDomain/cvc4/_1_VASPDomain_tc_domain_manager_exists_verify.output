@@ -1,4 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/cvc4/_1_VASPDomain_tc_domain_manager_exists_verify.smt2:192.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/cvc4/_1_VASPDomain_tc_domain_manager_exists_verify.smt2:733.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/cvc4/_1_VASPDomain_tc_domain_manager_exists_verify.smt2:740.36: unterminated |quoted| symbol")

@@ -19,7 +19,7 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DesignatedDealer_add_currency$verify ...
-  [0.232 s, 13 proof obligations]  verified
+  [0.235 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_add_currency_for_test$verify ...
   [0.007 s, 0 proof obligations]  verified
@@ -34,15 +34,15 @@ Verifying $1_DesignatedDealer_exists_at$verify ...
   [0.006 s, 2 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_publish_designated_dealer_credential$verify ...
-  [0.098 s, 21 proof obligations]  verified
+  [0.099 s, 21 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify ...
-  [1.050 s, 22 proof obligations]  verified
+  [1.069 s, 22 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_0 ...
-  [1.117 s, 22 proof obligations]  verified
+  [1.136 s, 22 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_1 ...
-  [1.226 s, 22 proof obligations]  verified
+  [1.265 s, 22 proof obligations]  verified
 
 Boogie program verifier finished with 9 verified, 0 errors

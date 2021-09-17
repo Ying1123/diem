@@ -19,24 +19,24 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemId_tc_domain_manager_exists$verify ...
-  [0.179 s, 2 proof obligations]  verified
+  [0.177 s, 2 proof obligations]  verified
 
 Verifying $1_DiemId_add_diem_id_domain$verify ...
-  [5.073 s, 18 proof obligations]  verified
+  [4.988 s, 18 proof obligations]  verified
 
 Verifying $1_DiemId_create_diem_id_domain$verify ...
-  [0.099 s, 5 proof obligations]  verified
+  [0.093 s, 5 proof obligations]  verified
 
 Verifying $1_DiemId_has_diem_id_domain$verify ...
-  [0.071 s, 5 proof obligations]  verified
+  [0.072 s, 5 proof obligations]  verified
 
 Verifying $1_DiemId_has_diem_id_domains$verify ...
   [0.007 s, 2 proof obligations]  verified
 
 Verifying $1_DiemId_publish_diem_id_domain_manager$verify ...
-  [0.065 s, 8 proof obligations]  verified
+  [0.071 s, 8 proof obligations]  verified
 
 Verifying $1_DiemId_publish_diem_id_domains$verify ...
-  [0.080 s, 9 proof obligations]  verified
+  [0.070 s, 9 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

@@ -1,8 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc5/_1_TreasuryComplianceScripts_update_exchange_rate_verify_instantiated_1.smt2:481.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc5/_1_TreasuryComplianceScripts_update_exchange_rate_verify_instantiated_1.smt2:1753.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc5/_1_TreasuryComplianceScripts_update_exchange_rate_verify_instantiated_1.smt2:1838.59: Symbol 'T@$Mem' not declared as a type
-
-  ...1_DiemAccount_DiemAccount_$memory@0 () T@$Mem
-                                            ^
-")

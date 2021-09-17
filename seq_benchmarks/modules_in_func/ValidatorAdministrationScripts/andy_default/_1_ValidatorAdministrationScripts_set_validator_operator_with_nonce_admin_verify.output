@@ -1,8 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_default/_1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin_verify.smt2:359.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_default/_1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin_verify.smt2:1346.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_default/_1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin_verify.smt2:1475.54: Symbol 'T@$' not declared as a type
-
-  ...fun $1_DesignatedDealer_Dealer_$memory () T@$
-                                               ^
-")

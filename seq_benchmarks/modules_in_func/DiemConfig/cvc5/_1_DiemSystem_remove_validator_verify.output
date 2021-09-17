@@ -1,3 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc5/_1_DiemSystem_remove_validator_verify.smt2:423.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc5/_1_DiemSystem_remove_validator_verify.smt2:1445.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)

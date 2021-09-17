@@ -19,129 +19,129 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.284 s, 35 proof obligations]  verified
+  [0.301 s, 35 proof obligations]  verified
 
 Verifying $1_Roles_assert_diem_root$verify ...
-  [0.056 s, 13 proof obligations]  verified
+  [0.049 s, 13 proof obligations]  verified
 
 Verifying $1_Roles_assert_treasury_compliance$verify ...
-  [0.039 s, 12 proof obligations]  verified
+  [0.044 s, 12 proof obligations]  verified
 
 Verifying $1_Roles_assert_child_vasp_role$verify ...
-  [0.039 s, 11 proof obligations]  verified
-
-Verifying $1_Roles_assert_designated_dealer$verify ...
-  [0.043 s, 11 proof obligations]  verified
-
-Verifying $1_Roles_assert_parent_vasp_or_child_vasp$verify ...
-  [0.064 s, 11 proof obligations]  verified
-
-Verifying $1_Roles_assert_parent_vasp_or_designated_dealer$verify ...
-  [0.044 s, 11 proof obligations]  verified
-
-Verifying $1_Roles_assert_parent_vasp_role$verify ...
-  [0.046 s, 11 proof obligations]  verified
-
-Verifying $1_Roles_assert_validator$verify ...
   [0.038 s, 11 proof obligations]  verified
 
+Verifying $1_Roles_assert_designated_dealer$verify ...
+  [0.056 s, 11 proof obligations]  verified
+
+Verifying $1_Roles_assert_parent_vasp_or_child_vasp$verify ...
+  [0.055 s, 11 proof obligations]  verified
+
+Verifying $1_Roles_assert_parent_vasp_or_designated_dealer$verify ...
+  [0.042 s, 11 proof obligations]  verified
+
+Verifying $1_Roles_assert_parent_vasp_role$verify ...
+  [0.041 s, 11 proof obligations]  verified
+
+Verifying $1_Roles_assert_validator$verify ...
+  [0.040 s, 11 proof obligations]  verified
+
 Verifying $1_Roles_assert_validator_operator$verify ...
-  [0.050 s, 11 proof obligations]  verified
+  [0.052 s, 11 proof obligations]  verified
 
 Verifying $1_Roles_can_hold_balance$verify ...
-  [0.051 s, 7 proof obligations]  verified
+  [0.050 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_get_role_id$verify ...
-  [0.040 s, 7 proof obligations]  verified
+  [0.037 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_grant_diem_root_role$verify ...
-  [0.118 s, 17 proof obligations]  verified
+  [0.115 s, 17 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.265 s, 25 proof obligations]  verified
+  [0.262 s, 25 proof obligations]  verified
 
 Verifying $1_Roles_grant_treasury_compliance_role$verify ...
-  [0.130 s, 20 proof obligations]  verified
+  [0.129 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_has_child_VASP_role$verify ...
-  [0.067 s, 7 proof obligations]  verified
+  [0.057 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_designated_dealer_role$verify ...
-  [0.038 s, 7 proof obligations]  verified
+  [0.037 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_diem_root_role$verify ...
-  [0.048 s, 7 proof obligations]  verified
+  [0.041 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_parent_VASP_role$verify ...
-  [0.056 s, 7 proof obligations]  verified
+  [0.058 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_role$verify ...
   [0.036 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_treasury_compliance_role$verify ...
-  [0.044 s, 7 proof obligations]  verified
+  [0.041 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_validator_operator_role$verify ...
-  [0.043 s, 7 proof obligations]  verified
+  [0.040 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_has_validator_role$verify ...
-  [0.061 s, 7 proof obligations]  verified
+  [0.063 s, 7 proof obligations]  verified
 
 Verifying $1_Roles_new_child_vasp_role$verify ...
-  [0.121 s, 18 proof obligations]  verified
+  [0.128 s, 18 proof obligations]  verified
 
 Verifying $1_Roles_new_designated_dealer_role$verify ...
-  [0.124 s, 20 proof obligations]  verified
+  [0.130 s, 20 proof obligations]  verified
 
 Verifying $1_Roles_new_parent_vasp_role$verify ...
-  [0.126 s, 20 proof obligations]  verified
-
-Verifying $1_Roles_new_validator_operator_role$verify ...
   [0.133 s, 20 proof obligations]  verified
 
+Verifying $1_Roles_new_validator_operator_role$verify ...
+  [0.125 s, 20 proof obligations]  verified
+
 Verifying $1_Roles_new_validator_role$verify ...
-  [0.139 s, 20 proof obligations]  verified
+  [0.155 s, 20 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [2.352 s, 37 proof obligations]  verified
+  [2.438 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [2.298 s, 37 proof obligations]  verified
+  [2.386 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [2.212 s, 37 proof obligations]  verified
+  [2.198 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify ...
-  [2.318 s, 40 proof obligations]  verified
+  [2.335 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
-  [2.053 s, 40 proof obligations]  verified
+  [2.117 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
-  [2.294 s, 40 proof obligations]  verified
+  [2.269 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [1.083 s, 36 proof obligations]  verified
+  [1.122 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [2.558 s, 38 proof obligations]  verified
+  [2.697 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.754 s, 38 proof obligations]  verified
+  [2.888 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [3.147 s, 38 proof obligations]  verified
+  [3.378 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [1.144 s, 39 proof obligations]  verified
+  [1.178 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_account$verify ...
-  [1.011 s, 24 proof obligations]  verified
+  [1.057 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_operator_account$verify ...
-  [0.245 s, 22 proof obligations]  verified
+  [0.252 s, 22 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.283 s, 28 proof obligations]  verified
+  [2.407 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 42 verified, 0 errors

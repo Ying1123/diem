@@ -19,13 +19,13 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.270 s, 35 proof obligations]  verified
+  [0.271 s, 35 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.128 s, 20 proof obligations]  verified
+  [0.122 s, 20 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
-  [0.203 s, 15 proof obligations]  error
+  [0.199 s, 15 proof obligations]  error
 assert_failed(27,3010,3103): post-condition does not hold
 Execution trace:
     /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6103,9): anon0
@@ -45,6 +45,6 @@ Execution trace:
     /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/seqArray/RegisteredCurrencies.bpl(6466,5): anon17
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.177 s, 28 proof obligations]  verified
+  [2.183 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 3 verified, 1 error

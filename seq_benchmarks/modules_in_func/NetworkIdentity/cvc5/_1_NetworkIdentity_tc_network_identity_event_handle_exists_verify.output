@@ -1,3 +1,0 @@
-unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/cvc5/_1_NetworkIdentity_tc_network_identity_event_handle_exists_verify.smt2:358.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-(error "Parse Error: /home/ying/diem/seq_benchmarks/modules_in_func/NetworkIdentity/cvc5/_1_NetworkIdentity_tc_network_identity_event_handle_exists_verify.smt2:1321.49: unterminated |quoted| symbol")

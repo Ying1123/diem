@@ -14,69 +14,69 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.193 s, 35 proof obligations]  verified
+  [0.190 s, 35 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
   [0.082 s, 25 proof obligations]  verified
 
 Verifying $1_AccountFreezing_initialize$verify ...
-  [0.049 s, 8 proof obligations]  verified
+  [0.046 s, 8 proof obligations]  verified
 
 Verifying $1_AccountFreezing_account_is_frozen$verify ...
-  [0.040 s, 3 proof obligations]  verified
+  [0.036 s, 3 proof obligations]  verified
 
 Verifying $1_AccountFreezing_assert_not_frozen$verify ...
-  [0.034 s, 3 proof obligations]  verified
+  [0.035 s, 3 proof obligations]  verified
 
 Verifying $1_AccountFreezing_create$verify ...
-  [0.044 s, 7 proof obligations]  verified
+  [0.042 s, 7 proof obligations]  verified
 
 Verifying $1_AccountFreezing_freeze_account$verify ...
-  [0.082 s, 18 proof obligations]  verified
+  [0.071 s, 18 proof obligations]  verified
 
 Verifying $1_AccountFreezing_unfreeze_account$verify ...
-  [0.082 s, 16 proof obligations]  verified
+  [0.087 s, 16 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [0.226 s, 37 proof obligations]  verified
+  [0.219 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [0.221 s, 37 proof obligations]  verified
+  [0.220 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [0.229 s, 37 proof obligations]  verified
+  [0.237 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify ...
-  [0.237 s, 40 proof obligations]  verified
+  [0.242 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
-  [0.228 s, 40 proof obligations]  verified
+  [0.205 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
-  [0.238 s, 40 proof obligations]  verified
+  [0.242 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [0.085 s, 36 proof obligations]  verified
+  [0.089 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [0.224 s, 38 proof obligations]  verified
+  [0.223 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [0.216 s, 38 proof obligations]  verified
+  [0.213 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [0.222 s, 38 proof obligations]  verified
+  [0.226 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [0.108 s, 39 proof obligations]  verified
+  [0.107 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_account$verify ...
-  [0.108 s, 24 proof obligations]  verified
+  [0.098 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_operator_account$verify ...
-  [0.085 s, 22 proof obligations]  verified
+  [0.083 s, 22 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [0.484 s, 28 proof obligations]  verified
+  [0.483 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 22 verified, 0 errors

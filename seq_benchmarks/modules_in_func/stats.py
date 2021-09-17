@@ -39,7 +39,7 @@ with open('result.csv', mode='w') as result_file:
 			elif exists("error", ls):
 				result_map[(func, option)] = "fail"
 			elif exists("unsat", ls):
-				result_map[(func, option)] = str(time)
+				result_map[(func, option)] = float(str(time))/1000.
 			else:
 				result_map[(func, option)] = "fail"
 		i = i + 4

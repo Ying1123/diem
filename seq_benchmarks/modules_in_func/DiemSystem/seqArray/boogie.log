@@ -19,43 +19,43 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.304 s, 35 proof obligations]  verified
+  [0.324 s, 35 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.211 s, 16 proof obligations]  verified
+  [0.216 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.218 s, 18 proof obligations]  verified
+  [0.213 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.251 s, 21 proof obligations]  verified
+  [0.245 s, 21 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify ...
-  [0.113 s, 13 proof obligations]  verified
+  [0.108 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_0 ...
-  [0.104 s, 14 proof obligations]  verified
+  [0.107 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_1 ...
   [0.107 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_2 ...
-  [0.122 s, 14 proof obligations]  verified
+  [0.119 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_3 ...
-  [0.105 s, 14 proof obligations]  verified
+  [0.114 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.109 s, 16 proof obligations]  verified
+  [0.111 s, 16 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
-  [0.114 s, 17 proof obligations]  verified
-
-Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
   [0.116 s, 17 proof obligations]  verified
 
+Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
+  [0.110 s, 17 proof obligations]  verified
+
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
-  [0.114 s, 17 proof obligations]  verified
+  [0.108 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
   [0.110 s, 17 proof obligations]  verified
@@ -67,27 +67,27 @@ Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiate
   [0.104 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_1 ...
-  [0.108 s, 13 proof obligations]  verified
+  [0.105 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_2 ...
-  [0.110 s, 13 proof obligations]  verified
+  [0.112 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_3 ...
-  [0.106 s, 13 proof obligations]  verified
+  [0.104 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify ...
-  [0.269 s, 14 proof obligations]  verified
+  [0.280 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_0 ...
-  [0.257 s, 15 proof obligations]  verified
+  [0.268 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_1 ...
-  [0.257 s, 15 proof obligations]  verified
+  [0.265 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_2 ...
-  [0.293 s, 15 proof obligations]  verified
+  [0.307 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_3 ...
-  [0.296 s, 15 proof obligations]  verified
+  [0.289 s, 15 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

@@ -14,21 +14,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify ...
-  [0.792 s, 39 proof obligations]  verified
+  [0.764 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_0 ...
-  [0.588 s, 39 proof obligations]  verified
+  [0.562 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_by_signers$verify_instantiated_1 ...
-  [0.608 s, 39 proof obligations]  verified
+  [0.593 s, 39 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify ...
-  [0.622 s, 46 proof obligations]  verified
+  [0.618 s, 46 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_0 ...
-  [0.630 s, 46 proof obligations]  verified
+  [0.614 s, 46 proof obligations]  verified
 
 Verifying $1_PaymentScripts_peer_to_peer_with_metadata$verify_instantiated_1 ...
-  [0.635 s, 46 proof obligations]  verified
+  [0.637 s, 46 proof obligations]  verified
 
 Boogie program verifier finished with 6 verified, 0 errors

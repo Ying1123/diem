@@ -6,6 +6,7 @@ f_old = open('QF_AX_SEQ/result/swap_old_seq.t', 'r')
 f_array = open('QF_AX_ARRAY/result/swap_array.t', 'r')
 
 timeout_new = []
+timeout_old = []
 timeout_array = []
 name = ""
 new = []
@@ -22,8 +23,12 @@ for line in f_new.readlines():
       timeout_new.append(name)
 for line in f_old.readlines():
   i += 1
-  if i % 2 == 0:
+  if i % 2 == 1:
+    name = line[0:-1]
+  else:
     old.append(int(line))
+    if int(line) >= 120:
+      timeout_old.append(name)
 for line in f_array.readlines():
   i += 1
   if i % 2 == 1:
@@ -37,6 +42,7 @@ for line in f_array.readlines():
 #print("array\t", timeout_array)
 #print(set(timeout_new) - set(timeout_array))
 print("lens: {} {} {}".format(len(new), len(old), len(array)))
+print("lens: {} {} {}".format(len(timeout_new), len(timeout_old), len(timeout_array)))
 
 
 x = np.linspace(0, np.max(np.array(array)), 1000)

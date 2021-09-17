@@ -1,2 +1,4 @@
 unsupported
-(error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/cvc5/_1_Roles_grant_role_verify.smt2:419.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Diem/cvc5/_1_Roles_grant_role_verify.smt2:1483.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

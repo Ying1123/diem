@@ -1,2 +1,4 @@
 unsupported
-(error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/cvc4/_1_SharedEd25519PublicKey_publish_verify.smt2:123.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SharedEd25519PublicKey/cvc4/_1_SharedEd25519PublicKey_publish_verify.smt2:466.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

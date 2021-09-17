@@ -83,6 +83,9 @@ find $bm_dir -type f -print0 | while read -d $'\0' file; do
 				else # cvc4 cvc5 andy_default
 					sed -i '/(set-option :strings-seq-update eager)/d' $bm_dir_single/$option/*.smt2
 					sed -i '/(set-option :strings-exp true)/d' $bm_dir_single/$option/*.smt2
+					if [ "$option" = "cvc4" ] || [ "$option" = "cvc5" ]; then
+						sed -i '/(set-option :ee-mode central)/d' $bm_dir_single/$option/*.smt2
+					fi
 				fi
 			done
         fi

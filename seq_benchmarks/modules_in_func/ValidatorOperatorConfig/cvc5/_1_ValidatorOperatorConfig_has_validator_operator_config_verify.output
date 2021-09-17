@@ -1,2 +1,4 @@
 unsupported
-(error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorOperatorConfig/cvc5/_1_ValidatorOperatorConfig_has_validator_operator_config_verify.smt2:120.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorOperatorConfig/cvc5/_1_ValidatorOperatorConfig_has_validator_operator_config_verify.smt2:419.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

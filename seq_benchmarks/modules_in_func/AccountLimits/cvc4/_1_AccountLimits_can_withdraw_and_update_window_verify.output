@@ -1,2 +1,4 @@
 unsupported
-(error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/cvc4/_1_AccountLimits_can_withdraw_and_update_window_verify.smt2:361.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountLimits/cvc4/_1_AccountLimits_can_withdraw_and_update_window_verify.smt2:1280.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

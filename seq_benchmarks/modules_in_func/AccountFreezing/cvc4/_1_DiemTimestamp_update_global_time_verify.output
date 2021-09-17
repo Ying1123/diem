@@ -1,2 +1,4 @@
 unsupported
-(error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/cvc4/_1_DiemTimestamp_update_global_time_verify.smt2:465.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/cvc4/_1_DiemTimestamp_update_global_time_verify.smt2:1650.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat

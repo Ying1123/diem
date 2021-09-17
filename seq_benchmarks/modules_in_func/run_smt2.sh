@@ -36,8 +36,15 @@ find $bm_dir -type f -print0 | while read -d $'\0' file; do
 
 			predir=$(dirname $file)
 			option=$(basename $predir)
+
+			# temporary
+			if ! { [ "$option" = "cvc4" ] || [ "$option" = "cvc5" ]; }; then
+				continue
+			fi
+    
 			echo "running $filename for option $option"
-            
+
+        
             start=$(date +%s%N)
 			if [ "$option" = "z3" ] || [ "$option" = "baseline" ]; then
 				timeout 60 $z3 $file > $predir/$filename.output 2>&1

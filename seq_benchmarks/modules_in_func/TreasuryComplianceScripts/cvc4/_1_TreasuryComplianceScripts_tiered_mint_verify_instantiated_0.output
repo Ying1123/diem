@@ -1,2 +1,4 @@
 unsupported
-(error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc4/_1_TreasuryComplianceScripts_tiered_mint_verify_instantiated_0.smt2:481.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/cvc4/_1_TreasuryComplianceScripts_tiered_mint_verify_instantiated_0.smt2:1753.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+(error "Term of kind SEQ_NTH not supported in default mode, try --strings-exp")

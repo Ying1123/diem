@@ -2,6 +2,7 @@
 (set-info :smt-lib-version 2.6)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
+(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -2169,19 +2170,5 @@
 PreconditionGeneratedEntry_correct@@0))))))))))))))))))
 ))
 (check-sat)
-(get-info :reason-unknown)
-(get-value ((ControlFlow 0 0)))
-(get-value ((ControlFlow 0 2039840)))
-(get-value ((ControlFlow 0 1093507)))
-(get-value ((ControlFlow 0 1093497)))
-(get-value ((ControlFlow 0 1094353)))
-(get-value ((ControlFlow 0 1094484)))
-(get-value ((ControlFlow 0 1094478)))
-(get-value ((ControlFlow 0 1094520)))
-(get-value ((ControlFlow 0 1094662)))
-(get-value ((ControlFlow 0 1094684)))
-(get-value ((ControlFlow 0 1095200)))
-(assert (not (= (ControlFlow 0 1095200) (- 2041222))))
-(check-sat)
 (pop 1)
-; Invalid
+; Valid

@@ -2,6 +2,7 @@
 (set-option :pre-skolem-quant true)
 (set-option :dt-share-sel false)
 (set-option :ee-mode central)
+(set-logic ALL)
 (set-info :smt-lib-version 2.6)
 ; done setting options
 

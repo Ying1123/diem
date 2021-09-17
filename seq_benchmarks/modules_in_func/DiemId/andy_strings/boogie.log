@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,24 +18,76 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemId_tc_domain_manager_exists$verify ...
-  [0.180 s, 2 proof obligations]  verified
+  [0.178 s, 2 proof obligations]  verified
 
 Verifying $1_DiemId_add_diem_id_domain$verify ...
-  [5.077 s, 18 proof obligations]  verified
+  [27.265 s, 18 proof obligations]  errors
+assert_failed(16,592,671): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3531,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(2187,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3531,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3729,35): anon33_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3411,5): inline$$1_DiemId_tc_domain_manager_exists$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3752,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3780,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3825,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3848,14): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3850,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4138,9): inline$$1_DiemId_create_diem_id_domain$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(1922,7): inline$$1_Vector_length'u8'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4148,5): inline$$1_DiemId_create_diem_id_domain$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(551,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4148,5): inline$$1_DiemId_create_diem_id_domain$0$anon6_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4183,16): inline$$1_DiemId_create_diem_id_domain$0$anon7_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3864,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(1109,9): inline$$1_Vector_contains'$1_DiemId_DiemIdDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3880,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3880,5): anon40_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3913,17): anon41_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(993,8): inline$$1_Vector_push_back'$1_DiemId_DiemIdDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3962,5): anon42_Else
+assert_failed(16,730,839): data invariant does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3531,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(2187,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3531,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3729,35): anon33_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3411,5): inline$$1_DiemId_tc_domain_manager_exists$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3752,5): anon34_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3780,17): anon35_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3825,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3848,14): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3850,5): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4138,9): inline$$1_DiemId_create_diem_id_domain$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(1922,7): inline$$1_Vector_length'u8'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4148,5): inline$$1_DiemId_create_diem_id_domain$0$anon6_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(551,9): inline$$Le$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4148,5): inline$$1_DiemId_create_diem_id_domain$0$anon6_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(4183,16): inline$$1_DiemId_create_diem_id_domain$0$anon7_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3864,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(1109,9): inline$$1_Vector_contains'$1_DiemId_DiemIdDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3880,5): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3880,5): anon40_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3913,17): anon41_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(993,8): inline$$1_Vector_push_back'$1_DiemId_DiemIdDomain'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemId/andy_strings/DiemId.bpl(3962,5): anon42_Else
 
 Verifying $1_DiemId_create_diem_id_domain$verify ...
-  [0.101 s, 5 proof obligations]  verified
+  [0.170 s, 5 proof obligations]  verified
 
 Verifying $1_DiemId_has_diem_id_domain$verify ...
-  [0.068 s, 5 proof obligations]  verified
+  [0.089 s, 5 proof obligations]  verified
 
 Verifying $1_DiemId_has_diem_id_domains$verify ...
-  [0.007 s, 2 proof obligations]  verified
+  [0.008 s, 2 proof obligations]  verified
 
 Verifying $1_DiemId_publish_diem_id_domain_manager$verify ...
-  [0.074 s, 8 proof obligations]  verified
+  [0.059 s, 8 proof obligations]  verified
 
 Verifying $1_DiemId_publish_diem_id_domains$verify ...
-  [0.069 s, 9 proof obligations]  verified
+  [0.096 s, 9 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

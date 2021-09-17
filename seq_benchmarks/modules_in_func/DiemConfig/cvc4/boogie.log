@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,111 +13,714 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.281 s, 35 proof obligations]  verified
+  [0.267 s, 35 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify ...
-  [0.094 s, 13 proof obligations]  verified
+  [0.071 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_0 ...
-  [0.089 s, 14 proof obligations]  verified
+  [0.060 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_1 ...
-  [0.081 s, 14 proof obligations]  verified
+  [0.067 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_2 ...
-  [0.109 s, 14 proof obligations]  verified
+  [0.088 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_3 ...
-  [0.089 s, 14 proof obligations]  verified
+  [0.068 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_disable_reconfiguration$verify ...
-  [0.008 s, 0 proof obligations]  verified
+  [0.006 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_emit_genesis_reconfiguration_event$verify ...
-  [0.213 s, 3 proof obligations]  verified
+  [0.103 s, 3 proof obligations]  errors
+assert_failed(14,17609,17629): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7907,5): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7907,5): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7954,16): anon17_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7981,14): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7983,5): anon19_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8006,17): anon20_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8050,1): L5
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8073,16): anon21_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3063,12): inline$$1_Event_emit_event'$1_DiemConfig_NewEpochEvent'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8122,5): anon22_Else
+assert_failed(14,17371,17635): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7907,5): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7907,5): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7954,16): anon17_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7981,14): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(7983,5): anon19_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8006,17): anon20_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8050,1): L5
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8073,16): anon21_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3063,12): inline$$1_Event_emit_event'$1_DiemConfig_NewEpochEvent'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(8122,5): anon22_Else
 
 Verifying $1_DiemConfig_enable_reconfiguration$verify ...
-  [0.011 s, 0 proof obligations]  verified
+  [0.006 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify ...
-  [0.017 s, 4 proof obligations]  verified
+  [0.022 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_0 ...
-  [0.014 s, 4 proof obligations]  verified
+  [0.021 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_1 ...
-  [0.015 s, 4 proof obligations]  verified
+  [0.016 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_2 ...
-  [0.017 s, 4 proof obligations]  verified
+  [0.019 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_3 ...
-  [0.011 s, 4 proof obligations]  verified
+  [0.016 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_4 ...
-  [0.029 s, 4 proof obligations]  verified
+  [0.014 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_5 ...
-  [0.013 s, 4 proof obligations]  verified
+  [0.018 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_initialize$verify ...
-  [0.050 s, 10 proof obligations]  verified
+  [0.047 s, 10 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.101 s, 16 proof obligations]  verified
+  [0.088 s, 16 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
-  [0.093 s, 17 proof obligations]  verified
+  [0.074 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
-  [0.099 s, 17 proof obligations]  verified
+  [0.084 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
-  [0.100 s, 17 proof obligations]  verified
+  [0.078 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
-  [0.099 s, 17 proof obligations]  verified
+  [0.074 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify ...
-  [0.089 s, 12 proof obligations]  verified
+  [0.074 s, 12 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_0 ...
-  [0.104 s, 13 proof obligations]  verified
+  [0.074 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_1 ...
-  [0.093 s, 13 proof obligations]  verified
+  [0.069 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_2 ...
-  [0.097 s, 13 proof obligations]  verified
+  [0.081 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_3 ...
-  [0.076 s, 13 proof obligations]  verified
+  [0.066 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfiguration_enabled$verify ...
-  [0.024 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfigure$verify ...
-  [0.258 s, 12 proof obligations]  verified
+  [0.156 s, 12 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(13928,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(13928,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14214,34): anon9_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14282,35): anon10_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14306,9): anon11_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14313,5): anon7
+assert_failed(14,11638,11933): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(13928,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(13928,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14214,34): anon9_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14282,35): anon10_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14306,9): anon11_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14313,5): anon7
 
 Verifying $1_DiemConfig_reconfigure_$verify ...
-  [0.317 s, 11 proof obligations]  verified
+  [0.222 s, 11 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14495,5): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14495,5): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3593,5): inline$$1_DiemTimestamp_is_genesis$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3593,5): inline$$1_DiemTimestamp_is_genesis$0$anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14574,5): anon35_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14582,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14658,16): anon38_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14707,16): anon40_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14927,1): L16
+assert_failed(14,13846,14936): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14495,5): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14495,5): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3593,5): inline$$1_DiemTimestamp_is_genesis$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3593,5): inline$$1_DiemTimestamp_is_genesis$0$anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14574,5): anon35_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14582,17): anon36_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14658,16): anon38_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14707,16): anon40_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14927,1): L16
+assert_failed(14,13846,14936): abort not covered by any of the `aborts_if` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14495,5): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14495,5): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3593,5): inline$$1_DiemTimestamp_is_genesis$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(571,9): inline$$Not$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(3593,5): inline$$1_DiemTimestamp_is_genesis$0$anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14574,5): anon35_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14582,35): anon36_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14615,36): anon37_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14658,34): anon38_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(13821,5): inline$$1_DiemConfig_reconfiguration_enabled$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(571,9): inline$$Not$1$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(13821,5): inline$$1_DiemConfig_reconfiguration_enabled$0$anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14687,5): anon39_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(571,9): inline$$Not$2$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14687,5): anon39_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14707,34): anon40_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14738,14): anon41_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14740,5): anon42_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14758,36): anon43_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14795,36): anon44_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(546,9): inline$$Gt$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14795,36): anon44_Else$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14843,17): anon45_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(421,9): inline$$AddU64$0$anon3_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(421,9): inline$$AddU64$0$anon3_Then$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14884,9): anon46_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(14994,1): L17
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify ...
-  [0.233 s, 14 proof obligations]  verified
+  [0.143 s, 14 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15077,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15077,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15198,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15225,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15227,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15318,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15342,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15349,5): anon13
+assert_failed(14,6973,7420): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15077,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15077,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15198,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15225,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15227,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15318,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15342,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15349,5): anon13
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_0 ...
-  [0.286 s, 15 proof obligations]  verified
+  [0.158 s, 15 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15525,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15525,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15650,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15677,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15679,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15776,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15800,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15807,5): anon13
+assert_failed(14,6973,7420): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15525,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15525,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15650,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15677,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15679,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15776,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15800,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15807,5): anon13
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_1 ...
-  [0.229 s, 15 proof obligations]  verified
+  [0.147 s, 15 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15983,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15983,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16108,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16135,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16137,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16234,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16258,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16265,5): anon13
+assert_failed(14,6973,7420): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15983,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(15983,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16108,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16135,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16137,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16234,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16258,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16265,5): anon13
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_2 ...
-  [0.303 s, 15 proof obligations]  verified
+  [0.160 s, 15 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16441,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16441,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16566,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16593,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16595,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16692,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16716,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16723,5): anon13
+assert_failed(14,6973,7420): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16441,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16441,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16566,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16593,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16595,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16692,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16716,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16723,5): anon13
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_3 ...
-  [0.258 s, 15 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.129 s, 15 proof obligations]  errors
+assert_failed(14,16555,16651): function does not emit the expected event
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16899,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16899,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17024,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17051,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17053,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17150,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17174,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17181,5): anon13
+assert_failed(14,6973,7420): emitted event not covered by any of the `emits` clauses
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16899,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(16899,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17024,17): anon15_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17051,14): anon16_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17053,5): anon17_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17150,35): anon18_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17174,9): anon19_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17181,5): anon13
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
 
+
+Verifying $1_DiemSystem_add_validator$verify ...
+  [0.159 s, 31 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/cvc4/DiemConfig.bpl(17382,27): Verification inconclusive ($1_DiemSystem_add_validator$verify)
+Unhandled exception. System.AggregateException: One or more errors occurred. (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe) (Broken pipe)
+ ---> System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 552
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+   at System.AggregateException.Handle(Func`2 predicate)
+   at Microsoft.Boogie.ExecutionEngine.InferAndVerify(Program program, PipelineStatistics stats, String programId, ErrorReporterDelegate er, String requestId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1032
+   at Microsoft.Boogie.ExecutionEngine.ProcessFiles(IList`1 fileNames, Boolean lookForSnapshots, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 511
+   at Microsoft.Boogie.OnlyBoogie.Main(String[] args) in /home/ying/boogie/Source/BoogieDriver/BoogieDriver.cs:line 65
+ ---> (Inner Exception #1) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #2) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #3) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #4) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #5) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #6) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #7) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #8) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #9) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #10) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #11) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #12) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #13) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #14) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+ ---> (Inner Exception #15) System.IO.IOException: Broken pipe
+   at System.IO.FileStream.WriteNative(ReadOnlySpan`1 source)
+   at System.IO.FileStream.FlushWriteBuffer()
+   at System.IO.FileStream.Flush(Boolean flushToDisk)
+   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)
+   at System.IO.StreamWriter.WriteLine(String value)
+   at Microsoft.Boogie.SMTLib.SMTLibProcess.Send(String cmd) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcess.cs:line 111
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.Send(String s, Boolean isCommon) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 213
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.SendCommon(String s) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 197
+   at Microsoft.Boogie.LinqExtender.Iter[T](IEnumerable`1 coll, Action`1 fn) in /home/ying/boogie/Source/Core/Util.cs:line 63
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAxioms() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 485
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.FlushAndCacheCommons() in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 476
+   at Microsoft.Boogie.SMTLib.SMTLibProcessTheoremProver.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler) in /home/ying/boogie/Source/Provers/SMTLib/SMTLibProcessTheoremProver.cs:line 538
+   at Microsoft.Boogie.Checker.BeginCheck(String descriptiveName, VCExpr vc, ErrorHandler handler, UInt32 timeout, UInt32 rlimit, Nullable`1 randomSeed) in /home/ying/boogie/Source/VCGeneration/Checker.cs:line 389
+   at VC.Split.BeginCheck(Checker checker, VerifierCallback callback, ModelViewInfo mvInfo, Int32 no, UInt32 timeout, UInt32 rlimit) in /home/ying/boogie/Source/VCGeneration/Split.cs:line 1174
+   at VC.VCGen.SplitAndVerify(Implementation impl, Dictionary`2 gotoCmdOrigins, VerifierCallback callback, ModelViewInfo mvInfo, Outcome& outcome) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 886
+   at VC.VCGen.VerifyImplementation(Implementation impl, VerifierCallback callback) in /home/ying/boogie/Source/VCGeneration/VCGen.cs:line 1090
+   at VC.ConditionGeneration.VerifyImplementation(Implementation impl, List`1& errors, String requestId) in /home/ying/boogie/Source/VCGeneration/ConditionGeneration.cs:line 137
+   at Microsoft.Boogie.ExecutionEngine.VerifyImplementation(Program program, PipelineStatistics stats, ErrorReporterDelegate er, String requestId, Dictionary`2 extractLoopMappingInfo, Implementation[] stablePrioritizedImpls, Int32 index, OutputCollector outputCollector, List`1 checkers, String programId) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 1207
+   at Microsoft.Boogie.ExecutionEngine.<>c__DisplayClass28_2.<InferAndVerify>b__5(Object dummy) in /home/ying/boogie/Source/ExecutionEngine/ExecutionEngine.cs:line 998
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)<---
+
+timeout: the monitored command dumped core

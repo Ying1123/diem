@@ -14,19 +14,19 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [0.375 s, 23 proof obligations]  verified
+  [0.342 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.048 s, 8 proof obligations]  verified
+  [0.051 s, 8 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify ...
-  [0.326 s, 19 proof obligations]  verified
+  [0.268 s, 19 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify ...
-  [0.380 s, 25 proof obligations]  verified
+  [0.312 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_operator$verify ...
-  [0.064 s, 14 proof obligations]  verified
+  [0.063 s, 14 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify ...
   [0.074 s, 16 proof obligations]  verified

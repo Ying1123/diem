@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_publish_verify.smt2:210.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_publish_verify.smt2:794.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_publish_verify.smt2:208.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorConfig/andy_default/_1_ValidatorConfig_publish_verify.smt2:792.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

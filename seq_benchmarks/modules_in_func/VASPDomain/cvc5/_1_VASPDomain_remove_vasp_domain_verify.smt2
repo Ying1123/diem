@@ -2,6 +2,7 @@
 (set-info :smt-lib-version 2.6)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
+(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -799,9 +800,474 @@
 (declare-fun $t9 () T@$Mutation_50608)
 (declare-fun $t31 () T@$Mutation_38341)
 (declare-fun $t34 () T@$Mutation_45908)
-; Undetermined
+; Valid
 (declare-fun _$t0@@0 () (Seq Int))
-(declare-fun _$t0@@0 () (Seq Int))
-(declare-fun _$t0@@0 () (Seq Int))
-(declare-fun _$t0@@0 () (Seq Int))
-(declare-fun _$t0@@0 () (Seq Int))
+(declare-fun $t4@0 () Int)
+(declare-fun inline$$Le$0$dst@1@@0 () Bool)
+(declare-fun $t8 () Int)
+(declare-fun $t9@0 () T@$1_VASPDomain_VASPDomain)
+(declare-fun |inline$$1_Vector_length'u8'$0$l@1@@0| () Int)
+; Valid
+(declare-fun $abort_flag@1@@0 () Bool)
+(declare-fun |inline$$1_Vector_contains'$1_VASPDomain_VASPDomain'$0$res@1@@0| () Bool)
+(declare-fun _$t0@@1 () Int)
+(declare-fun _$t1@@0 () (Seq Int))
+(declare-fun $t6 () T@$1_VASPDomain_VASPDomain)
+(declare-fun $t10@0 () Int)
+(declare-fun $abort_code@2@@0 () Int)
+(declare-fun $t13@0 () (Seq T@$1_VASPDomain_VASPDomain))
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@0 () T@$1_VASPDomain_VASPDomain)
+(declare-fun $t11@1 () T@$1_VASPDomain_VASPDomains)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$t4@1@@0 () Int)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$ret0@0@@0 () T@$1_VASPDomain_VASPDomain)
+(declare-fun inline$$Le$0$dst@1@@1 () Bool)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@0 () Int)
+(declare-fun $abort_flag@0@@0 () Bool)
+(declare-fun $abort_code@1@@0 () Int)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$t9@1@@0 () T@$1_VASPDomain_VASPDomain)
+(declare-fun |inline$$1_Vector_length'u8'$0$l@1@@1| () Int)
+(declare-fun $t11@@0 () T@$1_VASPDomain_VASPDomains)
+(declare-fun $t11@0 () T@$1_VASPDomain_VASPDomains)
+(declare-fun $abort_code@0@@0 () Int)
+(declare-fun $t7@0 () Bool)
+(declare-fun $t9@@0 () Int)
+; Valid
+(declare-fun _$t0@@2 () Int)
+(declare-fun $t1@0 () Bool)
+; Valid
+(declare-fun $abort_flag@0@@1 () Bool)
+(declare-fun $t3 () Int)
+(declare-fun _$t0@@3 () T@$signer)
+(declare-fun $1_VASPDomain_VASPDomainManager_$memory@1 () T@$Memory_50235)
+(declare-fun $t6@0 () Int)
+(declare-fun $abort_code@1@@1 () Int)
+(declare-fun $1_VASPDomain_VASPDomainManager_$memory@0 () T@$Memory_50235)
+(declare-fun |Store__T@[Int]$1_VASPDomain_VASPDomainManager_| (|T@[Int]$1_VASPDomain_VASPDomainManager| Int T@$1_VASPDomain_VASPDomainManager) |T@[Int]$1_VASPDomain_VASPDomainManager|)
+(assert (forall ( ( ?x0 |T@[Int]$1_VASPDomain_VASPDomainManager|) ( ?x1 Int) ( ?x2 T@$1_VASPDomain_VASPDomainManager)) (! (= (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| (|Store__T@[Int]$1_VASPDomain_VASPDomainManager_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[Int]$1_VASPDomain_VASPDomainManager|) ( ?x1 Int) ( ?y1 Int) ( ?x2 T@$1_VASPDomain_VASPDomainManager)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| (|Store__T@[Int]$1_VASPDomain_VASPDomainManager_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| ?x0 ?y1))) :weight 0)))
+(declare-fun $t13@0@@0 () T@$1_VASPDomain_VASPDomainManager)
+(declare-fun $abort_code@0@@1 () Int)
+(declare-fun |inline$$1_Event_new_event_handle'$1_VASPDomain_VASPDomainEvent'$0$res@0| () T@$1_Event_EventHandle)
+(declare-fun $1_VASPDomain_VASPDomainManager_$modifies () |T@[Int]Bool|)
+(declare-sort |T@[$1_Event_EventHandle]Bool| 0)
+(declare-fun |Select__T@[$1_Event_EventHandle]Bool_| (|T@[$1_Event_EventHandle]Bool| T@$1_Event_EventHandle) Bool)
+(declare-fun $1_Event_EventHandles () |T@[$1_Event_EventHandle]Bool|)
+(declare-fun $1_Event_EventHandles@0 () |T@[$1_Event_EventHandle]Bool|)
+(declare-fun |Store__T@[$1_Event_EventHandle]Bool_| (|T@[$1_Event_EventHandle]Bool| T@$1_Event_EventHandle Bool) |T@[$1_Event_EventHandle]Bool|)
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Bool|) ( ?x1 T@$1_Event_EventHandle) ( ?x2 Bool)) (! (= (|Select__T@[$1_Event_EventHandle]Bool_| (|Store__T@[$1_Event_EventHandle]Bool_| ?x0 ?x1 ?x2) ?x1)  ?x2) :weight 0)))
+(assert (forall ( ( ?x0 |T@[$1_Event_EventHandle]Bool|) ( ?x1 T@$1_Event_EventHandle) ( ?y1 T@$1_Event_EventHandle) ( ?x2 Bool)) (! (=>  (not (= ?x1 ?y1)) (= (|Select__T@[$1_Event_EventHandle]Bool_| (|Store__T@[$1_Event_EventHandle]Bool_| ?x0 ?x1 ?x2) ?y1) (|Select__T@[$1_Event_EventHandle]Bool_| ?x0 ?y1))) :weight 0)))
+(declare-fun inline$$Not$0$dst@1@@0 () Bool)
+(declare-fun $t11@@1 () Int)
+(declare-fun $t8@0 () Bool)
+(declare-fun $t5 () Bool)
+(declare-fun $t7 () Int)
+(declare-fun $t4 () Int)
+(declare-fun $t6@@0 () Int)
+; Valid
+(declare-fun $abort_flag@0@@2 () Bool)
+(declare-fun $t4@@0 () Int)
+(declare-fun $t3@@0 () Int)
+(declare-fun $1_VASPDomain_VASPDomains_$memory@1 () T@$Memory_50171)
+(declare-fun $t7@0@@0 () Int)
+(declare-fun $abort_code@1@@2 () Int)
+(declare-fun _$t0@@4 () T@$signer)
+(declare-fun $1_VASPDomain_VASPDomains_$memory@0@@0 () T@$Memory_50171)
+(declare-fun $t14@0 () T@$1_VASPDomain_VASPDomains)
+(declare-fun $abort_code@0@@2 () Int)
+(declare-fun |inline$$1_Vector_empty'$1_VASPDomain_VASPDomain'$0$v@1| () (Seq T@$1_VASPDomain_VASPDomain))
+(declare-fun inline$$Not$0$dst@1@@1 () Bool)
+(declare-fun $t12@@0 () Int)
+(declare-fun $t9@0@@0 () Bool)
+(declare-fun $t6@@1 () Bool)
+(declare-fun $t8@@0 () Int)
+(declare-fun $t5@@0 () Int)
+(declare-fun $t7@@0 () Int)
+; Valid
+(declare-fun $abort_flag@3 () Bool)
+(declare-fun $t38 () (Seq T@$1_VASPDomain_VASPDomain))
+(declare-fun $1_VASPDomain_VASPDomains_$memory@0@@1 () T@$Memory_50171)
+(declare-fun _$t1@@1 () Int)
+(declare-fun $t11@@2 () (Seq T@$1_VASPDomain_VASPDomain))
+(declare-fun _$t2@@0 () (Seq Int))
+(declare-fun $t12@@1 () Int)
+(declare-fun _$t0@@5 () T@$signer)
+(declare-fun $es@0@@0 () T@$EventStore)
+(declare-fun $t13@@0 () T@$1_Event_EventHandle)
+(declare-fun $t14@@0 () T@$1_VASPDomain_VASPDomainEvent)
+(declare-fun $t17@0@@0 () Int)
+(declare-fun $abort_code@4 () Int)
+(declare-fun |inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$handle@1@@0| () T@$1_Event_EventHandle)
+(declare-fun $t35@0 () T@$Mutation_45908)
+(declare-fun $t37@0 () T@$1_VASPDomain_VASPDomainEvent)
+(declare-fun $t34@1 () T@$Mutation_50669)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1 () T@$1_VASPDomain_VASPDomain)
+(declare-fun $t34@@0 () T@$Mutation_50669)
+(declare-fun $t34@0@@0 () T@$Mutation_50669)
+(declare-fun $abort_flag@2@@0 () Bool)
+(declare-fun $abort_code@3@@0 () Int)
+(declare-fun $t24@2@@0 () T@$Mutation_50608)
+(declare-fun $t24@1@@0 () T@$Mutation_50608)
+(declare-fun |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@2| () T@$Mutation_38341)
+(declare-fun |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@0| () T@$Mutation_38341)
+(declare-fun |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| () Int)
+(declare-fun |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1| () (Seq T@$1_VASPDomain_VASPDomain))
+(declare-fun |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$e@1| () T@$1_VASPDomain_VASPDomain)
+(declare-fun |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@1| () T@$Mutation_38341)
+(declare-fun $t31@0@@0 () T@$Mutation_38341)
+(declare-fun $abort_code@2@@1 () Int)
+(declare-fun $abort_flag@1@@1 () Bool)
+(declare-fun |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1| () Bool)
+(declare-fun $t30@@0 () Int)
+(declare-fun |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@1| () Int)
+(declare-fun $t26@0@@0 () (Seq T@$1_VASPDomain_VASPDomain))
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$t4@1@@1 () Int)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$ret0@0@@1 () T@$1_VASPDomain_VASPDomain)
+(declare-fun inline$$Le$0$dst@1@@2 () Bool)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1 () Int)
+(declare-fun $abort_flag@0@@3 () Bool)
+(declare-fun $abort_code@1@@3 () Int)
+(declare-fun inline$$1_VASPDomain_create_vasp_domain$0$$t9@1@@1 () T@$1_VASPDomain_VASPDomain)
+(declare-fun |inline$$1_Vector_length'u8'$0$l@1@@2| () Int)
+(declare-fun |$temp_0'$1_VASPDomain_VASPDomains'@0@@0| () T@$1_VASPDomain_VASPDomains)
+(declare-fun $t24@@0 () T@$Mutation_50608)
+(declare-fun $t24@0@@0 () T@$Mutation_50608)
+(declare-fun $abort_code@0@@3 () Int)
+(declare-fun $t21@0@@0 () Bool)
+(declare-fun $t23@@0 () Int)
+(declare-fun inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0 () Bool)
+(declare-fun $t20@@0 () Int)
+(declare-fun $t16@@0 () Bool)
+(declare-fun $t15@@0 () Int)
+(declare-fun $t17@@0 () Int)
+(declare-fun $t7@@1 () T@$Mutation_50608)
+(declare-fun $t31@@0 () T@$Mutation_38341)
+(declare-fun $t35 () T@$Mutation_45908)
+(push 1)
+(set-info :boogie-vc-id $1_VASPDomain_remove_vasp_domain$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 87518) (let ((anon46_Else_correct  (=> (and (not $abort_flag@3) (= $t38 (|$domains#$1_VASPDomain_VASPDomains| (|Select__T@[Int]$1_VASPDomain_VASPDomains_| (|contents#$Memory_50171| $1_VASPDomain_VASPDomains_$memory@0@@1) _$t1@@1)))) (and (=> (= (ControlFlow 0 79491) (- 0 90501)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1))) (and (=> (= (ControlFlow 0 79491) (- 0 90512)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453))) (and (=> (= (ControlFlow 0 79491) (- 0 90522)) (not (not (exists ((i@@58 Int) ) (!  (and (and (|$IsValid'u64'| i@@58) (and (>= i@@58 0) (< i@@58 (seq.len $t11@@2)))) (= (seq.nth $t11@@2 i@@58) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+))))) (=> (not (not (exists ((i@@59 Int) ) (!  (and (and (|$IsValid'u64'| i@@59) (and (>= i@@59 0) (< i@@59 (seq.len $t11@@2)))) (= (seq.nth $t11@@2 i@@59) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+)))) (and (=> (= (ControlFlow 0 79491) (- 0 90536)) (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)))) (=> (not (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1))) (and (=> (= (ControlFlow 0 79491) (- 0 90548)) (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)) 1)))) (=> (not (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)) 1))) (and (=> (= (ControlFlow 0 79491) (- 0 90566)) (not (not (= (|$addr#$signer| _$t0@@5) 186537453)))) (=> (not (not (= (|$addr#$signer| _$t0@@5) 186537453))) (and (=> (= (ControlFlow 0 79491) (- 0 90580)) (not (> (seq.len _$t2@@0) 63))) (=> (not (> (seq.len _$t2@@0) 63)) (and (=> (= (ControlFlow 0 79491) (- 0 90592)) (not (exists ((i@@60 Int) ) (!  (and (and (|$IsValid'u64'| i@@60) (and (>= i@@60 0) (< i@@60 (seq.len $t38)))) (= (seq.nth $t38 i@@60) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+)))) (=> (not (exists ((i@@61 Int) ) (!  (and (and (|$IsValid'u64'| i@@61) (and (>= i@@61 0) (< i@@61 (seq.len $t38)))) (= (seq.nth $t38 i@@61) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+))) (and (=> (= (ControlFlow 0 79491) (- 0 90604)) (let ((actual@@2 ($EventStore (- (|counter#$EventStore| $es@0@@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0@@0) (|streams#$EventStore| $es)))))
+(let ((expected@@2 (let ((stream@@10 (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $EmptyEventStore) $t13@@0)))
+(let ((stream_new@@3 (let ((len@@3 (|l#Multiset_30205| stream@@10)))
+(let ((cnt@@3 (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@10) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t14@@0))))
+(Multiset_30205 (|Store__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@10) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t14@@0) (+ cnt@@3 1)) (+ len@@3 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $EmptyEventStore) $t13@@0 stream_new@@3))))))
+ (and (<= (|counter#$EventStore| expected@@2) (|counter#$EventStore| actual@@2)) (forall ((handle@@10 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| expected@@2) handle@@10)) (|l#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| actual@@2) handle@@10))) (forall ((v@@35 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| expected@@2) handle@@10)) v@@35) (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| actual@@2) handle@@10)) v@@35))
+ :qid |VASPDomainbpl.139:13|
+ :skolemid |3|
+)))
+ :qid |VASPDomainbpl.2028:13|
+ :skolemid |55|
+)))))) (=> (let ((actual@@3 ($EventStore (- (|counter#$EventStore| $es@0@@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0@@0) (|streams#$EventStore| $es)))))
+(let ((expected@@3 (let ((stream@@11 (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $EmptyEventStore) $t13@@0)))
+(let ((stream_new@@4 (let ((len@@4 (|l#Multiset_30205| stream@@11)))
+(let ((cnt@@4 (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@11) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t14@@0))))
+(Multiset_30205 (|Store__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@11) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t14@@0) (+ cnt@@4 1)) (+ len@@4 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $EmptyEventStore) $t13@@0 stream_new@@4))))))
+ (and (<= (|counter#$EventStore| expected@@3) (|counter#$EventStore| actual@@3)) (forall ((handle@@11 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| expected@@3) handle@@11)) (|l#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| actual@@3) handle@@11))) (forall ((v@@36 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| expected@@3) handle@@11)) v@@36) (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| actual@@3) handle@@11)) v@@36))
+ :qid |VASPDomainbpl.139:13|
+ :skolemid |3|
+)))
+ :qid |VASPDomainbpl.2028:13|
+ :skolemid |55|
+))))) (=> (= (ControlFlow 0 79491) (- 0 90629)) (let ((actual@@4 ($EventStore (- (|counter#$EventStore| $es@0@@0) (|counter#$EventStore| $es)) (|lambda#2| (|streams#$EventStore| $es@0@@0) (|streams#$EventStore| $es)))))
+(let ((expected@@4 (let ((stream@@12 (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $EmptyEventStore) $t13@@0)))
+(let ((stream_new@@5 (let ((len@@5 (|l#Multiset_30205| stream@@12)))
+(let ((cnt@@5 (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@12) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t14@@0))))
+(Multiset_30205 (|Store__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@12) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t14@@0) (+ cnt@@5 1)) (+ len@@5 1))))))
+($EventStore (+ (|counter#$EventStore| $EmptyEventStore) 1) (|Store__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $EmptyEventStore) $t13@@0 stream_new@@5))))))
+ (and (<= (|counter#$EventStore| actual@@4) (|counter#$EventStore| expected@@4)) (forall ((handle@@12 T@$1_Event_EventHandle) ) (!  (and (<= (|l#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| actual@@4) handle@@12)) (|l#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| expected@@4) handle@@12))) (forall ((v@@37 T@$EventRep) ) (! (<= (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| actual@@4) handle@@12)) v@@37) (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| expected@@4) handle@@12)) v@@37))
+ :qid |VASPDomainbpl.139:13|
+ :skolemid |3|
+)))
+ :qid |VASPDomainbpl.2028:13|
+ :skolemid |55|
+)))))))))))))))))))))))))))
+(let ((L7_correct@@0  (and (=> (= (ControlFlow 0 77849) (- 0 90289)) (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453))) (not (exists ((i@@62 Int) ) (!  (and (and (|$IsValid'u64'| i@@62) (and (>= i@@62 0) (< i@@62 (seq.len $t11@@2)))) (= (seq.nth $t11@@2 i@@62) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+)))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)) 1))) (not (= (|$addr#$signer| _$t0@@5) 186537453))) (> (seq.len _$t2@@0) 63))) (=> (or (or (or (or (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)) (not (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453))) (not (exists ((i@@63 Int) ) (!  (and (and (|$IsValid'u64'| i@@63) (and (>= i@@63 0) (< i@@63 (seq.len $t11@@2)))) (= (seq.nth $t11@@2 i@@63) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+)))) (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1))) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)) 1))) (not (= (|$addr#$signer| _$t0@@5) 186537453))) (> (seq.len _$t2@@0) 63)) (=> (= (ControlFlow 0 77849) (- 0 90357)) (or (or (or (or (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)) (= 5 $t17@0@@0)) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453)) (= 5 $t17@0@@0))) (and (not (exists ((i@@64 Int) ) (!  (and (and (|$IsValid'u64'| i@@64) (and (>= i@@64 0) (< i@@64 (seq.len $t11@@2)))) (= (seq.nth $t11@@2 i@@64) ($1_VASPDomain_VASPDomain _$t2@@0)))
+ :qid |VASPDomainbpl.1140:13|
+ :skolemid |32|
+))) (= 7 $t17@0@@0))) (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)) (= 5 $t17@0@@0))) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t12@@1)) 1)) (= 3 $t17@0@@0))) (and (not (= (|$addr#$signer| _$t0@@5) 186537453)) (= 2 $t17@0@@0))) (and (> (seq.len _$t2@@0) 63) (= 7 $t17@0@@0))))))))
+(let ((anon46_Then_correct  (=> (and (and $abort_flag@3 (= $abort_code@4 $abort_code@4)) (and (= $t17@0@@0 $abort_code@4) (= (ControlFlow 0 79505) 77849))) L7_correct@@0)))
+(let ((|inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$anon0_correct@@0|  (=> (and (= |inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$handle@1@@0| (|v#$Mutation_45908| $t35@0)) (= $es@0@@0 (let ((stream@@13 (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$handle@1@@0|)))
+(let ((stream_new@@6 (let ((len@@6 (|l#Multiset_30205| stream@@13)))
+(let ((cnt@@6 (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@13) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t37@0))))
+(Multiset_30205 (|Store__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@13) (|$ToEventRep'$1_VASPDomain_VASPDomainEvent'| $t37@0) (+ cnt@@6 1)) (+ len@@6 1))))))
+($EventStore (+ (|counter#$EventStore| $es) 1) (|Store__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $es) |inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$handle@1@@0| stream_new@@6)))))) (and (=> (= (ControlFlow 0 79301) 79505) anon46_Then_correct) (=> (= (ControlFlow 0 79301) 79491) anon46_Else_correct)))))
+(let ((anon45_Else_correct@@0  (=> (and (and (not $abort_flag@3) (= $t35@0 ($Mutation_45908 (|l#$Mutation_50669| $t34@1) (seq.++ (|p#$Mutation_50669| $t34@1) (seq.unit 0)) (|$vasp_domain_events#$1_VASPDomain_VASPDomainManager| (|v#$Mutation_50669| $t34@1))))) (and (= $t37@0 ($1_VASPDomain_VASPDomainEvent true inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1 _$t1@@1)) (= (ControlFlow 0 79307) 79301))) |inline$$1_Event_emit_event'$1_VASPDomain_VASPDomainEvent'$0$anon0_correct@@0|)))
+(let ((anon45_Then_correct@@0  (=> (and (and $abort_flag@3 (= $abort_code@4 $abort_code@4)) (and (= $t17@0@@0 $abort_code@4) (= (ControlFlow 0 79519) 77849))) L7_correct@@0)))
+(let ((anon44_Then$1_correct  (=> (= $t34@1 $t34@@0) (=> (and (= $abort_flag@3 true) (= $abort_code@4 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 79571) 79519) anon45_Then_correct@@0) (=> (= (ControlFlow 0 79571) 79307) anon45_Else_correct@@0))))))
+(let ((anon44_Then_correct@@0  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453)) (= (ControlFlow 0 79569) 79571)) anon44_Then$1_correct)))
+(let ((anon44_Else_correct@@0  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453) (=> (and (and (= $t34@0@@0 ($Mutation_50669 ($Global 186537453) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| (|contents#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453))) (= $t34@1 $t34@0@@0)) (and (= $abort_flag@3 $abort_flag@2@@0) (= $abort_code@4 $abort_code@3@@0))) (and (=> (= (ControlFlow 0 79192) 79519) anon45_Then_correct@@0) (=> (= (ControlFlow 0 79192) 79307) anon45_Else_correct@@0))))))
+(let ((anon43_Else_correct@@0  (=> (and (not $abort_flag@2@@0) (= $t24@2@@0 ($Mutation_50608 (|l#$Mutation_50608| $t24@1@@0) (|p#$Mutation_50608| $t24@1@@0) ($1_VASPDomain_VASPDomains (|v#$Mutation_38341| |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@2|))))) (and (=> (= (ControlFlow 0 79170) (- 0 89851)) (let (($range_0@@16 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))))
+(forall (($i_1@@16 Int) ) (!  (=> ($InRange $range_0@@16 $i_1@@16) (let ((i@@65 $i_1@@16))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0)) i@@65))) 63)))
+ :qid |VASPDomainbpl.5072:107|
+ :skolemid |221|
+)))) (=> (let (($range_0@@17 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))))
+(forall (($i_1@@17 Int) ) (!  (=> ($InRange $range_0@@17 $i_1@@17) (let ((i@@66 $i_1@@17))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0)) i@@66))) 63)))
+ :qid |VASPDomainbpl.5072:107|
+ :skolemid |221|
+))) (and (=> (= (ControlFlow 0 79170) (- 0 89899)) (let (($range_0@@18 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))))
+(forall (($i_1@@18 Int) ) (!  (=> ($InRange $range_0@@18 $i_1@@18) (let ((i@@67 $i_1@@18))
+(let (($range_2@@5 ($Range (+ i@@67 1) (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))))
+(forall (($i_3@@5 Int) ) (!  (=> ($InRange $range_2@@5 $i_3@@5) (let ((j@@16 $i_3@@5))
+ (not (= (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0)) i@@67) (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0)) j@@16)))))
+ :qid |VASPDomainbpl.5080:112|
+ :skolemid |222|
+)))))
+ :qid |VASPDomainbpl.5079:107|
+ :skolemid |223|
+)))) (=> (let (($range_0@@19 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))))
+(forall (($i_1@@19 Int) ) (!  (=> ($InRange $range_0@@19 $i_1@@19) (let ((i@@68 $i_1@@19))
+(let (($range_2@@6 ($Range (+ i@@68 1) (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))))
+(forall (($i_3@@6 Int) ) (!  (=> ($InRange $range_2@@6 $i_3@@6) (let ((j@@17 $i_3@@6))
+ (not (= (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0)) i@@68) (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0)) j@@17)))))
+ :qid |VASPDomainbpl.5080:112|
+ :skolemid |222|
+)))))
+ :qid |VASPDomainbpl.5079:107|
+ :skolemid |223|
+))) (and (=> (= (ControlFlow 0 79170) (- 0 89984)) (let (($range_0@@20 (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))
+(forall (($i_1@@20 Int) ) (!  (=> (and (>= $i_1@@20 0) (< $i_1@@20 (seq.len $range_0@@20))) (let (($elem@@7 (seq.nth $range_0@@20 $i_1@@20)))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $elem@@7)) 63)))
+ :qid |VASPDomainbpl.5087:88|
+ :skolemid |224|
+)))) (=> (let (($range_0@@21 (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@2@@0))))
+(forall (($i_1@@21 Int) ) (!  (=> (and (>= $i_1@@21 0) (< $i_1@@21 (seq.len $range_0@@21))) (let (($elem@@8 (seq.nth $range_0@@21 $i_1@@21)))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $elem@@8)) 63)))
+ :qid |VASPDomainbpl.5087:88|
+ :skolemid |224|
+))) (=> (= $1_VASPDomain_VASPDomains_$memory@0@@1 ($Memory_50171 (|Store__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) (|a#$Global| (|l#$Mutation_50608| $t24@2@@0)) true) (|Store__T@[Int]$1_VASPDomain_VASPDomains_| (|contents#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) (|a#$Global| (|l#$Mutation_50608| $t24@2@@0)) (|v#$Mutation_50608| $t24@2@@0)))) (and (=> (= (ControlFlow 0 79170) (- 0 90042)) (forall ((addr@@57 Int) ) (!  (=> (|$IsValid'address'| addr@@57) (= (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory@0@@1) addr@@57)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@57) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@57)) 5))))
+ :qid |VASPDomainbpl.5099:15|
+ :skolemid |225|
+))) (=> (forall ((addr@@58 Int) ) (!  (=> (|$IsValid'address'| addr@@58) (= (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory@0@@1) addr@@58)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@58) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@58)) 5))))
+ :qid |VASPDomainbpl.5099:15|
+ :skolemid |225|
+)) (=> (|$IsValid'address'| 186537453) (and (=> (= (ControlFlow 0 79170) 79569) anon44_Then_correct@@0) (=> (= (ControlFlow 0 79170) 79192) anon44_Else_correct@@0)))))))))))))))
+(let ((anon43_Then_correct@@0  (=> (and (and $abort_flag@2@@0 (= $abort_code@3@@0 $abort_code@3@@0)) (and (= $t17@0@@0 $abort_code@3@@0) (= (ControlFlow 0 79585) 77849))) L7_correct@@0)))
+(let ((|inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon3_Then$1_correct|  (=> (= $abort_code@3@@0 $EXEC_FAILURE_CODE) (=> (and (= $abort_flag@2@@0 true) (= |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@2| |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@0|)) (and (=> (= (ControlFlow 0 78915) 79585) anon43_Then_correct@@0) (=> (= (ControlFlow 0 78915) 79170) anon43_Else_correct@@0))))))
+(let ((|inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon3_Then_correct|  (=> (and (not (and (>= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| 0) (< |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| (seq.len |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1|)))) (= (ControlFlow 0 78913) 78915)) |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon3_Then$1_correct|)))
+(let ((|inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon3_Else_correct|  (=> (and (and (and (>= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| 0) (< |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| (seq.len |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1|))) (= |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$e@1| (seq.nth |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1| |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2|))) (and (and (= |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@1| ($Mutation_38341 (|l#$Mutation_38341| $t31@0@@0) (|p#$Mutation_38341| $t31@0@@0) (seq.++ (seq.extract |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1| 0 (- |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| 0)) (seq.extract |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1| (+ |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| 1) (- (seq.len |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1|) (+ |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| 1)))))) (= $abort_code@3@@0 $abort_code@2@@1)) (and (= $abort_flag@2@@0 $abort_flag@1@@1) (= |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@2| |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$m'@1|)))) (and (=> (= (ControlFlow 0 78863) 79585) anon43_Then_correct@@0) (=> (= (ControlFlow 0 78863) 79170) anon43_Else_correct@@0)))))
+(let ((|inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon0_correct|  (=> (= |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$v@1| (|v#$Mutation_38341| $t31@0@@0)) (and (=> (= (ControlFlow 0 78839) 78913) |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon3_Then_correct|) (=> (= (ControlFlow 0 78839) 78863) |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon3_Else_correct|)))))
+(let ((anon42_Then_correct@@0  (=> |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1| (=> (and (= $t31@0@@0 ($Mutation_38341 (|l#$Mutation_50608| $t24@1@@0) (seq.++ (|p#$Mutation_50608| $t24@1@@0) (seq.unit 0)) (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)))) (= (ControlFlow 0 78923) 78839)) |inline$$1_Vector_remove'$1_VASPDomain_VASPDomain'$0$anon0_correct|))))
+(let ((anon42_Else_correct@@0  (=> (not |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1|) (and (=> (= (ControlFlow 0 78728) (- 0 89515)) (let (($range_0@@22 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))))
+(forall (($i_1@@22 Int) ) (!  (=> ($InRange $range_0@@22 $i_1@@22) (let ((i@@69 $i_1@@22))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)) i@@69))) 63)))
+ :qid |VASPDomainbpl.5004:107|
+ :skolemid |217|
+)))) (=> (let (($range_0@@23 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))))
+(forall (($i_1@@23 Int) ) (!  (=> ($InRange $range_0@@23 $i_1@@23) (let ((i@@70 $i_1@@23))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)) i@@70))) 63)))
+ :qid |VASPDomainbpl.5004:107|
+ :skolemid |217|
+))) (and (=> (= (ControlFlow 0 78728) (- 0 89563)) (let (($range_0@@24 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))))
+(forall (($i_1@@24 Int) ) (!  (=> ($InRange $range_0@@24 $i_1@@24) (let ((i@@71 $i_1@@24))
+(let (($range_2@@7 ($Range (+ i@@71 1) (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))))
+(forall (($i_3@@7 Int) ) (!  (=> ($InRange $range_2@@7 $i_3@@7) (let ((j@@18 $i_3@@7))
+ (not (= (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)) i@@71) (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)) j@@18)))))
+ :qid |VASPDomainbpl.5012:112|
+ :skolemid |218|
+)))))
+ :qid |VASPDomainbpl.5011:107|
+ :skolemid |219|
+)))) (=> (let (($range_0@@25 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))))
+(forall (($i_1@@25 Int) ) (!  (=> ($InRange $range_0@@25 $i_1@@25) (let ((i@@72 $i_1@@25))
+(let (($range_2@@8 ($Range (+ i@@72 1) (seq.len (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))))
+(forall (($i_3@@8 Int) ) (!  (=> ($InRange $range_2@@8 $i_3@@8) (let ((j@@19 $i_3@@8))
+ (not (= (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)) i@@72) (seq.nth (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0)) j@@19)))))
+ :qid |VASPDomainbpl.5012:112|
+ :skolemid |218|
+)))))
+ :qid |VASPDomainbpl.5011:107|
+ :skolemid |219|
+))) (and (=> (= (ControlFlow 0 78728) (- 0 89648)) (let (($range_0@@26 (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))
+(forall (($i_1@@26 Int) ) (!  (=> (and (>= $i_1@@26 0) (< $i_1@@26 (seq.len $range_0@@26))) (let (($elem@@9 (seq.nth $range_0@@26 $i_1@@26)))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $elem@@9)) 63)))
+ :qid |VASPDomainbpl.5019:88|
+ :skolemid |220|
+)))) (=> (let (($range_0@@27 (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))))
+(forall (($i_1@@27 Int) ) (!  (=> (and (>= $i_1@@27 0) (< $i_1@@27 (seq.len $range_0@@27))) (let (($elem@@10 (seq.nth $range_0@@27 $i_1@@27)))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $elem@@10)) 63)))
+ :qid |VASPDomainbpl.5019:88|
+ :skolemid |220|
+))) (=> (and (|$IsValid'u64'| 2) (|$IsValid'u64'| $t30@@0)) (=> (and (and (= $t30@@0 7) (= $t30@@0 $t30@@0)) (and (= $t17@0@@0 $t30@@0) (= (ControlFlow 0 78728) 77849))) L7_correct@@0)))))))))))
+(let ((anon41_Else_correct@@0  (=> (not $abort_flag@1@@1) (=> (and (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2|) (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1| |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1|)) (and (=> (= (ControlFlow 0 78518) 78923) anon42_Then_correct@@0) (=> (= (ControlFlow 0 78518) 78728) anon42_Else_correct@@0))))))
+(let ((anon41_Then_correct@@0  (=> (and (and $abort_flag@1@@1 (= $abort_code@2@@1 $abort_code@2@@1)) (and (= $t17@0@@0 $abort_code@2@@1) (= (ControlFlow 0 79599) 77849))) L7_correct@@0)))
+(let ((|inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$anon3_Else_correct|  (=> (> 0 |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@1|) (=> (and (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1| false) (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| 0)) (and (=> (= (ControlFlow 0 78478) 79599) anon41_Then_correct@@0) (=> (= (ControlFlow 0 78478) 78518) anon41_Else_correct@@0))))))
+(let ((|inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$anon3_Then_correct|  (=> (>= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@1| 0) (=> (and (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res1@1| true) (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@2| |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@1|)) (and (=> (= (ControlFlow 0 78488) 79599) anon41_Then_correct@@0) (=> (= (ControlFlow 0 78488) 78518) anon41_Else_correct@@0))))))
+(let ((|inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$anon0_correct|  (=> (= |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$res2@1| (|$IndexOfVec'$1_VASPDomain_VASPDomain'| $t26@0@@0 inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1)) (and (=> (= (ControlFlow 0 78466) 78488) |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$anon3_Then_correct|) (=> (= (ControlFlow 0 78466) 78478) |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$anon3_Else_correct|)))))
+(let ((anon40_Else_correct@@0  (=> (and (and (not $abort_flag@1@@1) (= inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1 inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1)) (and (= $t26@0@@0 (|$domains#$1_VASPDomain_VASPDomains| (|v#$Mutation_50608| $t24@1@@0))) (= (ControlFlow 0 78496) 78466))) |inline$$1_Vector_index_of'$1_VASPDomain_VASPDomain'$0$anon0_correct|)))
+(let ((anon40_Then_correct@@0  (=> (and (and $abort_flag@1@@1 (= $abort_code@2@@1 $abort_code@2@@1)) (and (= $t17@0@@0 $abort_code@2@@1) (= (ControlFlow 0 79613) 77849))) L7_correct@@0)))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$L3_correct@@1  (=> (= $abort_flag@1@@1 true) (=> (and (= $abort_code@2@@1 inline$$1_VASPDomain_create_vasp_domain$0$$t4@1@@1) (= inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1 inline$$1_VASPDomain_create_vasp_domain$0$$ret0@0@@1)) (and (=> (= (ControlFlow 0 78329) 79613) anon40_Then_correct@@0) (=> (= (ControlFlow 0 78329) 78496) anon40_Else_correct@@0))))))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$anon7_Else_correct@@1  (=> (and (and (not inline$$Le$0$dst@1@@2) (= inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1 inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1)) (and (= inline$$1_VASPDomain_create_vasp_domain$0$$t4@1@@1 inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1) (= (ControlFlow 0 78323) 78329))) inline$$1_VASPDomain_create_vasp_domain$0$L3_correct@@1)))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$anon6_Then_correct@@1  (=> (and (and $abort_flag@0@@3 (= $abort_code@1@@3 $abort_code@1@@3)) (and (= inline$$1_VASPDomain_create_vasp_domain$0$$t4@1@@1 $abort_code@1@@3) (= (ControlFlow 0 78361) 78329))) inline$$1_VASPDomain_create_vasp_domain$0$L3_correct@@1)))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then_correct@@1  (=> (and inline$$Le$0$dst@1@@2 (= inline$$1_VASPDomain_create_vasp_domain$0$$t9@1@@1 ($1_VASPDomain_VASPDomain _$t2@@0))) (=> (and (and (= inline$$1_VASPDomain_create_vasp_domain$0$$t9@1@@1 inline$$1_VASPDomain_create_vasp_domain$0$$t9@1@@1) (= $abort_flag@1@@1 $abort_flag@0@@3)) (and (= $abort_code@2@@1 $abort_code@1@@3) (= inline$$1_VASPDomain_create_vasp_domain$0$$ret0@1@@1 inline$$1_VASPDomain_create_vasp_domain$0$$t9@1@@1))) (and (=> (= (ControlFlow 0 78347) 79613) anon40_Then_correct@@0) (=> (= (ControlFlow 0 78347) 78496) anon40_Else_correct@@0))))))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1_correct@@1  (=> (|$IsValid'u64'| 5) (=> (and (and (|$IsValid'u64'| inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1) (= inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1 7)) (and (= inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1 inline$$1_VASPDomain_create_vasp_domain$0$$t8@0@@1) (= inline$$Le$0$dst@1@@2 inline$$Le$0$dst@1@@2))) (and (=> (= (ControlFlow 0 78307) 78347) inline$$1_VASPDomain_create_vasp_domain$0$anon7_Then_correct@@1) (=> (= (ControlFlow 0 78307) 78323) inline$$1_VASPDomain_create_vasp_domain$0$anon7_Else_correct@@1))))))
+(let ((inline$$Le$0$anon0_correct@@2  (=> (and (= inline$$Le$0$dst@1@@2 (<= |inline$$1_Vector_length'u8'$0$l@1@@2| 63)) (= (ControlFlow 0 78271) 78307)) inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else$1_correct@@1)))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else_correct@@1  (=> (not $abort_flag@0@@3) (=> (and (|$IsValid'u64'| 63) (= (ControlFlow 0 78277) 78271)) inline$$Le$0$anon0_correct@@2))))
+(let ((|inline$$1_Vector_length'u8'$0$anon0_correct@@2|  (=> (= |inline$$1_Vector_length'u8'$0$l@1@@2| (seq.len _$t2@@0)) (and (=> (= (ControlFlow 0 78211) 78361) inline$$1_VASPDomain_create_vasp_domain$0$anon6_Then_correct@@1) (=> (= (ControlFlow 0 78211) 78277) inline$$1_VASPDomain_create_vasp_domain$0$anon6_Else_correct@@1)))))
+(let ((inline$$1_VASPDomain_create_vasp_domain$0$anon0_correct@@1  (=> (and (= _$t2@@0 _$t2@@0) (= (ControlFlow 0 78217) 78211)) |inline$$1_Vector_length'u8'$0$anon0_correct@@2|)))
+(let ((anon39_Else_correct@@0  (=> (and (and (not $abort_flag@0@@3) (= |$temp_0'$1_VASPDomain_VASPDomains'@0@@0| (|v#$Mutation_50608| $t24@1@@0))) (and (= |$temp_0'$1_VASPDomain_VASPDomains'@0@@0| |$temp_0'$1_VASPDomain_VASPDomains'@0@@0|) (= (ControlFlow 0 78367) 78217))) inline$$1_VASPDomain_create_vasp_domain$0$anon0_correct@@1)))
+(let ((anon39_Then_correct@@0  (=> (and (and $abort_flag@0@@3 (= $abort_code@1@@3 $abort_code@1@@3)) (and (= $t17@0@@0 $abort_code@1@@3) (= (ControlFlow 0 79627) 77849))) L7_correct@@0)))
+(let ((anon38_Then$1_correct  (=> (= $t24@1@@0 $t24@@0) (=> (and (= $abort_flag@0@@3 true) (= $abort_code@1@@3 $EXEC_FAILURE_CODE)) (and (=> (= (ControlFlow 0 79679) 79627) anon39_Then_correct@@0) (=> (= (ControlFlow 0 79679) 78367) anon39_Else_correct@@0))))))
+(let ((anon38_Then_correct@@0  (=> (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)) (= (ControlFlow 0 79677) 79679)) anon38_Then$1_correct)))
+(let ((anon38_Else_correct@@0  (=> (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1) (=> (and (and (= $t24@0@@0 ($Mutation_50608 ($Global _$t1@@1) (as seq.empty (Seq Int)) (|Select__T@[Int]$1_VASPDomain_VASPDomains_| (|contents#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1))) (= $t24@1@@0 $t24@0@@0)) (and (= $abort_flag@0@@3 false) (= $abort_code@1@@3 $abort_code@0@@3))) (and (=> (= (ControlFlow 0 77933) 79627) anon39_Then_correct@@0) (=> (= (ControlFlow 0 77933) 78367) anon39_Else_correct@@0))))))
+(let ((anon37_Then_correct@@0  (=> $t21@0@@0 (and (=> (= (ControlFlow 0 77911) 79677) anon38_Then_correct@@0) (=> (= (ControlFlow 0 77911) 77933) anon38_Else_correct@@0)))))
+(let ((anon37_Else_correct@@0  (=> (and (and (not $t21@0@@0) (= $t23@@0 $t23@@0)) (and (= $t17@0@@0 $t23@@0) (= (ControlFlow 0 77907) 77849))) L7_correct@@0)))
+(let ((anon36_Then_correct@@0  (=> inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0 (=> (and (= $t21@0@@0 (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)) (|$IsValid'u64'| 4)) (=> (and (and (|$IsValid'u64'| $t23@@0) (= $t23@@0 5)) (and (= $t23@@0 $t23@@0) (= $t21@0@@0 $t21@0@@0))) (and (=> (= (ControlFlow 0 77891) 77911) anon37_Then_correct@@0) (=> (= (ControlFlow 0 77891) 77907) anon37_Else_correct@@0)))))))
+(let ((anon36_Else_correct@@0  (=> (and (and (not inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0) (= $t20@@0 $t20@@0)) (and (= $t17@0@@0 $t20@@0) (= (ControlFlow 0 77633) 77849))) L7_correct@@0)))
+(let ((anon35_Else_correct@@0  (=> (and (not false) (|$IsValid'u64'| 1)) (=> (and (and (|$IsValid'u64'| $t20@@0) (= $t20@@0 5)) (and (= $t20@@0 $t20@@0) (= inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0 inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0))) (and (=> (= (ControlFlow 0 77617) 77891) anon36_Then_correct@@0) (=> (= (ControlFlow 0 77617) 77633) anon36_Else_correct@@0))))))
+(let ((anon34_Then_correct@@0  (=> $t16@@0 (=> (and (and (or (or (and (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t15@@0)) (= 5 $t17@@0)) (and (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t15@@0)) 1)) (= 3 $t17@@0))) (and (not (= (|$addr#$signer| _$t0@@5) 186537453)) (= 2 $t17@@0))) (= $t17@@0 $t17@@0)) (and (= $t17@0@@0 $t17@@0) (= (ControlFlow 0 79765) 77849))) L7_correct@@0))))
+(let ((anon35_Then_correct@@0 true))
+(let ((inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0_correct@@0  (=> (|$IsValid'address'| 186537453) (=> (and (= inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0 (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453)) (= inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0 inline$$1_VASPDomain_tc_domain_manager_exists$0$$t1@1@@0)) (and (=> (= (ControlFlow 0 77575) 79693) anon35_Then_correct@@0) (=> (= (ControlFlow 0 77575) 77617) anon35_Else_correct@@0))))))
+(let ((anon34_Else_correct@@0  (=> (and (not $t16@@0) (= (ControlFlow 0 77581) 77575)) inline$$1_VASPDomain_tc_domain_manager_exists$0$anon0_correct@@0)))
+(let ((anon0$1_correct@@5  (=> (and (and (forall ((addr@@59 Int) ) (!  (=> (|$IsValid'address'| addr@@59) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@59) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@59)) 0)) (= addr@@59 173345816)))
+ :qid |VASPDomainbpl.4646:20|
+ :skolemid |184|
+)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_48071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) 173345816) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) 173345816)) 0)))) (and (forall ((addr@@60 Int) ) (!  (=> (|$IsValid'address'| addr@@60) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@60) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@60)) 1)) (= addr@@60 186537453)))
+ :qid |VASPDomainbpl.4654:20|
+ :skolemid |185|
+)) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_48071| $1_DiemTimestamp_CurrentTimeMicroseconds_$memory) 173345816) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) 186537453) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) 186537453)) 1))))) (=> (and (and (and (forall ((addr@@61 Int) ) (!  (=> (|$IsValid'address'| addr@@61) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61)) 0)) (not (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@61)) 2))))))
+ :qid |VASPDomainbpl.4662:20|
+ :skolemid |186|
+)) (forall ((addr@@62 Int) ) (!  (=> (|$IsValid'address'| addr@@62) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62)) 1)) (not (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@62)) 2))))))
+ :qid |VASPDomainbpl.4666:20|
+ :skolemid |187|
+))) (and (forall ((addr@@63 Int) ) (!  (=> (|$IsValid'address'| addr@@63) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63)) 3)) (not (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@63)) 2))))))
+ :qid |VASPDomainbpl.4670:20|
+ :skolemid |188|
+)) (forall ((addr@@64 Int) ) (!  (=> (|$IsValid'address'| addr@@64) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64)) 4)) (not (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@64)) 2))))))
+ :qid |VASPDomainbpl.4674:20|
+ :skolemid |189|
+)))) (and (and (forall ((addr@@65 Int) ) (!  (=> (|$IsValid'address'| addr@@65) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65)) 2)) (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@65)) 2)))))
+ :qid |VASPDomainbpl.4678:20|
+ :skolemid |190|
+)) (forall ((addr@@66 Int) ) (!  (=> (|$IsValid'address'| addr@@66) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66)) 5)) (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@66)) 2)))))
+ :qid |VASPDomainbpl.4682:20|
+ :skolemid |191|
+))) (and (forall ((addr@@67 Int) ) (!  (=> (|$IsValid'address'| addr@@67) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67)) 6)) (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@67)) 2)))))
+ :qid |VASPDomainbpl.4686:20|
+ :skolemid |192|
+)) (forall ((addr@@68 Int) ) (!  (=> (|$IsValid'address'| addr@@68) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_48520| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) addr@@68) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@68) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@68)) 4))))
+ :qid |VASPDomainbpl.4690:20|
+ :skolemid |193|
+))))) (=> (and (and (and (and (forall ((addr@@69 Int) ) (!  (=> (|$IsValid'address'| addr@@69) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_48952| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@69) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@69) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@69)) 3))))
+ :qid |VASPDomainbpl.4694:20|
+ :skolemid |194|
+)) (forall ((addr@@70 Int) ) (!  (=> (|$IsValid'address'| addr@@70) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_48952| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@70) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@70) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@70)) 3))))
+ :qid |VASPDomainbpl.4698:20|
+ :skolemid |195|
+))) (and (forall ((addr@@71 Int) ) (!  (=> (|$IsValid'address'| addr@@71) (=> (and (|Select__T@[Int]Bool_| (|domain#$Memory_48952| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@71) (not (= (seq.len (|$vec#$1_Option_Option'$1_ValidatorConfig_Config'| (|$config#$1_ValidatorConfig_ValidatorConfig| (|Select__T@[Int]$1_ValidatorConfig_ValidatorConfig_| (|contents#$Memory_48952| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@71)))) 0))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@71) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@71)) 3))))
+ :qid |VASPDomainbpl.4702:20|
+ :skolemid |196|
+)) (let (($range_0@@28 ($Range 0 (seq.len (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@72 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_49496| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@72))))))))
+(forall (($i_1@@28 Int) ) (!  (=> ($InRange $range_0@@28 $i_1@@28) (let ((i1@@0 $i_1@@28))
+ (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@73 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_49496| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@73)))) i1@@0))) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) (|$addr#$1_DiemSystem_ValidatorInfo| (seq.nth (|$validators#$1_DiemSystem_DiemSystem| (let ((addr@@73 173345816))
+(|$payload#$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'| (|Select__T@[Int]$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_| (|contents#$Memory_49496| |$1_DiemConfig_DiemConfig'$1_DiemSystem_DiemSystem'_$memory|) addr@@73)))) i1@@0)))) 3))))
+ :qid |VASPDomainbpl.4706:151|
+ :skolemid |197|
+))))) (and (and (forall ((addr1@@2 Int) ) (!  (=> (|$IsValid'address'| addr1@@2) (=> (|Select__T@[Int]Bool_| (|domain#$Memory_51443| $1_DualAttestation_Credential_$memory) addr1@@2) (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr1@@2) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr1@@2)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr1@@2) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr1@@2)) 2)))))
+ :qid |VASPDomainbpl.4711:20|
+ :skolemid |198|
+)) (forall ((addr@@74 Int) ) (!  (=> (|$IsValid'address'| addr@@74) (= (|Select__T@[Int]Bool_| (|domain#$Memory_51556| $1_DiemAccount_DiemAccount_$memory) addr@@74) (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@74)))
+ :qid |VASPDomainbpl.4715:20|
+ :skolemid |199|
+))) (and (forall ((addr@@75 Int) ) (!  (=> (|$IsValid'address'| addr@@75) (= (|Select__T@[Int]Bool_| (|domain#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) addr@@75)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@75) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@75)) 1))))
+ :qid |VASPDomainbpl.4719:20|
+ :skolemid |200|
+)) (forall ((addr@@76 Int) ) (!  (=> (|$IsValid'address'| addr@@76) (= (|Select__T@[Int]Bool_| (|domain#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) addr@@76)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@76) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@76)) 5))))
+ :qid |VASPDomainbpl.4723:20|
+ :skolemid |201|
+))))) (and (and (and (forall ((addr@@77 Int) ) (!  (=> (|$IsValid'address'| addr@@77) (=> (or (|Select__T@[Int]Bool_| (|domain#$Memory_51730| |$1_DiemAccount_Balance'$1_XUS_XUS'_$memory|) addr@@77) (|Select__T@[Int]Bool_| (|domain#$Memory_51790| |$1_DiemAccount_Balance'$1_XDX_XDX'_$memory|) addr@@77)) (or (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@77) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@77)) 5)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@77) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@77)) 6))) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@77) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@77)) 2)))))
+ :qid |VASPDomainbpl.4727:20|
+ :skolemid |202|
+)) (forall ((addr@@78 Int) ) (!  (=> (|$IsValid'address'| addr@@78) (= (|Select__T@[Int]Bool_| (|domain#$Memory_51875| $1_DesignatedDealer_Dealer_$memory) addr@@78)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@78) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@78)) 2))))
+ :qid |VASPDomainbpl.4731:20|
+ :skolemid |203|
+))) (and (forall ((addr@@79 Int) ) (!  (=> (|$IsValid'address'| addr@@79) (= (|Select__T@[Int]Bool_| (|domain#$Memory_51443| $1_DualAttestation_Credential_$memory) addr@@79)  (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@79) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@79)) 2)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@79) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@79)) 5)))))
+ :qid |VASPDomainbpl.4735:20|
+ :skolemid |204|
+)) (forall ((addr@@80 Int) ) (!  (=> (|$IsValid'address'| addr@@80) (= (|Select__T@[Int]Bool_| (|domain#$Memory_49463| $1_SlidingNonce_SlidingNonce_$memory) addr@@80)  (or (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@80) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@80)) 0)) (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@80) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@80)) 1)))))
+ :qid |VASPDomainbpl.4739:20|
+ :skolemid |205|
+)))) (and (and (forall ((addr@@81 Int) ) (!  (=> (|$IsValid'address'| addr@@81) (= (|Select__T@[Int]Bool_| (|domain#$Memory_48952| $1_ValidatorConfig_ValidatorConfig_$memory) addr@@81)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@81) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@81)) 3))))
+ :qid |VASPDomainbpl.4743:20|
+ :skolemid |206|
+)) (forall ((addr@@82 Int) ) (!  (=> (|$IsValid'address'| addr@@82) (= (|Select__T@[Int]Bool_| (|domain#$Memory_48520| $1_ValidatorOperatorConfig_ValidatorOperatorConfig_$memory) addr@@82)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@82) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@82)) 4))))
+ :qid |VASPDomainbpl.4747:20|
+ :skolemid |207|
+))) (and (forall ((addr@@83 Int) ) (!  (=> (|$IsValid'address'| addr@@83) (= (|Select__T@[Int]Bool_| (|domain#$Memory_52150| $1_VASP_ParentVASP_$memory) addr@@83)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@83) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@83)) 5))))
+ :qid |VASPDomainbpl.4751:20|
+ :skolemid |208|
+)) (forall ((addr@@84 Int) ) (!  (=> (|$IsValid'address'| addr@@84) (= (|Select__T@[Int]Bool_| (|domain#$Memory_52250| $1_VASP_ChildVASP_$memory) addr@@84)  (and (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) addr@@84) (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) addr@@84)) 6))))
+ :qid |VASPDomainbpl.4755:20|
+ :skolemid |209|
+)))))) (=> (and (and (and (and (and (|$IsValid'address'| (|$addr#$signer| _$t0@@5)) ($1_Signer_is_txn_signer _$t0@@5)) ($1_Signer_is_txn_signer_addr (|$addr#$signer| _$t0@@5))) (and (|$IsValid'address'| _$t1@@1) (|$IsValid'vec'u8''| _$t2@@0))) (and (and (forall (($a_0@@8 Int) ) (! (let (($rsc@@8 (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $a_0@@8)))
+(|$IsValid'$1_Roles_RoleId'| $rsc@@8))
+ :qid |VASPDomainbpl.4767:20|
+ :skolemid |210|
+ :pattern ( (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $a_0@@8))
+)) (forall (($a_0@@9 Int) ) (! (let (($rsc@@9 (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| (|contents#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) $a_0@@9)))
+(|$IsValid'$1_VASPDomain_VASPDomainManager'| $rsc@@9))
+ :qid |VASPDomainbpl.4771:20|
+ :skolemid |211|
+ :pattern ( (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| (|contents#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) $a_0@@9))
+))) (and (forall (($a_0@@10 Int) ) (! (let (($rsc@@10 (|Select__T@[Int]$1_VASPDomain_VASPDomains_| (|contents#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) $a_0@@10)))
+ (and (|$IsValid'$1_VASPDomain_VASPDomains'| $rsc@@10) (and (and (let (($range_1@@3 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10)))))
+(forall (($i_2@@3 Int) ) (!  (=> ($InRange $range_1@@3 $i_2@@3) (let ((i@@73 $i_2@@3))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| (seq.nth (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10) i@@73))) 63)))
+ :qid |VASPDomainbpl.4776:140|
+ :skolemid |212|
+))) (let (($range_3@@3 ($Range 0 (seq.len (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10)))))
+(forall (($i_4@@3 Int) ) (!  (=> ($InRange $range_3@@3 $i_4@@3) (let ((i@@74 $i_4@@3))
+(let (($range_5@@3 ($Range (+ i@@74 1) (seq.len (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10)))))
+(forall (($i_6@@3 Int) ) (!  (=> ($InRange $range_5@@3 $i_6@@3) (let ((j@@20 $i_6@@3))
+ (not (= (seq.nth (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10) i@@74) (seq.nth (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10) j@@20)))))
+ :qid |VASPDomainbpl.4778:98|
+ :skolemid |213|
+)))))
+ :qid |VASPDomainbpl.4777:202|
+ :skolemid |214|
+)))) (let (($range_7@@3 (|$domains#$1_VASPDomain_VASPDomains| $rsc@@10)))
+(forall (($i_8@@3 Int) ) (!  (=> (and (>= $i_8@@3 0) (< $i_8@@3 (seq.len $range_7@@3))) (let (($elem@@11 (seq.nth $range_7@@3 $i_8@@3)))
+(<= (seq.len (|$domain#$1_VASPDomain_VASPDomain| $elem@@11)) 63)))
+ :qid |VASPDomainbpl.4779:229|
+ :skolemid |215|
+))))))
+ :qid |VASPDomainbpl.4775:20|
+ :skolemid |216|
+ :pattern ( (|Select__T@[Int]$1_VASPDomain_VASPDomains_| (|contents#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) $a_0@@10))
+)) (= $t11@@2 (|$domains#$1_VASPDomain_VASPDomains| (|Select__T@[Int]$1_VASPDomain_VASPDomains_| (|contents#$Memory_50171| $1_VASPDomain_VASPDomains_$memory) _$t1@@1)))))) (and (and (and (= $t12@@1 (|$addr#$signer| _$t0@@5)) (= $t13@@0 (|$vasp_domain_events#$1_VASPDomain_VASPDomainManager| (|Select__T@[Int]$1_VASPDomain_VASPDomainManager_| (|contents#$Memory_50235| $1_VASPDomain_VASPDomainManager_$memory) 186537453)))) (and (= $t14@@0 ($1_VASPDomain_VASPDomainEvent true ($1_VASPDomain_VASPDomain _$t2@@0) _$t1@@1)) (= _$t0@@5 _$t0@@5))) (and (and (= _$t1@@1 _$t1@@1) (= _$t2@@0 _$t2@@0)) (and (= $t15@@0 (|$addr#$signer| _$t0@@5)) (= $t16@@0  (or (or (not (|Select__T@[Int]Bool_| (|domain#$Memory_48193| $1_Roles_RoleId_$memory) $t15@@0)) (not (= (|$role_id#$1_Roles_RoleId| (|Select__T@[Int]$1_Roles_RoleId_| (|contents#$Memory_48193| $1_Roles_RoleId_$memory) $t15@@0)) 1))) (not (= (|$addr#$signer| _$t0@@5) 186537453)))))))) (and (=> (= (ControlFlow 0 77488) 79765) anon34_Then_correct@@0) (=> (= (ControlFlow 0 77488) 77581) anon34_Else_correct@@0))))))))
+(let ((inline$$InitEventStore$0$anon0_correct@@5  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@13 T@$1_Event_EventHandle) ) (! (let ((stream@@14 (|Select__T@[$1_Event_EventHandle]Multiset_30205_| (|streams#$EventStore| $es) handle@@13)))
+ (and (= (|l#Multiset_30205| stream@@14) 0) (forall ((v@@38 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_30205| stream@@14) v@@38) 0)
+ :qid |VASPDomainbpl.134:13|
+ :skolemid |2|
+))))
+ :qid |VASPDomainbpl.2012:13|
+ :skolemid |54|
+))) (= (ControlFlow 0 76408) 77488)) anon0$1_correct@@5)))
+(let ((anon0_correct@@5  (=> (and (= (seq.len (|p#$Mutation_50608| $t7@@1)) 0) (= (seq.len (|p#$Mutation_50608| $t24@@0)) 0)) (=> (and (and (= (seq.len (|p#$Mutation_38341| $t31@@0)) 0) (= (seq.len (|p#$Mutation_50669| $t34@@0)) 0)) (and (= (seq.len (|p#$Mutation_45908| $t35)) 0) (= (ControlFlow 0 76418) 76408))) inline$$InitEventStore$0$anon0_correct@@5))))
+(let ((PreconditionGeneratedEntry_correct@@0  (=> (= (ControlFlow 0 87518) 76418) anon0_correct@@5)))
+PreconditionGeneratedEntry_correct@@0))))))))))))))))))))))))))))))))))))))))))))))))))))
+))
+(check-sat)

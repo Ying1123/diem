@@ -3,37 +3,33 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/z3/SlidingNonce.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.291 s, 35 proof obligations]  verified
+  [0.175 s, 35 proof obligations]  verified
 
 Verifying $1_SlidingNonce_publish$verify ...
-  [0.025 s, 5 proof obligations]  verified
+  [0.041 s, 5 proof obligations]  verified
 
 Verifying $1_SlidingNonce_record_nonce_or_abort$verify ...
-  [0.039 s, 4 proof obligations]  verified
+  [0.024 s, 4 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [0.720 s, 36 proof obligations]  verified
+  [0.205 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [0.727 s, 39 proof obligations]  verified
+  [0.168 s, 39 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.252 s, 28 proof obligations]  verified
+  [40.333 s, 28 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/z3/SlidingNonce.bpl(16093,27): Verification of '$1_Genesis_initialize_internal$verify' timed out after 40 seconds
 
-Boogie program verifier finished with 6 verified, 0 errors
+Boogie program verifier finished with 5 verified, 0 errors, 1 time out

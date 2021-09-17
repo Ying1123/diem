@@ -19,39 +19,39 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.355 s, 25 proof obligations]  verified
+  [0.350 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_human_name$verify ...
-  [0.026 s, 4 proof obligations]  verified
+  [0.020 s, 4 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_publish$verify ...
-  [0.100 s, 15 proof obligations]  verified
+  [0.091 s, 15 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_exists_config$verify ...
   [0.016 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_config$verify ...
-  [0.021 s, 5 proof obligations]  verified
+  [0.025 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_consensus_pubkey$verify ...
-  [0.003 s, 1 proof obligation]  verified
+  [0.004 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_get_operator$verify ...
-  [0.026 s, 5 proof obligations]  verified
+  [0.028 s, 5 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_get_validator_network_addresses$verify ...
-  [0.003 s, 1 proof obligation]  verified
+  [0.004 s, 1 proof obligation]  verified
 
 Verifying $1_ValidatorConfig_is_valid$verify ...
-  [0.017 s, 3 proof obligations]  verified
+  [0.025 s, 3 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.163 s, 16 proof obligations]  verified
+  [0.178 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.148 s, 18 proof obligations]  verified
+  [0.158 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.226 s, 21 proof obligations]  verified
+  [0.225 s, 21 proof obligations]  verified
 
 Boogie program verifier finished with 12 verified, 0 errors

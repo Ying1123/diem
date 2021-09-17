@@ -1,10 +1,6 @@
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:9.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:9.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:9.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:9.12: To suppress this warning in the future use (set-logic ALL).
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:570.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:571.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2295.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2295.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2295.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2295.12: To suppress this warning in the future use (set-logic ALL).
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2296.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2296.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2296.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/seqArray_array/_1_Roles_assert_validator_operator_verify.smt2:2296.12: To suppress this warning in the future use (set-logic ALL).

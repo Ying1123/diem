@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/andy_default/_1_AccountFreezing_freeze_account_verify.smt2:468.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/andy_default/_1_AccountFreezing_freeze_account_verify.smt2:1653.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/andy_default/_1_AccountFreezing_freeze_account_verify.smt2:466.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/andy_default/_1_AccountFreezing_freeze_account_verify.smt2:1651.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

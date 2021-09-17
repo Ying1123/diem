@@ -3,124 +3,156 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.290 s, 35 proof obligations]  verified
+  [0.175 s, 35 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify ...
-  [0.100 s, 13 proof obligations]  verified
+  [0.062 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_0 ...
-  [0.084 s, 14 proof obligations]  verified
+  [0.051 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_1 ...
-  [0.077 s, 14 proof obligations]  verified
+  [0.046 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_2 ...
-  [0.115 s, 14 proof obligations]  verified
+  [0.076 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_3 ...
-  [0.097 s, 14 proof obligations]  verified
+  [0.055 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_disable_reconfiguration$verify ...
-  [0.006 s, 0 proof obligations]  verified
+  [0.033 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_emit_genesis_reconfiguration_event$verify ...
-  [0.214 s, 3 proof obligations]  verified
+  [0.043 s, 3 proof obligations]  verified
 
 Verifying $1_DiemConfig_enable_reconfiguration$verify ...
-  [0.012 s, 0 proof obligations]  verified
+  [0.035 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify ...
-  [0.022 s, 4 proof obligations]  verified
+  [0.034 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_0 ...
-  [0.017 s, 4 proof obligations]  verified
+  [0.030 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_1 ...
-  [0.013 s, 4 proof obligations]  verified
+  [0.028 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_2 ...
-  [0.014 s, 4 proof obligations]  verified
+  [0.027 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_3 ...
-  [0.014 s, 4 proof obligations]  verified
+  [0.029 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_4 ...
-  [0.026 s, 4 proof obligations]  verified
+  [0.029 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_get$verify_instantiated_5 ...
-  [0.012 s, 4 proof obligations]  verified
+  [0.030 s, 4 proof obligations]  verified
 
 Verifying $1_DiemConfig_initialize$verify ...
-  [0.041 s, 10 proof obligations]  verified
+  [0.034 s, 10 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.104 s, 16 proof obligations]  verified
+  [0.051 s, 16 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
-  [0.098 s, 17 proof obligations]  verified
+  [0.050 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
-  [0.104 s, 17 proof obligations]  verified
+  [0.047 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
-  [0.101 s, 17 proof obligations]  verified
+  [0.056 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
-  [0.102 s, 17 proof obligations]  verified
+  [0.055 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify ...
-  [0.090 s, 12 proof obligations]  verified
+  [0.048 s, 12 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_0 ...
-  [0.112 s, 13 proof obligations]  verified
+  [0.050 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_1 ...
-  [0.087 s, 13 proof obligations]  verified
+  [0.042 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_2 ...
-  [0.087 s, 13 proof obligations]  verified
+  [0.045 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_3 ...
-  [0.081 s, 13 proof obligations]  verified
+  [0.035 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfiguration_enabled$verify ...
-  [0.022 s, 0 proof obligations]  verified
+  [0.020 s, 0 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfigure$verify ...
-  [0.242 s, 12 proof obligations]  verified
+  [0.061 s, 12 proof obligations]  verified
 
 Verifying $1_DiemConfig_reconfigure_$verify ...
-  [0.317 s, 11 proof obligations]  verified
+  [0.068 s, 11 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify ...
-  [0.221 s, 14 proof obligations]  verified
+  [0.046 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_0 ...
-  [0.267 s, 15 proof obligations]  verified
+  [0.056 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_1 ...
-  [0.216 s, 15 proof obligations]  verified
+  [0.063 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_2 ...
-  [0.286 s, 15 proof obligations]  verified
+  [0.067 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_3 ...
-  [0.244 s, 15 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.064 s, 15 proof obligations]  verified
 
+Verifying $1_DiemSystem_add_validator$verify ...
+  [40.300 s, 31 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl(17382,27): Verification of '$1_DiemSystem_add_validator$verify' timed out after 40 seconds
+
+Verifying $1_DiemSystem_initialize_validator_set$verify ...
+  [0.306 s, 22 proof obligations]  verified
+Prover error: line 60675 column 784: unknown function/constant seq.update
+
+Prover error: Prover died
+
+
+Verifying $1_DiemSystem_remove_validator$verify ...
+  [0.060 s, 27 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl(19465,27): Verification inconclusive ($1_DiemSystem_remove_validator$verify)
+
+Verifying $1_DiemSystem_set_diem_system_config$verify ...
+  [0.072 s, 16 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl(20379,27): Verification inconclusive ($1_DiemSystem_set_diem_system_config$verify)
+Prover error: Invalid PING response from the prover: unsat
+
+Prover error: line 3485 column 1950: unknown function/constant seq.update
+
+Prover error: Prover died
+
+
+Verifying $1_DiemSystem_update_config_and_reconfigure$verify ...
+  [0.087 s, 40 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl(20824,27): Verification inconclusive ($1_DiemSystem_update_config_and_reconfigure$verify)
+
+Verifying $1_RegisteredCurrencies_initialize$verify ...
+  [0.076 s, 20 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl(22531,27): Verification inconclusive ($1_RegisteredCurrencies_initialize$verify)
+Prover error: Invalid PING response from the prover: unsat
+
+
+Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
+  [0.062 s, 15 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/z3/DiemConfig.bpl(23350,27): Verification inconclusive ($1_RegisteredCurrencies_add_currency_code$verify)

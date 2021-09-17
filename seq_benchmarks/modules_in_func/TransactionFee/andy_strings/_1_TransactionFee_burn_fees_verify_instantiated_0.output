@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/_1_TransactionFee_burn_fees_verify_instantiated_0.smt2:437.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/_1_TransactionFee_burn_fees_verify_instantiated_0.smt2:1447.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/_1_TransactionFee_burn_fees_verify_instantiated_0.smt2:436.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_strings/_1_TransactionFee_burn_fees_verify_instantiated_0.smt2:1446.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

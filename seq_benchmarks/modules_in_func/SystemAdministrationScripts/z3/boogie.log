@@ -3,31 +3,26 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/SystemAdministrationScripts/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/SystemAdministrationScripts/z3/SystemAdministrationScripts.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_SystemAdministrationScripts_set_gas_constants$verify ...
-  [0.238 s, 0 proof obligations]  verified
+  [0.181 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_initialize_diem_consensus_config$verify ...
-  [0.011 s, 0 proof obligations]  verified
+  [0.039 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_consensus_config$verify ...
-  [0.018 s, 0 proof obligations]  verified
+  [0.044 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_version$verify ...
-  [0.011 s, 0 proof obligations]  verified
+  [0.034 s, 0 proof obligations]  verified
 
 Boogie program verifier finished with 4 verified, 0 errors

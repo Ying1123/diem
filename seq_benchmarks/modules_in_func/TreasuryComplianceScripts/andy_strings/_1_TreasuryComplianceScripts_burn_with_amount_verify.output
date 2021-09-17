@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_strings/_1_TreasuryComplianceScripts_burn_with_amount_verify.smt2:484.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_strings/_1_TreasuryComplianceScripts_burn_with_amount_verify.smt2:1756.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_strings/_1_TreasuryComplianceScripts_burn_with_amount_verify.smt2:483.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TreasuryComplianceScripts/andy_strings/_1_TreasuryComplianceScripts_burn_with_amount_verify.smt2:1755.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

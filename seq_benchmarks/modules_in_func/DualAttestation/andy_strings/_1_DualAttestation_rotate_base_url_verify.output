@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_strings/_1_DualAttestation_rotate_base_url_verify.smt2:424.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_strings/_1_DualAttestation_rotate_base_url_verify.smt2:1457.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_strings/_1_DualAttestation_rotate_base_url_verify.smt2:423.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/andy_strings/_1_DualAttestation_rotate_base_url_verify.smt2:1456.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

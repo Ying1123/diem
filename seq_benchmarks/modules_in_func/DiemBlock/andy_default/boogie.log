@@ -4,10 +4,8 @@
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_default/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,21 +17,24 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.286 s, 35 proof obligations]  verified
+  [0.285 s, 35 proof obligations]  verified
 
 Verifying $1_DiemBlock_is_initialized$verify ...
-  [0.003 s, 0 proof obligations]  verified
+  [0.002 s, 0 proof obligations]  verified
 
 Verifying $1_DiemBlock_block_prologue$verify ...
-  [0.318 s, 11 proof obligations]  verified
+  [0.299 s, 11 proof obligations]  verified
 
 Verifying $1_DiemBlock_get_current_block_height$verify ...
   [0.005 s, 0 proof obligations]  verified
 
 Verifying $1_DiemBlock_initialize_block_metadata$verify ...
-  [0.060 s, 8 proof obligations]  verified
+  [0.062 s, 8 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.246 s, 28 proof obligations]  verified
+  [0.615 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_default/DiemBlock.bpl(13899,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
 
-Boogie program verifier finished with 6 verified, 0 errors
+Boogie program verifier finished with 5 verified, 0 errors, 1 inconclusive

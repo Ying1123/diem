@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/XDX/andy_strings/_1_XDX_initialize_verify.smt2:471.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/XDX/andy_strings/_1_XDX_initialize_verify.smt2:1601.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/XDX/andy_strings/_1_XDX_initialize_verify.smt2:470.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/XDX/andy_strings/_1_XDX_initialize_verify.smt2:1600.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/_1_RecoveryAddress_rotate_authentication_key_verify.smt2:184.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/_1_RecoveryAddress_rotate_authentication_key_verify.smt2:681.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/_1_RecoveryAddress_rotate_authentication_key_verify.smt2:183.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/andy_strings/_1_RecoveryAddress_rotate_authentication_key_verify.smt2:680.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+cvc5 interrupted by SIGTERM.

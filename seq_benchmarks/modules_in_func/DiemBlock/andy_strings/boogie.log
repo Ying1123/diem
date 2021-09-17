@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemBlock/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,21 +18,21 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.281 s, 35 proof obligations]  verified
+  [0.287 s, 35 proof obligations]  verified
 
 Verifying $1_DiemBlock_is_initialized$verify ...
-  [0.004 s, 0 proof obligations]  verified
+  [0.003 s, 0 proof obligations]  verified
 
 Verifying $1_DiemBlock_block_prologue$verify ...
-  [0.315 s, 11 proof obligations]  verified
+  [0.305 s, 11 proof obligations]  verified
 
 Verifying $1_DiemBlock_get_current_block_height$verify ...
-  [0.005 s, 0 proof obligations]  verified
+  [0.006 s, 0 proof obligations]  verified
 
 Verifying $1_DiemBlock_initialize_block_metadata$verify ...
-  [0.057 s, 8 proof obligations]  verified
+  [0.071 s, 8 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.116 s, 28 proof obligations]  verified
+  [2.119 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 6 verified, 0 errors

@@ -916,4 +916,4 @@ anon0_correct@@3)))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
-; Undetermined
+; Valid

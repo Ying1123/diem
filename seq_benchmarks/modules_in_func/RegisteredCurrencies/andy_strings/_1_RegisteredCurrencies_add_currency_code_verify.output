@@ -1,8 +1,8 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/_1_RegisteredCurrencies_add_currency_code_verify.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/_1_RegisteredCurrencies_add_currency_code_verify.smt2:1375.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unknown
-(:reason-unknown incomplete)
+/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/_1_RegisteredCurrencies_add_currency_code_verify.smt2:399.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/_1_RegisteredCurrencies_add_currency_code_verify.smt2:1374.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unsat
+(error "Can't get-info :reason-unknown when the last result wasn't unknown!")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")
 (error "Cannot get value unless model generation is enabled (try --produce-models)")

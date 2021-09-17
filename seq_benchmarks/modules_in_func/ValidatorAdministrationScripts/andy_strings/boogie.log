@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,9 +18,75 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.432 s, 23 proof obligations]  verified
+  [2.069 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.056 s, 8 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.035 s, 8 proof obligations]  verified
 
+Verifying $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify ...
+  [4.737 s, 19 proof obligations]  errors
+assert_failed(17,12737,12827): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(7670,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(7670,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4259,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4277,34): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon8_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4298,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon9_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4305,5): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon5
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4343,16): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon10_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8014,5): anon11_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8028,35): anon12_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8061,17): anon13_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5359,9): inline$$1_DiemSystem_remove_validator$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5407,35): inline$$1_DiemSystem_remove_validator$0$anon22_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5438,35): inline$$1_DiemSystem_remove_validator$0$anon23_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5465,35): inline$$1_DiemSystem_remove_validator$0$anon24_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5558,17): inline$$1_DiemSystem_remove_validator$0$anon25_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5583,36): inline$$1_DiemSystem_remove_validator$0$anon26_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(1278,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(1280,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5621,5): inline$$1_DiemSystem_remove_validator$0$anon27_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5668,36): inline$$1_DiemSystem_remove_validator$0$anon28_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5692,9): inline$$1_DiemSystem_remove_validator$0$anon29_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5701,9): inline$$1_DiemSystem_remove_validator$0$anon30_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5708,5): inline$$1_DiemSystem_remove_validator$0$anon21
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8115,5): anon14_Else
+assert_failed(17,12967,13010): post-condition does not hold
+Execution trace:
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(7670,9): anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(2547,5): inline$$InitEventStore$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(7670,9): anon0$1
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4259,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4277,34): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon8_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4298,9): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon9_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4305,5): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon5
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(4343,16): inline$$1_SlidingNonce_record_nonce_or_abort$0$anon10_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8014,5): anon11_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8028,35): anon12_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8061,17): anon13_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5359,9): inline$$1_DiemSystem_remove_validator$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5407,35): inline$$1_DiemSystem_remove_validator$0$anon22_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5438,35): inline$$1_DiemSystem_remove_validator$0$anon23_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5465,35): inline$$1_DiemSystem_remove_validator$0$anon24_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5558,17): inline$$1_DiemSystem_remove_validator$0$anon25_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5583,36): inline$$1_DiemSystem_remove_validator$0$anon26_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(1278,7): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon0
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(1280,5): inline$$1_Vector_swap_remove'$1_DiemSystem_ValidatorInfo'$0$anon3_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5621,5): inline$$1_DiemSystem_remove_validator$0$anon27_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5668,36): inline$$1_DiemSystem_remove_validator$0$anon28_Else
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5692,9): inline$$1_DiemSystem_remove_validator$0$anon29_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5701,9): inline$$1_DiemSystem_remove_validator$0$anon30_Then
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(5708,5): inline$$1_DiemSystem_remove_validator$0$anon21
+    /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/andy_strings/ValidatorAdministrationScripts.bpl(8115,5): anon14_Else
+
+Verifying $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify ...
+  [3.275 s, 25 proof obligations]  verified
+
+Verifying $1_ValidatorAdministrationScripts_set_validator_operator$verify ...
+  [0.235 s, 14 proof obligations]  verified
+
+Verifying $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify ...
+  [0.183 s, 16 proof obligations]  verified
+
+Boogie program verifier finished with 5 verified, 2 errors

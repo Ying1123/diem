@@ -1,10 +1,6 @@
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:9.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:9.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:9.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:9.12: To suppress this warning in the future use (set-logic ALL).
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:488.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:489.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1887.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1887.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1887.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1887.12: To suppress this warning in the future use (set-logic ALL).
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1888.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1888.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1888.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/DualAttestation/seqArray_array/_1_DualAttestation_dual_attestation_required_verify.smt2:1888.12: To suppress this warning in the future use (set-logic ALL).

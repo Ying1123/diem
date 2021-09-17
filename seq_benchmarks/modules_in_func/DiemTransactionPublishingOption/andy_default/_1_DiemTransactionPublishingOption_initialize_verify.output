@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/andy_default/_1_DiemTransactionPublishingOption_initialize_verify.smt2:405.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/andy_default/_1_DiemTransactionPublishingOption_initialize_verify.smt2:1385.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/andy_default/_1_DiemTransactionPublishingOption_initialize_verify.smt2:403.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/andy_default/_1_DiemTransactionPublishingOption_initialize_verify.smt2:1383.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

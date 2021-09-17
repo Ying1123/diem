@@ -1,11 +1,7 @@
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:9.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:9.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:9.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:9.12: To suppress this warning in the future use (set-logic ALL).
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:493.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1791.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:494.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1792.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1943.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1943.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1943.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1943.12: To suppress this warning in the future use (set-logic ALL).
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1944.12: No set-logic command was given before this point.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1944.12: cvc5 will make all theories available.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1944.12: Consider setting a stricter logic for (likely) better performance.
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemConfig/seqArray_array/_1_DiemConfig_publish_new_config_verify_instantiated_1.smt2:1944.12: To suppress this warning in the future use (set-logic ALL).

@@ -3,130 +3,126 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/z3/DiemVersion.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.303 s, 35 proof obligations]  verified
+  [0.179 s, 35 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify ...
-  [0.092 s, 13 proof obligations]  verified
+  [0.057 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_0 ...
-  [0.095 s, 14 proof obligations]  verified
+  [0.055 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_1 ...
-  [0.104 s, 14 proof obligations]  verified
+  [0.047 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_2 ...
-  [0.103 s, 14 proof obligations]  verified
+  [0.068 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_3 ...
-  [0.103 s, 14 proof obligations]  verified
+  [0.054 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.109 s, 16 proof obligations]  verified
+  [0.049 s, 16 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
-  [0.106 s, 17 proof obligations]  verified
+  [0.053 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
-  [0.107 s, 17 proof obligations]  verified
+  [0.049 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
-  [0.104 s, 17 proof obligations]  verified
+  [0.060 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
-  [0.106 s, 17 proof obligations]  verified
+  [0.049 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify ...
-  [0.092 s, 12 proof obligations]  verified
+  [0.051 s, 12 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_0 ...
-  [0.093 s, 13 proof obligations]  verified
+  [0.039 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_1 ...
-  [0.103 s, 13 proof obligations]  verified
+  [0.036 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_2 ...
-  [0.090 s, 13 proof obligations]  verified
+  [0.049 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_3 ...
-  [0.091 s, 13 proof obligations]  verified
+  [0.052 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify ...
-  [0.224 s, 14 proof obligations]  verified
+  [0.062 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_0 ...
-  [0.235 s, 15 proof obligations]  verified
+  [0.062 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_1 ...
-  [0.286 s, 15 proof obligations]  verified
+  [0.065 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_2 ...
-  [0.286 s, 15 proof obligations]  verified
+  [0.075 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_3 ...
-  [0.280 s, 15 proof obligations]  verified
+  [0.062 s, 15 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [2.252 s, 37 proof obligations]  verified
+  [0.814 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [2.430 s, 37 proof obligations]  verified
+  [0.654 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [2.391 s, 37 proof obligations]  verified
+  [0.758 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify ...
-  [2.208 s, 40 proof obligations]  verified
+  [0.677 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
-  [2.099 s, 40 proof obligations]  verified
+  [0.720 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
-  [2.221 s, 40 proof obligations]  verified
+  [1.355 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [1.007 s, 36 proof obligations]  verified
+  [0.203 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [3.021 s, 38 proof obligations]  verified
+  [0.967 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.543 s, 38 proof obligations]  verified
+  [0.897 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [2.724 s, 38 proof obligations]  verified
+  [0.811 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [1.000 s, 39 proof obligations]  verified
+  [0.280 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_account$verify ...
-  [1.046 s, 24 proof obligations]  verified
+  [0.981 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_operator_account$verify ...
-  [0.273 s, 22 proof obligations]  verified
+  [0.133 s, 22 proof obligations]  verified
 
 Verifying $1_DiemVersion_set$verify ...
-  [0.200 s, 21 proof obligations]  verified
+  [0.073 s, 21 proof obligations]  verified
 
 Verifying $1_DiemVersion_initialize$verify ...
-  [0.190 s, 23 proof obligations]  verified
+  [0.062 s, 23 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.232 s, 28 proof obligations]  verified
+  [40.319 s, 28 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemVersion/z3/DiemVersion.bpl(43512,27): Verification of '$1_Genesis_initialize_internal$verify' timed out after 40 seconds
 
-Boogie program verifier finished with 37 verified, 0 errors
+Boogie program verifier finished with 36 verified, 0 errors, 1 time out

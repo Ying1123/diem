@@ -3,85 +3,81 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/z3/AccountFreezing.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.309 s, 35 proof obligations]  verified
+  [0.203 s, 35 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.255 s, 25 proof obligations]  verified
+  [0.087 s, 25 proof obligations]  verified
 
 Verifying $1_AccountFreezing_initialize$verify ...
-  [0.064 s, 8 proof obligations]  verified
+  [0.040 s, 8 proof obligations]  verified
 
 Verifying $1_AccountFreezing_account_is_frozen$verify ...
-  [0.010 s, 3 proof obligations]  verified
+  [0.029 s, 3 proof obligations]  verified
 
 Verifying $1_AccountFreezing_assert_not_frozen$verify ...
-  [0.009 s, 3 proof obligations]  verified
+  [0.028 s, 3 proof obligations]  verified
 
 Verifying $1_AccountFreezing_create$verify ...
-  [0.051 s, 7 proof obligations]  verified
+  [0.032 s, 7 proof obligations]  verified
 
 Verifying $1_AccountFreezing_freeze_account$verify ...
-  [0.549 s, 18 proof obligations]  verified
+  [0.084 s, 18 proof obligations]  verified
 
 Verifying $1_AccountFreezing_unfreeze_account$verify ...
-  [0.558 s, 16 proof obligations]  verified
+  [0.078 s, 16 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [2.142 s, 37 proof obligations]  verified
+  [0.682 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [2.476 s, 37 proof obligations]  verified
+  [0.444 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [2.326 s, 37 proof obligations]  verified
+  [0.738 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify ...
-  [2.295 s, 40 proof obligations]  verified
+  [0.496 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
-  [2.039 s, 40 proof obligations]  verified
+  [1.647 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
-  [2.169 s, 40 proof obligations]  verified
+  [1.256 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [1.051 s, 36 proof obligations]  verified
+  [0.124 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [3.267 s, 38 proof obligations]  verified
+  [0.479 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.752 s, 38 proof obligations]  verified
+  [0.533 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [2.885 s, 38 proof obligations]  verified
+  [0.423 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [1.036 s, 39 proof obligations]  verified
+  [0.247 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_account$verify ...
-  [1.076 s, 24 proof obligations]  verified
+  [0.460 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_operator_account$verify ...
-  [0.302 s, 22 proof obligations]  verified
+  [0.118 s, 22 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.312 s, 28 proof obligations]  verified
+  [40.288 s, 28 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/AccountFreezing/z3/AccountFreezing.bpl(36207,27): Verification of '$1_Genesis_initialize_internal$verify' timed out after 40 seconds
 
-Boogie program verifier finished with 22 verified, 0 errors
+Boogie program verifier finished with 21 verified, 0 errors, 1 time out

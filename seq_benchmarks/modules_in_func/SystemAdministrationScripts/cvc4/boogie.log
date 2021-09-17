@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/SystemAdministrationScripts/cvc4/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,16 +13,16 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/SystemAdministrationScripts/cvc4/SystemAdministrationScripts.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $1_SystemAdministrationScripts_set_gas_constants$verify ...
-  [0.233 s, 0 proof obligations]  verified
+  [0.236 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_initialize_diem_consensus_config$verify ...
-  [0.014 s, 0 proof obligations]  verified
+  [0.013 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_consensus_config$verify ...
-  [0.023 s, 0 proof obligations]  verified
+  [0.018 s, 0 proof obligations]  verified
 
 Verifying $1_SystemAdministrationScripts_update_diem_version$verify ...
   [0.009 s, 0 proof obligations]  verified

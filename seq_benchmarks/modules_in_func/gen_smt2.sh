@@ -78,6 +78,11 @@ find $bm_dir -type f -print0 | while read -d $'\0' file; do
 					sed -i '1s/^/(set-option :model.compact false)\n/' $bm_dir_single/$option/*.smt2
 					sed -i '1s/^/(set-option :smt.mbqi false)\n/' $bm_dir_single/$option/*.smt2
 					sed -i '1s/^/(set-option :print-success false)\n/' $bm_dir_single/$option/*.smt2
+				elif [ "$option" = "andy_strings" ]; then
+					sed -i '/(set-option :strings-seq-update eager)/d' $bm_dir_single/$option/*.smt2
+				else # cvc4 cvc5 andy_default
+					sed -i '/(set-option :strings-seq-update eager)/d' $bm_dir_single/$option/*.smt2
+					sed -i '/(set-option :strings-exp true)/d' $bm_dir_single/$option/*.smt2
 				fi
 			done
         fi

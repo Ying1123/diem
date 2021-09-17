@@ -2,6 +2,7 @@
 (set-info :smt-lib-version 2.6)
 (set-option :pre-skolem-quant true)
 (set-option :no-dt-share-sel true)
+(set-option :ee-mode central)
 (set-logic ALL)
 ; done setting options
 
@@ -915,4 +916,4 @@ anon0_correct@@3)))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
-; Undetermined
+; Valid

@@ -3,12 +3,9 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/ChainId/cvc4/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
+/proverOpt:PROVER_PATH=/home/ying/bin/cvc4
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:SOLVER=CVC5
 /trace
 -doModSetAnalysis
@@ -16,18 +13,21 @@
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/ChainId/cvc4/ChainId.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/cvc4
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.277 s, 35 proof obligations]  verified
+  [0.267 s, 35 proof obligations]  verified
 
 Verifying $1_ChainId_get$verify ...
   [0.004 s, 0 proof obligations]  verified
 
 Verifying $1_ChainId_initialize$verify ...
-  [0.033 s, 8 proof obligations]  verified
+  [0.036 s, 8 proof obligations]  verified
+Prover error: Term of kind SEQ_NTH not supported in default mode, try --strings-exp
+
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.212 s, 28 proof obligations]  verified
+  [0.846 s, 28 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/ChainId/cvc4/ChainId.bpl(13311,27): Verification inconclusive ($1_Genesis_initialize_internal$verify)
 
-Boogie program verifier finished with 4 verified, 0 errors
+Boogie program verifier finished with 3 verified, 0 errors, 1 inconclusive

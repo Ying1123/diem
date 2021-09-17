@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/andy_strings/_1_Roles_new_parent_vasp_role_verify.smt2:466.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/Roles/andy_strings/_1_Roles_new_parent_vasp_role_verify.smt2:1651.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/andy_strings/_1_Roles_new_parent_vasp_role_verify.smt2:465.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/Roles/andy_strings/_1_Roles_new_parent_vasp_role_verify.smt2:1650.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

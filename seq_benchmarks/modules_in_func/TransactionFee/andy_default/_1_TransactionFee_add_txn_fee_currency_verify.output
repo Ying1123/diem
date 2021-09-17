@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/_1_TransactionFee_add_txn_fee_currency_verify.smt2:437.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/_1_TransactionFee_add_txn_fee_currency_verify.smt2:1447.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/_1_TransactionFee_add_txn_fee_currency_verify.smt2:435.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/TransactionFee/andy_default/_1_TransactionFee_add_txn_fee_currency_verify.smt2:1445.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

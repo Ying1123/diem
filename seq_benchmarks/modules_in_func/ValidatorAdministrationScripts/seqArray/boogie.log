@@ -19,9 +19,9 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.945 s, 23 proof obligations]  verified
+  [1.426 s, 23 proof obligations]  verified
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.074 s, 8 proof obligations]  verified
+  [0.062 s, 8 proof obligations]  verified
 Prover error: cvc5 interrupted by SIGTERM.
 

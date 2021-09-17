@@ -1,3 +1,2 @@
+unsupported
 (error "Error in option parsing: unknown option for --ee-mode: `central'.  Try --ee-mode=help.")
-
-Please use --help to get help on command-line options.

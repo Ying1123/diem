@@ -3,49 +3,45 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/z3/DiemTransactionPublishingOption.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.286 s, 35 proof obligations]  verified
+  [0.180 s, 35 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_initialize$verify ...
-  [0.126 s, 20 proof obligations]  verified
+  [0.063 s, 20 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_halt_all_transactions$verify ...
-  [0.039 s, 1 proof obligation]  verified
+  [0.057 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_module_allowed$verify ...
-  [0.040 s, 4 proof obligations]  verified
+  [0.046 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_script_allowed$verify ...
-  [0.053 s, 4 proof obligations]  verified
+  [0.064 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_resume_transactions$verify ...
-  [0.032 s, 1 proof obligation]  verified
+  [0.045 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_module$verify ...
-  [0.105 s, 14 proof obligations]  verified
+  [0.067 s, 14 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_script$verify ...
-  [0.122 s, 14 proof obligations]  verified
+  [0.058 s, 14 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_transactions_halted$verify ...
-  [0.005 s, 1 proof obligation]  verified
+  [0.023 s, 1 proof obligation]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.091 s, 28 proof obligations]  verified
+  [40.293 s, 28 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/z3/DiemTransactionPublishingOption.bpl(16080,27): Verification of '$1_Genesis_initialize_internal$verify' timed out after 40 seconds
 
-Boogie program verifier finished with 10 verified, 0 errors
+Boogie program verifier finished with 9 verified, 0 errors, 1 time out

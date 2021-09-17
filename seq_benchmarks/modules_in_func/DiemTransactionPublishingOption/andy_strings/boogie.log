@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/DiemTransactionPublishingOption/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,33 +18,33 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.283 s, 35 proof obligations]  verified
+  [0.280 s, 35 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_initialize$verify ...
-  [0.147 s, 20 proof obligations]  verified
+  [0.122 s, 20 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_halt_all_transactions$verify ...
   [0.032 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_module_allowed$verify ...
-  [0.035 s, 4 proof obligations]  verified
+  [0.037 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_is_script_allowed$verify ...
-  [0.041 s, 4 proof obligations]  verified
+  [0.054 s, 4 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_resume_transactions$verify ...
-  [0.028 s, 1 proof obligation]  verified
+  [0.035 s, 1 proof obligation]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_module$verify ...
-  [0.108 s, 14 proof obligations]  verified
+  [0.118 s, 14 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_set_open_script$verify ...
-  [0.116 s, 14 proof obligations]  verified
+  [0.112 s, 14 proof obligations]  verified
 
 Verifying $1_DiemTransactionPublishingOption_transactions_halted$verify ...
-  [0.005 s, 1 proof obligation]  verified
+  [0.007 s, 1 proof obligation]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.104 s, 28 proof obligations]  verified
+  [2.098 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 10 verified, 0 errors

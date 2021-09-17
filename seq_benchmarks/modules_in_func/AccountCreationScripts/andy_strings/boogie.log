@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/AccountCreationScripts/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,36 +18,36 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify ...
-  [1.832 s, 52 proof obligations]  verified
+  [2.028 s, 52 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_0 ...
-  [1.410 s, 52 proof obligations]  verified
+  [1.344 s, 52 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_child_vasp_account$verify_instantiated_1 ...
-  [1.387 s, 52 proof obligations]  verified
+  [1.329 s, 52 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify ...
-  [2.136 s, 40 proof obligations]  verified
+  [4.369 s, 40 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_0 ...
-  [1.778 s, 40 proof obligations]  verified
+  [3.006 s, 40 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_designated_dealer$verify_instantiated_1 ...
-  [1.892 s, 40 proof obligations]  verified
+  [4.002 s, 40 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify ...
-  [2.683 s, 38 proof obligations]  verified
+  [7.165 s, 38 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_0 ...
-  [2.395 s, 38 proof obligations]  verified
+  [5.706 s, 38 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_parent_vasp_account$verify_instantiated_1 ...
-  [2.131 s, 38 proof obligations]  verified
+  [4.542 s, 38 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_validator_account$verify ...
-  [1.144 s, 25 proof obligations]  verified
+  [1.811 s, 25 proof obligations]  verified
 
 Verifying $1_AccountCreationScripts_create_validator_operator_account$verify ...
-  [1.103 s, 25 proof obligations]  verified
+  [1.619 s, 25 proof obligations]  verified
 
 Boogie program verifier finished with 11 verified, 0 errors

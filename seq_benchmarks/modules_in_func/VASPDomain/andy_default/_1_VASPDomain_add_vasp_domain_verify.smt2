@@ -1130,4 +1130,4 @@ PreconditionGeneratedEntry_correct))))))))))))))))))))))))))))))))))))))))))))))
 ))
 (check-sat)
 (pop 1)
-; Undetermined
+; Valid

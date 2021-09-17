@@ -14,48 +14,48 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_AccountAdministrationScripts_force_expire$verify ...
-  [0.231 s, 0 proof obligations]  verified
+  [0.216 s, 0 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key$verify ...
-  [0.068 s, 8 proof obligations]  verified
+  [0.081 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
-  [0.090 s, 9 proof obligations]  verified
+  [0.095 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_0 ...
-  [0.082 s, 9 proof obligations]  verified
+  [0.100 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_1 ...
-  [0.082 s, 9 proof obligations]  verified
+  [0.081 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_recovery_rotation_capability$verify ...
-  [0.073 s, 9 proof obligations]  verified
+  [0.072 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_recovery_address$verify ...
-  [0.069 s, 11 proof obligations]  verified
+  [0.070 s, 11 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
-  [0.057 s, 8 proof obligations]  verified
+  [0.055 s, 8 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_opt_in_to_crsn$verify ...
-  [0.058 s, 6 proof obligations]  verified
+  [0.063 s, 6 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_publish_shared_ed25519_public_key$verify ...
-  [0.076 s, 10 proof obligations]  verified
-
-Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
   [0.075 s, 10 proof obligations]  verified
 
+Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce$verify ...
+  [0.081 s, 10 proof obligations]  verified
+
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_nonce_admin$verify ...
-  [0.077 s, 10 proof obligations]  verified
+  [0.071 s, 10 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_authentication_key_with_recovery_address$verify ...
-  [0.081 s, 16 proof obligations]  verified
+  [0.089 s, 16 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_dual_attestation_info$verify ...
-  [0.120 s, 15 proof obligations]  verified
+  [0.118 s, 15 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_rotate_shared_ed25519_public_key$verify ...
-  [0.063 s, 7 proof obligations]  verified
+  [0.058 s, 7 proof obligations]  verified
 
 Boogie program verifier finished with 15 verified, 0 errors

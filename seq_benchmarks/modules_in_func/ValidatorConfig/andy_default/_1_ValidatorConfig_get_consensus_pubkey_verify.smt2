@@ -867,4 +867,24 @@
 (declare-fun $abort_code@0@@2 () Int)
 (declare-fun inline$$1_ValidatorConfig_exists_config$0$$t1@1 () Bool)
 (declare-fun $t9@@1 () Int)
-; Undetermined
+; Valid
+(declare-fun _$t0@@4 () T@$1_ValidatorConfig_Config)
+(declare-fun $t1@0@@0 () (Seq Int))
+(push 1)
+(set-info :boogie-vc-id $1_ValidatorConfig_get_consensus_pubkey$verify)
+(assert (not
+ (=> (= (ControlFlow 0 0) 93892) (let ((anon0$1_correct@@4  (=> (|$IsValid'$1_ValidatorConfig_Config'| _$t0@@4) (=> (and (and (= _$t0@@4 _$t0@@4) (= $t1@0@@0 (|$consensus_pubkey#$1_ValidatorConfig_Config| _$t0@@4))) (and (= $t1@0@@0 $t1@0@@0) (= (ControlFlow 0 81689) (- 0 93955)))) (not false)))))
+(let ((inline$$InitEventStore$0$anon0_correct@@4  (=> (and (and (= (|counter#$EventStore| $es) 0) (forall ((handle@@6 T@$1_Event_EventHandle) ) (! (let ((stream@@5 (|Select__T@[$1_Event_EventHandle]Multiset_33654_| (|streams#$EventStore| $es) handle@@6)))
+ (and (= (|l#Multiset_33654| stream@@5) 0) (forall ((v@@34 T@$EventRep) ) (! (= (|Select__T@[$EventRep]Int_| (|v#Multiset_33654| stream@@5) v@@34) 0)
+ :qid |ValidatorConfigbpl.134:13|
+ :skolemid |2|
+))))
+ :qid |ValidatorConfigbpl.2192:13|
+ :skolemid |59|
+))) (= (ControlFlow 0 81645) 81689)) anon0$1_correct@@4)))
+(let ((anon0_correct@@4  (=> (= (ControlFlow 0 93892) 81645) inline$$InitEventStore$0$anon0_correct@@4)))
+anon0_correct@@4))))
+))
+(check-sat)
+(pop 1)
+; Valid

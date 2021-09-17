@@ -5,9 +5,8 @@
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/@PROC@.smt2
 /proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
 /proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
 /proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
+/proverOpt:O:no-dt-share-sel=true
 /proverOpt:O:ee-mode=central
 /proverOpt:SOLVER=CVC5
 /trace
@@ -19,32 +18,15 @@ Inlining...
 [TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.271 s, 35 proof obligations]  verified
+  [0.270 s, 35 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_initialize$verify ...
-  [0.112 s, 20 proof obligations]  verified
+  [0.130 s, 20 proof obligations]  verified
 
 Verifying $1_RegisteredCurrencies_add_currency_code$verify ...
-  [0.203 s, 15 proof obligations]  error
-assert_failed(27,3010,3103): post-condition does not hold
-Execution trace:
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6103,9): anon0
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(2367,5): inline$$InitEventStore$0$anon0
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6103,9): anon0$1
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6284,34): anon19_Else
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(1829,9): inline$$1_Vector_contains'vec'u8''$0$anon0
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6322,5): anon20_Else
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(571,9): inline$$Not$0$anon0
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6322,5): anon20_Else$1
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6355,17): anon21_Then
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(1713,8): inline$$1_Vector_push_back'vec'u8''$0$anon0
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6384,5): anon22_Else
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6426,35): anon23_Else
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6450,9): anon24_Then
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6459,9): anon25_Then
-    /home/ying/diem/seq_benchmarks/modules_in_func/RegisteredCurrencies/andy_strings/RegisteredCurrencies.bpl(6466,5): anon17
+  [0.324 s, 15 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [2.183 s, 28 proof obligations]  verified
+  [2.204 s, 28 proof obligations]  verified
 
-Boogie program verifier finished with 3 verified, 1 error
+Boogie program verifier finished with 4 verified, 0 errors

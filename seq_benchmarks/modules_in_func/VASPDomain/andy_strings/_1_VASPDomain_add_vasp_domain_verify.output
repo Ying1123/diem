@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/_1_VASPDomain_add_vasp_domain_verify.smt2:195.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/_1_VASPDomain_add_vasp_domain_verify.smt2:736.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
-unsat
+/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/_1_VASPDomain_add_vasp_domain_verify.smt2:194.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/VASPDomain/andy_strings/_1_VASPDomain_add_vasp_domain_verify.smt2:735.171: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+unknown

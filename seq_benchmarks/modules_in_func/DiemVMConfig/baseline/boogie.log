@@ -14,114 +14,114 @@ Inlining...
 [TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_DiemTimestamp_update_global_time$verify ...
-  [0.236 s, 35 proof obligations]  verified
+  [0.209 s, 35 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify ...
-  [0.063 s, 13 proof obligations]  verified
+  [0.046 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set$verify_instantiated_0 ...
-  [0.073 s, 14 proof obligations]  verified
-
-Verifying $1_DiemConfig_set$verify_instantiated_1 ...
-  [0.054 s, 14 proof obligations]  verified
-
-Verifying $1_DiemConfig_set$verify_instantiated_2 ...
-  [0.079 s, 14 proof obligations]  verified
-
-Verifying $1_DiemConfig_set$verify_instantiated_3 ...
   [0.055 s, 14 proof obligations]  verified
 
+Verifying $1_DiemConfig_set$verify_instantiated_1 ...
+  [0.048 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_set$verify_instantiated_2 ...
+  [0.055 s, 14 proof obligations]  verified
+
+Verifying $1_DiemConfig_set$verify_instantiated_3 ...
+  [0.052 s, 14 proof obligations]  verified
+
 Verifying $1_DiemConfig_publish_new_config$verify ...
-  [0.061 s, 16 proof obligations]  verified
+  [0.049 s, 16 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_0 ...
-  [0.059 s, 17 proof obligations]  verified
+  [0.055 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_1 ...
-  [0.088 s, 17 proof obligations]  verified
+  [0.049 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_2 ...
-  [0.068 s, 17 proof obligations]  verified
+  [0.056 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config$verify_instantiated_3 ...
-  [0.058 s, 17 proof obligations]  verified
+  [0.055 s, 17 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify ...
-  [0.055 s, 12 proof obligations]  verified
+  [0.057 s, 12 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_0 ...
-  [0.061 s, 13 proof obligations]  verified
+  [0.056 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_1 ...
-  [0.066 s, 13 proof obligations]  verified
+  [0.054 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_2 ...
-  [0.058 s, 13 proof obligations]  verified
+  [0.056 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_publish_new_config_and_get_capability$verify_instantiated_3 ...
-  [0.057 s, 13 proof obligations]  verified
+  [0.063 s, 13 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify ...
-  [0.064 s, 14 proof obligations]  verified
+  [0.070 s, 14 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_0 ...
-  [0.075 s, 15 proof obligations]  verified
+  [0.073 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_1 ...
-  [0.085 s, 15 proof obligations]  verified
+  [0.075 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_2 ...
-  [0.076 s, 15 proof obligations]  verified
+  [0.064 s, 15 proof obligations]  verified
 
 Verifying $1_DiemConfig_set_with_capability_and_reconfigure$verify_instantiated_3 ...
-  [0.079 s, 15 proof obligations]  verified
+  [0.067 s, 15 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [0.347 s, 37 proof obligations]  verified
+  [0.233 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [0.297 s, 37 proof obligations]  verified
+  [0.216 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [0.294 s, 37 proof obligations]  verified
+  [0.232 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify ...
-  [0.383 s, 40 proof obligations]  verified
+  [0.248 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
-  [0.304 s, 40 proof obligations]  verified
+  [0.233 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
-  [0.339 s, 40 proof obligations]  verified
+  [0.256 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [0.120 s, 36 proof obligations]  verified
+  [0.092 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [0.289 s, 38 proof obligations]  verified
+  [0.229 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [0.269 s, 38 proof obligations]  verified
+  [0.215 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [0.294 s, 38 proof obligations]  verified
+  [0.224 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [0.135 s, 39 proof obligations]  verified
+  [0.113 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_account$verify ...
-  [0.130 s, 24 proof obligations]  verified
+  [0.098 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_operator_account$verify ...
   [0.098 s, 22 proof obligations]  verified
 
 Verifying $1_DiemVMConfig_initialize$verify ...
-  [0.096 s, 22 proof obligations]  verified
+  [0.079 s, 22 proof obligations]  verified
 
 Verifying $1_DiemVMConfig_set_gas_constants$verify ...
-  [0.115 s, 21 proof obligations]  verified
+  [0.102 s, 21 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [0.699 s, 28 proof obligations]  verified
+  [0.531 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 37 verified, 0 errors

@@ -1,4 +1,4 @@
 unsupported
-/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/andy_strings/_1_SlidingNonce_publish_verify.smt2:401.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/andy_strings/_1_SlidingNonce_publish_verify.smt2:1381.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/andy_strings/_1_SlidingNonce_publish_verify.smt2:400.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/SlidingNonce/andy_strings/_1_SlidingNonce_publish_verify.smt2:1380.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

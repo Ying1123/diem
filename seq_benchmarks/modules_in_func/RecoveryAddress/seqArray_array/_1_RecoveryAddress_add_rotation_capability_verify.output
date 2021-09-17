@@ -1,7 +1,3 @@
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:9.12: No set-logic command was given before this point.
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:9.12: cvc5 will make all theories available.
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:9.12: Consider setting a stricter logic for (likely) better performance.
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:9.12: To suppress this warning in the future use (set-logic ALL).
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:224.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
-/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:867.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:225.14: warning: Attribute ':skolemid' not supported (ignoring this and all following uses)
+/home/ying/diem/seq_benchmarks/modules_in_func/RecoveryAddress/seqArray_array/_1_RecoveryAddress_add_rotation_capability_verify.smt2:868.149: warning: Attribute ':weight' not supported (ignoring this and all following uses)
 unsat

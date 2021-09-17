@@ -3,25 +3,45 @@
 -monomorphize
 /env:2
 -proverLog:/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/@PROC@.smt2
-/proverOpt:PROVER_PATH=/home/ying/CVC4/seq_prod/bin/cvc5
-/proverOpt:O:strings-exp=true
-/proverOpt:O:strings-seq-update=eager
-/proverOpt:O:pre-skolem-quant=true
-/proverOpt:O:dt-share-sel=false
-/proverOpt:O:ee-mode=central
-/proverOpt:SOLVER=CVC5
+/proverOpt:PROVER_PATH=/home/ying/bin/z3
+/proverOpt:SOLVER=Z3
 /trace
 -doModSetAnalysis
 --------------------
 Parsing /home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/ValidatorAdministrationScripts.bpl
 Coalescing blocks...
 Inlining...
-[TRACE] Using prover: /home/ying/CVC4/seq_prod/bin/cvc5
+[TRACE] Using prover: /home/ying/bin/z3
 
 Verifying $1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify ...
-  [1.456 s, 23 proof obligations]  verified
+  [40.311 s, 23 proof obligations]  timed out
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/ValidatorAdministrationScripts.bpl(6794,27): Verification of '$1_ValidatorAdministrationScripts_add_validator_and_reconfigure$verify' timed out after 40 seconds
 
 Verifying $1_ValidatorAdministrationScripts_register_validator_config$verify ...
-  [0.050 s, 8 proof obligations]  verified
-Prover error: cvc5 interrupted by SIGTERM.
+  [0.105 s, 8 proof obligations]  verified
+Prover error: line 4842 column 1029: unknown function/constant seq.update
 
+Prover error: Prover died
+
+
+Verifying $1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify ...
+  [0.072 s, 19 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/ValidatorAdministrationScripts.bpl(7627,27): Verification inconclusive ($1_ValidatorAdministrationScripts_remove_validator_and_reconfigure$verify)
+
+Verifying $1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify ...
+  [0.098 s, 25 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/ValidatorAdministrationScripts.bpl(8253,27): Verification inconclusive ($1_ValidatorAdministrationScripts_set_validator_config_and_reconfigure$verify)
+Prover error: Invalid PING response from the prover: unsat
+
+
+Verifying $1_ValidatorAdministrationScripts_set_validator_operator$verify ...
+  [8.998 s, 14 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/ValidatorAdministrationScripts.bpl(9014,27): Verification inconclusive ($1_ValidatorAdministrationScripts_set_validator_operator$verify)
+Prover error: Invalid PING response from the prover: unsat
+
+
+Verifying $1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify ...
+  [0.062 s, 16 proof obligations]  inconclusive
+/home/ying/diem/seq_benchmarks/modules_in_func/ValidatorAdministrationScripts/z3/ValidatorAdministrationScripts.bpl(9406,27): Verification inconclusive ($1_ValidatorAdministrationScripts_set_validator_operator_with_nonce_admin$verify)
+
+Boogie program verifier finished with 1 verified, 0 errors, 4 inconclusives, 1 time out

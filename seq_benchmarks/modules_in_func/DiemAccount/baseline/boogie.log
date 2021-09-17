@@ -17,324 +17,324 @@ Verifying $1_DiemTimestamp_update_global_time$verify ...
   [0.206 s, 35 proof obligations]  verified
 
 Verifying $1_Roles_grant_role$verify ...
-  [0.085 s, 25 proof obligations]  verified
+  [0.088 s, 25 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_remove_operator$verify ...
-  [0.084 s, 16 proof obligations]  verified
+  [0.081 s, 16 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_config$verify ...
-  [0.089 s, 18 proof obligations]  verified
+  [0.081 s, 18 proof obligations]  verified
 
 Verifying $1_ValidatorConfig_set_operator$verify ...
-  [0.083 s, 21 proof obligations]  verified
+  [0.086 s, 21 proof obligations]  verified
 
 Verifying $1_VASPDomain_add_vasp_domain$verify ...
-  [0.109 s, 19 proof obligations]  verified
+  [0.116 s, 19 proof obligations]  verified
 
 Verifying $1_VASPDomain_remove_vasp_domain$verify ...
-  [0.451 s, 19 proof obligations]  verified
+  [0.425 s, 19 proof obligations]  verified
 
 Verifying $1_DualAttestation_rotate_base_url$verify ...
-  [0.061 s, 12 proof obligations]  verified
+  [0.077 s, 12 proof obligations]  verified
 
 Verifying $1_DualAttestation_rotate_compliance_public_key$verify ...
-  [0.079 s, 13 proof obligations]  verified
+  [0.084 s, 13 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify ...
-  [0.131 s, 22 proof obligations]  verified
+  [0.118 s, 22 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_0 ...
-  [0.228 s, 22 proof obligations]  verified
+  [0.220 s, 22 proof obligations]  verified
 
 Verifying $1_DesignatedDealer_tiered_mint$verify_instantiated_1 ...
   [0.124 s, 22 proof obligations]  verified
 
 Verifying $1_AccountFreezing_freeze_account$verify ...
-  [0.096 s, 18 proof obligations]  verified
+  [0.091 s, 18 proof obligations]  verified
 
 Verifying $1_AccountFreezing_unfreeze_account$verify ...
-  [0.086 s, 16 proof obligations]  verified
+  [0.080 s, 16 proof obligations]  verified
 
 Verifying $1_DiemAccount_initialize$verify ...
-  [0.120 s, 52 proof obligations]  verified
+  [0.124 s, 52 proof obligations]  verified
 
 Verifying $1_DiemAccount_preburn$verify ...
-  [0.592 s, 47 proof obligations]  verified
+  [0.590 s, 47 proof obligations]  verified
 
 Verifying $1_DiemAccount_preburn$verify_instantiated_0 ...
-  [0.560 s, 47 proof obligations]  verified
+  [0.546 s, 47 proof obligations]  verified
 
 Verifying $1_DiemAccount_preburn$verify_instantiated_1 ...
-  [0.469 s, 47 proof obligations]  verified
+  [0.456 s, 47 proof obligations]  verified
 
 Verifying $1_DiemAccount_cancel_burn$verify ...
-  [0.490 s, 35 proof obligations]  verified
+  [0.487 s, 35 proof obligations]  verified
 
 Verifying $1_DiemAccount_cancel_burn$verify_instantiated_0 ...
-  [0.504 s, 35 proof obligations]  verified
+  [0.513 s, 35 proof obligations]  verified
 
 Verifying $1_DiemAccount_cancel_burn$verify_instantiated_1 ...
-  [0.449 s, 35 proof obligations]  verified
+  [0.427 s, 35 proof obligations]  verified
 
 Verifying $1_DiemAccount_deposit$verify ...
   [0.259 s, 41 proof obligations]  verified
 
 Verifying $1_DiemAccount_deposit$verify_instantiated_0 ...
-  [0.245 s, 42 proof obligations]  verified
+  [0.260 s, 42 proof obligations]  verified
 
 Verifying $1_DiemAccount_deposit$verify_instantiated_1 ...
-  [0.272 s, 42 proof obligations]  verified
+  [0.258 s, 42 proof obligations]  verified
 
 Verifying $1_DiemAccount_balance$verify ...
-  [0.041 s, 5 proof obligations]  verified
-
-Verifying $1_DiemAccount_balance$verify_instantiated_0 ...
   [0.044 s, 5 proof obligations]  verified
 
+Verifying $1_DiemAccount_balance$verify_instantiated_0 ...
+  [0.041 s, 5 proof obligations]  verified
+
 Verifying $1_DiemAccount_balance$verify_instantiated_1 ...
-  [0.043 s, 5 proof obligations]  verified
+  [0.041 s, 5 proof obligations]  verified
 
 Verifying $1_DiemAccount_add_currency$verify ...
   [0.077 s, 11 proof obligations]  verified
 
 Verifying $1_DiemAccount_add_currency$verify_instantiated_0 ...
-  [0.081 s, 12 proof obligations]  verified
-
-Verifying $1_DiemAccount_add_currency$verify_instantiated_1 ...
   [0.085 s, 12 proof obligations]  verified
 
+Verifying $1_DiemAccount_add_currency$verify_instantiated_1 ...
+  [0.088 s, 12 proof obligations]  verified
+
 Verifying $1_DiemAccount_exists_at$verify ...
-  [0.041 s, 3 proof obligations]  verified
+  [0.040 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_tiered_mint$verify ...
-  [0.582 s, 39 proof obligations]  verified
+  [0.573 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_tiered_mint$verify_instantiated_0 ...
-  [0.722 s, 39 proof obligations]  verified
+  [0.718 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_tiered_mint$verify_instantiated_1 ...
-  [0.790 s, 39 proof obligations]  verified
+  [0.773 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_accepts_currency$verify ...
-  [0.056 s, 2 proof obligations]  verified
+  [0.036 s, 2 proof obligations]  verified
 
 Verifying $1_DiemAccount_accepts_currency$verify_instantiated_0 ...
-  [0.039 s, 2 proof obligations]  verified
+  [0.034 s, 2 proof obligations]  verified
 
 Verifying $1_DiemAccount_accepts_currency$verify_instantiated_1 ...
-  [0.039 s, 2 proof obligations]  verified
+  [0.035 s, 2 proof obligations]  verified
 
 Verifying $1_DiemAccount_add_currencies_for_account$verify ...
   [0.242 s, 16 proof obligations]  verified
 
 Verifying $1_DiemAccount_add_currencies_for_account$verify_instantiated_0 ...
-  [0.111 s, 16 proof obligations]  verified
+  [0.136 s, 16 proof obligations]  verified
 
 Verifying $1_DiemAccount_add_currencies_for_account$verify_instantiated_1 ...
-  [0.123 s, 16 proof obligations]  verified
+  [0.129 s, 16 proof obligations]  verified
 
 Verifying $1_DiemAccount_authentication_key$verify ...
-  [0.046 s, 3 proof obligations]  verified
+  [0.044 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_balance_for$verify ...
-  [0.040 s, 2 proof obligations]  verified
+  [0.037 s, 2 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_authentication_key$verify ...
-  [0.057 s, 3 proof obligations]  verified
+  [0.053 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify ...
-  [0.251 s, 37 proof obligations]  verified
+  [0.253 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_0 ...
-  [0.233 s, 37 proof obligations]  verified
+  [0.227 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_child_vasp_account$verify_instantiated_1 ...
-  [0.233 s, 37 proof obligations]  verified
+  [0.230 s, 37 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify ...
-  [0.268 s, 40 proof obligations]  verified
+  [0.266 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_0 ...
   [0.254 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_designated_dealer$verify_instantiated_1 ...
-  [0.252 s, 40 proof obligations]  verified
+  [0.260 s, 40 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_diem_root_account$verify ...
-  [0.097 s, 36 proof obligations]  verified
+  [0.092 s, 36 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify ...
-  [0.234 s, 38 proof obligations]  verified
+  [0.233 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_0 ...
-  [0.229 s, 38 proof obligations]  verified
+  [0.232 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_parent_vasp_account$verify_instantiated_1 ...
-  [0.235 s, 38 proof obligations]  verified
+  [0.233 s, 38 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_treasury_compliance_account$verify ...
-  [0.114 s, 39 proof obligations]  verified
+  [0.126 s, 39 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_account$verify ...
-  [0.111 s, 24 proof obligations]  verified
+  [0.113 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_create_validator_operator_account$verify ...
-  [0.095 s, 22 proof obligations]  verified
+  [0.089 s, 22 proof obligations]  verified
 
 Verifying $1_DiemAccount_delegated_key_rotation_capability$verify ...
-  [0.051 s, 3 proof obligations]  verified
+  [0.044 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_delegated_withdraw_capability$verify ...
-  [0.050 s, 3 proof obligations]  verified
+  [0.047 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_epilogue$verify ...
-  [0.169 s, 1 proof obligation]  verified
+  [0.175 s, 1 proof obligation]  verified
 
 Verifying $1_DiemAccount_epilogue$verify_instantiated_0 ...
-  [0.178 s, 1 proof obligation]  verified
+  [0.177 s, 1 proof obligation]  verified
 
 Verifying $1_DiemAccount_epilogue$verify_instantiated_1 ...
-  [0.168 s, 1 proof obligation]  verified
+  [0.184 s, 1 proof obligation]  verified
 
 Verifying $1_DiemAccount_epilogue_common$verify ...
-  [0.180 s, 19 proof obligations]  verified
+  [0.190 s, 19 proof obligations]  verified
 
 Verifying $1_DiemAccount_epilogue_common$verify_instantiated_0 ...
-  [0.181 s, 20 proof obligations]  verified
+  [0.199 s, 20 proof obligations]  verified
 
 Verifying $1_DiemAccount_epilogue_common$verify_instantiated_1 ...
-  [0.183 s, 20 proof obligations]  verified
+  [0.186 s, 20 proof obligations]  verified
 
 Verifying $1_DiemAccount_extract_key_rotation_capability$verify ...
-  [0.084 s, 18 proof obligations]  verified
+  [0.079 s, 18 proof obligations]  verified
 
 Verifying $1_DiemAccount_extract_withdraw_capability$verify ...
-  [0.076 s, 22 proof obligations]  verified
+  [0.095 s, 22 proof obligations]  verified
 
 Verifying $1_DiemAccount_has_published_account_limits$verify ...
-  [0.041 s, 2 proof obligations]  verified
+  [0.045 s, 2 proof obligations]  verified
 
 Verifying $1_DiemAccount_key_rotation_capability_address$verify ...
   [0.041 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_make_account$verify ...
-  [0.103 s, 24 proof obligations]  verified
+  [0.111 s, 24 proof obligations]  verified
 
 Verifying $1_DiemAccount_module_prologue$verify ...
-  [0.184 s, 21 proof obligations]  verified
+  [0.193 s, 21 proof obligations]  verified
 
 Verifying $1_DiemAccount_module_prologue$verify_instantiated_0 ...
-  [0.184 s, 21 proof obligations]  verified
+  [0.183 s, 21 proof obligations]  verified
 
 Verifying $1_DiemAccount_module_prologue$verify_instantiated_1 ...
-  [0.209 s, 21 proof obligations]  verified
+  [0.212 s, 21 proof obligations]  verified
 
 Verifying $1_DiemAccount_multi_agent_script_prologue$verify ...
-  [0.269 s, 28 proof obligations]  verified
+  [0.251 s, 28 proof obligations]  verified
 
 Verifying $1_DiemAccount_multi_agent_script_prologue$verify_instantiated_0 ...
-  [0.241 s, 28 proof obligations]  verified
+  [0.246 s, 28 proof obligations]  verified
 
 Verifying $1_DiemAccount_multi_agent_script_prologue$verify_instantiated_1 ...
-  [0.249 s, 28 proof obligations]  verified
+  [0.238 s, 28 proof obligations]  verified
 
 Verifying $1_DiemAccount_pay_by_signers$verify ...
-  [0.502 s, 51 proof obligations]  verified
+  [0.474 s, 51 proof obligations]  verified
 
 Verifying $1_DiemAccount_pay_by_signers$verify_instantiated_0 ...
-  [0.485 s, 51 proof obligations]  verified
+  [0.468 s, 51 proof obligations]  verified
 
 Verifying $1_DiemAccount_pay_by_signers$verify_instantiated_1 ...
-  [0.595 s, 51 proof obligations]  verified
+  [0.586 s, 51 proof obligations]  verified
 
 Verifying $1_DiemAccount_pay_from$verify ...
-  [0.567 s, 58 proof obligations]  verified
+  [0.569 s, 58 proof obligations]  verified
 
 Verifying $1_DiemAccount_pay_from$verify_instantiated_0 ...
-  [0.661 s, 58 proof obligations]  verified
+  [0.623 s, 58 proof obligations]  verified
 
 Verifying $1_DiemAccount_pay_from$verify_instantiated_1 ...
-  [0.517 s, 58 proof obligations]  verified
+  [0.512 s, 58 proof obligations]  verified
 
 Verifying $1_DiemAccount_prologue_common$verify ...
   [0.137 s, 18 proof obligations]  verified
 
 Verifying $1_DiemAccount_prologue_common$verify_instantiated_0 ...
-  [0.168 s, 18 proof obligations]  verified
+  [0.159 s, 18 proof obligations]  verified
 
 Verifying $1_DiemAccount_prologue_common$verify_instantiated_1 ...
-  [0.150 s, 18 proof obligations]  verified
+  [0.152 s, 18 proof obligations]  verified
 
 Verifying $1_DiemAccount_publish_crsn$verify ...
-  [0.064 s, 9 proof obligations]  verified
+  [0.063 s, 9 proof obligations]  verified
 
 Verifying $1_DiemAccount_restore_key_rotation_capability$verify ...
-  [0.072 s, 17 proof obligations]  verified
+  [0.064 s, 17 proof obligations]  verified
 
 Verifying $1_DiemAccount_restore_withdraw_capability$verify ...
-  [0.088 s, 19 proof obligations]  verified
+  [0.081 s, 19 proof obligations]  verified
 
 Verifying $1_DiemAccount_rotate_authentication_key$verify ...
-  [0.085 s, 20 proof obligations]  verified
+  [0.077 s, 20 proof obligations]  verified
 
 Verifying $1_DiemAccount_script_prologue$verify ...
-  [0.239 s, 21 proof obligations]  verified
+  [0.232 s, 21 proof obligations]  verified
 
 Verifying $1_DiemAccount_script_prologue$verify_instantiated_0 ...
-  [0.357 s, 21 proof obligations]  verified
+  [0.340 s, 21 proof obligations]  verified
 
 Verifying $1_DiemAccount_script_prologue$verify_instantiated_1 ...
-  [0.226 s, 21 proof obligations]  verified
+  [0.233 s, 21 proof obligations]  verified
 
 Verifying $1_DiemAccount_sequence_number$verify ...
-  [0.043 s, 3 proof obligations]  verified
+  [0.045 s, 3 proof obligations]  verified
 
 Verifying $1_DiemAccount_sequence_number_for_account$verify ...
-  [0.041 s, 3 proof obligations]  verified
-
-Verifying $1_DiemAccount_should_track_limits_for_account$verify ...
-  [0.057 s, 5 proof obligations]  verified
-
-Verifying $1_DiemAccount_withdraw_capability_address$verify ...
   [0.040 s, 3 proof obligations]  verified
 
+Verifying $1_DiemAccount_should_track_limits_for_account$verify ...
+  [0.052 s, 5 proof obligations]  verified
+
+Verifying $1_DiemAccount_withdraw_capability_address$verify ...
+  [0.042 s, 3 proof obligations]  verified
+
 Verifying $1_DiemAccount_withdraw_from$verify ...
-  [0.201 s, 32 proof obligations]  verified
+  [0.182 s, 32 proof obligations]  verified
 
 Verifying $1_DiemAccount_withdraw_from$verify_instantiated_0 ...
-  [0.208 s, 33 proof obligations]  verified
+  [0.209 s, 33 proof obligations]  verified
 
 Verifying $1_DiemAccount_withdraw_from$verify_instantiated_1 ...
-  [0.207 s, 33 proof obligations]  verified
+  [0.216 s, 33 proof obligations]  verified
 
 Verifying $1_DiemAccount_withdraw_from_balance$verify ...
-  [0.126 s, 15 proof obligations]  verified
+  [0.143 s, 15 proof obligations]  verified
 
 Verifying $1_DiemAccount_withdraw_from_balance$verify_instantiated_0 ...
-  [0.138 s, 15 proof obligations]  verified
+  [0.133 s, 15 proof obligations]  verified
 
 Verifying $1_DiemAccount_withdraw_from_balance$verify_instantiated_1 ...
-  [0.126 s, 15 proof obligations]  verified
+  [0.128 s, 15 proof obligations]  verified
 
 Verifying $1_DiemAccount_writeset_epilogue$verify ...
-  [0.416 s, 6 proof obligations]  verified
+  [0.417 s, 6 proof obligations]  verified
 
 Verifying $1_DiemAccount_writeset_prologue$verify ...
-  [0.151 s, 23 proof obligations]  verified
+  [0.153 s, 23 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify ...
-  [0.073 s, 9 proof obligations]  verified
+  [0.078 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_0 ...
-  [0.084 s, 9 proof obligations]  verified
+  [0.082 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_add_currency_to_account$verify_instantiated_1 ...
-  [0.087 s, 9 proof obligations]  verified
+  [0.080 s, 9 proof obligations]  verified
 
 Verifying $1_AccountAdministrationScripts_create_vasp_domains$verify ...
-  [0.068 s, 8 proof obligations]  verified
+  [0.060 s, 8 proof obligations]  verified
 
 Verifying $1_Genesis_initialize_internal$verify ...
-  [0.451 s, 28 proof obligations]  verified
+  [0.450 s, 28 proof obligations]  verified
 
 Boogie program verifier finished with 108 verified, 0 errors
